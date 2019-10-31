@@ -1,0 +1,89 @@
+{
+  "name": "@nartc/automapper",
+  "version": "0.1.0",
+  "license": "MIT",
+  "author": "Chau Tran",
+  "main": "dist/index.js",
+  "module": "dist/automapper.esm.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test",
+    "lint": "tsdx lint && lint-staged",
+    "commit": "git-cz"
+  },
+  "peerDependencies": {
+    "reflect-metadata": "^0.1.13"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-conventional-changelog"
+    }
+  },
+  "lint-staged": {
+    "{src,test}/**/*.ts": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "ts-jest"
+    },
+    "testEnvironment": "node",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/test/"
+    ],
+    "collectCoverageFrom": [
+      "src/automapper.{js,ts}"
+    ]
+  },
+  "devDependencies": {
+    "@commitlint/cli": "8.2.0",
+    "@commitlint/config-conventional": "8.2.0",
+    "@types/jest": "24.0.21",
+    "@types/lodash": "4.14.144",
+    "commitizen": "4.0.3",
+    "cz-conventional-changelog": "3.0.2",
+    "husky": "3.0.9",
+    "lint-staged": "9.4.2",
+    "prettier": "1.18.2",
+    "reflect-metadata": "0.1.13",
+    "semantic-release": "15.13.28",
+    "tsdx": "0.11.0",
+    "tslib": "1.10.0",
+    "typedoc": "0.15.0",
+    "typescript": "3.6.4"
+  },
+  "dependencies": {
+    "class-transformer": "0.2.3",
+    "lodash": "4.17.15",
+    "lodash-es": "4.17.15"
+  }
+}

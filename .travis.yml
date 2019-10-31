@@ -15,13 +15,13 @@ jobs:
   include:
     - stage: deploy_docs
       before_script:
-        - npm run build
+        - npm run build:docs
       node_js:
         - '12'
       script: if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then npm run deploy-docs; fi
     - stage: npm_release
       before_script:
-        - npm run build
+        - npm run build:prod
       node_js:
         - '12'
       script: if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then npm run semantic-release; fi

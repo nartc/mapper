@@ -18,8 +18,9 @@
   },
   "scripts": {
     "start": "tsdx watch",
-    "build": "tsdx build && typedoc --out docs --target es6 --theme minimal --mode file src",
+    "build": "tsdx build",
     "build:prod": "npm run test && npm run build",
+    "build:docs": "typedoc --out docs --target es6 --theme minimal --mode file src",
     "test": "tsdx test",
     "lint": "tsdx lint && lint-staged",
     "commit": "git-cz",
@@ -57,8 +58,8 @@
       "git add"
     ]
   },
-  "eslintConfig": {
-
+  "publishConfig": {
+    "access": "public"
   },
   "jest": {
     "transform": {

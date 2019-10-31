@@ -34,6 +34,22 @@ export abstract class AutoMapperBase {
     this._mappings = {};
   }
 
+  protected _mapArrayAsync<
+    TSource extends Dict<TSource> = any,
+    TDestination extends Dict<TDestination> = any
+  >(
+    sourceArray: TSource[],
+    mapping: Mapping<TSource, TDestination>,
+    option: MapActionOptions<
+      TSource[],
+      TDestination[]
+    > = defaultMapActionOptions
+  ): Promise<TDestination[]> {
+    return Promise.resolve().then(() =>
+      this._mapArray(sourceArray, mapping, option)
+    );
+  }
+
   protected _mapArray<
     TSource extends Dict<TSource> = any,
     TDestination extends Dict<TDestination> = any

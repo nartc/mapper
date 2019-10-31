@@ -108,6 +108,30 @@ export class AutoMapper extends AutoMapperBase {
     return super._mapAsync(sourceObj, mapping, options);
   }
 
+  public mapArray<
+    TSource extends Dict<TSource> = any,
+    TDestination extends Dict<TDestination> = any
+  >(
+    sourceArr: TSource[],
+    destination: Constructible<TDestination>,
+    options?: MapActionOptions<TSource[], TDestination[]>
+  ): TDestination[] {
+    const mapping = super._getMappingForDestination(destination);
+    return super._mapArray(sourceArr, mapping, options);
+  }
+
+  public mapArrayAsync<
+    TSource extends Dict<TSource> = any,
+    TDestination extends Dict<TDestination> = any
+  >(
+    sourceArr: TSource[],
+    destination: Constructible<TDestination>,
+    options?: MapActionOptions<TSource[], TDestination[]>
+  ): Promise<TDestination[]> {
+    const mapping = super._getMappingForDestination(destination);
+    return super._mapArrayAsync(sourceArr, mapping, options);
+  }
+
   public dispose(): void {
     Object.keys(this._profiles).forEach(key => {
       delete this._profiles[key];

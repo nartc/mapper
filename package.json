@@ -57,6 +57,9 @@
       "git add"
     ]
   },
+  "eslintConfig": {
+
+  },
   "jest": {
     "transform": {
       ".(ts|tsx)": "ts-jest"

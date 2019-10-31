@@ -3,12 +3,19 @@
   "version": "0.1.0",
   "license": "MIT",
   "author": "Chau Tran",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nartc/mapper.git"
+  },
   "main": "dist/index.js",
   "module": "dist/automapper.esm.js",
   "typings": "dist/index.d.ts",
   "files": [
     "dist"
   ],
+  "engines": {
+    "node": ">=8.0.0"
+  },
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build",

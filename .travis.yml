@@ -7,7 +7,7 @@ notifications:
 node_js:
   - '10'
   - '11'
-  - '8'
+  - '12'
 script:
   - npm run test
 
@@ -17,13 +17,13 @@ jobs:
       before_script:
         - npm run build
       node_js:
-        - '11'
+        - '12'
       script: if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then npm run deploy-docs; fi
     - stage: npm_release
       before_script:
         - npm run build
       node_js:
-        - '11'
+        - '12'
       script: if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then npm run semantic-release; fi
 branches:
   except:

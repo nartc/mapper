@@ -24,7 +24,7 @@
     "lint": "tsdx lint && lint-staged",
     "commit": "git-cz",
     "semantic-release": "semantic-release",
-    "deploy-docs": "ts-node tools/gh-pages-publish"
+    "deploy-docs": "ts-node tools/gh-pages"
   },
   "peerDependencies": {
     "reflect-metadata": "^0.1.13"

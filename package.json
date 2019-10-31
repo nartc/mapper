@@ -22,7 +22,7 @@
     "build:prod": "npm run test && npm run build",
     "build:docs": "typedoc --out docs --target es6 --theme minimal --mode file src",
     "test": "tsdx test",
-    "lint": "tsdx lint && lint-staged",
+    "lint": "tsdx lint src && lint-staged",
     "commit": "git-cz",
     "semantic-release": "semantic-release",
     "deploy-docs": "ts-node tools/gh-pages"

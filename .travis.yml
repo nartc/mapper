@@ -1,0 +1,30 @@
+language: node_js
+cache:
+  directories:
+    - ~/.npm
+notifications:
+  email: false
+node_js:
+  - '10'
+  - '11'
+  - '8'
+script:
+  - npm run test
+
+jobs:
+  include:
+    - stage: deploy_docs
+      before_script:
+        - npm run build
+      node_js:
+        - '11'
+      script: if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then npm run deploy-docs; fi
+    - stage: npm_release
+      before_script:
+        - npm run build
+      node_js:
+        - '11'
+      script: if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then npm run semantic-release; fi
+branches:
+  except:
+    - /^v\d+\.\d+\.\d+$/

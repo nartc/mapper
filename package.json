@@ -19,11 +19,11 @@
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build && typedoc --out docs --target es6 --theme minimal --mode file src",
+    "build:prod": "npm run test && npm run build",
     "test": "tsdx test",
     "lint": "tsdx lint && lint-staged",
     "commit": "git-cz",
     "semantic-release": "semantic-release",
-    "prepush": "npm run test && npm run build",
     "deploy-docs": "ts-node tools/gh-pages-publish"
   },
   "peerDependencies": {
@@ -32,7 +32,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "npm run lint",
-      "pre-push": "npm run prepush"
+      "pre-push": "npm run build:prod"
     }
   },
   "prettier": {

@@ -1,4 +1,4 @@
-import { NamingConvention } from 'types';
+import { NamingConvention } from '../types';
 
 export class CamelCaseNamingConvention implements NamingConvention {
   public separatorCharacter = '';

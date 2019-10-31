@@ -52,7 +52,7 @@
     }
   },
   "lint-staged": {
-    "{src,test}/**/*.ts": [
+    "{src}/**/*.ts": [
       "prettier --write",
       "git add"
     ]
@@ -88,6 +88,7 @@
     "reflect-metadata": "0.1.13",
     "semantic-release": "^15.13.28",
     "shelljs": "0.8.3",
+    "ts-node": "^8.4.1",
     "tsdx": "0.11.0",
     "tslib": "1.10.0",
     "typedoc": "0.15.0",

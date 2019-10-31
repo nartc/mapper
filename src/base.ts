@@ -61,6 +61,20 @@ export abstract class AutoMapperBase {
     return destination;
   }
 
+  protected _mapAsync<
+    TSource extends Dict<TSource> = any,
+    TDestination extends Dict<TDestination> = any
+  >(
+    sourceObj: TSource,
+    mapping: Mapping<TSource, TDestination>,
+    option: MapActionOptions<TSource, TDestination> = defaultMapActionOptions,
+    isArrayMap: boolean = false
+  ): Promise<TDestination> {
+    return Promise.resolve().then(() =>
+      this._map(sourceObj, mapping, option, isArrayMap)
+    );
+  }
+
   protected _map<
     TSource extends Dict<TSource> = any,
     TDestination extends Dict<TDestination> = any

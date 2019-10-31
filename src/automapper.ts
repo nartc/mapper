@@ -96,6 +96,18 @@ export class AutoMapper extends AutoMapperBase {
     return super._map(sourceObj, mapping, options);
   }
 
+  public mapAsync<
+    TSource extends Dict<TSource> = any,
+    TDestination extends Dict<TDestination> = any
+  >(
+    sourceObj: TSource,
+    destination: Constructible<TDestination>,
+    options?: MapActionOptions<TSource, TDestination>
+  ): Promise<TDestination> {
+    const mapping = super._getMappingForDestination(destination);
+    return super._mapAsync(sourceObj, mapping, options);
+  }
+
   public dispose(): void {
     Object.keys(this._profiles).forEach(key => {
       delete this._profiles[key];

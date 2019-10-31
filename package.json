@@ -1,6 +1,6 @@
 {
   "name": "@nartc/automapper",
-  "version": "0.1.0",
+  "version": "0.0.0-development",
   "license": "MIT",
   "author": "Chau Tran",
   "repository": {
@@ -21,7 +21,8 @@
     "build": "tsdx build",
     "test": "tsdx test",
     "lint": "tsdx lint && lint-staged",
-    "commit": "git-cz"
+    "commit": "git-cz",
+    "semantic-release": "semantic-release"
   },
   "peerDependencies": {
     "reflect-metadata": "^0.1.13"
@@ -82,7 +83,7 @@
     "lint-staged": "9.4.2",
     "prettier": "1.18.2",
     "reflect-metadata": "0.1.13",
-    "semantic-release": "15.13.28",
+    "semantic-release": "^15.13.28",
     "tsdx": "0.11.0",
     "tslib": "1.10.0",
     "typedoc": "0.15.0",

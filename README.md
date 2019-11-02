@@ -2,6 +2,13 @@
 
 An object-to-object mapper by convention for TypeScript.
 
+![travis](https://badgen.net/travis/nartc/mapper)
+![bundlephobia](https://badgen.net/bundlephobia/minzip/@nartc/automapper)
+![downloads](https://badgen.net/npm/dt/@nartc/automapper)
+![npm](https://badgen.net/npm/v/@nartc/automapper)
+![license](https://badgen.net/github/license/nartc/mapper)
+![codecov](https://badgen.net/codecov/c/github/nartc/mapper)
+ 
 ## Documentations
 
 Github Pages

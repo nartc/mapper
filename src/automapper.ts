@@ -57,7 +57,8 @@ export class AutoMapper extends AutoMapperBase {
    * });
    * ```
    *
-   * @param {(config: AutoMapperConfiguration) => void} configFn - Configuration Fn to be called when initializing an AutoMapper instance.
+   * @param {(config: AutoMapperConfiguration) => void} configFn - Configuration Fn to be called when initializing an
+   *   AutoMapper instance.
    */
   public initialize(configFn: (config: AutoMapperConfiguration) => void): void {
     const _config: AutoMapperConfiguration = {
@@ -84,7 +85,8 @@ export class AutoMapper extends AutoMapperBase {
    * ```typescript
    * // Example uses the Mapper singleton. You can always use a new instance of AutoMapper
    *
-   * // MappingProfileBase implements MappingProfile. You can extend MappingProfileBase or implements MappingProfile yourself.
+   * // MappingProfileBase implements MappingProfile. You can extend MappingProfileBase or implements MappingProfile
+   *   yourself.
    * // Using MappingProfileBase + a super() call will assign the Profile class name to profileName automatically.
    * // Implementing MappingProfile yourself will require you to provide value for profileName and it has to be unique.
    * class SomeProfile extends MappingProfileBase {
@@ -124,7 +126,8 @@ export class AutoMapper extends AutoMapperBase {
    *
    * @param {Constructible<TSource>} source - Source Model
    * @param {Constructible<TDestination>} destination - Destination Model
-   * @param {CreateMapActions} [options] - An option object with destination and source NamingConvention. Both are defaulted to CamelCaseNamingConvention()
+   * @param {CreateMapActions} [options] - An option object with destination and source NamingConvention. Both are
+   *   defaulted to CamelCaseNamingConvention()
    */
   public createMap<
     TSource extends Dict<TSource> = any,
@@ -132,12 +135,18 @@ export class AutoMapper extends AutoMapperBase {
   >(
     source: Constructible<TSource>,
     destination: Constructible<TDestination>,
-    options: CreateMapActions = {
-      destinationMemberNamingConvention: defaultDestinationMemberNamingConvention,
-      sourceMemberNamingConvention: defaultSourceMemberNamingConvention,
-    }
+    options?: CreateMapActions
   ): CreateMapFluentFunctions<TSource, TDestination> {
-    const _mapping = super._createMappingObject(source, destination, options);
+    const mergeOptions: CreateMapActions = {
+      sourceMemberNamingConvention: defaultSourceMemberNamingConvention,
+      destinationMemberNamingConvention: defaultDestinationMemberNamingConvention,
+      ...options,
+    };
+    const _mapping = super._createMappingObject(
+      source,
+      destination,
+      mergeOptions
+    );
     return this._createMappingFluentFunctions(_mapping);
   }
 
@@ -153,7 +162,8 @@ export class AutoMapper extends AutoMapperBase {
    *
    * @param {TSource} sourceObj - Source object value to execute the mapping against
    * @param {Constructible<TDestination>} destination - Destination Model to map to
-   * @param {MapActionOptions} [options] - An optional option object with beforeMap and/or afterMap callback. Both callbacks are defaulted to undefined aka no callbacks.
+   * @param {MapActionOptions} [options] - An optional option object with beforeMap and/or afterMap callback. Both
+   *   callbacks are defaulted to undefined aka no callbacks.
    */
   public map<
     TSource extends Dict<TSource> = any,
@@ -168,7 +178,8 @@ export class AutoMapper extends AutoMapperBase {
   }
 
   /**
-   * Map a Source object to a Destination Model using a pre-configured Mapping object. Executed as a Micro Task to not block the main thread.
+   * Map a Source object to a Destination Model using a pre-configured Mapping object. Executed as a Micro Task to not
+   * block the main thread.
    *
    * @example
    * ```typescript
@@ -179,7 +190,8 @@ export class AutoMapper extends AutoMapperBase {
    *
    * @param {TSource} sourceObj - Source object value to execute the mapping against
    * @param {Constructible<TDestination>} destination - Destination Model to map to
-   * @param {MapActionOptions} [options] - An optional option object with beforeMap and/or afterMap callback. Both callbacks are defaulted to undefined aka no callbacks.
+   * @param {MapActionOptions} [options] - An optional option object with beforeMap and/or afterMap callback. Both
+   *   callbacks are defaulted to undefined aka no callbacks.
    */
   public mapAsync<
     TSource extends Dict<TSource> = any,
@@ -208,7 +220,8 @@ export class AutoMapper extends AutoMapperBase {
    *
    * @param {TSource[]} sourceArr - Source array to execute the mapping against
    * @param {Constructible<TDestination>} destination - Destination Model to map to
-   * @param {MapActionOptions} [options] - An optional option object with beforeMap and/or afterMap callback. Both callbacks are defaulted to undefined aka no callbacks.
+   * @param {MapActionOptions} [options] - An optional option object with beforeMap and/or afterMap callback. Both
+   *   callbacks are defaulted to undefined aka no callbacks.
    */
   public mapArray<
     TSource extends Dict<TSource> = any,
@@ -223,7 +236,8 @@ export class AutoMapper extends AutoMapperBase {
   }
 
   /**
-   * Map an Array/List of Source object to an Array/List of Destination Model using a pre-configured Mapping. Executed as a Micro Task to not block the main thread.
+   * Map an Array/List of Source object to an Array/List of Destination Model using a pre-configured Mapping. Executed
+   * as a Micro Task to not block the main thread.
    *
    * @example
    * ```typescript
@@ -237,7 +251,8 @@ export class AutoMapper extends AutoMapperBase {
    *
    * @param {TSource[]} sourceArr - Source array to execute the mapping against
    * @param {Constructible<TDestination>} destination - Destination Model to map to
-   * @param {MapActionOptions} [options] - An optional option object with beforeMap and/or afterMap callback. Both callbacks are defaulted to undefined aka no callbacks.
+   * @param {MapActionOptions} [options] - An optional option object with beforeMap and/or afterMap callback. Both
+   *   callbacks are defaulted to undefined aka no callbacks.
    */
   public mapArrayAsync<
     TSource extends Dict<TSource> = any,

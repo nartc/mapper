@@ -12,6 +12,7 @@ import {
   Mapping,
   MappingProperty,
   MapWithTransformOptions,
+  NamingConvention,
   Resolver,
   TransformationType,
   ValueSelector,
@@ -380,9 +381,10 @@ export abstract class AutoMapperBase {
       destination,
       destinationKey: destination.prototype.constructor.name,
       properties: new Map(),
-      sourceMemberNamingConvention: options.sourceMemberNamingConvention,
-      destinationMemberNamingConvention:
-        options.destinationMemberNamingConvention,
+      sourceMemberNamingConvention: options.sourceMemberNamingConvention as NamingConvention,
+      destinationMemberNamingConvention: options.destinationMemberNamingConvention as NamingConvention,
+      beforeMapAction: undefined,
+      afterMapAction: undefined,
     });
 
     this._mappings[_key] = _mapping;
@@ -406,6 +408,8 @@ export abstract class AutoMapperBase {
       sourceMemberNamingConvention: mapping.destinationMemberNamingConvention,
       destinationMemberNamingConvention: mapping.sourceMemberNamingConvention,
       properties: _initializeReversedMappingProperties(mapping),
+      beforeMapAction: undefined,
+      afterMapAction: undefined,
     });
     this._mappings[_reversedKey] = _reversedMapping;
     return _reversedMapping;

@@ -130,10 +130,9 @@ function _getPath(fnParts: string[]): string {
   // @ts-ignore
   return fnParts
     .join('')
-    .split(new RegExp(`^${fnParts[0]}.`, 'g'))
+    .split(new RegExp(`${fnParts[0]}\\.{1}`, 'g'))
     .filter(Boolean)
-    .pop()
-    .slice(1);
+    .pop();
 }
 
 /**

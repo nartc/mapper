@@ -131,22 +131,23 @@ export function _initializeReversedMappingProperties<
       continue;
     }
 
-    reversedProperties.set(
-      _path,
-      Object.seal({
-        sourceMemberPath: prop.destinationMemberPath,
-        destinationMemberPath: _path,
-        destinationMemberSelector: s =>
-          (s as any)[prop.sourceMemberPath as string],
-        transformation: {
-          transformationType: {
-            preCondition: null,
-            type: TransformationType.MapInitialize,
+    !reversedProperties.has(_path) &&
+      reversedProperties.set(
+        _path,
+        Object.seal({
+          sourceMemberPath: prop.destinationMemberPath,
+          destinationMemberPath: _path,
+          destinationMemberSelector: s =>
+            (s as any)[prop.sourceMemberPath as string],
+          transformation: {
+            transformationType: {
+              preCondition: null,
+              type: TransformationType.MapInitialize,
+            },
+            mapFrom: d => get(d, prop.destinationMemberPath),
           },
-          mapFrom: d => get(d, prop.destinationMemberPath),
-        },
-      })
-    );
+        })
+      );
   }
 
   return reversedProperties;

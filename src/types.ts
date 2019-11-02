@@ -50,8 +50,8 @@ export interface NamingConvention {
 }
 
 export interface CreateMapActions {
-  sourceMemberNamingConvention: NamingConvention;
-  destinationMemberNamingConvention: NamingConvention;
+  sourceMemberNamingConvention?: NamingConvention;
+  destinationMemberNamingConvention?: NamingConvention;
 }
 
 export interface MapActionOptions<

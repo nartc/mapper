@@ -2,10 +2,12 @@ import { Expose } from 'class-transformer';
 import 'reflect-metadata';
 import {
   AutoMapper,
+  BeforeAfterMapAction,
   Converter,
   ExposedType,
   Mapper,
   MappingProfileBase,
+  PascalCaseNamingConvention,
 } from '../src';
 
 describe('AutoMapper', () => {
@@ -180,6 +182,143 @@ describe('AutoMapper - addProfile', () => {
         new UserProfile().profileName
       } is already existed on the current Mapper instance`
     );
+  });
+});
+
+describe('AutoMapper - callbacks', () => {
+  class User {
+    @Expose()
+    firstName!: string;
+    @Expose()
+    lastName!: string;
+  }
+
+  class UserVm {
+    @Expose()
+    firstName!: string;
+    @Expose()
+    lastName!: string;
+    @Expose()
+    fullName!: string;
+  }
+
+  const beforeCallback: BeforeAfterMapAction = jest.fn();
+  const afterCallback: BeforeAfterMapAction = jest.fn();
+
+  class UserProfile extends MappingProfileBase {
+    constructor() {
+      super();
+    }
+
+    configure(mapper: AutoMapper): void {
+      mapper
+        .createMap(User, UserVm)
+        .forMember(
+          d => d.fullName,
+          opts => opts.mapFrom(s => s.firstName + ' ' + s.lastName)
+        )
+        .beforeMap(beforeCallback)
+        .afterMap(afterCallback);
+    }
+  }
+
+  beforeAll(() => {
+    Mapper.addProfile(new UserProfile());
+  });
+
+  afterAll(() => {
+    Mapper.dispose();
+  });
+
+  it('callbacks are called', () => {
+    const user = new User();
+    user.firstName = 'Chau';
+    user.lastName = 'Tran';
+
+    Mapper.map(user, UserVm);
+    expect(beforeCallback).toBeCalled();
+    expect(afterCallback).toBeCalled();
+  });
+
+  it('map level callbacks are called', () => {
+    const user = new User();
+    user.firstName = 'Chau';
+    user.lastName = 'Tran';
+
+    const before = jest.fn();
+    const after = jest.fn();
+
+    Mapper.map(user, UserVm, { beforeMap: before, afterMap: after });
+    expect(before).toBeCalled();
+    expect(after).toBeCalled();
+  });
+});
+
+describe('AutoMapper - namingConvention', () => {
+  class Address {
+    @Expose()
+    Street!: string;
+  }
+
+  class User {
+    @Expose()
+    FirstName!: string;
+    @Expose()
+    LastName!: string;
+    @ExposedType(() => Address)
+    Address!: Address;
+  }
+
+  class UserVm {
+    @Expose()
+    firstName!: string;
+    @Expose()
+    lastName!: string;
+    @Expose()
+    fullName!: string;
+    @Expose()
+    addressStreet!: string;
+  }
+
+  class UserProfile extends MappingProfileBase {
+    constructor() {
+      super();
+    }
+
+    configure(mapper: AutoMapper): void {
+      mapper
+        .createMap(User, UserVm, {
+          sourceMemberNamingConvention: new PascalCaseNamingConvention(),
+        })
+        .forMember(
+          dest => dest.fullName,
+          opts => opts.mapFrom(s => s.FirstName + ' ' + s.LastName)
+        );
+    }
+  }
+
+  beforeAll(() => {
+    Mapper.addProfile(new UserProfile());
+  });
+
+  afterAll(() => {
+    Mapper.dispose();
+  });
+
+  it('naming convention', () => {
+    const user = new User();
+    user.FirstName = 'Chau';
+    user.LastName = 'Tran';
+    user.Address = new Address();
+    user.Address.Street = 'Midland';
+
+    const vm = Mapper.map(user, UserVm);
+    expect(vm).toBeTruthy();
+    expect(vm).toBeInstanceOf(UserVm);
+    expect(vm.firstName).toEqual(user.FirstName);
+    expect(vm.lastName).toEqual(user.LastName);
+    expect(vm.fullName).toEqual(user.FirstName + ' ' + user.LastName);
+    expect(vm.addressStreet).toEqual(user.Address.Street);
   });
 });
 
@@ -383,6 +522,27 @@ describe('AutoMapper - map', () => {
           user.profile.addresses[index].state
       );
     });
+  });
+
+  it('mapAsync', async () => {
+    const vm = await Mapper.mapAsync(user, UserVm);
+    expect(vm).toBeTruthy();
+    expect(vm).toBeInstanceOf(UserVm);
+  });
+
+  it('mapArray', () => {
+    const vms = Mapper.mapArray([user, user], UserVm);
+    expect(vms).toBeTruthy();
+    expect(vms.length).toEqual(2);
+    vms.forEach(vm => {
+      expect(vm).toBeInstanceOf(UserVm);
+    });
+  });
+
+  it('mapArrayAsync', async () => {
+    const vms = await Mapper.mapArrayAsync([user, user], UserVm);
+    expect(vms).toBeTruthy();
+    expect(vms.length).toEqual(2);
   });
 });
 

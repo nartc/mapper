@@ -21,7 +21,7 @@
     "build": "tsdx build",
     "build:prod": "npm run test && npm run build",
     "build:docs": "typedoc --out docs --target es6 --theme minimal --mode file src",
-    "test": "tsdx test --coverage",
+    "test": "tsdx test --coverage --no-cache",
     "lint": "tsdx lint src && lint-staged",
     "commit": "git-cz",
     "semantic-release": "semantic-release",

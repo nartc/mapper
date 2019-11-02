@@ -39,6 +39,26 @@ export class AutoMapper extends AutoMapperBase {
     }
   }
 
+  /**
+   * Initialize an AutoMapper instance.
+   *
+   * @example
+   * ```typescript
+   * const mapper = new AutoMapper();
+   * mapper.initialize(config => {
+   *   config.addProfile(...);
+   *   config.createMap(...);
+   * });
+   *
+   * // or use the default singleton Mapper
+   * Mapper.initialize(config => {
+   *   config.addProfile(...);
+   *   config.createMap(...);
+   * });
+   * ```
+   *
+   * @param {(config: AutoMapperConfiguration) => void} configFn - Configuration Fn to be called when initializing an AutoMapper instance.
+   */
   public initialize(configFn: (config: AutoMapperConfiguration) => void): void {
     const _config: AutoMapperConfiguration = {
       addProfile: (profile: MappingProfile): AutoMapper => {
@@ -57,6 +77,31 @@ export class AutoMapper extends AutoMapperBase {
     configFn(_config);
   }
 
+  /**
+   * Add a MappingProfile to an AutoMapper instance
+   *
+   * @example
+   * ```typescript
+   * // Example uses the Mapper singleton. You can always use a new instance of AutoMapper
+   *
+   * // MappingProfileBase implements MappingProfile. You can extend MappingProfileBase or implements MappingProfile yourself.
+   * // Using MappingProfileBase + a super() call will assign the Profile class name to profileName automatically.
+   * // Implementing MappingProfile yourself will require you to provide value for profileName and it has to be unique.
+   * class SomeProfile extends MappingProfileBase {
+   *   constructor() {
+   *     super();
+   *   }
+   *
+   *   configure(mapper: AutoMapper): void {
+   *     mapper.createMap(...);
+   *   }
+   * }
+   *
+   * Mapper.addProfile(new SomeProfile());
+   * ```
+   *
+   * @param {MappingProfile} profile - A MappingProfile to be add to this AutoMapper instance
+   */
   public addProfile(profile: MappingProfile): AutoMapper {
     if (this._profiles[profile.profileName]) {
       throw new Error(
@@ -69,6 +114,18 @@ export class AutoMapper extends AutoMapperBase {
     return this;
   }
 
+  /**
+   * Create a Mapping for a Source Model and a Destination Model
+   *
+   * @example
+   * ```typescript
+   * Mapper.createMap(User, UserVm);
+   * ```
+   *
+   * @param {Constructible<TSource>} source - Source Model
+   * @param {Constructible<TDestination>} destination - Destination Model
+   * @param {CreateMapActions} [options] - An option object with destination and source NamingConvention. Both are defaulted to CamelCaseNamingConvention()
+   */
   public createMap<
     TSource extends Dict<TSource> = any,
     TDestination extends Dict<TDestination> = any
@@ -84,6 +141,20 @@ export class AutoMapper extends AutoMapperBase {
     return this._createMappingFluentFunctions(_mapping);
   }
 
+  /**
+   * Map a Source object to a Destination Model using a pre-configured Mapping object.
+   *
+   * @example
+   * ```typescript
+   * const vm = Mapper.map(user, UserVm);
+   *
+   * console.log(vm instanceof UserVm); // true
+   * ```
+   *
+   * @param {TSource} sourceObj - Source object value to execute the mapping against
+   * @param {Constructible<TDestination>} destination - Destination Model to map to
+   * @param {MapActionOptions} [options] - An optional option object with beforeMap and/or afterMap callback. Both callbacks are defaulted to undefined aka no callbacks.
+   */
   public map<
     TSource extends Dict<TSource> = any,
     TDestination extends Dict<TDestination> = any
@@ -96,6 +167,20 @@ export class AutoMapper extends AutoMapperBase {
     return super._map(sourceObj, mapping, options);
   }
 
+  /**
+   * Map a Source object to a Destination Model using a pre-configured Mapping object. Executed as a Micro Task to not block the main thread.
+   *
+   * @example
+   * ```typescript
+   * const vm = await Mapper.mapAsync(user, UserVm);
+   *
+   * console.log(vm instanceof UserVm); // true
+   * ```
+   *
+   * @param {TSource} sourceObj - Source object value to execute the mapping against
+   * @param {Constructible<TDestination>} destination - Destination Model to map to
+   * @param {MapActionOptions} [options] - An optional option object with beforeMap and/or afterMap callback. Both callbacks are defaulted to undefined aka no callbacks.
+   */
   public mapAsync<
     TSource extends Dict<TSource> = any,
     TDestination extends Dict<TDestination> = any
@@ -108,6 +193,23 @@ export class AutoMapper extends AutoMapperBase {
     return super._mapAsync(sourceObj, mapping, options);
   }
 
+  /**
+   * Map an Array/List of Source object to an Array/List of Destination Model using a pre-configured Mapping.
+   *
+   * @example
+   * ```typescript
+   * const vms = Mapper.mapArray(users, UserVm);
+   *
+   * console.log(vms.length === users.length); // true
+   * vms.forEach(vm => {
+   *   console.log(vm instanceof UserVm); // true
+   * })
+   * ```
+   *
+   * @param {TSource[]} sourceArr - Source array to execute the mapping against
+   * @param {Constructible<TDestination>} destination - Destination Model to map to
+   * @param {MapActionOptions} [options] - An optional option object with beforeMap and/or afterMap callback. Both callbacks are defaulted to undefined aka no callbacks.
+   */
   public mapArray<
     TSource extends Dict<TSource> = any,
     TDestination extends Dict<TDestination> = any
@@ -120,6 +222,23 @@ export class AutoMapper extends AutoMapperBase {
     return super._mapArray(sourceArr, mapping, options);
   }
 
+  /**
+   * Map an Array/List of Source object to an Array/List of Destination Model using a pre-configured Mapping. Executed as a Micro Task to not block the main thread.
+   *
+   * @example
+   * ```typescript
+   * const vms = await Mapper.mapArrayAsync(users, UserVm);
+   *
+   * console.log(vms.length === users.length); // true
+   * vms.forEach(vm => {
+   *   console.log(vm instanceof UserVm); // true
+   * })
+   * ```
+   *
+   * @param {TSource[]} sourceArr - Source array to execute the mapping against
+   * @param {Constructible<TDestination>} destination - Destination Model to map to
+   * @param {MapActionOptions} [options] - An optional option object with beforeMap and/or afterMap callback. Both callbacks are defaulted to undefined aka no callbacks.
+   */
   public mapArrayAsync<
     TSource extends Dict<TSource> = any,
     TDestination extends Dict<TDestination> = any
@@ -132,6 +251,21 @@ export class AutoMapper extends AutoMapperBase {
     return super._mapArrayAsync(sourceArr, mapping, options);
   }
 
+  /**
+   * Dispose all configurations set on an AutoMapper instance.
+   *
+   * @example
+   * ```typescript
+   * Mapper.createMap(User, UserVm);
+   *
+   * const vm = Mapper.map(user, UserVm); // works
+   *
+   * Mapper.dispose();
+   *
+   * const vm2 = Mapper.map(user, UserVm); // Exception: Mapping<User, UserVm> is no longer existed.
+   *
+   * ```
+   */
   public dispose(): void {
     Object.keys(this._profiles).forEach(key => {
       delete this._profiles[key];

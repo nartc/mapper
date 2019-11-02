@@ -5,6 +5,9 @@
 import { AutoMapper } from '../automapper';
 import { MappingProfile } from '../types';
 
+/**
+ * MappingProfileBase. Provide the derived class name as value for profileName
+ */
 export abstract class MappingProfileBase implements MappingProfile {
   /**
    * @property {string} profileName - the name of the Profile

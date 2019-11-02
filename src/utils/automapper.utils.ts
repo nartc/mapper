@@ -23,6 +23,10 @@ import {
   _getTransformationType,
 } from './common.utils';
 
+/**
+ * Internal method
+ * @private
+ */
 export function _initializeMappingProperties<
   TSource extends Dict<TSource> = any,
   TDestination extends Dict<TDestination> = any
@@ -90,6 +94,10 @@ export function _initializeMappingProperties<
   }
 }
 
+/**
+ * Internal method
+ * @private
+ */
 export function _initializeReversedMappingProperties<
   TSource extends Dict<TSource> = any,
   TDestination extends Dict<TDestination> = any
@@ -144,6 +152,10 @@ export function _initializeReversedMappingProperties<
   return reversedProperties;
 }
 
+/**
+ * Internal method
+ * @private
+ */
 export function _createMapForPath<
   TSource extends Dict<TSource> = any,
   TDestination extends Dict<TDestination> = any,
@@ -222,6 +234,10 @@ export function _createMapForPath<
   return reversedFluentFunctions;
 }
 
+/**
+ * Internal method
+ * @private
+ */
 export function _createMapForMember<
   TSource extends Dict<TSource> = any,
   TDestination extends Dict<TDestination> = any,
@@ -299,6 +315,10 @@ export function _createMapForMember<
   return fluentFunctions;
 }
 
+/**
+ * Internal method
+ * @private
+ */
 export function _setMappingPropertyForMapFromMember<
   TSource extends Dict<TSource> = any,
   TDestination extends Dict<TDestination> = any

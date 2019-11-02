@@ -27,6 +27,11 @@ import {
   _setMappingPropertyForMapFromMember,
 } from './utils';
 
+/**
+ * Internal base class for AutoMapper
+ *
+ * @private
+ */
 export abstract class AutoMapperBase {
   protected readonly _mappings!: { [key: string]: Mapping };
 

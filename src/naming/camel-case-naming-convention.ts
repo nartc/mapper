@@ -1,5 +1,8 @@
 import { NamingConvention } from '../types';
 
+/**
+ * camelCase naming convention
+ */
 export class CamelCaseNamingConvention implements NamingConvention {
   public separatorCharacter = '';
   splittingExpression: RegExp = /(^[a-z]+(?=$|[A-Z]{1}[a-z0-9]+)|[A-Z]?[a-z0-9]+)/;

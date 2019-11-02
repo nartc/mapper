@@ -1,5 +1,8 @@
 import { NamingConvention } from '../types';
 
+/**
+ * PascalCase naming convention
+ */
 export class PascalCaseNamingConvention implements NamingConvention {
   public separatorCharacter = '';
   public splittingExpression: RegExp = /(^[A-Z]+(?=$|[A-Z]{1}[a-z0-9]+)|[A-Z]?[a-z0-9]+)/;

@@ -8,6 +8,10 @@ import {
   TransformationType,
 } from '../types';
 
+/**
+ * Internal method
+ * @private
+ */
 export function _getTransformationType(
   forMemberFn: ForMemberExpression
 ): { withPreCondition: boolean; type: TransformationType } {
@@ -41,6 +45,10 @@ function _getTransformationTypeWithoutPre(
   return TransformationType.Ignore;
 }
 
+/**
+ * Internal method
+ * @private
+ */
 export function _getPathRecursive(node: any, prefix: string = ''): string[] {
   if (typeof node !== 'object' || node === null) {
     return [];
@@ -66,10 +74,18 @@ export function _getPathRecursive(node: any, prefix: string = ''): string[] {
   return result;
 }
 
+/**
+ * Internal method
+ * @private
+ */
 export function _isObjectLike(obj: any): boolean {
   return obj !== null && obj !== undefined && typeof obj === 'object';
 }
 
+/**
+ * Internal method
+ * @private
+ */
 export function _getMappingKey(
   sourceKey: string,
   destinationKey: string
@@ -77,10 +93,18 @@ export function _getMappingKey(
   return sourceKey + '->' + destinationKey;
 }
 
+/**
+ * Internal method
+ * @private
+ */
 export function _isNestedPath(path: string): boolean {
   return path.split('.').length > 1;
 }
 
+/**
+ * Internal method
+ * @private
+ */
 export function _getMemberPath(fn: Selector): string {
   const fnString = fn.toString();
   return _isArrowFn(fnString)
@@ -112,6 +136,10 @@ function _getPath(fnParts: string[]): string {
     .slice(1);
 }
 
+/**
+ * Internal method
+ * @private
+ */
 export function _getSourcePropertyKey(
   destinationMemberNamingConvention: NamingConvention,
   sourceMemberNamingConvention: NamingConvention,
@@ -138,6 +166,10 @@ export function _getSourcePropertyKey(
     : sourceMemberNamingConvention.transformPropertyName(keyParts);
 }
 
+/**
+ * Internal method
+ * @private
+ */
 export function _isClass(fn: Function): boolean {
   return (
     fn.constructor &&
@@ -147,12 +179,20 @@ export function _isClass(fn: Function): boolean {
   );
 }
 
+/**
+ * Internal method
+ * @private
+ */
 export function _isResolver<TSource>(
   fn: MapFromCallback<TSource>
 ): fn is Resolver {
   return 'resolve' in fn;
 }
 
+/**
+ * Internal method
+ * @private
+ */
 export function _assertMappingErrors<T extends Dict<T> = any>(
   obj: T,
   propKeys: Array<string>

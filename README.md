@@ -25,7 +25,7 @@ Mapper.createMap(User, UserVm)
 
 ## Motivations
 
-I've been exposed and accustomed to the `ViewModel` pattern when working on Server Side applications whether it's *NodeJS* or *.NET Core*. However, *.NET* has a very powerful Mapper called `AutoMapper` (referred as *the original*) while *JS/TS* ecosystem does not have one that is up-to-date and/or lacking some features. 
+I've been exposed and accustomed to the `ViewModel` pattern when working on Server Side applications whether it's _NodeJS_ or _.NET Core_. However, _.NET_ has a very powerful Mapper called `AutoMapper` (referred as _the original_) while _JS/TS_ ecosystem does not have one that is up-to-date and/or lacking some features.
 I know that `AutoMapper` is weak in `TypeScript` because of how `Reflection` works in `TypeScript`. But, it'd be nice to have some type of `Mapper` that works for `NodeJS` development. After looking around for a while, I found a couple libraries that work well:
 
 1.  `automapper-ts`
@@ -82,7 +82,8 @@ yarn add reflect-metadata
 `@nartc/automapper` depends on `class-transformer` so `class-transformer` will also be installed automatically. I'll try to keep the dependency up-to-date so that when I update `@nartc/automapper`, all the dependencies are up-to-date as well.
 
 #### Lodash Note
-`@nartc/automapper` uses `lodash` as well but thanks to `tsdx`, only a few used `lodash`'s methods are used and the unused methods will be tree-shakable. Read more [here](https://www.npmjs.com/package/tsdx#using-lodash) 
+
+`@nartc/automapper` uses `lodash` as well but thanks to `tsdx`, only a few used `lodash`'s methods are used and the unused methods will be tree-shakable. Read more [here](https://www.npmjs.com/package/tsdx#using-lodash)
 
 ## Usage
 
@@ -224,8 +225,9 @@ Mapper.initialize(config => {
 Mapper.initialize(config => {
   config
     .createMap(User, UserVm) // create a mapping from User to UserVm (one direction)
-    .forMember(destination => destination.fullName, opts =>
-      opts.mapFrom(source => source.firstName + ' ' + source.lastName)
+    .forMember(
+      destination => destination.fullName,
+      opts => opts.mapFrom(source => source.firstName + ' ' + source.lastName)
     ); // You will get type-inference here
 });
 ```
@@ -245,8 +247,9 @@ export class UserProfile extends MappingProfileBase {
   configure(mapper: AutoMapper) {
     mapper
       .createMap(User, UserVm)
-      .forMember(destination => destination.fullName, opts =>
-        opts.mapFrom(source => source.firstName + ' ' + source.lastName)
+      .forMember(
+        destination => destination.fullName,
+        opts => opts.mapFrom(source => source.firstName + ' ' + source.lastName)
       ); // You will get type-inference here
   }
 }
@@ -285,7 +288,7 @@ There are two ways you can provide the callbacks: `Map` level and `Mapping` leve
  */
 const userVm = Mapper.map(user, UserVm, {
   beforeMap: (source, destination, mapping) => {},
-  afterMap: (source, destination, mapping) => {}
+  afterMap: (source, destination, mapping) => {},
 });
 ```
 
@@ -316,11 +319,11 @@ Mapper.initialize(config => {
 6. Use `Mapper.mapArray()` if you want to map from `TSource[]` to `TDestination[]`.
 
 #### ReverseMap
+
 `@nartc/automapper` supports `Reverse Mapping` by calling `reverseMap()`. This will create a reversed `Mapping` for the two models that were passed in `createMap()`.
 
 ```typescript
-Mapper
-  .createMap(User, UserVm) // Create a Mapping<User, UserVm>
+Mapper.createMap(User, UserVm) // Create a Mapping<User, UserVm>
   .reverseMap(); // also Create a Mapping<UserVm, User>
 ```
 
@@ -334,22 +337,27 @@ const user = Mapper.map(userVm, User); // map from UserVm back to User
 ```
 
 `reverseMap()` returns a `CreateReversedMapFluentFunctions` which will allow you to chain:
+
 1.  `forPath()`: Same as `forMember()` but will act against the properties of the original `TSource`. Eg: `createMap(User, UserVm)`, `forMember()` will refer to properties of `UserVm` while `forPath()` will refer to properties of `User`.
-2. `beforeMap()` and `afterMap()`: Same as `beforeMap()` and `afterMap()` for `CreateMapFluentFunctions`
+2.  `beforeMap()` and `afterMap()`: Same as `beforeMap()` and `afterMap()` for `CreateMapFluentFunctions`
 
 #### MapWith
+
 By default, `@nartc/automapper` will map nested model by naming convention meaning `user.profile` will be mapped to `userVm.profile`. Sometimes, you might have different property name for related nested model. Use `mapWith()` in this case.
 
 ```typescript
-Mapper.createMap(User, UserVm)
-  .forMember(dest => dest.someProfile, opts => opts.mapWith(ProfileVm, source => source.originalProfile));
+Mapper.createMap(User, UserVm).forMember(
+  dest => dest.someProfile,
+  opts => opts.mapWith(ProfileVm, source => source.originalProfile)
+);
 
 Mapper.map(user, UserVm); // user.originalProfile will be mapped to dest.someProfile with ProfileVm as the destination model.
-```  
+```
 
-`mapWith()` takes in two arguments: (1) the destination model and (2) the value on the source whose value `@nartc/automapper` will use to map to (1). Please ensure you have established the Mapping for whatever mapping operations you're using. In this case, you need to have had established `Mapping` for `Profile` (or whatever model associated with `source.originalProfile`) and `ProfileVm` in order for this `mapWith()` to work.  
+`mapWith()` takes in two arguments: (1) the destination model and (2) the value on the source whose value `@nartc/automapper` will use to map to (1). Please ensure you have established the Mapping for whatever mapping operations you're using. In this case, you need to have had established `Mapping` for `Profile` (or whatever model associated with `source.originalProfile`) and `ProfileVm` in order for this `mapWith()` to work.
 
 #### Value Converter
+
 In some cases, you might have some similar logic to map from one type to another. For example, you want to map from a type `Date` to `string` with the same logic for most parts of the application, you can use a class that implements the `Converter` for this.
 
 ```typescript
@@ -365,50 +373,88 @@ class DateStringConverter implements Converter<string, Date> {
 ##### Usage
 
 ```typescript
-Mapper.createMap(User, UserVm)
-  .forMember(dest => dest.birthday, opts => opts.convertUsing(new DateStringConverter(), source => source.someDateString))
+Mapper.createMap(User, UserVm).forMember(
+  dest => dest.birthday,
+  opts =>
+    opts.convertUsing(
+      new DateStringConverter(),
+      source => source.someDateString
+    )
+);
 ```
 
-Use `convertUsing()` to use the `Converter`. You'll get type inference here. 
+Use `convertUsing()` to use the `Converter`. You'll get type inference here.
 
 **Can you just use a `mapFrom()` here?** Absolutely yes, but a `Converter` will help you to separate the concern more if you choose to.
 
 #### Value Resolver
-Very similar concept to a `Converter`, however a `Resolver` has access to the whole `source` object as well as the `transformation` information regarding the current `destination member` being mapped. You can use a `Resolver` to handle more complex business mapping logic for a specific `destination member` that you don't want to pollute the construction of a `Mapping`. 
+
+Very similar concept to a `Converter`, however a `Resolver` has access to the whole `source` object as well as the `transformation` information regarding the current `destination member` being mapped. You can use a `Resolver` to handle more complex business mapping logic for a specific `destination member` that you don't want to pollute the construction of a `Mapping`.
 
 ##### Usage
+
 Create a class that implements `Resolver`. `Resolver` is an interface that takes in 3 type arguments: `TSource`, `TDestination` and the type of the `destination member` that you want to use this `Resolver` against. Impelemnting `Resolver` requires a `resolve()` function.
 
 ```typescript
 class CityToState implements Resolver<Address, AddressVm, string> {
-  resolve(source: Address, destination: AddressVm, transformation: MappingTransformation<Address, AddressVm, string>): string {
+  resolve(
+    source: Address,
+    destination: AddressVm,
+    transformation: MappingTransformation<Address, AddressVm, string>
+  ): string {
     return source.city;
   }
 }
 ```
 
 ```typescript
-Mapper.createMap(Address, AddressVm)
-  .forMember(dest => dest.someState, opts => opts.mapFrom(new CityToState()))
+Mapper.createMap(Address, AddressVm).forMember(
+  dest => dest.someState,
+  opts => opts.mapFrom(new CityToState())
+);
 ```
 
 Again, **can you just use `mapFrom()` instead?** Absolutely yes.
 
 #### PreCondition
+
 `@nartc/automapper` supports a pre-checked on some expression to determine whether a mapping operation should proceed by using `preCondition()`.
 
 ```typescript
-Mapper.createMap(User, UserVm)
-  .forMember(dest => dest.foo, opts => opts.preCondition(source => source.age >= 10).mapFrom(source => source.bar))
+Mapper.createMap(User, UserVm).forMember(
+  dest => dest.foo,
+  opts =>
+    opts.preCondition(source => source.age >= 10).mapFrom(source => source.bar)
+);
 ```
 
 The above mapping operation will only be proceeded if `source.age >= 10`. If `source.age < 10` (or the expression is falsy), then `dest.foo` will receive a `null` value.
 
 #### Condition
+
 Very similar to `preCondition`. However, if the `condition()` returns true, `@nartc/automapper` will try to map the same property name that is being checked against.
 
+```typescript
+Mapper.createMap(User, UserVm)
+  .forMember(dest => dest.fullName, opts => opts.condition(source => source.age >= 10));
+```
+
+If `condition()` returns truthy, then `@nartc/automapper` will try to map `source.fullName` to `dest.fullName`.
+
 #### FromValue
-Raw value to map to a `destination member`. Please take note if you pass in an object to `fromValue()`, that object will be mapped without consideration for any `Mapping`. 
+
+Raw value to map to a `destination member`. Please take note if you pass in an object to `fromValue()`, that object will be mapped without consideration for any `Mapping`.
+
+```typescript
+Mapper.createMap(User, UserVm)
+  .forMember(dest => dest.fullName, opts => opts.fromValue('Some value'));
+```
+
+`@nartc/automapper` will map `'Some value'` to `dest.fullName`.
+
+#### Async
+
+While `Async` versions of `map` and `mapArray` are available, they're not "real" `Async` since I just wrap the `map` operations inside of a `resolved Promise` to execute the operations as a `Micro Task`. I'll look into this more and I welcome any suggestions.
 
 ## Demo
 

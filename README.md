@@ -7,7 +7,7 @@ An object-to-object mapper by convention for TypeScript.
 ![downloads](https://badgen.net/npm/dt/@nartc/automapper)
 ![npm](https://badgen.net/npm/v/@nartc/automapper)
 ![license](https://badgen.net/github/license/nartc/mapper)
-![codecov](https://badgen.net/codecov/c/github/nartc/mapper)
+![coveralls](https://badgen.net/coveralls/c/github/nartc/mapper)
  
 ## Documentations
 

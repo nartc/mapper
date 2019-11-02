@@ -34,7 +34,7 @@ export interface Resolver<
   resolve(
     source: TSource,
     destination: TDestination,
-    transformation: MappingTransformation<TSource, TDestination>
+    transformation: MappingTransformation<TSource, TDestination, TReturnType>
   ): TReturnType;
 }
 

@@ -1,6 +1,12 @@
 import { Expose } from 'class-transformer';
 import 'reflect-metadata';
-import { AutoMapper, ExposedType, Mapper, MappingProfileBase } from '../src';
+import {
+  AutoMapper,
+  Converter,
+  ExposedType,
+  Mapper,
+  MappingProfileBase,
+} from '../src';
 
 describe('AutoMapper', () => {
   it('AutoMapper exposes a singleton', () => {
@@ -470,6 +476,12 @@ describe('AutoMapper - reverseMap - complex', () => {
     addresses!: AddressVm[];
   }
 
+  class DateConverter implements Converter<string, Date> {
+    convert(source: string): Date {
+      return new Date(source);
+    }
+  }
+
   class ProfileProfile extends MappingProfileBase {
     constructor() {
       super();
@@ -482,7 +494,7 @@ describe('AutoMapper - reverseMap - complex', () => {
         .reverseMap()
         .forPath(
           s => s.birthday,
-          opts => opts.fromValue(new Date('10/14/1991'))
+          opts => opts.convertUsing(new DateConverter(), _ => '10/14/1991')
         );
     }
   }

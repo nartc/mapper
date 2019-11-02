@@ -26,7 +26,7 @@
     "commit": "git-cz",
     "semantic-release": "semantic-release",
     "deploy-docs": "ts-node tools/gh-pages",
-    "report-coverage": "cat ./coverage/lcov.ixnfo | coveralls"
+    "report-coverage": "cat ./coverage/lcov.info | coveralls"
   },
   "peerDependencies": {
     "reflect-metadata": "^0.1.13"

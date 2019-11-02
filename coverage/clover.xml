@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1572731705873" clover="3.2.0">
-  <project timestamp="1572731705873" name="All files">
+<coverage generated="1572732028292" clover="3.2.0">
+  <project timestamp="1572732028292" name="All files">
     <metrics statements="63" coveredstatements="49" conditionals="8" coveredconditionals="7" methods="23" coveredmethods="16" elements="94" coveredelements="72" complexity="0" loc="63" ncloc="63" packages="1" files="1" classes="1"/>
     <file name="automapper.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/automapper.ts">
       <metrics statements="63" coveredstatements="49" conditionals="8" coveredconditionals="7" methods="23" coveredmethods="16"/>

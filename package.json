@@ -25,7 +25,8 @@
     "lint": "tsdx lint src && lint-staged",
     "commit": "git-cz",
     "semantic-release": "semantic-release",
-    "deploy-docs": "ts-node tools/gh-pages"
+    "deploy-docs": "ts-node tools/gh-pages",
+    "report-coverage": "cat ./coverage/lcov.ixnfo | coveralls"
   },
   "peerDependencies": {
     "reflect-metadata": "^0.1.13"
@@ -85,6 +86,7 @@
     "@types/jest": "24.0.21",
     "@types/lodash": "4.14.144",
     "commitizen": "4.0.3",
+    "coveralls": "3.0.7",
     "cz-conventional-changelog": "3.0.2",
     "husky": "3.0.9",
     "lint-staged": "9.4.2",

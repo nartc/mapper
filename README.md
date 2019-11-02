@@ -7,6 +7,22 @@ An object-to-object mapper by convention for TypeScript.
 Github Pages
 [https://nartc.github.io/mapper/](https://nartc.github.io/mapper/)
 
+#### Migrations from `automapper-nartc`
+
+The only migration step you need is to modify `forMember()` method.
+
+In `automapper-nartc`, `forMember()` takes in a `property string` as the first argument. Now, `forMember()` in `@nartc/automapper` takes in a `selector` instead. This wil allow `reverseMap()` to work better.
+
+```typescript
+// Before
+Mapper.createMap(User, UserVm)
+  .forMember('fullName', opts => opts.mapFrom(...));
+
+// Now
+Mapper.createMap(User, UserVm)
+  .forMember(dest => dest.fullName, opts => opts.mapFrom(...));
+```
+
 ## Motivations
 
 I've been exposed and accustomed to the `ViewModel` pattern when working on Server Side applications whether it's *NodeJS* or *.NET Core*. However, *.NET* has a very powerful Mapper called `AutoMapper` (referred as *the original*) while *JS/TS* ecosystem does not have one that is up-to-date and/or lacking some features. 

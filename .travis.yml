@@ -25,8 +25,12 @@ jobs:
       node_js:
         - '12'
       script: if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then npm run semantic-release; fi
-      after_success:
-        - npm run report-coverage
+    - stage: produce_coverage
+      before_script:
+        - npm run test:cov
+      node_js:
+        - '12'
+      script: if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then npm run report-coverage; fi
 branches:
   except:
     - /^v\d+\.\d+\.\d+$/

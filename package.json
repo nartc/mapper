@@ -20,12 +20,13 @@
     "start": "tsdx watch",
     "build": "tsdx build",
     "build:docs": "typedoc --out docs --target es6 --theme minimal --mode file src",
-    "test": "tsdx test --coverage --no-cache",
+    "test": "tsdx test --no-cache",
+    "test:cov": "tsdx test --coverage",
     "lint": "tsdx lint src && lint-staged",
     "commit": "git-cz",
     "semantic-release": "semantic-release",
     "deploy-docs": "ts-node tools/gh-pages",
-    "report-coverage": "cat ./coverage/lcov.info | coveralls"
+    "report-coverage": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
   },
   "peerDependencies": {
     "reflect-metadata": "^0.1.13"

@@ -13,23 +13,20 @@ script:
 
 jobs:
   include:
-    - stage: deploy_docs
+    - stage: Production
       before_script:
         - npm run build:docs
       node_js:
         - '12'
+      name: deploy_docs
       script: if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then npm run deploy-docs; fi
-    - stage: npm_release
+    - name: npm_release
       before_script:
         - npm run build
-      node_js:
-        - '12'
       script: if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then npm run semantic-release; fi
-    - stage: produce_coverage
+    - name: produce_coverage
       before_script:
         - npm run test:cov
-      node_js:
-        - '12'
       script: if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then npm run report-coverage; fi
 branches:
   except:

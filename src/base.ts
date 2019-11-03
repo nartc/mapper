@@ -119,7 +119,7 @@ export abstract class AutoMapperBase {
       sourceMemberNamingConvention,
       destinationMemberNamingConvention,
     } = mapping;
-    const configKeys: Array<string> = [];
+    const configKeys = [];
 
     let destinationObj = new destination();
 

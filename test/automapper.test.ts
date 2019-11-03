@@ -88,6 +88,9 @@ describe('AutoMapper - reverseMap', () => {
 
   let userVm: UserVm;
 
+  const before = jest.fn();
+  const after = jest.fn();
+
   beforeAll(() => {
     Mapper.createMap(User, UserVm)
       .forMember(
@@ -95,7 +98,9 @@ describe('AutoMapper - reverseMap', () => {
         opts => opts.mapFrom(s => s.firstName + ' ' + s.lastName)
       )
       .reverseMap()
-      .forPath(s => s.full, opts => opts.mapFrom(d => d.fullName));
+      .forPath(s => s.full, opts => opts.mapFrom(d => d.fullName))
+      .beforeMap(before)
+      .afterMap(after);
 
     userVm = new UserVm();
     userVm.firstName = 'Phuong';
@@ -114,6 +119,8 @@ describe('AutoMapper - reverseMap', () => {
     expect(user.firstName).toEqual(userVm.firstName);
     expect(user.lastName).toEqual(userVm.lastName);
     expect(user.full).toEqual(userVm.fullName);
+    expect(before).toBeCalled();
+    expect(after).toBeCalled();
   });
 });
 

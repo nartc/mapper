@@ -21,10 +21,14 @@ jobs:
       name: deploy_docs
       script: if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then npm run deploy-docs; fi
     - name: npm_release
+      node_js:
+        - '12'
       before_script:
         - npm run build
       script: if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then npm run semantic-release; fi
     - name: produce_coverage
+      node_js:
+        - '12'
       before_script:
         - npm run test:cov
       script: if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then npm run report-coverage; fi

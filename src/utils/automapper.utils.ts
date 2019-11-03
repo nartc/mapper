@@ -51,12 +51,20 @@ export function _initializeMappingProperties<
     );
 
     if (!source.hasOwnProperty(sourcePath)) {
-      const _paths = sourcePath
+      const [first, ...paths] = sourcePath
         .split(mapping.sourceMemberNamingConvention.splittingExpression)
         .filter(Boolean);
-      if (_paths.length === 1 || !source.hasOwnProperty(_paths[0])) {
+      if (!paths.length || !source.hasOwnProperty(first)) {
         continue;
       }
+
+      const sourceMemberPath = [first]
+        .concat(
+          paths.map(p =>
+            mapping.sourceMemberNamingConvention.transformPropertyName([p])
+          )
+        )
+        .join('.');
 
       mapping.properties.set(
         path,
@@ -66,11 +74,11 @@ export function _initializeMappingProperties<
               preCondition: null,
               type: TransformationType.MapInitialize,
             },
-            mapFrom: s => _get(s, _paths.join('.')),
+            mapFrom: s => _get(s, sourceMemberPath),
           },
           destinationMemberPath: path,
           destinationMemberSelector: d => (d as any)[path],
-          sourceMemberPath: _paths.join('.'),
+          sourceMemberPath,
         })
       );
       continue;

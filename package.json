@@ -32,8 +32,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run test && git add . && npm run lint",
-      "pre-push": "npm run build"
+      "pre-commit": "npm run test && git add . && npm run lint"
     }
   },
   "prettier": {

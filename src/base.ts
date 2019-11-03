@@ -323,10 +323,10 @@ export abstract class AutoMapperBase {
     }
 
     const sourceVal = (mapFrom as ValueSelector)(sourceObj);
-    // if (sourceVal === undefined || sourceVal === null) {
-    //   delete (destinationObj as any)[path];
-    //   return;
-    // }
+    if (sourceVal === undefined || sourceVal === null) {
+      set(destinationObj, destinationMemberPath, null);
+      return;
+    }
 
     if (_isObjectLike(sourceVal)) {
       if (_isDate(sourceVal)) {

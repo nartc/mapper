@@ -203,8 +203,7 @@ export function _assertMappingErrors<T extends Dict<T> = any>(
     if (propKeys.includes(key)) {
       continue;
     }
-    (obj[key as keyof T] === null || obj[key as keyof T] === undefined) &&
-      unmappedKeys.push(key);
+    unmappedKeys.push(key);
   }
 
   if (unmappedKeys.length) {
@@ -236,7 +235,7 @@ function _getTag(value: any): string {
 export function _get<T>(object: T, path: string, defaultVal: any = null): any {
   const _path = path.split('.').filter(Boolean);
   const _val = _path.reduce((obj: any, key) => obj && obj[key], object);
-  return _val == undefined ? defaultVal : _val;
+  return _val === undefined ? defaultVal : _val;
 }
 
 export function _isEmpty(value: any): boolean {

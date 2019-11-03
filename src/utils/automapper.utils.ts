@@ -1,5 +1,5 @@
 import { plainToClass } from 'class-transformer';
-import { get } from 'lodash';
+import get from 'lodash.get';
 import {
   ConditionPredicate,
   ConvertUsingTransformOptions,

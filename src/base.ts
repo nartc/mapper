@@ -1,5 +1,8 @@
 import { plainToClass } from 'class-transformer';
-import { get, isArray, isDate, isEmpty, set } from 'lodash';
+import get from 'lodash.get';
+import isDate from 'lodash.isdate';
+import isEmpty from 'lodash.isempty';
+import set from 'lodash.set';
 import { defaultMapActionOptions } from './constants';
 import {
   ConditionPredicate,
@@ -255,7 +258,7 @@ export abstract class AutoMapperBase {
         return;
       }
 
-      if (isArray(_source)) {
+      if (Array.isArray(_source)) {
         set(
           destinationObj,
           destinationMemberPath,
@@ -327,7 +330,7 @@ export abstract class AutoMapperBase {
         return;
       }
 
-      if (isArray(sourceVal)) {
+      if (Array.isArray(sourceVal)) {
         const _first = sourceVal[0];
         if (isEmpty(_first)) {
           set(destinationObj, destinationMemberPath, []);

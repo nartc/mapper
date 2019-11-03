@@ -83,7 +83,10 @@
     "@commitlint/cli": "8.2.0",
     "@commitlint/config-conventional": "8.2.0",
     "@types/jest": "24.0.21",
-    "@types/lodash": "4.14.144",
+    "@types/lodash.get": "4.4.6",
+    "@types/lodash.isdate": "4.0.6",
+    "@types/lodash.isempty": "4.4.6",
+    "@types/lodash.set": "4.3.6",
     "commitizen": "4.0.3",
     "coveralls": "3.0.7",
     "cz-conventional-changelog": "3.0.2",
@@ -101,7 +104,9 @@
   },
   "dependencies": {
     "class-transformer": "0.2.3",
-    "lodash": "4.17.15",
-    "lodash-es": "4.17.15"
+    "lodash.get": "4.4.2",
+    "lodash.isdate": "4.0.1",
+    "lodash.isempty": "4.4.0",
+    "lodash.set": "4.3.2"
   }
 }

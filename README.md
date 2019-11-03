@@ -90,7 +90,7 @@ yarn add reflect-metadata
 
 #### Lodash Note
 
-`@nartc/automapper` uses `lodash` as well but thanks to `tsdx`, only a few used `lodash`'s methods are used and the unused methods will be tree-shakable. Read more [here](https://www.npmjs.com/package/tsdx#using-lodash)
+`@nartc/automapper` uses single-method `lodash` methods as well. Namely, `lodash.get`; `lodash.set`; `lodash.isempty` and `lodash.isdate`. Single methods are used to keep the bundle-size as small as possible. `lodash` and `lodash-es` is treeshakable as well but I do not think I'd need to use some other `lodash` methods anytime soon.
 
 ## Usage
 

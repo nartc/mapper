@@ -465,7 +465,7 @@ While `Async` versions of `map` and `mapArray` are available, they're not "real"
 
 ## Demo
 
-Demo is coming
+[Codesandbox Demo](https://codesandbox.io/s/automapper-demo-ntc2d) 
 
 ## Contribution
 

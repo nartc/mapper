@@ -55,7 +55,10 @@
   "lint-staged": {
     "{src}/**/*.ts": [
       "prettier --write",
-      "git add ."
+      "git add"
+    ],
+    "{coverage/}": [
+      "git add"
     ]
   },
   "publishConfig": {

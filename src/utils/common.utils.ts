@@ -215,3 +215,47 @@ export function _assertMappingErrors<T extends Dict<T> = any>(
       `);
   }
 }
+
+export enum ObjectTag {
+  Undefined = '[object Undefined]',
+  Null = '[object Null]',
+  Object = '[object Object]',
+  Array = '[object Array]',
+  Date = '[object Date]',
+  Map = '[object Map]',
+}
+
+function _getTag(value: any): string {
+  if (value == null) {
+    return value === undefined ? ObjectTag.Undefined : ObjectTag.Null;
+  }
+
+  return Object.prototype.toString.call(value) as ObjectTag;
+}
+
+export function _get<T>(object: T, path: string, defaultVal: any = null): any {
+  const _path = path.split('.').filter(Boolean);
+  const _val = _path.reduce((obj: any, key) => obj && obj[key], object);
+  return _val == undefined ? defaultVal : _val;
+}
+
+export function _isEmpty(value: any): boolean {
+  const tag = _getTag(value);
+  if (tag === ObjectTag.Map) {
+    return !value.size;
+  }
+
+  if (tag === ObjectTag.Object) {
+    return !Object.keys(value).length;
+  }
+
+  if (tag === ObjectTag.Array) {
+    return !value.length;
+  }
+
+  return !value;
+}
+
+export function _isDate(value: any): boolean {
+  return _getTag(value) === ObjectTag.Date;
+}

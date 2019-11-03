@@ -1,7 +1,4 @@
 import { plainToClass } from 'class-transformer';
-import get from 'lodash.get';
-import isDate from 'lodash.isdate';
-import isEmpty from 'lodash.isempty';
 import set from 'lodash.set';
 import { defaultMapActionOptions } from './constants';
 import {
@@ -22,10 +19,13 @@ import {
 } from './types';
 import {
   _assertMappingErrors,
+  _get,
   _getMappingKey,
   _getSourcePropertyKey,
   _initializeReversedMappingProperties,
   _isClass,
+  _isDate,
+  _isEmpty,
   _isObjectLike,
   _isResolver,
   _setMappingPropertyForMapFromMember,
@@ -240,7 +240,7 @@ export abstract class AutoMapperBase {
         (mapWith as MapWithTransformOptions).destination
       );
       const _source = (mapWith as MapWithTransformOptions).fromValue(sourceObj);
-      if (isEmpty(_source)) {
+      if (_isEmpty(_source)) {
         console.warn(
           `${propSourceMemberPath} does not exist on ${_mapping.source}`
         );
@@ -262,7 +262,7 @@ export abstract class AutoMapperBase {
         set(
           destinationObj,
           destinationMemberPath,
-          isEmpty(_source[0])
+          _isEmpty(_source[0])
             ? []
             : (this._mapArray(_source, _mapping as Mapping) as any)
         );
@@ -284,7 +284,7 @@ export abstract class AutoMapperBase {
         set(
           destinationObj,
           destinationMemberPath,
-          get(sourceObj, propSourceMemberPath)
+          _get(sourceObj, propSourceMemberPath)
         );
         return;
       }
@@ -325,14 +325,14 @@ export abstract class AutoMapperBase {
     // }
 
     if (_isObjectLike(sourceVal)) {
-      if (isDate(sourceVal)) {
+      if (_isDate(sourceVal)) {
         set(destinationObj, destinationMemberPath, new Date(sourceVal));
         return;
       }
 
       if (Array.isArray(sourceVal)) {
         const _first = sourceVal[0];
-        if (isEmpty(_first)) {
+        if (_isEmpty(_first)) {
           set(destinationObj, destinationMemberPath, []);
           return;
         }

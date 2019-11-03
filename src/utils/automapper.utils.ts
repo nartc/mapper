@@ -1,5 +1,4 @@
 import { plainToClass } from 'class-transformer';
-import get from 'lodash.get';
 import {
   ConditionPredicate,
   ConvertUsingTransformOptions,
@@ -17,6 +16,7 @@ import {
   ValueSelector,
 } from '../types';
 import {
+  _get,
   _getMemberPath,
   _getPathRecursive,
   _getSourcePropertyKey,
@@ -66,7 +66,7 @@ export function _initializeMappingProperties<
               preCondition: null,
               type: TransformationType.MapInitialize,
             },
-            mapFrom: s => get(s, _paths.join('.')),
+            mapFrom: s => _get(s, _paths.join('.')),
           },
           destinationMemberPath: path,
           destinationMemberSelector: d => (d as any)[path],
@@ -84,7 +84,7 @@ export function _initializeMappingProperties<
             preCondition: null,
             type: TransformationType.MapInitialize,
           },
-          mapFrom: s => get(s, sourcePath),
+          mapFrom: s => _get(s, sourcePath),
         },
         destinationMemberSelector: d => (d as any)[path],
         destinationMemberPath: path,
@@ -144,7 +144,7 @@ export function _initializeReversedMappingProperties<
               preCondition: null,
               type: TransformationType.MapInitialize,
             },
-            mapFrom: d => get(d, prop.destinationMemberPath),
+            mapFrom: d => _get(d, prop.destinationMemberPath),
           },
         })
       );

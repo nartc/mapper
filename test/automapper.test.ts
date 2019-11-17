@@ -142,11 +142,8 @@ describe('AutoMapper - addProfile', () => {
   }
 
   class UserProfile extends MappingProfileBase {
-    constructor() {
+    constructor(mapper: AutoMapper) {
       super();
-    }
-
-    configure(mapper: AutoMapper): void {
       mapper.createMap(User, UserVm);
     }
   }
@@ -163,14 +160,14 @@ describe('AutoMapper - addProfile', () => {
 
   it('addProfile', () => {
     expect(Mapper).toEqual(mapper);
-    Mapper.addProfile(new UserProfile());
+    Mapper.addProfile(UserProfile);
     expect(Mapper).not.toEqual(mapper);
   });
 
   it('addProfile by initialize', () => {
     expect(Mapper).toEqual(mapper);
     Mapper.initialize(config => {
-      config.addProfile(new UserProfile());
+      config.addProfile(UserProfile);
     });
     expect(Mapper).not.toEqual(mapper);
   });
@@ -178,16 +175,14 @@ describe('AutoMapper - addProfile', () => {
   it('addProfile throw error when adding duplicate Profile', () => {
     let message: string = '';
     try {
-      Mapper.addProfile(new UserProfile()).addProfile(new UserProfile());
+      Mapper.addProfile(UserProfile).addProfile(UserProfile);
     } catch (e) {
       message = e.message;
     }
 
     expect(message).toBeTruthy();
     expect(message).toEqual(
-      `${
-        new UserProfile().profileName
-      } is already existed on the current Mapper instance`
+      `${UserProfile.name} is already existed on the current Mapper instance`
     );
   });
 });
@@ -213,11 +208,8 @@ describe('AutoMapper - callbacks', () => {
   const afterCallback: BeforeAfterMapAction = jest.fn();
 
   class UserProfile extends MappingProfileBase {
-    constructor() {
+    constructor(mapper: AutoMapper) {
       super();
-    }
-
-    configure(mapper: AutoMapper): void {
       mapper
         .createMap(User, UserVm)
         .forMember(
@@ -230,7 +222,7 @@ describe('AutoMapper - callbacks', () => {
   }
 
   beforeAll(() => {
-    Mapper.addProfile(new UserProfile());
+    Mapper.addProfile(UserProfile);
   });
 
   afterAll(() => {
@@ -288,11 +280,8 @@ describe('AutoMapper - namingConvention', () => {
   }
 
   class UserProfile extends MappingProfileBase {
-    constructor() {
+    constructor(mapper: AutoMapper) {
       super();
-    }
-
-    configure(mapper: AutoMapper): void {
       mapper
         .createMap(User, UserVm, {
           sourceMemberNamingConvention: new PascalCaseNamingConvention(),
@@ -305,7 +294,7 @@ describe('AutoMapper - namingConvention', () => {
   }
 
   beforeAll(() => {
-    Mapper.addProfile(new UserProfile());
+    Mapper.addProfile(UserProfile);
   });
 
   afterAll(() => {
@@ -347,11 +336,8 @@ describe('AutoMapper - map', () => {
   }
 
   class AvatarProfile extends MappingProfileBase {
-    constructor() {
+    constructor(mapper: AutoMapper) {
       super();
-    }
-
-    configure(mapper: AutoMapper): void {
       mapper
         .createMap(Avatar, AvatarVm)
         .forMember(
@@ -378,11 +364,8 @@ describe('AutoMapper - map', () => {
   }
 
   class AddressProfile extends MappingProfileBase {
-    constructor() {
+    constructor(mapper: AutoMapper) {
       super();
-    }
-
-    configure(mapper: AutoMapper): void {
       mapper
         .createMap(Address, AddressVm)
         .forMember(
@@ -413,11 +396,8 @@ describe('AutoMapper - map', () => {
   }
 
   class ProfileProfile extends MappingProfileBase {
-    constructor() {
+    constructor(mapper: AutoMapper) {
       super();
-    }
-
-    configure(mapper: AutoMapper): void {
       mapper
         .createMap(Profile, ProfileVm)
         .forMember(
@@ -448,11 +428,8 @@ describe('AutoMapper - map', () => {
   }
 
   class UserProfile extends MappingProfileBase {
-    constructor() {
+    constructor(mapper: AutoMapper) {
       super();
-    }
-
-    configure(mapper: AutoMapper): void {
       mapper
         .createMap(User, UserVm)
         .forMember(d => d.first, opts => opts.mapFrom(s => s.firstName))
@@ -467,10 +444,10 @@ describe('AutoMapper - map', () => {
   let user: User;
 
   beforeAll(() => {
-    Mapper.addProfile(new AvatarProfile())
-      .addProfile(new AddressProfile())
-      .addProfile(new ProfileProfile())
-      .addProfile(new UserProfile());
+    Mapper.addProfile(AvatarProfile)
+      .addProfile(AddressProfile)
+      .addProfile(ProfileProfile)
+      .addProfile(UserProfile);
   });
 
   afterAll(() => {
@@ -571,11 +548,8 @@ describe('AutoMapper - reverseMap - complex', () => {
   }
 
   class AvatarProfile extends MappingProfileBase {
-    constructor() {
+    constructor(mapper: AutoMapper) {
       super();
-    }
-
-    configure(mapper: AutoMapper): void {
       mapper
         .createMap(Avatar, AvatarVm)
         .forMember(
@@ -605,11 +579,8 @@ describe('AutoMapper - reverseMap - complex', () => {
   }
 
   class AddressProfile extends MappingProfileBase {
-    constructor() {
+    constructor(mapper: AutoMapper) {
       super();
-    }
-
-    configure(mapper: AutoMapper): void {
       mapper
         .createMap(Address, AddressVm)
         .forMember(
@@ -650,11 +621,8 @@ describe('AutoMapper - reverseMap - complex', () => {
   }
 
   class ProfileProfile extends MappingProfileBase {
-    constructor() {
+    constructor(mapper: AutoMapper) {
       super();
-    }
-
-    configure(mapper: AutoMapper): void {
       mapper
         .createMap(Profile, ProfileVm)
         .forMember(d => d.avatar, opts => opts.mapWith(AvatarVm, s => s.avatar))
@@ -687,11 +655,8 @@ describe('AutoMapper - reverseMap - complex', () => {
   }
 
   class UserProfile extends MappingProfileBase {
-    constructor() {
+    constructor(mapper: AutoMapper) {
       super();
-    }
-
-    configure(mapper: AutoMapper): void {
       mapper
         .createMap(User, UserVm)
         .forMember(d => d.first, opts => opts.mapFrom(s => s.firstName))
@@ -707,10 +672,10 @@ describe('AutoMapper - reverseMap - complex', () => {
   let userVm: UserVm;
 
   beforeAll(() => {
-    Mapper.addProfile(new AvatarProfile())
-      .addProfile(new AddressProfile())
-      .addProfile(new ProfileProfile())
-      .addProfile(new UserProfile());
+    Mapper.addProfile(AvatarProfile)
+      .addProfile(AddressProfile)
+      .addProfile(ProfileProfile)
+      .addProfile(UserProfile);
   });
 
   afterAll(() => {

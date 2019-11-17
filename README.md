@@ -217,7 +217,7 @@ class UserVm {
 - `createMap()`: `createMap()` expects a **source** as the first argument and the **destination** as the second argument. `createMap()` returns `CreateMapFluentFunctions<TSource, TDestination>` (Read more at [API Reference](https://nartc.github.io/mapper/index.html)).
 
 ```typescript
-import { Mapper, MappingProfileBase } from 'automapper-nartc';
+import { Mapper } from '@nartc/automapper';
 
 Mapper.initialize(config => {
   config.createMap(User, UserVm); // create a mapping from User to UserVm (one direction)
@@ -239,19 +239,14 @@ Mapper.initialize(config => {
 });
 ```
 
-- `addProfile()`: `addProfile()` expects a new instance of a class which extends `MappingProfileBase`. Usually, you can just initialize your `Mapper` with `config.createMap` and setup all your mappings that way. But more than often, it is better to separate your mappings into `Profile` which will create the mappings for specific set of **source** and **destination**
+- `addProfile()`: `addProfile()` expects a class which extends `MappingProfileBase`. Usually, you can just initialize your `Mapper` with `config.createMap` and setup all your mappings that way. But more than often, it is better to separate your mappings into `Profile` which will create the mappings for specific set of **source** and **destination**
 
 ```typescript
 import { MappingProfileBase } from '@nartc/automapper';
 
 export class UserProfile extends MappingProfileBase {
-  constructor() {
+  constructor(mapper: AutoMapper) {
     super(); // this is required since it will take UserProfile and get the string "UserProfile" to assign to profileName
-  }
-
-  // configure() is required since it is an abstract method. configure() will be called automatically by Mapper.
-  // This is where you will setup your mapping with the class method: createMap
-  configure(mapper: AutoMapper) {
     mapper
       .createMap(User, UserVm)
       .forMember(
@@ -263,7 +258,7 @@ export class UserProfile extends MappingProfileBase {
 
 // in another file
 Mapper.initialize(config => {
-  config.addProfile(new UserProfile());
+  config.addProfile(UserProfile);
 });
 ```
 

@@ -40,7 +40,6 @@ export interface Resolver<
 
 export interface MappingProfile {
   profileName: string;
-  configure: (mapper: any) => void;
 }
 
 export interface NamingConvention {
@@ -216,7 +215,7 @@ export interface CreateReversedMapFluentFunctions<
 }
 
 export interface AutoMapperConfiguration {
-  addProfile(profile: MappingProfile): AutoMapper;
+  addProfile(profile: new (mapper: AutoMapper) => MappingProfile): AutoMapper;
 
   createMap<
     TSource extends Dict<TSource> = any,

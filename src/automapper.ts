@@ -62,7 +62,9 @@ export class AutoMapper extends AutoMapperBase {
    */
   public initialize(configFn: (config: AutoMapperConfiguration) => void): void {
     const _config: AutoMapperConfiguration = {
-      addProfile: (profile: MappingProfile): AutoMapper => {
+      addProfile: (
+        profile: new (mapper: AutoMapper) => MappingProfile
+      ): AutoMapper => {
         return this.addProfile(profile);
       },
       createMap: <
@@ -90,29 +92,27 @@ export class AutoMapper extends AutoMapperBase {
    * // Using MappingProfileBase + a super() call will assign the Profile class name to profileName automatically.
    * // Implementing MappingProfile yourself will require you to provide value for profileName and it has to be unique.
    * class SomeProfile extends MappingProfileBase {
-   *   constructor() {
+   *   constructor(mapper: AutoMapper) {
    *     super();
-   *   }
-   *
-   *   configure(mapper: AutoMapper): void {
    *     mapper.createMap(...);
    *   }
    * }
    *
-   * Mapper.addProfile(new SomeProfile());
+   * Mapper.addProfile(SomeProfile);
    * ```
    *
-   * @param {MappingProfile} profile - A MappingProfile to be add to this AutoMapper instance
+   * @param {new (mapper: AutoMapper) => MappingProfile} profile - A MappingProfile to be add to this AutoMapper instance
    */
-  public addProfile(profile: MappingProfile): AutoMapper {
-    if (this._profiles[profile.profileName]) {
+  public addProfile(
+    profile: new (mapper: AutoMapper) => MappingProfile
+  ): AutoMapper {
+    if (this._profiles[profile.name]) {
       throw new Error(
-        `${profile.profileName} is already existed on the current Mapper instance`
+        `${profile.name} is already existed on the current Mapper instance`
       );
     }
 
-    profile.configure(this);
-    this._profiles[profile.profileName] = Object.freeze(profile);
+    this._profiles[profile.name] = Object.freeze(new profile(this));
     return this;
   }
 

@@ -54,6 +54,7 @@ So far, the following is supported:
 - [x] Async
 - [x] Before/After Callback
 - [x] Naming Conventions
+- [x] Null Substitution - [@lqmanh](https://github.com/lqmanh) pointed out the difference in `fromValue()` and `nullSubstitution()` use-case, and that difference is totally valid. Hence, `nullSubstitution` is now supported.
 
 #### Future features:
 
@@ -62,7 +63,7 @@ So far, the following is supported:
 
 #### Might not support / Need use-case:
 
-- [x] Null Substitution - It makes more sense to use `fromValue()` instead of implement `nullSubstitution()`. Please let me know of a use-case where `nullSubstitution()` makes sense.
+- N/A
 
 Contributions are appreciated.
 
@@ -453,6 +454,29 @@ Mapper.createMap(User, UserVm)
 ```
 
 `@nartc/automapper` will map `'Some value'` to `dest.fullName`.
+
+#### NullSubstitution
+
+A value to be mapped to `destsination.member` when `source.member` is `null`. Same rule applies for `nullSubstitution` when you pass in an object for `nullSubstitution`, it will not be mapped with any `Mapping`. The expected value is safe-typed to the `destination.member` type. 
+
+```typescript
+Mapper.createMap(User, UserVm)
+  .forMember(dest => dest.shouldBeSubstituted, opts => opts.nullSubstitution('substituted'))
+  
+const user = new User();
+user.firstName = 'John';
+user.lastName = 'Doe';
+
+// Case 1: do not assign to user.shouldBeSubstituted
+
+const vm = Mapper.map(user, UserVm);
+assert(vm.shouldBeSubstituted === 'substituted');
+
+// Case 2: Assign value to user.shouldBeSubstituted
+user.shouldBeSubstituted = 'initial value';
+const vm = Mapper.map(user, UserVm);
+assert(vm.shouldBeSubstituted === 'initial value');
+```
 
 #### Async
 

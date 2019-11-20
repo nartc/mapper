@@ -42,6 +42,11 @@ function _getTransformationTypeWithoutPre(
   if (fnString.includes('mapFrom')) {
     return TransformationType.MapFrom;
   }
+
+  if (fnString.includes('nullSubstitution')) {
+    return TransformationType.NullSubstituion;
+  }
+
   return TransformationType.Ignore;
 }
 

@@ -326,6 +326,8 @@ describe('AutoMapper - map', () => {
     source!: string;
     @Expose()
     shouldIgnore!: number;
+    @Expose()
+    shouldBeSubstituted!: string;
   }
 
   class AvatarVm {
@@ -333,6 +335,8 @@ describe('AutoMapper - map', () => {
     url!: string;
     @Expose()
     ignored!: number;
+    @Expose()
+    shouldBeSubstituted!: string;
   }
 
   class AvatarProfile extends MappingProfileBase {
@@ -345,7 +349,8 @@ describe('AutoMapper - map', () => {
           opts =>
             opts.preCondition(s => s.shouldIgnore > 5).mapFrom(s => s.source)
         )
-        .forMember(d => d.ignored, opts => opts.ignore());
+        .forMember(d => d.ignored, opts => opts.ignore())
+        .forMember(d => d.shouldBeSubstituted, opts => opts.nullSubstitution('Substituted'));
     }
   }
 
@@ -465,6 +470,7 @@ describe('AutoMapper - map', () => {
     user.profile.avatar.source = 'Internet';
     user.profile.avatar.url = 'url.com';
     user.profile.avatar.shouldIgnore = 6;
+    user.profile.avatar.shouldBeSubstituted = 'Will not be substituted';
     user.profile.addresses = Array(2)
       .fill('')
       .map((_, index) => {
@@ -492,6 +498,8 @@ describe('AutoMapper - map', () => {
     expect(vm.profile.avatar).toBeTruthy();
     expect(vm.profile.avatar).toBeInstanceOf(AvatarVm);
     expect(vm.profile.avatar.url).toEqual(user.profile.avatar.source);
+    expect(vm.profile.avatar.shouldBeSubstituted).not.toEqual('Substituted');
+    expect(vm.profile.avatar.shouldBeSubstituted).toEqual('Will not be substituted');
 
     expect(vm.profile.addresses).toBeTruthy();
     expect(vm.profile.addresses).toHaveLength(user.profile.addresses.length);

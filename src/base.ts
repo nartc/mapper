@@ -143,6 +143,7 @@ export abstract class AutoMapperBase {
           convertUsing,
           mapWith,
           condition,
+          nullSubstitution,
         },
         destinationMemberPath,
       } = prop;
@@ -168,6 +169,7 @@ export abstract class AutoMapperBase {
           propSourceMemberPath,
           prop,
           fromValue,
+          nullSubstitution,
           condition as ConditionPredicate,
           mapFrom as MapFromCallback,
           mapping
@@ -185,6 +187,7 @@ export abstract class AutoMapperBase {
         propSourceMemberPath,
         prop,
         fromValue,
+        nullSubstitution,
         condition as ConditionPredicate,
         mapFrom as MapFromCallback,
         mapping
@@ -220,6 +223,7 @@ export abstract class AutoMapperBase {
     propSourceMemberPath: string,
     prop: MappingProperty,
     fromValue: any,
+    nullSubstitution: any,
     condition: ConditionPredicate,
     mapFrom: MapFromCallback,
     mapping: Mapping<TSource, TDestination>
@@ -294,6 +298,15 @@ export abstract class AutoMapperBase {
       }
 
       set(destinationObj, destinationMemberPath, null);
+      return;
+    }
+
+    if (type === TransformationType.NullSubstituion) {
+      set(
+        destinationObj,
+        destinationMemberPath,
+        _get(sourceObj, propSourceMemberPath, nullSubstitution)
+      );
       return;
     }
 

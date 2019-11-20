@@ -90,6 +90,10 @@ export enum TransformationType {
    * when Mapping is initialized
    */
   MapInitialize = 6,
+  /**
+   * When `opts.nullSubstitution()` is used on `forMember()`
+   */
+  NullSubstituion = 7,
 }
 
 export interface Constructible<T extends Dict<T> = any> {
@@ -147,6 +151,8 @@ export interface DestinationMemberExpressionOptions<
     converter: Converter<TConvertSource, TSelectorReturn>,
     value: Selector<TSource, TConvertSource>
   ): void;
+
+  nullSubstitution(value: TSelectorReturn): void;
 
   ignore(): void;
 }
@@ -269,6 +275,7 @@ export interface MappingTransformation<
     TDestination,
     TSelectorReturn
   >;
+  nullSubstitution?: TSelectorReturn;
 }
 
 export interface MappingProperty<

@@ -187,6 +187,7 @@ export function _createMapForPath<
   let mapWith: MapWithTransformOptions<TDestination, TSource>;
   let convertUsing: ConvertUsingTransformOptions<TDestination, TSource>;
   let preCondition: ConditionPredicate<TDestination>;
+  let nullSubstitution: any;
 
   const opts: DestinationMemberExpressionOptions<TDestination, TSource> = {
     mapFrom: cb => {
@@ -210,6 +211,9 @@ export function _createMapForPath<
     preCondition: predicate => {
       preCondition = predicate;
       return opts;
+    },
+    nullSubstitution: value => {
+      nullSubstitution = value;
     },
   };
 
@@ -236,6 +240,8 @@ export function _createMapForPath<
         mapWith,
         // @ts-ignore
         convertUsing,
+        // @ts-ignore
+        nullSubstitution,
       }),
     })
   );
@@ -266,6 +272,7 @@ export function _createMapForMember<
   let mapWith: MapWithTransformOptions<TSource, TDestination>;
   let convertUsing: ConvertUsingTransformOptions<TSource, TDestination>;
   let preCondition: ConditionPredicate<TSource>;
+  let nullSubstitution: any;
 
   const opts: DestinationMemberExpressionOptions<TSource, TDestination> = {
     mapFrom: cb => {
@@ -289,6 +296,9 @@ export function _createMapForMember<
     preCondition: predicate => {
       preCondition = predicate;
       return opts;
+    },
+    nullSubstitution: value => {
+      nullSubstitution = value;
     },
   };
 
@@ -317,6 +327,8 @@ export function _createMapForMember<
         mapWith,
         // @ts-ignore
         convertUsing,
+        // @ts-ignore
+        nullSubstitution,
       }),
     })
   );

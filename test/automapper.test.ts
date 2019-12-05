@@ -529,11 +529,11 @@ describe('AutoMapper - map', () => {
     });
   });
 
-  /*it('mapAsync', async () => {
-    const vm = await Mapper.mapAsync(user, UserVm);
-    expect(vm).toBeTruthy();
-    expect(vm).toBeInstanceOf(UserVm);
-  });*/
+  // it('mapAsync', async () => {
+  //   const vm = await Mapper.mapAsync(user, UserVm);
+  //   expect(vm).toBeTruthy();
+  //   expect(vm).toBeInstanceOf(UserVm);
+  // });
 
   it('mapArray', () => {
     const vms = Mapper.mapArray([user, user], UserVm);

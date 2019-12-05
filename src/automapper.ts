@@ -101,7 +101,8 @@ export class AutoMapper extends AutoMapperBase {
    * Mapper.addProfile(SomeProfile);
    * ```
    *
-   * @param {new (mapper: AutoMapper) => MappingProfile} profile - A MappingProfile to be add to this AutoMapper instance
+   * @param {new (mapper: AutoMapper) => MappingProfile} profile - A MappingProfile to be add to this AutoMapper
+   *   instance
    */
   public addProfile(
     profile: new (mapper: AutoMapper) => MappingProfile

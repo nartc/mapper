@@ -19,7 +19,7 @@
   },
   "scripts": {
     "start": "tsdx watch",
-    "build": "tsdx build",
+    "build": "tsdx build && cp src/mapperAsync.js dist",
     "build:docs": "typedoc --out docs --target es6 --theme minimal --mode file src",
     "test": "tsdx test --no-cache",
     "test:cov": "tsdx test --coverage",

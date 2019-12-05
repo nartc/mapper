@@ -5,7 +5,6 @@ cache:
 notifications:
   email: false
 node_js:
-  - '10'
   - '11'
   - '12'
 script:
@@ -19,13 +18,17 @@ jobs:
       node_js:
         - '12'
       name: deploy_docs
-      script: if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then npm run deploy-docs; fi
+      if: branch = master
+      env: TRAVIS_PULL_REQUEST = false
+      script: yarn deploy-docs
     - name: npm_release
       node_js:
         - '12'
       before_script:
         - npm run build
-      script: if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then npm run semantic-release; fi
+      if: branch = master OR branch = next
+      env: TRAVIS_PULL_REQUEST = false
+      script: yarn semantic-release
     - name: produce_coverage
       node_js:
         - '12'

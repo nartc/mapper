@@ -1,4 +1,12 @@
-import { AutoMapperBase } from './base';
+import { resolve as pathResolve } from 'path';
+import { isMainThread, Worker } from 'worker_threads';
+import {
+  _createMappingObject,
+  _createReversedMappingObject,
+  _getMappingForDestination,
+  _map,
+  _mapArray,
+} from './base';
 import {
   defaultDestinationMemberNamingConvention,
   defaultSourceMemberNamingConvention,
@@ -18,11 +26,14 @@ import {
   _createMapForMember,
   _createMapForPath,
   _initializeMappingProperties,
+  _toArrayBuffer,
+  _toString,
 } from './utils';
 
-export class AutoMapper extends AutoMapperBase {
+export class AutoMapper {
   private static _instance: AutoMapper = new AutoMapper();
   private readonly _profiles: { [key: string]: MappingProfile };
+  readonly _mappings!: { [key: string]: Mapping };
 
   /**
    * @static - Get the Mapper instance
@@ -32,8 +43,8 @@ export class AutoMapper extends AutoMapperBase {
   }
 
   constructor() {
-    super();
     this._profiles = {};
+    this._mappings = {};
     if (!AutoMapper._instance) {
       AutoMapper._instance = this;
     }
@@ -143,10 +154,11 @@ export class AutoMapper extends AutoMapperBase {
       destinationMemberNamingConvention: defaultDestinationMemberNamingConvention,
       ...options,
     };
-    const _mapping = super._createMappingObject(
+    const _mapping = _createMappingObject(
       source,
       destination,
-      mergeOptions
+      mergeOptions,
+      this._mappings
     );
     return this._createMappingFluentFunctions(_mapping);
   }
@@ -174,8 +186,8 @@ export class AutoMapper extends AutoMapperBase {
     destination: Constructible<TDestination>,
     options?: MapActionOptions<TSource, TDestination>
   ): TDestination {
-    const mapping = super._getMappingForDestination(destination);
-    return super._map(sourceObj, mapping, options);
+    const mapping = _getMappingForDestination(destination, this._mappings);
+    return _map(sourceObj, mapping, options, false, this._mappings);
   }
 
   /**
@@ -202,8 +214,32 @@ export class AutoMapper extends AutoMapperBase {
     destination: Constructible<TDestination>,
     options?: MapActionOptions<TSource, TDestination>
   ): Promise<TDestination> {
-    const mapping = super._getMappingForDestination(destination);
-    return super._mapAsync(sourceObj, mapping, options);
+    const mapping = _getMappingForDestination(destination, this._mappings);
+
+    if (isMainThread) {
+      return new Promise((resolve, reject) => {
+        const workerData = {
+          sourceObj,
+          options,
+          mapping,
+          mappings: this._mappings,
+          isMapArray: false,
+        };
+
+        const worker = new Worker(pathResolve(__dirname, './mapperAsync.js'), {
+          workerData: _toArrayBuffer(JSON.stringify(workerData)),
+        });
+
+        worker.on('message', data => {
+          resolve(JSON.parse(_toString(data)));
+        });
+        worker.on('error', reject);
+      });
+    }
+
+    return Promise.resolve().then(() =>
+      _map(sourceObj, mapping, options, false, this._mappings)
+    );
   }
 
   /**
@@ -232,8 +268,8 @@ export class AutoMapper extends AutoMapperBase {
     destination: Constructible<TDestination>,
     options?: MapActionOptions<TSource[], TDestination[]>
   ): TDestination[] {
-    const mapping = super._getMappingForDestination(destination);
-    return super._mapArray(sourceArr, mapping, options);
+    const mapping = _getMappingForDestination(destination, this._mappings);
+    return _mapArray(sourceArr, mapping, options, this._mappings);
   }
 
   /**
@@ -263,8 +299,31 @@ export class AutoMapper extends AutoMapperBase {
     destination: Constructible<TDestination>,
     options?: MapActionOptions<TSource[], TDestination[]>
   ): Promise<TDestination[]> {
-    const mapping = super._getMappingForDestination(destination);
-    return super._mapArrayAsync(sourceArr, mapping, options);
+    const mapping = _getMappingForDestination(destination, this._mappings);
+    const workerData = {
+      sourceObj: sourceArr,
+      mapping,
+      options,
+      mappings: this._mappings,
+      isMapArray: true,
+    };
+
+    if (isMainThread) {
+      return new Promise((resolve, reject) => {
+        const worker = new Worker(pathResolve(__dirname, './mapperAsync.js'), {
+          workerData: _toArrayBuffer(JSON.stringify(workerData)),
+        });
+
+        worker.on('message', data => {
+          resolve(JSON.parse(_toString(data)));
+        });
+        worker.on('error', reject);
+      });
+    }
+
+    return Promise.resolve().then(() =>
+      _mapArray(sourceArr, mapping, options, this._mappings)
+    );
   }
 
   /**
@@ -286,7 +345,9 @@ export class AutoMapper extends AutoMapperBase {
     Object.keys(this._profiles).forEach(key => {
       delete this._profiles[key];
     });
-    super._dispose();
+    Object.keys(this._mappings).forEach(key => {
+      delete this._mappings[key];
+    });
   }
 
   private _createMappingFluentFunctions<
@@ -314,7 +375,10 @@ export class AutoMapper extends AutoMapperBase {
         return _fluentFunctions;
       },
       reverseMap: () => {
-        const reversedMapping = super._createReversedMappingObject(mapping);
+        const reversedMapping = _createReversedMappingObject(
+          mapping,
+          this._mappings
+        );
         return this._createReversedMappingFluentFunctions(reversedMapping);
       },
     };

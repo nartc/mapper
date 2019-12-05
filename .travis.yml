@@ -25,7 +25,7 @@ jobs:
         - '12'
       before_script:
         - npm run build
-      script: if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then npm run semantic-release; fi
+      script: if [ ["$TRAVIS_BRANCH" = "master" || "$TRAVIS_BRANCH" = "next"] -a "$TRAVIS_PULL_REQUEST" = "false" ]; then npm run semantic-release; fi
     - name: produce_coverage
       node_js:
         - '12'

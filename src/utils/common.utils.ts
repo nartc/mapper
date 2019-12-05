@@ -263,3 +263,19 @@ export function _isEmpty(value: any): boolean {
 export function _isDate(value: any): boolean {
   return _getTag(value) === ObjectTag.Date;
 }
+
+export function _toArrayBuffer(jsonString: string): ArrayBuffer {
+  const len = jsonString.length;
+  const buffer = new ArrayBuffer(len * 2);
+  const bufferView = new Uint16Array(buffer);
+
+  for (let i = 0; i < len; i++) {
+    bufferView[i] = jsonString.charCodeAt(i);
+  }
+
+  return buffer;
+}
+
+export function _toString(buffer: ArrayBuffer): string {
+  return String.fromCharCode.apply(null, new Uint16Array(buffer) as any);
+}

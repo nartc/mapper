@@ -78,6 +78,9 @@
     ],
     "collectCoverageFrom": [
       "src/automapper.{js,ts}"
+    ],
+    "setupFilesAfterEnv": [
+      "./jest.setup.js"
     ]
   },
   "devDependencies": {

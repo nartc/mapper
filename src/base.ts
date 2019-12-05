@@ -31,153 +31,360 @@ import {
   _setMappingPropertyForMapFromMember,
 } from './utils';
 
-/**
- * Internal base class for AutoMapper
- *
- * @private
- */
-export abstract class AutoMapperBase {
-  protected readonly _mappings!: { [key: string]: Mapping };
+export const _getMappingForDestination = <
+  TSource extends Dict<TSource> = any,
+  TDestination extends Dict<TDestination> = any
+>(
+  destination: Constructible<TDestination>,
+  mappings: { [key: string]: Mapping }
+): Mapping<TSource, TDestination> => {
+  const destinationName = destination.prototype.constructor.name;
+  const sourceKey = Object.keys(mappings)
+    .filter(key => key.includes(destinationName))
+    .find(key => mappings[key].destinationKey === destinationName);
 
-  protected constructor() {
-    this._mappings = {};
-  }
+  const sourceName = mappings[sourceKey as string].sourceKey;
+  const mapping = mappings[_getMappingKey(sourceName, destinationName)];
 
-  protected _mapArrayAsync<
-    TSource extends Dict<TSource> = any,
-    TDestination extends Dict<TDestination> = any
-  >(
-    sourceArray: TSource[],
-    mapping: Mapping<TSource, TDestination>,
-    option: MapActionOptions<
-      TSource[],
-      TDestination[]
-    > = defaultMapActionOptions
-  ): Promise<TDestination[]> {
-    return Promise.resolve().then(() =>
-      this._mapArray(sourceArray, mapping, option)
+  if (!mapping) {
+    throw new Error(
+      `Mapping not found for source ${sourceName} and destination ${destinationName}`
     );
   }
 
-  protected _mapArray<
-    TSource extends Dict<TSource> = any,
-    TDestination extends Dict<TDestination> = any
-  >(
-    sourceArray: TSource[],
-    mapping: Mapping<TSource, TDestination>,
-    option: MapActionOptions<
-      TSource[],
-      TDestination[]
-    > = defaultMapActionOptions
-  ): TDestination[] {
-    let destination: TDestination[] = [];
-    const { beforeMap, afterMap } = option;
+  return mapping;
+};
 
-    if (beforeMap) {
-      beforeMap(sourceArray, destination, { ...mapping } as any);
-    }
+const _getMappingForNestedKey = <
+  TSource extends Dict<TSource> = any,
+  TDestination extends Dict<TDestination> = any
+>(
+  val: Constructible<TSource>,
+  mappings: { [key: string]: Mapping }
+): Mapping<TSource, TDestination> => {
+  const mappingName = val.constructor.name;
+  const destinationEntry = Object.entries(mappings)
+    .filter(([key, _]) => key.includes(mappingName))
+    .find(([key, _]) => mappings[key].sourceKey === mappingName);
 
-    destination = sourceArray.map(s => this._map(s, mapping, {}, true));
-
-    if (afterMap) {
-      afterMap(sourceArray, destination, { ...mapping } as any);
-    }
-
-    return destination;
+  if (!destinationEntry) {
+    throw new Error(`Mapping not found for source ${mappingName}`);
   }
 
-  protected _mapAsync<
-    TSource extends Dict<TSource> = any,
-    TDestination extends Dict<TDestination> = any
-  >(
-    sourceObj: TSource,
-    mapping: Mapping<TSource, TDestination>,
-    option: MapActionOptions<TSource, TDestination> = defaultMapActionOptions,
-    isArrayMap: boolean = false
-  ): Promise<TDestination> {
-    return Promise.resolve().then(() =>
-      this._map(sourceObj, mapping, option, isArrayMap)
+  const destination = destinationEntry[1].destination as Constructible<
+    TDestination
+  >;
+
+  if (!destination) {
+    throw new Error(`Mapping not found for source ${mappingName}`);
+  }
+
+  const mapping = _getMapping(val, destination, mappings);
+
+  if (!mapping) {
+    throw new Error(
+      `Mapping not found for source ${mappingName} and destination ${destination.name ||
+        destination.constructor.name}`
     );
   }
 
-  protected _map<
-    TSource extends Dict<TSource> = any,
-    TDestination extends Dict<TDestination> = any
-  >(
-    sourceObj: TSource,
-    mapping: Mapping<TSource, TDestination>,
-    option: MapActionOptions<TSource, TDestination> = defaultMapActionOptions,
-    isArrayMap: boolean = false
-  ): TDestination {
-    sourceObj = plainToClass(mapping.source, sourceObj, {
-      excludeExtraneousValues: true,
-    });
-    const { afterMap, beforeMap } = option;
-    const {
-      destination,
-      properties,
-      afterMapAction,
-      beforeMapAction,
-      sourceMemberNamingConvention,
-      destinationMemberNamingConvention,
-    } = mapping;
-    const configKeys = [];
+  return mapping;
+};
 
-    let destinationObj = new destination();
+const _mapMember = <
+  TSource extends Dict<TSource> = any,
+  TDestination extends Dict<TDestination> = any
+>(
+  type: TransformationType,
+  destinationObj: TDestination,
+  destinationMemberPath: string,
+  convertUsing: ConvertUsingTransformOptions,
+  sourceObj: TSource,
+  mapWith: MapWithTransformOptions,
+  propSourceMemberPath: string,
+  prop: MappingProperty,
+  fromValue: any,
+  nullSubstitution: any,
+  condition: ConditionPredicate,
+  mapFrom: MapFromCallback,
+  mapping: Mapping<TSource, TDestination>,
+  mappings: { [key: string]: Mapping }
+) => {
+  if (type === TransformationType.Ignore) {
+    set(destinationObj, destinationMemberPath, null);
+    return;
+  }
 
-    if (!isArrayMap) {
-      if (beforeMap) {
-        beforeMap(sourceObj, new destination(), { ...mapping });
-      } else if (beforeMapAction) {
-        beforeMapAction(sourceObj, new destination(), { ...mapping });
-      }
-    }
+  if (type === TransformationType.ConvertUsing) {
+    const { converter, value } = convertUsing as ConvertUsingTransformOptions;
+    set(
+      destinationObj,
+      destinationMemberPath,
+      converter.convert(value(sourceObj))
+    );
+    return;
+  }
 
-    for (const prop of Array.from(properties.values())) {
-      configKeys.push(prop.destinationMemberPath);
-      const {
-        transformation: {
-          transformationType: { preCondition, type },
-          mapFrom,
-          fromValue,
-          convertUsing,
-          mapWith,
-          condition,
-          nullSubstitution,
-        },
-        destinationMemberPath,
-      } = prop;
-      const propSourceMemberPath = _getSourcePropertyKey(
-        destinationMemberNamingConvention,
-        sourceMemberNamingConvention,
-        destinationMemberPath
+  if (type === TransformationType.MapWith) {
+    const _mapping = _getMappingForDestination(
+      (mapWith as MapWithTransformOptions).destination,
+      mappings
+    );
+    const _source = (mapWith as MapWithTransformOptions).fromValue(sourceObj);
+    if (_isEmpty(_source)) {
+      console.warn(
+        `${propSourceMemberPath} does not exist on ${_mapping.source}`
       );
+      set(destinationObj, destinationMemberPath, null);
+      return;
+    }
 
-      if (preCondition && !preCondition(sourceObj)) {
-        set(destinationObj, destinationMemberPath, null);
-        continue;
-      }
+    if (!_isClass(_source as any)) {
+      console.warn(
+        `${prop.destinationMemberPath} is type ${
+          (mapWith as MapWithTransformOptions).destination.name
+        } but ${_source} is a primitive. No mapping was executed`
+      );
+      set(destinationObj, destinationMemberPath, null);
+      return;
+    }
 
-      if (preCondition && preCondition(sourceObj)) {
-        this._mapMember(
-          type,
-          destinationObj,
-          destinationMemberPath,
-          convertUsing as ConvertUsingTransformOptions,
+    if (Array.isArray(_source)) {
+      set(
+        destinationObj,
+        destinationMemberPath,
+        _isEmpty(_source[0])
+          ? []
+          : (_mapArray(
+              _source,
+              _mapping as Mapping,
+              defaultMapActionOptions,
+              mappings
+            ) as any)
+      );
+      return;
+    }
+
+    set(
+      destinationObj,
+      destinationMemberPath,
+      _map(_source, _mapping, defaultMapActionOptions, false, mappings)
+    );
+    return;
+  }
+
+  if (type === TransformationType.FromValue) {
+    set(destinationObj, destinationMemberPath, fromValue);
+    return;
+  }
+
+  if (type === TransformationType.Condition) {
+    const _passed = condition && condition(sourceObj);
+    if (_passed) {
+      set(
+        destinationObj,
+        destinationMemberPath,
+        _get(sourceObj, propSourceMemberPath)
+      );
+      return;
+    }
+
+    set(destinationObj, destinationMemberPath, null);
+    return;
+  }
+
+  if (type === TransformationType.NullSubstituion) {
+    set(
+      destinationObj,
+      destinationMemberPath,
+      _get(sourceObj, propSourceMemberPath, nullSubstitution)
+    );
+    return;
+  }
+
+  if (type === TransformationType.MapFrom) {
+    if (_isResolver(mapFrom as MapFromCallback)) {
+      set(
+        destinationObj,
+        destinationMemberPath,
+        (mapFrom as Resolver).resolve(
           sourceObj,
-          mapWith as MapWithTransformOptions,
-          propSourceMemberPath,
-          prop,
-          fromValue,
-          nullSubstitution,
-          condition as ConditionPredicate,
-          mapFrom as MapFromCallback,
-          mapping
-        );
-        continue;
+          destinationObj,
+          prop.transformation
+        )
+      );
+      return;
+    }
+
+    const mapFromValue = (mapFrom as ValueSelector)(sourceObj);
+    set(destinationObj, destinationMemberPath, mapFromValue);
+    _setMappingPropertyForMapFromMember(
+      destinationMemberPath,
+      propSourceMemberPath,
+      mapping,
+      mapFrom as ValueSelector
+    );
+    return;
+  }
+
+  const sourceVal = (mapFrom as ValueSelector)(sourceObj);
+  if (sourceVal === undefined || sourceVal === null) {
+    set(destinationObj, destinationMemberPath, null);
+    return;
+  }
+
+  if (_isObjectLike(sourceVal)) {
+    if (_isDate(sourceVal)) {
+      set(destinationObj, destinationMemberPath, new Date(sourceVal));
+      return;
+    }
+
+    if (Array.isArray(sourceVal)) {
+      const _first = sourceVal[0];
+      if (_isEmpty(_first)) {
+        set(destinationObj, destinationMemberPath, []);
+        return;
       }
 
-      this._mapMember(
+      if (!_isObjectLike(_first)) {
+        set(destinationObj, destinationMemberPath, sourceVal.slice());
+        return;
+      }
+
+      const nestedMapping = _getMappingForNestedKey(_first, mappings);
+      set(
+        destinationObj,
+        destinationMemberPath,
+        _mapArray(sourceVal, nestedMapping, defaultMapActionOptions, mappings)
+      );
+      return;
+    }
+  }
+
+  if (
+    (typeof sourceVal === 'object' || typeof sourceVal === 'function') &&
+    _isClass(sourceVal)
+  ) {
+    const nestedMapping = _getMappingForNestedKey(sourceVal, mappings);
+    set(
+      destinationObj,
+      destinationMemberPath,
+      _map(sourceVal, nestedMapping, defaultMapActionOptions, false, mappings)
+    );
+    return;
+  }
+
+  set(destinationObj, destinationMemberPath, sourceVal);
+  return;
+};
+
+/**
+ * Private Functions
+ */
+const _hasMapping = <
+  TSource extends Dict<TSource> = any,
+  TDestination extends Dict<TDestination> = any
+>(
+  source: Constructible<TSource>,
+  destination: Constructible<TDestination>,
+  mappings: { [key: string]: Mapping }
+): string => {
+  const key = _getMappingKey(source.name, destination.name);
+  if (mappings[key]) {
+    throw new Error(
+      `Mapping for source ${source.name} and destination ${destination.name} is already existed`
+    );
+  }
+
+  return key;
+};
+
+const _getMapping = <
+  TSource extends Dict<TSource> = any,
+  TDestination extends Dict<TDestination> = any
+>(
+  source: Constructible<TSource>,
+  destination: Constructible<TDestination>,
+  mappings: { [key: string]: Mapping }
+): Mapping<TSource, TDestination> => {
+  const sourceName = source.prototype
+    ? source.prototype.constructor.name
+    : source.constructor.name;
+  const destinationName = destination.prototype
+    ? destination.prototype.constructor.name
+    : destination.constructor.name;
+  const mapping = mappings[_getMappingKey(sourceName, destinationName)];
+
+  if (!mapping) {
+    throw new Error(
+      `Mapping not found for source ${sourceName} and destination ${destinationName}`
+    );
+  }
+
+  return mapping;
+};
+
+export const _map = <
+  TSource extends Dict<TSource> = any,
+  TDestination extends Dict<TDestination> = any
+>(
+  sourceObj: TSource,
+  mapping: Mapping<TSource, TDestination>,
+  option: MapActionOptions<TSource, TDestination> = defaultMapActionOptions,
+  isArrayMap: boolean = false,
+  mappings: { [key: string]: Mapping }
+): TDestination => {
+  sourceObj = plainToClass(mapping.source, sourceObj, {
+    excludeExtraneousValues: true,
+  });
+  const { afterMap, beforeMap } = option;
+  const {
+    destination,
+    properties,
+    afterMapAction,
+    beforeMapAction,
+    sourceMemberNamingConvention,
+    destinationMemberNamingConvention,
+  } = mapping;
+  const configKeys = [];
+
+  let destinationObj = new destination();
+
+  if (!isArrayMap) {
+    if (beforeMap) {
+      beforeMap(sourceObj, new destination(), { ...mapping });
+    } else if (beforeMapAction) {
+      beforeMapAction(sourceObj, new destination(), { ...mapping });
+    }
+  }
+
+  for (const prop of Array.from(properties.values())) {
+    configKeys.push(prop.destinationMemberPath);
+    const {
+      transformation: {
+        transformationType: { preCondition, type },
+        mapFrom,
+        fromValue,
+        convertUsing,
+        mapWith,
+        condition,
+        nullSubstitution,
+      },
+      destinationMemberPath,
+    } = prop;
+    const propSourceMemberPath = _getSourcePropertyKey(
+      destinationMemberNamingConvention,
+      sourceMemberNamingConvention,
+      destinationMemberPath
+    );
+
+    if (preCondition && !preCondition(sourceObj)) {
+      set(destinationObj, destinationMemberPath, null);
+      continue;
+    }
+
+    if (preCondition && preCondition(sourceObj)) {
+      _mapMember(
         type,
         destinationObj,
         destinationMemberPath,
@@ -190,353 +397,124 @@ export abstract class AutoMapperBase {
         nullSubstitution,
         condition as ConditionPredicate,
         mapFrom as MapFromCallback,
-        mapping
-      );
-    }
-
-    destinationObj = plainToClass(destination, destinationObj, {
-      excludeExtraneousValues: true,
-    });
-    _assertMappingErrors(destinationObj, configKeys);
-
-    if (!isArrayMap) {
-      if (afterMap) {
-        afterMap(sourceObj, destinationObj, { ...mapping });
-      } else if (afterMapAction) {
-        afterMapAction(sourceObj, destinationObj, { ...mapping });
-      }
-    }
-
-    return destinationObj;
-  }
-
-  private _mapMember<
-    TSource extends Dict<TSource> = any,
-    TDestination extends Dict<TDestination> = any
-  >(
-    type: TransformationType,
-    destinationObj: TDestination,
-    destinationMemberPath: string,
-    convertUsing: ConvertUsingTransformOptions,
-    sourceObj: TSource,
-    mapWith: MapWithTransformOptions,
-    propSourceMemberPath: string,
-    prop: MappingProperty,
-    fromValue: any,
-    nullSubstitution: any,
-    condition: ConditionPredicate,
-    mapFrom: MapFromCallback,
-    mapping: Mapping<TSource, TDestination>
-  ) {
-    if (type === TransformationType.Ignore) {
-      set(destinationObj, destinationMemberPath, null);
-      return;
-    }
-
-    if (type === TransformationType.ConvertUsing) {
-      const { converter, value } = convertUsing as ConvertUsingTransformOptions;
-      set(
-        destinationObj,
-        destinationMemberPath,
-        converter.convert(value(sourceObj))
-      );
-      return;
-    }
-
-    if (type === TransformationType.MapWith) {
-      const _mapping = this._getMappingForDestination(
-        (mapWith as MapWithTransformOptions).destination
-      );
-      const _source = (mapWith as MapWithTransformOptions).fromValue(sourceObj);
-      if (_isEmpty(_source)) {
-        console.warn(
-          `${propSourceMemberPath} does not exist on ${_mapping.source}`
-        );
-        set(destinationObj, destinationMemberPath, null);
-        return;
-      }
-
-      if (!_isClass(_source as any)) {
-        console.warn(
-          `${prop.destinationMemberPath} is type ${
-            (mapWith as MapWithTransformOptions).destination.name
-          } but ${_source} is a primitive. No mapping was executed`
-        );
-        set(destinationObj, destinationMemberPath, null);
-        return;
-      }
-
-      if (Array.isArray(_source)) {
-        set(
-          destinationObj,
-          destinationMemberPath,
-          _isEmpty(_source[0])
-            ? []
-            : (this._mapArray(_source, _mapping as Mapping) as any)
-        );
-        return;
-      }
-
-      set(destinationObj, destinationMemberPath, this._map(_source, _mapping));
-      return;
-    }
-
-    if (type === TransformationType.FromValue) {
-      set(destinationObj, destinationMemberPath, fromValue);
-      return;
-    }
-
-    if (type === TransformationType.Condition) {
-      const _passed = condition && condition(sourceObj);
-      if (_passed) {
-        set(
-          destinationObj,
-          destinationMemberPath,
-          _get(sourceObj, propSourceMemberPath)
-        );
-        return;
-      }
-
-      set(destinationObj, destinationMemberPath, null);
-      return;
-    }
-
-    if (type === TransformationType.NullSubstituion) {
-      set(
-        destinationObj,
-        destinationMemberPath,
-        _get(sourceObj, propSourceMemberPath, nullSubstitution)
-      );
-      return;
-    }
-
-    if (type === TransformationType.MapFrom) {
-      if (_isResolver(mapFrom as MapFromCallback)) {
-        set(
-          destinationObj,
-          destinationMemberPath,
-          (mapFrom as Resolver).resolve(
-            sourceObj,
-            destinationObj,
-            prop.transformation
-          )
-        );
-        return;
-      }
-
-      const mapFromValue = (mapFrom as ValueSelector)(sourceObj);
-      set(destinationObj, destinationMemberPath, mapFromValue);
-      _setMappingPropertyForMapFromMember(
-        destinationMemberPath,
-        propSourceMemberPath,
         mapping,
-        mapFrom as ValueSelector
+        mappings
       );
-      return;
+      continue;
     }
 
-    const sourceVal = (mapFrom as ValueSelector)(sourceObj);
-    if (sourceVal === undefined || sourceVal === null) {
-      set(destinationObj, destinationMemberPath, null);
-      return;
-    }
-
-    if (_isObjectLike(sourceVal)) {
-      if (_isDate(sourceVal)) {
-        set(destinationObj, destinationMemberPath, new Date(sourceVal));
-        return;
-      }
-
-      if (Array.isArray(sourceVal)) {
-        const _first = sourceVal[0];
-        if (_isEmpty(_first)) {
-          set(destinationObj, destinationMemberPath, []);
-          return;
-        }
-
-        if (!_isObjectLike(_first)) {
-          set(destinationObj, destinationMemberPath, sourceVal.slice());
-          return;
-        }
-
-        const nestedMapping = this._getMappingForNestedKey(_first);
-        set(
-          destinationObj,
-          destinationMemberPath,
-          this._mapArray(sourceVal, nestedMapping)
-        );
-        return;
-      }
-    }
-
-    if (
-      (typeof sourceVal === 'object' || typeof sourceVal === 'function') &&
-      _isClass(sourceVal)
-    ) {
-      const nestedMapping = this._getMappingForNestedKey(sourceVal);
-      set(
-        destinationObj,
-        destinationMemberPath,
-        this._map(sourceVal, nestedMapping)
-      );
-      return;
-    }
-
-    set(destinationObj, destinationMemberPath, sourceVal);
-    return;
+    _mapMember(
+      type,
+      destinationObj,
+      destinationMemberPath,
+      convertUsing as ConvertUsingTransformOptions,
+      sourceObj,
+      mapWith as MapWithTransformOptions,
+      propSourceMemberPath,
+      prop,
+      fromValue,
+      nullSubstitution,
+      condition as ConditionPredicate,
+      mapFrom as MapFromCallback,
+      mapping,
+      mappings
+    );
   }
 
-  protected _createMappingObject<
-    TSource extends Dict<TSource> = any,
-    TDestination extends Dict<TDestination> = any
-  >(
-    source: Constructible<TSource>,
-    destination: Constructible<TDestination>,
-    options: CreateMapActions
-  ): Mapping<TSource, TDestination> {
-    const _key = this._hasMapping(source, destination);
-    const _mapping: Mapping<TSource, TDestination> = Object.seal({
-      source,
-      sourceKey: source.prototype.constructor.name,
-      destination,
-      destinationKey: destination.prototype.constructor.name,
-      properties: new Map(),
-      sourceMemberNamingConvention: options.sourceMemberNamingConvention as NamingConvention,
-      destinationMemberNamingConvention: options.destinationMemberNamingConvention as NamingConvention,
-      beforeMapAction: undefined,
-      afterMapAction: undefined,
-    });
+  destinationObj = plainToClass(destination, destinationObj, {
+    excludeExtraneousValues: true,
+  });
+  _assertMappingErrors(destinationObj, configKeys);
 
-    this._mappings[_key] = _mapping;
-    return _mapping;
-  }
-
-  protected _createReversedMappingObject<
-    TSource extends Dict<TSource> = any,
-    TDestination extends Dict<TDestination> = any
-  >(mapping: Mapping<TSource, TDestination>): Mapping<TDestination, TSource> {
-    const _reversedKey = this._hasMapping(mapping.destination, mapping.source);
-    const _reversedMapping: Mapping<TDestination, TSource> = Object.seal({
-      source: mapping.destination,
-      sourceKey: mapping.destination.prototype
-        ? mapping.destination.prototype.constructor.name
-        : mapping.destination.constructor.name,
-      destination: mapping.source,
-      destinationKey: mapping.source.prototype
-        ? mapping.source.prototype.constructor.name
-        : mapping.source.constructor.name,
-      sourceMemberNamingConvention: mapping.destinationMemberNamingConvention,
-      destinationMemberNamingConvention: mapping.sourceMemberNamingConvention,
-      properties: _initializeReversedMappingProperties(mapping),
-      beforeMapAction: undefined,
-      afterMapAction: undefined,
-    });
-    this._mappings[_reversedKey] = _reversedMapping;
-    return _reversedMapping;
-  }
-
-  protected _dispose() {
-    Object.keys(this._mappings).forEach(key => {
-      delete this._mappings[key];
-    });
-  }
-
-  protected _getMappingForDestination<
-    TSource extends Dict<TSource> = any,
-    TDestination extends Dict<TDestination> = any
-  >(destination: Constructible<TDestination>): Mapping<TSource, TDestination> {
-    const destinationName = destination.prototype.constructor.name;
-    const sourceKey = Object.keys(this._mappings)
-      .filter(key => key.includes(destinationName))
-      .find(key => this._mappings[key].destinationKey === destinationName);
-
-    const sourceName = this._mappings[sourceKey as string].sourceKey;
-    const mapping = this._mappings[_getMappingKey(sourceName, destinationName)];
-
-    if (!mapping) {
-      throw new Error(
-        `Mapping not found for source ${sourceName} and destination ${destinationName}`
-      );
+  if (!isArrayMap) {
+    if (afterMap) {
+      afterMap(sourceObj, destinationObj, { ...mapping });
+    } else if (afterMapAction) {
+      afterMapAction(sourceObj, destinationObj, { ...mapping });
     }
-
-    return mapping;
   }
 
-  /**
-   * Private Functions
-   */
+  return destinationObj;
+};
 
-  private _hasMapping<
-    TSource extends Dict<TSource> = any,
-    TDestination extends Dict<TDestination> = any
-  >(
-    source: Constructible<TSource>,
-    destination: Constructible<TDestination>
-  ): string {
-    const key = _getMappingKey(source.name, destination.name);
-    if (this._mappings[key]) {
-      throw new Error(
-        `Mapping for source ${source.name} and destination ${destination.name} is already existed`
-      );
-    }
+export const _mapArray = <
+  TSource extends Dict<TSource> = any,
+  TDestination extends Dict<TDestination> = any
+>(
+  sourceArray: TSource[],
+  mapping: Mapping<TSource, TDestination>,
+  option: MapActionOptions<TSource[], TDestination[]> = defaultMapActionOptions,
+  mappings: { [key: string]: Mapping }
+): TDestination[] => {
+  let destination: TDestination[] = [];
+  const { beforeMap, afterMap } = option;
 
-    return key;
+  if (beforeMap) {
+    beforeMap(sourceArray, destination, { ...mapping } as any);
   }
 
-  private _getMapping<
-    TSource extends Dict<TSource> = any,
-    TDestination extends Dict<TDestination> = any
-  >(
-    source: Constructible<TSource>,
-    destination: Constructible<TDestination>
-  ): Mapping<TSource, TDestination> {
-    const sourceName = source.prototype
-      ? source.prototype.constructor.name
-      : source.constructor.name;
-    const destinationName = destination.prototype
-      ? destination.prototype.constructor.name
-      : destination.constructor.name;
-    const mapping = this._mappings[_getMappingKey(sourceName, destinationName)];
+  destination = sourceArray.map(s => _map(s, mapping, {}, true, mappings));
 
-    if (!mapping) {
-      throw new Error(
-        `Mapping not found for source ${sourceName} and destination ${destinationName}`
-      );
-    }
-
-    return mapping;
+  if (afterMap) {
+    afterMap(sourceArray, destination, { ...mapping } as any);
   }
 
-  private _getMappingForNestedKey<
-    TSource extends Dict<TSource> = any,
-    TDestination extends Dict<TDestination> = any
-  >(val: Constructible<TSource>): Mapping<TSource, TDestination> {
-    const mappingName = val.constructor.name;
-    const destinationEntry = Object.entries(this._mappings)
-      .filter(([key, _]) => key.includes(mappingName))
-      .find(([key, _]) => this._mappings[key].sourceKey === mappingName);
+  return destination;
+};
 
-    if (!destinationEntry) {
-      throw new Error(`Mapping not found for source ${mappingName}`);
-    }
+export const _createMappingObject = <
+  TSource extends Dict<TSource> = any,
+  TDestination extends Dict<TDestination> = any
+>(
+  source: Constructible<TSource>,
+  destination: Constructible<TDestination>,
+  options: CreateMapActions,
+  mappings: { [key: string]: Mapping }
+): Mapping<TSource, TDestination> => {
+  const _key = _hasMapping(source, destination, mappings);
+  const _mapping: Mapping<TSource, TDestination> = Object.seal({
+    source,
+    sourceKey: source.prototype.constructor.name,
+    destination,
+    destinationKey: destination.prototype.constructor.name,
+    properties: new Map(),
+    sourceMemberNamingConvention: options.sourceMemberNamingConvention as NamingConvention,
+    destinationMemberNamingConvention: options.destinationMemberNamingConvention as NamingConvention,
+    beforeMapAction: undefined,
+    afterMapAction: undefined,
+  });
 
-    const destination = destinationEntry[1].destination as Constructible<
-      TDestination
-    >;
+  mappings[_key] = _mapping;
+  return _mapping;
+};
 
-    if (!destination) {
-      throw new Error(`Mapping not found for source ${mappingName}`);
-    }
-
-    const mapping = this._getMapping(val, destination);
-
-    if (!mapping) {
-      throw new Error(
-        `Mapping not found for source ${mappingName} and destination ${destination.name ||
-          destination.constructor.name}`
-      );
-    }
-
-    return mapping;
-  }
-}
+export const _createReversedMappingObject = <
+  TSource extends Dict<TSource> = any,
+  TDestination extends Dict<TDestination> = any
+>(
+  mapping: Mapping<TSource, TDestination>,
+  mappings: { [key: string]: Mapping }
+): Mapping<TDestination, TSource> => {
+  const _reversedKey = _hasMapping(
+    mapping.destination,
+    mapping.source,
+    mappings
+  );
+  const _reversedMapping: Mapping<TDestination, TSource> = Object.seal({
+    source: mapping.destination,
+    sourceKey: mapping.destination.prototype
+      ? mapping.destination.prototype.constructor.name
+      : mapping.destination.constructor.name,
+    destination: mapping.source,
+    destinationKey: mapping.source.prototype
+      ? mapping.source.prototype.constructor.name
+      : mapping.source.constructor.name,
+    sourceMemberNamingConvention: mapping.destinationMemberNamingConvention,
+    destinationMemberNamingConvention: mapping.sourceMemberNamingConvention,
+    properties: _initializeReversedMappingProperties(mapping),
+    beforeMapAction: undefined,
+    afterMapAction: undefined,
+  });
+  mappings[_reversedKey] = _reversedMapping;
+  return _reversedMapping;
+};

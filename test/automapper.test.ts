@@ -98,7 +98,10 @@ describe('AutoMapper - reverseMap', () => {
         opts => opts.mapFrom(s => s.firstName + ' ' + s.lastName)
       )
       .reverseMap()
-      .forPath(s => s.full, opts => opts.mapFrom(d => d.fullName))
+      .forPath(
+        s => s.full,
+        opts => opts.mapFrom(d => d.fullName)
+      )
       .beforeMap(before)
       .afterMap(after);
 
@@ -349,8 +352,14 @@ describe('AutoMapper - map', () => {
           opts =>
             opts.preCondition(s => s.shouldIgnore > 5).mapFrom(s => s.source)
         )
-        .forMember(d => d.ignored, opts => opts.ignore())
-        .forMember(d => d.shouldBeSubstituted, opts => opts.nullSubstitution('Substituted'));
+        .forMember(
+          d => d.ignored,
+          opts => opts.ignore()
+        )
+        .forMember(
+          d => d.shouldBeSubstituted,
+          opts => opts.nullSubstitution('Substituted')
+        );
     }
   }
 
@@ -371,12 +380,10 @@ describe('AutoMapper - map', () => {
   class AddressProfile extends MappingProfileBase {
     constructor(mapper: AutoMapper) {
       super();
-      mapper
-        .createMap(Address, AddressVm)
-        .forMember(
-          d => d.formattedAddress,
-          opts => opts.mapFrom(s => s.street + ' ' + s.city + ' ' + s.state)
-        );
+      mapper.createMap(Address, AddressVm).forMember(
+        d => d.formattedAddress,
+        opts => opts.mapFrom(s => s.street + ' ' + s.city + ' ' + s.state)
+      );
     }
   }
 
@@ -403,12 +410,10 @@ describe('AutoMapper - map', () => {
   class ProfileProfile extends MappingProfileBase {
     constructor(mapper: AutoMapper) {
       super();
-      mapper
-        .createMap(Profile, ProfileVm)
-        .forMember(
-          d => d.avatar,
-          opts => opts.mapWith(AvatarVm, s => s.avatar)
-        );
+      mapper.createMap(Profile, ProfileVm).forMember(
+        d => d.avatar,
+        opts => opts.mapWith(AvatarVm, s => s.avatar)
+      );
     }
   }
 
@@ -437,8 +442,14 @@ describe('AutoMapper - map', () => {
       super();
       mapper
         .createMap(User, UserVm)
-        .forMember(d => d.first, opts => opts.mapFrom(s => s.firstName))
-        .forMember(d => d.last, opts => opts.mapFrom(s => s.lastName))
+        .forMember(
+          d => d.first,
+          opts => opts.mapFrom(s => s.firstName)
+        )
+        .forMember(
+          d => d.last,
+          opts => opts.mapFrom(s => s.lastName)
+        )
         .forMember(
           d => d.full,
           opts => opts.mapFrom(s => s.firstName + ' ' + s.lastName)
@@ -499,7 +510,9 @@ describe('AutoMapper - map', () => {
     expect(vm.profile.avatar).toBeInstanceOf(AvatarVm);
     expect(vm.profile.avatar.url).toEqual(user.profile.avatar.source);
     expect(vm.profile.avatar.shouldBeSubstituted).not.toEqual('Substituted');
-    expect(vm.profile.avatar.shouldBeSubstituted).toEqual('Will not be substituted');
+    expect(vm.profile.avatar.shouldBeSubstituted).toEqual(
+      'Will not be substituted'
+    );
 
     expect(vm.profile.addresses).toBeTruthy();
     expect(vm.profile.addresses).toHaveLength(user.profile.addresses.length);
@@ -516,11 +529,11 @@ describe('AutoMapper - map', () => {
     });
   });
 
-  it('mapAsync', async () => {
+  /*it('mapAsync', async () => {
     const vm = await Mapper.mapAsync(user, UserVm);
     expect(vm).toBeTruthy();
     expect(vm).toBeInstanceOf(UserVm);
-  });
+  });*/
 
   it('mapArray', () => {
     const vms = Mapper.mapArray([user, user], UserVm);
@@ -531,11 +544,11 @@ describe('AutoMapper - map', () => {
     });
   });
 
-  it('mapArrayAsync', async () => {
-    const vms = await Mapper.mapArrayAsync([user, user], UserVm);
-    expect(vms).toBeTruthy();
-    expect(vms.length).toEqual(2);
-  });
+  // it('mapArrayAsync', async () => {
+  //   const vms = await Mapper.mapArrayAsync([user, user], UserVm);
+  //   expect(vms).toBeTruthy();
+  //   expect(vms.length).toEqual(2);
+  // });
 });
 
 describe('AutoMapper - reverseMap - complex', () => {
@@ -565,10 +578,19 @@ describe('AutoMapper - reverseMap - complex', () => {
           opts =>
             opts.preCondition(s => s.shouldIgnore > 5).mapFrom(s => s.source)
         )
-        .forMember(d => d.ignored, opts => opts.ignore())
+        .forMember(
+          d => d.ignored,
+          opts => opts.ignore()
+        )
         .reverseMap()
-        .forPath(s => s.url, opts => opts.ignore())
-        .forPath(s => s.shouldIgnore, opts => opts.fromValue(5));
+        .forPath(
+          s => s.url,
+          opts => opts.ignore()
+        )
+        .forPath(
+          s => s.shouldIgnore,
+          opts => opts.fromValue(5)
+        );
     }
   }
 
@@ -596,9 +618,18 @@ describe('AutoMapper - reverseMap - complex', () => {
           opts => opts.mapFrom(s => s.street + ' ' + s.city + ' ' + s.state)
         )
         .reverseMap()
-        .forPath(s => s.street, opts => opts.ignore())
-        .forPath(s => s.city, opts => opts.ignore())
-        .forPath(s => s.state, opts => opts.ignore());
+        .forPath(
+          s => s.street,
+          opts => opts.ignore()
+        )
+        .forPath(
+          s => s.city,
+          opts => opts.ignore()
+        )
+        .forPath(
+          s => s.state,
+          opts => opts.ignore()
+        );
     }
   }
 
@@ -633,7 +664,10 @@ describe('AutoMapper - reverseMap - complex', () => {
       super();
       mapper
         .createMap(Profile, ProfileVm)
-        .forMember(d => d.avatar, opts => opts.mapWith(AvatarVm, s => s.avatar))
+        .forMember(
+          d => d.avatar,
+          opts => opts.mapWith(AvatarVm, s => s.avatar)
+        )
         .reverseMap()
         .forPath(
           s => s.birthday,
@@ -667,8 +701,14 @@ describe('AutoMapper - reverseMap - complex', () => {
       super();
       mapper
         .createMap(User, UserVm)
-        .forMember(d => d.first, opts => opts.mapFrom(s => s.firstName))
-        .forMember(d => d.last, opts => opts.mapFrom(s => s.lastName))
+        .forMember(
+          d => d.first,
+          opts => opts.mapFrom(s => s.firstName)
+        )
+        .forMember(
+          d => d.last,
+          opts => opts.mapFrom(s => s.lastName)
+        )
         .forMember(
           d => d.full,
           opts => opts.mapFrom(s => s.firstName + ' ' + s.lastName)

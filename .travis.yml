@@ -18,13 +18,15 @@ jobs:
       node_js:
         - '12'
       name: deploy_docs
-      script: if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then npm run deploy-docs; fi
+      if: branch = master AND env(TRAVIS_PULL_REQUEST) = false
+      script: yarn deploy-docs
     - name: npm_release
       node_js:
         - '12'
       before_script:
         - npm run build
-      script: if [ ["$TRAVIS_BRANCH" = "master" || "$TRAVIS_BRANCH" = "next"] -a "$TRAVIS_PULL_REQUEST" = "false" ]; then npm run semantic-release; fi
+      if: (branch = master OR branch = next) AND env(TRAVIS_PULL_REQUEST) = false
+      script: yarn semantic-release
     - name: produce_coverage
       node_js:
         - '12'

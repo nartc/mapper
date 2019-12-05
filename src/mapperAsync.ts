@@ -1,6 +1,6 @@
 import { parentPort, workerData } from 'worker_threads';
 import { _map, _mapArray } from './base';
-import { _toArrayBuffer, _toString } from './utils/common.utils';
+import { _toArrayBuffer, _toString } from './utils';
 
 const { sourceObj, mapping, options, mappings, isMapArray } = JSON.parse(
   _toString(workerData)

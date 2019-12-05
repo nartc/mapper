@@ -18,14 +18,16 @@ jobs:
       node_js:
         - '12'
       name: deploy_docs
-      if: branch = master AND env(TRAVIS_PULL_REQUEST) = false
+      if: branch = master
+      env: TRAVIS_PULL_REQUEST = false
       script: yarn deploy-docs
     - name: npm_release
       node_js:
         - '12'
       before_script:
         - npm run build
-      if: (branch = master OR branch = next) AND env(TRAVIS_PULL_REQUEST) = false
+      if: branch = master OR branch = next
+      env: TRAVIS_PULL_REQUEST = false
       script: yarn semantic-release
     - name: produce_coverage
       node_js:

@@ -26,9 +26,17 @@ jobs:
         - '12'
       before_script:
         - npm run build
-      if: branch = master OR branch = next
+      if: branch = master
       env: TRAVIS_PULL_REQUEST = false
       script: yarn semantic-release
+    - name: npm_release_next
+      node_js:
+        - '12'
+      before_script:
+        - npm run build
+      if: branch = next
+      env: TRAVIS_PULL_REQUEST = false
+      script: yarn semantic-release --branch next
     - name: produce_coverage
       node_js:
         - '12'

@@ -62,6 +62,15 @@
   "publishConfig": {
     "access": "public"
   },
+  "release": {
+    "branches": [
+      "master",
+      {
+        "name": "next",
+        "prerelease": true
+      }
+    ]
+  },
   "jest": {
     "transform": {
       ".(ts|tsx)": "ts-jest"

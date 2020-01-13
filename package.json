@@ -105,7 +105,7 @@
     "semantic-release": "16.0.1",
     "shelljs": "0.8.3",
     "ts-node": "8.5.4",
-    "tsdx": "0.12.1",
+    "tsdx": "0.12.2",
     "tslib": "1.10.0",
     "typedoc": "0.16.0",
     "typescript": "3.7.2"

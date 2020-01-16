@@ -90,7 +90,7 @@
     ]
   },
   "devDependencies": {
-    "@commitlint/cli": "8.3.4",
+    "@commitlint/cli": "8.3.5",
     "@commitlint/config-conventional": "8.3.4",
     "@types/jest": "24.0.25",
     "@types/lodash.set": "4.3.6",

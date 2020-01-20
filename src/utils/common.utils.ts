@@ -174,12 +174,12 @@ export function _getSourcePropertyKey(
  * Internal method
  * @private
  */
-export function _isClass(fn: Function): boolean {
+export function _isClass(val: Function | Object): boolean {
   return (
-    fn.constructor &&
-    (/^\s*function/.test(fn.constructor.toString()) ||
-      /^\s*class/.test(fn.constructor.toString())) &&
-    fn.constructor.toString().includes(fn.constructor.name)
+    val.constructor &&
+    (/^\s*function/.test(val.constructor.toString()) ||
+      /^\s*class/.test(val.constructor.toString())) &&
+    val.constructor.toString().includes(val.constructor.name)
   );
 }
 

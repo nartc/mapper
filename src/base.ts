@@ -245,7 +245,8 @@ export abstract class AutoMapperBase {
 
     if (type === TransformationType.MapWith) {
       const _mapping = this._getMappingForDestination(
-        (mapWith as MapWithTransformOptions).destination
+        (mapWith as MapWithTransformOptions).destination,
+        sourceObj
       );
       const _source = (mapWith as MapWithTransformOptions).fromValue(sourceObj);
       if (_isEmpty(_source)) {
@@ -444,18 +445,31 @@ export abstract class AutoMapperBase {
   protected _getMappingForDestination<
     TSource extends Dict<TSource> = any,
     TDestination extends Dict<TDestination> = any
-  >(destination: Constructible<TDestination>): Mapping<TSource, TDestination> {
+  >(
+    destination: Constructible<TDestination>,
+    source: TSource
+  ): Mapping<TSource, TDestination> {
     const destinationName = destination.prototype.constructor.name;
     const sourceKey = Object.keys(this._mappings)
       .filter(key => key.includes(destinationName))
       .find(key => this._mappings[key].destinationKey === destinationName);
 
-    const sourceName = this._mappings[sourceKey as string].sourceKey;
-    const mapping = this._mappings[_getMappingKey(sourceName, destinationName)];
-
+    const sourceNameFromSource = _isClass(source)
+      ? source.constructor.name
+      : '';
+    const sourceNameFromDestination = this._mappings[sourceKey as string]
+      .sourceKey;
+    let mapping = this._mappings[
+      _getMappingKey(sourceNameFromSource, destinationName)
+    ];
+    mapping = mapping
+      ? mapping
+      : this._mappings[
+          _getMappingKey(sourceNameFromDestination, destinationName)
+        ];
     if (!mapping) {
       throw new Error(
-        `Mapping not found for source ${sourceName} and destination ${destinationName}`
+        `Mapping not found for source ${sourceNameFromSource} / ${sourceNameFromDestination} and destination ${destinationName}`
       );
     }
 

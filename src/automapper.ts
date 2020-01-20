@@ -174,7 +174,7 @@ export class AutoMapper extends AutoMapperBase {
     destination: Constructible<TDestination>,
     options?: MapActionOptions<TSource, TDestination>
   ): TDestination {
-    const mapping = super._getMappingForDestination(destination);
+    const mapping = super._getMappingForDestination(destination, sourceObj);
     return super._map(sourceObj, mapping, options);
   }
 
@@ -202,7 +202,7 @@ export class AutoMapper extends AutoMapperBase {
     destination: Constructible<TDestination>,
     options?: MapActionOptions<TSource, TDestination>
   ): Promise<TDestination> {
-    const mapping = super._getMappingForDestination(destination);
+    const mapping = super._getMappingForDestination(destination, sourceObj);
     return super._mapAsync(sourceObj, mapping, options);
   }
 
@@ -232,7 +232,7 @@ export class AutoMapper extends AutoMapperBase {
     destination: Constructible<TDestination>,
     options?: MapActionOptions<TSource[], TDestination[]>
   ): TDestination[] {
-    const mapping = super._getMappingForDestination(destination);
+    const mapping = super._getMappingForDestination(destination, sourceArr[0]);
     return super._mapArray(sourceArr, mapping, options);
   }
 
@@ -263,7 +263,7 @@ export class AutoMapper extends AutoMapperBase {
     destination: Constructible<TDestination>,
     options?: MapActionOptions<TSource[], TDestination[]>
   ): Promise<TDestination[]> {
-    const mapping = super._getMappingForDestination(destination);
+    const mapping = super._getMappingForDestination(destination, sourceArr[0]);
     return super._mapArrayAsync(sourceArr, mapping, options);
   }
 

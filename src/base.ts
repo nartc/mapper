@@ -449,7 +449,9 @@ export abstract class AutoMapperBase {
   ): Mapping<TSource, TDestination> {
     const destinationName = destination.prototype.constructor.name;
     const sourceName = _isClass(sourceObj)
-      ? sourceObj.constructor.name
+      ? (sourceObj as any).prototype
+        ? (sourceObj as any).prototype.constructor.name
+        : sourceObj.constructor.name
       : (sourceObj as Constructible<TSource>).prototype.constructor.name;
 
     const mapping = this._mappings[_getMappingKey(sourceName, destinationName)];

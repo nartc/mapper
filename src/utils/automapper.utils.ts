@@ -1,12 +1,14 @@
 import { plainToClass } from 'class-transformer';
 import {
   ConditionPredicate,
+  Constructible,
   ConvertUsingTransformOptions,
   CreateMapFluentFunctions,
   CreateReversedMapFluentFunctions,
   DestinationMemberExpressionOptions,
   Dict,
   ForMemberExpression,
+  MapActionOptions,
   MapFromCallback,
   Mapping,
   MappingProperty,
@@ -21,6 +23,7 @@ import {
   _getPathRecursive,
   _getSourcePropertyKey,
   _getTransformationType,
+  _isClass,
 } from './common.utils';
 
 /**
@@ -364,4 +367,41 @@ export function _setMappingPropertyForMapFromMember<
       },
     })
   );
+}
+
+/**
+ * Internal method
+ * @private
+ */
+export function _getPropsFromArguments<
+  TSource extends Dict<TSource> = any,
+  TDestination extends Dict<TDestination> = any
+>(
+  args: any[]
+): {
+  destination: Constructible<TDestination>;
+  source?: Constructible<TSource>;
+  options?: MapActionOptions<TSource, TDestination>;
+} {
+  const destination: Constructible<TDestination> = args[0];
+
+  if (args.length === 1) {
+    return { destination };
+  }
+
+  if (args.length === 3) {
+    return { destination, source: args[1], options: args[2] };
+  }
+
+  let temp = args[1];
+
+  if (
+    (typeof temp === 'function' || _isClass(temp)) &&
+    !temp['beforeMap'] &&
+    !temp['afterMap']
+  ) {
+    return { destination, source: temp };
+  }
+
+  return { destination, options: temp };
 }

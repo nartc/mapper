@@ -11,7 +11,7 @@ export type AutoMapDecoratorOptions = {
   typeOptions?: TypeOptions;
 };
 
-export const autoMap = (
+export const AutoMap = (
   typeFn?: (type?: TypeHelpOptions) => Function,
   options: AutoMapDecoratorOptions = {}
 ): PropertyDecorator => (target: any, propertyKey) => {

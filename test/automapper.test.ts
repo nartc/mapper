@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import {
-  autoMap,
+  AutoMap,
   AutoMapper,
   BeforeAfterMapAction,
   Converter,
@@ -26,18 +26,18 @@ describe('AutoMapper', () => {
 
 describe('AutoMapper - CreateMap', () => {
   class User {
-    @autoMap()
+    @AutoMap()
     firstName!: string;
-    @autoMap()
+    @AutoMap()
     lastName!: string;
   }
 
   class UserVm {
-    @autoMap()
+    @AutoMap()
     firstName!: string;
-    @autoMap()
+    @AutoMap()
     lastName!: string;
-    @autoMap()
+    @AutoMap()
     fullName!: string;
   }
 
@@ -68,20 +68,20 @@ describe('AutoMapper - CreateMap', () => {
 
 describe('AutoMapper - reverseMap', () => {
   class User {
-    @autoMap()
+    @AutoMap()
     firstName!: string;
-    @autoMap()
+    @AutoMap()
     lastName!: string;
-    @autoMap()
+    @AutoMap()
     full!: string;
   }
 
   class UserVm {
-    @autoMap()
+    @AutoMap()
     firstName!: string;
-    @autoMap()
+    @AutoMap()
     lastName!: string;
-    @autoMap()
+    @AutoMap()
     fullName!: string;
   }
 
@@ -128,18 +128,18 @@ describe('AutoMapper - reverseMap', () => {
 
 describe('AutoMapper - addProfile', () => {
   class User {
-    @autoMap()
+    @AutoMap()
     firstName!: string;
-    @autoMap()
+    @AutoMap()
     lastName!: string;
   }
 
   class UserVm {
-    @autoMap()
+    @AutoMap()
     firstName!: string;
-    @autoMap()
+    @AutoMap()
     lastName!: string;
-    @autoMap()
+    @AutoMap()
     fullName!: string;
   }
 
@@ -191,18 +191,18 @@ describe('AutoMapper - addProfile', () => {
 
 describe('AutoMapper - callbacks', () => {
   class User {
-    @autoMap()
+    @AutoMap()
     firstName!: string;
-    @autoMap()
+    @AutoMap()
     lastName!: string;
   }
 
   class UserVm {
-    @autoMap()
+    @AutoMap()
     firstName!: string;
-    @autoMap()
+    @AutoMap()
     lastName!: string;
-    @autoMap()
+    @AutoMap()
     fullName!: string;
   }
 
@@ -257,27 +257,27 @@ describe('AutoMapper - callbacks', () => {
 
 describe('AutoMapper - namingConvention', () => {
   class Address {
-    @autoMap()
+    @AutoMap()
     Street!: string;
   }
 
   class User {
-    @autoMap()
+    @AutoMap()
     FirstName!: string;
-    @autoMap()
+    @AutoMap()
     LastName!: string;
-    @autoMap(() => Address)
+    @AutoMap(() => Address)
     Address!: Address;
   }
 
   class UserVm {
-    @autoMap()
+    @AutoMap()
     firstName!: string;
-    @autoMap()
+    @AutoMap()
     lastName!: string;
-    @autoMap()
+    @AutoMap()
     fullName!: string;
-    @autoMap()
+    @AutoMap()
     addressStreet!: string;
   }
 
@@ -322,22 +322,22 @@ describe('AutoMapper - namingConvention', () => {
 
 describe('AutoMapper - map', () => {
   class Avatar {
-    @autoMap()
+    @AutoMap()
     url!: string;
-    @autoMap()
+    @AutoMap()
     source!: string;
-    @autoMap()
+    @AutoMap()
     shouldIgnore!: number;
-    @autoMap()
+    @AutoMap()
     shouldBeSubstituted!: string;
   }
 
   class AvatarVm {
-    @autoMap()
+    @AutoMap()
     url!: string;
-    @autoMap()
+    @AutoMap()
     ignored!: number;
-    @autoMap()
+    @AutoMap()
     shouldBeSubstituted!: string;
   }
 
@@ -363,16 +363,16 @@ describe('AutoMapper - map', () => {
   }
 
   class Address {
-    @autoMap()
+    @AutoMap()
     street!: string;
-    @autoMap()
+    @AutoMap()
     city!: string;
-    @autoMap()
+    @AutoMap()
     state!: string;
   }
 
   class AddressVm {
-    @autoMap()
+    @AutoMap()
     formattedAddress!: string;
   }
 
@@ -387,22 +387,22 @@ describe('AutoMapper - map', () => {
   }
 
   class Profile {
-    @autoMap()
+    @AutoMap()
     bio!: string;
-    @autoMap()
+    @AutoMap()
     birthday!: Date;
-    @autoMap(() => Avatar)
+    @AutoMap(() => Avatar)
     avatar!: Avatar;
-    @autoMap(() => Address)
+    @AutoMap(() => Address)
     addresses!: Address[];
   }
 
   class ProfileVm {
-    @autoMap()
+    @AutoMap()
     bio!: string;
-    @autoMap(() => AvatarVm)
+    @AutoMap(() => AvatarVm)
     avatar!: AvatarVm;
-    @autoMap(() => AddressVm)
+    @AutoMap(() => AddressVm)
     addresses!: AddressVm[];
   }
 
@@ -417,22 +417,22 @@ describe('AutoMapper - map', () => {
   }
 
   class User {
-    @autoMap()
+    @AutoMap()
     firstName!: string;
-    @autoMap()
+    @AutoMap()
     lastName!: string;
-    @autoMap(() => Profile)
+    @AutoMap(() => Profile)
     profile!: Profile;
   }
 
   class UserVm {
-    @autoMap()
+    @AutoMap()
     first!: string;
-    @autoMap()
+    @AutoMap()
     last!: string;
-    @autoMap()
+    @AutoMap()
     full!: string;
-    @autoMap(() => ProfileVm)
+    @AutoMap(() => ProfileVm)
     profile!: ProfileVm;
   }
 
@@ -552,18 +552,18 @@ describe('AutoMapper - map', () => {
 
 describe('AutoMapper - reverseMap - complex', () => {
   class Avatar {
-    @autoMap()
+    @AutoMap()
     url!: string;
-    @autoMap()
+    @AutoMap()
     source!: string;
-    @autoMap()
+    @AutoMap()
     shouldIgnore!: number;
   }
 
   class AvatarVm {
-    @autoMap()
+    @AutoMap()
     url!: string;
-    @autoMap()
+    @AutoMap()
     ignored!: number;
   }
 
@@ -594,16 +594,16 @@ describe('AutoMapper - reverseMap - complex', () => {
   }
 
   class Address {
-    @autoMap()
+    @AutoMap()
     street!: string;
-    @autoMap()
+    @AutoMap()
     city!: string;
-    @autoMap()
+    @AutoMap()
     state!: string;
   }
 
   class AddressVm {
-    @autoMap()
+    @AutoMap()
     formattedAddress!: string;
   }
 
@@ -633,22 +633,22 @@ describe('AutoMapper - reverseMap - complex', () => {
   }
 
   class Profile {
-    @autoMap()
+    @AutoMap()
     bio!: string;
-    @autoMap()
+    @AutoMap()
     birthday!: Date;
-    @autoMap(() => Avatar)
+    @AutoMap(() => Avatar)
     avatar!: Avatar;
-    @autoMap(() => Address)
+    @AutoMap(() => Address)
     addresses!: Address[];
   }
 
   class ProfileVm {
-    @autoMap()
+    @AutoMap()
     bio!: string;
-    @autoMap(() => AvatarVm)
+    @AutoMap(() => AvatarVm)
     avatar!: AvatarVm;
-    @autoMap(() => AddressVm)
+    @AutoMap(() => AddressVm)
     addresses!: AddressVm[];
   }
 
@@ -676,31 +676,31 @@ describe('AutoMapper - reverseMap - complex', () => {
   }
 
   class User {
-    @autoMap()
+    @AutoMap()
     firstName!: string;
-    @autoMap()
+    @AutoMap()
     lastName!: string;
-    @autoMap(() => Profile)
+    @AutoMap(() => Profile)
     profile!: Profile;
   }
 
   class User2 {
-    @autoMap()
+    @AutoMap()
     firstName!: string;
-    @autoMap()
+    @AutoMap()
     lastName!: string;
-    @autoMap(() => Profile)
+    @AutoMap(() => Profile)
     profile!: Profile;
   }
 
   class UserVm {
-    @autoMap()
+    @AutoMap()
     first!: string;
-    @autoMap()
+    @AutoMap()
     last!: string;
-    @autoMap()
+    @AutoMap()
     full!: string;
-    @autoMap(() => ProfileVm)
+    @AutoMap(() => ProfileVm)
     profile!: ProfileVm;
   }
 
@@ -799,6 +799,39 @@ describe('AutoMapper - reverseMap - complex', () => {
       });
 
     const vm = Mapper.map(user, UserVm);
+    expect(vm).toBeTruthy();
+    expect(vm).toBeInstanceOf(UserVm);
+    expect(vm.first).toEqual('user2 first name');
+    expect(vm.last).toEqual('user2 last name');
+    expect(vm.full).toEqual('full name');
+    expect(vm.profile).toBeTruthy();
+    expect(vm.profile).toBeInstanceOf(ProfileVm);
+  });
+
+  it('multiple mapping with overload', () => {
+    const user: User2 = {
+      firstName: 'blah',
+      lastName: 'foo',
+      profile: {
+        bio: 'Developer',
+        birthday: new Date('10/14/1991'),
+        addresses: Array(2)
+          .fill('')
+          .map((_, index) => {
+            const addr = new Address();
+            addr.street = 'Street ' + index + 1;
+            addr.city = 'City ' + index + 1;
+            addr.state = 'State ' + index + 1;
+            return addr;
+          }),
+        avatar: {
+          source: 'Internet',
+          url: 'url.com',
+          shouldIgnore: 6,
+        },
+      },
+    };
+    const vm = Mapper.map(user, UserVm, User2);
     expect(vm).toBeTruthy();
     expect(vm).toBeInstanceOf(UserVm);
     expect(vm.first).toEqual('user2 first name');

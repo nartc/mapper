@@ -17,6 +17,7 @@ import {
 import {
   _createMapForMember,
   _createMapForPath,
+  _getPropsFromArguments,
   _initializeMappingProperties,
 } from './utils';
 
@@ -152,32 +153,31 @@ export class AutoMapper extends AutoMapperBase {
   }
 
   /**
-   * Map a Source object to a Destination Model using a pre-configured Mapping object.
+   * Map a Source object to a Destination Model using a pre-configured Mapping object. Executed as a Micro Task to not
+   * block the main thread.
    *
    * @example
    * ```typescript
-   * const vm = Mapper.map(user, UserVm);
+   * const vm = await Mapper.mapAsync(user, UserVm, User);
    *
    * console.log(vm instanceof UserVm); // true
    * ```
    *
    * @param {TSource} sourceObj - Source object value to execute the mapping against
    * @param {Constructible<TDestination>} destination - Destination Model to map to
+   * @param {Constructible<TSource>} source - Source Model to map from
    * @param {MapActionOptions} [options] - An optional option object with beforeMap and/or afterMap callback. Both
    *   callbacks are defaulted to undefined aka no callbacks.
    */
-  public map<
+  public mapAsync<
     TSource extends Dict<TSource> = any,
     TDestination extends Dict<TDestination> = any
   >(
     sourceObj: TSource,
     destination: Constructible<TDestination>,
+    source?: Constructible<TSource>,
     options?: MapActionOptions<TSource, TDestination>
-  ): TDestination {
-    const mapping = super._getMappingForDestination(destination, sourceObj);
-    return super._map(sourceObj, mapping, options);
-  }
-
+  ): Promise<TDestination>;
   /**
    * Map a Source object to a Destination Model using a pre-configured Mapping object. Executed as a Micro Task to not
    * block the main thread.
@@ -201,11 +201,108 @@ export class AutoMapper extends AutoMapperBase {
     sourceObj: TSource,
     destination: Constructible<TDestination>,
     options?: MapActionOptions<TSource, TDestination>
-  ): Promise<TDestination> {
-    const mapping = super._getMappingForDestination(destination, sourceObj);
+  ): Promise<TDestination>;
+  public mapAsync<
+    TSource extends Dict<TSource> = any,
+    TDestination extends Dict<TDestination> = any
+  >(sourceObj: TSource, ...args: any[]): Promise<TDestination> {
+    const { destination, source, options } = _getPropsFromArguments(args);
+    const mapping = super._getMappingForDestination(
+      destination,
+      source || sourceObj
+    );
     return super._mapAsync(sourceObj, mapping, options);
   }
 
+  /**
+   * Map a Source object to a Destination Model using a pre-configured Mapping object.
+   *
+   * @example
+   * ```typescript
+   * const vm = Mapper.map(user, UserVm, User);
+   *
+   * console.log(vm instanceof UserVm); // true
+   * ```
+   *
+   * @param {TSource} sourceObj - Source object value to execute the mapping against
+   * @param {Constructible<TDestination>} destination - Destination Model to map to
+   * @param {Constructible<TSource>} source - Source Model to map from
+   * @param {MapActionOptions} [options] - An optional option object with beforeMap and/or afterMap callback. Both
+   *   callbacks are defaulted to undefined aka no callbacks.
+   */
+  public map<
+    TSource extends Dict<TSource> = any,
+    TDestination extends Dict<TDestination> = any
+  >(
+    sourceObj: TSource,
+    destination: Constructible<TDestination>,
+    source?: Constructible<TSource>,
+    options?: MapActionOptions<TSource, TDestination>
+  ): TDestination;
+  /**
+   * Map a Source object to a Destination Model using a pre-configured Mapping object.
+   *
+   * @example
+   * ```typescript
+   * const vm = Mapper.map(user, UserVm);
+   *
+   * console.log(vm instanceof UserVm); // true
+   * ```
+   *
+   * @param {TSource} sourceObj - Source object value to execute the mapping against
+   * @param {Constructible<TDestination>} destination - Destination Model to map to
+   * @param {MapActionOptions} [options] - An optional option object with beforeMap and/or afterMap callback. Both
+   *   callbacks are defaulted to undefined aka no callbacks.
+   */
+  public map<
+    TSource extends Dict<TSource> = any,
+    TDestination extends Dict<TDestination> = any
+  >(
+    sourceObj: TSource,
+    destination: Constructible<TDestination>,
+    options?: MapActionOptions<TSource, TDestination>
+  ): TDestination;
+  public map<
+    TSource extends Dict<TSource> = any,
+    TDestination extends Dict<TDestination> = any
+  >(sourceObj: TSource, ...args: any[]): TDestination {
+    const { destination, source, options } = _getPropsFromArguments(args);
+
+    const mapping = super._getMappingForDestination(
+      destination,
+      source || sourceObj
+    );
+    return super._map(sourceObj, mapping, options);
+  }
+
+  /**
+   * Map an Array/List of Source object to an Array/List of Destination Model using a pre-configured Mapping.
+   *
+   * @example
+   * ```typescript
+   * const vms = Mapper.mapArray(users, UserVm, User);
+   *
+   * console.log(vms.length === users.length); // true
+   * vms.forEach(vm => {
+   *   console.log(vm instanceof UserVm); // true
+   * })
+   * ```
+   *
+   * @param {TSource[]} sourceArr - Source array to execute the mapping against
+   * @param {Constructible<TDestination>} destination - Destination Model to map to
+   * @param {Constructible<TSource>} source - Source Model to map from
+   * @param {MapActionOptions} [options] - An optional option object with beforeMap and/or afterMap callback. Both
+   *   callbacks are defaulted to undefined aka no callbacks.
+   */
+  public mapArray<
+    TSource extends Dict<TSource> = any,
+    TDestination extends Dict<TDestination> = any
+  >(
+    sourceArr: TSource[],
+    destination: Constructible<TDestination>,
+    source?: Constructible<TSource>,
+    options?: MapActionOptions<TSource[], TDestination[]>
+  ): TDestination[];
   /**
    * Map an Array/List of Source object to an Array/List of Destination Model using a pre-configured Mapping.
    *
@@ -231,15 +328,53 @@ export class AutoMapper extends AutoMapperBase {
     sourceArr: TSource[],
     destination: Constructible<TDestination>,
     options?: MapActionOptions<TSource[], TDestination[]>
-  ): TDestination[] {
+  ): TDestination[];
+  public mapArray<
+    TSource extends Dict<TSource> = any,
+    TDestination extends Dict<TDestination> = any
+  >(sourceArr: TSource[], ...args: any[]): TDestination[] {
     if (!sourceArr.length) {
       return [];
     }
 
-    const mapping = super._getMappingForDestination(destination, sourceArr[0]);
+    const { destination, source, options } = _getPropsFromArguments(args);
+
+    const mapping = super._getMappingForDestination(
+      destination,
+      source || sourceArr[0]
+    );
     return super._mapArray(sourceArr, mapping, options);
   }
 
+  /**
+   * Map an Array/List of Source object to an Array/List of Destination Model using a pre-configured Mapping. Executed
+   * as a Micro Task to not block the main thread.
+   *
+   * @example
+   * ```typescript
+   * const vms = await Mapper.mapArrayAsync(users, UserVm, User);
+   *
+   * console.log(vms.length === users.length); // true
+   * vms.forEach(vm => {
+   *   console.log(vm instanceof UserVm); // true
+   * })
+   * ```
+   *
+   * @param {TSource[]} sourceArr - Source array to execute the mapping against
+   * @param {Constructible<TDestination>} destination - Destination Model to map to
+   * @param {Constructible<TSource>} source - Source Model to map from
+   * @param {MapActionOptions} [options] - An optional option object with beforeMap and/or afterMap callback. Both
+   *   callbacks are defaulted to undefined aka no callbacks.
+   */
+  public mapArrayAsync<
+    TSource extends Dict<TSource> = any,
+    TDestination extends Dict<TDestination> = any
+  >(
+    sourceArr: TSource[],
+    destination: Constructible<TDestination>,
+    source?: Constructible<TSource>,
+    options?: MapActionOptions<TSource[], TDestination[]>
+  ): Promise<TDestination[]>;
   /**
    * Map an Array/List of Source object to an Array/List of Destination Model using a pre-configured Mapping. Executed
    * as a Micro Task to not block the main thread.
@@ -266,12 +401,21 @@ export class AutoMapper extends AutoMapperBase {
     sourceArr: TSource[],
     destination: Constructible<TDestination>,
     options?: MapActionOptions<TSource[], TDestination[]>
-  ): Promise<TDestination[]> {
+  ): Promise<TDestination[]>;
+  public mapArrayAsync<
+    TSource extends Dict<TSource> = any,
+    TDestination extends Dict<TDestination> = any
+  >(sourceArr: TSource[], ...args: any[]): Promise<TDestination[]> {
     if (!sourceArr.length) {
       return Promise.resolve([]);
     }
 
-    const mapping = super._getMappingForDestination(destination, sourceArr[0]);
+    const { destination, source, options } = _getPropsFromArguments(args);
+
+    const mapping = super._getMappingForDestination(
+      destination,
+      source || sourceArr[0]
+    );
     return super._mapArrayAsync(sourceArr, mapping, options);
   }
 

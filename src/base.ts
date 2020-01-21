@@ -244,27 +244,26 @@ export abstract class AutoMapperBase {
     }
 
     if (type === TransformationType.MapWith) {
-      const _mapping = this._getMappingForDestination(
-        (mapWith as MapWithTransformOptions).destination
-      );
-      const _source = (mapWith as MapWithTransformOptions).fromValue(sourceObj);
+      const _source = mapWith.fromValue(sourceObj);
+
       if (_isEmpty(_source)) {
+        console.warn(`${propSourceMemberPath} does not exist`);
+        set(destinationObj, destinationMemberPath, null);
+        return;
+      }
+
+      if (!_isClass(_source)) {
         console.warn(
-          `${propSourceMemberPath} does not exist on ${_mapping.source}`
+          `${prop.destinationMemberPath} is type ${mapWith.destination.name} but ${_source} is a primitive. No mapping was executed`
         );
         set(destinationObj, destinationMemberPath, null);
         return;
       }
 
-      if (!_isClass(_source as any)) {
-        console.warn(
-          `${prop.destinationMemberPath} is type ${
-            (mapWith as MapWithTransformOptions).destination.name
-          } but ${_source} is a primitive. No mapping was executed`
-        );
-        set(destinationObj, destinationMemberPath, null);
-        return;
-      }
+      const _mapping = this._getMappingForDestination(
+        (mapWith as MapWithTransformOptions).destination,
+        _source
+      );
 
       if (Array.isArray(_source)) {
         set(
@@ -272,7 +271,7 @@ export abstract class AutoMapperBase {
           destinationMemberPath,
           _isEmpty(_source[0])
             ? []
-            : (this._mapArray(_source, _mapping as Mapping) as any)
+            : this._mapArray(_source, _mapping as Mapping)
         );
         return;
       }
@@ -444,13 +443,15 @@ export abstract class AutoMapperBase {
   protected _getMappingForDestination<
     TSource extends Dict<TSource> = any,
     TDestination extends Dict<TDestination> = any
-  >(destination: Constructible<TDestination>): Mapping<TSource, TDestination> {
+  >(
+    destination: Constructible<TDestination>,
+    sourceObj: TSource | Constructible<TSource>
+  ): Mapping<TSource, TDestination> {
     const destinationName = destination.prototype.constructor.name;
-    const sourceKey = Object.keys(this._mappings)
-      .filter(key => key.includes(destinationName))
-      .find(key => this._mappings[key].destinationKey === destinationName);
+    const sourceName = _isClass(sourceObj)
+      ? sourceObj.constructor.name
+      : (sourceObj as Constructible<TSource>).prototype.constructor.name;
 
-    const sourceName = this._mappings[sourceKey as string].sourceKey;
     const mapping = this._mappings[_getMappingKey(sourceName, destinationName)];
 
     if (!mapping) {

@@ -1,10 +1,5 @@
-import {
-  Expose,
-  ExposeOptions,
-  Type,
-  TypeHelpOptions,
-  TypeOptions,
-} from 'class-transformer';
+import { ExposeOptions, TypeHelpOptions, TypeOptions } from 'class-transformer';
+import { autoMap } from './automap.decorator';
 
 /**
  * Combined Expose and Type from class-transformer
@@ -18,6 +13,6 @@ export const ExposedType = (
   exposeOptions?: ExposeOptions,
   typeOptions?: TypeOptions
 ): PropertyDecorator => (target: any, propertyKey) => {
-  Expose(exposeOptions)(target, propertyKey as string);
-  Type(typeFn, typeOptions)(target, propertyKey as string);
+  console.warn('ExposedType is being deprecated. Please use @autoMap instead');
+  autoMap(typeFn, { exposeOptions, typeOptions })(target, propertyKey);
 };

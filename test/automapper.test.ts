@@ -1,10 +1,9 @@
-import { Expose } from 'class-transformer';
 import 'reflect-metadata';
 import {
+  autoMap,
   AutoMapper,
   BeforeAfterMapAction,
   Converter,
-  ExposedType,
   Mapper,
   MappingProfileBase,
   PascalCaseNamingConvention,
@@ -27,18 +26,18 @@ describe('AutoMapper', () => {
 
 describe('AutoMapper - CreateMap', () => {
   class User {
-    @Expose()
+    @autoMap()
     firstName!: string;
-    @Expose()
+    @autoMap()
     lastName!: string;
   }
 
   class UserVm {
-    @Expose()
+    @autoMap()
     firstName!: string;
-    @Expose()
+    @autoMap()
     lastName!: string;
-    @Expose()
+    @autoMap()
     fullName!: string;
   }
 
@@ -69,20 +68,20 @@ describe('AutoMapper - CreateMap', () => {
 
 describe('AutoMapper - reverseMap', () => {
   class User {
-    @Expose()
+    @autoMap()
     firstName!: string;
-    @Expose()
+    @autoMap()
     lastName!: string;
-    @Expose()
+    @autoMap()
     full!: string;
   }
 
   class UserVm {
-    @Expose()
+    @autoMap()
     firstName!: string;
-    @Expose()
+    @autoMap()
     lastName!: string;
-    @Expose()
+    @autoMap()
     fullName!: string;
   }
 
@@ -98,7 +97,10 @@ describe('AutoMapper - reverseMap', () => {
         opts => opts.mapFrom(s => s.firstName + ' ' + s.lastName)
       )
       .reverseMap()
-      .forPath(s => s.full, opts => opts.mapFrom(d => d.fullName))
+      .forPath(
+        s => s.full,
+        opts => opts.mapFrom(d => d.fullName)
+      )
       .beforeMap(before)
       .afterMap(after);
 
@@ -126,18 +128,18 @@ describe('AutoMapper - reverseMap', () => {
 
 describe('AutoMapper - addProfile', () => {
   class User {
-    @Expose()
+    @autoMap()
     firstName!: string;
-    @Expose()
+    @autoMap()
     lastName!: string;
   }
 
   class UserVm {
-    @Expose()
+    @autoMap()
     firstName!: string;
-    @Expose()
+    @autoMap()
     lastName!: string;
-    @Expose()
+    @autoMap()
     fullName!: string;
   }
 
@@ -189,18 +191,18 @@ describe('AutoMapper - addProfile', () => {
 
 describe('AutoMapper - callbacks', () => {
   class User {
-    @Expose()
+    @autoMap()
     firstName!: string;
-    @Expose()
+    @autoMap()
     lastName!: string;
   }
 
   class UserVm {
-    @Expose()
+    @autoMap()
     firstName!: string;
-    @Expose()
+    @autoMap()
     lastName!: string;
-    @Expose()
+    @autoMap()
     fullName!: string;
   }
 
@@ -255,27 +257,27 @@ describe('AutoMapper - callbacks', () => {
 
 describe('AutoMapper - namingConvention', () => {
   class Address {
-    @Expose()
+    @autoMap()
     Street!: string;
   }
 
   class User {
-    @Expose()
+    @autoMap()
     FirstName!: string;
-    @Expose()
+    @autoMap()
     LastName!: string;
-    @ExposedType(() => Address)
+    @autoMap(() => Address)
     Address!: Address;
   }
 
   class UserVm {
-    @Expose()
+    @autoMap()
     firstName!: string;
-    @Expose()
+    @autoMap()
     lastName!: string;
-    @Expose()
+    @autoMap()
     fullName!: string;
-    @Expose()
+    @autoMap()
     addressStreet!: string;
   }
 
@@ -320,22 +322,22 @@ describe('AutoMapper - namingConvention', () => {
 
 describe('AutoMapper - map', () => {
   class Avatar {
-    @Expose()
+    @autoMap()
     url!: string;
-    @Expose()
+    @autoMap()
     source!: string;
-    @Expose()
+    @autoMap()
     shouldIgnore!: number;
-    @Expose()
+    @autoMap()
     shouldBeSubstituted!: string;
   }
 
   class AvatarVm {
-    @Expose()
+    @autoMap()
     url!: string;
-    @Expose()
+    @autoMap()
     ignored!: number;
-    @Expose()
+    @autoMap()
     shouldBeSubstituted!: string;
   }
 
@@ -349,86 +351,88 @@ describe('AutoMapper - map', () => {
           opts =>
             opts.preCondition(s => s.shouldIgnore > 5).mapFrom(s => s.source)
         )
-        .forMember(d => d.ignored, opts => opts.ignore())
-        .forMember(d => d.shouldBeSubstituted, opts => opts.nullSubstitution('Substituted'));
+        .forMember(
+          d => d.ignored,
+          opts => opts.ignore()
+        )
+        .forMember(
+          d => d.shouldBeSubstituted,
+          opts => opts.nullSubstitution('Substituted')
+        );
     }
   }
 
   class Address {
-    @Expose()
+    @autoMap()
     street!: string;
-    @Expose()
+    @autoMap()
     city!: string;
-    @Expose()
+    @autoMap()
     state!: string;
   }
 
   class AddressVm {
-    @Expose()
+    @autoMap()
     formattedAddress!: string;
   }
 
   class AddressProfile extends MappingProfileBase {
     constructor(mapper: AutoMapper) {
       super();
-      mapper
-        .createMap(Address, AddressVm)
-        .forMember(
-          d => d.formattedAddress,
-          opts => opts.mapFrom(s => s.street + ' ' + s.city + ' ' + s.state)
-        );
+      mapper.createMap(Address, AddressVm).forMember(
+        d => d.formattedAddress,
+        opts => opts.mapFrom(s => s.street + ' ' + s.city + ' ' + s.state)
+      );
     }
   }
 
   class Profile {
-    @Expose()
+    @autoMap()
     bio!: string;
-    @Expose()
+    @autoMap()
     birthday!: Date;
-    @ExposedType(() => Avatar)
+    @autoMap(() => Avatar)
     avatar!: Avatar;
-    @ExposedType(() => Address)
+    @autoMap(() => Address)
     addresses!: Address[];
   }
 
   class ProfileVm {
-    @Expose()
+    @autoMap()
     bio!: string;
-    @ExposedType(() => AvatarVm)
+    @autoMap(() => AvatarVm)
     avatar!: AvatarVm;
-    @ExposedType(() => AddressVm)
+    @autoMap(() => AddressVm)
     addresses!: AddressVm[];
   }
 
   class ProfileProfile extends MappingProfileBase {
     constructor(mapper: AutoMapper) {
       super();
-      mapper
-        .createMap(Profile, ProfileVm)
-        .forMember(
-          d => d.avatar,
-          opts => opts.mapWith(AvatarVm, s => s.avatar)
-        );
+      mapper.createMap(Profile, ProfileVm).forMember(
+        d => d.avatar,
+        opts => opts.mapWith(AvatarVm, s => s.avatar)
+      );
     }
   }
 
   class User {
-    @Expose()
+    @autoMap()
     firstName!: string;
-    @Expose()
+    @autoMap()
     lastName!: string;
-    @ExposedType(() => Profile)
+    @autoMap(() => Profile)
     profile!: Profile;
   }
 
   class UserVm {
-    @Expose()
+    @autoMap()
     first!: string;
-    @Expose()
+    @autoMap()
     last!: string;
-    @Expose()
+    @autoMap()
     full!: string;
-    @ExposedType(() => ProfileVm)
+    @autoMap(() => ProfileVm)
     profile!: ProfileVm;
   }
 
@@ -437,8 +441,14 @@ describe('AutoMapper - map', () => {
       super();
       mapper
         .createMap(User, UserVm)
-        .forMember(d => d.first, opts => opts.mapFrom(s => s.firstName))
-        .forMember(d => d.last, opts => opts.mapFrom(s => s.lastName))
+        .forMember(
+          d => d.first,
+          opts => opts.mapFrom(s => s.firstName)
+        )
+        .forMember(
+          d => d.last,
+          opts => opts.mapFrom(s => s.lastName)
+        )
         .forMember(
           d => d.full,
           opts => opts.mapFrom(s => s.firstName + ' ' + s.lastName)
@@ -499,7 +509,9 @@ describe('AutoMapper - map', () => {
     expect(vm.profile.avatar).toBeInstanceOf(AvatarVm);
     expect(vm.profile.avatar.url).toEqual(user.profile.avatar.source);
     expect(vm.profile.avatar.shouldBeSubstituted).not.toEqual('Substituted');
-    expect(vm.profile.avatar.shouldBeSubstituted).toEqual('Will not be substituted');
+    expect(vm.profile.avatar.shouldBeSubstituted).toEqual(
+      'Will not be substituted'
+    );
 
     expect(vm.profile.addresses).toBeTruthy();
     expect(vm.profile.addresses).toHaveLength(user.profile.addresses.length);
@@ -540,18 +552,18 @@ describe('AutoMapper - map', () => {
 
 describe('AutoMapper - reverseMap - complex', () => {
   class Avatar {
-    @Expose()
+    @autoMap()
     url!: string;
-    @Expose()
+    @autoMap()
     source!: string;
-    @Expose()
+    @autoMap()
     shouldIgnore!: number;
   }
 
   class AvatarVm {
-    @Expose()
+    @autoMap()
     url!: string;
-    @Expose()
+    @autoMap()
     ignored!: number;
   }
 
@@ -565,24 +577,33 @@ describe('AutoMapper - reverseMap - complex', () => {
           opts =>
             opts.preCondition(s => s.shouldIgnore > 5).mapFrom(s => s.source)
         )
-        .forMember(d => d.ignored, opts => opts.ignore())
+        .forMember(
+          d => d.ignored,
+          opts => opts.ignore()
+        )
         .reverseMap()
-        .forPath(s => s.url, opts => opts.ignore())
-        .forPath(s => s.shouldIgnore, opts => opts.fromValue(5));
+        .forPath(
+          s => s.url,
+          opts => opts.ignore()
+        )
+        .forPath(
+          s => s.shouldIgnore,
+          opts => opts.fromValue(5)
+        );
     }
   }
 
   class Address {
-    @Expose()
+    @autoMap()
     street!: string;
-    @Expose()
+    @autoMap()
     city!: string;
-    @Expose()
+    @autoMap()
     state!: string;
   }
 
   class AddressVm {
-    @Expose()
+    @autoMap()
     formattedAddress!: string;
   }
 
@@ -596,29 +617,38 @@ describe('AutoMapper - reverseMap - complex', () => {
           opts => opts.mapFrom(s => s.street + ' ' + s.city + ' ' + s.state)
         )
         .reverseMap()
-        .forPath(s => s.street, opts => opts.ignore())
-        .forPath(s => s.city, opts => opts.ignore())
-        .forPath(s => s.state, opts => opts.ignore());
+        .forPath(
+          s => s.street,
+          opts => opts.ignore()
+        )
+        .forPath(
+          s => s.city,
+          opts => opts.ignore()
+        )
+        .forPath(
+          s => s.state,
+          opts => opts.ignore()
+        );
     }
   }
 
   class Profile {
-    @Expose()
+    @autoMap()
     bio!: string;
-    @Expose()
+    @autoMap()
     birthday!: Date;
-    @ExposedType(() => Avatar)
+    @autoMap(() => Avatar)
     avatar!: Avatar;
-    @ExposedType(() => Address)
+    @autoMap(() => Address)
     addresses!: Address[];
   }
 
   class ProfileVm {
-    @Expose()
+    @autoMap()
     bio!: string;
-    @ExposedType(() => AvatarVm)
+    @autoMap(() => AvatarVm)
     avatar!: AvatarVm;
-    @ExposedType(() => AddressVm)
+    @autoMap(() => AddressVm)
     addresses!: AddressVm[];
   }
 
@@ -633,7 +663,10 @@ describe('AutoMapper - reverseMap - complex', () => {
       super();
       mapper
         .createMap(Profile, ProfileVm)
-        .forMember(d => d.avatar, opts => opts.mapWith(AvatarVm, s => s.avatar))
+        .forMember(
+          d => d.avatar,
+          opts => opts.mapWith(AvatarVm, s => s.avatar)
+        )
         .reverseMap()
         .forPath(
           s => s.birthday,
@@ -643,22 +676,31 @@ describe('AutoMapper - reverseMap - complex', () => {
   }
 
   class User {
-    @Expose()
+    @autoMap()
     firstName!: string;
-    @Expose()
+    @autoMap()
     lastName!: string;
-    @ExposedType(() => Profile)
+    @autoMap(() => Profile)
+    profile!: Profile;
+  }
+
+  class User2 {
+    @autoMap()
+    firstName!: string;
+    @autoMap()
+    lastName!: string;
+    @autoMap(() => Profile)
     profile!: Profile;
   }
 
   class UserVm {
-    @Expose()
+    @autoMap()
     first!: string;
-    @Expose()
+    @autoMap()
     last!: string;
-    @Expose()
+    @autoMap()
     full!: string;
-    @ExposedType(() => ProfileVm)
+    @autoMap(() => ProfileVm)
     profile!: ProfileVm;
   }
 
@@ -667,13 +709,34 @@ describe('AutoMapper - reverseMap - complex', () => {
       super();
       mapper
         .createMap(User, UserVm)
-        .forMember(d => d.first, opts => opts.mapFrom(s => s.firstName))
-        .forMember(d => d.last, opts => opts.mapFrom(s => s.lastName))
+        .forMember(
+          d => d.first,
+          opts => opts.mapFrom(s => s.firstName)
+        )
+        .forMember(
+          d => d.last,
+          opts => opts.mapFrom(s => s.lastName)
+        )
         .forMember(
           d => d.full,
           opts => opts.mapFrom(s => s.firstName + ' ' + s.lastName)
         )
         .reverseMap();
+
+      mapper
+        .createMap(User2, UserVm)
+        .forMember(
+          d => d.first,
+          opts => opts.fromValue('user2 first name')
+        )
+        .forMember(
+          d => d.last,
+          opts => opts.fromValue('user2 last name')
+        )
+        .forMember(
+          d => d.full,
+          opts => opts.fromValue('full name')
+        );
     }
   }
 
@@ -712,5 +775,36 @@ describe('AutoMapper - reverseMap - complex', () => {
     const user = Mapper.map(userVm, User);
     expect(user).toBeTruthy();
     expect(user).toBeInstanceOf(User);
+  });
+
+  it('multiple mapping to vm', () => {
+    const user = new User2();
+    user.firstName = 'blah';
+    user.lastName = 'foo';
+    user.profile = new Profile();
+    user.profile.bio = 'Developer';
+    user.profile.birthday = new Date('10/14/1991');
+    user.profile.avatar = new Avatar();
+    user.profile.avatar.source = 'Internet';
+    user.profile.avatar.url = 'url.com';
+    user.profile.avatar.shouldIgnore = 6;
+    user.profile.addresses = Array(2)
+      .fill('')
+      .map((_, index) => {
+        const addr = new Address();
+        addr.street = 'Street ' + index + 1;
+        addr.city = 'City ' + index + 1;
+        addr.state = 'State ' + index + 1;
+        return addr;
+      });
+
+    const vm = Mapper.map(user, UserVm);
+    expect(vm).toBeTruthy();
+    expect(vm).toBeInstanceOf(UserVm);
+    expect(vm.first).toEqual('user2 first name');
+    expect(vm.last).toEqual('user2 last name');
+    expect(vm.full).toEqual('full name');
+    expect(vm.profile).toBeTruthy();
+    expect(vm.profile).toBeInstanceOf(ProfileVm);
   });
 });

@@ -91,7 +91,7 @@ yarn add reflect-metadata
 
 #### Lodash Note
 
-`@nartc/automapper` uses single-method `lodash` methods as well. Namely, `lodash.get`; `lodash.set`; `lodash.isempty` and `lodash.isdate`. Single methods are used to keep the bundle-size as small as possible. `lodash` and `lodash-es` is treeshakable as well but I do not think I'd need to use some other `lodash` methods anytime soon.
+`@nartc/automapper` uses single-method `lodash` methods as well. Namely, `lodash.set`. Single methods are used to keep the bundle-size as small as possible. `lodash` and `lodash-es` is treeshakable as well but I do not think I'd need to use some other `lodash` methods anytime soon.
 
 ## Usage
 
@@ -270,6 +270,26 @@ const userVm = Mapper.map(user, UserVm); // this will return an instance of User
 
 console.log('instance of UserVm?', userVm instanceof UserVm); // true
 ```
+
+6. `Mapper.map()` (as well as `mapArray` and the **Async** versions) has an overload where you can also pass in `Source` model. This is to help with Multiple Mapping Sources to the same Destination. And especially when you have a **Plain JS** object, this (as a requirement) will allow you to map plain Object as well.
+
+```typescript
+class User2 {
+  // some properties
+}
+
+Mapper.createMap(User2, UserVm); // assumed you already have a Mapping created between User and UserVm.
+const userVm = Mapper.map(user, UserVm);
+
+/**
+* If "user" is truly an instance of User2, then it's fine. But if "user" is just a Plain JS object
+* and TS is tricked to see "user" as User2, then AutoMapper will have trouble looking for
+* the correct Mapping (User2 and UserVm).
+* 
+* In that case, the "Source" argument will help AutoMapper to look for the correct Mapping
+*/
+const userVm = Mapper.map(user, UserVm, User2);
+``` 
 
 #### Callbacks
 

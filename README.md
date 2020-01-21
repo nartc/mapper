@@ -30,6 +30,28 @@ Mapper.createMap(User, UserVm)
   .forMember(dest => dest.fullName, opts => opts.mapFrom(...));
 ```
 
+#### Migrations to v3
+
+- Change `@Expose()` and `@ExposedType()` to `@AutoMap()`
+
+```typescript
+// Before
+class User {
+  @Expose()
+  firstName: string;
+  @ExposedType(() => Profile)
+  profile: Profile;
+}
+
+// v3
+class User {
+  @AutoMap()
+  firstName: string;
+  @AutoMap(() => Profile)
+  profile: Profile;
+}
+```
+
 ## Motivations
 
 I've been exposed and accustomed to the `ViewModel` pattern when working on Server Side applications whether it's _NodeJS_ or _.NET Core_. However, _.NET_ has a very powerful Mapper called `AutoMapper` (referred as _the original_) while _JS/TS_ ecosystem does not have one that is up-to-date and/or lacking some features.
@@ -141,71 +163,28 @@ class UserVm {
 }
 ```
 
-3. Decorate all of your properties with `@Expose()`. `@Expose` is imported from `class-transformer`. This will allow the engine to be aware of all the properties available in a certain **class**.
+3. Decorate all of your properties with `@AutoMap()`. This will allow the engine to be aware of all the properties available in a certain **class**.
 
 ```typescript
 class User {
-  @Expose()
+  @AutoMap()
   firstName: string;
-  @Expose()
+  @AutoMap()
   lastName: string;
-  @Expose()
+  @AutoMap()
   password: string;
-  @Expose()
+  @AutoMap(() => Profile)
   profile: Profile;
 }
 
 class UserVm {
-  @Expose()
+  @AutoMap()
   fullName: string;
-  @Expose()
+  @AutoMap(() => ProfileVm)
   profile: ProfileVm;
-  @Expose()
+  @AutoMap()
   firstName?: string;
-  @Expose()
-  lastName?: string;
-}
-```
-
-**NOTE: If you have nested model, like `profile` in this case, you will want to use `@Type()` on those as well. `@Type()` is also imported from `class-transformer`.**
-
-```typescript
-class User {
-  @Expose()
-  firstName: string;
-  @Expose()
-  lastName: string;
-  @Expose()
-  password: string;
-  @Expose()
-  @Type(() => Profile)
-  profile: Profile;
-}
-
-class UserVm {
-  @Expose()
-  fullName: string;
-  @Expose()
-  @Type(() => ProfileVm)
-  profile: ProfileVm;
-  @Expose()
-  firstName?: string;
-  @Expose()
-  lastName?: string;
-}
-```
-
-However, `@nartc/automapper` provides a short-hand decorator `@ExposedType()` instead of explicitly use `@Expose()` and `@Type()` on a nested model property.
-
-```typescript
-class UserVm {
-  @Expose()
-  fullName: string;
-  @ExposedType(() => ProfileVm)
-  profile: ProfileVm;
-  @Expose()
-  firstName?: string;
-  @Expose()
+  @AutoMap()
   lastName?: string;
 }
 ```

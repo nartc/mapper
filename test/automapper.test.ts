@@ -548,6 +548,18 @@ describe('AutoMapper - map', () => {
     expect(vms).toBeTruthy();
     expect(vms.length).toEqual(2);
   });
+
+  it('mapArray with empty array', () => {
+    const vms = Mapper.mapArray([], UserVm, User);
+    expect(vms).toBeTruthy();
+    expect(vms.length).toEqual(0);
+  });
+
+  it('mapArrayAsync with empty array', async () => {
+    const vms = await Mapper.mapArrayAsync([], UserVm, User);
+    expect(vms).toBeTruthy();
+    expect(vms.length).toEqual(0);
+  });
 });
 
 describe('AutoMapper - reverseMap - complex', () => {

@@ -895,12 +895,36 @@ describe('AutoMapper - public getter setter', () => {
           d => d.fullName,
           opts => opts.mapFrom(s => s.firstName + ' ' + s.lastName)
         )
-        .reverseMap()
+        .reverseMap();
+    }
+  }
+
+  class Foo {
+    private _foo!: string;
+    @AutoMap()
+    public get foo(): string {
+      return this._foo;
+    }
+
+    public set foo(value: string) {
+      this._foo = value;
+    }
+  }
+
+  class FooDto {
+    @AutoMap()
+    public foo!: string;
+  }
+
+  class FooProfile extends MappingProfileBase {
+    constructor(mapper: AutoMapper) {
+      super();
+      mapper.createMap(FooDto, Foo);
     }
   }
 
   beforeAll(() => {
-    Mapper.addProfile(UserProfile);
+    Mapper.addProfile(UserProfile).addProfile(FooProfile);
   });
 
   afterAll(() => {
@@ -929,5 +953,11 @@ describe('AutoMapper - public getter setter', () => {
     const user = Mapper.map(vm, User);
     expect(user).toBeTruthy();
     expect(user).toBeInstanceOf(User);
+  });
+
+  it('map foo', () => {
+    const foo = Mapper.map({foo: 'bar'}, Foo, FooDto);
+    expect(foo).toBeTruthy();
+    expect(foo).toBeInstanceOf(Foo);
   });
 });

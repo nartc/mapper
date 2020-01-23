@@ -76,6 +76,34 @@ export function _getPathRecursive(node: any, prefix: string = ''): string[] {
     }
   }
 
+  const proto = node.constructor.prototype || node.__proto__;
+
+  if (typeof proto !== 'object' || proto === null) {
+    return result;
+  }
+
+  for (const key in proto) {
+    const path = prefix + key;
+    !result.includes(path) && result.push(path);
+    const child = proto[key];
+    if (_isObjectLike(child)) {
+      let queue = [child];
+      if (Array.isArray(child)) {
+        queue = child;
+      }
+
+      for (const childNode of queue) {
+        const childPaths = _getPathRecursive(childNode, path + '.');
+        for (const childPath of childPaths) {
+          if (result.includes(childPath)) {
+            continue;
+          }
+          result.push(childPath);
+        }
+      }
+    }
+  }
+
   return result;
 }
 

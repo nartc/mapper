@@ -895,7 +895,7 @@ describe('AutoMapper - public getter setter', () => {
           d => d.fullName,
           opts => opts.mapFrom(s => s.firstName + ' ' + s.lastName)
         )
-        .reverseMap();
+        .reverseMap()
     }
   }
 
@@ -914,8 +914,20 @@ describe('AutoMapper - public getter setter', () => {
 
     const vm = Mapper.map(user, UserVm);
     expect(vm).toBeTruthy();
+    expect(vm).toBeInstanceOf(UserVm);
     expect(vm.firstName).toEqual(user.firstName);
     expect(vm.lastName).toEqual(user.lastName);
     expect(vm.fullName).toEqual(user.firstName + ' ' + user.lastName);
+  });
+
+  it('reverse map', () => {
+    const vm = new UserVm();
+    vm.firstName = 'Chau';
+    vm.lastName = 'Tran';
+    vm.fullName = 'Chau Tran';
+
+    const user = Mapper.map(vm, User);
+    expect(user).toBeTruthy();
+    expect(user).toBeInstanceOf(User);
   });
 });

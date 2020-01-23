@@ -8,7 +8,7 @@ An object-to-object mapper by convention for TypeScript.
 ![npm](https://badgen.net/npm/v/@nartc/automapper)
 ![license](https://badgen.net/github/license/nartc/mapper)
 [![Coverage Status](https://coveralls.io/repos/github/nartc/mapper/badge.svg?branch=master)](https://coveralls.io/github/nartc/mapper?branch=master) [![Greenkeeper badge](https://badges.greenkeeper.io/nartc/mapper.svg)](https://greenkeeper.io/)
- 
+
 ## Documentations
 
 Github Pages
@@ -227,12 +227,10 @@ import { MappingProfileBase } from '@nartc/automapper';
 export class UserProfile extends MappingProfileBase {
   constructor(mapper: AutoMapper) {
     super(); // this is required since it will take UserProfile and get the string "UserProfile" to assign to profileName
-    mapper
-      .createMap(User, UserVm)
-      .forMember(
-        destination => destination.fullName,
-        opts => opts.mapFrom(source => source.firstName + ' ' + source.lastName)
-      ); // You will get type-inference here
+    mapper.createMap(User, UserVm).forMember(
+      destination => destination.fullName,
+      opts => opts.mapFrom(source => source.firstName + ' ' + source.lastName)
+    ); // You will get type-inference here
   }
 }
 
@@ -261,14 +259,107 @@ Mapper.createMap(User2, UserVm); // assumed you already have a Mapping created b
 const userVm = Mapper.map(user, UserVm);
 
 /**
-* If "user" is truly an instance of User2, then it's fine. But if "user" is just a Plain JS object
-* and TS is tricked to see "user" as User2, then AutoMapper will have trouble looking for
-* the correct Mapping (User2 and UserVm).
-* 
-* In that case, the "Source" argument will help AutoMapper to look for the correct Mapping
-*/
+ * If "user" is truly an instance of User2, then it's fine. But if "user" is just a Plain JS object
+ * and TS is tricked to see "user" as User2, then AutoMapper will have trouble looking for
+ * the correct Mapping (User2 and UserVm).
+ *
+ * In that case, the "Source" argument will help AutoMapper to look for the correct Mapping
+ */
 const userVm = Mapper.map(user, UserVm, User2);
-``` 
+```
+
+#### Naming Conventions
+
+`@nartc/automapper` provides away to map between two models with different naming conventions. Naming conventions supported:
+
+- `PascalCaseNamingConvention`
+- `CamelCaseNamingConvention`
+
+By default, every models will have `CamelCaseNamingConvention`. You can modify the naming conventions on the models by providing the third argument to `createMap()` method:
+
+```typescript
+class Address {
+  @AutoMap()
+  Street!: string;
+}
+
+class User {
+  @AutoMap()
+  FirstName!: string;
+  @AutoMap()
+  LastName!: string;
+  @AutoMap(() => Address)
+  Address!: Address;
+}
+
+class UserVm {
+  @AutoMap()
+  firstName!: string;
+  @AutoMap()
+  lastName!: string;
+  @AutoMap()
+  fullName!: string;
+  @AutoMap()
+  addressStreet!: string;
+}
+
+Mapper.createMap(User, UserVm, {
+  sourceMemberNamingConvention: new PascalCaseNamingConvention(),
+}).forMember(
+  dest => dest.fullName,
+  opts => opts.mapFrom(s => s.FirstName + ' ' + s.LastName)
+);
+```
+
+When `map()`, `User.FirstName`, `User.LastName` and `User.Address.Street` will be mapped automatically to `UserVm.firstName`, `UserVm.lastName`, and `UserVm.addressStreet`. **Map by conventions** still stays true.
+
+\*\*NOTE: I am looking for a contribution for `SnakeCaseNamingConvention` if anybody could help.
+
+#### Getters
+
+`@nartc/automapper` can map **public getters**
+
+```typescript
+class User {
+  private _firstName!: string;
+  @AutoMap()
+  public get firstName() {
+    return this._firstName;
+  }
+
+  public set firstName(value: string) {
+    this._firstName = value;
+  }
+
+  private _lastName!: string;
+  @AutoMap()
+  public get lastName() {
+    return this._lastName;
+  }
+
+  public set lastName(value: string) {
+    this._lastName = value;
+  }
+}
+
+class UserVm {
+  @AutoMap()
+  firstName!: string;
+  @AutoMap()
+  lastName!: string;
+  @AutoMap()
+  fullName!: string;
+}
+
+Mapper.createMap(User, UserVm)
+  .forMember(
+    d => d.fullName,
+    opts => opts.mapFrom(s => s.firstName + ' ' + s.lastName)
+  )
+  .reverseMap();
+```
+
+Please take note that `@nartc/automapper` works based a lot on **conventions**. This applies greatly to **getters support** so try to keep your `private fields` and `public getters` somewhat aligned with each other. E.g: `private _firstName`  and `public get firstName()`
 
 #### Callbacks
 
@@ -437,8 +528,10 @@ The above mapping operation will only be proceeded if `source.age >= 10`. If `so
 Very similar to `preCondition`. However, if the `condition()` returns true, `@nartc/automapper` will try to map the same property name that is being checked against.
 
 ```typescript
-Mapper.createMap(User, UserVm)
-  .forMember(dest => dest.fullName, opts => opts.condition(source => source.age >= 10));
+Mapper.createMap(User, UserVm).forMember(
+  dest => dest.fullName,
+  opts => opts.condition(source => source.age >= 10)
+);
 ```
 
 If `condition()` returns truthy, then `@nartc/automapper` will try to map `source.fullName` to `dest.fullName`.
@@ -448,20 +541,24 @@ If `condition()` returns truthy, then `@nartc/automapper` will try to map `sourc
 Raw value to map to a `destination member`. Please take note if you pass in an object to `fromValue()`, that object will be mapped without consideration for any `Mapping`.
 
 ```typescript
-Mapper.createMap(User, UserVm)
-  .forMember(dest => dest.fullName, opts => opts.fromValue('Some value'));
+Mapper.createMap(User, UserVm).forMember(
+  dest => dest.fullName,
+  opts => opts.fromValue('Some value')
+);
 ```
 
 `@nartc/automapper` will map `'Some value'` to `dest.fullName`.
 
 #### NullSubstitution
 
-A value to be mapped to `destsination.member` when `source.member` is `null`. Same rule applies for `nullSubstitution` when you pass in an object for `nullSubstitution`, it will not be mapped with any `Mapping`. The expected value is safe-typed to the `destination.member` type. 
+A value to be mapped to `destsination.member` when `source.member` is `null`. Same rule applies for `nullSubstitution` when you pass in an object for `nullSubstitution`, it will not be mapped with any `Mapping`. The expected value is safe-typed to the `destination.member` type.
 
 ```typescript
-Mapper.createMap(User, UserVm)
-  .forMember(dest => dest.shouldBeSubstituted, opts => opts.nullSubstitution('substituted'))
-  
+Mapper.createMap(User, UserVm).forMember(
+  dest => dest.shouldBeSubstituted,
+  opts => opts.nullSubstitution('substituted')
+);
+
 const user = new User();
 user.firstName = 'John';
 user.lastName = 'Doe';
@@ -483,7 +580,7 @@ While `Async` versions of `map` and `mapArray` are available, they're not "real"
 
 ## Demo
 
-[Codesandbox Demo](https://codesandbox.io/s/automapper-demo-ntc2d) 
+[Codesandbox Demo](https://codesandbox.io/s/automapper-demo-ntc2d)
 
 ## Contribution
 

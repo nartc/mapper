@@ -119,7 +119,11 @@ export function _initializeReversedMappingProperties<
 >(
   mapping: Mapping<TSource, TDestination>
 ): Map<string, MappingProperty<TDestination, TSource>> {
-  const model = plainToClass(mapping.source, new mapping.source());
+  const model = plainToClass(mapping.source, new mapping.source(), {
+    enableCircularCheck: true,
+    enableImplicitConversion: true,
+  });
+  const proto = model.constructor.prototype || (model as any).__proto__;
   const reversedProperties = new Map<
     string,
     MappingProperty<TDestination, TSource>
@@ -142,7 +146,7 @@ export function _initializeReversedMappingProperties<
           (prop.transformation.mapWith as MapWithTransformOptions).fromValue
         );
 
-    if (!model.hasOwnProperty(_path)) {
+    if (!model.hasOwnProperty(_path) && !proto.hasOwnProperty(_path)) {
       continue;
     }
 

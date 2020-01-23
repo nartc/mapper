@@ -205,7 +205,7 @@ export function _assertMappingErrors<T extends Dict<T> = any>(
   const unmappedKeys: string[] = [];
   for (let i = 0; i < keys.length; i++) {
     const key = keys[i];
-    if (propKeys.includes(key)) {
+    if (propKeys.includes(key) || propKeys.some(k => key.includes(k))) {
       continue;
     }
     unmappedKeys.push(key);

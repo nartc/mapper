@@ -83,11 +83,13 @@ export function _getPathRecursive(node: any, prefix: string = ''): string[] {
     return result;
   }
 
-  for (const key in Object.getOwnPropertyNames(proto).filter(
+  for (const key of Object.getOwnPropertyNames(proto).filter(
     pName => pName !== 'constructor'
   )) {
     const path = prefix + key;
-    !result.includes(path) && result.push(path);
+    if (!result.includes(path)) {
+      result.push(path);
+    }
     const child = proto[key];
     if (_isObjectLike(child)) {
       let queue = [child];

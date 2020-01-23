@@ -853,3 +853,69 @@ describe('AutoMapper - reverseMap - complex', () => {
     expect(vm.profile).toBeInstanceOf(ProfileVm);
   });
 });
+
+describe('AutoMapper - public getter setter', () => {
+  class User {
+    private _firstName!: string;
+    @AutoMap()
+    public get firstName() {
+      return this._firstName;
+    }
+
+    public set firstName(value: string) {
+      this._firstName = value;
+    }
+
+    private _lastName!: string;
+    @AutoMap()
+    public get lastName() {
+      return this._lastName;
+    }
+
+    public set lastName(value: string) {
+      this._lastName = value;
+    }
+  }
+
+  class UserVm {
+    @AutoMap()
+    firstName!: string;
+    @AutoMap()
+    lastName!: string;
+    @AutoMap()
+    fullName!: string;
+  }
+
+  class UserProfile extends MappingProfileBase {
+    constructor(mapper: AutoMapper) {
+      super();
+      mapper
+        .createMap(User, UserVm)
+        .forMember(
+          d => d.fullName,
+          opts => opts.mapFrom(s => s.firstName + ' ' + s.lastName)
+        )
+        .reverseMap();
+    }
+  }
+
+  beforeAll(() => {
+    Mapper.addProfile(UserProfile);
+  });
+
+  afterAll(() => {
+    Mapper.dispose();
+  });
+
+  it('map', () => {
+    const user = new User();
+    user.firstName = 'John';
+    user.lastName = 'Doe';
+
+    const vm = Mapper.map(user, UserVm);
+    expect(vm).toBeTruthy();
+    expect(vm.firstName).toEqual(user.firstName);
+    expect(vm.lastName).toEqual(user.lastName);
+    expect(vm.fullName).toEqual(user.firstName + ' ' + user.lastName);
+  });
+});

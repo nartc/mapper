@@ -43,6 +43,7 @@ export function _initializeMappingProperties<
     enableCircularCheck: true,
     enableImplicitConversion: true,
   });
+  const sourceProto = source.constructor.prototype || (source as any).__proto__;
   const destinationPaths = _getPathRecursive(destination);
 
   for (let i = 0; i < destinationPaths.length; i++) {
@@ -53,7 +54,10 @@ export function _initializeMappingProperties<
       path
     );
 
-    if (!source.hasOwnProperty(sourcePath)) {
+    if (
+      !source.hasOwnProperty(sourcePath) &&
+      !sourceProto.hasOwnProperty(sourcePath)
+    ) {
       const [first, ...paths] = sourcePath
         .split(mapping.sourceMemberNamingConvention.splittingExpression)
         .filter(Boolean);

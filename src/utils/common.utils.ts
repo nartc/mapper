@@ -76,13 +76,16 @@ export function _getPathRecursive(node: any, prefix: string = ''): string[] {
     }
   }
 
-  const proto = node.constructor.prototype || node.__proto__;
+  const proto =
+    Object.getPrototypeOf(node) || node.constructor.prototype || node.__proto__;
 
   if (typeof proto !== 'object' || proto === null) {
     return result;
   }
 
-  for (const key in proto) {
+  for (const key in Object.getOwnPropertyNames(proto).filter(
+    pName => pName !== 'constructor'
+  )) {
     const path = prefix + key;
     !result.includes(path) && result.push(path);
     const child = proto[key];

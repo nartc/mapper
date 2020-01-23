@@ -43,7 +43,10 @@ export function _initializeMappingProperties<
     enableCircularCheck: true,
     enableImplicitConversion: true,
   });
-  const sourceProto = source.constructor.prototype || (source as any).__proto__;
+  const sourceProto =
+    Object.getPrototypeOf(source) ||
+    source.constructor.prototype ||
+    (source as any).__proto__;
   const destinationPaths = _getPathRecursive(destination);
 
   for (let i = 0; i < destinationPaths.length; i++) {
@@ -123,7 +126,10 @@ export function _initializeReversedMappingProperties<
     enableCircularCheck: true,
     enableImplicitConversion: true,
   });
-  const proto = model.constructor.prototype || (model as any).__proto__;
+  const proto =
+    Object.getPrototypeOf(model) ||
+    model.constructor.prototype ||
+    (model as any).__proto__;
   const reversedProperties = new Map<
     string,
     MappingProperty<TDestination, TSource>

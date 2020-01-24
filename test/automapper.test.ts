@@ -7,6 +7,7 @@ import {
   Mapper,
   MappingProfileBase,
   PascalCaseNamingConvention,
+  SnakeCaseNamingConvention,
 } from '../src';
 
 describe('AutoMapper', () => {
@@ -256,6 +257,20 @@ describe('AutoMapper - callbacks', () => {
 });
 
 describe('AutoMapper - namingConvention', () => {
+  class SnakeCaseAddress {
+    @AutoMap()
+    street!: string;
+  }
+
+  class SnakeCaseUser {
+    @AutoMap()
+    first_name!: string;
+    @AutoMap()
+    last_name!: string;
+    @AutoMap(() => SnakeCaseAddress)
+    address!: SnakeCaseAddress;
+  }
+
   class Address {
     @AutoMap()
     Street!: string;
@@ -292,6 +307,15 @@ describe('AutoMapper - namingConvention', () => {
           dest => dest.fullName,
           opts => opts.mapFrom(s => s.FirstName + ' ' + s.LastName)
         );
+
+      mapper
+        .createMap(SnakeCaseUser, UserVm, {
+          sourceMemberNamingConvention: new SnakeCaseNamingConvention(),
+        })
+        .forMember(
+          dest => dest.fullName,
+          opts => opts.mapFrom(s => s.first_name + ' ' + s.last_name)
+        );
     }
   }
 
@@ -303,7 +327,7 @@ describe('AutoMapper - namingConvention', () => {
     Mapper.dispose();
   });
 
-  it('naming convention', () => {
+  it('pascal naming convention', () => {
     const user = new User();
     user.FirstName = 'Chau';
     user.LastName = 'Tran';
@@ -317,6 +341,18 @@ describe('AutoMapper - namingConvention', () => {
     expect(vm.lastName).toEqual(user.LastName);
     expect(vm.fullName).toEqual(user.FirstName + ' ' + user.LastName);
     expect(vm.addressStreet).toEqual(user.Address.Street);
+  });
+
+  it('snake naming convention', () => {
+    const user = new SnakeCaseUser();
+    user.first_name = 'Chau';
+    user.last_name = 'Tran';
+    user.address = new SnakeCaseAddress();
+    user.address.street = 'Midland';
+
+    const vm = Mapper.map(user, UserVm, SnakeCaseUser);
+    expect(vm).toBeTruthy();
+    expect(vm).toBeInstanceOf(UserVm);
   });
 });
 
@@ -956,7 +992,7 @@ describe('AutoMapper - public getter setter', () => {
   });
 
   it('map foo', () => {
-    const foo = Mapper.map({foo: 'bar'}, Foo, FooDto);
+    const foo = Mapper.map({ foo: 'bar' }, Foo, FooDto);
     expect(foo).toBeTruthy();
     expect(foo).toBeInstanceOf(Foo);
   });

@@ -274,6 +274,7 @@ const userVm = Mapper.map(user, UserVm, User2);
 
 - `PascalCaseNamingConvention`
 - `CamelCaseNamingConvention`
+- `SnakeCaseNamingConvention`
 
 By default, every models will have `CamelCaseNamingConvention`. You can modify the naming conventions on the models by providing the third argument to `createMap()` method:
 
@@ -312,8 +313,6 @@ Mapper.createMap(User, UserVm, {
 ```
 
 When `map()`, `User.FirstName`, `User.LastName` and `User.Address.Street` will be mapped automatically to `UserVm.firstName`, `UserVm.lastName`, and `UserVm.addressStreet`. **Map by conventions** still stays true.
-
-\*\*NOTE: I am looking for a contribution for `SnakeCaseNamingConvention` if anybody could help.
 
 #### Getters
 

@@ -11,12 +11,8 @@ export class SnakeCaseNamingConvention implements NamingConvention {
       return sourcePropNameParts[0] || '';
     }
 
-    let result = '';
-    for (let i = 0; i < len; i++) {
-      const part = sourcePropNameParts[i].toLowerCase();
-      result += i === len - 1 ? part : part.concat('_');
-    }
-
-    return result;
+    return sourcePropNameParts
+      .map(p => p.toLowerCase())
+      .join(this.separatorCharacter);
   }
 }

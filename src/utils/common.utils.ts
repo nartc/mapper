@@ -281,12 +281,12 @@ export function _get<T>(
     return _val === undefined ? defaultVal : _val;
   }
 
-  let val = defaultVal;
-  for (let i = 0; i < paths.length; i++) {
-    val = _getInternal(object, paths[i]);
-    if (val != null) {
+  let val = _getInternal(object, paths[0]);
+  for (let i = 1; i < paths.length; i++) {
+    if (val != null && defaultVal == null) {
       break;
     }
+    val = _getInternal(object, paths[i]);
   }
 
   return val;

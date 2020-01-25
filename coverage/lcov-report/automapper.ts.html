@@ -766,7 +766,7 @@ import {
 import {
   AutoMapperConfiguration,
   Constructible,
-  CreateMapActions,
+  CreateMapOptions,
   CreateMapFluentFunctions,
   CreateReversedMapFluentFunctions,
   Dict,
@@ -886,7 +886,7 @@ export class AutoMapper extends AutoMapperBase {
    *
    * @param {Constructible&lt;TSource&gt;} source - Source Model
    * @param {Constructible&lt;TDestination&gt;} destination - Destination Model
-   * @param {CreateMapActions} [options] - An option object with destination and source NamingConvention. Both are
+   * @param {CreateMapOptions} [options] - An option object with destination and source NamingConvention. Both are
    *   defaulted to CamelCaseNamingConvention()
    */
   public createMap&lt;
@@ -895,9 +895,9 @@ export class AutoMapper extends AutoMapperBase {
   &gt;(
     source: Constructible&lt;TSource&gt;,
     destination: Constructible&lt;TDestination&gt;,
-    options?: CreateMapActions
+    options?: CreateMapOptions
   ): CreateMapFluentFunctions&lt;TSource, TDestination&gt; {
-    const mergeOptions: CreateMapActions = {
+    const mergeOptions: CreateMapOptions = {
       sourceMemberNamingConvention: defaultSourceMemberNamingConvention,
       destinationMemberNamingConvention: defaultDestinationMemberNamingConvention,
       ...options,

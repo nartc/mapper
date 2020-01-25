@@ -270,8 +270,23 @@ function _getTag(value: any): string {
   return Object.prototype.toString.call(value) as ObjectTag;
 }
 
-export function _get<T>(object: T, path: string, defaultVal: any = null): any {
-  const _path = path.split('.').filter(Boolean);
+export function _get<T>(
+  object: T,
+  paths: string | string[],
+  defaultVal: any = null
+): any {
+  if (Array.isArray(paths)) {
+    let _val = defaultVal;
+    for (let i = 0; i < paths.length; i++) {
+      _val = _get(object, paths[i], defaultVal);
+      if (_val != null) {
+        break;
+      }
+    }
+    return _val;
+  }
+
+  const _path = paths.split('.').filter(Boolean);
   const _val = _path.reduce((obj: any, key) => obj && obj[key], object);
   return _val === undefined ? defaultVal : _val;
 }

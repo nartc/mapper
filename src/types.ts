@@ -48,7 +48,7 @@ export interface NamingConvention {
   transformPropertyName: (sourcePropNameParts: string[]) => string;
 }
 
-export interface CreateMapActions {
+export interface CreateMapOptions {
   sourceMemberNamingConvention?: NamingConvention;
   destinationMemberNamingConvention?: NamingConvention;
 }
@@ -220,7 +220,14 @@ export interface CreateReversedMapFluentFunctions<
   ): CreateReversedMapFluentFunctions<TSource, TDestination>;
 }
 
+export interface AutoMapperGlobalSettings {
+  sourceNamingConvention?: Constructible<NamingConvention>;
+  destinationNamingConvention?: Constructible<NamingConvention>;
+}
+
 export interface AutoMapperConfiguration {
+  withGlobalSettings(settings: AutoMapperGlobalSettings): void;
+
   addProfile(profile: new (mapper: AutoMapper) => MappingProfile): AutoMapper;
 
   createMap<

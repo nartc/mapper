@@ -2,14 +2,16 @@ import { AutoMapperBase } from './base';
 import { defaultNamingConvention } from './constants';
 import {
   AutoMapperConfiguration,
+  AutoMapperGlobalSettings,
   Constructible,
-  CreateMapActions,
+  CreateMapOptions,
   CreateMapFluentFunctions,
   CreateReversedMapFluentFunctions,
   Dict,
   MapActionOptions,
   Mapping,
   MappingProfile,
+  NamingConvention,
 } from './types';
 import {
   _createMapForMember,
@@ -20,7 +22,9 @@ import {
 
 export class AutoMapper extends AutoMapperBase {
   private static _instance: AutoMapper = new AutoMapper();
-  private readonly _profiles: { [key: string]: MappingProfile };
+  private _profiles!: { [key: string]: MappingProfile };
+  private _defaultSourceNamingConvention!: NamingConvention;
+  private _defaultDestinationNamingConvention!: NamingConvention;
 
   /**
    * @static - Get the Mapper instance
@@ -31,7 +35,7 @@ export class AutoMapper extends AutoMapperBase {
 
   constructor() {
     super();
-    this._profiles = {};
+    this._setDefault();
     if (!AutoMapper._instance) {
       AutoMapper._instance = this;
     }
@@ -60,6 +64,19 @@ export class AutoMapper extends AutoMapperBase {
    */
   public initialize(configFn: (config: AutoMapperConfiguration) => void): void {
     const _config: AutoMapperConfiguration = {
+      withGlobalSettings: (settings: AutoMapperGlobalSettings): void => {
+        const {
+          sourceNamingConvention,
+          destinationNamingConvention,
+        } = settings;
+        if (sourceNamingConvention) {
+          this._defaultSourceNamingConvention = new sourceNamingConvention();
+        }
+
+        if (destinationNamingConvention) {
+          this._defaultDestinationNamingConvention = new destinationNamingConvention();
+        }
+      },
       addProfile: (
         profile: new (mapper: AutoMapper) => MappingProfile
       ): AutoMapper => {
@@ -71,7 +88,7 @@ export class AutoMapper extends AutoMapperBase {
       >(
         source: Constructible<TSource>,
         destination: Constructible<TDestination>,
-        options?: CreateMapActions
+        options?: CreateMapOptions
       ): CreateMapFluentFunctions<TSource, TDestination> => {
         return this.createMap(source, destination, options);
       },
@@ -126,7 +143,7 @@ export class AutoMapper extends AutoMapperBase {
    *
    * @param {Constructible<TSource>} source - Source Model
    * @param {Constructible<TDestination>} destination - Destination Model
-   * @param {CreateMapActions} [options] - An option object with destination and source NamingConvention. Both are
+   * @param {CreateMapOptions} [options] - An option object with destination and source NamingConvention. Both are
    *   defaulted to CamelCaseNamingConvention()
    */
   public createMap<
@@ -135,11 +152,12 @@ export class AutoMapper extends AutoMapperBase {
   >(
     source: Constructible<TSource>,
     destination: Constructible<TDestination>,
-    options?: CreateMapActions
+    options?: CreateMapOptions
   ): CreateMapFluentFunctions<TSource, TDestination> {
-    const mergeOptions: CreateMapActions = {
-      sourceMemberNamingConvention: defaultNamingConvention,
-      destinationMemberNamingConvention: defaultNamingConvention,
+    const mergeOptions: CreateMapOptions = {
+      sourceMemberNamingConvention: this._defaultSourceNamingConvention,
+      destinationMemberNamingConvention: this
+        ._defaultDestinationNamingConvention,
       ...options,
     };
     const _mapping = super._createMappingObject(
@@ -433,10 +451,14 @@ export class AutoMapper extends AutoMapperBase {
    * ```
    */
   public dispose(): void {
-    Object.keys(this._profiles).forEach(key => {
-      delete this._profiles[key];
-    });
+    this._setDefault();
     super._dispose();
+  }
+
+  private _setDefault(): void {
+    this._profiles = {};
+    this._defaultSourceNamingConvention = defaultNamingConvention;
+    this._defaultDestinationNamingConvention = defaultNamingConvention;
   }
 
   private _createMappingFluentFunctions<

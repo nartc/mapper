@@ -997,3 +997,61 @@ describe('AutoMapper - public getter setter', () => {
     expect(foo).toBeInstanceOf(Foo);
   });
 });
+
+describe('AutoMapper - global settings', () => {
+  class Job {
+    @AutoMap()
+    title!: string;
+    @AutoMap()
+    annual_salary!: number;
+  }
+
+  class User {
+    @AutoMap()
+    first_name!: string;
+    @AutoMap()
+    last_name!: string;
+    @AutoMap()
+    some_long_property!: number;
+    @AutoMap(() => Job)
+    job!: Job;
+  }
+
+  class UserVm {
+    @AutoMap()
+    firstName!: string;
+    @AutoMap()
+    lastName!: string;
+    @AutoMap()
+    someLongProperty!: number;
+    @AutoMap()
+    jobTitle!: string;
+    @AutoMap()
+    jobAnnualSalary!: number;
+  }
+
+  beforeAll(() => {
+    Mapper.initialize(cfg => {
+      cfg.withGlobalSettings({sourceNamingConvention: SnakeCaseNamingConvention});
+      cfg.createMap(User, UserVm).reverseMap();
+    });
+  });
+
+  afterAll(() => {
+    Mapper.dispose();
+  });
+
+  it('map', () => {
+    const user = new User();
+    user.first_name = 'Chau';
+    user.last_name = 'Tran';
+    user.some_long_property = 30;
+    user.job = new Job();
+    user.job.title = 'Developer';
+    user.job.annual_salary = 10000;
+
+    const vm = Mapper.map(user, UserVm);
+    expect(vm).toBeTruthy();
+    expect(vm).toBeInstanceOf(UserVm);
+  });
+});

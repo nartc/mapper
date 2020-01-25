@@ -68,13 +68,25 @@ export function _initializeMappingProperties<
         continue;
       }
 
-      const sourceMemberPath = [first]
-        .concat(
-          paths.map(p =>
-            mapping.sourceMemberNamingConvention.transformPropertyName([p])
+      const sourceMemberPath = [
+        [first]
+          .concat(
+            paths.map(p =>
+              mapping.sourceMemberNamingConvention.transformPropertyName([p])
+            )
           )
-        )
-        .join('.');
+          .join('.'),
+      ];
+
+      if (paths.length > 1) {
+        sourceMemberPath.push(
+          [first]
+            .concat(
+              mapping.sourceMemberNamingConvention.transformPropertyName(paths)
+            )
+            .join('.')
+        );
+      }
 
       mapping.properties.set(
         path,
@@ -84,11 +96,16 @@ export function _initializeMappingProperties<
               preCondition: null,
               type: TransformationType.MapInitialize,
             },
-            mapFrom: s => _get(s, sourceMemberPath),
+            mapFrom: s =>
+              _get(
+                s,
+                sourceMemberPath.length > 1
+                  ? sourceMemberPath
+                  : sourceMemberPath[0]
+              ),
           },
           destinationMemberPath: path,
           destinationMemberSelector: d => (d as any)[path],
-          sourceMemberPath,
         })
       );
       continue;

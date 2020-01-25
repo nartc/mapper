@@ -5,7 +5,7 @@ import {
   ConditionPredicate,
   Constructible,
   ConvertUsingTransformOptions,
-  CreateMapActions,
+  CreateMapOptions,
   Dict,
   MapActionOptions,
   MapFromCallback,
@@ -372,7 +372,7 @@ export abstract class AutoMapperBase {
   >(
     source: Constructible<TSource>,
     destination: Constructible<TDestination>,
-    options: CreateMapActions
+    options: CreateMapOptions
   ): Mapping<TSource, TDestination> {
     const _key = this._hasMapping(source, destination);
     const _mapping: Mapping<TSource, TDestination> = Object.seal({

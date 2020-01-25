@@ -272,23 +272,24 @@ function _getTag(value: any): string {
 
 export function _get<T>(
   object: T,
-  paths: string | string[],
-  defaultVal: any = null
+  defaultVal: any = null,
+  ...paths: string[]
 ): any {
-  if (Array.isArray(paths)) {
-    let _val = defaultVal;
-    for (let i = 0; i < paths.length; i++) {
-      _val = _get(object, paths[i], defaultVal);
-      if (_val != null) {
-        break;
-      }
-    }
-    return _val;
+  function _getInternal(object: T, path: string) {
+    const _path = path.split('.').filter(Boolean);
+    const _val = _path.reduce((obj: any, key) => obj && obj[key], object);
+    return _val === undefined ? defaultVal : _val;
   }
 
-  const _path = paths.split('.').filter(Boolean);
-  const _val = _path.reduce((obj: any, key) => obj && obj[key], object);
-  return _val === undefined ? defaultVal : _val;
+  let val = defaultVal;
+  for (let i = 0; i < paths.length; i++) {
+    val = _getInternal(object, paths[i]);
+    if (val != null) {
+      break;
+    }
+  }
+
+  return val;
 }
 
 export function _isEmpty(value: any): boolean {

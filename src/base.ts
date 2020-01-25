@@ -272,7 +272,7 @@ export abstract class AutoMapperBase {
         set(
           destinationObj,
           destinationMemberPath,
-          _get(sourceObj, propSourceMemberPath)
+          _get(sourceObj, null, propSourceMemberPath)
         );
         return;
       }
@@ -285,7 +285,7 @@ export abstract class AutoMapperBase {
       set(
         destinationObj,
         destinationMemberPath,
-        _get(sourceObj, propSourceMemberPath, nullSubstitution)
+        _get(sourceObj, nullSubstitution, propSourceMemberPath)
       );
       return;
     }

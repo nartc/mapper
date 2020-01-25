@@ -96,13 +96,7 @@ export function _initializeMappingProperties<
               preCondition: null,
               type: TransformationType.MapInitialize,
             },
-            mapFrom: s =>
-              _get(
-                s,
-                sourceMemberPath.length > 1
-                  ? sourceMemberPath
-                  : sourceMemberPath[0]
-              ),
+            mapFrom: s => _get(s, null, ...sourceMemberPath),
           },
           destinationMemberPath: path,
           destinationMemberSelector: d => (d as any)[path],
@@ -119,7 +113,7 @@ export function _initializeMappingProperties<
             preCondition: null,
             type: TransformationType.MapInitialize,
           },
-          mapFrom: s => _get(s, sourcePath),
+          mapFrom: s => _get(s, null, sourcePath),
         },
         destinationMemberSelector: d => (d as any)[path],
         destinationMemberPath: path,
@@ -186,7 +180,7 @@ export function _initializeReversedMappingProperties<
               preCondition: null,
               type: TransformationType.MapInitialize,
             },
-            mapFrom: d => _get(d, prop.destinationMemberPath),
+            mapFrom: d => _get(d, null, prop.destinationMemberPath),
           },
         })
       );

@@ -158,25 +158,6 @@ export abstract class AutoMapperBase {
         continue;
       }
 
-      if (preCondition && preCondition(sourceObj)) {
-        this._mapMember(
-          type,
-          destinationObj,
-          destinationMemberPath,
-          convertUsing as ConvertUsingTransformOptions,
-          sourceObj,
-          mapWith as MapWithTransformOptions,
-          propSourceMemberPath,
-          prop,
-          fromValue,
-          nullSubstitution,
-          condition as ConditionPredicate,
-          mapFrom as MapFromCallback,
-          mapping
-        );
-        continue;
-      }
-
       this._mapMember(
         type,
         destinationObj,

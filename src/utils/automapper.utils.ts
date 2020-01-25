@@ -203,7 +203,7 @@ export function _createMapForPath<
   let fromValue: any;
   let mapWith: MapWithTransformOptions<TDestination, TSource>;
   let convertUsing: ConvertUsingTransformOptions<TDestination, TSource>;
-  let preCondition: ConditionPredicate<TDestination>;
+  let preCondition: ConditionPredicate<TDestination> = () => true;
   let nullSubstitution: any;
 
   const opts: DestinationMemberExpressionOptions<TDestination, TSource> = {
@@ -235,8 +235,7 @@ export function _createMapForPath<
   };
 
   fn(opts);
-  // @ts-ignore
-  const _pcfn = _transformationType.withPreCondition ? preCondition : null;
+
   reversedMapping.properties.set(
     _path,
     Object.freeze({
@@ -245,7 +244,7 @@ export function _createMapForPath<
       transformation: Object.freeze({
         transformationType: {
           type: _transformationType.type,
-          preCondition: _pcfn,
+          preCondition,
         },
         // @ts-ignore
         mapFrom,
@@ -288,7 +287,7 @@ export function _createMapForMember<
   let fromValue: any;
   let mapWith: MapWithTransformOptions<TSource, TDestination>;
   let convertUsing: ConvertUsingTransformOptions<TSource, TDestination>;
-  let preCondition: ConditionPredicate<TSource>;
+  let preCondition: ConditionPredicate<TSource> = () => true;
   let nullSubstitution: any;
 
   const opts: DestinationMemberExpressionOptions<TSource, TDestination> = {
@@ -321,9 +320,6 @@ export function _createMapForMember<
 
   fn(opts);
 
-  // @ts-ignore
-  const _pcfn = _transformationType.withPreCondition ? preCondition : null;
-
   mapping.properties.set(
     _memberPath,
     Object.freeze({
@@ -332,7 +328,7 @@ export function _createMapForMember<
       transformation: Object.freeze({
         transformationType: {
           type: _transformationType.type,
-          preCondition: _pcfn,
+          preCondition,
         },
         // @ts-ignore
         mapFrom,

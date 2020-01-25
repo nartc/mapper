@@ -1,8 +1,5 @@
 import { AutoMapperBase } from './base';
-import {
-  defaultDestinationMemberNamingConvention,
-  defaultSourceMemberNamingConvention,
-} from './constants';
+import { defaultNamingConvention } from './constants';
 import {
   AutoMapperConfiguration,
   Constructible,
@@ -73,9 +70,10 @@ export class AutoMapper extends AutoMapperBase {
         TDestination extends Dict<TDestination> = any
       >(
         source: Constructible<TSource>,
-        destination: Constructible<TDestination>
+        destination: Constructible<TDestination>,
+        options?: CreateMapActions
       ): CreateMapFluentFunctions<TSource, TDestination> => {
-        return this.createMap(source, destination);
+        return this.createMap(source, destination, options);
       },
     };
     configFn(_config);
@@ -140,8 +138,8 @@ export class AutoMapper extends AutoMapperBase {
     options?: CreateMapActions
   ): CreateMapFluentFunctions<TSource, TDestination> {
     const mergeOptions: CreateMapActions = {
-      sourceMemberNamingConvention: defaultSourceMemberNamingConvention,
-      destinationMemberNamingConvention: defaultDestinationMemberNamingConvention,
+      sourceMemberNamingConvention: defaultNamingConvention,
+      destinationMemberNamingConvention: defaultNamingConvention,
       ...options,
     };
     const _mapping = super._createMappingObject(

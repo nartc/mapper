@@ -5,13 +5,7 @@ import { MapActionOptions } from './types';
  * Internal constant
  * @private
  */
-export const defaultSourceMemberNamingConvention = new CamelCaseNamingConvention();
-
-/**
- * Internal constant
- * @private
- */
-export const defaultDestinationMemberNamingConvention = new CamelCaseNamingConvention();
+export const defaultNamingConvention = new CamelCaseNamingConvention();
 
 /**
  * Internal constant

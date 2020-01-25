@@ -314,6 +314,18 @@ Mapper.createMap(User, UserVm, {
 
 When `map()`, `User.FirstName`, `User.LastName` and `User.Address.Street` will be mapped automatically to `UserVm.firstName`, `UserVm.lastName`, and `UserVm.addressStreet`. **Map by conventions** still stays true.
 
+#### Global Settings
+
+You can also provide **Naming Conventions** (for now) at a global level through **Global Settings**.
+
+```typescript
+Mapper.initialize(cfg => {
+  cfg.withGlobalSettings({ sourceMemberNamingConvention: SnakeCaseNamingConvention });
+});
+```
+
+Now, `SnakeCaseNamingConvention` will be applied to every `Source` models that is a part of a `Mapping` via `createMap()`.
+
 #### Getters
 
 `@nartc/automapper` can map **public getters**

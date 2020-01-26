@@ -534,6 +534,18 @@ Mapper.createMap(User, UserVm).forMember(
 
 The above mapping operation will only be proceeded if `source.age >= 10`. If `source.age < 10` (or the expression is falsy), then `dest.foo` will receive a `null` value.
 
+`preCondition` takes in an optional second argument: `defaultValue` which will be used to map to the `destinationMember`  is the `predicate` returns falsy instead of `null`.
+
+```typescript
+Mapper.createMap(User, UserVm).forMember(
+  dest => dest.foo,
+  opts =>
+    opts.preCondition(source => source.age >= 10, 'default value').mapFrom(source => source.bar)
+);
+```
+
+If `source.age < 10`, `dest.foo` will receive `'default value'` instead of `null`. Please take note that `defaultValue` respects the type of `destinationMember`. In this case, `dest.foo` is a `string` so you can only pass in a `string` for `defaultValue`.
+
 #### Condition
 
 Very similar to `preCondition`. However, if the `condition()` returns true, `@nartc/automapper` will try to map the same property name that is being checked against.
@@ -545,7 +557,7 @@ Mapper.createMap(User, UserVm).forMember(
 );
 ```
 
-If `condition()` returns truthy, then `@nartc/automapper` will try to map `source.fullName` to `dest.fullName`.
+If `condition()` returns truthy, then `@nartc/automapper` will try to map `source.fullName` to `dest.fullName`. `condition()` will also take in an optional second argument `defaultValue` and the same rule (as `preCondition`) applies to `condition()`.
 
 #### FromValue
 

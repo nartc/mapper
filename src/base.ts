@@ -2,7 +2,7 @@ import { plainToClass } from 'class-transformer';
 import set from 'lodash.set';
 import { defaultMapActionOptions } from './constants';
 import {
-  ConditionPredicate,
+  ConditionTransformation,
   Constructible,
   ConvertUsingTransformOptions,
   CreateMapOptions,
@@ -153,8 +153,8 @@ export abstract class AutoMapperBase {
         destinationMemberPath
       );
 
-      if (preCondition && !preCondition(sourceObj)) {
-        set(destinationObj, destinationMemberPath, null);
+      if (preCondition && !preCondition.predicate(sourceObj)) {
+        set(destinationObj, destinationMemberPath, preCondition.defaultValue);
         continue;
       }
 
@@ -169,7 +169,7 @@ export abstract class AutoMapperBase {
         prop,
         fromValue,
         nullSubstitution,
-        condition as ConditionPredicate,
+        condition as ConditionTransformation,
         mapFrom as MapFromCallback,
         mapping
       );
@@ -205,7 +205,7 @@ export abstract class AutoMapperBase {
     prop: MappingProperty,
     fromValue: any,
     nullSubstitution: any,
-    condition: ConditionPredicate,
+    condition: ConditionTransformation,
     mapFrom: MapFromCallback,
     mapping: Mapping<TSource, TDestination>
   ) {
@@ -267,8 +267,7 @@ export abstract class AutoMapperBase {
     }
 
     if (type === TransformationType.Condition) {
-      const _passed = condition && condition(sourceObj);
-      if (_passed) {
+      if (condition && condition.predicate(sourceObj)) {
         set(
           destinationObj,
           destinationMemberPath,
@@ -277,7 +276,7 @@ export abstract class AutoMapperBase {
         return;
       }
 
-      set(destinationObj, destinationMemberPath, null);
+      set(destinationObj, destinationMemberPath, condition.defaultValue);
       return;
     }
 

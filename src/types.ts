@@ -104,6 +104,14 @@ export interface ConditionPredicate<TSource extends Dict<TSource> = any> {
   (source: TSource): boolean;
 }
 
+export interface ConditionTransformation<
+  TSource extends Dict<TSource> = any,
+  TReturnType = any
+> {
+  predicate: ConditionPredicate<TSource>;
+  defaultValue?: TReturnType;
+}
+
 export interface Selector<
   TSource extends Dict<TSource> = any,
   TReturnType = any
@@ -133,7 +141,8 @@ export interface DestinationMemberExpressionOptions<
   TSelectorReturn = SelectorReturn<TDestination>
 > {
   preCondition(
-    predicate: ConditionPredicate<TSource>
+    predicate: ConditionPredicate<TSource>,
+    defaultValue?: TSelectorReturn
   ): DestinationMemberExpressionOptions<TSource, TDestination, TSelectorReturn>;
 
   mapFrom(cb: MapFromCallback<TSource, TDestination, TSelectorReturn>): void;
@@ -143,7 +152,10 @@ export interface DestinationMemberExpressionOptions<
     fromValue: ValueSelector<TSource>
   ): void;
 
-  condition(predicate: ConditionPredicate<TSource>): void;
+  condition(
+    predicate: ConditionPredicate<TSource>,
+    defaultValue?: TSelectorReturn
+  ): void;
 
   fromValue(value: TSelectorReturn): void;
 
@@ -261,10 +273,11 @@ export interface ConvertUsingTransformOptions<
 }
 
 export interface MappingTransformationType<
-  TSource extends Dict<TSource> = any
+  TSource extends Dict<TSource> = any,
+  TReturnType = any
 > {
   type: TransformationType;
-  preCondition: ConditionPredicate<TSource> | null;
+  preCondition: ConditionTransformation<TSource, TReturnType> | null;
 }
 
 export interface MappingTransformation<
@@ -272,10 +285,10 @@ export interface MappingTransformation<
   TDestination extends Dict<TDestination> = any,
   TSelectorReturn = SelectorReturn<TDestination>
 > {
-  transformationType: MappingTransformationType<TSource>;
+  transformationType: MappingTransformationType<TSource, TSelectorReturn>;
   mapFrom?: MapFromCallback<TSource, TDestination, TSelectorReturn>;
   mapWith?: MapWithTransformOptions<TSource, TDestination, TSelectorReturn>;
-  condition?: ConditionPredicate<TSource>;
+  condition?: ConditionTransformation<TSource, TSelectorReturn>;
   fromValue?: TSelectorReturn;
   convertUsing?: ConvertUsingTransformOptions<
     TSource,

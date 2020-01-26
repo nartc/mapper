@@ -366,6 +366,8 @@ describe('AutoMapper - map', () => {
     shouldIgnore!: number;
     @AutoMap()
     shouldBeSubstituted!: string;
+    @AutoMap()
+    forCondition!: boolean;
   }
 
   class AvatarVm {
@@ -375,6 +377,8 @@ describe('AutoMapper - map', () => {
     ignored!: number;
     @AutoMap()
     shouldBeSubstituted!: string;
+    @AutoMap()
+    forCondition!: boolean;
   }
 
   class AvatarProfile extends MappingProfileBase {
@@ -385,7 +389,13 @@ describe('AutoMapper - map', () => {
         .forMember(
           d => d.url,
           opts =>
-            opts.preCondition(s => s.shouldIgnore > 5).mapFrom(s => s.source)
+            opts
+              .preCondition(s => s.shouldIgnore > 5, 'default url')
+              .mapFrom(s => s.source)
+        )
+        .forMember(
+          d => d.forCondition,
+          opts => opts.condition(s => s.shouldIgnore > 5, true)
         )
         .forMember(
           d => d.ignored,
@@ -517,6 +527,7 @@ describe('AutoMapper - map', () => {
     user.profile.avatar.url = 'url.com';
     user.profile.avatar.shouldIgnore = 6;
     user.profile.avatar.shouldBeSubstituted = 'Will not be substituted';
+    user.profile.avatar.forCondition = false;
     user.profile.addresses = Array(2)
       .fill('')
       .map((_, index) => {
@@ -544,6 +555,7 @@ describe('AutoMapper - map', () => {
     expect(vm.profile.avatar).toBeTruthy();
     expect(vm.profile.avatar).toBeInstanceOf(AvatarVm);
     expect(vm.profile.avatar.url).toEqual(user.profile.avatar.source);
+    expect(vm.profile.avatar.forCondition).toEqual(false);
     expect(vm.profile.avatar.shouldBeSubstituted).not.toEqual('Substituted');
     expect(vm.profile.avatar.shouldBeSubstituted).toEqual(
       'Will not be substituted'
@@ -595,6 +607,22 @@ describe('AutoMapper - map', () => {
     const vms = await Mapper.mapArrayAsync([], UserVm, User);
     expect(vms).toBeTruthy();
     expect(vms.length).toEqual(0);
+  });
+
+  it('map with preCondition default value', () => {
+    user.profile.avatar.shouldIgnore = 5;
+    const vm = Mapper.map(user, UserVm);
+    expect(vm).toBeTruthy();
+    expect(vm).toBeInstanceOf(UserVm);
+    expect(vm.profile.avatar.url).toEqual('default url');
+  });
+
+  it('map with condition default value', () => {
+    user.profile.avatar.shouldIgnore = 5;
+    const vm = Mapper.map(user, UserVm);
+    expect(vm).toBeTruthy();
+    expect(vm).toBeInstanceOf(UserVm);
+    expect(vm.profile.avatar.forCondition).toEqual(true);
   });
 });
 
@@ -1032,7 +1060,9 @@ describe('AutoMapper - global settings', () => {
 
   beforeAll(() => {
     Mapper.initialize(cfg => {
-      cfg.withGlobalSettings({sourceNamingConvention: SnakeCaseNamingConvention});
+      cfg.withGlobalSettings({
+        sourceNamingConvention: SnakeCaseNamingConvention,
+      });
       cfg.createMap(User, UserVm).reverseMap();
     });
   });

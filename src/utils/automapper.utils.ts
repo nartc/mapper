@@ -1,6 +1,6 @@
 import { plainToClass } from 'class-transformer';
 import {
-  ConditionPredicate,
+  ConditionTransformation,
   Constructible,
   ConvertUsingTransformOptions,
   CreateMapFluentFunctions,
@@ -210,11 +210,14 @@ export function _createMapForPath<
   const _path = _getMemberPath(pathSelector);
 
   let mapFrom: MapFromCallback<TDestination, TSource>;
-  let condition: ConditionPredicate<TDestination>;
+  let condition: ConditionTransformation<TDestination, ReturnType<TSelector>>;
   let fromValue: any;
   let mapWith: MapWithTransformOptions<TDestination, TSource>;
   let convertUsing: ConvertUsingTransformOptions<TDestination, TSource>;
-  let preCondition: ConditionPredicate<TDestination> = () => true;
+  let preCondition: ConditionTransformation<
+    TDestination,
+    ReturnType<TSelector>
+  >;
   let nullSubstitution: any;
 
   const opts: DestinationMemberExpressionOptions<TDestination, TSource> = {
@@ -224,8 +227,8 @@ export function _createMapForPath<
     mapWith: (destination, value) => {
       mapWith = { destination, fromValue: value };
     },
-    condition: predicate => {
-      condition = predicate;
+    condition: (predicate, defaultValue) => {
+      condition = { predicate, defaultValue };
     },
     ignore(): void {
       // do nothing
@@ -236,8 +239,8 @@ export function _createMapForPath<
     convertUsing: (converter, value) => {
       convertUsing = { converter, value };
     },
-    preCondition: predicate => {
-      preCondition = predicate;
+    preCondition: (predicate, defaultValue) => {
+      preCondition = { predicate, defaultValue };
       return opts;
     },
     nullSubstitution: value => {
@@ -255,6 +258,7 @@ export function _createMapForPath<
       transformation: Object.freeze({
         transformationType: {
           type: _transformationType.type,
+          // @ts-ignore
           preCondition,
         },
         // @ts-ignore
@@ -294,11 +298,11 @@ export function _createMapForMember<
   const _memberPath = _getMemberPath(memberSelector);
 
   let mapFrom: MapFromCallback<TSource, TDestination>;
-  let condition: ConditionPredicate<TSource>;
+  let condition: ConditionTransformation<TSource, ReturnType<TSelector>>;
   let fromValue: any;
   let mapWith: MapWithTransformOptions<TSource, TDestination>;
   let convertUsing: ConvertUsingTransformOptions<TSource, TDestination>;
-  let preCondition: ConditionPredicate<TSource> = () => true;
+  let preCondition: ConditionTransformation<TSource, ReturnType<TSelector>>;
   let nullSubstitution: any;
 
   const opts: DestinationMemberExpressionOptions<TSource, TDestination> = {
@@ -308,8 +312,8 @@ export function _createMapForMember<
     mapWith: (destination, value) => {
       mapWith = { destination, fromValue: value };
     },
-    condition: predicate => {
-      condition = predicate;
+    condition: (predicate, defaultValue) => {
+      condition = { predicate, defaultValue };
     },
     ignore(): void {
       // do nothing
@@ -320,8 +324,8 @@ export function _createMapForMember<
     convertUsing: (converter, value) => {
       convertUsing = { converter, value };
     },
-    preCondition: predicate => {
-      preCondition = predicate;
+    preCondition: (predicate, defaultValue) => {
+      preCondition = { predicate, defaultValue };
       return opts;
     },
     nullSubstitution: value => {
@@ -339,6 +343,7 @@ export function _createMapForMember<
       transformation: Object.freeze({
         transformationType: {
           type: _transformationType.type,
+          // @ts-ignore
           preCondition,
         },
         // @ts-ignore
@@ -381,7 +386,9 @@ export function _setMappingPropertyForMapFromMember<
       sourceMemberPath: sourcePath,
       transformation: {
         transformationType: {
-          preCondition: null,
+          preCondition:
+            mapping.properties.get(path)?.transformation.transformationType
+              .preCondition || null,
           type: TransformationType.MapFrom,
         },
         mapFrom,

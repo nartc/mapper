@@ -276,7 +276,7 @@ export abstract class AutoMapperBase {
         return;
       }
 
-      set(destinationObj, destinationMemberPath, condition.defaultValue);
+      set(destinationObj, destinationMemberPath, condition.defaultValue || null);
       return;
     }
 

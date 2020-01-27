@@ -99,7 +99,7 @@
     "cz-conventional-changelog": "3.0.2",
     "eslint-plugin-prettier": "3.1.2",
     "husky": "4.2.1",
-    "lint-staged": "9.5.0",
+    "lint-staged": "10.0.3",
     "prettier": "1.19.1",
     "reflect-metadata": "0.1.13",
     "semantic-release": "16.0.1",

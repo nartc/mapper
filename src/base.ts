@@ -109,9 +109,10 @@ export abstract class AutoMapperBase {
     option: MapActionOptions<TSource, TDestination> = defaultMapActionOptions,
     isArrayMap: boolean = false
   ): TDestination {
-    sourceObj = plainToClass(mapping.source, sourceObj, {
-      excludeExtraneousValues: true,
-    });
+    !(sourceObj instanceof mapping.source) &&
+      (sourceObj = plainToClass(mapping.source, sourceObj, {
+        excludeExtraneousValues: true,
+      }));
     const { afterMap, beforeMap } = option;
     const {
       destination,

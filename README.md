@@ -309,9 +309,15 @@ The best way to handle this is to use `mapFrom` and configure your mapping prope
 
 ```typescript
 Mapper.createMap(Foo, FooVm)
-  .forMember(dest => dest.someDate, opts => opts.mapFrom(source => source.someDate.toDateString()))
+  .forMember(
+    dest => dest.someDate,
+    opts => opts.mapFrom(source => source.someDate.toDateString())
+  )
   .reverseMap()
-  .forPath(source => source.someDate, opts => opts.mapFrom(dest => new Date(dest.someDate)));
+  .forPath(
+    source => source.someDate,
+    opts => opts.mapFrom(dest => new Date(dest.someDate))
+  );
 ```
 
 If you have many `Date-string` pairs like above, you might want to consider using a `Converter` for reusability.
@@ -338,9 +344,13 @@ and I cannot intelligently tell an `Object` is a `Moment` object without pulling
 Again, apply mapping manually would be the best way to go about this.
 
 ```typescript
-Mapper.createMap(Foo, FooVm)
-  .forMember(dest => dest.someMoment, opts => opts.mapFrom(source => source.someMoment.toISOString()));
+Mapper.createMap(Foo, FooVm).forMember(
+  dest => dest.someMoment,
+  opts => opts.mapFrom(source => source.someMoment.toISOString())
+);
 ```
+
+Updated: `Moment` does not work really well right now since `plainToClass` from `class-transformer` will instantiate a new `moment()` everytime. If the `source` that was passed in `Mapper.map(source, Destination)` is truly an instance of a `Source` class, then it should work.
 
 #### Naming Conventions
 
@@ -394,7 +404,9 @@ You can also provide **Naming Conventions** (for now) at a global level through 
 
 ```typescript
 Mapper.initialize(cfg => {
-  cfg.withGlobalSettings({ sourceMemberNamingConvention: SnakeCaseNamingConvention });
+  cfg.withGlobalSettings({
+    sourceMemberNamingConvention: SnakeCaseNamingConvention,
+  });
 });
 ```
 
@@ -444,7 +456,7 @@ Mapper.createMap(User, UserVm)
   .reverseMap();
 ```
 
-Please take note that `@nartc/automapper` works based a lot on **conventions**. This applies greatly to **getters support** so try to keep your `private fields` and `public getters` somewhat aligned with each other. E.g: `private _firstName`  and `public get firstName()`
+Please take note that `@nartc/automapper` works based a lot on **conventions**. This applies greatly to **getters support** so try to keep your `private fields` and `public getters` somewhat aligned with each other. E.g: `private _firstName` and `public get firstName()`
 
 #### Callbacks
 
@@ -608,13 +620,15 @@ Mapper.createMap(User, UserVm).forMember(
 
 The above mapping operation will only be proceeded if `source.age >= 10`. If `source.age < 10` (or the expression is falsy), then `dest.foo` will receive a `null` value.
 
-`preCondition` takes in an optional second argument: `defaultValue` which will be used to map to the `destinationMember`  is the `predicate` returns falsy instead of `null`.
+`preCondition` takes in an optional second argument: `defaultValue` which will be used to map to the `destinationMember` is the `predicate` returns falsy instead of `null`.
 
 ```typescript
 Mapper.createMap(User, UserVm).forMember(
   dest => dest.foo,
   opts =>
-    opts.preCondition(source => source.age >= 10, 'default value').mapFrom(source => source.bar)
+    opts
+      .preCondition(source => source.age >= 10, 'default value')
+      .mapFrom(source => source.bar)
 );
 ```
 

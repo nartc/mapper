@@ -1132,6 +1132,8 @@ describe('AutoMapper - moment', () => {
     someDate!: Date;
     @AutoMap()
     someMomentMoment!: string;
+    @AutoMap(() => moment)
+    someOtherMoment!: moment.Moment;
   }
 
   class FooDto {
@@ -1143,6 +1145,8 @@ describe('AutoMapper - moment', () => {
     someDate!: Date;
     @AutoMap(() => moment)
     someMomentMoment!: moment.Moment;
+    @AutoMap()
+    someOtherMomentTimestamp!: number;
   }
 
   class FooProfile extends MappingProfileBase {
@@ -1159,7 +1163,23 @@ describe('AutoMapper - moment', () => {
           s => s.someMomentMoment,
           opts => opts.mapFrom(d => d.someMomentMoment.toISOString())
         )
-        .reverseMap();
+        .forMember(
+          s => s.someOtherMoment,
+          opts => opts.mapFrom(d => moment(d.someOtherMomentTimestamp))
+        )
+        .reverseMap()
+        .forPath(
+          d => d.someOtherMomentTimestamp,
+          opts => opts.mapFrom(s => s.someOtherMoment.unix())
+        )
+        .forPath(
+          d => d.someMomentDateString,
+          opts => opts.mapFrom(s => s.someMoment.toISOString())
+        )
+        .forPath(
+          d => d.someMomentMoment,
+          opts => opts.ignore()
+        );
     }
   }
 
@@ -1172,18 +1192,29 @@ describe('AutoMapper - moment', () => {
   });
 
   it('map', () => {
-    const dateToCheck = moment('10/14/1991', 'MM-DD-YYYY');
     const dto = new FooDto();
     dto.foo = 'bar';
     dto.someMomentDateString = '10/14/1991';
     dto.someDate = new Date();
     dto.someMomentMoment = moment();
+    dto.someOtherMomentTimestamp = 12345 * 1000;
 
     const foo = Mapper.map(dto, Foo);
     expect(foo).toBeTruthy();
     expect(foo).toBeInstanceOf(Foo);
     expect(foo.foo).toEqual('bar');
     expect(moment.isMoment(foo.someMoment)).toBeTruthy();
-    expect(foo.someMoment).toEqual(dateToCheck);
+  });
+
+  it('reverseMap', () => {
+    const foo = new Foo();
+    foo.foo = 'some bar';
+    foo.someDate = new Date();
+    foo.someOtherMoment = moment(54321 * 1000);
+    foo.someMoment = moment();
+    foo.someMomentMoment = '10/14/1991';
+
+    const dto = Mapper.map(foo, FooDto);
+    expect(dto).toBeTruthy();
   });
 });

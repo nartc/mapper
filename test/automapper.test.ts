@@ -973,17 +973,32 @@ describe('AutoMapper - public getter setter', () => {
     public set foo(value: string) {
       this._foo = value;
     }
+
+    private _someLongProperty!: Date;
+    @AutoMap()
+    public get someLongProperty() {
+      return this._someLongProperty;
+    }
+
+    public set someLongProperty(value: Date) {
+      this._someLongProperty = value;
+    }
   }
 
   class FooDto {
     @AutoMap()
     public foo!: string;
+    @AutoMap()
+    someLongPropertyDateString!: string;
   }
 
   class FooProfile extends MappingProfileBase {
     constructor(mapper: AutoMapper) {
       super();
-      mapper.createMap(FooDto, Foo);
+      mapper.createMap(FooDto, Foo).forMember(
+        d => d.someLongProperty,
+        opts => opts.mapFrom(s => new Date(s.someLongPropertyDateString))
+      );
     }
   }
 
@@ -1020,7 +1035,11 @@ describe('AutoMapper - public getter setter', () => {
   });
 
   it('map foo', () => {
-    const foo = Mapper.map({ foo: 'bar' }, Foo, FooDto);
+    const foo = Mapper.map(
+      { foo: 'bar', someLongPropertyDateString: '10/14/1991' },
+      Foo,
+      FooDto
+    );
     expect(foo).toBeTruthy();
     expect(foo).toBeInstanceOf(Foo);
   });

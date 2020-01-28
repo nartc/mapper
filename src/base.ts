@@ -154,7 +154,11 @@ export abstract class AutoMapperBase {
       );
 
       if (preCondition && !preCondition.predicate(sourceObj)) {
-        set(destinationObj, destinationMemberPath, preCondition.defaultValue || null);
+        set(
+          destinationObj,
+          destinationMemberPath,
+          preCondition.defaultValue || null
+        );
         continue;
       }
 
@@ -276,7 +280,11 @@ export abstract class AutoMapperBase {
         return;
       }
 
-      set(destinationObj, destinationMemberPath, condition.defaultValue || null);
+      set(
+        destinationObj,
+        destinationMemberPath,
+        condition.defaultValue || null
+      );
       return;
     }
 

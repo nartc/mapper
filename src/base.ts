@@ -123,7 +123,10 @@ export abstract class AutoMapperBase {
     } = mapping;
     const configKeys = [];
 
-    let destinationObj = new destination();
+    let destinationObj = plainToClass(destination, new destination(), {
+      enableCircularCheck: true,
+      excludeExtraneousValues: true,
+    });
 
     if (!isArrayMap) {
       if (beforeMap) {
@@ -179,9 +182,9 @@ export abstract class AutoMapperBase {
       );
     }
 
-    destinationObj = plainToClass(destination, destinationObj, {
-      excludeExtraneousValues: true,
-    });
+    // destinationObj = plainToClass(destination, destinationObj, {
+    //   excludeExtraneousValues: true,
+    // });
     _assertMappingErrors(destinationObj, configKeys);
 
     if (!isArrayMap) {

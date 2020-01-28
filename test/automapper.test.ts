@@ -1,3 +1,4 @@
+import moment from 'moment';
 import 'reflect-metadata';
 import {
   AutoMap,
@@ -1102,5 +1103,87 @@ describe('AutoMapper - global settings', () => {
     const vm = Mapper.map(user, UserVm);
     expect(vm).toBeTruthy();
     expect(vm).toBeInstanceOf(UserVm);
+  });
+});
+
+describe('AutoMapper - moment', () => {
+  class Foo {
+    private _foo!: string;
+    @AutoMap()
+    public get foo(): string {
+      return this._foo;
+    }
+
+    public set foo(value: string) {
+      this._foo = value;
+    }
+
+    private _someMoment!: moment.Moment;
+    @AutoMap(() => moment)
+    public get someMoment(): moment.Moment {
+      return this._someMoment;
+    }
+
+    public set someMoment(value: moment.Moment) {
+      this._someMoment = value;
+    }
+
+    @AutoMap()
+    someDate!: Date;
+    @AutoMap()
+    someMomentMoment!: string;
+  }
+
+  class FooDto {
+    @AutoMap()
+    foo!: string;
+    @AutoMap()
+    someMomentDateString!: string;
+    @AutoMap()
+    someDate!: Date;
+    @AutoMap(() => moment)
+    someMomentMoment!: moment.Moment;
+  }
+
+  class FooProfile extends MappingProfileBase {
+    constructor(mapper: AutoMapper) {
+      super();
+      mapper
+        .createMap(FooDto, Foo)
+        .forMember(
+          s => s.someMoment,
+          opts =>
+            opts.mapFrom(d => moment(d.someMomentDateString, 'MM-DD-YYYY'))
+        )
+        .forMember(
+          s => s.someMomentMoment,
+          opts => opts.mapFrom(d => d.someMomentMoment.toISOString())
+        )
+        .reverseMap();
+    }
+  }
+
+  beforeAll(() => {
+    Mapper.addProfile(FooProfile);
+  });
+
+  afterAll(() => {
+    Mapper.dispose();
+  });
+
+  it('map', () => {
+    const dateToCheck = moment('10/14/1991', 'MM-DD-YYYY');
+    const dto = new FooDto();
+    dto.foo = 'bar';
+    dto.someMomentDateString = '10/14/1991';
+    dto.someDate = new Date();
+    dto.someMomentMoment = moment();
+
+    const foo = Mapper.map(dto, Foo);
+    expect(foo).toBeTruthy();
+    expect(foo).toBeInstanceOf(Foo);
+    expect(foo.foo).toEqual('bar');
+    expect(moment.isMoment(foo.someMoment)).toBeTruthy();
+    expect(foo.someMoment).toEqual(dateToCheck);
   });
 });

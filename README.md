@@ -268,6 +268,80 @@ const userVm = Mapper.map(user, UserVm);
 const userVm = Mapper.map(user, UserVm, User2);
 ```
 
+#### Date Time
+
+Dealing with `Date Time` is hard and there are so many options out there to help with manipulating `Date` object in **JavaScript**.
+
+1. Vanilla `Date` object:
+
+Internally, `@nartc/automapper` is not using any 3rd party library to manipulate `Date` object rather than the `Date` object itself. Therefore, you might want to handle the mappings with `Date` yourself using `mapFrom` and such that the `AutoMapper` provides.
+You can use `date-fns`, `dayjs`, or `luxon` which are 3 very powerful `DateTime` library that deal with Vanilla `Date` object.
+
+```typescript
+class Foo {
+  @AutoMap()
+  someDate!: Date;
+}
+
+class FooVm {
+  @AutoMap()
+  someDate!: Date;
+}
+```
+
+The above case, all is fine. But check out the below case:
+
+```typescript
+class Foo {
+  @AutoMap()
+  someDate!: Date;
+}
+
+class FooVm {
+  @AutoMap()
+  someDate!: string; // the only difference is now this is a string
+}
+```
+
+When we map from between these two models, the `destination type` will always be the same as the `source type`.
+In other words, if you map from `Foo -> FooVm`, `FooVm.someDate` will also be `Date` and not `string`.
+The best way to handle this is to use `mapFrom` and configure your mapping properly
+
+```typescript
+Mapper.createMap(Foo, FooVm)
+  .forMember(dest => dest.someDate, opts => opts.mapFrom(source => source.someDate.toDateString()))
+  .reverseMap()
+  .forPath(source => source.someDate, opts => opts.mapFrom(dest => new Date(dest.someDate)));
+```
+
+If you have many `Date-string` pairs like above, you might want to consider using a `Converter` for reusability.
+Again, if you have more complex cases regarding `Date Time` manipulation, try to leverage the libraries I mentioned.
+
+2. `Moment` object
+
+Same complexity and limit apply to `Moment` object with one extra caveat.
+
+```typescript
+class Foo {
+  @AutoMap(() => moment) // <-- add the TypeFn to Moment field
+  someMoment: moment.Moment;
+}
+
+class FooVm {
+  @AutoMap()
+  someMoment: string;
+}
+```
+
+Internally, `@nartc/automapper` uses `class-transformer's plainToClass` to initialize the models and do so recursively for nested models. However, `moment` doesn't have a constructor like any other model
+and I cannot intelligently tell an `Object` is a `Moment` object without pulling in the `moment` library. Passing in the `typeFn` does not do anything but by-pass initialization for those `moment` fields.
+Again, apply mapping manually would be the best way to go about this.
+
+```typescript
+Mapper.createMap(Foo, FooVm)
+  .forMember(dest => dest.someMoment, opts => opts.mapFrom(source => source.someMoment.toISOString()));
+```
+
 #### Naming Conventions
 
 `@nartc/automapper` provides away to map between two models with different naming conventions. Naming conventions supported:

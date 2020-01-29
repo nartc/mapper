@@ -689,6 +689,21 @@ assert(vm.shouldBeSubstituted === 'initial value');
 
 While `Async` versions of `map` and `mapArray` are available, they're not "real" `Async` since I just wrap the `map` operations inside of a `resolved Promise` to execute the operations as a `Micro Task`. I'll look into this more and I welcome any suggestions.
 
+## Plugin
+
+Looking over the examples, you can see that in order for `@nartc/automapper` to work properly, there's a lot of boilerplate code for `@AutoMap()` decorator.
+In order to solve that issue, `@nartc/automapper` has a plugin called [@nartc/automapper-transformer-plugin](https://github.com/nartc/automapper-transformer-plugin).
+
+#### Installation
+
+```shell script
+npm i -D @nartc/automapper-transformer-plugin
+```
+
+#### Usage
+
+Check out [@nartc/automapper-transformer-plugin](https://github.com/nartc/automapper-transformer-plugin) for detail usage.
+
 ## Demo
 
 [Codesandbox Demo](https://codesandbox.io/s/automapper-demo-ntc2d)

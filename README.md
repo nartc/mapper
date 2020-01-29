@@ -189,7 +189,7 @@ class UserVm {
 }
 ```
 
-**NOTE: I am looking into working on a plugin where the decorators will be added programmatically before the compilation steps so that we don't need as much boilerplate.**
+**NOTE: Check out the [Plugin](#plugin) section for more info.**
 
 4. Next, import `Mapper` from `@nartc/automapper`. You can also just instantiate a new instance of `AutoMapper` if you want to manage your instance.
 5. Initialize `Mapper` with `initialize()` method. `initialize()` expects a `Configuration` callback that will give you access to the `Configuration` object. There are two methods on the `Configuration` object that you can use to setup your `Mapper`

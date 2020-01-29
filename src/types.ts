@@ -98,6 +98,8 @@ export enum TransformationType {
 
 export interface Constructible<T extends Dict<T> = any> {
   new (...args: any[]): T;
+
+  __NARTC_AUTOMAPPER_METADATA_FACTORY?: () => Dict<T>;
 }
 
 export interface ConditionPredicate<TSource extends Dict<TSource> = any> {

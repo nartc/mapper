@@ -1,11 +1,12 @@
 import { AutoMapperBase } from './base';
 import { defaultNamingConvention } from './constants';
+import { MetadataExplorer } from './metadata-explorer';
 import {
   AutoMapperConfiguration,
   AutoMapperGlobalSettings,
   Constructible,
-  CreateMapOptions,
   CreateMapFluentFunctions,
+  CreateMapOptions,
   CreateReversedMapFluentFunctions,
   Dict,
   MapActionOptions,
@@ -154,6 +155,8 @@ export class AutoMapper extends AutoMapperBase {
     destination: Constructible<TDestination>,
     options?: CreateMapOptions
   ): CreateMapFluentFunctions<TSource, TDestination> {
+    MetadataExplorer.explore(source);
+    MetadataExplorer.explore(destination);
     const mergeOptions: CreateMapOptions = {
       sourceMemberNamingConvention: this._defaultSourceNamingConvention,
       destinationMemberNamingConvention: this

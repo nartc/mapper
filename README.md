@@ -584,8 +584,7 @@ Mapper.initialize(cfg => {
     );
 
   cfg
-    .createMap(User, UserVm)
-    .includeBase(Base, BaseVm) // call includeBase and pass in the base classes
+    .createMap(User, UserVm, { includeBase: [Base, BaseVm] }) // provide includeBase option
     .forMember(
       d => d.fullName,
       opts => opts.mapFrom(s => s.firstName + ' ' + s.lastName)
@@ -595,7 +594,7 @@ Mapper.initialize(cfg => {
 
 The **unampped** error will be gone now.
 
-**NOTE: As mentioned above that there is a caveat regarding the typings, it means that `includeBase()` isn't type safe 😢. I'll continue looking for a solution regarding this.**
+**NOTE: Generics typing for `includeBase` is quite tricky. It might not be working properly in some cases.**
 
 #### ReverseMap
 

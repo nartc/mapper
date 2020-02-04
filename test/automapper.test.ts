@@ -1277,8 +1277,7 @@ describe('AutoMapper - inheritance', () => {
         );
 
       mapper
-        .createMap(User, UserVm)
-        .includeBase(Base, BaseVm)
+        .createMap(User, UserVm, { includeBase: [Base, BaseVm] })
         .forMember(
           d => d.first,
           opts => opts.mapFrom(s => s.firstName)

@@ -1,5 +1,6 @@
 import { plainToClass } from 'class-transformer';
 import {
+  BaseOf,
   ConditionTransformation,
   Constructible,
   ConvertUsingTransformOptions,
@@ -124,12 +125,12 @@ export function _initializeMappingProperties<
 }
 
 export function _inheritBaseMapping<
-  TBaseSource extends Dict<TBaseSource> = any,
-  TBaseDestination extends Dict<TBaseDestination> = any,
-  TSource extends TBaseSource = any,
-  TDestination extends TBaseDestination = any
+  TSource extends Dict<TSource> = any,
+  TDestination extends Dict<TDestination> = any,
+  TBaseSource extends BaseOf<TSource, TBaseSource> = any,
+  TBaseDestination extends BaseOf<TDestination, TBaseDestination> = any
 >(
-  mapping: Mapping<TBaseSource, TBaseDestination, TSource, TDestination>,
+  mapping: Mapping<TSource, TDestination, TBaseSource, TBaseDestination>,
   baseMapping: Mapping<TBaseSource, TBaseDestination>
 ): void {
   const props = mapping.properties;
@@ -146,7 +147,7 @@ export function _inheritBaseMapping<
       continue;
     }
 
-    props.set(prop.destinationMemberPath, Object.seal({ ...prop }));
+    props.set(prop.destinationMemberPath, Object.seal({ ...prop } as any));
   }
 }
 
@@ -155,12 +156,12 @@ export function _inheritBaseMapping<
  * @private
  */
 export function _initializeReversedMappingProperties<
-  TBaseSource extends Dict<TBaseSource> = any,
-  TBaseDestination extends Dict<TBaseDestination> = any,
-  TSource extends TBaseSource = any,
-  TDestination extends TBaseDestination = any
+  TSource extends Dict<TSource> = any,
+  TDestination extends Dict<TDestination> = any,
+  TBaseSource extends BaseOf<TSource, TBaseSource> = any,
+  TBaseDestination extends BaseOf<TDestination, TBaseDestination> = any
 >(
-  mapping: Mapping<TBaseSource, TBaseDestination, TSource, TDestination>
+  mapping: Mapping<TSource, TDestination, TBaseSource, TBaseDestination>
 ): Map<string, MappingProperty<TDestination, TSource>> {
   const model = plainToClass(mapping.source, new mapping.source(), {
     enableCircularCheck: true,
@@ -223,17 +224,17 @@ export function _initializeReversedMappingProperties<
  * @private
  */
 export function _createMapForPath<
-  TBaseSource extends Dict<TBaseSource> = any,
-  TBaseDestination extends Dict<TBaseDestination> = any,
-  TSource extends TBaseSource = any,
-  TDestination extends TBaseDestination = any,
+  TSource extends Dict<TSource> = any,
+  TDestination extends Dict<TDestination> = any,
+  TBaseSource extends BaseOf<TSource, TBaseSource> = any,
+  TBaseDestination extends BaseOf<TDestination, TBaseDestination> = any,
   TSelector extends Selector<TSource> = Selector<TSource>
 >(
   reversedMapping: Mapping<
-    TBaseDestination,
-    TBaseSource,
     TDestination,
-    TSource
+    TSource,
+    TBaseDestination,
+    TBaseSource
   >,
   pathSelector: TSelector,
   fn: ForMemberExpression<TDestination, TSource>,
@@ -321,26 +322,26 @@ export function _createMapForPath<
  * @private
  */
 export function _createMapForMember<
-  TBaseSource extends Dict<TBaseSource> = any,
-  TBaseDestination extends Dict<TBaseDestination> = any,
-  TSource extends TBaseSource = any,
-  TDestination extends TBaseDestination = any,
+  TSource extends Dict<TSource> = any,
+  TDestination extends Dict<TDestination> = any,
+  TBaseSource extends BaseOf<TSource, TBaseSource> = any,
+  TBaseDestination extends BaseOf<TDestination, TBaseDestination> = any,
   TSelector extends Selector<TDestination> = Selector<TDestination>
 >(
-  mapping: Mapping<TBaseSource, TBaseDestination, TSource, TDestination>,
+  mapping: Mapping<TSource, TDestination, TBaseSource, TBaseDestination>,
   memberSelector: TSelector,
   fn: ForMemberExpression<TSource, TDestination>,
   fluentFunctions: CreateMapFluentFunctions<
-    TBaseSource,
-    TBaseDestination,
     TSource,
-    TDestination
+    TDestination,
+    TBaseSource,
+    TBaseDestination
   >
 ): CreateMapFluentFunctions<
-  TBaseSource,
-  TBaseDestination,
   TSource,
-  TDestination
+  TDestination,
+  TBaseSource,
+  TBaseDestination
 > {
   const _transformationType = _getTransformationType(fn);
   const _memberPath = _getMemberPath(memberSelector);

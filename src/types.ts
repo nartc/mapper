@@ -48,9 +48,15 @@ export interface NamingConvention {
   transformPropertyName: (sourcePropNameParts: string[]) => string;
 }
 
-export interface CreateMapOptions {
+export interface CreateMapOptions<
+  TSource extends Dict<TSource> = any,
+  TDestination extends Dict<TDestination> = any,
+  TBaseSource extends BaseOf<TSource, TBaseSource> = any,
+  TBaseDestination extends BaseOf<TDestination, TBaseDestination> = any
+> {
   sourceMemberNamingConvention?: NamingConvention;
   destinationMemberNamingConvention?: NamingConvention;
+  includeBase?: [Constructible<TBaseSource>, Constructible<TBaseDestination>];
 }
 
 export interface MapActionOptions<
@@ -101,6 +107,10 @@ export interface Constructible<T extends Dict<T> = any> {
 
   __NARTC_AUTOMAPPER_METADATA_FACTORY?: () => Dict<T>;
 }
+
+export type BaseOf<T extends Dict<T> = any, TBase = any> = [T] extends [TBase]
+  ? unknown
+  : never;
 
 export interface ConditionPredicate<TSource extends Dict<TSource> = any> {
   (source: TSource): boolean;
@@ -197,47 +207,37 @@ export interface BeforeAfterMapAction<
 }
 
 export interface CreateMapFluentFunctions<
-  TBaseSource extends Dict<TBaseSource> = any,
-  TBaseDestination extends Dict<TBaseDestination> = any,
-  TSource extends TBaseSource = any,
-  TDestination extends TBaseDestination = any
+  TSource extends Dict<TSource> = any,
+  TDestination extends Dict<TDestination> = any,
+  TBaseSource extends BaseOf<TSource, TBaseSource> = any,
+  TBaseDestination extends BaseOf<TDestination, TBaseDestination> = any
 > {
-  includeBase(
-    baseSource: Constructible<TBaseSource>,
-    baseDestination: Constructible<TBaseDestination>
-  ): CreateMapFluentFunctions<
-    TBaseSource,
-    TBaseDestination,
-    TSource,
-    TDestination
-  >;
-
   forMember<TMemberType = SelectorReturn<TDestination>>(
     selector: Selector<TDestination, TMemberType>,
     expression: ForMemberExpression<TSource, TDestination, TMemberType>
   ): CreateMapFluentFunctions<
-    TBaseSource,
-    TBaseDestination,
     TSource,
-    TDestination
+    TDestination,
+    TBaseSource,
+    TBaseDestination
   >;
 
   beforeMap(
     action: BeforeAfterMapAction<TSource, TDestination>
   ): CreateMapFluentFunctions<
-    TBaseSource,
-    TBaseDestination,
     TSource,
-    TDestination
+    TDestination,
+    TBaseSource,
+    TBaseDestination
   >;
 
   afterMap(
     action: BeforeAfterMapAction<TSource, TDestination>
   ): CreateMapFluentFunctions<
-    TBaseSource,
-    TBaseDestination,
     TSource,
-    TDestination
+    TDestination,
+    TBaseSource,
+    TBaseDestination
   >;
 
   reverseMap(): CreateReversedMapFluentFunctions<TDestination, TSource>;
@@ -272,18 +272,18 @@ export interface AutoMapperConfiguration {
   addProfile(profile: new (mapper: AutoMapper) => MappingProfile): AutoMapper;
 
   createMap<
-    TBaseSource extends Dict<TBaseSource> = any,
-    TBaseDestination extends Dict<TBaseDestination> = any,
-    TSource extends TBaseSource = any,
-    TDestination extends TBaseDestination = any
+    TSource extends Dict<TSource> = any,
+    TDestination extends Dict<TDestination> = any,
+    TBaseSource extends BaseOf<TSource, TBaseSource> = any,
+    TBaseDestination extends BaseOf<TDestination, TBaseDestination> = any
   >(
     source: Constructible<TSource>,
     destination: Constructible<TDestination>
   ): CreateMapFluentFunctions<
-    TBaseSource,
-    TBaseDestination,
     TSource,
-    TDestination
+    TDestination,
+    TBaseSource,
+    TBaseDestination
   >;
 }
 
@@ -351,10 +351,10 @@ export interface MappingProperty<
 }
 
 export interface Mapping<
-  TBaseSource extends Dict<TBaseSource> = any,
-  TBaseDestination extends Dict<TBaseDestination> = any,
-  TSource extends TBaseSource = any,
-  TDestination extends TBaseDestination = any
+  TSource extends Dict<TSource> = any,
+  TDestination extends Dict<TDestination> = any,
+  TBaseSource extends BaseOf<TSource, TBaseSource> = any,
+  TBaseDestination extends BaseOf<TDestination, TBaseDestination> = any
 > {
   source: Constructible<TSource>;
   sourceKey: string;

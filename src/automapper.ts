@@ -4,6 +4,7 @@ import { MetadataExplorer } from './metadata-explorer';
 import {
   AutoMapperConfiguration,
   AutoMapperGlobalSettings,
+  BaseOf,
   Constructible,
   CreateMapFluentFunctions,
   CreateMapOptions,
@@ -85,19 +86,19 @@ export class AutoMapper extends AutoMapperBase {
         return this.addProfile(profile);
       },
       createMap: <
-        TBaseSource extends Dict<TBaseSource> = any,
-        TBaseDestination extends Dict<TBaseDestination> = any,
-        TSource extends TBaseSource = any,
-        TDestination extends TBaseDestination = any
+        TSource extends Dict<TSource> = any,
+        TDestination extends Dict<TDestination> = any,
+        TBaseSource extends BaseOf<TSource, TBaseSource> = any,
+        TBaseDestination extends BaseOf<TDestination, TBaseDestination> = any
       >(
         source: Constructible<TSource>,
         destination: Constructible<TDestination>,
         options?: CreateMapOptions
       ): CreateMapFluentFunctions<
-        TBaseSource,
-        TBaseDestination,
         TSource,
-        TDestination
+        TDestination,
+        TBaseSource,
+        TBaseDestination
       > => {
         return this.createMap(source, destination, options);
       },
@@ -156,19 +157,24 @@ export class AutoMapper extends AutoMapperBase {
    *   defaulted to CamelCaseNamingConvention()
    */
   public createMap<
-    TBaseSource extends Dict<TBaseSource> = any,
-    TBaseDestination extends Dict<TBaseDestination> = any,
-    TSource extends TBaseSource = any,
-    TDestination extends TBaseDestination = any
+    TSource extends Dict<TSource> = any,
+    TDestination extends Dict<TDestination> = any,
+    TBaseSource extends BaseOf<TSource, TBaseSource> = any,
+    TBaseDestination extends BaseOf<TDestination, TBaseDestination> = any
   >(
     source: Constructible<TSource>,
     destination: Constructible<TDestination>,
-    options?: CreateMapOptions
+    options?: CreateMapOptions<
+      TSource,
+      TDestination,
+      TBaseSource,
+      TBaseDestination
+    >
   ): CreateMapFluentFunctions<
-    TBaseSource,
-    TBaseDestination,
     TSource,
-    TDestination
+    TDestination,
+    TBaseSource,
+    TBaseDestination
   > {
     MetadataExplorer.explore(source, destination);
     const mergeOptions: CreateMapOptions = {
@@ -182,7 +188,7 @@ export class AutoMapper extends AutoMapperBase {
       destination,
       mergeOptions
     );
-    return this._createMappingFluentFunctions(_mapping);
+    return this._createMappingFluentFunctions(_mapping, mergeOptions);
   }
 
   /**
@@ -479,24 +485,45 @@ export class AutoMapper extends AutoMapperBase {
   }
 
   private _createMappingFluentFunctions<
-    TBaseSource extends Dict<TBaseSource> = any,
-    TBaseDestination extends Dict<TBaseDestination> = any,
-    TSource extends TBaseSource = any,
-    TDestination extends TBaseDestination = any
+    TSource extends Dict<TSource> = any,
+    TDestination extends Dict<TDestination> = any,
+    TBaseSource extends BaseOf<TSource, TBaseSource> = any,
+    TBaseDestination extends BaseOf<TDestination, TBaseDestination> = any
   >(
-    mapping: Mapping<TBaseSource, TBaseDestination, TSource, TDestination>
+    mapping: Mapping<TSource, TDestination, TBaseSource, TBaseDestination>,
+    options: CreateMapOptions<
+      TSource,
+      TDestination,
+      TBaseSource,
+      TBaseDestination
+    >
   ): CreateMapFluentFunctions<
-    TBaseSource,
-    TBaseDestination,
     TSource,
-    TDestination
+    TDestination,
+    TBaseSource,
+    TBaseDestination
   > {
     _initializeMappingProperties(mapping);
+
+    if (options.includeBase && options.includeBase.length) {
+      const [baseSource, baseDestination] = options.includeBase;
+      mapping.baseSource = baseSource;
+      mapping.baseDestination = baseDestination;
+      const baseMapping = super._getMappingForDestination(
+        baseDestination,
+        baseSource,
+        true
+      );
+      if (baseMapping != null) {
+        _inheritBaseMapping(mapping, baseMapping);
+      }
+    }
+
     const _fluentFunctions: CreateMapFluentFunctions<
-      TBaseSource,
-      TBaseDestination,
       TSource,
-      TDestination
+      TDestination,
+      TBaseSource,
+      TBaseDestination
     > = {
       forMember: (selector, expression) => {
         return _createMapForMember(
@@ -505,19 +532,6 @@ export class AutoMapper extends AutoMapperBase {
           expression,
           _fluentFunctions
         );
-      },
-      includeBase: (baseSource, baseDestination) => {
-        mapping.baseSource = baseSource;
-        mapping.baseDestination = baseDestination;
-        const baseMapping = super._getMappingForDestination(
-          baseDestination,
-          baseSource,
-          true
-        );
-        if (baseMapping != null) {
-          _inheritBaseMapping(mapping, baseMapping);
-        }
-        return _fluentFunctions;
       },
       beforeMap: action => {
         mapping.beforeMapAction = action;
@@ -537,12 +551,12 @@ export class AutoMapper extends AutoMapperBase {
   }
 
   private _createReversedMappingFluentFunctions<
-    TBaseSource extends Dict<TBaseSource> = any,
-    TBaseDestination extends Dict<TBaseDestination> = any,
-    TSource extends TBaseSource = any,
-    TDestination extends TBaseDestination = any
+    TSource extends Dict<TSource> = any,
+    TDestination extends Dict<TDestination> = any,
+    TBaseSource extends BaseOf<TSource, TBaseSource> = any,
+    TBaseDestination extends BaseOf<TDestination, TBaseDestination> = any
   >(
-    mapping: Mapping<TBaseDestination, TBaseSource, TDestination, TSource>
+    mapping: Mapping<TDestination, TSource, TBaseDestination, TBaseSource>
   ): CreateReversedMapFluentFunctions<TDestination, TSource> {
     const _reversedFluentFunctions: CreateReversedMapFluentFunctions<
       TDestination,

@@ -2,6 +2,7 @@ import { plainToClass } from 'class-transformer';
 import set from 'lodash.set';
 import { defaultMapActionOptions } from './constants';
 import {
+  BaseOf,
   ConditionTransformation,
   Constructible,
   ConvertUsingTransformOptions,
@@ -380,21 +381,21 @@ export abstract class AutoMapperBase {
   }
 
   protected _createMappingObject<
-    TBaseSource extends Dict<TBaseSource> = any,
-    TBaseDestination extends Dict<TBaseDestination> = any,
-    TSource extends TBaseSource = any,
-    TDestination extends TBaseDestination = any
+    TSource extends Dict<TSource> = any,
+    TDestination extends Dict<TDestination> = any,
+    TBaseSource extends BaseOf<TSource, TBaseSource> = any,
+    TBaseDestination extends BaseOf<TDestination, TBaseDestination> = any
   >(
     source: Constructible<TSource>,
     destination: Constructible<TDestination>,
     options: CreateMapOptions
-  ): Mapping<TBaseSource, TBaseDestination, TSource, TDestination> {
+  ): Mapping<TSource, TDestination, TBaseSource, TBaseDestination> {
     const _key = this._hasMapping(source, destination);
     const _mapping: Mapping<
-      TBaseSource,
-      TBaseDestination,
       TSource,
-      TDestination
+      TDestination,
+      TBaseSource,
+      TBaseDestination
     > = Object.seal({
       source,
       sourceKey: source.prototype.constructor.name,
@@ -414,19 +415,19 @@ export abstract class AutoMapperBase {
   }
 
   protected _createReversedMappingObject<
-    TBaseSource extends Dict<TBaseSource> = any,
-    TBaseDestination extends Dict<TBaseDestination> = any,
-    TSource extends TBaseSource = any,
-    TDestination extends TBaseDestination = any
+    TSource extends Dict<TSource> = any,
+    TDestination extends Dict<TDestination> = any,
+    TBaseSource extends BaseOf<TSource, TBaseSource> = any,
+    TBaseDestination extends BaseOf<TDestination, TBaseDestination> = any
   >(
-    mapping: Mapping<TBaseSource, TBaseDestination, TSource, TDestination>
-  ): Mapping<TBaseDestination, TBaseSource, TDestination, TSource> {
+    mapping: Mapping<TSource, TDestination, TBaseSource, TBaseDestination>
+  ): Mapping<TDestination, TSource, TBaseDestination, TBaseSource> {
     const _reversedKey = this._hasMapping(mapping.destination, mapping.source);
     const _reversedMapping: Mapping<
-      TBaseDestination,
-      TBaseSource,
       TDestination,
-      TSource
+      TSource,
+      TBaseDestination,
+      TBaseSource
     > = Object.seal({
       source: mapping.destination,
       sourceKey: mapping.destination.prototype

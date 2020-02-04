@@ -68,6 +68,7 @@ So far, the following is supported:
 
 - [x] Basic Mapping between two classes
 - [x] Basic Mapping for nested classes
+- [x] Mapping Inheritance - with caveats regarding typings.
 - [x] Array/List Mapping
 - [x] Flattening
 - [x] ReverseMap
@@ -507,6 +508,94 @@ Mapper.initialize(config => {
 **NOTE 3: `mapArray()` will ignore `Mapping` level callbacks because that would be a performance issue if callbacks were to be called on every single item in an array. Provide `Map` level callbacks for `mapArray()` if you want to have callbacks on `mapArray()`**
 
 6. Use `Mapper.mapArray()` if you want to map from `TSource[]` to `TDestination[]`.
+
+#### Mapping Inheritance
+
+`@nartc/automapper` supports mapping inheritance with a caveat surrounding `Generics Typings`.
+
+```typescript
+class Base {
+  @AutoMap()
+  createdDate?: Date;
+  @AutoMap()
+  updatedDate?: Date;
+  @AutoMap()
+  id?: string;
+}
+
+class BaseVm {
+  @AutoMap()
+  created?: Date;
+  @AutoMap()
+  updated?: Date;
+  @AutoMap()
+  recordId?: string;
+}
+
+class User extends Base {
+  @AutoMap()
+  firstName!: string;
+  @AutoMap()
+  lastName!: string;
+  @AutoMap()
+  about!: string;
+}
+
+class UserVm extends BaseVm {
+  @AutoMap()
+  firstName!: string;
+  @AutoMap()
+  lastName!: string;
+  @AutoMap()
+  fullName!: string;
+  @AutoMap()
+  about!: string;
+}
+
+Mapper.initialize(cfg => {
+  cfg.createMap(User, UserVm).forMember(
+    d => d.fullName,
+    opts => opts.mapFrom(s => s.firstName + ' ' + s.lastName)
+  );
+});
+```
+
+Now if you run `Mapper.map(someUser, UserVm)`, you will get an error showing 3 **unmapped properties** on `UserVm`: `created`, `updated`, and `recordId`.
+`UserVm` is a subclass of `BaseVm` so `UserVm` inherits all properties from `BaseVm` which are `created`, `updated` and `recordId`.
+`AutoMapper` cannot _automap_ `createdDate -> created` and so on. That's why you're seeing the error. Now, if `BaseVm` has the same `properties` as `Base`, everything will work without additional work.
+
+Here's how to fix the issue:
+
+```typescript
+Mapper.initialize(cfg => {
+  cfg
+    .createMap(Base, BaseVm) // create a mapping for Base and BaseVm
+    .forMember(
+      d => d.created,
+      opts => opts.mapFrom(s => s.createdAt)
+    )
+    .forMember(
+      d => d.updated,
+      opts => opts.mapFrom(s => s.updatedAt)
+    )
+    .forMember(
+      d => d.recordId,
+      opts => opts.mapFrom(s => s.id)
+    );
+
+  cfg
+    .createMap(User, UserVm)
+    .includeBase(Base, BaseVm) // call includeBase and pass in the base classes
+    .forMember(
+      d => d.fullName,
+      opts => opts.mapFrom(s => s.firstName + ' ' + s.lastName)
+    );
+});
+```
+
+The **unampped** error will be gone now.
+
+**NOTE: As mentioned above that there is a caveat regarding the typings, it means that `includeBase()` isn't type safe 😢. I'll continue looking for a solution regarding this.**
 
 #### ReverseMap
 

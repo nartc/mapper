@@ -22,6 +22,7 @@ import {
   _get,
   _getMappingKey,
   _getSourcePropertyKey,
+  _inheritBaseMapping,
   _initializeReversedMappingProperties,
   _isClass,
   _isDate,
@@ -439,9 +440,24 @@ export abstract class AutoMapperBase {
       properties: _initializeReversedMappingProperties(mapping),
       beforeMapAction: undefined,
       afterMapAction: undefined,
-      baseSource: undefined,
-      baseDestination: undefined,
+      baseSource: mapping.baseDestination,
+      baseDestination: mapping.baseSource,
     });
+
+    if (
+      _reversedMapping.baseSource != null &&
+      _reversedMapping.baseDestination != null
+    ) {
+      const reversedBaseMapping = this._getMappingForDestination(
+        _reversedMapping.baseDestination,
+        _reversedMapping.baseSource,
+        true
+      );
+      if (reversedBaseMapping != null) {
+        _inheritBaseMapping(_reversedMapping, reversedBaseMapping);
+      }
+    }
+
     this._mappings[_reversedKey] = _reversedMapping;
     return _reversedMapping;
   }

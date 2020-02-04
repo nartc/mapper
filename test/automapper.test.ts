@@ -1320,3 +1320,56 @@ describe('AutoMapper - inheritance', () => {
     expect(vm).toBeInstanceOf(UserVm);
   });
 });
+
+describe('AutoMapper - plain object', () => {
+  class Profile {
+    @AutoMap()
+    bio!: string;
+  }
+
+  class ProfileVm {
+    @AutoMap()
+    bio!: string;
+  }
+
+  class User {
+    @AutoMap()
+    fName!: string;
+    @AutoMap()
+    lName!: string;
+    profile!: Profile;
+  }
+
+  class UserVm {
+    @AutoMap()
+    fName!: string;
+    @AutoMap()
+    lName!: string;
+    profile!: ProfileVm;
+  }
+
+  beforeAll(() => {
+    AutoMap(() => Profile)(User.prototype, 'profile');
+    AutoMap(() => ProfileVm)(UserVm.prototype, 'profile');
+    Mapper.createMap(Profile, ProfileVm);
+    Mapper.createMap(User, UserVm);
+  });
+
+  afterAll(() => {
+    Mapper.dispose();
+  });
+
+  it('map', () => {
+    const user = new User();
+    user.fName = 'Chau';
+    user.lName = 'Tran';
+    user.profile = new Profile();
+    user.profile.bio = 'Developer';
+
+    const plain = JSON.parse(JSON.stringify(user));
+    const vm = Mapper.map(plain, UserVm, User);
+    expect(vm).toBeTruthy();
+    expect(vm).toBeInstanceOf(UserVm);
+    expect(vm.profile).toBeInstanceOf(ProfileVm);
+  });
+});

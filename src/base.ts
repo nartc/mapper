@@ -113,6 +113,7 @@ export abstract class AutoMapperBase {
     !(sourceObj instanceof mapping.source) &&
       (sourceObj = plainToClass(mapping.source, sourceObj, {
         excludeExtraneousValues: true,
+        enableCircularCheck: true,
       }));
     const { afterMap, beforeMap } = option;
     const {

@@ -12,6 +12,12 @@ export class MetadataExplorer {
   }
 
   private static exploreInternal(model: Constructible): void {
+    const modelProto = model.prototype || null;
+
+    if (!modelProto) {
+      return;
+    }
+
     if (this.metadataTrackMap.has(model)) {
       return;
     }
@@ -22,7 +28,7 @@ export class MetadataExplorer {
     }
 
     const metadata = factory();
-    const metadataEntries = Object.entries(metadata);
+    const metadataEntries: [string, Constructible][] = Object.entries(metadata);
 
     if (!metadataEntries.length) {
       return;
@@ -30,9 +36,9 @@ export class MetadataExplorer {
 
     for (const [key, value] of metadataEntries) {
       if (value == null) {
-        AutoMap()(model, key);
+        AutoMap()(modelProto, key);
       } else {
-        AutoMap(() => value as Function)(model, key);
+        AutoMap(() => value)(modelProto, key);
       }
     }
 

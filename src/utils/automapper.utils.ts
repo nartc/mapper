@@ -123,15 +123,44 @@ export function _initializeMappingProperties<
   }
 }
 
+export function _inheritBaseMapping<
+  TBaseSource extends Dict<TBaseSource> = any,
+  TBaseDestination extends Dict<TBaseDestination> = any,
+  TSource extends TBaseSource = any,
+  TDestination extends TBaseDestination = any
+>(
+  mapping: Mapping<TBaseSource, TBaseDestination, TSource, TDestination>,
+  baseMapping: Mapping<TBaseSource, TBaseDestination>
+): void {
+  const props = mapping.properties;
+  for (
+    let i = 0,
+      baseMappingSize = baseMapping.properties.size,
+      baseProperties = Array.from(baseMapping.properties.values());
+    i < baseMappingSize;
+    i++
+  ) {
+    const prop = baseProperties[i];
+
+    if (props.has(prop.destinationMemberPath)) {
+      continue;
+    }
+
+    props.set(prop.destinationMemberPath, Object.seal({ ...prop }));
+  }
+}
+
 /**
  * Internal method
  * @private
  */
 export function _initializeReversedMappingProperties<
-  TSource extends Dict<TSource> = any,
-  TDestination extends Dict<TDestination> = any
+  TBaseSource extends Dict<TBaseSource> = any,
+  TBaseDestination extends Dict<TBaseDestination> = any,
+  TSource extends TBaseSource = any,
+  TDestination extends TBaseDestination = any
 >(
-  mapping: Mapping<TSource, TDestination>
+  mapping: Mapping<TBaseSource, TBaseDestination, TSource, TDestination>
 ): Map<string, MappingProperty<TDestination, TSource>> {
   const model = plainToClass(mapping.source, new mapping.source(), {
     enableCircularCheck: true,
@@ -194,11 +223,18 @@ export function _initializeReversedMappingProperties<
  * @private
  */
 export function _createMapForPath<
-  TSource extends Dict<TSource> = any,
-  TDestination extends Dict<TDestination> = any,
+  TBaseSource extends Dict<TBaseSource> = any,
+  TBaseDestination extends Dict<TBaseDestination> = any,
+  TSource extends TBaseSource = any,
+  TDestination extends TBaseDestination = any,
   TSelector extends Selector<TSource> = Selector<TSource>
 >(
-  reversedMapping: Mapping<TDestination, TSource>,
+  reversedMapping: Mapping<
+    TBaseDestination,
+    TBaseSource,
+    TDestination,
+    TSource
+  >,
   pathSelector: TSelector,
   fn: ForMemberExpression<TDestination, TSource>,
   reversedFluentFunctions: CreateReversedMapFluentFunctions<
@@ -285,15 +321,27 @@ export function _createMapForPath<
  * @private
  */
 export function _createMapForMember<
-  TSource extends Dict<TSource> = any,
-  TDestination extends Dict<TDestination> = any,
+  TBaseSource extends Dict<TBaseSource> = any,
+  TBaseDestination extends Dict<TBaseDestination> = any,
+  TSource extends TBaseSource = any,
+  TDestination extends TBaseDestination = any,
   TSelector extends Selector<TDestination> = Selector<TDestination>
 >(
-  mapping: Mapping<TSource, TDestination>,
+  mapping: Mapping<TBaseSource, TBaseDestination, TSource, TDestination>,
   memberSelector: TSelector,
   fn: ForMemberExpression<TSource, TDestination>,
-  fluentFunctions: CreateMapFluentFunctions<TSource, TDestination>
-): CreateMapFluentFunctions<TSource, TDestination> {
+  fluentFunctions: CreateMapFluentFunctions<
+    TBaseSource,
+    TBaseDestination,
+    TSource,
+    TDestination
+  >
+): CreateMapFluentFunctions<
+  TBaseSource,
+  TBaseDestination,
+  TSource,
+  TDestination
+> {
   const _transformationType = _getTransformationType(fn);
   const _memberPath = _getMemberPath(memberSelector);
 

@@ -197,21 +197,48 @@ export interface BeforeAfterMapAction<
 }
 
 export interface CreateMapFluentFunctions<
-  TSource extends Dict<TSource> = any,
-  TDestination extends Dict<TDestination> = any
+  TBaseSource extends Dict<TBaseSource> = any,
+  TBaseDestination extends Dict<TBaseDestination> = any,
+  TSource extends TBaseSource = any,
+  TDestination extends TBaseDestination = any
 > {
+  includeBase(
+    baseSource: Constructible<TBaseSource>,
+    baseDestination: Constructible<TBaseDestination>
+  ): CreateMapFluentFunctions<
+    TBaseSource,
+    TBaseDestination,
+    TSource,
+    TDestination
+  >;
+
   forMember<TMemberType = SelectorReturn<TDestination>>(
     selector: Selector<TDestination, TMemberType>,
     expression: ForMemberExpression<TSource, TDestination, TMemberType>
-  ): CreateMapFluentFunctions<TSource, TDestination>;
+  ): CreateMapFluentFunctions<
+    TBaseSource,
+    TBaseDestination,
+    TSource,
+    TDestination
+  >;
 
   beforeMap(
     action: BeforeAfterMapAction<TSource, TDestination>
-  ): CreateMapFluentFunctions<TSource, TDestination>;
+  ): CreateMapFluentFunctions<
+    TBaseSource,
+    TBaseDestination,
+    TSource,
+    TDestination
+  >;
 
   afterMap(
     action: BeforeAfterMapAction<TSource, TDestination>
-  ): CreateMapFluentFunctions<TSource, TDestination>;
+  ): CreateMapFluentFunctions<
+    TBaseSource,
+    TBaseDestination,
+    TSource,
+    TDestination
+  >;
 
   reverseMap(): CreateReversedMapFluentFunctions<TDestination, TSource>;
 }
@@ -245,12 +272,19 @@ export interface AutoMapperConfiguration {
   addProfile(profile: new (mapper: AutoMapper) => MappingProfile): AutoMapper;
 
   createMap<
-    TSource extends Dict<TSource> = any,
-    TDestination extends Dict<TDestination> = any
+    TBaseSource extends Dict<TBaseSource> = any,
+    TBaseDestination extends Dict<TBaseDestination> = any,
+    TSource extends TBaseSource = any,
+    TDestination extends TBaseDestination = any
   >(
     source: Constructible<TSource>,
     destination: Constructible<TDestination>
-  ): CreateMapFluentFunctions<TSource, TDestination>;
+  ): CreateMapFluentFunctions<
+    TBaseSource,
+    TBaseDestination,
+    TSource,
+    TDestination
+  >;
 }
 
 export interface MapWithTransformOptions<
@@ -317,8 +351,10 @@ export interface MappingProperty<
 }
 
 export interface Mapping<
-  TSource extends Dict<TSource> = any,
-  TDestination extends Dict<TDestination> = any
+  TBaseSource extends Dict<TBaseSource> = any,
+  TBaseDestination extends Dict<TBaseDestination> = any,
+  TSource extends TBaseSource = any,
+  TDestination extends TBaseDestination = any
 > {
   source: Constructible<TSource>;
   sourceKey: string;
@@ -332,4 +368,6 @@ export interface Mapping<
   destinationMemberNamingConvention: NamingConvention;
   beforeMapAction?: BeforeAfterMapAction<TSource, TDestination>;
   afterMapAction?: BeforeAfterMapAction<TSource, TDestination>;
+  baseSource?: Constructible<TBaseSource>;
+  baseDestination?: Constructible<TBaseDestination>;
 }

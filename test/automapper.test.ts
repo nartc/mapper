@@ -1218,3 +1218,105 @@ describe('AutoMapper - moment', () => {
     expect(dto).toBeTruthy();
   });
 });
+
+describe('AutoMapper - inheritance', () => {
+  class Base {
+    @AutoMap()
+    createdDate?: Date;
+    @AutoMap()
+    updatedDate?: Date;
+    @AutoMap()
+    id?: string;
+  }
+
+  class BaseVm {
+    @AutoMap()
+    created?: Date;
+    @AutoMap()
+    updated?: Date;
+    @AutoMap()
+    recordId?: string;
+  }
+
+  class User extends Base {
+    @AutoMap()
+    firstName!: string;
+    @AutoMap()
+    lastName!: string;
+    @AutoMap()
+    about!: string;
+  }
+
+  class UserVm extends BaseVm {
+    @AutoMap()
+    first!: string;
+    @AutoMap()
+    last!: string;
+    @AutoMap()
+    full!: string;
+    @AutoMap()
+    aboutMe!: string;
+  }
+
+  class UserProfile extends MappingProfileBase {
+    constructor(mapper: AutoMapper) {
+      super();
+      mapper
+        .createMap(Base, BaseVm)
+        .forMember(
+          d => d.created,
+          opts => opts.mapFrom(s => s.createdDate)
+        )
+        .forMember(
+          d => d.updated,
+          opts => opts.mapFrom(s => s.updatedDate)
+        )
+        .forMember(
+          d => d.recordId,
+          opts => opts.mapFrom(s => s.id)
+        );
+
+      mapper
+        .createMap(User, UserVm)
+        .includeBase(Base, BaseVm)
+        .forMember(
+          d => d.first,
+          opts => opts.mapFrom(s => s.firstName)
+        )
+        .forMember(
+          d => d.last,
+          opts => opts.mapFrom(s => s.lastName)
+        )
+        .forMember(
+          d => d.full,
+          opts => opts.mapFrom(s => s.firstName + ' ' + s.lastName)
+        )
+        .forMember(
+          d => d.aboutMe,
+          opts => opts.mapFrom(s => s.about)
+        );
+    }
+  }
+
+  beforeAll(() => {
+    Mapper.addProfile(UserProfile);
+  });
+
+  afterAll(() => {
+    Mapper.dispose();
+  });
+
+  it('map', () => {
+    const user = new User();
+    user.firstName = 'Chau';
+    user.lastName = 'Tran';
+    user.about = 'Developer';
+    user.createdDate = new Date();
+    user.updatedDate = new Date();
+    user.id = '1234';
+
+    const vm = Mapper.map(user, UserVm);
+    expect(vm).toBeTruthy();
+    expect(vm).toBeInstanceOf(UserVm);
+  });
+});

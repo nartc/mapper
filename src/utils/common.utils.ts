@@ -50,6 +50,10 @@ function _getTransformationTypeWithoutPre(
   return TransformationType.Ignore;
 }
 
+function filterConstructorPathString(path: string): boolean {
+  return path !== 'constructor';
+}
+
 /**
  * Internal method
  * @private
@@ -60,7 +64,9 @@ export function _getPathRecursive(node: any, prefix: string = ''): string[] {
   }
 
   const result: string[] = [];
-  for (const key in node) {
+  for (const key of Object.getOwnPropertyNames(node).filter(
+    filterConstructorPathString
+  )) {
     const path = prefix + key;
     result.push(path);
     const child = node[key];
@@ -84,7 +90,7 @@ export function _getPathRecursive(node: any, prefix: string = ''): string[] {
   }
 
   for (const key of Object.getOwnPropertyNames(proto).filter(
-    pName => pName !== 'constructor'
+    filterConstructorPathString
   )) {
     const path = prefix + key;
     if (!result.includes(path)) {

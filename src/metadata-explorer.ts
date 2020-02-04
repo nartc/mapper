@@ -1,14 +1,17 @@
 import { AutoMap } from './decorators';
-import { Constructible, Dict } from './types';
+import { Constructible } from './types';
 
 export class MetadataExplorer {
   private static readonly metadataTrackMap = new Map();
   private static readonly AUTOMAPPER_METADATA_FACTORY =
     '__NARTC_AUTOMAPPER_METADATA_FACTORY';
 
-  static explore<TModel extends Dict<TModel>>(
-    model: Constructible<TModel>
-  ): void {
+  static explore(source: Constructible, destination: Constructible): void {
+    this.exploreInternal(source);
+    this.exploreInternal(destination);
+  }
+
+  private static exploreInternal(model: Constructible): void {
     if (this.metadataTrackMap.has(model)) {
       return;
     }

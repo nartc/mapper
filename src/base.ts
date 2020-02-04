@@ -378,15 +378,22 @@ export abstract class AutoMapperBase {
   }
 
   protected _createMappingObject<
-    TSource extends Dict<TSource> = any,
-    TDestination extends Dict<TDestination> = any
+    TBaseSource extends Dict<TBaseSource> = any,
+    TBaseDestination extends Dict<TBaseDestination> = any,
+    TSource extends TBaseSource = any,
+    TDestination extends TBaseDestination = any
   >(
     source: Constructible<TSource>,
     destination: Constructible<TDestination>,
     options: CreateMapOptions
-  ): Mapping<TSource, TDestination> {
+  ): Mapping<TBaseSource, TBaseDestination, TSource, TDestination> {
     const _key = this._hasMapping(source, destination);
-    const _mapping: Mapping<TSource, TDestination> = Object.seal({
+    const _mapping: Mapping<
+      TBaseSource,
+      TBaseDestination,
+      TSource,
+      TDestination
+    > = Object.seal({
       source,
       sourceKey: source.prototype.constructor.name,
       destination,
@@ -396,6 +403,8 @@ export abstract class AutoMapperBase {
       destinationMemberNamingConvention: options.destinationMemberNamingConvention as NamingConvention,
       beforeMapAction: undefined,
       afterMapAction: undefined,
+      baseSource: undefined,
+      baseDestination: undefined,
     });
 
     this._mappings[_key] = _mapping;
@@ -403,11 +412,20 @@ export abstract class AutoMapperBase {
   }
 
   protected _createReversedMappingObject<
-    TSource extends Dict<TSource> = any,
-    TDestination extends Dict<TDestination> = any
-  >(mapping: Mapping<TSource, TDestination>): Mapping<TDestination, TSource> {
+    TBaseSource extends Dict<TBaseSource> = any,
+    TBaseDestination extends Dict<TBaseDestination> = any,
+    TSource extends TBaseSource = any,
+    TDestination extends TBaseDestination = any
+  >(
+    mapping: Mapping<TBaseSource, TBaseDestination, TSource, TDestination>
+  ): Mapping<TBaseDestination, TBaseSource, TDestination, TSource> {
     const _reversedKey = this._hasMapping(mapping.destination, mapping.source);
-    const _reversedMapping: Mapping<TDestination, TSource> = Object.seal({
+    const _reversedMapping: Mapping<
+      TBaseDestination,
+      TBaseSource,
+      TDestination,
+      TSource
+    > = Object.seal({
       source: mapping.destination,
       sourceKey: mapping.destination.prototype
         ? mapping.destination.prototype.constructor.name
@@ -421,6 +439,8 @@ export abstract class AutoMapperBase {
       properties: _initializeReversedMappingProperties(mapping),
       beforeMapAction: undefined,
       afterMapAction: undefined,
+      baseSource: undefined,
+      baseDestination: undefined,
     });
     this._mappings[_reversedKey] = _reversedMapping;
     return _reversedMapping;
@@ -437,7 +457,8 @@ export abstract class AutoMapperBase {
     TDestination extends Dict<TDestination> = any
   >(
     destination: Constructible<TDestination>,
-    sourceObj: TSource | Constructible<TSource>
+    sourceObj: TSource | Constructible<TSource>,
+    isInherit: boolean = false
   ): Mapping<TSource, TDestination> {
     const destinationName = destination.prototype.constructor.name;
     const sourceName = _isClass(sourceObj)
@@ -448,7 +469,7 @@ export abstract class AutoMapperBase {
 
     const mapping = this._mappings[_getMappingKey(sourceName, destinationName)];
 
-    if (!mapping) {
+    if (!mapping && !isInherit) {
       throw new Error(
         `Mapping not found for source ${sourceName} and destination ${destinationName}`
       );

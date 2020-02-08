@@ -161,13 +161,22 @@ function _isArrowFn(fnString: string): boolean {
 }
 
 function _removeExtraForArrow(fnString: string): string[] {
-  return fnString.replace(/(?:\s|return|{|}|\(|\)|)+/gm, '').split('=>');
+  const _parts = fnString.replace(/(?:\s|;|{|}|\(|\)|)+/gm, '').split(/=>(.+)/);
+  const _returnPart = _parts[1];
+  const _returnMatches = _returnPart.match(/return/g);
+
+  if (_returnMatches?.length && _returnMatches.length > 1) {
+    _parts.pop();
+    return _parts.concat(..._returnPart.split(/return(.+)/).filter(Boolean));
+  }
+
+  return _parts;
 }
 
 function _removeExtraForFunction(fnString: string): string[] {
   return fnString
     .replace(/(?:\s|function|;|{|}|\(|\)|)+/gm, '')
-    .split('return');
+    .split(/return(.+)/);
 }
 
 function _getPath(fnParts: string[]): string {

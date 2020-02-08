@@ -1372,3 +1372,40 @@ describe('AutoMapper - plain object', () => {
     expect(vm.profile).toBeInstanceOf(ProfileVm);
   });
 });
+
+describe('AutoMapper - function', () => {
+  class Foo {
+    returnFoo!: string;
+  }
+
+  class FooVm {
+    returnFooVm!: string;
+  }
+
+  beforeAll(() => {
+    Mapper.initialize(cfg => {
+      cfg.createMap(Foo, FooVm)
+        .forMember(
+        destination => {
+          return destination.returnFooVm;
+        },
+        exp =>
+          exp.mapFrom(src => {
+            return src.returnFoo;
+          })
+      );
+    });
+  });
+
+  afterAll(() => {
+    Mapper.dispose();
+  });
+
+  it('map', () => {
+    const foo = new Foo();
+    foo.returnFoo = 'bar';
+
+    const vm = Mapper.map(foo, FooVm);
+    expect(vm).toBeTruthy();
+  });
+});

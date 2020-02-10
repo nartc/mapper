@@ -60,8 +60,14 @@ class MetadataManager {
     model: TModel,
     metadata: MetadataMapList<TModel>
   ) {
+    const existingMetadata = this._metadataMap.get(model) || [];
+    const existingProtoMetadata = Object.getPrototypeOf(model)
+      ? this._metadataMap.get(Object.getPrototypeOf(model)) || []
+      : [];
+
     this._metadataMap.set(model, [
-      ...(this._metadataMap.has(model) ? this.getMetadata(model) : []),
+      ...existingProtoMetadata,
+      ...existingMetadata,
       ...metadata,
     ]);
   }

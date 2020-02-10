@@ -2,6 +2,13 @@ import { AutoMap } from '../src';
 import { instantiate } from '../src/metadata-explorer';
 
 describe('MetadataManager', () => {
+  class Base {
+    @AutoMap()
+    createdAt!: Date;
+    @AutoMap()
+    updatedAt!: Date;
+  }
+
   class Address {
     @AutoMap()
     street!: string;
@@ -11,7 +18,7 @@ describe('MetadataManager', () => {
     state!: string;
   }
 
-  class User {
+  class User extends Base {
     @AutoMap()
     firstName!: string;
     @AutoMap()

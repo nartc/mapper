@@ -1,25 +1,35 @@
-import {
-  Expose,
-  ExposeOptions,
-  Type,
-  TypeHelpOptions,
-  TypeOptions,
-} from 'class-transformer';
+import { metadataManager } from '../metadata-explorer';
+import { MetadataFunction } from '../types';
 
-export type AutoMapDecoratorOptions = {
-  exposeOptions?: ExposeOptions;
-  typeOptions?: TypeOptions;
-};
-
-export const AutoMap = (
-  typeFn?: (type?: TypeHelpOptions) => Function,
-  options: AutoMapDecoratorOptions = {}
-): PropertyDecorator => (target: any, propertyKey) => {
-  const { exposeOptions, typeOptions } = options;
+export const AutoMap = (typeFn?: () => Function): PropertyDecorator => (
+  target: any,
+  propertyKey
+) => {
   if (typeFn) {
-    Expose(exposeOptions)(target, propertyKey as string);
-    Type(typeFn, typeOptions)(target, propertyKey as string);
+    metadataManager.addMetadata(target, [
+      [propertyKey, typeFn as MetadataFunction],
+    ]);
   } else {
-    Expose(exposeOptions)(target, propertyKey as string);
+    const reflectedMetadata = Reflect.getMetadata(
+      'design:type',
+      target,
+      propertyKey
+    );
+    if (reflectedMetadata) {
+      switch (reflectedMetadata.prototype.constructor.name) {
+        case 'String':
+        case 'Number':
+        case 'Boolean':
+        default:
+          metadataManager.addMetadata(target, [[propertyKey, () => false]]);
+          break;
+        case 'Date':
+          metadataManager.addMetadata(target, [[propertyKey, () => Date]]);
+          break;
+        case 'Array':
+          metadataManager.addMetadata(target, [[propertyKey, () => []]]);
+          break;
+      }
+    }
   }
 };

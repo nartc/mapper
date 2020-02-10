@@ -1,5 +1,4 @@
 import moment from 'moment';
-import 'reflect-metadata';
 import {
   AutoMap,
   AutoMapper,
@@ -1384,8 +1383,7 @@ describe('AutoMapper - function', () => {
 
   beforeAll(() => {
     Mapper.initialize(cfg => {
-      cfg.createMap(Foo, FooVm)
-        .forMember(
+      cfg.createMap(Foo, FooVm).forMember(
         destination => {
           return destination.returnFooVm;
         },

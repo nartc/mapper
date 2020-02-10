@@ -1,5 +1,5 @@
-import { plainToClass } from 'class-transformer';
 import set from 'lodash.set';
+import { instantiate } from './metadata-explorer';
 import { defaultMapActionOptions } from './constants';
 import {
   BaseOf,
@@ -112,10 +112,7 @@ export abstract class AutoMapperBase {
     isArrayMap: boolean = false
   ): TDestination {
     !(sourceObj instanceof mapping.source) &&
-      (sourceObj = plainToClass(mapping.source, sourceObj, {
-        excludeExtraneousValues: true,
-        enableCircularCheck: true,
-      }));
+      (sourceObj = instantiate(mapping.source));
     const { afterMap, beforeMap } = option;
     const {
       destination,
@@ -127,10 +124,7 @@ export abstract class AutoMapperBase {
     } = mapping;
     const configKeys = [];
 
-    let destinationObj = plainToClass(destination, new destination(), {
-      enableCircularCheck: true,
-      excludeExtraneousValues: true,
-    });
+    let destinationObj = instantiate(destination);
 
     if (!isArrayMap) {
       if (beforeMap) {
@@ -186,9 +180,6 @@ export abstract class AutoMapperBase {
       );
     }
 
-    // destinationObj = plainToClass(destination, destinationObj, {
-    //   excludeExtraneousValues: true,
-    // });
     _assertMappingErrors(destinationObj, configKeys);
 
     if (!isArrayMap) {

@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { AutoMapperBase } from './base';
 import { defaultNamingConvention } from './constants';
 import { MetadataExplorer } from './metadata-explorer';

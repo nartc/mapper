@@ -371,3 +371,12 @@ export interface Mapping<
   baseSource?: Constructible<TBaseSource>;
   baseDestination?: Constructible<TBaseDestination>;
 }
+
+export type MetadataFunction = () => false | [] | Constructible;
+export type MetadataMap<
+  TModel extends Dict<TModel> = any,
+  TKey extends keyof TModel = any
+> = [TKey, MetadataFunction];
+export type MetadataMapList<TModel extends Dict<TModel> = any> = Array<
+  MetadataMap<TModel>
+>;

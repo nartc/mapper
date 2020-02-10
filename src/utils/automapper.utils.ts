@@ -1,4 +1,4 @@
-import { plainToClass } from 'class-transformer';
+import { instantiate } from '../metadata-explorer';
 import {
   BaseOf,
   ConditionTransformation,
@@ -35,15 +35,8 @@ export function _initializeMappingProperties<
   TSource extends Dict<TSource> = any,
   TDestination extends Dict<TDestination> = any
 >(mapping: Mapping<TSource, TDestination>): void {
-  const destination = plainToClass(
-    mapping.destination,
-    new mapping.destination(),
-    { enableCircularCheck: true, enableImplicitConversion: true }
-  );
-  const source = plainToClass(mapping.source, new mapping.source(), {
-    enableCircularCheck: true,
-    enableImplicitConversion: true,
-  });
+  const destination = instantiate(mapping.destination);
+  const source = instantiate(mapping.source);
   const sourceProto =
     Object.getPrototypeOf(source) ||
     source.constructor.prototype ||
@@ -58,13 +51,25 @@ export function _initializeMappingProperties<
       path
     );
 
+    const dottedSourcePaths = sourcePath.split('.');
+    if (dottedSourcePaths.length > 1) {
+      const [first] = dottedSourcePaths;
+      if (
+        !source.hasOwnProperty(first) ||
+        ((source as any)[first] && _isClass((source as any)[first]))
+      ) {
+        continue;
+      }
+    }
+
     if (
       !source.hasOwnProperty(sourcePath) &&
       !sourceProto.hasOwnProperty(sourcePath)
     ) {
       const [first, ...paths] = sourcePath
         .split(mapping.sourceMemberNamingConvention.splittingExpression)
-        .filter(Boolean);
+        .filter(Boolean)
+        .filter(p => p !== '.');
       if (!paths.length || !source.hasOwnProperty(first)) {
         continue;
       }
@@ -163,10 +168,7 @@ export function _initializeReversedMappingProperties<
 >(
   mapping: Mapping<TSource, TDestination, TBaseSource, TBaseDestination>
 ): Map<string, MappingProperty<TDestination, TSource>> {
-  const model = plainToClass(mapping.source, new mapping.source(), {
-    enableCircularCheck: true,
-    enableImplicitConversion: true,
-  });
+  const model = instantiate(mapping.source);
   const proto =
     Object.getPrototypeOf(model) ||
     model.constructor.prototype ||

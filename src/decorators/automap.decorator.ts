@@ -2,7 +2,7 @@ import { metadataManager } from '../metadata-explorer';
 import { MetadataFunction } from '../types';
 
 export const AutoMap = (typeFn?: () => Function): PropertyDecorator => (
-  target: any,
+  target,
   propertyKey
 ) => {
   if (typeFn) {

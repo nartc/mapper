@@ -110,7 +110,9 @@ npm install --save reflect-metadata
 yarn add reflect-metadata
 ```
 
-`@nartc/automapper` depends on `class-transformer` so `class-transformer` will also be installed automatically. I'll try to keep the dependency up-to-date so that when I update `@nartc/automapper`, all the dependencies are up-to-date as well.
+~~`@nartc/automapper` depends on `class-transformer` so `class-transformer` will also be installed automatically. I'll try to keep the dependency up-to-date so that when I update `@nartc/automapper`, all the dependencies are up-to-date as well.~~
+
+`@nartc/automapper` uses an internal solution for keeping track of `class metadata`. Hence, it is no longer dependant on `class-transformer`
 
 #### Lodash Note
 
@@ -340,9 +342,11 @@ class FooVm {
 }
 ```
 
-Internally, `@nartc/automapper` uses `class-transformer's plainToClass` to initialize the models and do so recursively for nested models. However, `moment` doesn't have a constructor like any other model
+~~Internally, `@nartc/automapper` uses `class-transformer's plainToClass` to initialize the models and do so recursively for nested models. However, `moment` doesn't have a constructor like any other model
 and I cannot intelligently tell an `Object` is a `Moment` object without pulling in the `moment` library. Passing in the `typeFn` does not do anything but by-pass initialization for those `moment` fields.
-Again, apply mapping manually would be the best way to go about this.
+Again, apply mapping manually would be the best way to go about this.~~
+
+Although, `moment` object should be initialized properly now but for mapping `moment` to different type, you might want to add a mapping config manually.
 
 ```typescript
 Mapper.createMap(Foo, FooVm).forMember(

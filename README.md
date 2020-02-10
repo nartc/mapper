@@ -351,8 +351,6 @@ Mapper.createMap(Foo, FooVm).forMember(
 );
 ```
 
-Updated: `Moment` does not work really well right now since `plainToClass` from `class-transformer` will instantiate a new `moment()` everytime. If the `source` that was passed in `Mapper.map(source, Destination)` is truly an instance of a `Source` class, then it should work.
-
 #### Naming Conventions
 
 `@nartc/automapper` provides away to map between two models with different naming conventions. Naming conventions supported:

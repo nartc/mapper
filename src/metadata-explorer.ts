@@ -47,7 +47,9 @@ export class MetadataExplorer {
       }
 
       const meta = value();
-      switch (meta.prototype.constructor.name) {
+      const metaName =
+        meta.prototype?.constructor?.name || meta.constructor.name;
+      switch (metaName) {
         case 'String':
         case 'Number':
         case 'Boolean':

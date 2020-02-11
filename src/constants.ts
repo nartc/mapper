@@ -15,3 +15,5 @@ export const defaultMapActionOptions: MapActionOptions = {
   beforeMap: undefined,
   afterMap: undefined,
 };
+
+export const METADATA = '__NARTC_METADATA';

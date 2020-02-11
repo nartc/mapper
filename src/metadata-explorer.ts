@@ -1,4 +1,3 @@
-import { AutoMap } from './decorators';
 import { Constructible, Dict, MetadataMapList } from './types';
 import { _isEmpty } from './utils';
 
@@ -10,6 +9,12 @@ export class MetadataExplorer {
   static explore(source: Constructible, destination: Constructible): void {
     this.exploreInternal(source);
     this.exploreInternal(destination);
+  }
+
+  static exploreMany(...models: Constructible[]): void {
+    for (const model of models) {
+      this.exploreInternal(model);
+    }
   }
 
   private static exploreInternal(model: Constructible): void {
@@ -29,17 +34,30 @@ export class MetadataExplorer {
     }
 
     const metadata = factory();
-    const metadataEntries: [string, Constructible][] = Object.entries(metadata);
+    const metadataEntries: [string, () => any][] = Object.entries(metadata);
 
     if (!metadataEntries.length) {
       return;
     }
 
     for (const [key, value] of metadataEntries) {
-      if (value == null) {
-        AutoMap()(modelProto, key);
-      } else {
-        AutoMap(() => value)(modelProto, key);
+      const meta = value();
+      if (meta === null) {
+        metadataManager.addMetadata(model.prototype, [[key, () => false]]);
+        continue;
+      }
+
+      switch (meta.prototype.constructor.name) {
+        case 'String':
+        case 'Number':
+        case 'Boolean':
+          metadataManager.addMetadata(model.prototype, [[key, () => false]]);
+          break;
+        case 'Array':
+          metadataManager.addMetadata(model.prototype, [[key, () => []]]);
+          break;
+        default:
+          metadataManager.addMetadata(model.prototype, [[key, value]]);
       }
     }
 
@@ -73,7 +91,7 @@ class MetadataManager {
   }
 
   dispose() {
-    this._metadataMap = new Map();
+    this._metadataMap.clear();
   }
 }
 

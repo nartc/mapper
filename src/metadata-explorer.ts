@@ -41,12 +41,12 @@ export class MetadataExplorer {
     }
 
     for (const [key, value] of metadataEntries) {
-      const meta = value();
-      if (meta === null) {
+      if (!value) {
         metadataManager.addMetadata(model.prototype, [[key, () => false]]);
         continue;
       }
 
+      const meta = value();
       switch (meta.prototype.constructor.name) {
         case 'String':
         case 'Number':

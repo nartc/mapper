@@ -1,6 +1,6 @@
 import set from 'lodash.set';
-import { instantiate } from './metadata-explorer';
 import { defaultMapActionOptions } from './constants';
+import { instantiate } from './metadata-explorer';
 import {
   BaseOf,
   ConditionTransformation,
@@ -112,7 +112,7 @@ export abstract class AutoMapperBase {
     isArrayMap: boolean = false
   ): TDestination {
     !(sourceObj instanceof mapping.source) &&
-      (sourceObj = instantiate(mapping.source));
+      (sourceObj = instantiate(mapping.source, sourceObj));
     const { afterMap, beforeMap } = option;
     const {
       destination,

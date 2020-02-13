@@ -102,7 +102,7 @@
     "moment": "2.24.0",
     "prettier": "1.19.1",
     "reflect-metadata": "0.1.13",
-    "semantic-release": "17.0.2",
+    "semantic-release": "17.0.3",
     "shelljs": "0.8.3",
     "ts-node": "8.6.2",
     "tsdx": "0.12.3",

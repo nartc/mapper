@@ -24,12 +24,20 @@ module.exports = {
           title: 'Docs',
           items: [
             {
-              label: 'Style Guide',
-              to: 'docs/doc1',
+              label: 'Why AutoMapper?',
+              to: 'docs/introduction/why',
             },
             {
-              label: 'Second Doc',
-              to: 'docs/doc2',
+              label: 'Anti-pitch',
+              to: 'docs/introduction/anti-pitch',
+            },
+            {
+              label: "Author's use-case",
+              to: 'docs/introduction/author-use-case',
+            },
+            {
+              label: 'Getting Started',
+              to: 'docs/guides/getting-started',
             },
           ],
         },
@@ -66,7 +74,7 @@ module.exports = {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
           editUrl:
-            'https://github.com/facebook/docusaurus/edit/master/website/',
+            'https://github.com/nartc/mapper/edit/master/automapper-docusaurus/',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),

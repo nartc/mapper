@@ -17,10 +17,18 @@ jobs:
         - npm run build:docs
       node_js:
         - '12'
-      name: deploy_docs
+      name: deploy_api_reference
       if: branch = master
       env: TRAVIS_PULL_REQUEST = false
       script: yarn deploy-docs
+    - name: deploy_docs
+      before_script:
+        - npm run build:docusaurus
+      node_js:
+        - '12'
+      if: branch = master
+      env: TRAVIS_PULL_REQUEST = false
+      script: npm run deploy-docusaurus
     - name: npm_release
       node_js:
         - '12'

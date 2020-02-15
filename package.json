@@ -21,12 +21,14 @@
     "start": "tsdx watch",
     "build": "tsdx build",
     "build:docs": "typedoc --out gh-docs --target es6 --theme minimal --mode file src",
+    "build:docusaurus": "cd automapper-docusaurus && npm run build",
     "test": "CI=true tsdx test --no-cache",
     "test:cov": "tsdx test --coverage",
     "lint": "tsdx lint src && lint-staged",
     "commit": "git-cz",
     "semantic-release": "semantic-release",
     "deploy-docs": "ts-node tools/gh-pages",
+    "deploy-docusaurus": "ts-node tools/netlify-docs",
     "report-coverage": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
   },
   "peerDependencies": {

@@ -21,7 +21,7 @@
     "start": "tsdx watch",
     "build": "tsdx build",
     "build:docs": "typedoc --out gh-docs --target es6 --theme minimal --mode file src",
-    "build:docusaurus": "cd automapper-docusaurus && npm run build",
+    "build:docusaurus": "cd automapper-docusaurus && npm install",
     "test": "CI=true tsdx test --no-cache",
     "test:cov": "tsdx test --coverage",
     "lint": "tsdx lint src && lint-staged",

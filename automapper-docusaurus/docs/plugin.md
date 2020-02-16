@@ -176,7 +176,7 @@ export default {
 
 `ttypescript` patches `typescript` in order to use `transformers` in `tsconfig.json`. See [ttypescript's README](https://github.com/cevek/ttypescript) for how to use this with module bundlers such as `webpack` or `Rollup`.
 
-```javscript
+```json
 {
   "compilerOptions": {
     ...,
@@ -197,7 +197,7 @@ Check out this [Examples Repo](https://github.com/nartc/automapper-transformer-p
 
 `nestjs/cli` can enable **Transformers** by default. To use this plugin with `nestjs/cli`, modify your `nest-cli.json`
 
-```typescript {5-7,16-23}
+```json {5-7,16-23}
 {
   "collection": "@nestjs/schematics",
   "sourceRoot": "src",

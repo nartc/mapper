@@ -13,7 +13,7 @@ class User {
 }
 ```
 
-the above `.ts` code will be compiled to the following in `.js` (depends on the **JS** flavor you picked for your `target`)
+the above `.ts` code will be compiled to the following in `.js` (depending on the **JS** flavor you picked for your `target`)
 
 ```javascript
 class User {}
@@ -22,7 +22,7 @@ class User {}
 function User() {}
 ```
 
-Now, whn you try to `instantiate` (or `new up`) a `User` by writing the following code:
+Now, when you try to `instantiate` (or `new up`) a `User` by writing the following code:
 
 ```typescript
 const user = new User();

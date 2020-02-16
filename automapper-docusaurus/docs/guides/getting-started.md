@@ -66,7 +66,6 @@ In `tsconfig.json`, you need to make sure to turn on `emitDecoratorMetadata` and
 - [x] Naming Conventions
 - [x] Null Substitution - [@lqmanh](https://github.com/lqmanh) pointed out the difference in `fromValue()` and `nullSubstitution()` use-case, and that difference is totally valid. Hence, `nullSubstitution` is now supported.
 
-
 ### Example
 
 Now you can start decorating your class's properties with `AutoMap`
@@ -112,12 +111,12 @@ const vm = Mapper.map(user, UserVm);
  * UserVm { firstName: 'Chau', lastName: 'Tran', age: 28, bio: 'Developer' }
  */
 
- // Pseudo code to get a list of Users
- const users = this.db.User.findAll();
- const vms = Mapper.mapArray(users, UserVm);
- /**
-  * [UserVm, UserVm, UserVm ...]
-  */
+// Pseudo code to get a list of Users
+const users = this.db.User.findAll();
+const vms = Mapper.mapArray(users, UserVm);
+/**
+ * [UserVm, UserVm, UserVm ...]
+ */
 ```
 
-> More complex mapping examples will be addressed in later sections. And you probably already notice the verbose issue with `@AutoMap()`, check out the [Plugin]() section to learn how to address this. Throughout the documentations, I will keep the `@AutoMap()` decorator in the sample snippets to make the documentations clear.
+> More complex mapping examples will be addressed in later sections. And you probably already notice the verbose issue with `@AutoMap()`, check out the [Plugin](../plugin.md) section to learn how to address this. Throughout the documentations, I will keep the `@AutoMap()` decorator in the sample snippets to make the documentations clear.

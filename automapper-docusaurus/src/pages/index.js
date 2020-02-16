@@ -59,7 +59,7 @@ function Home() {
   return (
     <Layout
       title={`${siteConfig.title} - Documentations`}
-      description="Description will go into a meta tag in <head />"
+      description="AutoMapper for TypeScript Documentations"
     >
       <header className={classnames('hero hero--primary', styles.heroBanner)}>
         <div className="container">

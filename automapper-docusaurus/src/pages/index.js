@@ -20,7 +20,7 @@ const features = [
     title: <>Easy to use</>,
     description: (
       <>
-        Clear documentations along with an utility{' '}
+        Clear documentations along with a utility{' '}
         <code>Transformer Plugin</code> make adopting{' '}
         <code>@nartc/automapper</code> easier than ever.
       </>

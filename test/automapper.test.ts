@@ -3,6 +3,7 @@ import {
   AutoMap,
   AutoMapper,
   BeforeAfterMapAction,
+  CamelCaseNamingConvention,
   Converter,
   Mapper,
   MappingProfileBase,
@@ -1081,6 +1082,7 @@ describe('AutoMapper - global settings', () => {
     Mapper.initialize(cfg => {
       cfg.withGlobalSettings({
         sourceNamingConvention: SnakeCaseNamingConvention,
+        destinationNamingConvention: CamelCaseNamingConvention,
       });
       cfg.createMap(User, UserVm).reverseMap();
     });

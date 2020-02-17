@@ -127,9 +127,9 @@ export abstract class AutoMapperBase {
 
     if (!isArrayMap) {
       if (beforeMap) {
-        beforeMap(sourceObj, new destination(), { ...mapping });
+        beforeMap(sourceObj, destinationObj, { ...mapping });
       } else if (beforeMapAction) {
-        beforeMapAction(sourceObj, new destination(), { ...mapping });
+        beforeMapAction(sourceObj, destinationObj, { ...mapping });
       }
     }
 

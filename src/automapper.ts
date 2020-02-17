@@ -514,9 +514,9 @@ export class AutoMapper extends AutoMapperBase {
         true
       );
       if (baseMapping != null) {
+        _inheritBaseMapping(mapping, baseMapping);
         mapping.baseSource = baseSource;
         mapping.baseDestination = baseDestination;
-        _inheritBaseMapping(mapping, baseMapping);
       }
     }
 

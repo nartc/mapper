@@ -1385,6 +1385,7 @@ describe('AutoMapper - function', () => {
 
   beforeAll(() => {
     Mapper.initialize(cfg => {
+      cfg.withGlobalSettings({});
       cfg.createMap(Foo, FooVm).forMember(
         destination => {
           return destination.returnFooVm;

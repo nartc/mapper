@@ -1259,6 +1259,16 @@ describe('AutoMapper - inheritance', () => {
     aboutMe!: string;
   }
 
+  class Foo {
+    @AutoMap()
+    foo!: string;
+  }
+
+  class Bar {
+    @AutoMap()
+    bar!: string;
+  }
+
   class UserProfile extends MappingProfileBase {
     constructor(mapper: AutoMapper) {
       super();
@@ -1295,6 +1305,8 @@ describe('AutoMapper - inheritance', () => {
           d => d.aboutMe,
           opts => opts.mapFrom(s => s.about)
         );
+
+      mapper.createMap(Foo, Bar, { includeBase: [Foo, Bar] });
     }
   }
 

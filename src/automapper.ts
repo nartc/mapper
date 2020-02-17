@@ -508,14 +508,14 @@ export class AutoMapper extends AutoMapperBase {
 
     if (options.includeBase && options.includeBase.length) {
       const [baseSource, baseDestination] = options.includeBase;
-      mapping.baseSource = baseSource;
-      mapping.baseDestination = baseDestination;
       const baseMapping = super._getMappingForDestination(
         baseDestination,
         baseSource,
         true
       );
       if (baseMapping != null) {
+        mapping.baseSource = baseSource;
+        mapping.baseDestination = baseDestination;
         _inheritBaseMapping(mapping, baseMapping);
       }
     }

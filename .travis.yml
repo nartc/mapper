@@ -15,34 +15,28 @@ jobs:
     - stage: Production
       before_script:
         - npm run build:docs
-      node_js:
-        - '12'
+      node_js: '12'
       name: deploy_api_reference
-      if: branch = master
-      env: TRAVIS_PULL_REQUEST = false
+      if: branch = master AND TRAVIS_PULL_REQUEST = false
       script: yarn deploy-docs
     - name: deploy_docs
       before_script:
         - npm run build:docusaurus
-      node_js:
-        - '12'
-      if: branch = master
-      env: TRAVIS_PULL_REQUEST = false
+      node_js: '12'
+      if: branch = master AND TRAVIS_PULL_REQUEST = false
       script: npm run deploy-docusaurus
     - name: npm_release
-      node_js:
-        - '12'
+      node_js: '12'
       before_script:
         - npm run build
-      if: branch = master OR branch = next
-      env: TRAVIS_PULL_REQUEST = false
+      if: (branch = master OR branch = next) AND TRAVIS_PULL_REQUEST = false
       script: yarn semantic-release
     - name: produce_coverage
-      node_js:
-        - '12'
+      node_js: '12'
+      if: branch = master AND TRAVIS_PULL_REQUEST = false
       before_script:
         - npm run test:cov
-      script: if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then npm run report-coverage; fi
+      script: npm run report-coverage
 branches:
   except:
     - /^v\d+\.\d+\.\d+$/

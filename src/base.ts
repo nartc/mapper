@@ -3,7 +3,6 @@ import { defaultMapActionOptions } from './constants';
 import { instantiate } from './metadata-explorer';
 import {
   BaseOf,
-  ConditionTransformation,
   Constructible,
   ConvertUsingTransformOptions,
   CreateMapOptions,
@@ -11,7 +10,7 @@ import {
   MapActionOptions,
   MapFromCallback,
   Mapping,
-  MappingProperty,
+  MappingTransformation,
   MapWithTransformOptions,
   NamingConvention,
   Resolver,
@@ -134,49 +133,35 @@ export abstract class AutoMapperBase {
       }
     }
 
-    for (const prop of Array.from(properties.values())) {
-      configKeys.push(prop.destinationMemberPath);
-      const {
-        transformation: {
-          transformationType: { preCondition, type },
-          mapFrom,
-          fromValue,
-          convertUsing,
-          mapWith,
-          condition,
-          nullSubstitution,
-        },
-        destinationMemberPath,
-      } = prop;
+    const props = Array.from(properties.values());
+    for (let i = 0, len = props.length; i < len; i++) {
+      const { transformation, destinationMemberPath } = props[i];
+      configKeys.push(destinationMemberPath);
       const propSourceMemberPath = _getSourcePropertyKey(
         destinationMemberNamingConvention,
         sourceMemberNamingConvention,
         destinationMemberPath
       );
 
-      if (preCondition && !preCondition.predicate(sourceObj)) {
+      if (
+        transformation.transformationType.preCondition &&
+        !transformation.transformationType.preCondition.predicate(sourceObj)
+      ) {
         set(
           destinationObj,
           destinationMemberPath,
-          preCondition.defaultValue || null
+          transformation.transformationType.preCondition.defaultValue || null
         );
         continue;
       }
 
       this._mapMember(
-        type,
         destinationObj,
         destinationMemberPath,
-        convertUsing as ConvertUsingTransformOptions,
         sourceObj,
-        mapWith as MapWithTransformOptions,
         propSourceMemberPath,
-        prop,
-        fromValue,
-        nullSubstitution,
-        condition as ConditionTransformation,
-        mapFrom as MapFromCallback,
-        mapping
+        mapping,
+        transformation
       );
     }
 
@@ -197,20 +182,23 @@ export abstract class AutoMapperBase {
     TSource extends Dict<TSource> = any,
     TDestination extends Dict<TDestination> = any
   >(
-    type: TransformationType,
     destinationObj: TDestination,
     destinationMemberPath: string,
-    convertUsing: ConvertUsingTransformOptions,
     sourceObj: TSource,
-    mapWith: MapWithTransformOptions,
     propSourceMemberPath: string,
-    prop: MappingProperty,
-    fromValue: any,
-    nullSubstitution: any,
-    condition: ConditionTransformation,
-    mapFrom: MapFromCallback,
-    mapping: Mapping<TSource, TDestination>
+    mapping: Mapping<TSource, TDestination>,
+    transformation: MappingTransformation<TSource, TDestination>
   ) {
+    const {
+      transformationType: { type },
+      mapFrom,
+      fromValue,
+      convertUsing,
+      mapWith,
+      condition,
+      nullSubstitution,
+    } = transformation;
+
     if (type === TransformationType.Ignore) {
       set(destinationObj, destinationMemberPath, null);
       return;
@@ -227,7 +215,7 @@ export abstract class AutoMapperBase {
     }
 
     if (type === TransformationType.MapWith) {
-      const _source = mapWith.fromValue(sourceObj);
+      const _source = mapWith?.fromValue(sourceObj);
 
       if (_isEmpty(_source)) {
         console.warn(`${propSourceMemberPath} does not exist`);
@@ -237,7 +225,7 @@ export abstract class AutoMapperBase {
 
       if (!_isClass(_source)) {
         console.warn(
-          `${prop.destinationMemberPath} is type ${mapWith.destination.name} but ${_source} is a primitive. No mapping was executed`
+          `${destinationMemberPath} is type ${mapWith?.destination.name} but ${_source} is a primitive. No mapping was executed`
         );
         set(destinationObj, destinationMemberPath, null);
         return;
@@ -281,7 +269,7 @@ export abstract class AutoMapperBase {
       set(
         destinationObj,
         destinationMemberPath,
-        condition.defaultValue || null
+        condition?.defaultValue || null
       );
       return;
     }
@@ -303,7 +291,7 @@ export abstract class AutoMapperBase {
           (mapFrom as Resolver).resolve(
             sourceObj,
             destinationObj,
-            prop.transformation
+            transformation
           )
         );
         return;

@@ -16,7 +16,8 @@ jobs:
       before_script:
         - npm run build:docs
       node_js:
-        - 12
+        - '10'
+        - '12'
       name: deploy_api_reference
       if: branch = master AND TRAVIS_PULL_REQUEST = false
       script: yarn deploy-docs
@@ -24,19 +25,22 @@ jobs:
       before_script:
         - npm run build:docusaurus
       node_js:
-        - 12
+        - '10'
+        - '12'
       if: branch = master AND TRAVIS_PULL_REQUEST = false
       script: npm run deploy-docusaurus
     - name: npm_release
       node_js:
-        - 12
+        - '10'
+        - '12'
       before_script:
         - npm run build
       if: (branch = master OR branch = next) AND TRAVIS_PULL_REQUEST = false
       script: yarn semantic-release
     - name: produce_coverage
       node_js:
-        - 12
+        - '10'
+        - '12'
       if: branch = master AND TRAVIS_PULL_REQUEST = false
       before_script:
         - npm run test:cov

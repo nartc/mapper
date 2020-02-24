@@ -36,7 +36,16 @@ export function _initializeMappingProperties<
   TDestination extends Dict<TDestination> = any
 >(mapping: Mapping<TSource, TDestination>): void {
   const destination = instantiate(mapping.destination);
-  const source = instantiate(mapping.source);
+  let source = instantiate(mapping.source);
+
+  const sourceProtoConstructor =
+    Object.getPrototypeOf(source.constructor) ||
+    (source.constructor as any).__proto__;
+
+  if (sourceProtoConstructor?.name) {
+    source = Object.assign(source, instantiate(sourceProtoConstructor));
+  }
+
   const sourceProto =
     Object.getPrototypeOf(source) ||
     source.constructor.prototype ||

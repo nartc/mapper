@@ -1422,3 +1422,95 @@ describe('AutoMapper - function', () => {
     expect(vm).toBeTruthy();
   });
 });
+
+describe('AutoMapper - extends', () => {
+  class BaseProfile {
+    @AutoMap()
+    bio!: string;
+    @AutoMap()
+    age!: number;
+  }
+
+  class Profile extends BaseProfile {
+    @AutoMap()
+    other?: any;
+  }
+
+  class User {
+    @AutoMap()
+    firstName!: string;
+    @AutoMap()
+    lastName!: string;
+    @AutoMap(() => Profile)
+    profile!: Profile;
+  }
+
+  class ProfileVm {
+    @AutoMap()
+    bio!: string;
+    @AutoMap()
+    isAdult!: boolean;
+  }
+
+  class UserVm {
+    @AutoMap()
+    firstName!: string;
+    @AutoMap()
+    lastName!: string;
+    @AutoMap(() => ProfileVm)
+    profile!: ProfileVm;
+  }
+
+  class BaseVm {
+    @AutoMap()
+    bio!: string;
+    @AutoMap()
+    age!: number;
+  }
+
+  class Foo extends BaseProfile {
+    foo!: string;
+  }
+
+  class FooVm extends BaseVm {
+    fooBar!: string;
+  }
+
+  beforeAll(() => {
+    Mapper.createMap(BaseProfile, BaseVm);
+    Mapper.createMap(User, UserVm);
+    Mapper.createMap(Foo, FooVm, {includeBase: [BaseProfile, BaseVm]})
+      .forMember(d => d.fooBar, opts => opts.mapFrom(s => s.foo));
+    Mapper.createMap(Profile, ProfileVm).forMember(
+      d => d.isAdult,
+      opts => opts.mapFrom(s => s.age > 18)
+    );
+  });
+
+  afterAll(() => {
+    Mapper.dispose();
+  });
+
+  it('map', () => {
+    const user = new User();
+    user.firstName = 'Chau';
+    user.lastName = 'Tran';
+    user.profile = new Profile();
+    user.profile.bio = 'Developer';
+    user.profile.age = 19;
+    user.profile.other = 'some other';
+
+    const vm = Mapper.map(user, UserVm);
+    expect(vm).toBeTruthy();
+  });
+
+  it('map includeBase', () => {
+    const foo = new Foo();
+    foo.foo = 'foo';
+    foo.bio = 'dev';
+    foo.age = 20;
+
+    const vm = Mapper.map(foo, FooVm);
+    expect(vm).toBeTruthy();
+  });
+});

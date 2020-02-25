@@ -100,7 +100,7 @@
     "cz-conventional-changelog": "3.1.0",
     "eslint-plugin-prettier": "3.1.2",
     "husky": "4.2.3",
-    "lint-staged": "10.0.7",
+    "lint-staged": "10.0.8",
     "moment": "2.24.0",
     "prettier": "1.19.1",
     "reflect-metadata": "0.1.13",
@@ -110,7 +110,7 @@
     "tsdx": "0.12.3",
     "tslib": "1.11.0",
     "typedoc": "0.16.10",
-    "typescript": "3.7.5"
+    "typescript": "3.8.2"
   },
   "dependencies": {
     "lodash.set": "4.3.2"

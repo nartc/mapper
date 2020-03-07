@@ -7,7 +7,7 @@ An object-to-object mapper by convention for TypeScript.
 ![downloads](https://badgen.net/npm/dt/@nartc/automapper)
 ![npm](https://badgen.net/npm/v/@nartc/automapper)
 ![license](https://badgen.net/github/license/nartc/mapper)
-[![Coverage Status](https://coveralls.io/repos/github/nartc/mapper/badge.svg?branch=master)](https://coveralls.io/github/nartc/mapper?branch=master) [![Greenkeeper badge](https://badges.greenkeeper.io/nartc/mapper.svg)](https://greenkeeper.io/)
+[![Coverage Status](https://coveralls.io/repos/github/nartc/mapper/badge.svg?branch=master)](https://coveralls.io/github/nartc/mapper?branch=master) 
 
 #### Migrations from `automapper-nartc`
 

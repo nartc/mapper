@@ -129,7 +129,7 @@ export function _getMappingKey(
   sourceKey: string,
   destinationKey: string
 ): string {
-  return _wrapMappingKey(sourceKey) + '->' + _wrapMappingKey(destinationKey);
+  return _wrapMappingKey(sourceKey) + 'ϑ' + _wrapMappingKey(destinationKey);
 }
 
 /**

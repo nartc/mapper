@@ -50,53 +50,34 @@ function _getTransformationTypeWithoutPre(
   return TransformationType.Ignore;
 }
 
-function filterConstructorPathString(path: string): boolean {
+function removeConstructorFromPath(path: string): boolean {
   return path !== 'constructor';
 }
 
 /**
- * Internal method
+ * internal method
  * @private
  */
-export function _getPathRecursive(node: any, prefix: string = ''): string[] {
-  if (typeof node !== 'object' || node === null) {
-    return [];
-  }
+export function _getPathRecursive(
+  node: any,
+  prefix: string = '',
+  prev?: string[]
+) {
+  let result: string[] = prev || [];
 
-  const result: string[] = [];
-  for (const key of Object.getOwnPropertyNames(node).filter(
-    filterConstructorPathString
-  )) {
-    const path = prefix + key;
-    result.push(path);
-    const child = node[key];
-    if (_isObjectLike(child)) {
-      let queue = [child];
-      if (Array.isArray(child)) {
-        queue = child;
-      }
-
-      for (const childNode of queue) {
-        result.push(..._getPathRecursive(childNode, path + '.'));
-      }
-    }
-  }
-
-  const proto =
-    Object.getPrototypeOf(node) || node.constructor.prototype || node.__proto__;
-
-  if (typeof proto !== 'object' || proto === null) {
+  if (!_isObjectLike(node)) {
     return result;
   }
 
-  for (const key of Object.getOwnPropertyNames(proto).filter(
-    filterConstructorPathString
+  for (const key of Object.getOwnPropertyNames(node).filter(
+    removeConstructorFromPath
   )) {
     const path = prefix + key;
     if (!result.includes(path)) {
       result.push(path);
     }
-    const child = proto[key];
+
+    const child = node[key];
     if (_isObjectLike(child)) {
       let queue = [child];
       if (Array.isArray(child)) {
@@ -115,7 +96,21 @@ export function _getPathRecursive(node: any, prefix: string = ''): string[] {
     }
   }
 
+  if (!prev) {
+    result = _getPathRecursive(_getProto(node), prefix, result);
+  }
+
   return result;
+}
+
+/**
+ * internal method
+ * @private
+ */
+export function _getProto(node: any) {
+  return (
+    Object.getPrototypeOf(node) || node.constructor.prototype || node.__proto__
+  );
 }
 
 /**
@@ -123,7 +118,7 @@ export function _getPathRecursive(node: any, prefix: string = ''): string[] {
  * @private
  */
 export function _isObjectLike(obj: any): boolean {
-  return obj !== null && obj !== undefined && typeof obj === 'object';
+  return obj != null && typeof obj === 'object';
 }
 
 /**
@@ -134,7 +129,15 @@ export function _getMappingKey(
   sourceKey: string,
   destinationKey: string
 ): string {
-  return sourceKey + '->' + destinationKey;
+  return _wrapMappingKey(sourceKey) + '->' + _wrapMappingKey(destinationKey);
+}
+
+/**
+ * Internal method
+ * @private
+ */
+export function _wrapMappingKey(key: string): string {
+  return '𝛌' + key + '𝛌';
 }
 
 /**

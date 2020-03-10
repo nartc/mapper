@@ -1,5 +1,5 @@
 import { Constructible, Dict, MetadataMapList } from './types';
-import { _isEmpty } from './utils';
+import { _getProto, _isEmpty } from './utils';
 
 export class MetadataExplorer {
   private static readonly metadataTrackMap = new Map();
@@ -81,8 +81,9 @@ class MetadataManager {
     metadata: MetadataMapList<TModel>
   ) {
     const existingMetadata = this._metadataMap.get(model) || [];
-    const existingProtoMetadata = Object.getPrototypeOf(model)
-      ? this._metadataMap.get(Object.getPrototypeOf(model)) || []
+    const proto = _getProto(model);
+    const existingProtoMetadata = proto
+      ? this._metadataMap.get(proto) || []
       : [];
 
     this._metadataMap.set(model, [

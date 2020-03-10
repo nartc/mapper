@@ -22,6 +22,7 @@ import {
   _get,
   _getMemberPath,
   _getPathRecursive,
+  _getProto,
   _getSourcePropertyKey,
   _getTransformationType,
   _isClass,
@@ -38,18 +39,13 @@ export function _initializeMappingProperties<
   const destination = instantiate(mapping.destination);
   let source = instantiate(mapping.source);
 
-  const sourceProtoConstructor =
-    Object.getPrototypeOf(source.constructor) ||
-    (source.constructor as any).__proto__;
+  const sourceProtoConstructor = _getProto(source.constructor);
 
   if (sourceProtoConstructor?.name) {
     source = Object.assign(source, instantiate(sourceProtoConstructor));
   }
 
-  const sourceProto =
-    Object.getPrototypeOf(source) ||
-    source.constructor.prototype ||
-    (source as any).__proto__;
+  const sourceProto = _getProto(source);
   const destinationPaths = _getPathRecursive(destination);
 
   for (let i = 0; i < destinationPaths.length; i++) {
@@ -178,10 +174,7 @@ export function _initializeReversedMappingProperties<
   mapping: Mapping<TSource, TDestination, TBaseSource, TBaseDestination>
 ): Map<string, MappingProperty<TDestination, TSource>> {
   const model = instantiate(mapping.source);
-  const proto =
-    Object.getPrototypeOf(model) ||
-    model.constructor.prototype ||
-    (model as any).__proto__;
+  const proto = _getProto(model);
   const reversedProperties = new Map<
     string,
     MappingProperty<TDestination, TSource>

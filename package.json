@@ -24,7 +24,7 @@
     "build:docusaurus": "cd automapper-docusaurus && npm install",
     "test": "CI=true tsdx test --no-cache",
     "test:cov": "tsdx test --coverage",
-    "lint": "tsdx lint src && lint-staged",
+    "lint": "lint-staged && tsdx lint src",
     "commit": "git-cz",
     "semantic-release": "semantic-release",
     "deploy-docs": "ts-node tools/gh-pages",

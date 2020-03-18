@@ -249,7 +249,7 @@ export class AutoMapper extends AutoMapperBase {
     const { destination, source, options } = _getPropsFromArguments(args);
     const mapping = super._getMappingForDestination(
       destination,
-      source || sourceObj
+      source || (sourceObj.constructor as Constructible<TSource>)
     );
     return super._mapAsync(sourceObj, mapping, options);
   }
@@ -310,7 +310,7 @@ export class AutoMapper extends AutoMapperBase {
 
     const mapping = super._getMappingForDestination(
       destination,
-      source || sourceObj
+      source || (sourceObj.constructor as Constructible<TSource>)
     );
     return super._map(sourceObj, mapping, options);
   }
@@ -381,7 +381,7 @@ export class AutoMapper extends AutoMapperBase {
 
     const mapping = super._getMappingForDestination(
       destination,
-      source || sourceArr[0]
+      source || (sourceArr[0].constructor as Constructible<TSource>)
     );
     return super._mapArray(sourceArr, mapping, options);
   }
@@ -454,7 +454,7 @@ export class AutoMapper extends AutoMapperBase {
 
     const mapping = super._getMappingForDestination(
       destination,
-      source || sourceArr[0]
+      source || (sourceArr[0].constructor as Constructible<TSource>)
     );
     return super._mapArrayAsync(sourceArr, mapping, options);
   }

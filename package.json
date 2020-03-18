@@ -36,7 +36,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run test && git add . && npm run lint"
+      "pre-commit": "npm run test && npm run lint"
     }
   },
   "prettier": {
@@ -109,7 +109,7 @@
     "ts-node": "8.6.2",
     "tsdx": "0.12.3",
     "tslib": "1.11.1",
-    "typedoc": "0.16.11",
+    "typedoc": "0.17.0",
     "typescript": "3.8.3"
   },
   "dependencies": {

@@ -9,7 +9,7 @@ sidebar_label: FromValue
 ```typescript
 Mapper.createMap(User, UserVm).forMember(
   dest => dest.fullName,
-  opts => opts.fromValue('Some raw value')
+  fromValue('Some raw value')
 );
 ```
 

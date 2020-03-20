@@ -10,8 +10,8 @@ to determine whether the following mapping operation should be able to proceed o
 ```typescript
 Mapper.createMap(User, UserVm).forMember(
   dest => dest.foo,
-  opts =>
-    opts.preCondition(source => source.age >= 10).mapFrom(source => source.bar)
+  preCondition(source => source.age >= 10),
+  mapFrom(source => source.bar)
 );
 ```
 
@@ -22,10 +22,8 @@ Same as [Condition](condition), `preCondition()` also takes in an optional secon
 ```typescript
 Mapper.createMap(User, UserVm).forMember(
   dest => dest.foo,
-  opts =>
-    opts
-      .preCondition(source => source.age >= 10, 'default value')
-      .mapFrom(source => source.bar)
+  preCondition(source => source.age >= 10, 'default value'),
+  mapFrom(source => source.bar)
 );
 ```
 

@@ -6,12 +6,12 @@ sidebar_label: Profile
 
 `Profile` is generally a good way (and recommended) to organize your `Mapping`. This helps you to separate your concern by providing you a way to group related `Mappings` for a certain **Domain Model**.
 
-A `Profile` needs to inherit from `MappingProfileBase` and the configuration will be put in the `constructor`
+A `Profile` needs to inherit from `ProfileBase` and the configuration will be put in the `constructor`
 
 ```typescript
-import { AutoMapper, MappingProfileBase } from '@nartc/automapper';
+import { AutoMapper, ProfileBase } from '@nartc/automapper';
 
-export class SourceProfile extends MappingProfileBase {
+export class SourceProfile extends ProfileBase {
   constructor(mapper: AutoMapper) {
     super();
     mapper.createMap(Source, DestinationOne);
@@ -27,7 +27,7 @@ Mapper.addProfile(SourceProfile);
 ```
 
 `addProfile()`, upon called, will first instantiate an instance of `Profile` and pass in the `AutoMapper` instance from which `addProfile()` is invoked.
-Hence, `SourceProfile.constructor` will be called with `Mapper` as its argument. `super()`, which is `MappingProfileBase.constructor`, is also get called and the `profileName` will be set to `SourceProfile`.
+Hence, `SourceProfile.constructor` will be called with `Mapper` as its argument. `super()`, which is `ProfileBase.constructor`, is also get called and the `profileName` will be set to `SourceProfile`.
 
 > Each `Profile` added to the `Mapper` is **unique** and is tracked by `profileName`. `@nartc/automapper` will throw an `Error` if you're trying to add the same `profileName` twice.
 

@@ -1,3 +1,7 @@
+const versions = require('./versions');
+
+console.log(versions);
+
 module.exports = {
   title: '@nartc/automapper',
   tagline: 'An object-object automapper written in TypeScript',
@@ -11,11 +15,23 @@ module.exports = {
       title: '@nartc/automapper',
       links: [
         {
+          to: 'versions',
+          label: versions[0],
+          position: 'left',
+          style: {
+            whiteSpace: 'nowrap',
+            padding: '0.25rem 0.5rem 0.2rem 0.25rem',
+            fontSize: 'calc(0.9 * var(--ifm-font-size-base))',
+            textDecoration: 'underline',
+          },
+        },
+        {
           href: 'https://github.com/nartc/mapper',
           label: 'GitHub',
           position: 'right',
         },
       ],
+      hideOnScroll: true,
     },
     footer: {
       style: 'light',

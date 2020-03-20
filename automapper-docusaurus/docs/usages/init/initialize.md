@@ -3,6 +3,7 @@ id: initialize
 title: Initialize
 sidebar_label: Initialize
 ---
+`deprecated`
 
 `AutoMapper` exposes an instance method `initialize()` to configure your `AutoMapper` instance the same way as `createMap()` combined with `addProfile()`.
 `initialize()` expects a `callback (config: Configuration) => void` as its only argument. `Configuration` has the same `addProfile()` and `createMap()` as the `AutoMapper` instance.

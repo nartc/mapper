@@ -10,18 +10,18 @@ Let's take a look at the following snippet
 Mapper.createMap(User, UserVm)
   .forMember(
     dest => dest.fullName,
-    opts => opts.mapFrom(src => src.firstName + ' ' + src.lastName)
+    mapFrom(src => src.firstName + ' ' + src.lastName)
   )
   .forMember(
     dest => dest.isAdult,
-    opts => opts.mapFrom(src => src.age >= 18)
+    mapFrom(src => src.age >= 18)
   );
 ```
 
 `mapFrom()` takes in a callback that receives the `source` and needs to return a value with a `type` that matches `dest => dest.<some_member>`.
 **TypeScript** will provide strong-typings for the consumers.
 
-![Type Inference](https://p42.f3.n0.cdn.getcloudapp.com/items/WnuN17mb/Screen+Recording+2020-02-15+at+01.36+PM.gif?v=30cdc579dd34646b4e6c0b51129c2005)
+![Type Inference](https://p42.f3.n0.cdn.getcloudapp.com/items/2NuBpGo7/Screen%20Recording%202020-03-20%20at%2003.08%20PM.gif?v=827421e292a75bf9fc33c511f4336abc)
 
 `mapFrom()` will set the [TransformationType](../../../guides/basic-concept.md#mappingtransformation) to `MapFrom`.
 

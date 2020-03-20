@@ -10,7 +10,7 @@ Sometimes, you might have different property name for related nested models. `ma
 ```typescript
 Mapper.createMap(User, UserVm).forMember(
   dest => dest.someProfile,
-  opts => opts.mapWith(ProfileVm, src => src.originalProfile)
+  mapWith(ProfileVm, src => src.originalProfile)
 );
 ```
 

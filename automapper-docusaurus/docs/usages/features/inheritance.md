@@ -47,7 +47,7 @@ class UserVm extends BaseVm {
 
 Mapper.createMap(User, UserVm).forMember(
   d => d.fullName,
-  opts => opts.mapFrom(s => s.firstName + ' ' + s.lastName)
+  mapFrom(s => s.firstName + ' ' + s.lastName)
 );
 ```
 
@@ -63,25 +63,25 @@ To fix this issue, you need to `createMap()` for `Base` and `BaseVm` then includ
 Mapper.createMap(Base, BaseVm)
   .forMember(
     d => d.created,
-    opts => opts.mapFrom(s => s.createdAt)
+    mapFrom(s => s.createdAt)
   )
   .forMember(
     d => d.updated,
-    opts => opts.mapFrom(s => s.updatedAt)
+    mapFrom(s => s.updatedAt)
   )
   .forMember(
     d => d.recordId,
-    opts => opts.mapFrom(s => s.id)
+    mapFrom(s => s.id)
   );
 
 Mapper.createMap(User, UserVm, { includeBase: [Base, BaseVm] }) // <-- include base mapping
   .forMember(
     d => d.fullName,
-    opts => opts.mapFrom(s => s.firstName + ' ' + s.lastName)
+    mapFrom(s => s.firstName + ' ' + s.lastName)
   );
 ```
 
-Now when you run `Mapper.map(user, UserVm)`, the **unampped error** will be gone.
+Now when you run `Mapper.map(user, UserVm)`, the **unmapped error** will be gone.
 
 ### Notes
 

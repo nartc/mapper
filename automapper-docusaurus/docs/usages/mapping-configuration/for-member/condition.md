@@ -11,7 +11,7 @@ being configured with `forMember()`
 ```typescript
 Mapper.createMap(User, UserVm).forMember(
   dest => dest.fullName,
-  opts => opts.condition(src => src.age > 10)
+  condition(src => src.age > 10)
 );
 ```
 
@@ -33,7 +33,7 @@ const vm = Mapper.map(user, UserVm);
 
 Mapper.createMap(User, UserVm).forMember(
   dest => dest.fullname,
-  opts => opts.condition(src => src.age > 10, 'default value')
+  condition(src => src.age > 10, 'default value')
 );
 const vm2 = Mapper.map(user, UserVm);
 /**

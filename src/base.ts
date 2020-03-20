@@ -1,6 +1,6 @@
 import set from 'lodash.set';
 import { defaultMapActionOptions } from './constants';
-import { instantiate } from './metadata-explorer';
+import { instantiate, metadataManager } from './metadata-explorer';
 import {
   BaseOf,
   Constructible,
@@ -20,8 +20,6 @@ import {
 import {
   _assertMappingErrors,
   _get,
-  _getMappingKey,
-  _getProto,
   _getSourcePropertyKey,
   _inheritBaseMapping,
   _initializeReversedMappingProperties,
@@ -31,7 +29,6 @@ import {
   _isObjectLike,
   _isResolver,
   _setMappingPropertyForMapFromMember,
-  _wrapMappingKey,
 } from './utils';
 
 /**
@@ -40,12 +37,16 @@ import {
  * @private
  */
 export abstract class AutoMapperBase {
-  private _mappings!: { [key: string]: Mapping };
-  private _classNameMap!: WeakMap<Constructible, string>;
+  private _mappingsMap!: WeakMap<
+    Constructible,
+    WeakMap<Constructible, Mapping>
+  >;
 
   protected constructor() {
-    this._mappings = {};
-    this._classNameMap = new WeakMap<Constructible, string>();
+    this._mappingsMap = new WeakMap<
+      Constructible,
+      WeakMap<Constructible, Mapping>
+    >();
   }
 
   protected _mapArrayAsync<
@@ -336,7 +337,11 @@ export abstract class AutoMapperBase {
           return;
         }
 
-        const nestedMapping = this._getMappingForNestedKey(_first);
+        const nestedMapping = this._getMappingForNestedKey(
+          mapping.destination,
+          destinationMemberPath as keyof TDestination,
+          _first.constructor
+        );
         set(
           destinationObj,
           destinationMemberPath,
@@ -350,7 +355,10 @@ export abstract class AutoMapperBase {
       (typeof sourceVal === 'object' || typeof sourceVal === 'function') &&
       _isClass(sourceVal)
     ) {
-      const nestedMapping = this._getMappingForNestedKey(sourceVal);
+      const nestedMapping = this._getMappingForDestination(
+        _get(destinationObj, null, destinationMemberPath).constructor,
+        sourceVal.constructor
+      );
       set(
         destinationObj,
         destinationMemberPath,
@@ -373,16 +381,12 @@ export abstract class AutoMapperBase {
     destination: Constructible<TDestination>,
     options: CreateMapOptions
   ): Mapping<TSource, TDestination, TBaseSource, TBaseDestination> {
-    const [sourceKey, destinationKey] = this._getHashedNames(
-      source,
-      destination
-    );
-    const _key = this._hasMapping(
-      source,
-      destination,
-      sourceKey,
-      destinationKey
-    );
+    if (this._hasMappingMap(source, destination)) {
+      throw new Error(
+        `Mapping for source ${source.toString()} and destination ${destination.toString()} is already existed`
+      );
+    }
+
     const _mapping: Mapping<
       TSource,
       TDestination,
@@ -402,7 +406,10 @@ export abstract class AutoMapperBase {
       baseDestination: undefined,
     });
 
-    this._mappings[_key] = _mapping;
+    this._mappingsMap.set(
+      source,
+      new WeakMap<Constructible, Mapping>().set(destination, _mapping)
+    );
     return _mapping;
   }
 
@@ -414,7 +421,12 @@ export abstract class AutoMapperBase {
   >(
     mapping: Mapping<TSource, TDestination, TBaseSource, TBaseDestination>
   ): Mapping<TDestination, TSource, TBaseDestination, TBaseSource> {
-    const _reversedKey = this._hasMapping(mapping.destination, mapping.source);
+    if (this._hasMappingMap(mapping.destination, mapping.source)) {
+      throw new Error(
+        `Mapping for source ${mapping.destination.toString()} and destination ${mapping.source.toString()} is already existed`
+      );
+    }
+
     const _reversedMapping: Mapping<
       TDestination,
       TSource,
@@ -452,13 +464,21 @@ export abstract class AutoMapperBase {
       }
     }
 
-    this._mappings[_reversedKey] = _reversedMapping;
+    this._mappingsMap.set(
+      mapping.destination,
+      new WeakMap<Constructible, Mapping>().set(
+        mapping.source,
+        _reversedMapping
+      )
+    );
     return _reversedMapping;
   }
 
   protected _dispose() {
-    this._mappings = {};
-    this._classNameMap = new WeakMap<Constructible, string>();
+    this._mappingsMap = new WeakMap<
+      Constructible,
+      WeakMap<Constructible, Mapping>
+    >();
   }
 
   protected _getMappingForDestination<
@@ -469,12 +489,7 @@ export abstract class AutoMapperBase {
     sourceObj: Constructible<TSource>,
     isInherit: boolean = false
   ): Mapping<TSource, TDestination> {
-    const [srcKey, destKey] = this._getHashedNames(
-      sourceObj,
-      destination,
-      false
-    );
-    const mapping = this._mappings[_getMappingKey(srcKey, destKey)];
+    const mapping = this._mappingsMap.get(sourceObj)?.get(destination);
 
     if (!mapping && !isInherit) {
       throw new Error(
@@ -482,132 +497,53 @@ export abstract class AutoMapperBase {
       );
     }
 
-    return mapping;
+    return mapping as Mapping;
   }
 
   /**
    * Private Functions
    */
-
-  private _hasMapping<
-    TSource extends Dict<TSource> = any,
-    TDestination extends Dict<TDestination> = any
-  >(
-    source: Constructible<TSource>,
-    destination: Constructible<TDestination>,
-    sourceKey?: string,
-    destinationKey?: string
-  ): string {
-    let key = '';
-    if (sourceKey && destinationKey) {
-      key = _getMappingKey(sourceKey, destinationKey);
-    } else {
-      const [srcKey, destKey] = this._getHashedNames(source, destination);
-      key = _getMappingKey(srcKey, destKey);
-    }
-
-    if (this._mappings[key]) {
-      throw new Error(
-        `Mapping for source ${source.name} and destination ${destination.name} is already existed`
-      );
-    }
-
-    return key;
-  }
-
-  private _getMapping<
+  private _hasMappingMap<
     TSource extends Dict<TSource> = any,
     TDestination extends Dict<TDestination> = any
   >(
     source: Constructible<TSource>,
     destination: Constructible<TDestination>
-  ): Mapping<TSource, TDestination> {
-    const sourceName = source.prototype
-      ? source.prototype.constructor.name
-      : source.constructor.name;
-    const destinationName = destination.prototype
-      ? destination.prototype.constructor.name
-      : destination.constructor.name;
-    const [srcKey, destKey] = this._getHashedNames(source, destination);
-    const mapping = this._mappings[_getMappingKey(srcKey, destKey)];
-
-    if (!mapping) {
-      throw new Error(
-        `Mapping not found for source ${sourceName} and destination ${destinationName}`
-      );
-    }
-
-    return mapping;
+  ): boolean {
+    return (
+      (this._mappingsMap.has(source) &&
+        this._mappingsMap.get(source)?.has(destination)) ||
+      false
+    );
   }
 
   private _getMappingForNestedKey<
     TSource extends Dict<TSource> = any,
-    TDestination extends Dict<TDestination> = any
-  >(val: TSource): Mapping<TSource, TDestination> {
-    const sourceConstructor = val.constructor as Constructible<TSource>;
-    const mappingName = this._getHash(sourceConstructor, false);
-    const destinationEntry = Object.entries(this._mappings)
-      .filter(([key]) => key.includes(mappingName))
-      .find(
-        ([key]) => this._mappings[key].sourceKey === sourceConstructor.name
-      );
+    TDestination extends Dict<TDestination> = any,
+    TDestinationKey extends keyof TDestination = any
+  >(
+    destinationConstructor: Constructible<TDestination>,
+    destinationMemberKey: TDestinationKey,
+    sourceConstructor: Constructible<TSource>
+  ): Mapping<TSource, TDestination> {
+    const keyMetadata = metadataManager.getMetadataForKey(
+      destinationConstructor,
+      destinationMemberKey
+    );
 
-    if (!destinationEntry) {
-      throw new Error(`Mapping not found for source ${sourceConstructor.name}`);
-    }
-
-    const destination = destinationEntry[1].destination as Constructible<
-      TDestination
-    >;
-
-    if (!destination) {
-      throw new Error(`Mapping not found for source ${sourceConstructor.name}`);
-    }
-
-    const mapping = this._getMapping(sourceConstructor, destination);
-
-    if (!mapping) {
+    if (keyMetadata == null) {
       throw new Error(
-        `Mapping not found for source ${
-          sourceConstructor.name
-        } and destination ${destination.name || destination.constructor.name}`
+        `Metadata for ${destinationMemberKey} cannot be found. Consider manual map this property`
       );
     }
 
-    return mapping;
-  }
-
-  private _getHashedNames(
-    source: Constructible,
-    destination: Constructible,
-    shouldCreate: boolean = true
-  ): [string, string] {
-    const classes = [source, destination];
-    return classes.map(c => this._getHash(c, shouldCreate)) as [string, string];
-  }
-
-  private _getHash(source: Constructible, shouldCreate: boolean): string {
-    if (this._classNameMap.has(source)) {
-      return this._classNameMap.get(source) as string;
+    const meta = keyMetadata[1]();
+    if (!meta || Array.isArray(meta)) {
+      throw new Error(
+        `Metadata for ${destinationMemberKey} is a primitive or Array. Consider manual map this property`
+      );
     }
 
-    if (shouldCreate) {
-      const stringify = _wrapMappingKey(source.toString()).trim();
-      let hash = 0;
-      for (let i = 0; i < stringify.length; i++) {
-        const c = stringify.charCodeAt(i);
-        hash = (hash << 5) - hash + c;
-        hash = hash & hash;
-      }
-      this._classNameMap.set(source, hash.toString());
-      return hash.toString();
-    }
-
-    const proto = _getProto(source);
-    if (!shouldCreate && this._classNameMap.has(proto)) {
-      return this._classNameMap.get(proto) as string;
-    }
-
-    return '';
+    return this._getMappingForDestination(meta, sourceConstructor);
   }
 }

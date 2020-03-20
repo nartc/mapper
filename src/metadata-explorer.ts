@@ -1,4 +1,4 @@
-import { Constructible, Dict, MetadataMapList } from './types';
+import { Constructible, Dict, MetadataMap, MetadataMapList } from './types';
 import { _getProto, _isEmpty } from './utils';
 
 export class MetadataExplorer {
@@ -74,6 +74,13 @@ class MetadataManager {
     model: Constructible<TModel>
   ): MetadataMapList<TModel> {
     return this._metadataMap.get(model) as MetadataMapList<TModel>;
+  }
+
+  getMetadataForKey<TModel extends Dict<TModel> = any>(
+    model: Constructible<TModel>,
+    key: keyof TModel
+  ): MetadataMap<TModel> | undefined {
+    return this.getMetadata(model).find(([metaKey]) => metaKey === key);
   }
 
   addMetadata<TModel extends Dict<TModel> = any>(

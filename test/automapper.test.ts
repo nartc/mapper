@@ -56,7 +56,7 @@ describe('AutoMapper - CreateMap', () => {
   it('createMap', () => {
     expect(Mapper).toEqual(mapper);
     Mapper.createMap(User, UserVm);
-    expect(Mapper).not.toEqual(mapper);
+    expect(Mapper).not.toBe(mapper);
   });
 
   it('createMap by initialize', () => {
@@ -64,7 +64,7 @@ describe('AutoMapper - CreateMap', () => {
     Mapper.initialize(config => {
       config.createMap(User, UserVm);
     });
-    expect(Mapper).not.toEqual(mapper);
+    expect(Mapper).not.toBe(mapper);
   });
 });
 

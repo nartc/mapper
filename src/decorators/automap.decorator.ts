@@ -1,12 +1,12 @@
 import { metadataManager } from '../metadata-explorer';
-import { MetadataFunction } from '../types';
+import { Constructible, MetadataFunction } from '../types';
 
 export const AutoMap = (typeFn?: () => Function): PropertyDecorator => (
   target,
   propertyKey
 ) => {
   if (typeFn) {
-    metadataManager.addMetadata(target, [
+    metadataManager.addMetadata(target.constructor as Constructible, [
       [propertyKey, typeFn as MetadataFunction],
     ]);
   } else {
@@ -21,13 +21,19 @@ export const AutoMap = (typeFn?: () => Function): PropertyDecorator => (
         case 'Number':
         case 'Boolean':
         default:
-          metadataManager.addMetadata(target, [[propertyKey, () => false]]);
+          metadataManager.addMetadata(target.constructor as Constructible, [
+            [propertyKey, () => false],
+          ]);
           break;
         case 'Date':
-          metadataManager.addMetadata(target, [[propertyKey, () => Date]]);
+          metadataManager.addMetadata(target.constructor as Constructible, [
+            [propertyKey, () => Date],
+          ]);
           break;
         case 'Array':
-          metadataManager.addMetadata(target, [[propertyKey, () => []]]);
+          metadataManager.addMetadata(target.constructor as Constructible, [
+            [propertyKey, () => []],
+          ]);
           break;
       }
     }

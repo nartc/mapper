@@ -42,7 +42,7 @@ export class MetadataExplorer {
 
     for (const [key, value] of metadataEntries) {
       if (!value) {
-        metadataManager.addMetadata(model.prototype, [[key, () => false]]);
+        metadataManager.addMetadata(model, [[key, () => false]]);
         continue;
       }
 
@@ -53,13 +53,13 @@ export class MetadataExplorer {
         case 'String':
         case 'Number':
         case 'Boolean':
-          metadataManager.addMetadata(model.prototype, [[key, () => false]]);
+          metadataManager.addMetadata(model, [[key, () => false]]);
           break;
         case 'Array':
-          metadataManager.addMetadata(model.prototype, [[key, () => []]]);
+          metadataManager.addMetadata(model, [[key, () => []]]);
           break;
         default:
-          metadataManager.addMetadata(model.prototype, [[key, value]]);
+          metadataManager.addMetadata(model, [[key, value]]);
       }
     }
 
@@ -71,13 +71,13 @@ class MetadataManager {
   private _metadataMap = new Map<any, MetadataMapList>();
 
   getMetadata<TModel extends Dict<TModel> = any>(
-    model: TModel
+    model: Constructible<TModel>
   ): MetadataMapList<TModel> {
     return this._metadataMap.get(model) as MetadataMapList<TModel>;
   }
 
   addMetadata<TModel extends Dict<TModel> = any>(
-    model: TModel,
+    model: Constructible<TModel>,
     metadata: MetadataMapList<TModel>
   ) {
     const existingMetadata = this._metadataMap.get(model) || [];
@@ -105,7 +105,7 @@ export function instantiate<TModel extends Dict<TModel>>(
   model: Constructible<TModel>,
   defaultValue: TModel = new model()
 ): TModel {
-  const metadata = metadataManager.getMetadata(model.prototype as TModel);
+  const metadata = metadataManager.getMetadata(model);
 
   if (_isEmpty(metadata) || !metadata) {
     return defaultValue;

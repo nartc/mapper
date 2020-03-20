@@ -406,6 +406,11 @@ export abstract class AutoMapperBase {
       baseDestination: undefined,
     });
 
+    if (this._mappingsMap.has(source)) {
+      this._mappingsMap.get(source)?.set(destination, _mapping);
+      return _mapping;
+    }
+
     this._mappingsMap.set(
       source,
       new WeakMap<Constructible, Mapping>().set(destination, _mapping)
@@ -462,6 +467,13 @@ export abstract class AutoMapperBase {
       if (reversedBaseMapping != null) {
         _inheritBaseMapping(_reversedMapping, reversedBaseMapping);
       }
+    }
+
+    if (this._mappingsMap.has(mapping.destination)) {
+      this._mappingsMap
+        .get(mapping.destination)
+        ?.set(mapping.source, _reversedMapping);
+      return _reversedMapping;
     }
 
     this._mappingsMap.set(

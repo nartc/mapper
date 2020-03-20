@@ -8,7 +8,7 @@ export class SnakeCaseNamingConvention implements NamingConvention {
     const len = sourcePropNameParts.length;
 
     if (len <= 1) {
-      return sourcePropNameParts[0] || '';
+      return sourcePropNameParts[0].toLowerCase() || '';
     }
 
     return sourcePropNameParts

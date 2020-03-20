@@ -1,5 +1,5 @@
 export * from './automapper';
 export * from './types';
-export * from './naming';
 export * from './decorators';
-export * from './profile/profile-base';
+export * from './member-functions';
+export * from './profile-base';

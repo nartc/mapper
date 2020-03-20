@@ -1,6 +1,4 @@
-import { AutoMapper } from './automapper';
-
-type Unpacked<T> = T extends (infer U)[]
+export type Unpacked<T> = T extends (infer U)[]
   ? U
   : T extends (...args: any[]) => infer U
   ? U
@@ -8,22 +6,78 @@ type Unpacked<T> = T extends (infer U)[]
   ? U
   : T;
 
-type TypeOrReturnType<T, U> = U extends undefined
-  ? T
-  : U extends null
-  ? T
-  : U extends never
-  ? T
-  : U extends (...args: any) => infer R
-  ? R
-  : T;
-
-type SelectorReturn<TSource> = ReturnType<Selector<TSource>>;
-
 export type Dict<T> = { [key in keyof T]?: any };
 
-export interface Converter<TConvertSource, TConvertDestination> {
-  convert(source: TConvertSource): TConvertDestination;
+export type BaseOf<T extends Dict<T> = any, TBase = any> = [T] extends [TBase]
+  ? unknown
+  : never;
+
+export enum ObjectTag {
+  Undefined = '[object Undefined]',
+  Null = '[object Null]',
+  Object = '[object Object]',
+  Array = '[object Array]',
+  Date = '[object Date]',
+  Map = '[object Map]',
+}
+
+export enum TransformationType {
+  Ignore = 0,
+  MapFrom = 1,
+  Condition = 2,
+  FromValue = 3,
+  MapWith = 4,
+  ConvertUsing = 5,
+  MapInitialize = 6,
+  NullSubstitution = 7,
+}
+
+export interface Selector<
+  TSource extends Dict<TSource> = any,
+  TReturnType = any
+> {
+  (source: TSource): TReturnType;
+}
+
+export type SelectorReturn<TSource> = ReturnType<Selector<TSource>>;
+
+export interface ValueSelector<
+  TSource extends Dict<TSource> = any,
+  TDestination extends Dict<TDestination> = any,
+  TReturnType = SelectorReturn<TDestination>
+> {
+  (source: TSource): TReturnType;
+}
+
+export interface ConditionPredicate<TSource extends Dict<TSource> = any> {
+  (source: TSource): boolean;
+}
+
+export interface MapAction<
+  TSource extends Dict<TSource> = any,
+  TDestination extends Dict<TDestination> = any,
+  TMappingSource = Unpacked<TSource>,
+  TMappingDestination = Unpacked<TDestination>
+> {
+  (
+    source: TSource,
+    destination: TDestination,
+    mapping?: Mapping<TMappingSource, TMappingDestination>
+  ): void;
+}
+
+export interface MapOptions<
+  TSource extends Dict<TSource> = any,
+  TDestination extends Dict<TDestination> = any
+> {
+  beforeMap?: MapAction<TSource, TDestination>;
+  afterMap?: MapAction<TSource, TDestination>;
+}
+
+export interface NamingConvention {
+  splittingExpression: RegExp;
+  separatorCharacter: string;
+  transformPropertyName: (sourcePropNameParts: string[]) => string;
 }
 
 export interface Resolver<
@@ -38,14 +92,12 @@ export interface Resolver<
   ): TReturnType;
 }
 
-export interface MappingProfile {
-  profileName: string;
+export interface Converter<TConvertSource, TConvertDestination> {
+  convert(source: TConvertSource): TConvertDestination;
 }
 
-export interface NamingConvention {
-  splittingExpression: RegExp;
-  separatorCharacter: string;
-  transformPropertyName: (sourcePropNameParts: string[]) => string;
+export interface MappingProfile {
+  profileName: string;
 }
 
 export interface CreateMapOptions<
@@ -54,52 +106,9 @@ export interface CreateMapOptions<
   TBaseSource extends BaseOf<TSource, TBaseSource> = any,
   TBaseDestination extends BaseOf<TDestination, TBaseDestination> = any
 > {
-  sourceMemberNamingConvention?: NamingConvention;
-  destinationMemberNamingConvention?: NamingConvention;
+  sourceMemberNamingConvention?: Constructible<NamingConvention>;
+  destinationMemberNamingConvention?: Constructible<NamingConvention>;
   includeBase?: [Constructible<TBaseSource>, Constructible<TBaseDestination>];
-}
-
-export interface MapActionOptions<
-  TSource extends Dict<TSource> = any,
-  TDestination extends Dict<TDestination> = any
-> {
-  beforeMap?: BeforeAfterMapAction<TSource, TDestination>;
-  afterMap?: BeforeAfterMapAction<TSource, TDestination>;
-}
-
-export enum TransformationType {
-  /**
-   * when `opts.ignore()` is used on `forMember()`
-   */
-  Ignore = 0,
-  /**
-   * when `opts.mapFrom()` is used on `forMember()`
-   */
-  MapFrom = 1,
-  /**
-   * when `opts.condition()` is used on `forMember()`
-   */
-  Condition = 2,
-  /**
-   * when `opts.fromValue()` is used on `forMember()`
-   */
-  FromValue = 3,
-  /**
-   * when `opts.mapWith()` is used on `forMember()`
-   */
-  MapWith = 4,
-  /**
-   * when `opts.convertUsing()` is used on `forMember()`
-   */
-  ConvertUsing = 5,
-  /**
-   * when Mapping is initialized
-   */
-  MapInitialize = 6,
-  /**
-   * When `opts.nullSubstitution()` is used on `forMember()`
-   */
-  NullSubstituion = 7,
 }
 
 export interface Constructible<T extends Dict<T> = any> {
@@ -108,105 +117,7 @@ export interface Constructible<T extends Dict<T> = any> {
   __NARTC_AUTOMAPPER_METADATA_FACTORY?: () => Dict<T>;
 }
 
-export type BaseOf<T extends Dict<T> = any, TBase = any> = [T] extends [TBase]
-  ? unknown
-  : never;
-
-export interface ConditionPredicate<TSource extends Dict<TSource> = any> {
-  (source: TSource): boolean;
-}
-
-export interface ConditionTransformation<
-  TSource extends Dict<TSource> = any,
-  TReturnType = any
-> {
-  predicate: ConditionPredicate<TSource>;
-  defaultValue?: TReturnType;
-}
-
-export interface Selector<
-  TSource extends Dict<TSource> = any,
-  TReturnType = any
-> {
-  (source: TSource): TReturnType;
-}
-
-export interface ValueSelector<
-  TSource extends Dict<TSource> = any,
-  TDestination extends Dict<TDestination> = any,
-  TReturnType = SelectorReturn<TDestination>
-> {
-  (source: TSource): TReturnType;
-}
-
-export type MapFromCallback<
-  TSource extends Dict<TSource> = any,
-  TDestination extends Dict<TDestination> = any,
-  TSelectorReturn = SelectorReturn<TDestination>
-> =
-  | ValueSelector<TSource, TDestination, TSelectorReturn>
-  | Resolver<TSource, TDestination, TSelectorReturn>;
-
-export interface DestinationMemberExpressionOptions<
-  TSource extends Dict<TSource> = any,
-  TDestination extends Dict<TDestination> = any,
-  TSelectorReturn = SelectorReturn<TDestination>
-> {
-  preCondition(
-    predicate: ConditionPredicate<TSource>,
-    defaultValue?: TSelectorReturn
-  ): DestinationMemberExpressionOptions<TSource, TDestination, TSelectorReturn>;
-
-  mapFrom(cb: MapFromCallback<TSource, TDestination, TSelectorReturn>): void;
-
-  mapWith(
-    destination: Constructible<Unpacked<TSelectorReturn>>,
-    fromValue: ValueSelector<TSource>
-  ): void;
-
-  condition(
-    predicate: ConditionPredicate<TSource>,
-    defaultValue?: TSelectorReturn
-  ): void;
-
-  fromValue(value: TSelectorReturn): void;
-
-  convertUsing<TConvertSource = TSource>(
-    converter: Converter<TConvertSource, TSelectorReturn>,
-    value: Selector<TSource, TConvertSource>
-  ): void;
-
-  nullSubstitution(value: TSelectorReturn): void;
-
-  ignore(): void;
-}
-
-export interface ForMemberExpression<
-  TSource extends Dict<TSource> = any,
-  TDestination extends Dict<TDestination> = any,
-  TSelectorReturn = any
-> {
-  (
-    opts: DestinationMemberExpressionOptions<
-      TSource,
-      TDestination,
-      TSelectorReturn
-    >
-  ): void;
-}
-
-export interface BeforeAfterMapAction<
-  TSource extends Dict<TSource> = any,
-  TDestination extends Dict<TDestination> = any
-> {
-  (
-    source: TSource,
-    destination: TDestination,
-    mapping?: Mapping<TSource, TDestination>
-  ): void;
-}
-
-export interface CreateMapFluentFunctions<
+export interface CreateMapFluentFunction<
   TSource extends Dict<TSource> = any,
   TDestination extends Dict<TDestination> = any,
   TBaseSource extends BaseOf<TSource, TBaseSource> = any,
@@ -214,8 +125,25 @@ export interface CreateMapFluentFunctions<
 > {
   forMember<TMemberType = SelectorReturn<TDestination>>(
     selector: Selector<TDestination, TMemberType>,
-    expression: ForMemberExpression<TSource, TDestination, TMemberType>
-  ): CreateMapFluentFunctions<
+    memberMapFunction: ReturnType<
+      MemberMapFunction<TSource, TDestination, TMemberType>
+    >
+  ): CreateMapFluentFunction<
+    TSource,
+    TDestination,
+    TBaseSource,
+    TBaseDestination
+  >;
+
+  forMember<TMemberType = SelectorReturn<TDestination>>(
+    selector: Selector<TDestination, TMemberType>,
+    preConditionFunction: ReturnType<
+      PreConditionFunction<TSource, TDestination, TMemberType>
+    >,
+    memberMapFunction: ReturnType<
+      MemberMapFunction<TSource, TDestination, TMemberType>
+    >
+  ): CreateMapFluentFunction<
     TSource,
     TDestination,
     TBaseSource,
@@ -223,8 +151,8 @@ export interface CreateMapFluentFunctions<
   >;
 
   beforeMap(
-    action: BeforeAfterMapAction<TSource, TDestination>
-  ): CreateMapFluentFunctions<
+    action: MapAction<TSource, TDestination>
+  ): CreateMapFluentFunction<
     TSource,
     TDestination,
     TBaseSource,
@@ -232,88 +160,172 @@ export interface CreateMapFluentFunctions<
   >;
 
   afterMap(
-    action: BeforeAfterMapAction<TSource, TDestination>
-  ): CreateMapFluentFunctions<
+    action: MapAction<TSource, TDestination>
+  ): CreateMapFluentFunction<
     TSource,
     TDestination,
     TBaseSource,
     TBaseDestination
   >;
 
-  reverseMap(): CreateReversedMapFluentFunctions<TDestination, TSource>;
+  reverseMap(): CreateReversedMapFluentFunction<TDestination, TSource>;
 }
 
-export interface CreateReversedMapFluentFunctions<
+export interface CreateReversedMapFluentFunction<
   TSource extends Dict<TSource> = any,
   TDestination extends Dict<TDestination> = any
 > {
   forPath<TMemberType = SelectorReturn<TDestination>>(
     selector: Selector<TDestination, TMemberType>,
-    expression: ForMemberExpression<TSource, TDestination, TMemberType>
-  ): CreateReversedMapFluentFunctions<TSource, TDestination>;
+    memberMapFunction: ReturnType<
+      MemberMapFunction<TSource, TDestination, TMemberType>
+    >
+  ): CreateReversedMapFluentFunction<TSource, TDestination>;
+
+  forPath<TMemberType = SelectorReturn<TDestination>>(
+    selector: Selector<TDestination, TMemberType>,
+    preConditionFunction: ReturnType<
+      PreConditionFunction<TSource, TDestination, TMemberType>
+    >,
+    memberMapFunction: ReturnType<
+      MemberMapFunction<TSource, TDestination, TMemberType>
+    >
+  ): CreateReversedMapFluentFunction<TSource, TDestination>;
 
   beforeMap(
-    action: BeforeAfterMapAction<TSource, TDestination>
-  ): CreateReversedMapFluentFunctions<TSource, TDestination>;
+    action: MapAction<TSource, TDestination>
+  ): CreateReversedMapFluentFunction<TSource, TDestination>;
 
   afterMap(
-    action: BeforeAfterMapAction<TSource, TDestination>
-  ): CreateReversedMapFluentFunctions<TSource, TDestination>;
+    action: MapAction<TSource, TDestination>
+  ): CreateReversedMapFluentFunction<TSource, TDestination>;
 }
 
-export interface AutoMapperGlobalSettings {
-  sourceNamingConvention?: Constructible<NamingConvention>;
-  destinationNamingConvention?: Constructible<NamingConvention>;
-}
+export type MemberMapFunction<
+  TSource extends Dict<TSource> = any,
+  TDestination extends Dict<TDestination> = any,
+  TSelectorReturn = SelectorReturn<TDestination>
+> =
+  | MapInitializeFunction<TSource, TDestination, TSelectorReturn>
+  | MapFromFunction<TSource, TDestination, TSelectorReturn>
+  | MapWithFunction<TSource, TDestination, TSelectorReturn>
+  | ConditionFunction<TSource, TDestination, TSelectorReturn>
+  | FromValueFunction<TSource, TDestination, TSelectorReturn>
+  | ConvertUsingFunction<TSource, TDestination, TSelectorReturn>
+  | NullSubstitutionFunction<TSource, TDestination, TSelectorReturn>
+  | IgnoreFunction;
 
-export interface AutoMapperConfiguration {
-  withGlobalSettings(settings: AutoMapperGlobalSettings): void;
-
-  addProfile(profile: new (mapper: AutoMapper) => MappingProfile): AutoMapper;
-
-  createMap<
-    TSource extends Dict<TSource> = any,
-    TDestination extends Dict<TDestination> = any,
-    TBaseSource extends BaseOf<TSource, TBaseSource> = any,
-    TBaseDestination extends BaseOf<TDestination, TBaseDestination> = any
-  >(
-    source: Constructible<TSource>,
-    destination: Constructible<TDestination>
-  ): CreateMapFluentFunctions<
-    TSource,
-    TDestination,
-    TBaseSource,
-    TBaseDestination
-  >;
-}
-
-export interface MapWithTransformOptions<
+export interface PreConditionFunction<
   TSource extends Dict<TSource> = any,
   TDestination extends Dict<TDestination> = any,
   TSelectorReturn = SelectorReturn<TDestination>
 > {
-  destination: Constructible<Unpacked<TSelectorReturn>>;
-  fromValue: ValueSelector<TSource>;
+  (predicate: ConditionPredicate<TSource>, defaultValue?: TSelectorReturn): {
+    (source: TSource): boolean;
+    defaultValue?: TSelectorReturn;
+  };
 }
 
-export interface ConvertUsingTransformOptions<
+export interface MapFromFunction<
   TSource extends Dict<TSource> = any,
   TDestination extends Dict<TDestination> = any,
   TSelectorReturn = SelectorReturn<TDestination>
 > {
-  converter: Converter<
-    TypeOrReturnType<TSource, ConvertUsingTransformOptions['value']>,
-    TSelectorReturn
-  >;
-  value: Selector<TSource, TSelectorReturn>;
+  (
+    from:
+      | ValueSelector<TSource, TDestination, TSelectorReturn>
+      | Resolver<TSource, TDestination, TSelectorReturn>
+  ): {
+    type: TransformationType.MapFrom;
+    fromSelector: ValueSelector<TSource, TDestination, TSelectorReturn>;
+    (
+      source: TSource,
+      destination: typeof from extends Resolver ? TDestination : any,
+      transformation: typeof from extends Resolver
+        ? MappingTransformation<TSource, TDestination, TSelectorReturn>
+        : any
+    ): TSelectorReturn;
+  };
 }
 
-export interface MappingTransformationType<
+export interface MapWithFunction<
   TSource extends Dict<TSource> = any,
-  TReturnType = any
+  TDestination extends Dict<TDestination> = any,
+  TSelectorReturn = SelectorReturn<TDestination>
 > {
-  type: TransformationType;
-  preCondition: ConditionTransformation<TSource, TReturnType> | null;
+  (
+    withDestination: Constructible<Unpacked<TSelectorReturn>>,
+    withValue: ValueSelector<TSource>
+  ): {
+    type: TransformationType.MapWith;
+    withValueSelector: ValueSelector<TSource>;
+    (source: TSource): TSelectorReturn | null;
+  };
+}
+
+export interface ConditionFunction<
+  TSource extends Dict<TSource> = any,
+  TDestination extends Dict<TDestination> = any,
+  TSelectorReturn = SelectorReturn<TDestination>
+> {
+  (predicate: ConditionPredicate<TSource>, defaultValue?: TSelectorReturn): {
+    type: TransformationType.Condition;
+    (source: TSource, ...sourceMemberPaths: string[]): TSelectorReturn;
+  };
+}
+
+export interface FromValueFunction<
+  TSource extends Dict<TSource> = any,
+  TDestination extends Dict<TDestination> = any,
+  TSelectorReturn = SelectorReturn<TDestination>
+> {
+  (rawValue: TSelectorReturn): {
+    type: TransformationType.FromValue;
+    (source: TSource): TSelectorReturn;
+  };
+}
+
+export interface ConvertUsingFunction<
+  TSource extends Dict<TSource> = any,
+  TDestination extends Dict<TDestination> = any,
+  TSelectorReturn = SelectorReturn<TDestination>
+> {
+  <TConvertSource = TSource>(
+    converter: Converter<TConvertSource, TSelectorReturn>,
+    value: Selector<TSource, TConvertSource>
+  ): {
+    type: TransformationType.ConvertUsing;
+    (source: TSource): TSelectorReturn;
+  };
+}
+
+export interface NullSubstitutionFunction<
+  TSource extends Dict<TSource> = any,
+  TDestination extends Dict<TDestination> = any,
+  TSelectorReturn = SelectorReturn<TDestination>
+> {
+  (substitution: TSelectorReturn): {
+    type: TransformationType.NullSubstitution;
+    (source: TSource, ...sourceMemberPaths: string[]): TSelectorReturn;
+  };
+}
+
+export interface IgnoreFunction {
+  (): {
+    type: TransformationType.Ignore;
+    (): void;
+  };
+}
+
+export interface MapInitializeFunction<
+  TSource extends Dict<TSource> = any,
+  TDestination extends Dict<TDestination> = any,
+  TSelectorReturn = SelectorReturn<TDestination>
+> {
+  (...paths: string[]): {
+    type: TransformationType.MapInitialize;
+    (source: TSource): TSelectorReturn;
+  };
 }
 
 export interface MappingTransformation<
@@ -321,33 +333,20 @@ export interface MappingTransformation<
   TDestination extends Dict<TDestination> = any,
   TSelectorReturn = SelectorReturn<TDestination>
 > {
-  transformationType: MappingTransformationType<TSource, TSelectorReturn>;
-  mapFrom?: MapFromCallback<TSource, TDestination, TSelectorReturn>;
-  mapWith?: MapWithTransformOptions<TSource, TDestination, TSelectorReturn>;
-  condition?: ConditionTransformation<TSource, TSelectorReturn>;
-  fromValue?: TSelectorReturn;
-  convertUsing?: ConvertUsingTransformOptions<
-    TSource,
-    TDestination,
-    TSelectorReturn
+  type: TransformationType;
+  mapFn: ReturnType<MemberMapFunction<TSource, TDestination, TSelectorReturn>>;
+  preCond?: ReturnType<
+    PreConditionFunction<TSource, TDestination, TSelectorReturn>
   >;
-  nullSubstitution?: TSelectorReturn;
 }
 
 export interface MappingProperty<
   TSource extends Dict<TSource> = any,
   TDestination extends Dict<TDestination> = any,
-  TSelector extends Selector<TDestination> = Selector<TDestination>
+  TSelectorReturn = SelectorReturn<TDestination>
 > {
-  destinationMemberPath: string;
-  destinationMemberSelector: TSelector;
-  transformation: MappingTransformation<
-    TSource,
-    TDestination,
-    ReturnType<TSelector>
-  >;
-  sourceMemberPath?: string;
-  transformedValue?: ReturnType<TSelector>;
+  paths: [string, string?];
+  transformation: MappingTransformation<TSource, TDestination, TSelectorReturn>;
 }
 
 export interface Mapping<
@@ -356,20 +355,22 @@ export interface Mapping<
   TBaseSource extends BaseOf<TSource, TBaseSource> = any,
   TBaseDestination extends BaseOf<TDestination, TBaseDestination> = any
 > {
-  source: Constructible<TSource>;
-  sourceKey: string;
-  destination: Constructible<TDestination>;
-  destinationKey: string;
-  properties: Map<
-    string,
-    MappingProperty<TSource, TDestination, Selector<TDestination>>
+  models: [Constructible<TSource>, Constructible<TDestination>];
+  conventions: [
+    Constructible<NamingConvention>,
+    Constructible<NamingConvention>
+  ];
+  props: Array<
+    [
+      string,
+      MappingProperty<TSource, TDestination, ReturnType<Selector<TDestination>>>
+    ]
   >;
-  sourceMemberNamingConvention: NamingConvention;
-  destinationMemberNamingConvention: NamingConvention;
-  beforeMapAction?: BeforeAfterMapAction<TSource, TDestination>;
-  afterMapAction?: BeforeAfterMapAction<TSource, TDestination>;
-  baseSource?: Constructible<TBaseSource>;
-  baseDestination?: Constructible<TBaseDestination>;
+  actions?: [
+    MapAction<TSource, TDestination>?,
+    MapAction<TSource, TDestination>?
+  ];
+  bases?: [Constructible<TBaseSource>, Constructible<TBaseDestination>];
 }
 
 export type MetadataFunction = () => false | [] | Constructible;
@@ -380,3 +381,8 @@ export type MetadataMap<
 export type MetadataMapList<TModel extends Dict<TModel> = any> = Array<
   MetadataMap<TModel>
 >;
+
+export interface AutoMapperGlobalSettings {
+  sourceNamingConvention?: Constructible<NamingConvention>;
+  destinationNamingConvention?: Constructible<NamingConvention>;
+}

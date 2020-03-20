@@ -23,7 +23,7 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "baseUrl": "./",
+    "baseUrl": "./src",
     "jsx": "react",
     "esModuleInterop": true
   }

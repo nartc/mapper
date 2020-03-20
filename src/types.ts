@@ -386,3 +386,14 @@ export interface AutoMapperGlobalSettings {
   sourceNamingConvention?: Constructible<NamingConvention>;
   destinationNamingConvention?: Constructible<NamingConvention>;
 }
+
+export type MetadataOptions<TModel extends Dict<TModel> = any> = {
+  [key in keyof TModel]?: String | Number | Boolean | Date | [] | Constructible;
+};
+
+export interface CreateMapMetadataFunction {
+  <TModel extends Dict<TModel> = any>(
+    model: Constructible<TModel>,
+    metadataOptions: MetadataOptions<TModel>
+  ): void;
+}

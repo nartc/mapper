@@ -50,7 +50,7 @@ export class MetadataExplorer {
       const meta = value();
       const metaName =
         meta.prototype?.constructor?.name || meta.constructor.name;
-      storeMetadata(model, metaName, key, value);
+      storeMetadata(model, metaName, key, meta);
     }
 
     this.metadataTrackMap.set(model, 1);

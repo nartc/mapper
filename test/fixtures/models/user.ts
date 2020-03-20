@@ -1,6 +1,16 @@
 import { AutoMap } from '../../../src';
 import { Profile, ProfileVm } from './profile';
 
+export class UserNoDecorator {
+  firstName!: string;
+  lastName!: string;
+  age!: number;
+  birthday!: Date;
+  isAdult!: boolean;
+  addresses!: string[];
+  profile!: Profile;
+}
+
 export class User {
   @AutoMap()
   firstName!: string;

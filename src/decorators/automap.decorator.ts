@@ -1,5 +1,6 @@
 import { metadataStorage } from '../storages';
 import { Constructible, MetadataFunction } from '../types';
+import { storeMetadata } from '../utils';
 
 export const AutoMap = (typeFn?: () => Function): PropertyDecorator => (
   target,
@@ -16,26 +17,11 @@ export const AutoMap = (typeFn?: () => Function): PropertyDecorator => (
       propertyKey
     );
     if (reflectedMetadata) {
-      switch (reflectedMetadata.prototype.constructor.name) {
-        case 'String':
-        case 'Number':
-        case 'Boolean':
-        default:
-          metadataStorage.addMetadata(target.constructor as Constructible, [
-            [propertyKey, () => false],
-          ]);
-          break;
-        case 'Date':
-          metadataStorage.addMetadata(target.constructor as Constructible, [
-            [propertyKey, () => Date],
-          ]);
-          break;
-        case 'Array':
-          metadataStorage.addMetadata(target.constructor as Constructible, [
-            [propertyKey, () => []],
-          ]);
-          break;
-      }
+      storeMetadata(
+        target.constructor as Constructible,
+        reflectedMetadata.prototype.constructor.name,
+        propertyKey as string
+      );
     }
   }
 };

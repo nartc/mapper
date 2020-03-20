@@ -1,5 +1,6 @@
 import { metadataStorage } from '../storages';
 import { Constructible } from '../types';
+import { storeMetadata } from '../utils';
 
 export class MetadataExplorer {
   private static readonly metadataTrackMap = new Map();
@@ -49,18 +50,7 @@ export class MetadataExplorer {
       const meta = value();
       const metaName =
         meta.prototype?.constructor?.name || meta.constructor.name;
-      switch (metaName) {
-        case 'String':
-        case 'Number':
-        case 'Boolean':
-          metadataStorage.addMetadata(model, [[key, () => false]]);
-          break;
-        case 'Array':
-          metadataStorage.addMetadata(model, [[key, () => []]]);
-          break;
-        default:
-          metadataStorage.addMetadata(model, [[key, value]]);
-      }
+      storeMetadata(model, metaName, key, value);
     }
 
     this.metadataTrackMap.set(model, 1);

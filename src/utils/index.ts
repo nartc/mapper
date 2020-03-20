@@ -1,3 +1,4 @@
+export * from './storeMetadata';
 export * from './wrapMappingKey';
 export * from './shouldHaveMemberPath';
 export * from './isMapFrom';

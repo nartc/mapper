@@ -113,6 +113,35 @@ export class AutoMapper {
     return map(sourceObj, mapping, options);
   }
 
+  mapAsync<
+    TSource extends Dict<TSource> = any,
+    TDestination extends Dict<TDestination> = any
+  >(
+    sourceObj: TSource,
+    destination: Constructible<TDestination>,
+    source?: Constructible<TSource>,
+    options?: MapOptions<TSource, TDestination>
+  ): Promise<TDestination>;
+  mapAsync<
+    TSource extends Dict<TSource> = any,
+    TDestination extends Dict<TDestination> = any
+  >(
+    sourceObj: TSource,
+    destination: Constructible<TDestination>,
+    options?: MapOptions<TSource, TDestination>
+  ): Promise<TDestination>;
+  mapAsync<
+    TSource extends Dict<TSource> = any,
+    TDestination extends Dict<TDestination> = any
+  >(sourceObj: TSource, ...args: any[]): Promise<TDestination> {
+    const [destination, source, options] = getMapProps(args);
+    const mapping = getMappingForDestination(
+      destination,
+      source || (sourceObj.constructor as Constructible<TSource>)
+    );
+    return Promise.resolve().then(() => map(sourceObj, mapping, options));
+  }
+
   mapArray<
     TSource extends Dict<TSource> = any,
     TDestination extends Dict<TDestination> = any
@@ -146,6 +175,41 @@ export class AutoMapper {
     );
 
     return mapArray(sourceArr, mapping, options);
+  }
+
+  mapArrayAsync<
+    TSource extends Dict<TSource> = any,
+    TDestination extends Dict<TDestination> = any
+  >(
+    sourceArr: TSource[],
+    destination: Constructible<TDestination>,
+    source?: Constructible<TSource>,
+    options?: MapOptions<TSource[], TDestination[]>
+  ): Promise<TDestination[]>;
+  mapArrayAsync<
+    TSource extends Dict<TSource> = any,
+    TDestination extends Dict<TDestination> = any
+  >(
+    sourceArr: TSource[],
+    destination: Constructible<TDestination>,
+    source?: Constructible<TSource>,
+    options?: MapOptions<TSource[], TDestination[]>
+  ): Promise<TDestination[]>;
+  mapArrayAsync<
+    TSource extends Dict<TSource> = any,
+    TDestination extends Dict<TDestination> = any
+  >(sourceArr: TSource[], ...args: any[]): Promise<TDestination[]> {
+    if (!sourceArr.length) {
+      return Promise.resolve().then(() => []);
+    }
+
+    const [destination, source, options] = getMapProps(args);
+    const mapping = getMappingForDestination(
+      destination,
+      source || (sourceArr[0].constructor as Constructible<TSource>)
+    );
+
+    return Promise.resolve().then(() => mapArray(sourceArr, mapping, options));
   }
 
   dispose(): void {

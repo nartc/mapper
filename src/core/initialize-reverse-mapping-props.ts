@@ -2,12 +2,14 @@ import { mapInitialize } from '../member-functions/map-initialize';
 import {
   BaseOf,
   Dict,
+  MapFromFunction,
   Mapping,
   MappingProperty,
+  MapWithFunction,
   Selector,
   TransformationType,
 } from '../types';
-import { getMemberPath, isMapFrom, isMapWith } from '../utils';
+import { getMemberPath, isThisMemberMap } from '../utils';
 import { getProto } from '../utils/getProto';
 import { instantiate } from './instantiate';
 
@@ -45,9 +47,15 @@ export function initializeReverseMappingProps<
 
     const path = sourcePath
       ? sourcePath
-      : isMapWith(transformation.mapFn)
+      : isThisMemberMap<MapWithFunction>(
+          transformation.mapFn,
+          TransformationType.MapWith
+        )
       ? getMemberPath(transformation.mapFn.withValueSelector)
-      : isMapFrom(transformation.mapFn)
+      : isThisMemberMap<MapFromFunction>(
+          transformation.mapFn,
+          TransformationType.MapFrom
+        )
       ? getMemberPath(transformation.mapFn.fromSelector)
       : '';
 

@@ -1,17 +1,26 @@
 import set from 'lodash.set';
-import { Dict, MapOptions, Mapping } from '../types';
+import {
+  ConditionFunction,
+  ConvertUsingFunction,
+  Dict,
+  FromValueFunction,
+  IgnoreFunction,
+  MapFromFunction,
+  MapInitializeFunction,
+  MapOptions,
+  Mapping,
+  MapWithFunction,
+  NullSubstitutionFunction,
+  TransformationType,
+} from '../types';
 import {
   get,
   getSourcePropertyKey,
   isClass,
   isDate,
   isEmpty,
-  isIgnore,
-  isMapFrom,
-  isMapInitialize,
   isObjectLike,
-  shouldHaveMemberPath,
-  shouldHaveSource,
+  isThisMemberMap,
 } from '../utils';
 import { getMappingForDestination } from './get-mapping-for-destination';
 import { getMappingForNestedKey } from './get-mapping-for-nested-key';
@@ -65,7 +74,12 @@ export function map<
       continue;
     }
 
-    if (isIgnore(transformation.mapFn)) {
+    if (
+      isThisMemberMap<IgnoreFunction>(
+        transformation.mapFn,
+        TransformationType.Ignore
+      )
+    ) {
       set(destination, memberPath, null);
       continue;
     }
@@ -75,7 +89,12 @@ export function map<
       memberPath
     );
 
-    if (isMapInitialize(transformation.mapFn)) {
+    if (
+      isThisMemberMap<MapInitializeFunction>(
+        transformation.mapFn,
+        TransformationType.MapInitialize
+      )
+    ) {
       const mapInitializeValue = transformation.mapFn(sourceObj);
       if (mapInitializeValue == null) {
         set(destination, memberPath, null);
@@ -132,11 +151,38 @@ export function map<
     }
 
     let value: any;
-    if (shouldHaveMemberPath(transformation.mapFn)) {
+    if (
+      isThisMemberMap<ConditionFunction>(
+        transformation.mapFn,
+        TransformationType.Condition
+      ) ||
+      isThisMemberMap<NullSubstitutionFunction>(
+        transformation.mapFn,
+        TransformationType.NullSubstitution
+      )
+    ) {
       value = transformation.mapFn(sourceObj, sourceMemberPath);
-    } else if (isMapFrom(transformation.mapFn)) {
+    } else if (
+      isThisMemberMap<MapFromFunction>(
+        transformation.mapFn,
+        TransformationType.MapFrom
+      )
+    ) {
       value = transformation.mapFn(sourceObj, destination, transformation);
-    } else if (shouldHaveSource(transformation.mapFn)) {
+    } else if (
+      isThisMemberMap<MapWithFunction>(
+        transformation.mapFn,
+        TransformationType.MapWith
+      ) ||
+      isThisMemberMap<FromValueFunction>(
+        transformation.mapFn,
+        TransformationType.FromValue
+      ) ||
+      isThisMemberMap<ConvertUsingFunction>(
+        transformation.mapFn,
+        TransformationType.ConvertUsing
+      )
+    ) {
       value = transformation.mapFn(sourceObj);
     }
 

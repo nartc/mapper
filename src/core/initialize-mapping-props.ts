@@ -19,7 +19,8 @@ export function initializeMappingProps<
 
   const sourceProto = getProto(source);
   const destinationPaths = getPathRecursive(destination);
-  for (let i = 0, len = destinationPaths.length; i < len; i++) {
+  let i = destinationPaths.length;
+  while (i--) {
     const path = destinationPaths[i];
     const sourcePath = getSourcePropertyKey(mapping.conventions, path);
     const dottedSourcePaths = sourcePath.split('.');

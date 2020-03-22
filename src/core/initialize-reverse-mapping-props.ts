@@ -33,7 +33,8 @@ export function initializeReverseMappingProps<
     MappingProperty<TDestination, TSource, ReturnType<Selector<TSource>>>
   ]> = [];
 
-  for (let i = 0, len = mapping.props.length; i < len; i++) {
+  let i = mapping.props.length;
+  while (i--) {
     const { paths, transformation } = mapping.props[i][1];
     const [destPath, sourcePath] = paths;
 

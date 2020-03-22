@@ -61,7 +61,8 @@ export function map<
     }
   }
 
-  for (let i = 0, len = props.length; i < len; i++) {
+  let i = props.length;
+  while (i--) {
     const [memberPath, { transformation }] = props[i];
     configKeys.push(memberPath);
 

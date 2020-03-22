@@ -1,7 +1,5 @@
 const versions = require('./versions');
 
-console.log(versions);
-
 module.exports = {
   title: '@nartc/automapper',
   tagline: 'An object-object automapper written in TypeScript',

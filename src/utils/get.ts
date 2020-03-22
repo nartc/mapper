@@ -10,7 +10,7 @@ export function get<T>(
   }
 
   let val = _getInternal(object, paths[0]);
-  for (let i = 1; i < paths.length; i++) {
+  for (let i = 1, len = paths.length; i < len; i++) {
     if (val != null && defaultVal == null) {
       break;
     }

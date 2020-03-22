@@ -43,7 +43,8 @@
     "printWidth": 80,
     "semi": true,
     "singleQuote": true,
-    "trailingComma": "es5"
+    "trailingComma": "es5",
+    "arrowParens": "avoid"
   },
   "commitlint": {
     "extends": [
@@ -105,14 +106,14 @@
     "husky": "4.2.3",
     "lint-staged": "10.0.8",
     "moment": "2.24.0",
-    "prettier": "1.19.1",
+    "prettier": "2.0.1",
     "reflect-metadata": "0.1.13",
     "semantic-release": "17.0.4",
     "shelljs": "0.8.3",
-    "ts-node": "8.7.0",
+    "ts-node": "8.8.1",
     "tsdx": "0.13.0",
     "tslib": "1.11.1",
-    "typedoc": "0.17.1",
+    "typedoc": "0.17.3",
     "typescript": "3.8.3"
   },
   "dependencies": {

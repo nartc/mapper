@@ -1,7 +1,7 @@
 ---
 id: initialize
 title: Initialize
-sidebar_label: Initialize
+sidebar_label: Initialize (deprecated)
 ---
 `deprecated`
 

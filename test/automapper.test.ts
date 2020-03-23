@@ -152,28 +152,8 @@ describe('AutoMapper - addProfile', () => {
     }
   }
 
-  let mapper: AutoMapper;
-
-  beforeEach(() => {
-    mapper = new AutoMapper();
-  });
-
   afterEach(() => {
     Mapper.dispose();
-  });
-
-  it('addProfile', () => {
-    expect(Mapper).toEqual(mapper);
-    Mapper.addProfile(UserProfile);
-    expect(Mapper).not.toEqual(mapper);
-  });
-
-  it('addProfile by initialize', () => {
-    expect(Mapper).toEqual(mapper);
-    Mapper.initialize(config => {
-      config.addProfile(UserProfile);
-    });
-    expect(Mapper).not.toEqual(mapper);
   });
 
   it('addProfile throw error when adding duplicate Profile', () => {
@@ -186,7 +166,7 @@ describe('AutoMapper - addProfile', () => {
 
     expect(message).toBeTruthy();
     expect(message).toEqual(
-      `${UserProfile.name} is already existed on the current Mapper instance`
+      `${UserProfile.toString()} is already existed on the current Mapper instance`
     );
   });
 });
@@ -1479,8 +1459,12 @@ describe('AutoMapper - extends', () => {
   beforeAll(() => {
     Mapper.createMap(BaseProfile, BaseVm);
     Mapper.createMap(User, UserVm);
-    Mapper.createMap(Foo, FooVm, {includeBase: [BaseProfile, BaseVm]})
-      .forMember(d => d.fooBar, opts => opts.mapFrom(s => s.foo));
+    Mapper.createMap(Foo, FooVm, {
+      includeBase: [BaseProfile, BaseVm],
+    }).forMember(
+      d => d.fooBar,
+      opts => opts.mapFrom(s => s.foo)
+    );
     Mapper.createMap(Profile, ProfileVm).forMember(
       d => d.isAdult,
       opts => opts.mapFrom(s => s.age > 18)

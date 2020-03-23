@@ -26,7 +26,7 @@ import {
 
 export class AutoMapper extends AutoMapperBase {
   private static _instance: AutoMapper = new AutoMapper();
-  private _profiles!: { [key: string]: MappingProfile };
+  private _profiles!: WeakMap<Constructible, MappingProfile>;
   private _defaultSourceNamingConvention!: NamingConvention;
   private _defaultDestinationNamingConvention!: NamingConvention;
 
@@ -134,13 +134,13 @@ export class AutoMapper extends AutoMapperBase {
   public addProfile(
     profile: new (mapper: AutoMapper) => MappingProfile
   ): AutoMapper {
-    if (this._profiles[profile.name]) {
+    if (this._profiles.has(profile)) {
       throw new Error(
-        `${profile.name} is already existed on the current Mapper instance`
+        `${profile.toString()} is already existed on the current Mapper instance`
       );
     }
 
-    this._profiles[profile.name] = Object.freeze(new profile(this));
+    this._profiles.set(profile, Object.freeze(new profile(this)));
     return this;
   }
 
@@ -480,7 +480,7 @@ export class AutoMapper extends AutoMapperBase {
   }
 
   private _setDefault(): void {
-    this._profiles = {};
+    this._profiles = new WeakMap<Constructible, MappingProfile>();
     this._defaultSourceNamingConvention = defaultNamingConvention;
     this._defaultDestinationNamingConvention = defaultNamingConvention;
   }

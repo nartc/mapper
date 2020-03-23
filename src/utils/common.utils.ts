@@ -263,11 +263,12 @@ export function _assertMappingErrors<T extends Dict<T> = any>(
   }
 
   if (unmappedKeys.length) {
-    throw new Error(`The following keys are unmapped on ${obj.constructor
-      .name || ''}:
+    throw new Error(
+      `The following keys are unmapped on ${obj.constructor.name || ''}:
       ----------------------------
       ${unmappedKeys.join('\n')}
-      `);
+      `
+    );
   }
 }
 

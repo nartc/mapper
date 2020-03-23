@@ -44,7 +44,7 @@ class CompanyVm {
 }
 
 Mapper.createMap(Company, CompanyVm, {
-  sourceMemberNamingConvention: new PascalCaseNamingConvention(),
+  sourceMemberNamingConvention: PascalCaseNamingConvention,
 });
 ```
 
@@ -53,10 +53,8 @@ When `map()`, `Company.Name`, `Company.Description` and `Company.Address.Street`
 You can set the naming conventions as **global settings**
 
 ```typescript
-Mapping.initialize(config => {
-  config.withGlobalSettings({
-    sourceNamingConvention: PascalCaseNamingConvention,
-  });
+Mapping.withGlobalSettings({
+  sourceNamingConvention: PascalCaseNamingConvention,
 });
 ```
 

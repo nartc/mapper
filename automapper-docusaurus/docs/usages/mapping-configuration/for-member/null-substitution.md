@@ -10,7 +10,7 @@ same rule for `fromValue()` applies meaning that `object` will be mapped **witho
 ```typescript
 Mapper.createMap(User, UserVm).forMember(
   dest => dest.shouldBeSubstituted,
-  opts => opts.nullSubstitution('substituted')
+  nullSubstitution('substituted')
 );
 
 const user = new User();

@@ -46,7 +46,7 @@ Once you have the `ValueResolver` ready, you can pass an instance of the `ValueR
 ```typescript
 Mapper.createMap(Item, ItemVm).forMember(
   dest => dest.tax,
-  opts => opts.mapFrom(new TaxResolver())
+  mapFrom(new TaxResolver())
 );
 ```
 

@@ -9,7 +9,7 @@ When you want to completely ignore a `destination.<some_member>` and to avoid th
 ```typescript
 Mapper.createMap(Source, Destination).forMember(
   dest => dest.someMember,
-  opts => opts.ignore()
+  ignore()
 );
 ```
 

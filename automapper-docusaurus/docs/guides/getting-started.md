@@ -14,17 +14,17 @@ sidebar_label: Getting started
 - NPM
 
 ```bash
-npm install @nartc/automapper
+npm install @nartc/automapper@next
 ```
 
 ```bash
-npm i @nartc/automapper
+npm i @nartc/automapper@next
 ```
 
 - Yarn:
 
 ```bash
-yarn add @nartc/automapper
+yarn add @nartc/automapper@next
 ```
 
 `@nartc/automapper` utilizes `reflect-metadata` for the **Reflection** capabilities as a `peerDependency` so you will also need to install `reflect-metadata`

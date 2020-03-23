@@ -15,6 +15,7 @@ module.exports = {
         'introduction/anti-pitch',
         'introduction/author-use-case',
         'introduction/problems-with-typescript',
+        'introduction/async',
       ],
     },
     {

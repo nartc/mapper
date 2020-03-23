@@ -33,8 +33,7 @@ Once you have the `ValueConverter` ready, call `convertUsing()` to use the `Valu
 ```typescript
 Mapper.createMap(User, UserVm).forMember(
   dest => dest.birthday,
-  opts =>
-    opts.convertUsing(new StringDateConverter(), src => src.someDateString) // <-- the selector needs to return a value of type "string" because of the StringDateConverter type
+  convertUsing(new StringDateConverter(), src => src.someDateString) // <-- the selector needs to return a value of type "string" because of the StringDateConverter type
 );
 ```
 

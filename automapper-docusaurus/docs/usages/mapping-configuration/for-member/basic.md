@@ -39,26 +39,27 @@ class UserVm {
 ```
 
 Now when you invoke `map()` to map from an instance of `User` to `UserVm`, you will get an `Error` showing some **unmapped properties**. Namely, `fullName` and `isAdult` in this case.
-`fullName` and `isAdult` are not in `User`, hence, `@nartc/automapper` cannot _automap_ them to `UserVm`. To customize the mapping configuration for a `member`, use `forMember()` on `CreateMapFluentFunctions`
+`fullName` and `isAdult` are not in `User`, hence, `@nartc/automapper` cannot _automap_ them to `UserVm`. To customize the mapping configuration for a `member`, use `forMember()` on `CreateMapFluentFunction`
 
-> `CreateMapFluentFunctions` is the returned value of `createMap()`
+> `CreateMapFluentFunction` is the returned value of `createMap()`
 
 ```typescript
 Mapper.createMap(User, UserVm)
   .forMember(
     dest => dest.fullName,
-    opts => opts.mapFrom(src => src.firstName + ' ' + src.lastName)
+    mapFrom(src => src.firstName + ' ' + src.lastName)
   )
   .forMember(
     dest => dest.isAdult,
-    opts => opts.mapFrom(src => src.age >= 18)
+    mapFrom(src => src.age >= 18)
   );
 ```
 
 `forMember()` takes in two arguments:
 
 1. Destination Member Selector: This argument is a `selectorFn` that receives the `destination` and needs to return the `member` that you want to configure the mapping. Eg: `destination => destination.fullName`
-2. ForMember Expression: This argument is a `function` that receives a `DestinationMemberExpressionOptions`. `DestinationMemberExpressionOptions` exposes numerous functions that return the [TransformationType](../../../guides/basic-concept.md#mappingtransformation) accordingly based on which function you use.
-   The most common function is `mapFrom()`
+2. MemberMapFunction: A function that will be applied to the Destination Member.
 
 The **Selector** approach allows `@nartc/automapper` to provide an extensive typing definitions that greatly improve **Developer Experience**.
+
+All `MemberMapFunction` are separate functions that allows **tree-shake** tool to tree-shake those mapping operations that are not used.

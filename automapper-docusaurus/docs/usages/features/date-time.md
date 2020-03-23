@@ -46,7 +46,7 @@ customize your mapping configuration between `Foo.someDate` and `FooVm.someDate`
 
 ```typescript
 Mapper.createMap(Foo, FooVm)
-    .forMember(dest => dest.someDate, opts => opts.mapFrom(src => src.someDate.toDateString());
+    .forMember(dest => dest.someDate, mapFrom(src => src.someDate.toDateString());
 ```
 
 > Learn more about `mapFrom()` at [ForMember](../mapping-configuration/for-member/basic.md)
@@ -79,5 +79,5 @@ Again, for complex cases, please use `mapFrom()` to customize the mapping config
 
 ```typescript
 Mapper.createMap(Foo, FooVm)
-    .forMember(dest => dest.someMoment, opts => opts.mapFrom(src => src.someMoment.toISOString());
+    .forMember(dest => dest.someMoment, mapFrom(src => src.someMoment.toISOString());
 ```

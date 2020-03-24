@@ -349,29 +349,31 @@ export interface MappingProperty<
   transformation: MappingTransformation<TSource, TDestination, TSelectorReturn>;
 }
 
-export interface Mapping<
+export enum MappingClassId {
+  models,
+  conventions,
+  props,
+  actions,
+  bases,
+}
+
+export type Mapping<
   TSource extends Dict<TSource> = any,
   TDestination extends Dict<TDestination> = any,
   TBaseSource extends BaseOf<TSource, TBaseSource> = any,
   TBaseDestination extends BaseOf<TDestination, TBaseDestination> = any
-> {
-  models: [Constructible<TSource>, Constructible<TDestination>];
-  conventions: [
-    Constructible<NamingConvention>,
-    Constructible<NamingConvention>
-  ];
-  props: Array<
+> = [
+  [Constructible<TSource>, Constructible<TDestination>],
+  [Constructible<NamingConvention>, Constructible<NamingConvention>],
+  Array<
     [
       string,
       MappingProperty<TSource, TDestination, ReturnType<Selector<TDestination>>>
     ]
-  >;
-  actions?: [
-    MapAction<TSource, TDestination>?,
-    MapAction<TSource, TDestination>?
-  ];
-  bases?: [Constructible<TBaseSource>, Constructible<TBaseDestination>];
-}
+  >,
+  [MapAction<TSource, TDestination>?, MapAction<TSource, TDestination>?]?,
+  [Constructible<TBaseSource>, Constructible<TBaseDestination>]?
+];
 
 export type MetadataFunction = () => false | [] | Constructible;
 export type MetadataMap<

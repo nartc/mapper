@@ -1,5 +1,5 @@
 import { mapInitialize } from '../member-functions/map-initialize';
-import { Dict, Mapping, TransformationType } from '../types';
+import { Dict, Mapping, MappingClassId, TransformationType } from '../types';
 import { getPathRecursive, getSourcePropertyKey, isClass } from '../utils';
 import { getProto } from '../utils/getProto';
 import { instantiate } from './instantiate';
@@ -8,7 +8,7 @@ export function initializeMappingProps<
   TSource extends Dict<TSource> = any,
   TDestination extends Dict<TDestination> = any
 >(mapping: Mapping<TSource, TDestination>): void {
-  const [srcModel, destModel] = mapping.models;
+  const [srcModel, destModel] = mapping[MappingClassId.models];
   const destination = instantiate(destModel);
 
   let source = instantiate(srcModel);
@@ -22,7 +22,10 @@ export function initializeMappingProps<
   let i = destinationPaths.length;
   while (i--) {
     const path = destinationPaths[i];
-    const sourcePath = getSourcePropertyKey(mapping.conventions, path);
+    const sourcePath = getSourcePropertyKey(
+      mapping[MappingClassId.conventions],
+      path
+    );
     const dottedSourcePaths = sourcePath.split('.');
     if (dottedSourcePaths.length > 1) {
       const [first] = dottedSourcePaths;
@@ -39,7 +42,7 @@ export function initializeMappingProps<
       !sourceProto.hasOwnProperty(sourcePath)
     ) {
       const [first, ...paths] = sourcePath
-        .split(new mapping.conventions[0]().splittingExpression)
+        .split(new mapping[MappingClassId.conventions][0]().splittingExpression)
         .filter(Boolean)
         .filter(p => p !== '.');
       if (!paths.length || !source.hasOwnProperty(first)) {
@@ -50,7 +53,9 @@ export function initializeMappingProps<
         [first]
           .concat(
             paths.map(p =>
-              new mapping.conventions[0]().transformPropertyName([p])
+              new mapping[
+                MappingClassId.conventions
+              ][0]().transformPropertyName([p])
             )
           )
           .join('.'),
@@ -59,12 +64,16 @@ export function initializeMappingProps<
       if (paths.length > 1) {
         sourceMemberPath.push(
           [first]
-            .concat(new mapping.conventions[0]().transformPropertyName(paths))
+            .concat(
+              new mapping[
+                MappingClassId.conventions
+              ][0]().transformPropertyName(paths)
+            )
             .join('.')
         );
       }
 
-      mapping.props.push([
+      mapping[MappingClassId.props].push([
         path,
         Object.seal({
           paths: [path],
@@ -78,7 +87,7 @@ export function initializeMappingProps<
       continue;
     }
 
-    mapping.props.push([
+    mapping[MappingClassId.props].push([
       path,
       Object.seal({
         paths: [path, sourcePath],

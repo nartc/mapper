@@ -4,6 +4,7 @@ import {
   Dict,
   MapFromFunction,
   Mapping,
+  MappingClassId,
   MappingProperty,
   MapWithFunction,
   Selector,
@@ -26,16 +27,16 @@ export function initializeReverseMappingProps<
     MappingProperty<TDestination, TSource, ReturnType<Selector<TSource>>>
   ]
 > {
-  const model = instantiate(mapping.models[0]);
+  const model = instantiate(mapping[MappingClassId.models][0]);
   const proto = getProto(model);
   const reversedProps: Array<[
     string,
     MappingProperty<TDestination, TSource, ReturnType<Selector<TSource>>>
   ]> = [];
 
-  let i = mapping.props.length;
+  let i = mapping[MappingClassId.props].length;
   while (i--) {
-    const { paths, transformation } = mapping.props[i][1];
+    const { paths, transformation } = mapping[MappingClassId.props][i][1];
     const [destPath, sourcePath] = paths;
 
     if (

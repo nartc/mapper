@@ -38,12 +38,12 @@ export function map<
   },
   isArrayMap: boolean = false
 ): TDestination {
-  const {
-    models: [sourceModel, destinationModel],
+  const [
+    [sourceModel, destinationModel],
+    [sourceConvention, destinationConvention],
     props,
-    conventions: [sourceConvention, destinationConvention],
     actions,
-  } = mapping as Required<Mapping<TSource, TDestination>>;
+  ] = mapping as Required<Mapping<TSource, TDestination>>;
   if (!(sourceObj instanceof sourceModel)) {
     sourceObj = instantiate(sourceModel, sourceObj);
   }

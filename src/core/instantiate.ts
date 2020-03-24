@@ -1,6 +1,6 @@
 import { metadataStorage } from '../storages';
 import { Constructible, Dict } from '../types';
-import { isEmpty } from '../utils/isEmpty';
+import { isEmpty } from '../utils';
 
 export function instantiate<TModel extends Dict<TModel>>(
   model: Constructible<TModel>,

@@ -1,4 +1,10 @@
-import { BaseOf, Dict, Mapping, MappingProperty } from '../types';
+import {
+  BaseOf,
+  Dict,
+  Mapping,
+  MappingClassId,
+  MappingProperty,
+} from '../types';
 
 export function inheritBaseMapping<
   TSource extends Dict<TSource> = any,
@@ -9,14 +15,21 @@ export function inheritBaseMapping<
   mapping: Mapping<TSource, TDestination, TBaseSource, TBaseDestination>,
   baseMapping: Mapping<TBaseSource, TBaseDestination>
 ) {
-  const props = mapping.props;
-  for (let i = 0, len = baseMapping.props.length; i < len; i++) {
-    const [basePropKey, baseProp] = baseMapping.props[i];
+  const props = mapping[MappingClassId.props];
+  for (
+    let i = 0, len = baseMapping[MappingClassId.props].length;
+    i < len;
+    i++
+  ) {
+    const [basePropKey, baseProp] = baseMapping[MappingClassId.props][i];
     if (props.map(p => p[0]).some(pKey => pKey === basePropKey)) {
       continue;
     }
 
     props.push([basePropKey, Object.seal({ ...baseProp }) as MappingProperty]);
   }
-  mapping.bases = [baseMapping.models[0], baseMapping.models[1]];
+  mapping[MappingClassId.bases] = [
+    baseMapping[MappingClassId.models][0],
+    baseMapping[MappingClassId.models][1],
+  ];
 }

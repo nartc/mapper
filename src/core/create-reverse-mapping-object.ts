@@ -1,5 +1,5 @@
 import { mappingStorage } from '../storages';
-import { BaseOf, Constructible, Dict, Mapping } from '../types';
+import { BaseOf, Constructible, Dict, Mapping, MappingClassId } from '../types';
 import { getMappingForDestination } from './get-mapping-for-destination';
 import { inheritBaseMapping } from './inherit-base-mapping';
 import { initializeReverseMappingProps } from './initialize-reverse-mapping-props';
@@ -12,29 +12,29 @@ export function createReverseMappingObject<
 >(
   mapping: Mapping<TSource, TDestination, TBaseSource, TBaseDestination>
 ): Mapping<TDestination, TSource, TBaseDestination, TBaseSource> {
-  const {
-    models: [source, destination],
-    conventions: [sourceConvention, destinationConvention],
-    bases,
-  } = mapping;
+  const [source, destination] = mapping[MappingClassId.models];
+  const [sourceConvention, destinationConvention] = mapping[
+    MappingClassId.conventions
+  ];
+  const bases = mapping[MappingClassId.bases];
 
   let reversedMapping = mappingStorage.get(destination, source);
   if (reversedMapping) {
     return reversedMapping;
   }
 
-  reversedMapping = Object.seal({
-    models: [destination, source],
-    conventions: [destinationConvention, sourceConvention],
-    bases: bases?.slice().reverse() as [Constructible, Constructible],
-    actions: undefined,
-    props: initializeReverseMappingProps(mapping),
-  });
+  reversedMapping = Object.seal([
+    [destination, source],
+    [destinationConvention, sourceConvention],
+    initializeReverseMappingProps(mapping),
+    [],
+    bases?.slice().reverse() as [Constructible, Constructible],
+  ]);
 
-  if (reversedMapping.bases) {
+  if (reversedMapping[MappingClassId.bases]) {
     const reversedBaseMapping = getMappingForDestination(
-      reversedMapping.bases[1],
-      reversedMapping.bases[0],
+      (reversedMapping[MappingClassId.bases] as any)[1],
+      (reversedMapping[MappingClassId.bases] as any)[0],
       true
     );
     if (reversedBaseMapping) {

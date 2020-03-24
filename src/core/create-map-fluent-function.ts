@@ -4,6 +4,7 @@ import {
   CreateMapOptions,
   Dict,
   Mapping,
+  MappingClassId,
   MemberMapFunction,
   PreConditionFunction,
   Selector,
@@ -76,13 +77,13 @@ export function createMapFluentFunction<
     ) =>
       createMapForMember(mapping, selector, functions as any, fluentFunction),
     beforeMap: action => {
-      mapping.actions = mapping.actions || [];
-      mapping.actions[0] = action;
+      mapping[MappingClassId.actions] = mapping[MappingClassId.actions] || [];
+      (mapping[MappingClassId.actions] as any)[0] = action;
       return fluentFunction;
     },
     afterMap: action => {
-      mapping.actions = mapping.actions || [];
-      mapping.actions[1] = action;
+      mapping[MappingClassId.actions] = mapping[MappingClassId.actions] || [];
+      (mapping[MappingClassId.actions] as any)[1] = action;
       return fluentFunction;
     },
     reverseMap: () => {

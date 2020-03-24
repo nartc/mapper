@@ -5,6 +5,7 @@ import {
   CreateMapOptions,
   Dict,
   Mapping,
+  MappingClassId,
 } from '../types';
 
 export function createMappingObject<
@@ -33,16 +34,14 @@ export function createMappingObject<
     TDestination,
     TBaseSource,
     TBaseDestination
-  > = Object.seal({
-    models: [source, destination],
-    props: [],
-    conventions: [
+  > = Object.seal([
+    [source, destination],
+    [
       options.sourceMemberNamingConvention,
       options.destinationMemberNamingConvention,
-    ] as Mapping['conventions'],
-    actions: undefined,
-    bases: undefined,
-  });
+    ] as Mapping[MappingClassId.conventions],
+    [],
+  ]);
   mappingStorage.set(source, destination, mapping);
   return mapping;
 }

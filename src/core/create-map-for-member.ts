@@ -2,6 +2,7 @@ import {
   BaseOf,
   Dict,
   Mapping,
+  MappingClassId,
   MappingProperty,
   MemberMapFunction,
   PreConditionFunction,
@@ -44,16 +45,19 @@ export function createMapForMember<
       preCond,
     },
   });
-  const propIndex = mapping.props.findIndex(
+  const propIndex = mapping[MappingClassId.props].findIndex(
     ([propName]) => propName === memberPath
   );
 
   if (propIndex !== -1) {
-    mapping.props.splice(propIndex, 1, [memberPath, mappingProperty]);
+    mapping[MappingClassId.props].splice(propIndex, 1, [
+      memberPath,
+      mappingProperty,
+    ]);
     return fluentFunction;
   }
 
-  mapping.props.push([
+  mapping[MappingClassId.props].push([
     memberPath,
     Object.seal({
       paths: [memberPath],

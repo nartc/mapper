@@ -1,3 +1,6 @@
+import { ObjectTag } from '../types';
+import { getTag } from './getTag';
+
 export function get<T>(
   object: T,
   defaultVal: any = null,
@@ -6,7 +9,10 @@ export function get<T>(
   function _getInternal(object: T, path: string) {
     const _path = path.split('.').filter(Boolean);
     const _val = _path.reduce((obj: any, key) => obj && obj[key], object);
-    return _val != undefined ? _val : defaultVal;
+    const _tag = getTag(_val);
+    return _tag !== ObjectTag.Undefined && _tag !== ObjectTag.Null
+      ? _val
+      : defaultVal;
   }
 
   let val = _getInternal(object, paths[0]);

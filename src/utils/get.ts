@@ -6,7 +6,7 @@ export function get<T>(
   function _getInternal(object: T, path: string) {
     const _path = path.split('.').filter(Boolean);
     const _val = _path.reduce((obj: any, key) => obj && obj[key], object);
-    return _val == undefined ? defaultVal : _val;
+    return _val != undefined ? _val : defaultVal;
   }
 
   let val = _getInternal(object, paths[0]);

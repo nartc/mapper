@@ -10,6 +10,7 @@ import {
   MapOptions,
   Mapping,
   MapWithFunction,
+  MemberMapFunctionReturnClassId,
   NullSubstitutionFunction,
   TransformationType,
 } from '../types';
@@ -66,12 +67,8 @@ export function map<
     const [memberPath, { transformation }] = props[i];
     configKeys.push(memberPath);
 
-    if (transformation.preCond && !transformation.preCond(sourceObj)) {
-      set(
-        destination,
-        memberPath,
-        transformation.preCond?.defaultValue ?? null
-      );
+    if (transformation.preCond && !transformation.preCond[0](sourceObj)) {
+      set(destination, memberPath, transformation.preCond?.[1] ?? null);
       continue;
     }
 
@@ -96,7 +93,9 @@ export function map<
         TransformationType.MapInitialize
       )
     ) {
-      const mapInitializeValue = transformation.mapFn(sourceObj);
+      const mapInitializeValue = transformation.mapFn[
+        MemberMapFunctionReturnClassId.fn
+      ](sourceObj);
       if (mapInitializeValue == null) {
         set(destination, memberPath, null);
         continue;
@@ -162,14 +161,21 @@ export function map<
         TransformationType.NullSubstitution
       )
     ) {
-      value = transformation.mapFn(sourceObj, sourceMemberPath);
+      value = transformation.mapFn[MemberMapFunctionReturnClassId.fn](
+        sourceObj,
+        sourceMemberPath
+      );
     } else if (
       isThisMemberMap<MapFromFunction>(
         transformation.mapFn,
         TransformationType.MapFrom
       )
     ) {
-      value = transformation.mapFn(sourceObj, destination, transformation);
+      value = transformation.mapFn[MemberMapFunctionReturnClassId.fn](
+        sourceObj,
+        destination,
+        transformation
+      );
     } else if (
       isThisMemberMap<MapWithFunction>(
         transformation.mapFn,
@@ -184,7 +190,9 @@ export function map<
         TransformationType.ConvertUsing
       )
     ) {
-      value = transformation.mapFn(sourceObj);
+      value = transformation.mapFn[MemberMapFunctionReturnClassId.fn](
+        sourceObj
+      );
     }
 
     set(destination, memberPath, value);

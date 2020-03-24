@@ -12,11 +12,5 @@ export function fromValue<
 >(
   rawValue: TSelectorReturn
 ): ReturnType<FromValueFunction<TSource, TDestination, TSelectorReturn>> {
-  const result: ReturnType<FromValueFunction<
-    TSource,
-    TDestination,
-    TSelectorReturn
-  >> = () => rawValue;
-  result.type = TransformationType.FromValue as const;
-  return result;
+  return [TransformationType.FromValue as const, null, () => rawValue];
 }

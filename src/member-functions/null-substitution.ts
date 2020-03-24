@@ -15,12 +15,10 @@ export function nullSubstitution<
 ): ReturnType<
   NullSubstitutionFunction<TSource, TDestination, TSelectorReturn>
 > {
-  const result: ReturnType<NullSubstitutionFunction<
-    TSource,
-    TDestination,
-    TSelectorReturn
-  >> = (source, ...sourceMemberPaths) =>
-    get(source, substitution, ...sourceMemberPaths);
-  result.type = TransformationType.NullSubstitution as const;
-  return result;
+  return [
+    TransformationType.NullSubstitution as const,
+    null,
+    (source, ...sourceMemberPaths) =>
+      get(source, substitution, ...sourceMemberPaths),
+  ];
 }

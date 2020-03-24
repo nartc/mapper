@@ -13,11 +13,5 @@ export function preCondition<
   predicate: ConditionPredicate<TSource>,
   defaultValue?: TSelectorReturn
 ): ReturnType<PreConditionFunction<TSource, TDestination, TSelectorReturn>> {
-  const result: ReturnType<PreConditionFunction<
-    TSource,
-    TDestination,
-    TSelectorReturn
-  >> = source => predicate(source);
-  result.defaultValue = defaultValue;
-  return result;
+  return [source => predicate(source), defaultValue];
 }

@@ -201,6 +201,12 @@ export interface CreateReversedMapFluentFunction<
   ): CreateReversedMapFluentFunction<TSource, TDestination>;
 }
 
+export enum MemberMapFunctionReturnClassId {
+  type,
+  misc,
+  fn,
+}
+
 export type MemberMapFunction<
   TSource extends Dict<TSource> = any,
   TDestination extends Dict<TDestination> = any,
@@ -220,10 +226,10 @@ export interface PreConditionFunction<
   TDestination extends Dict<TDestination> = any,
   TSelectorReturn = SelectorReturn<TDestination>
 > {
-  (predicate: ConditionPredicate<TSource>, defaultValue?: TSelectorReturn): {
-    (source: TSource): boolean;
-    defaultValue?: TSelectorReturn;
-  };
+  (predicate: ConditionPredicate<TSource>, defaultValue?: TSelectorReturn): [
+    (source: TSource) => boolean,
+    TSelectorReturn?
+  ];
 }
 
 export interface MapFromFunction<
@@ -235,17 +241,17 @@ export interface MapFromFunction<
     from:
       | ValueSelector<TSource, TDestination, TSelectorReturn>
       | Resolver<TSource, TDestination, TSelectorReturn>
-  ): {
-    type: TransformationType.MapFrom;
-    fromSelector: ValueSelector<TSource, TDestination, TSelectorReturn>;
+  ): [
+    TransformationType.MapFrom,
+    ValueSelector<TSource, TDestination, TSelectorReturn>,
     (
       source: TSource,
       destination: typeof from extends Resolver ? TDestination : any,
       transformation: typeof from extends Resolver
         ? MappingTransformation<TSource, TDestination, TSelectorReturn>
         : any
-    ): TSelectorReturn;
-  };
+    ) => TSelectorReturn
+  ];
 }
 
 export interface MapWithFunction<
@@ -256,11 +262,11 @@ export interface MapWithFunction<
   (
     withDestination: Constructible<Unpacked<TSelectorReturn>>,
     withValue: ValueSelector<TSource>
-  ): {
-    type: TransformationType.MapWith;
-    withValueSelector: ValueSelector<TSource>;
-    (source: TSource): TSelectorReturn | null;
-  };
+  ): [
+    TransformationType.MapWith,
+    ValueSelector<TSource>,
+    (source: TSource) => TSelectorReturn | null
+  ];
 }
 
 export interface ConditionFunction<
@@ -268,10 +274,11 @@ export interface ConditionFunction<
   TDestination extends Dict<TDestination> = any,
   TSelectorReturn = SelectorReturn<TDestination>
 > {
-  (predicate: ConditionPredicate<TSource>, defaultValue?: TSelectorReturn): {
-    type: TransformationType.Condition;
-    (source: TSource, ...sourceMemberPaths: string[]): TSelectorReturn;
-  };
+  (predicate: ConditionPredicate<TSource>, defaultValue?: TSelectorReturn): [
+    TransformationType.Condition,
+    null,
+    (source: TSource, ...sourceMemberPaths: string[]) => TSelectorReturn
+  ];
 }
 
 export interface FromValueFunction<
@@ -279,10 +286,11 @@ export interface FromValueFunction<
   TDestination extends Dict<TDestination> = any,
   TSelectorReturn = SelectorReturn<TDestination>
 > {
-  (rawValue: TSelectorReturn): {
-    type: TransformationType.FromValue;
-    (source: TSource): TSelectorReturn;
-  };
+  (rawValue: TSelectorReturn): [
+    TransformationType.FromValue,
+    null,
+    (source: TSource) => TSelectorReturn
+  ];
 }
 
 export interface ConvertUsingFunction<
@@ -293,10 +301,11 @@ export interface ConvertUsingFunction<
   <TConvertSource = TSource>(
     converter: Converter<TConvertSource, TSelectorReturn>,
     value: Selector<TSource, TConvertSource>
-  ): {
-    type: TransformationType.ConvertUsing;
-    (source: TSource): TSelectorReturn;
-  };
+  ): [
+    TransformationType.ConvertUsing,
+    null,
+    (source: TSource) => TSelectorReturn
+  ];
 }
 
 export interface NullSubstitutionFunction<
@@ -304,17 +313,15 @@ export interface NullSubstitutionFunction<
   TDestination extends Dict<TDestination> = any,
   TSelectorReturn = SelectorReturn<TDestination>
 > {
-  (substitution: TSelectorReturn): {
-    type: TransformationType.NullSubstitution;
-    (source: TSource, ...sourceMemberPaths: string[]): TSelectorReturn;
-  };
+  (substitution: TSelectorReturn): [
+    TransformationType.NullSubstitution,
+    null,
+    (source: TSource, ...sourceMemberPaths: string[]) => TSelectorReturn
+  ];
 }
 
 export interface IgnoreFunction {
-  (): {
-    type: TransformationType.Ignore;
-    (): void;
-  };
+  (): [TransformationType.Ignore, null, () => void];
 }
 
 export interface MapInitializeFunction<
@@ -322,10 +329,11 @@ export interface MapInitializeFunction<
   TDestination extends Dict<TDestination> = any,
   TSelectorReturn = SelectorReturn<TDestination>
 > {
-  (...paths: string[]): {
-    type: TransformationType.MapInitialize;
-    (source: TSource): TSelectorReturn;
-  };
+  (...paths: string[]): [
+    TransformationType.MapInitialize,
+    null,
+    (source: TSource) => TSelectorReturn
+  ];
 }
 
 export interface MappingTransformation<

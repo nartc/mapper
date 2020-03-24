@@ -15,17 +15,15 @@ export function condition<
   predicate: ConditionPredicate<TSource>,
   defaultValue?: TSelectorReturn
 ): ReturnType<ConditionFunction<TSource, TDestination, TSelectorReturn>> {
-  const result: ReturnType<ConditionFunction<
-    TSource,
-    TDestination,
-    TSelectorReturn
-  >> = (source, ...sourceMemberPaths) => {
-    if (predicate(source)) {
-      return get(source, null, ...sourceMemberPaths);
-    }
+  return [
+    TransformationType.Condition as const,
+    null,
+    (source, ...sourceMemberPaths) => {
+      if (predicate(source)) {
+        return get(source, null, ...sourceMemberPaths);
+      }
 
-    return defaultValue || null;
-  };
-  result.type = TransformationType.Condition as const;
-  return result;
+      return defaultValue || null;
+    },
+  ];
 }

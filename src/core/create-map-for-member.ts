@@ -5,6 +5,7 @@ import {
   MappingClassId,
   MappingProperty,
   MemberMapFunction,
+  MemberMapFunctionReturnClassId,
   PreConditionFunction,
   Selector,
 } from '../types';
@@ -29,7 +30,7 @@ export function createMapForMember<
   const memberPath = getMemberPath(selector);
 
   if (mapMemberFn == null) {
-    mapMemberFn = preCond as ReturnType<MemberMapFunction>;
+    mapMemberFn = preCond as any;
     preCond = undefined as any;
   }
 
@@ -41,7 +42,7 @@ export function createMapForMember<
     paths: [memberPath],
     transformation: {
       mapFn: mapMemberFn,
-      type: mapMemberFn.type,
+      type: mapMemberFn[MemberMapFunctionReturnClassId.type],
       preCond,
     },
   });
@@ -63,7 +64,7 @@ export function createMapForMember<
       paths: [memberPath],
       transformation: {
         mapFn: mapMemberFn,
-        type: mapMemberFn.type,
+        type: mapMemberFn[MemberMapFunctionReturnClassId.type],
         preCond,
       },
     }),

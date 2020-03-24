@@ -16,11 +16,9 @@ export function convertUsing<
   converter: Converter<TConvertSource, TSelectorReturn>,
   value: Selector<TSource, TConvertSource>
 ): ReturnType<ConvertUsingFunction<TSource, TDestination, TSelectorReturn>> {
-  const result: ReturnType<ConvertUsingFunction<
-    TSource,
-    TDestination,
-    TSelectorReturn
-  >> = source => converter.convert(value(source));
-  result.type = TransformationType.ConvertUsing as const;
-  return result;
+  return [
+    TransformationType.ConvertUsing as const,
+    null,
+    source => converter.convert(value(source)),
+  ];
 }

@@ -17,19 +17,15 @@ export function mapFrom<
     | ValueSelector<TSource, TDestination, TSelectorReturn>
     | Resolver<TSource, TDestination, TSelectorReturn>
 ): ReturnType<MapFromFunction<TSource, TDestination, TSelectorReturn>> {
-  const result: ReturnType<MapFromFunction<
-    TSource,
-    TDestination,
-    TSelectorReturn
-  >> = (source, destination, transformation) => {
-    if (isResolver(from)) {
-      return from.resolve(source, destination, transformation);
-    }
+  return [
+    TransformationType.MapFrom as const,
+    from as ValueSelector,
+    (source, destination, transformation) => {
+      if (isResolver(from)) {
+        return from.resolve(source, destination, transformation);
+      }
 
-    return from(source);
-  };
-  result.type = TransformationType.MapFrom as const;
-  result.fromSelector = from as ValueSelector;
-
-  return result;
+      return from(source);
+    },
+  ];
 }

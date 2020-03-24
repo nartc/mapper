@@ -81,8 +81,8 @@ export interface NamingConvention {
 }
 
 export interface Resolver<
-  TSource extends Dict<TSource> = any,
-  TDestination extends Dict<TDestination> = any,
+  TSource extends Dict<TSource>,
+  TDestination extends Dict<TDestination>,
   TReturnType = SelectorReturn<TDestination>
 > {
   resolve(
@@ -246,8 +246,18 @@ export interface MapFromFunction<
     ValueSelector<TSource, TDestination, TSelectorReturn>,
     (
       source: TSource,
-      destination: typeof from extends Resolver ? TDestination : any,
-      transformation: typeof from extends Resolver
+      destination: typeof from extends Resolver<
+        TSource,
+        TDestination,
+        TSelectorReturn
+      >
+        ? TDestination
+        : any,
+      transformation: typeof from extends Resolver<
+        TSource,
+        TDestination,
+        TSelectorReturn
+      >
         ? MappingTransformation<TSource, TDestination, TSelectorReturn>
         : any
     ) => TSelectorReturn
@@ -289,7 +299,7 @@ export interface FromValueFunction<
   (rawValue: TSelectorReturn): [
     TransformationType.FromValue,
     null,
-    (source: TSource) => TSelectorReturn
+    () => TSelectorReturn
   ];
 }
 

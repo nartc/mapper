@@ -34,14 +34,14 @@ export function createMappingObject<
     TDestination,
     TBaseSource,
     TBaseDestination
-  > = Object.seal([
+  > = [
     [source, destination],
     [
       options.sourceMemberNamingConvention,
       options.destinationMemberNamingConvention,
     ] as Mapping[MappingClassId.conventions],
     [],
-  ]);
+  ];
   mappingStorage.set(source, destination, mapping);
   return mapping;
 }

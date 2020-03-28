@@ -1,6 +1,7 @@
 import {
   BaseOf,
   Dict,
+  MapFromFunction,
   Mapping,
   MappingClassId,
   MappingProperty,
@@ -8,8 +9,9 @@ import {
   MemberMapFunctionReturnClassId,
   PreConditionFunction,
   Selector,
+  TransformationType,
 } from '../types';
-import { getMemberPath } from '../utils';
+import { getMemberPath, isThisMemberMap } from '../utils';
 
 export function createMapForMember<
   TSource extends Dict<TSource> = any,
@@ -34,12 +36,25 @@ export function createMapForMember<
     preCond = undefined as any;
   }
 
+  let sourcePath: string = '';
+  if (
+    isThisMemberMap<MapFromFunction>(mapMemberFn, TransformationType.MapFrom)
+  ) {
+    sourcePath = getMemberPath(
+      mapMemberFn[MemberMapFunctionReturnClassId.misc]
+    );
+  }
+
+  const paths: [string, string?] = !!sourcePath
+    ? [memberPath, sourcePath]
+    : [memberPath];
+
   const mappingProperty: MappingProperty<
     TSource,
     TDestination,
     ReturnType<TSelector>
   > = Object.seal({
-    paths: [memberPath],
+    paths,
     transformation: {
       mapFn: mapMemberFn,
       type: mapMemberFn[MemberMapFunctionReturnClassId.type],
@@ -61,7 +76,7 @@ export function createMapForMember<
   mapping[MappingClassId.props].push([
     memberPath,
     Object.seal({
-      paths: [memberPath],
+      paths,
       transformation: {
         mapFn: mapMemberFn,
         type: mapMemberFn[MemberMapFunctionReturnClassId.type],

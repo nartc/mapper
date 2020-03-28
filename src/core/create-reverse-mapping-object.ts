@@ -23,13 +23,13 @@ export function createReverseMappingObject<
     return reversedMapping;
   }
 
-  reversedMapping = Object.seal([
+  reversedMapping = [
     [destination, source],
     [destinationConvention, sourceConvention],
     initializeReverseMappingProps(mapping),
     [],
     bases?.slice().reverse() as [Constructible, Constructible],
-  ]);
+  ];
 
   if (reversedMapping[MappingClassId.bases]) {
     const reversedBaseMapping = getMappingForDestination(

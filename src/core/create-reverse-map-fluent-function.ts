@@ -41,12 +41,10 @@ export function createReverseMapFluentFunction<
         reversedMapFluentFunction
       ),
     beforeMap: action => {
-      mapping[MappingClassId.actions] = mapping[MappingClassId.actions] || [];
       (mapping[MappingClassId.actions] as any)[0] = action;
       return reversedMapFluentFunction;
     },
     afterMap: action => {
-      mapping[MappingClassId.actions] = mapping[MappingClassId.actions] || [];
       (mapping[MappingClassId.actions] as any)[1] = action;
       return reversedMapFluentFunction;
     },

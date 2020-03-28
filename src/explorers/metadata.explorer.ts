@@ -19,13 +19,7 @@ export class MetadataExplorer {
   }
 
   private static exploreInternal(model: Constructible): void {
-    const modelProto = model.prototype || null;
-
-    if (!modelProto) {
-      return;
-    }
-
-    if (this.metadataTrackMap.has(model)) {
+    if (!model.prototype || this.metadataTrackMap.has(model)) {
       return;
     }
 

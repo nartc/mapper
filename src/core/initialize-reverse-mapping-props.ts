@@ -76,7 +76,7 @@ export function initializeReverseMappingProps<
         transformation: {
           type: TransformationType.MapInitialize,
           preCond: undefined,
-          mapFn: mapInitialize(path),
+          mapFn: mapInitialize(destPath),
         },
       }),
     ]);

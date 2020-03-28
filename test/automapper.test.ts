@@ -1,16 +1,29 @@
-import { Mapper } from '../src';
+import { fromValue, ignore, MapAction, mapFrom, Mapper } from '../src';
+import {
+  PascalCaseNamingConvention,
+  SnakeCaseNamingConvention,
+} from '../src/conventions';
 import { mappingStorage } from '../src/storages';
 import { Address, AddressVm } from './fixtures/models/address';
 import { Avatar, AvatarVm } from './fixtures/models/avatar';
+import { Base, BaseVm } from './fixtures/models/base';
+import { CamelCaseJob, SnakeCaseJob } from './fixtures/models/job';
 import { Profile, ProfileVm } from './fixtures/models/profile';
 import {
+  CamelCaseUser,
   ComplexUser,
   ComplexUserVm,
+  PascalCaseUserVm,
+  SnakeCaseUser,
+  SnakeCaseUserVm,
   User,
   UserVm,
+  UserVmWithBase,
+  UserWithBase,
 } from './fixtures/models/user';
 import { AddressProfile } from './fixtures/profiles/address.profile';
 import { AvatarProfile } from './fixtures/profiles/avatar.profile';
+import { BaseProfile } from './fixtures/profiles/base.profile';
 import { ProfileProfile } from './fixtures/profiles/profile.profile';
 import {
   ComplexUserProfile,
@@ -29,6 +42,87 @@ describe('AutoMapper Integration - Create Map', () => {
   it('should retrieve mapping after creation', () => {
     Mapper.createMap(User, UserVm);
     expect(mappingStorage.get(User, UserVm)).toBeTruthy();
+  });
+
+  it('should throw error when adding a pair of models twice', () => {
+    Mapper.createMap(User, UserVm);
+    expect(() => {
+      Mapper.createMap(User, UserVm);
+    }).toThrowError(
+      new Error(
+        `Mapping for source ${User.toString()} and destination ${UserVm.toString()} already exists`
+      )
+    );
+  });
+});
+
+describe('AutoMapper Integration - WithGlobalSettings', () => {
+  let user: SnakeCaseUser;
+
+  beforeAll(() => {
+    user = new SnakeCaseUser();
+    user.first_name = 'Chau';
+    user.last_name = 'Tran';
+    user.some_long_property = 10;
+    user.job = new SnakeCaseJob();
+    user.job.title = 'Developer';
+    user.job.annual_salary = 10000;
+  });
+
+  afterEach(Mapper.dispose.bind(Mapper));
+
+  it('should have snake case applied', () => {
+    Mapper.withGlobalSettings({
+      sourceNamingConvention: SnakeCaseNamingConvention,
+    });
+    Mapper.createMap(SnakeCaseUser, SnakeCaseUserVm);
+
+    const vm = Mapper.map(user, SnakeCaseUserVm);
+    expect(vm).toBeTruthy();
+    expect(vm).toBeInstanceOf(SnakeCaseUserVm);
+    expect(vm.firstName).toBe(user.first_name);
+    expect(vm.lastName).toBe(user.last_name);
+    expect(vm.someLongProperty).toBe(user.some_long_property);
+    expect(vm.jobTitle).toBe(user.job.title);
+    expect(vm.jobAnnualSalary).toBe(user.job.annual_salary);
+  });
+
+  it('should have pascal case applied', () => {
+    Mapper.withGlobalSettings({
+      sourceNamingConvention: SnakeCaseNamingConvention,
+      destinationNamingConvention: PascalCaseNamingConvention,
+    });
+    Mapper.createMap(SnakeCaseUser, PascalCaseUserVm);
+    const vm = Mapper.map(user, PascalCaseUserVm);
+    expect(vm).toBeTruthy();
+    expect(vm).toBeInstanceOf(PascalCaseUserVm);
+    expect(vm.FirstName).toBe(user.first_name);
+    expect(vm.LastName).toBe(user.last_name);
+    expect(vm.SomeLongProperty).toBe(user.some_long_property);
+    expect(vm.JobTitle).toBe(user.job.title);
+    expect(vm.JobAnnualSalary).toBe(user.job.annual_salary);
+  });
+
+  it('should use default camel case', () => {
+    Mapper.withGlobalSettings({
+      destinationNamingConvention: PascalCaseNamingConvention,
+    });
+    Mapper.createMap(CamelCaseUser, PascalCaseUserVm);
+    const camelCaseUser = new CamelCaseUser();
+    camelCaseUser.firstName = 'Chau';
+    camelCaseUser.lastName = 'Tran';
+    camelCaseUser.someLongProperty = 10;
+    camelCaseUser.job = new CamelCaseJob();
+    camelCaseUser.job.title = 'Developer';
+    camelCaseUser.job.annualSalary = 10000;
+    const vm = Mapper.map(camelCaseUser, PascalCaseUserVm);
+    expect(vm).toBeTruthy();
+    expect(vm).toBeInstanceOf(PascalCaseUserVm);
+    expect(vm.FirstName).toBe(camelCaseUser.firstName);
+    expect(vm.LastName).toBe(camelCaseUser.lastName);
+    expect(vm.SomeLongProperty).toBe(camelCaseUser.someLongProperty);
+    expect(vm.JobTitle).toBe(camelCaseUser.job.title);
+    expect(vm.JobAnnualSalary).toBe(camelCaseUser.job.annualSalary);
   });
 });
 
@@ -113,6 +207,39 @@ describe('AutoMapper Integration - Map', () => {
     });
   });
 
+  it('should mapAsync', async () => {
+    complexUser.profile.avatar.shouldIgnore = 6;
+
+    const vm = await Mapper.mapAsync(complexUser, ComplexUserVm);
+    expect(vm).toBeTruthy();
+    expect(vm).toBeInstanceOf(ComplexUserVm);
+    expect(vm.first).toEqual(complexUser.firstName);
+    expect(vm.last).toEqual(complexUser.lastName);
+    expect(vm.full).toEqual(complexUser.firstName + ' ' + complexUser.lastName);
+
+    expect(vm.profile).toBeTruthy();
+    expect(vm.profile).toBeInstanceOf(ProfileVm);
+    expect(vm.profile.bio).toEqual(complexUser.profile.bio);
+
+    expect(vm.profile.avatar).toBeTruthy();
+    expect(vm.profile.avatar).toBeInstanceOf(AvatarVm);
+    expect(vm.profile.avatar.ignored).toBeNull();
+    expect(vm.profile.avatar.url).toEqual(complexUser.profile.avatar.source);
+    expect(vm.profile.avatar.forCondition).toEqual(false);
+    expect(vm.profile.avatar.shouldBeSubstituted).toEqual('sub');
+
+    expect(vm.profile.addresses).toBeTruthy();
+    expect(vm.profile.addresses).toHaveLength(
+      complexUser.profile.addresses.length
+    );
+    vm.profile.addresses.forEach((address, index) => {
+      expect(address).toBeTruthy();
+      expect(address).toBeInstanceOf(AddressVm);
+      const { street, city, state } = complexUser.profile.addresses[index];
+      expect(address.formattedAddress).toEqual(`${street} ${city} ${state}`);
+    });
+  });
+
   it('should map complex User to complex UserVm - pre(condition) with default value when shouldIgnore <= 5', () => {
     complexUser.profile.avatar.shouldIgnore = 5;
 
@@ -137,9 +264,312 @@ describe('AutoMapper Integration - Map', () => {
     });
   });
 
+  it('should mapArrayAsync', async () => {
+    const vms = await Mapper.mapArrayAsync([user, user], UserVm);
+    expect(vms).toBeTruthy();
+    expect(vms).toHaveLength(2);
+    vms.forEach(vm => {
+      expect(vm).toBeTruthy();
+      expect(vm).toBeInstanceOf(UserVm);
+    });
+  });
+
   it('should return empty array when mapArray with empty Array', () => {
     const vms = Mapper.mapArray([], UserVm, User);
     expect(vms).toBeTruthy();
     expect(vms).toHaveLength(0);
+  });
+
+  it('should return empty array when mapArrayAsync with empty Array', async () => {
+    const vms = await Mapper.mapArrayAsync([], UserVm, User);
+    expect(vms).toBeTruthy();
+    expect(vms).toHaveLength(0);
+  });
+
+  it('should map correctly with all parameters provided', () => {
+    const before = jest.fn();
+    const after = jest.fn();
+    const vm = Mapper.map(user, UserVm, User, {
+      beforeMap: before,
+      afterMap: after,
+    });
+    expect(vm).toBeTruthy();
+    expect(vm).toBeInstanceOf(UserVm);
+    expect(before).toHaveBeenCalled();
+    expect(after).toHaveBeenCalled();
+  });
+
+  it('should throw error when map without mapping', () => {
+    class Foo {
+      foo!: string;
+    }
+
+    class Bar {
+      bar!: string;
+    }
+
+    const foo = new Foo();
+    foo.foo = 'foo';
+    expect(() => {
+      Mapper.map(foo, Bar);
+    }).toThrowError(
+      new Error(
+        `Mapping not found for source ${Foo.toString()} and destination ${Bar.toString()}`
+      )
+    );
+  });
+});
+
+describe('AutoMapper Integration - Callback', () => {
+  const beforeCallback: MapAction = jest.fn();
+  const afterCallback: MapAction = jest.fn();
+  beforeAll(() => {
+    Mapper.createMap(User, UserVm)
+      .forMember(
+        d => d.fullName,
+        mapFrom(s => s.firstName + ' ' + s.lastName)
+      )
+      .beforeMap(beforeCallback)
+      .afterMap(afterCallback)
+      .reverseMap()
+      .beforeMap(beforeCallback)
+      .afterMap(afterCallback);
+
+    Mapper.createMap(Address, AddressVm)
+      .forMember(d => d.formattedAddress, fromValue('some street'))
+      .afterMap(afterCallback)
+      .reverseMap()
+      .forPath(s => s.street, ignore())
+      .forPath(s => s.city, ignore())
+      .forPath(s => s.state, ignore())
+      .afterMap(afterCallback);
+  });
+
+  afterAll(Mapper.dispose.bind(Mapper));
+
+  it('mapping level callbacks should be invoked', () => {
+    const user = new User();
+    user.firstName = 'Chau';
+    user.lastName = 'Tran';
+    const vm = Mapper.map(user, UserVm);
+    expect(beforeCallback).toBeCalledTimes(1);
+    expect(afterCallback).toBeCalledTimes(1);
+    Mapper.map(vm, User);
+    expect(beforeCallback).toBeCalledTimes(2);
+    expect(afterCallback).toBeCalledTimes(2);
+  });
+
+  it('map level callbacks should override mapping level', () => {
+    const user = new User();
+    user.firstName = 'Chau';
+    user.lastName = 'Tran';
+
+    const before = jest.fn();
+    const after = jest.fn();
+
+    const vm = Mapper.map(user, UserVm, { beforeMap: before, afterMap: after });
+    expect(before).toBeCalledTimes(1);
+    expect(beforeCallback).not.toBeCalledTimes(3);
+    expect(after).toBeCalledTimes(1);
+    expect(afterCallback).not.toBeCalledTimes(3);
+    Mapper.map(vm, User, { beforeMap: before, afterMap: after });
+    expect(before).toBeCalledTimes(2);
+    expect(beforeCallback).not.toBeCalledTimes(3);
+    expect(after).toBeCalledTimes(2);
+    expect(afterCallback).not.toBeCalledTimes(3);
+  });
+
+  it('mapping level callbacks only invoke what provided', () => {
+    const address = new Address();
+    const vm = Mapper.map(address, AddressVm);
+    expect(beforeCallback).toBeCalledTimes(2);
+    expect(afterCallback).toBeCalledTimes(3);
+    Mapper.map(vm, Address);
+    expect(beforeCallback).toBeCalledTimes(2);
+    expect(afterCallback).toBeCalledTimes(4);
+  });
+});
+
+describe('AutoMapper Integration - ReverseMap', () => {
+  beforeAll(() => {
+    Mapper.addProfile(AvatarProfile)
+      .addProfile(AddressProfile)
+      .addProfile(ProfileProfile)
+      .addProfile(ComplexUserProfile);
+  });
+
+  afterAll(Mapper.dispose.bind(Mapper));
+
+  it('should reverse map', () => {
+    const vm = new ComplexUserVm();
+    vm.first = 'Chau';
+    vm.last = 'Tran';
+    vm.full = 'Chau Tran';
+    vm.profile = new ProfileVm();
+    vm.profile.bio = 'Developer';
+    vm.profile.avatar = new AvatarVm();
+    vm.profile.avatar.url = 'google.com';
+    vm.profile.avatar.forCondition = false;
+    vm.profile.avatar.shouldBeSubstituted = 'sub';
+    vm.profile.avatar.ignored = 5;
+
+    vm.profile.addresses = Array(2)
+      .fill('')
+      .map((_, index) => {
+        const addressVm = new AddressVm();
+        addressVm.formattedAddress = `Street ${index} City ${index} State ${index}`;
+        return addressVm;
+      });
+
+    const user = Mapper.map(vm, ComplexUser);
+    expect(user).toBeTruthy();
+  });
+
+  it('should return mapping if reverseMap is called after createMap', () => {
+    Mapper.createMap(UserVm, User);
+    const mapping = mappingStorage.get(UserVm, User);
+    expect(mapping).toBeTruthy();
+    Mapper.createMap(User, UserVm).reverseMap();
+    const sameMapping = mappingStorage.get(UserVm, User);
+    expect(sameMapping).toEqual(mapping);
+  });
+});
+
+describe('AutoMapper Integration - Inheritance', () => {
+  beforeAll(() => {
+    Mapper.addProfile(BaseProfile);
+    Mapper.createMap(UserWithBase, UserVmWithBase, {
+      includeBase: [Base, BaseVm],
+    })
+      .forMember(
+        d => d.first,
+        mapFrom(s => s.firstName)
+      )
+      .forMember(
+        d => d.last,
+        mapFrom(s => s.lastName)
+      )
+      .forMember(
+        d => d.full,
+        mapFrom(s => `${s.firstName} ${s.lastName}`)
+      )
+      .forMember(
+        d => d.aboutMe,
+        mapFrom(s => s.about)
+      )
+      .reverseMap();
+
+    // Test empty includeBase. TypeScript will not allow but needed to test regardless.
+    Mapper.createMap(User, UserVm, { includeBase: [] as any });
+    // Test includeBase without having previously created mapping for bases.
+    Mapper.createMap(Avatar, AvatarVm, { includeBase: [Avatar, AvatarVm] });
+  });
+
+  afterAll(Mapper.dispose.bind(Mapper));
+
+  it('should map with inheritance', () => {
+    const user = new UserWithBase();
+    user.firstName = 'Chau';
+    user.lastName = 'Tran';
+    user.about = 'Developer';
+    user.createdDate = new Date();
+    user.updatedDate = new Date();
+    user.id = '123';
+
+    const vm = Mapper.map(user, UserVmWithBase);
+    expect(vm).toBeTruthy();
+    expect(vm).toBeInstanceOf(UserVmWithBase);
+    expect(vm.first).toBe(user.firstName);
+    expect(vm.last).toBe(user.lastName);
+    expect(vm.full).toBe(`${user.firstName} ${user.lastName}`);
+    expect(vm.aboutMe).toBe(user.about);
+    expect(vm.created).toBe(user.createdDate);
+    expect(vm.updated).toBe(user.updatedDate);
+    expect(vm.recordId).toBe(user.id);
+  });
+
+  it('should reverseMap with inheritance', () => {
+    const vm = new UserVmWithBase();
+    vm.first = 'Chau';
+    vm.last = 'Tran';
+    vm.aboutMe = 'Developer';
+    vm.recordId = '1234';
+    vm.created = new Date();
+    vm.updated = new Date();
+
+    const user = Mapper.map(vm, UserWithBase);
+    expect(user).toBeTruthy();
+    expect(user).toBeInstanceOf(UserWithBase);
+    expect(user.firstName).toBe(vm.first);
+    expect(user.lastName).toBe(vm.last);
+    expect(user.about).toBe(vm.aboutMe);
+    expect(user.id).toBe(vm.recordId);
+    expect(user.createdDate).toEqual(vm.created);
+    expect(user.updatedDate).toEqual(vm.updated);
+  });
+});
+
+describe('AutoMapper Integration - PlainObject', () => {
+  const addProfiles = () => {
+    Mapper.addProfile(AvatarProfile)
+      .addProfile(AddressProfile)
+      .addProfile(ProfileProfile)
+      .addProfile(ComplexUserProfile);
+  };
+
+  afterEach(Mapper.dispose.bind(Mapper));
+
+  it('should map complex plain object', () => {
+    addProfiles();
+    const complexUser = new ComplexUser();
+    complexUser.firstName = 'Chau';
+    complexUser.lastName = 'Tran';
+    complexUser.profile = new Profile();
+    complexUser.profile.bio = 'Developer';
+    complexUser.profile.birthday = new Date('10/14/1991');
+    complexUser.profile.avatar = new Avatar();
+    complexUser.profile.avatar.source = 'Internet';
+    complexUser.profile.avatar.url = 'url.com';
+    complexUser.profile.avatar.forCondition = false;
+    complexUser.profile.addresses = Array(2)
+      .fill('')
+      .map((_, index) => {
+        const addr = new Address();
+        addr.street = 'Street ' + index + 1;
+        addr.city = 'City ' + index + 1;
+        addr.state = 'State ' + index + 1;
+        return addr;
+      });
+    const plain = JSON.parse(JSON.stringify(complexUser));
+    const vm = Mapper.map(plain, ComplexUserVm, ComplexUser);
+    expect(vm).toBeTruthy();
+    expect(vm).toBeInstanceOf(ComplexUserVm);
+  });
+
+  it('should reverse map complex plain object', () => {
+    addProfiles();
+    const vm = new ComplexUserVm();
+    vm.first = 'Chau';
+    vm.last = 'Tran';
+    vm.full = 'Chau Tran';
+    vm.profile = new ProfileVm();
+    vm.profile.bio = 'Developer';
+    vm.profile.avatar = new AvatarVm();
+    vm.profile.avatar.url = 'google.com';
+    vm.profile.avatar.forCondition = false;
+    vm.profile.avatar.shouldBeSubstituted = 'sub';
+    vm.profile.avatar.ignored = 5;
+
+    vm.profile.addresses = Array(2)
+      .fill('')
+      .map((_, index) => {
+        const addressVm = new AddressVm();
+        addressVm.formattedAddress = `Street ${index} City ${index} State ${index}`;
+        return addressVm;
+      });
+    const plainVm = JSON.parse(JSON.stringify(vm));
+    const user = Mapper.map(plainVm, ComplexUser, ComplexUserVm);
+    expect(user).toBeTruthy();
+    expect(user).toBeInstanceOf(ComplexUser);
   });
 });

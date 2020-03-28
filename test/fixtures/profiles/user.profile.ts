@@ -27,6 +27,7 @@ export class ComplexUserProfile extends ProfileBase {
       .forMember(
         d => d.full,
         mapFrom(s => s.firstName + ' ' + s.lastName)
-      );
+      )
+      .reverseMap();
   }
 }

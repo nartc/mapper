@@ -1,7 +1,7 @@
 import { createMapMetadata } from '../src';
 import { instantiate } from '../src/core';
 import { Profile } from './fixtures/models/profile';
-import { UserNoDecorator } from './fixtures/models/user';
+import { UserNoDecorator, UserNoDecoratorTwo } from './fixtures/models/user';
 
 describe('CreateMapMetadata', () => {
   it('should create and store metadata', () => {
@@ -30,5 +30,13 @@ describe('CreateMapMetadata', () => {
     expect(userNoDecorator2.birthday).toBeInstanceOf(Date);
     expect(userNoDecorator2.addresses).toBeInstanceOf(Array);
     expect(userNoDecorator2.profile).toBeInstanceOf(Profile);
+  });
+
+  it('should exit if an empty metadataOptions is passed in', () => {
+    const userNoDecorator = instantiate(UserNoDecoratorTwo);
+    createMapMetadata(UserNoDecorator, {});
+    expect(userNoDecorator.firstName).toBeFalsy();
+    expect(userNoDecorator.lastName).toBeFalsy();
+    expect(userNoDecorator.age).toBeFalsy();
   });
 });

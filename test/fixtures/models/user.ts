@@ -1,4 +1,6 @@
 import { AutoMap } from '../../../src';
+import { Base, BaseVm } from './base';
+import { CamelCaseJob, SnakeCaseJob } from './job';
 import { Profile, ProfileVm } from './profile';
 
 export class UserNoDecorator {
@@ -9,6 +11,12 @@ export class UserNoDecorator {
   isAdult!: boolean;
   addresses!: string[];
   profile!: Profile;
+}
+
+export class UserNoDecoratorTwo {
+  firstName!: string;
+  lastName!: string;
+  age!: number;
 }
 
 export class User {
@@ -45,4 +53,72 @@ export class ComplexUserVm {
   full!: string;
   @AutoMap(() => ProfileVm)
   profile!: ProfileVm;
+}
+
+export class SnakeCaseUser {
+  @AutoMap()
+  first_name!: string;
+  @AutoMap()
+  last_name!: string;
+  @AutoMap()
+  some_long_property!: number;
+  @AutoMap(() => SnakeCaseJob)
+  job!: SnakeCaseJob;
+}
+
+export class CamelCaseUser {
+  @AutoMap()
+  firstName!: string;
+  @AutoMap()
+  lastName!: string;
+  @AutoMap()
+  someLongProperty!: number;
+  @AutoMap(() => CamelCaseJob)
+  job!: CamelCaseJob;
+}
+
+export class SnakeCaseUserVm {
+  @AutoMap()
+  firstName!: string;
+  @AutoMap()
+  lastName!: string;
+  @AutoMap()
+  someLongProperty!: number;
+  @AutoMap()
+  jobTitle!: string;
+  @AutoMap()
+  jobAnnualSalary!: number;
+}
+
+export class PascalCaseUserVm {
+  @AutoMap()
+  FirstName!: string;
+  @AutoMap()
+  LastName!: string;
+  @AutoMap()
+  SomeLongProperty!: number;
+  @AutoMap()
+  JobTitle!: string;
+  @AutoMap()
+  JobAnnualSalary!: number;
+}
+
+export class UserWithBase extends Base {
+  @AutoMap()
+  firstName!: string;
+  @AutoMap()
+  lastName!: string;
+  @AutoMap()
+  about!: string;
+}
+
+export class UserVmWithBase extends BaseVm {
+  @AutoMap()
+  first!: string;
+  @AutoMap()
+  last!: string;
+  @AutoMap()
+  full!: string;
+  @AutoMap()
+  aboutMe!: string;
 }

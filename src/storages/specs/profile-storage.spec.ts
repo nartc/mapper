@@ -25,4 +25,13 @@ describe('ProfileStorage', () => {
     });
     expect(spy).toHaveBeenCalledTimes(1);
   });
+
+  it('add throws exception when AutoMapper.addProfile is invoked twice with same profile', () => {
+    const mapper = new AutoMapper();
+    expect(() => {
+      mapper.addProfile(FooBarProfile).addProfile(FooBarProfile);
+    }).toThrowError(
+      `${FooBarProfile.name} already exists on this mapper instance`
+    );
+  });
 });

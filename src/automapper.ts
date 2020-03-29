@@ -157,7 +157,6 @@ export class AutoMapper {
   >(
     sourceArr: TSource[],
     destination: Constructible<TDestination>,
-    source?: Constructible<TSource>,
     options?: MapOptions<TSource[], TDestination[]>
   ): TDestination[];
   mapArray<
@@ -192,7 +191,6 @@ export class AutoMapper {
   >(
     sourceArr: TSource[],
     destination: Constructible<TDestination>,
-    source?: Constructible<TSource>,
     options?: MapOptions<TSource[], TDestination[]>
   ): Promise<TDestination[]>;
   mapArrayAsync<

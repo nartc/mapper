@@ -15,13 +15,7 @@ export function getMappingForNestedKey<
     destinationMemberKey
   );
 
-  if (keyMetadata == null) {
-    throw new Error(
-      `Metadata for ${destinationMemberKey} cannot be found. Consider manual map this property`
-    );
-  }
-
-  const meta = keyMetadata[1]();
+  const meta = keyMetadata?.[1]();
   if (!meta || Array.isArray(meta)) {
     throw new Error(
       `Metadata for ${destinationMemberKey} is a primitive or Array. Consider manual map this property`

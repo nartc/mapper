@@ -12,9 +12,9 @@ export function getPathRecursive(
     return result;
   }
 
-  for (const key of Object.getOwnPropertyNames(node).filter(
-    removeConstructorFromPath
-  )) {
+  const keys = Object.getOwnPropertyNames(node).filter(removeFromPath);
+  for (let i = 0, len = keys.length; i < len; i++) {
+    const key = keys[i];
     const path = prefix + key;
     if (!result.includes(path)) {
       result.push(path);
@@ -46,6 +46,19 @@ export function getPathRecursive(
   return result;
 }
 
-function removeConstructorFromPath(path: string): boolean {
-  return path !== 'constructor';
+function removeFromPath(path: string): boolean {
+  return (
+    path !== 'constructor' &&
+    path !== '__defineGetter__' &&
+    path !== '__defineSetter__' &&
+    path !== 'hasOwnProperty' &&
+    path !== '__lookupGetter__' &&
+    path !== '__lookupSetter__' &&
+    path !== 'isPrototypeOf' &&
+    path !== 'propertyIsEnumerable' &&
+    path !== 'toString' &&
+    path !== 'valueOf' &&
+    path !== '__proto__' &&
+    path !== 'toLocaleString'
+  );
 }

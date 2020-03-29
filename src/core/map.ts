@@ -228,14 +228,6 @@ export function mapArray<
   }
 
   const len = sourceArray.length;
-  if (!len) {
-    if (afterMap) {
-      afterMap(sourceArray, destination, { ...mapping });
-    }
-
-    return destination;
-  }
-
   for (let i = 0; i < len; i++) {
     const source = sourceArray[i];
     destination.push(map(source, mapping, {}, true));

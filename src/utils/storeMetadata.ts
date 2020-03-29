@@ -20,9 +20,7 @@ export function storeMetadata<TModel extends Dict<TModel> = any>(
       metadataStorage.addMetadata(model, [[metaKey, () => []]]);
       break;
     default:
-      metaValue != null
-        ? metadataStorage.addMetadata(model, [[metaKey, () => metaValue]])
-        : metadataStorage.addMetadata(model, [[metaKey, () => false]]);
+      metadataStorage.addMetadata(model, [[metaKey, () => metaValue]]);
       break;
   }
 }

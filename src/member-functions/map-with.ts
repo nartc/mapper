@@ -34,16 +34,22 @@ export function mapWith<
         return null;
       }
 
+      if (Array.isArray(sourceValue)) {
+        if (isEmpty(sourceValue[0])) {
+          return [];
+        }
+
+        const mapping = getMappingForDestination(
+          withDestination,
+          sourceValue[0].constructor
+        );
+        return mapArray(sourceValue, mapping) as any;
+      }
+
       const mapping = getMappingForDestination(
         withDestination,
         sourceValue.constructor
       );
-      if (Array.isArray(sourceValue)) {
-        return isEmpty(sourceValue[0])
-          ? []
-          : (mapArray(sourceValue, mapping) as any);
-      }
-
       return map(sourceValue, mapping) as TSelectorReturn;
     },
   ];

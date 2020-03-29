@@ -4,7 +4,7 @@ import { Constructible, Mapping } from '../types';
  * Internal MappingStorage class
  * @private
  */
-class MappingStorage {
+export class MappingStorage {
   private mappings: WeakMap<Constructible, WeakMap<Constructible, Mapping>>;
 
   constructor() {
@@ -45,5 +45,3 @@ class MappingStorage {
     >();
   }
 }
-
-export const mappingStorage = new MappingStorage();

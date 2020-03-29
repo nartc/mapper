@@ -1,65 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1585451061937" clover="3.2.0">
-  <project timestamp="1585451061937" name="All files">
-    <metrics statements="708" coveredstatements="700" conditionals="390" coveredconditionals="352" methods="122" coveredmethods="120" elements="1220" coveredelements="1172" complexity="0" loc="708" ncloc="708" packages="8" files="57" classes="57"/>
+<coverage generated="1585506404972" clover="3.2.0">
+  <project timestamp="1585506404972" name="All files">
+    <metrics statements="715" coveredstatements="707" conditionals="391" coveredconditionals="353" methods="125" coveredmethods="123" elements="1231" coveredelements="1183" complexity="0" loc="715" ncloc="715" packages="8" files="57" classes="57"/>
     <package name="src">
-      <metrics statements="99" coveredstatements="99" conditionals="32" coveredconditionals="32" methods="21" coveredmethods="21"/>
+      <metrics statements="109" coveredstatements="109" conditionals="32" coveredconditionals="32" methods="24" coveredmethods="24"/>
       <file name="automapper.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/automapper.ts">
-        <metrics statements="54" coveredstatements="54" conditionals="16" coveredconditionals="16" methods="14" coveredmethods="14"/>
+        <metrics statements="64" coveredstatements="64" conditionals="16" coveredconditionals="16" methods="17" coveredmethods="17"/>
         <line num="1" count="5" type="stmt"/>
         <line num="2" count="5" type="stmt"/>
         <line num="3" count="5" type="stmt"/>
         <line num="11" count="5" type="stmt"/>
         <line num="12" count="5" type="stmt"/>
-        <line num="25" count="5" type="stmt"/>
-        <line num="32" count="8" type="stmt"/>
-        <line num="35" count="5" type="stmt"/>
-        <line num="36" count="3" type="stmt"/>
-        <line num="37" count="3" type="cond" truecount="2" falsecount="0"/>
-        <line num="38" count="2" type="stmt"/>
+        <line num="26" count="5" type="stmt"/>
+        <line num="27" count="8" type="stmt"/>
+        <line num="28" count="8" type="stmt"/>
+        <line num="36" count="8" type="stmt"/>
+        <line num="39" count="5" type="stmt"/>
+        <line num="40" count="3" type="stmt"/>
         <line num="41" count="3" type="cond" truecount="2" falsecount="0"/>
         <line num="42" count="2" type="stmt"/>
-        <line num="44" count="3" type="stmt"/>
-        <line num="47" count="5" type="stmt"/>
-        <line num="48" count="86" type="stmt"/>
-        <line num="49" count="85" type="stmt"/>
-        <line num="52" count="5" type="stmt"/>
-        <line num="72" count="102" type="stmt"/>
-        <line num="73" count="102" type="stmt"/>
-        <line num="83" count="102" type="stmt"/>
-        <line num="84" count="101" type="stmt"/>
-        <line num="104" count="5" type="stmt"/>
-        <line num="107" count="75" type="stmt"/>
-        <line num="108" count="23" type="stmt"/>
-        <line num="109" count="23" type="stmt"/>
-        <line num="113" count="22" type="stmt"/>
-        <line num="133" count="5" type="stmt"/>
-        <line num="136" count="3" type="stmt"/>
-        <line num="137" count="1" type="stmt"/>
-        <line num="138" count="1" type="stmt"/>
-        <line num="142" count="1" type="stmt"/>
-        <line num="162" count="5" type="stmt"/>
-        <line num="165" count="11" type="stmt"/>
-        <line num="166" count="3" type="cond" truecount="2" falsecount="0"/>
-        <line num="167" count="1" type="stmt"/>
-        <line num="170" count="2" type="stmt"/>
-        <line num="171" count="2" type="stmt"/>
-        <line num="176" count="2" type="stmt"/>
-        <line num="196" count="5" type="stmt"/>
-        <line num="199" count="7" type="stmt"/>
-        <line num="200" count="2" type="cond" truecount="2" falsecount="0"/>
-        <line num="201" count="1" type="stmt"/>
-        <line num="204" count="1" type="stmt"/>
-        <line num="205" count="1" type="stmt"/>
-        <line num="210" count="1" type="stmt"/>
-        <line num="213" count="5" type="stmt"/>
-        <line num="214" count="26" type="stmt"/>
-        <line num="215" count="26" type="stmt"/>
-        <line num="218" count="5" type="stmt"/>
-        <line num="219" count="34" type="stmt"/>
-        <line num="220" count="34" type="stmt"/>
-        <line num="225" count="5" type="stmt"/>
-        <line num="227" count="5" type="stmt"/>
+        <line num="45" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="46" count="2" type="stmt"/>
+        <line num="48" count="3" type="stmt"/>
+        <line num="51" count="5" type="stmt"/>
+        <line num="52" count="86" type="stmt"/>
+        <line num="53" count="85" type="stmt"/>
+        <line num="56" count="5" type="stmt"/>
+        <line num="76" count="101" type="stmt"/>
+        <line num="77" count="101" type="stmt"/>
+        <line num="87" count="101" type="stmt"/>
+        <line num="93" count="100" type="stmt"/>
+        <line num="113" count="5" type="stmt"/>
+        <line num="116" count="75" type="stmt"/>
+        <line num="117" count="23" type="stmt"/>
+        <line num="118" count="23" type="stmt"/>
+        <line num="123" count="22" type="stmt"/>
+        <line num="143" count="5" type="stmt"/>
+        <line num="146" count="3" type="stmt"/>
+        <line num="147" count="1" type="stmt"/>
+        <line num="148" count="1" type="stmt"/>
+        <line num="153" count="1" type="stmt"/>
+        <line num="154" count="1" type="stmt"/>
+        <line num="175" count="5" type="stmt"/>
+        <line num="178" count="11" type="stmt"/>
+        <line num="179" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="180" count="1" type="stmt"/>
+        <line num="183" count="2" type="stmt"/>
+        <line num="184" count="2" type="stmt"/>
+        <line num="190" count="2" type="stmt"/>
+        <line num="210" count="5" type="stmt"/>
+        <line num="213" count="7" type="stmt"/>
+        <line num="214" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="215" count="1" type="stmt"/>
+        <line num="218" count="1" type="stmt"/>
+        <line num="219" count="1" type="stmt"/>
+        <line num="225" count="1" type="stmt"/>
+        <line num="226" count="1" type="stmt"/>
+        <line num="230" count="5" type="stmt"/>
+        <line num="237" count="4" type="stmt"/>
+        <line num="240" count="5" type="stmt"/>
+        <line num="241" count="26" type="stmt"/>
+        <line num="242" count="26" type="stmt"/>
+        <line num="245" count="5" type="stmt"/>
+        <line num="246" count="5" type="stmt"/>
+        <line num="249" count="5" type="stmt"/>
+        <line num="250" count="2" type="stmt"/>
+        <line num="253" count="5" type="stmt"/>
+        <line num="254" count="34" type="stmt"/>
+        <line num="255" count="34" type="stmt"/>
+        <line num="260" count="5" type="stmt"/>
+        <line num="262" count="5" type="stmt"/>
       </file>
       <file name="create-map-metadata.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/create-map-metadata.ts">
         <metrics statements="10" coveredstatements="10" conditionals="8" coveredconditionals="8" methods="1" coveredmethods="1"/>
@@ -91,32 +101,32 @@
       </file>
       <file name="types.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/types.ts">
         <metrics statements="26" coveredstatements="26" conditionals="8" coveredconditionals="8" methods="4" coveredmethods="4"/>
-        <line num="15" count="16" type="cond" truecount="2" falsecount="0"/>
-        <line num="16" count="16" type="stmt"/>
-        <line num="17" count="16" type="stmt"/>
+        <line num="17" count="16" type="cond" truecount="2" falsecount="0"/>
         <line num="18" count="16" type="stmt"/>
         <line num="19" count="16" type="stmt"/>
         <line num="20" count="16" type="stmt"/>
         <line num="21" count="16" type="stmt"/>
-        <line num="24" count="16" type="cond" truecount="2" falsecount="0"/>
-        <line num="25" count="16" type="stmt"/>
-        <line num="26" count="16" type="stmt"/>
+        <line num="22" count="16" type="stmt"/>
+        <line num="23" count="16" type="stmt"/>
+        <line num="26" count="16" type="cond" truecount="2" falsecount="0"/>
         <line num="27" count="16" type="stmt"/>
         <line num="28" count="16" type="stmt"/>
         <line num="29" count="16" type="stmt"/>
         <line num="30" count="16" type="stmt"/>
         <line num="31" count="16" type="stmt"/>
         <line num="32" count="16" type="stmt"/>
-        <line num="204" count="16" type="cond" truecount="2" falsecount="0"/>
-        <line num="205" count="16" type="stmt"/>
-        <line num="206" count="16" type="stmt"/>
+        <line num="33" count="16" type="stmt"/>
+        <line num="34" count="16" type="stmt"/>
+        <line num="206" count="16" type="cond" truecount="2" falsecount="0"/>
         <line num="207" count="16" type="stmt"/>
-        <line num="370" count="16" type="cond" truecount="2" falsecount="0"/>
-        <line num="371" count="16" type="stmt"/>
-        <line num="372" count="16" type="stmt"/>
+        <line num="208" count="16" type="stmt"/>
+        <line num="209" count="16" type="stmt"/>
+        <line num="372" count="16" type="cond" truecount="2" falsecount="0"/>
         <line num="373" count="16" type="stmt"/>
         <line num="374" count="16" type="stmt"/>
         <line num="375" count="16" type="stmt"/>
+        <line num="376" count="16" type="stmt"/>
+        <line num="377" count="16" type="stmt"/>
       </file>
     </package>
     <package name="src.conventions">
@@ -124,15 +134,15 @@
       <file name="camel-case-naming-convention.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/conventions/camel-case-naming-convention.ts">
         <metrics statements="11" coveredstatements="11" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
         <line num="6" count="6" type="stmt"/>
-        <line num="7" count="2838" type="stmt"/>
-        <line num="8" count="2838" type="stmt"/>
+        <line num="7" count="2831" type="stmt"/>
+        <line num="8" count="2831" type="stmt"/>
         <line num="10" count="6" type="stmt"/>
-        <line num="11" count="1367" type="stmt"/>
-        <line num="13" count="1367" type="stmt"/>
-        <line num="14" count="2020" type="cond" truecount="2" falsecount="0"/>
-        <line num="15" count="1367" type="stmt"/>
-        <line num="19" count="653" type="stmt"/>
-        <line num="25" count="1367" type="stmt"/>
+        <line num="11" count="1364" type="stmt"/>
+        <line num="13" count="1364" type="stmt"/>
+        <line num="14" count="2014" type="cond" truecount="2" falsecount="0"/>
+        <line num="15" count="1364" type="stmt"/>
+        <line num="19" count="650" type="stmt"/>
+        <line num="25" count="1364" type="stmt"/>
         <line num="27" count="6" type="stmt"/>
       </file>
       <file name="index.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/conventions/index.ts">
@@ -170,35 +180,35 @@
       </file>
     </package>
     <package name="src.core">
-      <metrics statements="298" coveredstatements="298" conditionals="209" coveredconditionals="195" methods="27" coveredmethods="27"/>
+      <metrics statements="297" coveredstatements="297" conditionals="210" coveredconditionals="196" methods="27" coveredmethods="27"/>
       <file name="create-map-fluent-function.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/core/create-map-fluent-function.ts">
         <metrics statements="26" coveredstatements="26" conditionals="12" coveredconditionals="11" methods="5" coveredmethods="5"/>
-        <line num="1" count="5" type="stmt"/>
-        <line num="13" count="5" type="stmt"/>
+        <line num="2" count="5" type="stmt"/>
         <line num="14" count="5" type="stmt"/>
         <line num="15" count="5" type="stmt"/>
         <line num="16" count="5" type="stmt"/>
         <line num="17" count="5" type="stmt"/>
         <line num="18" count="5" type="stmt"/>
-        <line num="20" count="5" type="stmt"/>
-        <line num="39" count="101" type="stmt"/>
-        <line num="41" count="101" type="cond" truecount="6" falsecount="0"/>
-        <line num="42" count="2" type="stmt"/>
-        <line num="43" count="2" type="stmt"/>
-        <line num="48" count="2" type="cond" truecount="1" falsecount="1"/>
-        <line num="49" count="2" type="stmt"/>
-        <line num="58" count="101" type="stmt"/>
-        <line num="61" count="602" type="stmt"/>
-        <line num="78" count="195" type="stmt"/>
-        <line num="80" count="1" type="cond" truecount="2" falsecount="0"/>
-        <line num="81" count="1" type="stmt"/>
-        <line num="82" count="1" type="stmt"/>
-        <line num="85" count="2" type="cond" truecount="2" falsecount="0"/>
-        <line num="86" count="2" type="stmt"/>
-        <line num="87" count="2" type="stmt"/>
-        <line num="90" count="73" type="stmt"/>
-        <line num="91" count="73" type="stmt"/>
-        <line num="95" count="101" type="stmt"/>
+        <line num="19" count="5" type="stmt"/>
+        <line num="21" count="5" type="stmt"/>
+        <line num="41" count="100" type="stmt"/>
+        <line num="43" count="100" type="cond" truecount="6" falsecount="0"/>
+        <line num="44" count="2" type="stmt"/>
+        <line num="45" count="2" type="stmt"/>
+        <line num="51" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="52" count="2" type="stmt"/>
+        <line num="61" count="100" type="stmt"/>
+        <line num="64" count="602" type="stmt"/>
+        <line num="81" count="195" type="stmt"/>
+        <line num="83" count="1" type="cond" truecount="2" falsecount="0"/>
+        <line num="84" count="1" type="stmt"/>
+        <line num="85" count="1" type="stmt"/>
+        <line num="88" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="89" count="2" type="stmt"/>
+        <line num="90" count="2" type="stmt"/>
+        <line num="93" count="73" type="stmt"/>
+        <line num="97" count="73" type="stmt"/>
+        <line num="101" count="100" type="stmt"/>
       </file>
       <file name="create-map-for-member.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/core/create-map-for-member.ts">
         <metrics statements="20" coveredstatements="20" conditionals="8" coveredconditionals="8" methods="2" coveredmethods="2"/>
@@ -224,14 +234,13 @@
         <line num="88" count="214" type="stmt"/>
       </file>
       <file name="create-mapping-object.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/core/create-mapping-object.ts">
-        <metrics statements="7" coveredstatements="7" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
-        <line num="1" count="5" type="stmt"/>
+        <metrics statements="6" coveredstatements="6" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
         <line num="11" count="5" type="stmt"/>
-        <line num="26" count="102" type="cond" truecount="2" falsecount="0"/>
-        <line num="27" count="1" type="stmt"/>
-        <line num="37" count="101" type="stmt"/>
-        <line num="45" count="101" type="stmt"/>
-        <line num="46" count="101" type="stmt"/>
+        <line num="27" count="101" type="cond" truecount="2" falsecount="0"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="38" count="100" type="stmt"/>
+        <line num="46" count="100" type="stmt"/>
+        <line num="47" count="100" type="stmt"/>
       </file>
       <file name="create-reverse-map-fluent-function.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/core/create-reverse-map-fluent-function.ts">
         <metrics statements="11" coveredstatements="11" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
@@ -248,26 +257,25 @@
         <line num="53" count="73" type="stmt"/>
       </file>
       <file name="create-reverse-mapping-object.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/core/create-reverse-mapping-object.ts">
-        <metrics statements="19" coveredstatements="19" conditionals="10" coveredconditionals="9" methods="1" coveredmethods="1"/>
-        <line num="1" count="5" type="stmt"/>
+        <metrics statements="18" coveredstatements="18" conditionals="10" coveredconditionals="9" methods="1" coveredmethods="1"/>
         <line num="2" count="5" type="stmt"/>
         <line num="3" count="5" type="stmt"/>
         <line num="4" count="5" type="stmt"/>
         <line num="5" count="5" type="stmt"/>
         <line num="7" count="5" type="stmt"/>
-        <line num="15" count="73" type="stmt"/>
         <line num="16" count="73" type="stmt"/>
-        <line num="19" count="73" type="stmt"/>
-        <line num="21" count="73" type="stmt"/>
-        <line num="22" count="73" type="cond" truecount="2" falsecount="0"/>
-        <line num="23" count="1" type="stmt"/>
-        <line num="26" count="72" type="stmt"/>
-        <line num="34" count="72" type="cond" truecount="2" falsecount="0"/>
-        <line num="35" count="1" type="stmt"/>
-        <line num="40" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="41" count="1" type="stmt"/>
-        <line num="45" count="72" type="stmt"/>
-        <line num="46" count="72" type="stmt"/>
+        <line num="17" count="73" type="stmt"/>
+        <line num="20" count="73" type="stmt"/>
+        <line num="22" count="73" type="stmt"/>
+        <line num="23" count="73" type="cond" truecount="2" falsecount="0"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="27" count="72" type="stmt"/>
+        <line num="35" count="72" type="cond" truecount="2" falsecount="0"/>
+        <line num="36" count="1" type="stmt"/>
+        <line num="42" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="43" count="1" type="stmt"/>
+        <line num="47" count="72" type="stmt"/>
+        <line num="48" count="72" type="stmt"/>
       </file>
       <file name="get-map-props.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/core/get-map-props.ts">
         <metrics statements="11" coveredstatements="11" conditionals="10" coveredconditionals="10" methods="1" coveredmethods="1"/>
@@ -284,27 +292,26 @@
         <line num="34" count="3" type="stmt"/>
       </file>
       <file name="get-mapping-for-destination.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/core/get-mapping-for-destination.ts">
-        <metrics statements="7" coveredstatements="7" conditionals="6" coveredconditionals="6" methods="1" coveredmethods="1"/>
-        <line num="1" count="5" type="stmt"/>
+        <metrics statements="6" coveredstatements="6" conditionals="6" coveredconditionals="6" methods="1" coveredmethods="1"/>
         <line num="4" count="5" type="stmt"/>
-        <line num="10" count="93" type="cond" truecount="2" falsecount="0"/>
-        <line num="12" count="48" type="stmt"/>
-        <line num="14" count="48" type="cond" truecount="4" falsecount="0"/>
-        <line num="15" count="1" type="stmt"/>
-        <line num="20" count="47" type="stmt"/>
+        <line num="11" count="93" type="cond" truecount="2" falsecount="0"/>
+        <line num="13" count="48" type="stmt"/>
+        <line num="15" count="48" type="cond" truecount="4" falsecount="0"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="21" count="47" type="stmt"/>
       </file>
       <file name="get-mapping-for-nested-key.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/core/get-mapping-for-nested-key.ts">
         <metrics statements="10" coveredstatements="10" conditionals="10" coveredconditionals="9" methods="1" coveredmethods="1"/>
         <line num="1" count="5" type="stmt"/>
         <line num="4" count="5" type="stmt"/>
-        <line num="13" count="7" type="stmt"/>
-        <line num="18" count="7" type="cond" truecount="3" falsecount="1"/>
-        <line num="19" count="7" type="cond" truecount="4" falsecount="0"/>
-        <line num="20" count="1" type="stmt"/>
-        <line num="25" count="6" type="stmt"/>
-        <line num="26" count="6" type="cond" truecount="2" falsecount="0"/>
-        <line num="27" count="1" type="stmt"/>
-        <line num="32" count="5" type="stmt"/>
+        <line num="14" count="7" type="stmt"/>
+        <line num="19" count="7" type="cond" truecount="3" falsecount="1"/>
+        <line num="20" count="7" type="cond" truecount="4" falsecount="0"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="26" count="6" type="stmt"/>
+        <line num="27" count="6" type="cond" truecount="2" falsecount="0"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="33" count="5" type="stmt"/>
       </file>
       <file name="index.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/core/index.ts">
         <metrics statements="13" coveredstatements="13" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
@@ -342,35 +349,35 @@
         <line num="4" count="5" type="stmt"/>
         <line num="5" count="5" type="stmt"/>
         <line num="7" count="5" type="stmt"/>
-        <line num="11" count="101" type="stmt"/>
-        <line num="12" count="101" type="stmt"/>
-        <line num="14" count="101" type="stmt"/>
-        <line num="15" count="101" type="stmt"/>
-        <line num="16" count="101" type="cond" truecount="5" falsecount="1"/>
+        <line num="11" count="100" type="stmt"/>
+        <line num="12" count="100" type="stmt"/>
+        <line num="14" count="100" type="stmt"/>
+        <line num="15" count="100" type="stmt"/>
+        <line num="16" count="100" type="cond" truecount="5" falsecount="1"/>
         <line num="17" count="1" type="stmt"/>
-        <line num="20" count="101" type="stmt"/>
-        <line num="21" count="101" type="stmt"/>
-        <line num="22" count="101" type="stmt"/>
-        <line num="23" count="101" type="stmt"/>
-        <line num="24" count="732" type="stmt"/>
-        <line num="25" count="732" type="stmt"/>
-        <line num="29" count="732" type="stmt"/>
-        <line num="30" count="732" type="cond" truecount="2" falsecount="0"/>
+        <line num="20" count="100" type="stmt"/>
+        <line num="21" count="100" type="stmt"/>
+        <line num="22" count="100" type="stmt"/>
+        <line num="23" count="100" type="stmt"/>
+        <line num="24" count="729" type="stmt"/>
+        <line num="25" count="729" type="stmt"/>
+        <line num="29" count="729" type="stmt"/>
+        <line num="30" count="729" type="cond" truecount="2" falsecount="0"/>
         <line num="31" count="411" type="stmt"/>
         <line num="32" count="411" type="cond" truecount="1" falsecount="1"/>
         <line num="36" count="411" type="stmt"/>
-        <line num="40" count="321" type="cond" truecount="2" falsecount="0"/>
-        <line num="44" count="123" type="stmt"/>
-        <line num="47" count="173" type="stmt"/>
-        <line num="48" count="123" type="cond" truecount="4" falsecount="0"/>
-        <line num="49" count="116" type="stmt"/>
+        <line num="40" count="318" type="cond" truecount="2" falsecount="0"/>
+        <line num="44" count="122" type="stmt"/>
+        <line num="47" count="171" type="stmt"/>
+        <line num="48" count="122" type="cond" truecount="4" falsecount="0"/>
+        <line num="49" count="115" type="stmt"/>
         <line num="52" count="7" type="stmt"/>
         <line num="56" count="10" type="stmt"/>
         <line num="64" count="7" type="cond" truecount="2" falsecount="0"/>
         <line num="65" count="3" type="stmt"/>
         <line num="76" count="7" type="stmt"/>
         <line num="87" count="7" type="stmt"/>
-        <line num="90" count="198" type="stmt"/>
+        <line num="90" count="196" type="stmt"/>
       </file>
       <file name="initialize-reverse-mapping-props.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/core/initialize-reverse-mapping-props.ts">
         <metrics statements="19" coveredstatements="19" conditionals="16" coveredconditionals="15" methods="2" coveredmethods="2"/>
@@ -399,18 +406,18 @@
         <line num="1" count="5" type="stmt"/>
         <line num="3" count="5" type="stmt"/>
         <line num="5" count="5" type="stmt"/>
-        <line num="7" count="1276" type="cond" truecount="2" falsecount="0"/>
-        <line num="9" count="642" type="stmt"/>
-        <line num="11" count="642" type="cond" truecount="4" falsecount="0"/>
+        <line num="7" count="1272" type="cond" truecount="2" falsecount="0"/>
+        <line num="9" count="640" type="stmt"/>
+        <line num="11" count="640" type="cond" truecount="4" falsecount="0"/>
         <line num="12" count="8" type="stmt"/>
-        <line num="15" count="634" type="stmt"/>
-        <line num="17" count="634" type="stmt"/>
-        <line num="18" count="634" type="stmt"/>
-        <line num="19" count="2227" type="stmt"/>
-        <line num="20" count="2227" type="stmt"/>
-        <line num="21" count="2227" type="cond" truecount="2" falsecount="0"/>
-        <line num="22" count="1790" type="cond" truecount="5" falsecount="1"/>
-        <line num="23" count="1790" type="stmt"/>
+        <line num="15" count="632" type="stmt"/>
+        <line num="17" count="632" type="stmt"/>
+        <line num="18" count="632" type="stmt"/>
+        <line num="19" count="2222" type="stmt"/>
+        <line num="20" count="2222" type="stmt"/>
+        <line num="21" count="2222" type="cond" truecount="2" falsecount="0"/>
+        <line num="22" count="1785" type="cond" truecount="5" falsecount="1"/>
+        <line num="23" count="1785" type="stmt"/>
         <line num="26" count="437" type="cond" truecount="2" falsecount="0"/>
         <line num="27" count="13" type="cond" truecount="5" falsecount="1"/>
         <line num="28" count="13" type="stmt"/>
@@ -418,98 +425,100 @@
         <line num="35" count="119" type="cond" truecount="3" falsecount="1"/>
         <line num="38" count="119" type="stmt"/>
         <line num="41" count="305" type="stmt"/>
-        <line num="47" count="634" type="stmt"/>
+        <line num="47" count="632" type="stmt"/>
       </file>
       <file name="map.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/core/map.ts">
-        <metrics statements="88" coveredstatements="88" conditionals="70" coveredconditionals="67" methods="2" coveredmethods="2"/>
+        <metrics statements="90" coveredstatements="90" conditionals="71" coveredconditionals="68" methods="2" coveredmethods="2"/>
         <line num="1" count="5" type="stmt"/>
-        <line num="2" count="5" type="stmt"/>
-        <line num="17" count="5" type="stmt"/>
-        <line num="26" count="5" type="stmt"/>
-        <line num="27" count="5" type="stmt"/>
-        <line num="28" count="5" type="stmt"/>
-        <line num="30" count="5" type="stmt"/>
-        <line num="36" count="94" type="cond" truecount="2" falsecount="0"/>
-        <line num="40" count="97" type="cond" truecount="2" falsecount="0"/>
-        <line num="42" count="57" type="stmt"/>
-        <line num="43" count="57" type="stmt"/>
+        <line num="3" count="5" type="stmt"/>
+        <line num="18" count="5" type="stmt"/>
+        <line num="19" count="5" type="stmt"/>
+        <line num="20" count="5" type="stmt"/>
+        <line num="21" count="5" type="stmt"/>
+        <line num="23" count="5" type="stmt"/>
+        <line num="27" count="94" type="cond" truecount="2" falsecount="0"/>
+        <line num="32" count="97" type="cond" truecount="2" falsecount="0"/>
+        <line num="34" count="57" type="stmt"/>
+        <line num="35" count="57" type="stmt"/>
+        <line num="36" count="57" type="stmt"/>
+        <line num="37" count="57" type="stmt"/>
+        <line num="38" count="57" type="stmt"/>
+        <line num="40" count="57" type="cond" truecount="2" falsecount="0"/>
+        <line num="41" count="2" type="stmt"/>
+        <line num="43" count="57" type="cond" truecount="2" falsecount="0"/>
         <line num="44" count="57" type="stmt"/>
         <line num="45" count="57" type="stmt"/>
-        <line num="46" count="57" type="stmt"/>
-        <line num="48" count="57" type="cond" truecount="2" falsecount="0"/>
-        <line num="49" count="2" type="stmt"/>
-        <line num="51" count="57" type="cond" truecount="2" falsecount="0"/>
-        <line num="52" count="57" type="stmt"/>
-        <line num="53" count="57" type="stmt"/>
-        <line num="55" count="57" type="stmt"/>
-        <line num="57" count="57" type="cond" truecount="2" falsecount="0"/>
-        <line num="58" count="40" type="cond" truecount="2" falsecount="0"/>
-        <line num="59" count="3" type="stmt"/>
-        <line num="60" count="37" type="cond" truecount="2" falsecount="0"/>
-        <line num="61" count="2" type="stmt"/>
-        <line num="65" count="57" type="stmt"/>
-        <line num="66" count="57" type="stmt"/>
-        <line num="67" count="172" type="stmt"/>
-        <line num="68" count="172" type="stmt"/>
-        <line num="70" count="172" type="cond" truecount="4" falsecount="0"/>
-        <line num="71" count="3" type="cond" truecount="6" falsecount="2"/>
-        <line num="72" count="3" type="stmt"/>
-        <line num="75" count="169" type="cond" truecount="2" falsecount="0"/>
-        <line num="81" count="21" type="stmt"/>
-        <line num="82" count="21" type="stmt"/>
-        <line num="85" count="148" type="stmt"/>
-        <line num="90" count="148" type="cond" truecount="2" falsecount="0"/>
-        <line num="96" count="80" type="stmt"/>
-        <line num="99" count="80" type="cond" truecount="2" falsecount="0"/>
-        <line num="100" count="4" type="stmt"/>
-        <line num="101" count="4" type="stmt"/>
-        <line num="104" count="76" type="cond" truecount="2" falsecount="0"/>
-        <line num="105" count="22" type="cond" truecount="2" falsecount="0"/>
-        <line num="106" count="2" type="stmt"/>
-        <line num="107" count="2" type="stmt"/>
-        <line num="110" count="20" type="cond" truecount="2" falsecount="0"/>
-        <line num="111" count="9" type="stmt"/>
-        <line num="112" count="9" type="cond" truecount="2" falsecount="0"/>
-        <line num="113" count="1" type="stmt"/>
-        <line num="114" count="1" type="stmt"/>
-        <line num="117" count="8" type="cond" truecount="2" falsecount="0"/>
-        <line num="118" count="1" type="stmt"/>
-        <line num="119" count="1" type="stmt"/>
-        <line num="122" count="7" type="stmt"/>
-        <line num="127" count="5" type="stmt"/>
-        <line num="132" count="5" type="stmt"/>
-        <line num="136" count="65" type="cond" truecount="2" falsecount="0"/>
-        <line num="141" count="11" type="stmt"/>
-        <line num="145" count="11" type="stmt"/>
-        <line num="146" count="11" type="stmt"/>
-        <line num="149" count="54" type="stmt"/>
-        <line num="150" count="54" type="stmt"/>
-        <line num="153" count="68" type="stmt"/>
-        <line num="154" count="68" type="cond" truecount="2" falsecount="0"/>
-        <line num="164" count="10" type="stmt"/>
-        <line num="168" count="58" type="cond" truecount="2" falsecount="0"/>
-        <line num="174" count="45" type="stmt"/>
-        <line num="179" count="13" type="cond" truecount="1" falsecount="1"/>
-        <line num="193" count="13" type="stmt"/>
-        <line num="198" count="68" type="stmt"/>
-        <line num="201" count="55" type="cond" truecount="2" falsecount="0"/>
-        <line num="202" count="38" type="cond" truecount="2" falsecount="0"/>
-        <line num="203" count="3" type="stmt"/>
-        <line num="204" count="35" type="cond" truecount="2" falsecount="0"/>
-        <line num="205" count="4" type="stmt"/>
-        <line num="209" count="55" type="stmt"/>
-        <line num="212" count="5" type="stmt"/>
-        <line num="218" count="17" type="cond" truecount="2" falsecount="0"/>
-        <line num="223" count="9" type="stmt"/>
-        <line num="224" count="9" type="stmt"/>
-        <line num="226" count="9" type="cond" truecount="2" falsecount="0"/>
-        <line num="227" count="1" type="stmt"/>
-        <line num="230" count="9" type="stmt"/>
-        <line num="231" count="17" type="stmt"/>
-        <line num="232" count="17" type="stmt"/>
-        <line num="235" count="9" type="cond" truecount="2" falsecount="0"/>
-        <line num="236" count="1" type="stmt"/>
-        <line num="239" count="9" type="stmt"/>
+        <line num="47" count="57" type="stmt"/>
+        <line num="49" count="57" type="cond" truecount="2" falsecount="0"/>
+        <line num="50" count="40" type="cond" truecount="2" falsecount="0"/>
+        <line num="51" count="3" type="stmt"/>
+        <line num="52" count="37" type="cond" truecount="2" falsecount="0"/>
+        <line num="53" count="2" type="stmt"/>
+        <line num="57" count="57" type="stmt"/>
+        <line num="58" count="57" type="stmt"/>
+        <line num="59" count="172" type="stmt"/>
+        <line num="60" count="172" type="stmt"/>
+        <line num="62" count="172" type="cond" truecount="4" falsecount="0"/>
+        <line num="63" count="3" type="cond" truecount="6" falsecount="2"/>
+        <line num="64" count="3" type="stmt"/>
+        <line num="67" count="169" type="cond" truecount="2" falsecount="0"/>
+        <line num="73" count="21" type="stmt"/>
+        <line num="74" count="21" type="stmt"/>
+        <line num="77" count="148" type="stmt"/>
+        <line num="82" count="148" type="cond" truecount="2" falsecount="0"/>
+        <line num="88" count="80" type="stmt"/>
+        <line num="91" count="80" type="cond" truecount="2" falsecount="0"/>
+        <line num="92" count="4" type="stmt"/>
+        <line num="93" count="4" type="stmt"/>
+        <line num="96" count="76" type="cond" truecount="2" falsecount="0"/>
+        <line num="97" count="22" type="cond" truecount="2" falsecount="0"/>
+        <line num="98" count="2" type="stmt"/>
+        <line num="99" count="2" type="stmt"/>
+        <line num="102" count="20" type="cond" truecount="2" falsecount="0"/>
+        <line num="103" count="9" type="stmt"/>
+        <line num="104" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="105" count="1" type="stmt"/>
+        <line num="106" count="1" type="stmt"/>
+        <line num="109" count="8" type="cond" truecount="2" falsecount="0"/>
+        <line num="110" count="1" type="stmt"/>
+        <line num="111" count="1" type="stmt"/>
+        <line num="114" count="7" type="stmt"/>
+        <line num="120" count="5" type="stmt"/>
+        <line num="130" count="5" type="stmt"/>
+        <line num="134" count="65" type="cond" truecount="2" falsecount="0"/>
+        <line num="139" count="11" type="stmt"/>
+        <line num="144" count="11" type="stmt"/>
+        <line num="149" count="11" type="stmt"/>
+        <line num="152" count="54" type="stmt"/>
+        <line num="153" count="54" type="stmt"/>
+        <line num="156" count="68" type="stmt"/>
+        <line num="157" count="68" type="cond" truecount="2" falsecount="0"/>
+        <line num="167" count="10" type="stmt"/>
+        <line num="171" count="58" type="cond" truecount="2" falsecount="0"/>
+        <line num="177" count="45" type="stmt"/>
+        <line num="182" count="13" type="cond" truecount="2" falsecount="0"/>
+        <line num="188" count="5" type="stmt"/>
+        <line num="192" count="8" type="cond" truecount="1" falsecount="1"/>
+        <line num="202" count="8" type="stmt"/>
+        <line num="207" count="68" type="stmt"/>
+        <line num="210" count="55" type="cond" truecount="2" falsecount="0"/>
+        <line num="211" count="38" type="cond" truecount="2" falsecount="0"/>
+        <line num="212" count="3" type="stmt"/>
+        <line num="213" count="35" type="cond" truecount="2" falsecount="0"/>
+        <line num="214" count="4" type="stmt"/>
+        <line num="218" count="55" type="stmt"/>
+        <line num="221" count="5" type="stmt"/>
+        <line num="225" count="17" type="cond" truecount="2" falsecount="0"/>
+        <line num="231" count="9" type="stmt"/>
+        <line num="232" count="9" type="stmt"/>
+        <line num="234" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="235" count="1" type="stmt"/>
+        <line num="238" count="9" type="stmt"/>
+        <line num="239" count="17" type="stmt"/>
+        <line num="240" count="17" type="stmt"/>
+        <line num="243" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="244" count="1" type="stmt"/>
+        <line num="247" count="9" type="stmt"/>
       </file>
     </package>
     <package name="src.decorators">
@@ -544,17 +553,17 @@
         <line num="6" count="6" type="stmt"/>
         <line num="7" count="6" type="stmt"/>
         <line num="10" count="6" type="stmt"/>
-        <line num="11" count="102" type="stmt"/>
-        <line num="12" count="102" type="stmt"/>
+        <line num="11" count="101" type="stmt"/>
+        <line num="12" count="101" type="stmt"/>
         <line num="15" count="14" type="stmt"/>
         <line num="16" count="8" type="stmt"/>
         <line num="17" count="6" type="stmt"/>
         <line num="21" count="6" type="stmt"/>
-        <line num="22" count="210" type="cond" truecount="4" falsecount="0"/>
+        <line num="22" count="208" type="cond" truecount="4" falsecount="0"/>
         <line num="23" count="1" type="stmt"/>
-        <line num="26" count="209" type="stmt"/>
-        <line num="27" count="209" type="cond" truecount="2" falsecount="0"/>
-        <line num="28" count="204" type="stmt"/>
+        <line num="26" count="207" type="stmt"/>
+        <line num="27" count="207" type="cond" truecount="2" falsecount="0"/>
+        <line num="28" count="202" type="stmt"/>
         <line num="31" count="5" type="stmt"/>
         <line num="32" count="5" type="stmt"/>
         <line num="33" count="5" type="stmt"/>
@@ -630,8 +639,8 @@
         <line num="1" count="6" type="stmt"/>
         <line num="7" count="6" type="stmt"/>
         <line num="9" count="6" type="stmt"/>
-        <line num="14" count="1013" type="stmt"/>
-        <line num="16" count="337" type="stmt"/>
+        <line num="14" count="1007" type="stmt"/>
+        <line num="16" count="335" type="stmt"/>
         <line num="19" count="81" type="stmt"/>
       </file>
       <file name="map-with.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/member-functions/map-with.ts">
@@ -651,9 +660,9 @@
         <line num="38" count="2" type="cond" truecount="2" falsecount="0"/>
         <line num="39" count="1" type="stmt"/>
         <line num="42" count="1" type="stmt"/>
-        <line num="46" count="1" type="stmt"/>
-        <line num="49" count="6" type="stmt"/>
-        <line num="53" count="6" type="stmt"/>
+        <line num="47" count="1" type="stmt"/>
+        <line num="50" count="6" type="stmt"/>
+        <line num="55" count="6" type="stmt"/>
       </file>
       <file name="null-substitution.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/member-functions/null-substitution.ts">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
@@ -671,7 +680,7 @@
       </file>
     </package>
     <package name="src.storages">
-      <metrics statements="40" coveredstatements="40" conditionals="21" coveredconditionals="19" methods="16" coveredmethods="16"/>
+      <metrics statements="38" coveredstatements="38" conditionals="21" coveredconditionals="19" methods="16" coveredmethods="16"/>
       <file name="index.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/storages/index.ts">
         <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="11" type="stmt"/>
@@ -679,19 +688,18 @@
         <line num="3" count="11" type="stmt"/>
       </file>
       <file name="mapping.storage.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/storages/mapping.storage.ts">
-        <metrics statements="12" coveredstatements="12" conditionals="13" coveredconditionals="12" methods="6" coveredmethods="6"/>
+        <metrics statements="11" coveredstatements="11" conditionals="13" coveredconditionals="12" methods="6" coveredmethods="6"/>
         <line num="7" count="11" type="stmt"/>
-        <line num="11" count="11" type="stmt"/>
+        <line num="11" count="9" type="stmt"/>
         <line num="17" count="11" type="stmt"/>
-        <line num="22" count="177" type="cond" truecount="2" falsecount="0"/>
+        <line num="22" count="176" type="cond" truecount="2" falsecount="0"/>
         <line num="29" count="11" type="stmt"/>
-        <line num="30" count="134" type="cond" truecount="4" falsecount="0"/>
+        <line num="30" count="135" type="cond" truecount="4" falsecount="0"/>
         <line num="33" count="11" type="stmt"/>
-        <line num="34" count="283" type="stmt"/>
+        <line num="34" count="279" type="stmt"/>
         <line num="41" count="11" type="stmt"/>
         <line num="42" count="33" type="stmt"/>
         <line num="47" count="11" type="stmt"/>
-        <line num="49" count="11" type="stmt"/>
       </file>
       <file name="metadata.storage.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/storages/metadata.storage.ts">
         <metrics statements="14" coveredstatements="14" conditionals="6" coveredconditionals="5" methods="5" coveredmethods="5"/>
@@ -699,7 +707,7 @@
         <line num="9" count="12" type="stmt"/>
         <line num="10" count="12" type="stmt"/>
         <line num="12" count="12" type="stmt"/>
-        <line num="15" count="651" type="stmt"/>
+        <line num="15" count="649" type="stmt"/>
         <line num="18" count="12" type="stmt"/>
         <line num="22" count="25" type="stmt"/>
         <line num="25" count="12" type="stmt"/>
@@ -711,9 +719,9 @@
         <line num="43" count="12" type="stmt"/>
       </file>
       <file name="profile.storage.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/storages/profile.storage.ts">
-        <metrics statements="11" coveredstatements="11" conditionals="2" coveredconditionals="2" methods="5" coveredmethods="5"/>
+        <metrics statements="10" coveredstatements="10" conditionals="2" coveredconditionals="2" methods="5" coveredmethods="5"/>
         <line num="9" count="11" type="stmt"/>
-        <line num="13" count="11" type="stmt"/>
+        <line num="13" count="8" type="stmt"/>
         <line num="21" count="11" type="stmt"/>
         <line num="22" count="34" type="stmt"/>
         <line num="31" count="11" type="stmt"/>
@@ -722,7 +730,6 @@
         <line num="34" count="1" type="stmt"/>
         <line num="39" count="85" type="stmt"/>
         <line num="41" count="11" type="stmt"/>
-        <line num="43" count="11" type="stmt"/>
       </file>
     </package>
     <package name="src.utils">
@@ -774,18 +781,18 @@
         <line num="1" count="12" type="stmt"/>
         <line num="2" count="12" type="stmt"/>
         <line num="4" count="12" type="stmt"/>
-        <line num="6" count="492" type="cond" truecount="2" falsecount="0"/>
-        <line num="9" count="389" type="cond" truecount="2" falsecount="0"/>
-        <line num="11" count="389" type="cond" truecount="2" falsecount="0"/>
+        <line num="6" count="489" type="cond" truecount="2" falsecount="0"/>
+        <line num="9" count="387" type="cond" truecount="2" falsecount="0"/>
+        <line num="11" count="387" type="cond" truecount="2" falsecount="0"/>
         <line num="12" count="1" type="stmt"/>
-        <line num="15" count="388" type="stmt"/>
-        <line num="16" count="388" type="stmt"/>
-        <line num="17" count="736" type="stmt"/>
-        <line num="18" count="736" type="stmt"/>
-        <line num="19" count="736" type="cond" truecount="1" falsecount="1"/>
-        <line num="20" count="736" type="stmt"/>
-        <line num="23" count="736" type="stmt"/>
-        <line num="24" count="736" type="cond" truecount="2" falsecount="0"/>
+        <line num="15" count="386" type="stmt"/>
+        <line num="16" count="386" type="stmt"/>
+        <line num="17" count="733" type="stmt"/>
+        <line num="18" count="733" type="stmt"/>
+        <line num="19" count="733" type="cond" truecount="1" falsecount="1"/>
+        <line num="20" count="733" type="stmt"/>
+        <line num="23" count="733" type="stmt"/>
+        <line num="24" count="733" type="cond" truecount="2" falsecount="0"/>
         <line num="25" count="96" type="stmt"/>
         <line num="26" count="96" type="cond" truecount="2" falsecount="0"/>
         <line num="27" count="4" type="stmt"/>
@@ -795,34 +802,34 @@
         <line num="33" count="499" type="cond" truecount="2" falsecount="0"/>
         <line num="34" count="1" type="stmt"/>
         <line num="36" count="498" type="stmt"/>
-        <line num="42" count="388" type="cond" truecount="2" falsecount="0"/>
-        <line num="43" count="194" type="stmt"/>
-        <line num="46" count="388" type="stmt"/>
-        <line num="50" count="975" type="stmt"/>
+        <line num="42" count="386" type="cond" truecount="2" falsecount="0"/>
+        <line num="43" count="193" type="stmt"/>
+        <line num="46" count="386" type="stmt"/>
+        <line num="50" count="971" type="stmt"/>
       </file>
       <file name="getProto.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/utils/getProto.ts">
         <metrics statements="2" coveredstatements="2" conditionals="3" coveredconditionals="1" methods="1" coveredmethods="1"/>
         <line num="1" count="13" type="stmt"/>
-        <line num="2" count="739" type="stmt"/>
+        <line num="2" count="736" type="stmt"/>
       </file>
       <file name="getSourcePropertyKey.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/utils/getSourcePropertyKey.ts">
         <metrics statements="8" coveredstatements="8" conditionals="4" coveredconditionals="3" methods="2" coveredmethods="2"/>
         <line num="2" count="11" type="stmt"/>
         <line num="4" count="11" type="stmt"/>
-        <line num="5" count="1787" type="stmt"/>
-        <line num="11" count="1787" type="cond" truecount="2" falsecount="0"/>
+        <line num="5" count="1784" type="stmt"/>
+        <line num="11" count="1784" type="cond" truecount="2" falsecount="0"/>
         <line num="12" count="411" type="stmt"/>
         <line num="15" count="907" type="stmt"/>
-        <line num="23" count="1376" type="stmt"/>
-        <line num="26" count="1376" type="stmt"/>
+        <line num="23" count="1373" type="stmt"/>
+        <line num="26" count="1373" type="stmt"/>
       </file>
       <file name="getTag.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/utils/getTag.ts">
         <metrics statements="5" coveredstatements="5" conditionals="4" coveredconditionals="4" methods="1" coveredmethods="1"/>
         <line num="1" count="13" type="stmt"/>
         <line num="3" count="13" type="stmt"/>
-        <line num="4" count="3426" type="cond" truecount="2" falsecount="0"/>
-        <line num="5" count="1419" type="cond" truecount="2" falsecount="0"/>
-        <line num="8" count="2007" type="stmt"/>
+        <line num="4" count="3413" type="cond" truecount="2" falsecount="0"/>
+        <line num="5" count="1410" type="cond" truecount="2" falsecount="0"/>
+        <line num="8" count="2003" type="stmt"/>
       </file>
       <file name="index.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/utils/index.ts">
         <metrics statements="14" coveredstatements="14" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
@@ -858,26 +865,26 @@
         <line num="1" count="12" type="stmt"/>
         <line num="2" count="12" type="stmt"/>
         <line num="4" count="12" type="stmt"/>
-        <line num="5" count="664" type="stmt"/>
-        <line num="6" count="664" type="cond" truecount="2" falsecount="0"/>
+        <line num="5" count="662" type="stmt"/>
+        <line num="6" count="662" type="cond" truecount="2" falsecount="0"/>
         <line num="7" count="1" type="stmt"/>
-        <line num="10" count="663" type="cond" truecount="2" falsecount="0"/>
+        <line num="10" count="661" type="cond" truecount="2" falsecount="0"/>
         <line num="11" count="15" type="stmt"/>
-        <line num="14" count="648" type="cond" truecount="2" falsecount="0"/>
-        <line num="15" count="637" type="stmt"/>
+        <line num="14" count="646" type="cond" truecount="2" falsecount="0"/>
+        <line num="15" count="635" type="stmt"/>
         <line num="18" count="11" type="stmt"/>
       </file>
       <file name="isNestedPath.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/utils/isNestedPath.ts">
         <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="11" type="stmt"/>
-        <line num="2" count="1787" type="stmt"/>
+        <line num="2" count="1784" type="stmt"/>
       </file>
       <file name="isObjectLike.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/utils/isObjectLike.ts">
         <metrics statements="4" coveredstatements="4" conditionals="3" coveredconditionals="3" methods="1" coveredmethods="1"/>
         <line num="1" count="12" type="stmt"/>
         <line num="2" count="12" type="stmt"/>
         <line num="4" count="12" type="stmt"/>
-        <line num="5" count="1209" type="stmt"/>
+        <line num="5" count="1204" type="stmt"/>
       </file>
       <file name="isResolver.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/utils/isResolver.ts">
         <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
@@ -895,7 +902,7 @@
         <line num="1" count="11" type="stmt"/>
         <line num="4" count="11" type="stmt"/>
         <line num="10" count="242" type="stmt"/>
-        <line num="14" count="1790" type="stmt"/>
+        <line num="14" count="1785" type="stmt"/>
         <line num="15" count="204" type="stmt"/>
         <line num="17" count="119" type="stmt"/>
         <line num="18" count="23" type="stmt"/>

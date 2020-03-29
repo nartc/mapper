@@ -9,7 +9,7 @@ import {
   mapArray,
 } from './core';
 import { MetadataExplorer } from './explorers';
-import { mappingStorage, profileStorage } from './storages';
+import { MappingStorage, ProfileStorage } from './storages';
 import {
   AutoMapperGlobalSettings,
   BaseOf,
@@ -18,11 +18,15 @@ import {
   CreateMapOptions,
   Dict,
   MapOptions,
+  Mapping,
   MappingProfile,
   NamingConvention,
 } from './types';
 
 export class AutoMapper {
+  private readonly _mappingStorage = new MappingStorage();
+  private readonly _profileStorage = new ProfileStorage();
+
   private defaultNamingConventions!: [
     Constructible<NamingConvention>,
     Constructible<NamingConvention>
@@ -45,7 +49,7 @@ export class AutoMapper {
   }
 
   addProfile(profile: new (mapper: AutoMapper) => MappingProfile): AutoMapper {
-    profileStorage.add(this, new profile(this));
+    this._profileStorage.add(this, new profile(this));
     return this;
   }
 
@@ -80,8 +84,13 @@ export class AutoMapper {
       destinationMemberNamingConvention: this.defaultNamingConventions[1],
       ...options,
     };
-    const mapping = createMappingObject(source, destination, mergeOptions);
-    return createMapFluentFunction(mapping, mergeOptions);
+    const mapping = createMappingObject(
+      source,
+      destination,
+      mergeOptions,
+      this._mappingStorage
+    );
+    return createMapFluentFunction(mapping, mergeOptions, this._mappingStorage);
   }
 
   map<
@@ -108,9 +117,10 @@ export class AutoMapper {
     const [destination, source, options] = getMapProps(args);
     const mapping = getMappingForDestination(
       destination,
-      source || (sourceObj.constructor as Constructible<TSource>)
+      source || (sourceObj.constructor as Constructible<TSource>),
+      this._mappingStorage
     );
-    return map(sourceObj, mapping, options);
+    return map(sourceObj, mapping, options, this._mappingStorage);
   }
 
   mapAsync<
@@ -137,9 +147,12 @@ export class AutoMapper {
     const [destination, source, options] = getMapProps(args);
     const mapping = getMappingForDestination(
       destination,
-      source || (sourceObj.constructor as Constructible<TSource>)
+      source || (sourceObj.constructor as Constructible<TSource>),
+      this._mappingStorage
     );
-    return Promise.resolve().then(() => map(sourceObj, mapping, options));
+    return Promise.resolve().then(() =>
+      map(sourceObj, mapping, options, this._mappingStorage)
+    );
   }
 
   mapArray<
@@ -170,10 +183,11 @@ export class AutoMapper {
     const [destination, source, options] = getMapProps(args);
     const mapping = getMappingForDestination(
       destination,
-      source || (sourceArr[0].constructor as Constructible<TSource>)
+      source || (sourceArr[0].constructor as Constructible<TSource>),
+      this._mappingStorage
     );
 
-    return mapArray(sourceArr, mapping, options);
+    return mapArray(sourceArr, mapping, options, this._mappingStorage);
   }
 
   mapArrayAsync<
@@ -204,19 +218,40 @@ export class AutoMapper {
     const [destination, source, options] = getMapProps(args);
     const mapping = getMappingForDestination(
       destination,
-      source || (sourceArr[0].constructor as Constructible<TSource>)
+      source || (sourceArr[0].constructor as Constructible<TSource>),
+      this._mappingStorage
     );
 
-    return Promise.resolve().then(() => mapArray(sourceArr, mapping, options));
+    return Promise.resolve().then(() =>
+      mapArray(sourceArr, mapping, options, this._mappingStorage)
+    );
+  }
+
+  getMapping<
+    TSource extends Dict<TSource> = any,
+    TDestination extends Dict<TDestination> = any
+  >(
+    source: Constructible<TSource>,
+    destination: Constructible<TDestination>
+  ): Mapping<TSource, TDestination> | undefined {
+    return this._mappingStorage.get(source, destination);
   }
 
   dispose(): void {
     this.setDefault();
-    mappingStorage.dispose();
+    this._mappingStorage.dispose();
+  }
+
+  get mappingStorage(): MappingStorage {
+    return this._mappingStorage;
+  }
+
+  get profileStorage(): ProfileStorage {
+    return this._profileStorage;
   }
 
   private setDefault() {
-    profileStorage.initialize(this);
+    this._profileStorage.initialize(this);
     this.defaultNamingConventions = [
       defaultNamingConvention,
       defaultNamingConvention,

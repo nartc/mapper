@@ -1,4 +1,4 @@
-import { mappingStorage } from '../storages';
+import { MappingStorage } from '../storages';
 import { Constructible, Dict, Mapping } from '../types';
 
 export function getMappingForDestination<
@@ -7,6 +7,7 @@ export function getMappingForDestination<
 >(
   destination: Constructible<TDestination>,
   source: Constructible<TSource>,
+  mappingStorage: MappingStorage,
   isInherit: boolean = false
 ): Mapping<TSource, TDestination> {
   const mapping = mappingStorage.get(source, destination);

@@ -1,3 +1,4 @@
+import { MappingStorage } from '../storages';
 import {
   BaseOf,
   CreateMapFluentFunction,
@@ -29,7 +30,8 @@ export function createMapFluentFunction<
     TDestination,
     TBaseSource,
     TBaseDestination
-  >
+  >,
+  mappingStorage: MappingStorage
 ): CreateMapFluentFunction<
   TSource,
   TDestination,
@@ -43,6 +45,7 @@ export function createMapFluentFunction<
     const baseMapping = getMappingForDestination(
       baseDestination,
       baseSource,
+      mappingStorage,
       true
     );
     if (baseMapping != null) {
@@ -87,7 +90,10 @@ export function createMapFluentFunction<
       return fluentFunction;
     },
     reverseMap: () => {
-      const reversedMapping = createReverseMappingObject(mapping);
+      const reversedMapping = createReverseMappingObject(
+        mapping,
+        mappingStorage
+      );
       return createReverseMapFluentFunction(reversedMapping);
     },
   };

@@ -3,7 +3,6 @@ import {
   PascalCaseNamingConvention,
   SnakeCaseNamingConvention,
 } from '../src/conventions';
-import { mappingStorage } from '../src/storages';
 import { Address, AddressVm } from './fixtures/models/address';
 import { Avatar, AvatarVm, OtherAvatar } from './fixtures/models/avatar';
 import { Base, BaseVm } from './fixtures/models/base';
@@ -41,14 +40,9 @@ describe('AutoMapper Integration - Create Map', () => {
   afterEach(Mapper.dispose.bind(Mapper));
 
   it('should create mapping', () => {
-    expect(mappingStorage.has(User, UserVm)).toEqual(false);
+    expect(Mapper.getMapping(User, UserVm)).toBeUndefined();
     Mapper.createMap(User, UserVm);
-    expect(mappingStorage.has(User, UserVm)).toEqual(true);
-  });
-
-  it('should retrieve mapping after creation', () => {
-    Mapper.createMap(User, UserVm);
-    expect(mappingStorage.get(User, UserVm)).toBeTruthy();
+    expect(Mapper.getMapping(User, UserVm)).toBeTruthy();
   });
 
   it('should throw error when adding a pair of models twice', () => {
@@ -501,10 +495,10 @@ describe('AutoMapper Integration - ReverseMap', () => {
 
   it('should return mapping if reverseMap is called after createMap', () => {
     Mapper.createMap(UserVm, User);
-    const mapping = mappingStorage.get(UserVm, User);
+    const mapping = Mapper.getMapping(UserVm, User);
     expect(mapping).toBeTruthy();
     Mapper.createMap(User, UserVm).reverseMap();
-    const sameMapping = mappingStorage.get(UserVm, User);
+    const sameMapping = Mapper.getMapping(UserVm, User);
     expect(sameMapping).toEqual(mapping);
   });
 });

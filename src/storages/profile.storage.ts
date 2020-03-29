@@ -6,7 +6,7 @@ import { MappingProfile } from '../types';
  *
  * @private
  */
-class ProfileStorage {
+export class ProfileStorage {
   private profiles: WeakMap<AutoMapper, MappingProfile[]>;
 
   constructor() {
@@ -39,5 +39,3 @@ class ProfileStorage {
     profiles.push(profile);
   }
 }
-
-export const profileStorage = new ProfileStorage();

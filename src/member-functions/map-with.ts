@@ -21,7 +21,7 @@ export function mapWith<
   return [
     TransformationType.MapWith as const,
     withValue,
-    source => {
+    (source, mappingStorage) => {
       const sourceValue = withValue(source);
       if (isEmpty(sourceValue)) {
         return null;
@@ -41,16 +41,23 @@ export function mapWith<
 
         const mapping = getMappingForDestination(
           withDestination,
-          sourceValue[0].constructor
+          sourceValue[0].constructor,
+          mappingStorage
         );
-        return mapArray(sourceValue, mapping) as any;
+        return mapArray(sourceValue, mapping, undefined, mappingStorage) as any;
       }
 
       const mapping = getMappingForDestination(
         withDestination,
-        sourceValue.constructor
+        sourceValue.constructor,
+        mappingStorage
       );
-      return map(sourceValue, mapping) as TSelectorReturn;
+      return map(
+        sourceValue,
+        mapping,
+        undefined,
+        mappingStorage
+      ) as TSelectorReturn;
     },
   ];
 }

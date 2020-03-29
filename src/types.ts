@@ -1,3 +1,5 @@
+import { MappingStorage } from './storages';
+
 export type Unpacked<T> = T extends (infer U)[]
   ? U
   : T extends (...args: any[]) => infer U
@@ -275,7 +277,7 @@ export interface MapWithFunction<
   ): [
     TransformationType.MapWith,
     ValueSelector<TSource>,
-    (source: TSource) => TSelectorReturn | null
+    (source: TSource, mappingStorage: MappingStorage) => TSelectorReturn | null
   ];
 }
 

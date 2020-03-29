@@ -1,4 +1,5 @@
 import set from 'lodash.set';
+import { MappingStorage } from '../storages';
 import {
   ConditionFunction,
   ConvertUsingFunction,
@@ -37,6 +38,7 @@ export function map<
     beforeMap: undefined,
     afterMap: undefined,
   },
+  mappingStorage: MappingStorage,
   isArrayMap: boolean = false
 ): TDestination {
   const [
@@ -122,12 +124,18 @@ export function map<
           const nestedMapping = getMappingForNestedKey(
             destinationModel,
             memberPath as keyof TDestination,
-            first.constructor
+            first.constructor,
+            mappingStorage
           );
           set(
             destination,
             memberPath,
-            mapArray(mapInitializeValue, nestedMapping)
+            mapArray(
+              mapInitializeValue,
+              nestedMapping,
+              undefined,
+              mappingStorage
+            )
           );
           continue;
         }
@@ -140,9 +148,14 @@ export function map<
       ) {
         const nestedMapping = getMappingForDestination(
           get(destination, null, memberPath).constructor,
-          mapInitializeValue.constructor
+          mapInitializeValue.constructor,
+          mappingStorage
         );
-        set(destination, memberPath, map(mapInitializeValue, nestedMapping));
+        set(
+          destination,
+          memberPath,
+          map(mapInitializeValue, nestedMapping, undefined, mappingStorage)
+        );
         continue;
       }
 
@@ -180,7 +193,13 @@ export function map<
       isThisMemberMap<MapWithFunction>(
         transformation.mapFn,
         TransformationType.MapWith
-      ) ||
+      )
+    ) {
+      value = transformation.mapFn[MemberMapFunctionReturnClassId.fn](
+        sourceObj,
+        mappingStorage
+      );
+    } else if (
       isThisMemberMap<FromValueFunction>(
         transformation.mapFn,
         TransformationType.FromValue
@@ -218,7 +237,8 @@ export function mapArray<
   options: MapOptions<TSource[], TDestination[]> = {
     beforeMap: undefined,
     afterMap: undefined,
-  }
+  },
+  mappingStorage: MappingStorage
 ): TDestination[] {
   let destination: TDestination[] = [];
   const { beforeMap, afterMap } = options;
@@ -229,7 +249,7 @@ export function mapArray<
 
   for (let i = 0, len = sourceArray.length; i < len; i++) {
     const source = sourceArray[i];
-    destination.push(map(source, mapping, {}, true));
+    destination.push(map(source, mapping, {}, mappingStorage, true));
   }
 
   if (afterMap) {

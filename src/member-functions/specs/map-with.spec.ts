@@ -38,7 +38,10 @@ describe('MapWithFunction', () => {
     const mapWithFn = mapWith(Bar, sourceSelector);
     const foo = new Foo();
     foo.foo = 'bar';
-    const result = mapWithFn[MemberMapFunctionReturnClassId.fn]({ foo });
+    const result = mapWithFn[MemberMapFunctionReturnClassId.fn](
+      { foo },
+      Mapper.mappingStorage
+    );
     expect(result).toBeTruthy();
     expect(result).toBeInstanceOf(Bar);
     expect(result?.bar).toBe(foo.foo);
@@ -46,11 +49,17 @@ describe('MapWithFunction', () => {
 
   it('should return null when sourceValue is empty', () => {
     const mapWithFn = mapWith(Bar, sourceSelector);
-    const result = mapWithFn[MemberMapFunctionReturnClassId.fn]({ foo: null });
+    const result = mapWithFn[MemberMapFunctionReturnClassId.fn](
+      { foo: null },
+      Mapper.mappingStorage
+    );
     expect(result).toBeNull();
-    const result2 = mapWithFn[MemberMapFunctionReturnClassId.fn]({
-      foo: 'test',
-    });
+    const result2 = mapWithFn[MemberMapFunctionReturnClassId.fn](
+      {
+        foo: 'test',
+      },
+      Mapper.mappingStorage
+    );
     expect(result2).toBeNull();
   });
 
@@ -67,14 +76,20 @@ describe('MapWithFunction', () => {
     );
     const foo = new FooTwo();
     foo.foo = ['1'];
-    const result = mapWithFn[MemberMapFunctionReturnClassId.fn]({ foo: [foo] });
+    const result = mapWithFn[MemberMapFunctionReturnClassId.fn](
+      { foo: [foo] },
+      Mapper.mappingStorage
+    );
     expect(result).toBeTruthy();
     expect(result).toHaveLength(1);
   });
 
   it('should return empty array for empty array', () => {
     const mapWithFn = mapWith(Bar, sourceSelector);
-    const result = mapWithFn[MemberMapFunctionReturnClassId.fn]({ foo: [[]] });
+    const result = mapWithFn[MemberMapFunctionReturnClassId.fn](
+      { foo: [[]] },
+      Mapper.mappingStorage
+    );
     expect(result).toBeTruthy();
     expect(result).toHaveLength(0);
   });

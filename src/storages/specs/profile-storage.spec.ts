@@ -1,6 +1,5 @@
 import { AutoMapper } from '../../automapper';
 import { ProfileBase } from '../../profile-base';
-import { profileStorage } from '../profile.storage';
 
 describe('ProfileStorage', () => {
   class FooBarProfile extends ProfileBase {
@@ -10,15 +9,16 @@ describe('ProfileStorage', () => {
   }
 
   it('initialize is invoked once when AutoMapper is instantiate', () => {
-    const spy = jest.spyOn(profileStorage, 'initialize');
     const mapper = new AutoMapper();
+    const spy = jest.spyOn(mapper.profileStorage, 'initialize');
+    mapper.dispose();
     expect(spy).toHaveBeenCalledWith(mapper);
     expect(spy).toHaveBeenCalledTimes(1);
   });
 
   it('add is invoked once when AutoMapper.addProfile is invoked', () => {
-    const spy = jest.spyOn(profileStorage, 'add');
     const mapper = new AutoMapper();
+    const spy = jest.spyOn(mapper.profileStorage, 'add');
     mapper.addProfile(FooBarProfile);
     expect(spy).toHaveBeenCalledWith(mapper, {
       profileName: FooBarProfile.name,

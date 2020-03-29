@@ -1,4 +1,4 @@
-import { mappingStorage } from '../storages';
+import { MappingStorage } from '../storages';
 import { BaseOf, Constructible, Dict, Mapping, MappingClassId } from '../types';
 import { getMappingForDestination } from './get-mapping-for-destination';
 import { inheritBaseMapping } from './inherit-base-mapping';
@@ -10,7 +10,8 @@ export function createReverseMappingObject<
   TBaseSource extends BaseOf<TSource, TBaseSource> = any,
   TBaseDestination extends BaseOf<TDestination, TBaseDestination> = any
 >(
-  mapping: Mapping<TSource, TDestination, TBaseSource, TBaseDestination>
+  mapping: Mapping<TSource, TDestination, TBaseSource, TBaseDestination>,
+  mappingStorage: MappingStorage
 ): Mapping<TDestination, TSource, TBaseDestination, TBaseSource> {
   const [source, destination] = mapping[MappingClassId.models];
   const [sourceConvention, destinationConvention] = mapping[
@@ -35,6 +36,7 @@ export function createReverseMappingObject<
     const reversedBaseMapping = getMappingForDestination(
       (reversedMapping[MappingClassId.bases] as any)[1],
       (reversedMapping[MappingClassId.bases] as any)[0],
+      mappingStorage,
       true
     );
     if (reversedBaseMapping) {

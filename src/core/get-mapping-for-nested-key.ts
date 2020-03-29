@@ -1,4 +1,4 @@
-import { mappingStorage, metadataStorage } from '../storages';
+import { MappingStorage, metadataStorage } from '../storages';
 import { Constructible, Dict, Mapping } from '../types';
 
 export function getMappingForNestedKey<
@@ -8,7 +8,8 @@ export function getMappingForNestedKey<
 >(
   destinationConstructor: Constructible<TDestination>,
   destinationMemberKey: TDestinationKey,
-  sourceConstructor: Constructible<TSource>
+  sourceConstructor: Constructible<TSource>,
+  mappingStorage: MappingStorage
 ): Mapping<TSource, TDestination[TDestinationKey]> {
   const keyMetadata = metadataStorage.getMetadataForKey(
     destinationConstructor,

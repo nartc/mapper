@@ -1,4 +1,4 @@
-import { mappingStorage } from '../storages';
+import { MappingStorage } from '../storages';
 import {
   BaseOf,
   Constructible,
@@ -21,7 +21,8 @@ export function createMappingObject<
     TDestination,
     TBaseSource,
     TBaseDestination
-  >
+  >,
+  mappingStorage: MappingStorage
 ) {
   if (mappingStorage.has(source, destination)) {
     throw new Error(

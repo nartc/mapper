@@ -1,7 +1,8 @@
 import { User, UserVm } from '../../../test/fixtures/models/user';
-import { mappingStorage } from '../mapping.storage';
+import { MappingStorage } from '../mapping.storage';
 
 describe('MappingStorage', () => {
+  const mappingStorage = new MappingStorage();
   afterEach(() => {
     mappingStorage.dispose();
   });

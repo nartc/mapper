@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1585449162174" clover="3.2.0">
-  <project timestamp="1585449162174" name="All files">
-    <metrics statements="707" coveredstatements="699" conditionals="390" coveredconditionals="352" methods="122" coveredmethods="120" elements="1219" coveredelements="1171" complexity="0" loc="707" ncloc="707" packages="8" files="57" classes="57"/>
+<coverage generated="1585451061937" clover="3.2.0">
+  <project timestamp="1585451061937" name="All files">
+    <metrics statements="708" coveredstatements="700" conditionals="390" coveredconditionals="352" methods="122" coveredmethods="120" elements="1220" coveredelements="1172" complexity="0" loc="708" ncloc="708" packages="8" files="57" classes="57"/>
     <package name="src">
       <metrics statements="99" coveredstatements="99" conditionals="32" coveredconditionals="32" methods="21" coveredmethods="21"/>
       <file name="automapper.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/automapper.ts">
@@ -66,9 +66,9 @@
         <line num="7" count="3" type="stmt"/>
         <line num="9" count="3" type="stmt"/>
         <line num="15" count="2" type="stmt"/>
-        <line num="16" count="2" type="stmt"/>
-        <line num="17" count="2" type="cond" truecount="2" falsecount="0"/>
-        <line num="18" count="1" type="stmt"/>
+        <line num="17" count="2" type="stmt"/>
+        <line num="18" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="19" count="1" type="stmt"/>
         <line num="21" count="1" type="stmt"/>
         <line num="22" count="7" type="stmt"/>
         <line num="24" count="7" type="cond" truecount="6" falsecount="0"/>
@@ -120,21 +120,20 @@
       </file>
     </package>
     <package name="src.conventions">
-      <metrics statements="37" coveredstatements="37" conditionals="6" coveredconditionals="5" methods="7" coveredmethods="7"/>
+      <metrics statements="35" coveredstatements="35" conditionals="6" coveredconditionals="5" methods="7" coveredmethods="7"/>
       <file name="camel-case-naming-convention.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/conventions/camel-case-naming-convention.ts">
-        <metrics statements="12" coveredstatements="12" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
+        <metrics statements="11" coveredstatements="11" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
         <line num="6" count="6" type="stmt"/>
-        <line num="7" count="2840" type="stmt"/>
-        <line num="8" count="2840" type="stmt"/>
+        <line num="7" count="2838" type="stmt"/>
+        <line num="8" count="2838" type="stmt"/>
         <line num="10" count="6" type="stmt"/>
-        <line num="11" count="1368" type="stmt"/>
-        <line num="13" count="1368" type="stmt"/>
-        <line num="15" count="1368" type="stmt"/>
-        <line num="16" count="2021" type="cond" truecount="2" falsecount="0"/>
-        <line num="17" count="1368" type="stmt"/>
-        <line num="21" count="653" type="stmt"/>
-        <line num="27" count="1368" type="stmt"/>
-        <line num="29" count="6" type="stmt"/>
+        <line num="11" count="1367" type="stmt"/>
+        <line num="13" count="1367" type="stmt"/>
+        <line num="14" count="2020" type="cond" truecount="2" falsecount="0"/>
+        <line num="15" count="1367" type="stmt"/>
+        <line num="19" count="653" type="stmt"/>
+        <line num="25" count="1367" type="stmt"/>
+        <line num="27" count="6" type="stmt"/>
       </file>
       <file name="index.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/conventions/index.ts">
         <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
@@ -145,17 +144,16 @@
         <line num="6" count="5" type="stmt"/>
       </file>
       <file name="pascal-case-naming-convention.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/conventions/pascal-case-naming-convention.ts">
-        <metrics statements="10" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="6" count="6" type="stmt"/>
         <line num="7" count="22" type="stmt"/>
         <line num="8" count="22" type="stmt"/>
         <line num="10" count="6" type="stmt"/>
         <line num="11" count="6" type="stmt"/>
-        <line num="12" count="6" type="stmt"/>
-        <line num="14" count="6" type="stmt"/>
-        <line num="15" count="12" type="stmt"/>
-        <line num="20" count="6" type="stmt"/>
-        <line num="22" count="6" type="stmt"/>
+        <line num="13" count="6" type="stmt"/>
+        <line num="14" count="12" type="stmt"/>
+        <line num="19" count="6" type="stmt"/>
+        <line num="21" count="6" type="stmt"/>
       </file>
       <file name="snake-case-naming-convention.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/conventions/snake-case-naming-convention.ts">
         <metrics statements="10" coveredstatements="10" conditionals="4" coveredconditionals="3" methods="3" coveredmethods="3"/>
@@ -172,7 +170,7 @@
       </file>
     </package>
     <package name="src.core">
-      <metrics statements="297" coveredstatements="297" conditionals="209" coveredconditionals="195" methods="27" coveredmethods="27"/>
+      <metrics statements="298" coveredstatements="298" conditionals="209" coveredconditionals="195" methods="27" coveredmethods="27"/>
       <file name="create-map-fluent-function.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/core/create-map-fluent-function.ts">
         <metrics statements="26" coveredstatements="26" conditionals="12" coveredconditionals="11" methods="5" coveredmethods="5"/>
         <line num="1" count="5" type="stmt"/>
@@ -397,7 +395,7 @@
         <line num="85" count="72" type="stmt"/>
       </file>
       <file name="instantiate.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/core/instantiate.ts">
-        <metrics statements="21" coveredstatements="21" conditionals="40" coveredconditionals="35" methods="1" coveredmethods="1"/>
+        <metrics statements="23" coveredstatements="23" conditionals="40" coveredconditionals="35" methods="1" coveredmethods="1"/>
         <line num="1" count="5" type="stmt"/>
         <line num="3" count="5" type="stmt"/>
         <line num="5" count="5" type="stmt"/>
@@ -406,22 +404,24 @@
         <line num="11" count="642" type="cond" truecount="4" falsecount="0"/>
         <line num="12" count="8" type="stmt"/>
         <line num="15" count="634" type="stmt"/>
-        <line num="17" count="2227" type="stmt"/>
-        <line num="18" count="2227" type="stmt"/>
-        <line num="19" count="2227" type="cond" truecount="2" falsecount="0"/>
-        <line num="20" count="1790" type="cond" truecount="5" falsecount="1"/>
-        <line num="21" count="1790" type="stmt"/>
-        <line num="24" count="437" type="cond" truecount="2" falsecount="0"/>
-        <line num="25" count="13" type="cond" truecount="5" falsecount="1"/>
-        <line num="26" count="13" type="stmt"/>
-        <line num="29" count="424" type="cond" truecount="2" falsecount="0"/>
-        <line num="33" count="119" type="cond" truecount="3" falsecount="1"/>
-        <line num="36" count="119" type="stmt"/>
-        <line num="39" count="305" type="stmt"/>
-        <line num="45" count="634" type="stmt"/>
+        <line num="17" count="634" type="stmt"/>
+        <line num="18" count="634" type="stmt"/>
+        <line num="19" count="2227" type="stmt"/>
+        <line num="20" count="2227" type="stmt"/>
+        <line num="21" count="2227" type="cond" truecount="2" falsecount="0"/>
+        <line num="22" count="1790" type="cond" truecount="5" falsecount="1"/>
+        <line num="23" count="1790" type="stmt"/>
+        <line num="26" count="437" type="cond" truecount="2" falsecount="0"/>
+        <line num="27" count="13" type="cond" truecount="5" falsecount="1"/>
+        <line num="28" count="13" type="stmt"/>
+        <line num="31" count="424" type="cond" truecount="2" falsecount="0"/>
+        <line num="35" count="119" type="cond" truecount="3" falsecount="1"/>
+        <line num="38" count="119" type="stmt"/>
+        <line num="41" count="305" type="stmt"/>
+        <line num="47" count="634" type="stmt"/>
       </file>
       <file name="map.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/core/map.ts">
-        <metrics statements="89" coveredstatements="89" conditionals="70" coveredconditionals="67" methods="2" coveredmethods="2"/>
+        <metrics statements="88" coveredstatements="88" conditionals="70" coveredconditionals="67" methods="2" coveredmethods="2"/>
         <line num="1" count="5" type="stmt"/>
         <line num="2" count="5" type="stmt"/>
         <line num="17" count="5" type="stmt"/>
@@ -449,21 +449,21 @@
         <line num="61" count="2" type="stmt"/>
         <line num="65" count="57" type="stmt"/>
         <line num="66" count="57" type="stmt"/>
-        <line num="67" count="173" type="stmt"/>
-        <line num="68" count="173" type="stmt"/>
-        <line num="70" count="173" type="cond" truecount="4" falsecount="0"/>
+        <line num="67" count="172" type="stmt"/>
+        <line num="68" count="172" type="stmt"/>
+        <line num="70" count="172" type="cond" truecount="4" falsecount="0"/>
         <line num="71" count="3" type="cond" truecount="6" falsecount="2"/>
         <line num="72" count="3" type="stmt"/>
-        <line num="75" count="170" type="cond" truecount="2" falsecount="0"/>
+        <line num="75" count="169" type="cond" truecount="2" falsecount="0"/>
         <line num="81" count="21" type="stmt"/>
         <line num="82" count="21" type="stmt"/>
-        <line num="85" count="149" type="stmt"/>
-        <line num="90" count="149" type="cond" truecount="2" falsecount="0"/>
-        <line num="96" count="81" type="stmt"/>
-        <line num="99" count="81" type="cond" truecount="2" falsecount="0"/>
-        <line num="100" count="3" type="stmt"/>
-        <line num="101" count="3" type="stmt"/>
-        <line num="104" count="78" type="cond" truecount="2" falsecount="0"/>
+        <line num="85" count="148" type="stmt"/>
+        <line num="90" count="148" type="cond" truecount="2" falsecount="0"/>
+        <line num="96" count="80" type="stmt"/>
+        <line num="99" count="80" type="cond" truecount="2" falsecount="0"/>
+        <line num="100" count="4" type="stmt"/>
+        <line num="101" count="4" type="stmt"/>
+        <line num="104" count="76" type="cond" truecount="2" falsecount="0"/>
         <line num="105" count="22" type="cond" truecount="2" falsecount="0"/>
         <line num="106" count="2" type="stmt"/>
         <line num="107" count="2" type="stmt"/>
@@ -478,12 +478,12 @@
         <line num="122" count="7" type="stmt"/>
         <line num="127" count="5" type="stmt"/>
         <line num="132" count="5" type="stmt"/>
-        <line num="136" count="67" type="cond" truecount="2" falsecount="0"/>
+        <line num="136" count="65" type="cond" truecount="2" falsecount="0"/>
         <line num="141" count="11" type="stmt"/>
         <line num="145" count="11" type="stmt"/>
         <line num="146" count="11" type="stmt"/>
-        <line num="149" count="56" type="stmt"/>
-        <line num="150" count="56" type="stmt"/>
+        <line num="149" count="54" type="stmt"/>
+        <line num="150" count="54" type="stmt"/>
         <line num="153" count="68" type="stmt"/>
         <line num="154" count="68" type="cond" truecount="2" falsecount="0"/>
         <line num="164" count="10" type="stmt"/>
@@ -505,12 +505,11 @@
         <line num="226" count="9" type="cond" truecount="2" falsecount="0"/>
         <line num="227" count="1" type="stmt"/>
         <line num="230" count="9" type="stmt"/>
-        <line num="231" count="9" type="stmt"/>
+        <line num="231" count="17" type="stmt"/>
         <line num="232" count="17" type="stmt"/>
-        <line num="233" count="17" type="stmt"/>
-        <line num="236" count="9" type="cond" truecount="2" falsecount="0"/>
-        <line num="237" count="1" type="stmt"/>
-        <line num="240" count="9" type="stmt"/>
+        <line num="235" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="236" count="1" type="stmt"/>
+        <line num="239" count="9" type="stmt"/>
       </file>
     </package>
     <package name="src.decorators">
@@ -532,13 +531,13 @@
       </file>
     </package>
     <package name="src.explorers">
-      <metrics statements="31" coveredstatements="31" conditionals="20" coveredconditionals="17" methods="5" coveredmethods="4"/>
+      <metrics statements="33" coveredstatements="33" conditionals="20" coveredconditionals="17" methods="5" coveredmethods="4"/>
       <file name="index.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/explorers/index.ts">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="5" type="stmt"/>
       </file>
       <file name="metadata.explorer.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/explorers/metadata.explorer.ts">
-        <metrics statements="30" coveredstatements="30" conditionals="20" coveredconditionals="17" methods="5" coveredmethods="4"/>
+        <metrics statements="32" coveredstatements="32" conditionals="20" coveredconditionals="17" methods="5" coveredmethods="4"/>
         <line num="1" count="6" type="stmt"/>
         <line num="3" count="6" type="stmt"/>
         <line num="5" count="6" type="stmt"/>
@@ -558,17 +557,19 @@
         <line num="28" count="204" type="stmt"/>
         <line num="31" count="5" type="stmt"/>
         <line num="32" count="5" type="stmt"/>
+        <line num="33" count="5" type="stmt"/>
         <line num="34" count="5" type="cond" truecount="2" falsecount="0"/>
         <line num="35" count="2" type="stmt"/>
-        <line num="38" count="10" type="stmt"/>
-        <line num="39" count="10" type="cond" truecount="2" falsecount="0"/>
-        <line num="40" count="1" type="stmt"/>
+        <line num="38" count="3" type="stmt"/>
+        <line num="39" count="10" type="stmt"/>
+        <line num="40" count="10" type="cond" truecount="2" falsecount="0"/>
         <line num="41" count="1" type="stmt"/>
-        <line num="44" count="9" type="stmt"/>
-        <line num="46" count="9" type="cond" truecount="7" falsecount="3"/>
-        <line num="47" count="9" type="stmt"/>
-        <line num="50" count="3" type="stmt"/>
-        <line num="52" count="6" type="stmt"/>
+        <line num="42" count="1" type="stmt"/>
+        <line num="45" count="9" type="stmt"/>
+        <line num="47" count="9" type="cond" truecount="7" falsecount="3"/>
+        <line num="48" count="9" type="stmt"/>
+        <line num="51" count="3" type="stmt"/>
+        <line num="53" count="6" type="stmt"/>
       </file>
     </package>
     <package name="src.member-functions">
@@ -631,7 +632,7 @@
         <line num="9" count="6" type="stmt"/>
         <line num="14" count="1013" type="stmt"/>
         <line num="16" count="337" type="stmt"/>
-        <line num="19" count="82" type="stmt"/>
+        <line num="19" count="81" type="stmt"/>
       </file>
       <file name="map-with.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/member-functions/map-with.ts">
         <metrics statements="18" coveredstatements="18" conditionals="8" coveredconditionals="8" methods="2" coveredmethods="2"/>
@@ -731,18 +732,18 @@
         <line num="1" count="11" type="stmt"/>
         <line num="2" count="11" type="stmt"/>
         <line num="4" count="11" type="stmt"/>
-        <line num="6" count="104" type="cond" truecount="1" falsecount="1"/>
-        <line num="7" count="315" type="stmt"/>
-        <line num="10" count="107" type="stmt"/>
-        <line num="11" count="120" type="cond" truecount="2" falsecount="0"/>
-        <line num="12" count="107" type="stmt"/>
-        <line num="13" count="107" type="cond" truecount="2" falsecount="0"/>
-        <line num="18" count="104" type="stmt"/>
-        <line num="19" count="104" type="stmt"/>
+        <line num="6" count="103" type="cond" truecount="1" falsecount="1"/>
+        <line num="7" count="312" type="stmt"/>
+        <line num="10" count="106" type="stmt"/>
+        <line num="11" count="119" type="cond" truecount="2" falsecount="0"/>
+        <line num="12" count="106" type="stmt"/>
+        <line num="13" count="106" type="cond" truecount="2" falsecount="0"/>
+        <line num="18" count="103" type="stmt"/>
+        <line num="19" count="103" type="stmt"/>
         <line num="20" count="3" type="cond" truecount="2" falsecount="2"/>
         <line num="21" count="0" type="stmt"/>
         <line num="23" count="3" type="stmt"/>
-        <line num="26" count="104" type="stmt"/>
+        <line num="26" count="103" type="stmt"/>
       </file>
       <file name="getMemberPath.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/utils/getMemberPath.ts">
         <metrics statements="13" coveredstatements="6" conditionals="10" coveredconditionals="1" methods="4" coveredmethods="3"/>
@@ -808,20 +809,20 @@
         <metrics statements="8" coveredstatements="8" conditionals="4" coveredconditionals="3" methods="2" coveredmethods="2"/>
         <line num="2" count="11" type="stmt"/>
         <line num="4" count="11" type="stmt"/>
-        <line num="5" count="1788" type="stmt"/>
-        <line num="11" count="1788" type="cond" truecount="2" falsecount="0"/>
+        <line num="5" count="1787" type="stmt"/>
+        <line num="11" count="1787" type="cond" truecount="2" falsecount="0"/>
         <line num="12" count="411" type="stmt"/>
         <line num="15" count="907" type="stmt"/>
-        <line num="23" count="1377" type="stmt"/>
-        <line num="26" count="1377" type="stmt"/>
+        <line num="23" count="1376" type="stmt"/>
+        <line num="26" count="1376" type="stmt"/>
       </file>
       <file name="getTag.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/utils/getTag.ts">
         <metrics statements="5" coveredstatements="5" conditionals="4" coveredconditionals="4" methods="1" coveredmethods="1"/>
         <line num="1" count="13" type="stmt"/>
         <line num="3" count="13" type="stmt"/>
-        <line num="4" count="3433" type="cond" truecount="2" falsecount="0"/>
-        <line num="5" count="1418" type="cond" truecount="2" falsecount="0"/>
-        <line num="8" count="2015" type="stmt"/>
+        <line num="4" count="3426" type="cond" truecount="2" falsecount="0"/>
+        <line num="5" count="1419" type="cond" truecount="2" falsecount="0"/>
+        <line num="8" count="2007" type="stmt"/>
       </file>
       <file name="index.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/utils/index.ts">
         <metrics statements="14" coveredstatements="14" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
@@ -869,14 +870,14 @@
       <file name="isNestedPath.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/utils/isNestedPath.ts">
         <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="11" type="stmt"/>
-        <line num="2" count="1788" type="stmt"/>
+        <line num="2" count="1787" type="stmt"/>
       </file>
       <file name="isObjectLike.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/utils/isObjectLike.ts">
         <metrics statements="4" coveredstatements="4" conditionals="3" coveredconditionals="3" methods="1" coveredmethods="1"/>
         <line num="1" count="12" type="stmt"/>
         <line num="2" count="12" type="stmt"/>
         <line num="4" count="12" type="stmt"/>
-        <line num="5" count="1211" type="stmt"/>
+        <line num="5" count="1209" type="stmt"/>
       </file>
       <file name="isResolver.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/utils/isResolver.ts">
         <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
@@ -887,7 +888,7 @@
         <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="11" type="stmt"/>
         <line num="7" count="11" type="stmt"/>
-        <line num="11" count="923" type="stmt"/>
+        <line num="11" count="921" type="stmt"/>
       </file>
       <file name="storeMetadata.ts" path="/Users/chautran/Code/Projects/@nartc/automapper/src/utils/storeMetadata.ts">
         <metrics statements="11" coveredstatements="11" conditionals="6" coveredconditionals="6" methods="5" coveredmethods="5"/>

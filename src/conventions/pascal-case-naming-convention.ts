@@ -9,9 +9,8 @@ export class PascalCaseNamingConvention implements NamingConvention {
 
   public transformPropertyName(sourceNameParts: string[]): string {
     let result = '';
-    const len = sourceNameParts.length;
 
-    for (let i = 0; i < len; i++) {
+    for (let i = 0, len = sourceNameParts.length; i < len; i++) {
       result +=
         sourceNameParts[i].charAt(0).toUpperCase() +
         sourceNameParts[i].substr(1);

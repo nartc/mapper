@@ -13,12 +13,12 @@ export const createMapMetadata: CreateMapMetadataFunction = <
   metadataOptions: MetadataOptions<TModel>
 ) => {
   const entries = Object.entries(metadataOptions);
-  const len = entries.length;
-  if (!len) {
+
+  let i = entries.length;
+  if (!i) {
     return;
   }
-
-  for (let i = 0; i < len; i++) {
+  while (i--) {
     const [key, metadata]: [string, any] = entries[i];
     const metadataName =
       metadata.prototype?.constructor.name || metadata.constructor.name;

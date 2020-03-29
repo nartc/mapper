@@ -30,12 +30,13 @@ export class MetadataExplorer {
 
     const metadata = factory();
     const metadataEntries: [string, () => any][] = Object.entries(metadata);
-
-    if (!metadataEntries.length) {
+    let i = metadataEntries.length;
+    if (!i) {
       return;
     }
 
-    for (const [key, value] of metadataEntries) {
+    while (i--) {
+      const [key, value] = metadataEntries[i];
       if (!value) {
         metadataStorage.addMetadata(model, [[key, () => false]]);
         continue;

@@ -227,8 +227,7 @@ export function mapArray<
     beforeMap(sourceArray, destination, { ...mapping });
   }
 
-  const len = sourceArray.length;
-  for (let i = 0; i < len; i++) {
+  for (let i = 0, len = sourceArray.length; i < len; i++) {
     const source = sourceArray[i];
     destination.push(map(source, mapping, {}, true));
   }

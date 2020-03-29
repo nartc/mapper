@@ -10,9 +10,7 @@ export class CamelCaseNamingConvention implements NamingConvention {
   public transformPropertyName(sourceNameParts: string[]): string {
     let result = '';
 
-    const len = sourceNameParts.length;
-
-    for (let i = 0; i < len; i++) {
+    for (let i = 0, len = sourceNameParts.length; i < len; i++) {
       if (i === 0) {
         result +=
           sourceNameParts[i].charAt(0).toLowerCase() +

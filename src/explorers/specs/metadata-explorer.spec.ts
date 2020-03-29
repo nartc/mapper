@@ -72,4 +72,35 @@ describe('MetadataExplorer', () => {
     MetadataExplorer.exploreMany(Address, User);
     expect(spy).toHaveBeenCalledTimes(12);
   });
+
+  it('should', () => {
+    const addMetadataSpy = jest.spyOn(metadataStorage, 'addMetadata');
+
+    class Address {
+      street!: string;
+      city!: string;
+      state!: string;
+
+      static __NARTC_AUTOMAPPER_METADATA_FACTORY() {
+        return {};
+      }
+    }
+
+    class Foo {
+      foo!: string;
+
+      static __NARTC_AUTOMAPPER_METADATA_FACTORY() {
+        return { foo: null };
+      }
+    }
+
+    const spy = jest.spyOn(MetadataExplorer, 'exploreMany');
+    MetadataExplorer.exploreMany(Address, Address);
+    expect(spy).toHaveReturnedWith(undefined);
+    MetadataExplorer.exploreMany(Foo);
+    expect(addMetadataSpy).toHaveBeenCalledTimes(13);
+    MetadataExplorer.exploreMany(Foo);
+    expect(spy).toHaveReturnedWith(undefined);
+    expect(addMetadataSpy).toHaveBeenCalledTimes(13);
+  });
 });

@@ -44,6 +44,41 @@ describe('MapWithFunction', () => {
     expect(result?.bar).toBe(foo.foo);
   });
 
+  it('should return null when sourceValue is empty', () => {
+    const mapWithFn = mapWith(Bar, sourceSelector);
+    const result = mapWithFn[MemberMapFunctionReturnClassId.fn]({ foo: null });
+    expect(result).toBeNull();
+    const result2 = mapWithFn[MemberMapFunctionReturnClassId.fn]({
+      foo: 'test',
+    });
+    expect(result2).toBeNull();
+  });
+
+  it('should map correctly for array of MapWith', () => {
+    const mapWithFn = mapWith(Bar, sourceSelector);
+
+    class FooTwo {
+      foo!: string[];
+    }
+
+    Mapper.createMap(FooTwo, Bar).forMember(
+      d => d.bar,
+      mapFrom(s => s.foo.join(''))
+    );
+    const foo = new FooTwo();
+    foo.foo = ['1'];
+    const result = mapWithFn[MemberMapFunctionReturnClassId.fn]({ foo: [foo] });
+    expect(result).toBeTruthy();
+    expect(result).toHaveLength(1);
+  });
+
+  it('should return empty array for empty array', () => {
+    const mapWithFn = mapWith(Bar, sourceSelector);
+    const result = mapWithFn[MemberMapFunctionReturnClassId.fn]({ foo: [[]] });
+    expect(result).toBeTruthy();
+    expect(result).toHaveLength(0);
+  });
+
   afterAll(() => {
     Mapper.dispose();
   });

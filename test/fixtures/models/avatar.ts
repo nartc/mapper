@@ -23,3 +23,15 @@ export class AvatarVm {
   @AutoMap()
   forCondition!: boolean;
 }
+
+export class OtherAvatar {
+  @AutoMap()
+  url!: string;
+  @AutoMap()
+  source!: string;
+}
+
+export class OtherAvatarVm {
+  @AutoMap()
+  url!: string;
+}

@@ -5,10 +5,17 @@ import {
 } from '../src/conventions';
 import { mappingStorage } from '../src/storages';
 import { Address, AddressVm } from './fixtures/models/address';
-import { Avatar, AvatarVm } from './fixtures/models/avatar';
+import { Avatar, AvatarVm, OtherAvatar } from './fixtures/models/avatar';
 import { Base, BaseVm } from './fixtures/models/base';
 import { CamelCaseJob, SnakeCaseJob } from './fixtures/models/job';
-import { Profile, ProfileVm } from './fixtures/models/profile';
+import {
+  Profile,
+  ProfileVm,
+  ProfileWithAvatar,
+  ProfileWithAvatarVm,
+  ProfileWithMissingMetadata,
+  ProfileWithMissingMetadataVm,
+} from './fixtures/models/profile';
 import {
   CamelCaseUser,
   ComplexUser,
@@ -318,6 +325,54 @@ describe('AutoMapper Integration - Map', () => {
       )
     );
   });
+
+  it('should throw manual map error when missing metadata on complex Array', () => {
+    Mapper.createMap(ProfileWithMissingMetadata, ProfileWithMissingMetadataVm);
+    const profile = new ProfileWithMissingMetadata();
+    profile.bio = 'Developer';
+    profile.birthday = new Date();
+    profile.addresses = Array.from({ length: 2 }).map(() => {
+      const addr = new Address();
+      addr.street = 'street';
+      return addr;
+    });
+    expect(() => {
+      Mapper.map(profile, ProfileWithMissingMetadataVm);
+    }).toThrowError(
+      `Metadata for addresses is a primitive or Array. Consider manual map this property`
+    );
+  });
+
+  it('should map empty array when element is null or empty', () => {
+    Mapper.createMap(ProfileWithMissingMetadata, ProfileWithMissingMetadataVm);
+    const profile = new ProfileWithMissingMetadata();
+    profile.bio = null as any;
+    profile.skills = ['1', '2'];
+    profile.addresses = Array.from({ length: 2 }).map(() => new Address());
+    const vm = Mapper.map(profile, ProfileWithMissingMetadataVm);
+    expect(vm).toBeTruthy();
+    expect(vm).toBeInstanceOf(ProfileWithMissingMetadataVm);
+    expect(vm.bio).toBeNull();
+    expect(vm.skills).toEqual(profile.skills);
+    expect(vm.addresses).toEqual([]);
+  });
+
+  it('should throw missing mapping error when nested key mapping has not been created', () => {
+    Mapper.createMap(ProfileWithAvatar, ProfileWithAvatarVm);
+    const profile = new ProfileWithAvatar();
+    profile.bio = 'Developer';
+    profile.avatars = Array.from({ length: 2 }).map(() => {
+      const avatar = new OtherAvatar();
+      avatar.url = 'google.com';
+      avatar.source = 'internet';
+      return avatar;
+    });
+    expect(() => {
+      Mapper.map(profile, ProfileWithAvatarVm);
+    }).toThrowError(
+      'Mapping for avatars cannot be found. Consider manual map this property with MapWith'
+    );
+  });
 });
 
 describe('AutoMapper Integration - Callback', () => {
@@ -377,6 +432,25 @@ describe('AutoMapper Integration - Callback', () => {
     expect(beforeCallback).not.toBeCalledTimes(3);
     expect(after).toBeCalledTimes(2);
     expect(afterCallback).not.toBeCalledTimes(3);
+  });
+
+  it('map level callbacks should be invoked for mapArray', () => {
+    const user = new User();
+    user.firstName = 'Chau';
+    user.lastName = 'Tran';
+    const user2 = new User();
+    user.firstName = 'John';
+    user.lastName = 'Doe';
+
+    const before = jest.fn();
+    const after = jest.fn();
+    const vms = Mapper.mapArray([user, user2], UserVm, {
+      beforeMap: before,
+      afterMap: after,
+    });
+    expect(vms).toBeTruthy();
+    expect(before).toHaveBeenCalled();
+    expect(after).toHaveBeenCalled();
   });
 
   it('mapping level callbacks only invoke what provided', () => {

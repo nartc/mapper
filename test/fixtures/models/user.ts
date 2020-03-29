@@ -127,3 +127,25 @@ export class UserVmWithBase extends BaseVm {
   @AutoMap()
   aboutMe!: string;
 }
+
+export class UserWithGetter {
+  private _firstName!: string;
+  @AutoMap()
+  public get firstName() {
+    return this._firstName;
+  }
+
+  public set firstName(value: string) {
+    this._firstName = value;
+  }
+
+  private _lastName!: string;
+  @AutoMap()
+  public get lastName() {
+    return this._lastName;
+  }
+
+  public set lastName(value: string) {
+    this._lastName = value;
+  }
+}

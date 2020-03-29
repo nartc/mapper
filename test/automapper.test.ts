@@ -5,7 +5,9 @@ import {
 } from '../src/conventions';
 import { Address, AddressVm } from './fixtures/models/address';
 import { Avatar, AvatarVm, OtherAvatar } from './fixtures/models/avatar';
+import { Bar } from './fixtures/models/bar';
 import { Base, BaseVm } from './fixtures/models/base';
+import { Foo, FooWithReturn, FooWithReturnVm } from './fixtures/models/foo';
 import { CamelCaseJob, SnakeCaseJob } from './fixtures/models/job';
 import {
   Profile,
@@ -27,6 +29,7 @@ import {
   UserVm,
   UserVmWithBase,
   UserWithBase,
+  UserWithGetter,
 } from './fixtures/models/user';
 import { AddressProfile } from './fixtures/profiles/address.profile';
 import { AvatarProfile } from './fixtures/profiles/avatar.profile';
@@ -309,14 +312,6 @@ describe('AutoMapper Integration - Map', () => {
   });
 
   it('should throw error when map without mapping', () => {
-    class Foo {
-      foo!: string;
-    }
-
-    class Bar {
-      bar!: string;
-    }
-
     const foo = new Foo();
     foo.foo = 'foo';
     expect(() => {
@@ -374,6 +369,61 @@ describe('AutoMapper Integration - Map', () => {
     }).toThrowError(
       'Mapping for avatars cannot be found. Consider manual map this property with MapWith'
     );
+  });
+});
+
+describe('AutoMapper Integration - Various Syntax', () => {
+  beforeAll(() => {
+    Mapper.createMap(FooWithReturn, FooWithReturnVm)
+      .forMember(
+        d => {
+          return d.returnFooVm;
+        },
+        mapFrom(function (s) {
+          return s.returnFoo;
+        })
+      )
+      .reverseMap();
+  });
+
+  afterAll(Mapper.dispose.bind(Mapper));
+
+  it('should map properly', () => {
+    const foo = new FooWithReturn();
+    foo.returnFoo = 'foo';
+    const vm = Mapper.map(foo, FooWithReturnVm);
+    expect(vm).toBeTruthy();
+    expect(vm.returnFooVm).toBe(foo.returnFoo);
+  });
+
+  it('should reverseMap properly', () => {
+    const vm = new FooWithReturnVm();
+    vm.returnFooVm = 'bar';
+    const foo = Mapper.map(vm, FooWithReturn);
+    expect(foo).toBeTruthy();
+    expect(foo.returnFoo).toBe(vm.returnFooVm);
+  });
+});
+
+describe('AutoMapper Integration - Public Getter Setter', () => {
+  beforeAll(() => {
+    Mapper.createMap(UserWithGetter, UserVm).forMember(
+      d => d.fullName,
+      mapFrom(s => s.firstName + ' ' + s.lastName)
+    );
+  });
+
+  afterAll(Mapper.dispose.bind(Mapper));
+
+  it('should map properly', () => {
+    const user = new UserWithGetter();
+    user.firstName = 'Chau';
+    user.lastName = 'Tran';
+    const vm = Mapper.map(user, UserVm);
+    expect(vm).toBeTruthy();
+    expect(vm.firstName).toBe(user.firstName);
+    expect(vm.lastName).toBe(user.lastName);
+    expect(vm.fullName).toBe(user.firstName + ' ' + user.lastName);
   });
 });
 

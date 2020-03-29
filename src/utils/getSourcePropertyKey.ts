@@ -1,5 +1,4 @@
 import { Constructible, NamingConvention } from '../types';
-import { isNestedPath } from './isNestedPath';
 
 export function getSourcePropertyKey(
   [sourceNamingConvention, destinationNamingConvention]: [
@@ -26,4 +25,8 @@ export function getSourcePropertyKey(
   return !keyParts.length
     ? path
     : new sourceNamingConvention().transformPropertyName(keyParts);
+}
+
+function isNestedPath(path: string): boolean {
+  return path.split('.').length > 1;
 }

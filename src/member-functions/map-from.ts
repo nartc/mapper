@@ -6,7 +6,6 @@ import {
   TransformationType,
   ValueSelector,
 } from '../types';
-import { isResolver } from '../utils';
 
 export function mapFrom<
   TSource extends Dict<TSource> = any,
@@ -28,4 +27,10 @@ export function mapFrom<
       return from(source);
     },
   ];
+}
+
+function isResolver(
+  fn: ValueSelector | Resolver<any, any>
+): fn is Resolver<any, any> {
+  return 'resolve' in fn;
 }

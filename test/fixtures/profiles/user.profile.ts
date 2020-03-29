@@ -1,10 +1,21 @@
 import { AutoMapper, mapFrom, ProfileBase } from '../../../src';
-import { ComplexUser, ComplexUserVm, User, UserVm } from '../models/user';
+import {
+  ComplexUser,
+  ComplexUserVm,
+  User,
+  UserInformation,
+  UserVm,
+} from '../models/user';
 
 export class UserProfile extends ProfileBase {
   constructor(mapper: AutoMapper) {
     super();
     mapper.createMap(User, UserVm).forMember(
+      d => d.fullName,
+      mapFrom(s => s.firstName + ' ' + s.lastName)
+    );
+
+    mapper.createMap(User, UserInformation).forMember(
       d => d.fullName,
       mapFrom(s => s.firstName + ' ' + s.lastName)
     );

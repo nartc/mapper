@@ -19,11 +19,17 @@ export class MappingStorage {
     destination: Constructible,
     mapping: Mapping
   ): void {
-    !this.has(source, destination) &&
+    if (!this.mappings.has(source)) {
       this.mappings.set(
         source,
         new WeakMap<Constructible, Mapping>().set(destination, mapping)
       );
+      return;
+    }
+
+    if (!this.has(source, destination)) {
+      this.mappings.get(source)?.set(destination, mapping);
+    }
   }
 
   get(source: Constructible, destination: Constructible): Mapping | undefined {
@@ -31,11 +37,7 @@ export class MappingStorage {
   }
 
   has(source: Constructible, destination: Constructible): boolean {
-    return (
-      (this.mappings.has(source) &&
-        this.mappings.get(source)?.has(destination)) ||
-      false
-    );
+    return this.mappings.get(source)?.has(destination) || false;
   }
 
   dispose(): void {

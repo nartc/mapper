@@ -35,6 +35,11 @@ export class UserVm {
   fullName!: string;
 }
 
+export class UserInformation {
+  @AutoMap()
+  fullName!: string;
+}
+
 export class ComplexUser {
   @AutoMap()
   firstName!: string;

@@ -23,6 +23,7 @@ import {
   SnakeCaseUser,
   SnakeCaseUserVm,
   User,
+  UserInformation,
   UserVm,
   UserVmWithBase,
   UserWithBase,
@@ -173,6 +174,13 @@ describe('AutoMapper Integration - Map', () => {
     expect(vm.firstName).toEqual(user.firstName);
     expect(vm.lastName).toEqual(user.lastName);
     expect(vm.fullName).toEqual(user.firstName + ' ' + user.lastName);
+  });
+
+  it('should map to another destination with same source', () => {
+    const vm = Mapper.map(user, UserInformation);
+    const testVm = Mapper.map(user, UserVm);
+    expect(vm).toBeTruthy();
+    expect(testVm).toBeTruthy();
   });
 
   it('should map complex User to complex UserVm', () => {

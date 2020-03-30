@@ -1,5 +1,5 @@
 {
-  "include": ["src", "types", "test"],
+  "include": ["src", "types"],
   "compilerOptions": {
     "target": "es5",
     "module": "esnext",
@@ -8,7 +8,7 @@
     "declaration": true,
     "sourceMap": true,
     "inlineSourceMap": true,
-    "rootDir": "./",
+    "rootDir": "./src",
     "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
@@ -23,7 +23,7 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "baseUrl": "./src",
+    "baseUrl": "./",
     "jsx": "react",
     "esModuleInterop": true
   }

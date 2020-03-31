@@ -1,5 +1,6 @@
 {
   "include": ["src", "types"],
+  "exclude": ["src/**/specs/**.*"],
   "compilerOptions": {
     "target": "es5",
     "module": "esnext",

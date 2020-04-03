@@ -61,29 +61,15 @@ export function createMapForMember<
       preCond,
     },
   });
-  const propIndex = mapping[MappingClassId.props].findIndex(
+
+  const existProp = mapping[MappingClassId.props].find(
     ([propName]) => propName === memberPath
   );
-
-  if (propIndex !== -1) {
-    mapping[MappingClassId.props].splice(propIndex, 1, [
-      memberPath,
-      mappingProperty,
-    ]);
+  if (existProp != null) {
+    existProp[1] = mappingProperty;
     return fluentFunction;
   }
 
-  mapping[MappingClassId.props].push([
-    memberPath,
-    Object.seal({
-      paths,
-      transformation: {
-        mapFn: mapMemberFn,
-        type: mapMemberFn[MemberMapFunctionReturnClassId.type],
-        preCond,
-      },
-    }),
-  ]);
-
+  mapping[MappingClassId.props].push([memberPath, mappingProperty]);
   return fluentFunction;
 }

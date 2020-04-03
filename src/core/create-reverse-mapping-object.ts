@@ -34,8 +34,8 @@ export function createReverseMappingObject<
 
   if (reversedMapping[MappingClassId.bases]) {
     const reversedBaseMapping = getMappingForDestination(
-      (reversedMapping[MappingClassId.bases] as any)[1],
-      (reversedMapping[MappingClassId.bases] as any)[0],
+      reversedMapping[MappingClassId.bases]![1],
+      reversedMapping[MappingClassId.bases]![0],
       mappingStorage,
       true
     );

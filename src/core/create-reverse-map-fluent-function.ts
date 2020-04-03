@@ -26,12 +26,8 @@ export function createReverseMapFluentFunction<
     forPath: (
       selector: Selector<TSource, SelectorReturn<TSource>>,
       ...functions: (
-        | ReturnType<
-            MemberMapFunction<TDestination, TSource, SelectorReturn<TSource>>
-          >
-        | ReturnType<
-            PreConditionFunction<TDestination, TSource, SelectorReturn<TSource>>
-          >
+        | ReturnType<MemberMapFunction>
+        | ReturnType<PreConditionFunction>
       )[]
     ) =>
       createMapForMember(
@@ -41,11 +37,11 @@ export function createReverseMapFluentFunction<
         reversedMapFluentFunction
       ),
     beforeMap: action => {
-      (mapping[MappingClassId.actions] as any)[0] = action;
+      mapping[MappingClassId.actions][0] = action;
       return reversedMapFluentFunction;
     },
     afterMap: action => {
-      (mapping[MappingClassId.actions] as any)[1] = action;
+      mapping[MappingClassId.actions][1] = action;
       return reversedMapFluentFunction;
     },
   };

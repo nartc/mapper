@@ -16,12 +16,9 @@ export function inheritBaseMapping<
   baseMapping: Mapping<TBaseSource, TBaseDestination>
 ) {
   const props = mapping[MappingClassId.props];
-  for (
-    let i = 0, len = baseMapping[MappingClassId.props].length;
-    i < len;
-    i++
-  ) {
-    const [basePropKey, baseProp] = baseMapping[MappingClassId.props][i];
+  const baseProps = baseMapping[MappingClassId.props];
+  for (let i = 0, len = baseProps.length; i < len; i++) {
+    const [basePropKey, baseProp] = baseProps[i];
     if (props.map(p => p[0]).some(pKey => pKey === basePropKey)) {
       continue;
     }

@@ -165,12 +165,9 @@ export function map<
 
     let value: any;
     if (
-      isThisMemberMap<ConditionFunction>(
+      isThisMemberMap<ConditionFunction, NullSubstitutionFunction>(
         transformation.mapFn,
-        TransformationType.Condition
-      ) ||
-      isThisMemberMap<NullSubstitutionFunction>(
-        transformation.mapFn,
+        TransformationType.Condition,
         TransformationType.NullSubstitution
       )
     ) {
@@ -200,10 +197,6 @@ export function map<
         mappingStorage
       );
     } else if (
-      isThisMemberMap<FromValueFunction>(
-        transformation.mapFn,
-        TransformationType.FromValue
-      ) ||
       isThisMemberMap<ConvertUsingFunction>(
         transformation.mapFn,
         TransformationType.ConvertUsing
@@ -212,6 +205,13 @@ export function map<
       value = transformation.mapFn[MemberMapFunctionReturnClassId.fn](
         sourceObj
       );
+    } else if (
+      isThisMemberMap<FromValueFunction>(
+        transformation.mapFn,
+        TransformationType.FromValue
+      )
+    ) {
+      value = transformation.mapFn[MemberMapFunctionReturnClassId.fn]();
     }
 
     set(destination, memberPath, value);

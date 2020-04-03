@@ -35,9 +35,10 @@ export function initializeReverseMappingProps<
     MappingProperty<TDestination, TSource, ReturnType<Selector<TSource>>>
   ]> = [];
 
-  let i = mapping[MappingClassId.props].length;
+  const props = mapping[MappingClassId.props];
+  let i = props.length;
   while (i--) {
-    const { paths, transformation } = mapping[MappingClassId.props][i][1];
+    const { paths, transformation } = props[i][1];
     const [destPath, sourcePath] = paths;
 
     if (
@@ -50,13 +51,9 @@ export function initializeReverseMappingProps<
 
     const path = sourcePath
       ? sourcePath
-      : isThisMemberMap<MapWithFunction>(
+      : isThisMemberMap<MapWithFunction, MapFromFunction>(
           transformation.mapFn,
-          TransformationType.MapWith
-        )
-      ? getMemberPath(transformation.mapFn[MemberMapFunctionReturnClassId.misc])
-      : isThisMemberMap<MapFromFunction>(
-          transformation.mapFn,
+          TransformationType.MapWith,
           TransformationType.MapFrom
         )
       ? getMemberPath(transformation.mapFn[MemberMapFunctionReturnClassId.misc])

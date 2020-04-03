@@ -1,7 +1,7 @@
 import { NamingConvention } from '../types';
 
 export class SnakeCaseNamingConvention implements NamingConvention {
-  public separatorCharacter: string = '_';
+  separatorCharacter: string = '_';
   splittingExpression: RegExp = /_/;
 
   public transformPropertyName(sourcePropNameParts: string[]): string {

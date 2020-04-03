@@ -41,8 +41,9 @@ export function initializeMappingProps<
       !source.hasOwnProperty(sourcePath) &&
       !sourceProto.hasOwnProperty(sourcePath)
     ) {
+      const convention = new mapping[MappingClassId.conventions][0]();
       const [first, ...paths] = sourcePath
-        .split(new mapping[MappingClassId.conventions][0]().splittingExpression)
+        .split(convention.splittingExpression)
         .filter(Boolean)
         .filter(p => p !== '.');
       if (!paths.length || !source.hasOwnProperty(first)) {
@@ -51,25 +52,13 @@ export function initializeMappingProps<
 
       const sourceMemberPath = [
         [first]
-          .concat(
-            paths.map(p =>
-              new mapping[
-                MappingClassId.conventions
-              ][0]().transformPropertyName([p])
-            )
-          )
+          .concat(paths.map(p => convention.transformPropertyName([p])))
           .join('.'),
       ];
 
       if (paths.length > 1) {
         sourceMemberPath.push(
-          [first]
-            .concat(
-              new mapping[
-                MappingClassId.conventions
-              ][0]().transformPropertyName(paths)
-            )
-            .join('.')
+          [first].concat(convention.transformPropertyName(paths)).join('.')
         );
       }
 

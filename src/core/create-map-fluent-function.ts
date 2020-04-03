@@ -61,41 +61,23 @@ export function createMapFluentFunction<
   > = {
     forMember: (
       selector: Selector<TDestination, SelectorReturn<TDestination>>,
-      ...functions: (
-        | ReturnType<
-            MemberMapFunction<
-              TSource,
-              TDestination,
-              SelectorReturn<TDestination>
-            >
-          >
-        | ReturnType<
-            PreConditionFunction<
-              TSource,
-              TDestination,
-              SelectorReturn<TDestination>
-            >
-          >
-      )[]
+      ...functions: Array<
+        ReturnType<MemberMapFunction> | ReturnType<PreConditionFunction>
+      >
     ) =>
       createMapForMember(mapping, selector, functions as any, fluentFunction),
     beforeMap: action => {
-      mapping[MappingClassId.actions] = mapping[MappingClassId.actions] || [];
-      (mapping[MappingClassId.actions] as any)[0] = action;
+      mapping[MappingClassId.actions][0] = action;
       return fluentFunction;
     },
     afterMap: action => {
-      mapping[MappingClassId.actions] = mapping[MappingClassId.actions] || [];
-      (mapping[MappingClassId.actions] as any)[1] = action;
+      mapping[MappingClassId.actions][1] = action;
       return fluentFunction;
     },
-    reverseMap: () => {
-      const reversedMapping = createReverseMappingObject(
-        mapping,
-        mappingStorage
-      );
-      return createReverseMapFluentFunction(reversedMapping);
-    },
+    reverseMap: () =>
+      createReverseMapFluentFunction(
+        createReverseMappingObject(mapping, mappingStorage)
+      ),
   };
 
   return fluentFunction;

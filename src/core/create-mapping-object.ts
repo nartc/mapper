@@ -5,7 +5,6 @@ import {
   CreateMapOptions,
   Dict,
   Mapping,
-  MappingClassId,
 } from '../types';
 
 export function createMappingObject<
@@ -38,9 +37,10 @@ export function createMappingObject<
   > = [
     [source, destination],
     [
-      options.sourceMemberNamingConvention,
-      options.destinationMemberNamingConvention,
-    ] as Mapping[MappingClassId.conventions],
+      options.sourceMemberNamingConvention!,
+      options.destinationMemberNamingConvention!,
+    ],
+    [],
     [],
   ];
   mappingStorage.set(source, destination, mapping);

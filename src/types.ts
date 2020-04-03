@@ -391,7 +391,7 @@ export type Mapping<
       MappingProperty<TSource, TDestination, ReturnType<Selector<TDestination>>>
     ]
   >,
-  [MapAction<TSource, TDestination>?, MapAction<TSource, TDestination>?]?,
+  [MapAction<TSource, TDestination>?, MapAction<TSource, TDestination>?],
   [Constructible<TBaseSource>, Constructible<TBaseDestination>]?
 ];
 

@@ -84,13 +84,13 @@ export interface NamingConvention {
 
 export interface Resolver<
   TSource extends Dict<TSource>,
-  TDestination extends Dict<TDestination>,
+  TDestination extends Dict<TDestination> = any,
   TReturnType = SelectorReturn<TDestination>
 > {
   resolve(
     source: TSource,
-    destination: TDestination,
-    transformation: MappingTransformation<TSource, TDestination, TReturnType>
+    destination?: TDestination,
+    transformation?: MappingTransformation<TSource, TDestination, TReturnType>
   ): TReturnType;
 }
 

@@ -52,12 +52,9 @@ export function mapWith<
         sourceValue.constructor,
         mappingStorage
       );
-      return map(
-        sourceValue,
-        mapping,
-        undefined,
-        mappingStorage
-      ) as TSelectorReturn;
+      return (
+        map(sourceValue, mapping, undefined, mappingStorage) as TSelectorReturn
+      );
     },
   ];
 }

@@ -23,7 +23,7 @@ jobs:
       before_script:
         - npm run build:docusaurus
       node_js: '12'
-      if: branch = master AND env(TRAVIS_PULL_REQUEST) IS false
+      if: (branch = master OR branch = next) AND env(TRAVIS_PULL_REQUEST) IS false
       script: npm run deploy-docusaurus
     - name: npm_release
       node_js: '12'

@@ -36,6 +36,11 @@ export class AutoMapper {
     this.setDefault();
   }
 
+  /**
+   * Provide global naming conventions to the models
+   *
+   * @param {AutoMapperGlobalSettings} settings
+   */
   withGlobalSettings(settings: AutoMapperGlobalSettings): AutoMapper {
     const { sourceNamingConvention, destinationNamingConvention } = settings;
     if (sourceNamingConvention) {
@@ -48,11 +53,22 @@ export class AutoMapper {
     return this;
   }
 
+  /**
+   * Add a Profile to this AutoMapper instance
+   * @param {MappingProfile} profile
+   */
   addProfile(profile: new (mapper: AutoMapper) => MappingProfile): AutoMapper {
     this._profileStorage.add(this, new profile(this));
     return this;
   }
 
+  /**
+   * Create a mapping between a Source and a Destination with an optional Options
+   *
+   * @param {Constructible} source
+   * @param {Constructible} destination
+   * @param {CreateMapOptions} options - Provide inheritance and naming conventions for this Mapping
+   */
   createMap<
     TSource extends Dict<TSource> = any,
     TDestination extends Dict<TDestination> = any,
@@ -93,6 +109,21 @@ export class AutoMapper {
     return createMapFluentFunction(mapping, mergeOptions, this._mappingStorage);
   }
 
+  /**
+   * Map a sourceObj to the Destination with Source model provided.
+   * Usually used to map plain object of Source instead of an instance of Source.
+   *
+   * @example
+   * ```typescript
+   * const user = this.db.findOne(...).toJSON();
+   * Mapper.map(user, UserVm, User);
+   * ```
+   *
+   * @param {object} sourceObj
+   * @param {Constructible} destination
+   * @param {Constructible} source
+   * @param {MapOptions} options - Provide callbacks for this map operation
+   */
   map<
     TSource extends Dict<TSource> = any,
     TDestination extends Dict<TDestination> = any
@@ -102,6 +133,13 @@ export class AutoMapper {
     source?: Constructible<TSource>,
     options?: MapOptions<TSource, TDestination>
   ): TDestination;
+  /**
+   * Map a sourceObj to the Destination with an optional Options provided.
+   *
+   * @param {object} sourceObj
+   * @param {Constructible} destination
+   * @param {MapOptions} options - Provide callbacks for this map operation
+   */
   map<
     TSource extends Dict<TSource> = any,
     TDestination extends Dict<TDestination> = any
@@ -123,6 +161,9 @@ export class AutoMapper {
     return map(sourceObj, mapping, options, this._mappingStorage);
   }
 
+  /**
+   * Async version of map()
+   */
   mapAsync<
     TSource extends Dict<TSource> = any,
     TDestination extends Dict<TDestination> = any
@@ -132,6 +173,9 @@ export class AutoMapper {
     source?: Constructible<TSource>,
     options?: MapOptions<TSource, TDestination>
   ): Promise<TDestination>;
+  /**
+   * Async version of map()
+   */
   mapAsync<
     TSource extends Dict<TSource> = any,
     TDestination extends Dict<TDestination> = any
@@ -155,6 +199,21 @@ export class AutoMapper {
     );
   }
 
+  /**
+   * Map a sourceArr to an array of Destination with Source model provided.
+   * Usually used to map plain array of Source instead of an instance of Source.
+   *
+   * @example
+   * ```typescript
+   * const user = this.db.findOne(...).toJSON();
+   * Mapper.map(user, UserVm, User);
+   * ```
+   *
+   * @param {Array} sourceArr
+   * @param {Constructible} destination
+   * @param {Constructible} source
+   * @param {MapOptions} options - Provide callbacks for this map operation
+   */
   mapArray<
     TSource extends Dict<TSource> = any,
     TDestination extends Dict<TDestination> = any
@@ -164,6 +223,13 @@ export class AutoMapper {
     source?: Constructible<TSource>,
     options?: MapOptions<TSource[], TDestination[]>
   ): TDestination[];
+  /**
+   * Map a sourceArr to an Array of Destination with an optional Options provided.
+   *
+   * @param {Array} sourceArr
+   * @param {Constructible} destination
+   * @param {MapOptions} options - Provide callbacks for this map operation
+   */
   mapArray<
     TSource extends Dict<TSource> = any,
     TDestination extends Dict<TDestination> = any
@@ -190,6 +256,9 @@ export class AutoMapper {
     return mapArray(sourceArr, mapping, options, this._mappingStorage);
   }
 
+  /**
+   * Async version of mapArray()
+   */
   mapArrayAsync<
     TSource extends Dict<TSource> = any,
     TDestination extends Dict<TDestination> = any
@@ -199,6 +268,9 @@ export class AutoMapper {
     source?: Constructible<TSource>,
     options?: MapOptions<TSource[], TDestination[]>
   ): Promise<TDestination[]>;
+  /**
+   * Async version of mapArray()
+   */
   mapArrayAsync<
     TSource extends Dict<TSource> = any,
     TDestination extends Dict<TDestination> = any
@@ -227,6 +299,12 @@ export class AutoMapper {
     );
   }
 
+  /**
+   * Retrieve the mapping of a Source and a Destination
+   *
+   * @param {Constructible} source
+   * @param {Constructible} destination
+   */
   getMapping<
     TSource extends Dict<TSource> = any,
     TDestination extends Dict<TDestination> = any
@@ -237,15 +315,24 @@ export class AutoMapper {
     return this._mappingStorage.get(source, destination);
   }
 
+  /**
+   * Dispose of all Mappings and Profiles on the AutoMapper instance
+   */
   dispose(): void {
     this.setDefault();
     this._mappingStorage.dispose();
   }
 
+  /**
+   * Retrieve the current instance of the MappingStorage on the AutoMapper instance
+   */
   get mappingStorage(): MappingStorage {
     return this._mappingStorage;
   }
 
+  /**
+   * Retrieve the current instance of the ProfileStorage on the AutoMapper instance
+   */
   get profileStorage(): ProfileStorage {
     return this._profileStorage;
   }

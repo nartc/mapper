@@ -10,6 +10,38 @@ An object-to-object mapper by convention for TypeScript.
 ![Coveralls github](https://img.shields.io/coveralls/github/nartc/mapper?style=for-the-badge)
 ![Snyk Vulnerabilities for GitHub Repo](https://img.shields.io/snyk/vulnerabilities/github/nartc/mapper?style=for-the-badge)
 
+#### Migrations to v6
+
+- `initialize()` has been deprecated in `v6`. Please use `createMap()`, `addProfile()`, and/or `withGlobalSettings()` directly
+- Mapping operations have been rewritten as individual functions to support **tree-shaking**, please migrate your `mapping configurations` to use those
+
+```typescript
+// before
+Mapper.createMap(Source, Destination)
+    .forMember(d => d.destMember, opts => opts.mapFrom(s => s.sourceMember);
+
+// after
+Mapper.createMap(Source, Destination)
+    .forMember(d => d.destMember, mapFrom(s => s.sourceMember))
+```
+
+- Pre-Condition: `preCondition()` is also a separate function. Use in v6 as follow
+
+```typescript
+// before
+Mapper.createMap(Source, Destination).forMember(
+  d => d.destMember,
+  opts => opts.preCondition(predicate).mapFrom(s => s.sourceMember)
+);
+
+// after
+Mapper.createMap(Source, Destination).forMember(
+  d => d.destMember,
+  preCondition(predicate),
+  mapFrom(s => s.sourceMember)
+);
+```
+
 #### Migrations from `automapper-nartc`
 
 The only migration step you need is to modify `forMember()` method.

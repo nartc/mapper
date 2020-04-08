@@ -16,14 +16,15 @@ export function instantiate<TModel extends Dict<TModel>>(
 
   for (let i = 0, len = metadata.length; i < len; i++) {
     const [key, meta] = metadata[i];
+    const value = (defaultValue as any)?.[key];
     const metaResult = meta();
     if (!metaResult) {
-      (instance as any)[key] = (defaultValue as any)?.[key] || undefined;
+      (instance as any)[key] = value || undefined;
       continue;
     }
 
     if (Array.isArray(metaResult)) {
-      (instance as any)[key] = (defaultValue as any)?.[key] || metaResult;
+      (instance as any)[key] = value || metaResult;
       continue;
     }
 
@@ -31,16 +32,16 @@ export function instantiate<TModel extends Dict<TModel>>(
       metaResult.prototype.constructor.name === 'Date' ||
       metaResult.prototype.constructor.name === 'Moment'
     ) {
-      (instance as any)[key] = (defaultValue as any)?.[key]
-        ? new metaResult((defaultValue as any)?.[key])
-        : new metaResult();
+      (instance as any)[key] = value ? new metaResult(value) : new metaResult();
       continue;
     }
 
-    (instance as any)[key] = instantiate(
-      metaResult,
-      (defaultValue as any)?.[key]
-    );
+    if (Array.isArray(value)) {
+      (instance as any)[key] = value.map(v => instantiate(metaResult, v));
+      return instance;
+    }
+
+    (instance as any)[key] = instantiate(metaResult, value);
   }
 
   return instance;

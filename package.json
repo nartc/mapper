@@ -57,8 +57,8 @@
     }
   },
   "lint-staged": {
-    "{src}/**/*.ts": [
-      "prettier --write"
+    "src/**/*.ts": [
+      "prettier --fix --write"
     ]
   },
   "publishConfig": {

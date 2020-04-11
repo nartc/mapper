@@ -5,6 +5,8 @@ import {
   User,
   UserInformation,
   UserVm,
+  UserWithEmptyProfile,
+  UserWithEmptyProfileVm,
 } from '../models/user';
 
 export class UserProfile extends ProfileBase {
@@ -40,5 +42,12 @@ export class ComplexUserProfile extends ProfileBase {
         mapFrom(s => s.firstName + ' ' + s.lastName)
       )
       .reverseMap();
+  }
+}
+
+export class UserWithEmptyProfileProfile extends ProfileBase {
+  constructor(mapper: AutoMapper) {
+    super();
+    mapper.createMap(UserWithEmptyProfile, UserWithEmptyProfileVm);
   }
 }

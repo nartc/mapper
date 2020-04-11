@@ -1,5 +1,8 @@
 import { fromValue, ignore, MapAction, mapFrom, Mapper } from '../src';
-import { PascalCaseNamingConvention, SnakeCaseNamingConvention } from '../src/conventions';
+import {
+  PascalCaseNamingConvention,
+  SnakeCaseNamingConvention,
+} from '../src/conventions';
 import { Address, AddressVm } from './fixtures/models/address';
 import { Avatar, AvatarVm, OtherAvatar } from './fixtures/models/avatar';
 import { Bar } from './fixtures/models/bar';
@@ -7,6 +10,7 @@ import { Base, BaseVm } from './fixtures/models/base';
 import { Foo, FooWithReturn, FooWithReturnVm } from './fixtures/models/foo';
 import { CamelCaseJob, SnakeCaseJob } from './fixtures/models/job';
 import {
+  EmptyProfile, EmptyProfileVm,
   Profile,
   ProfileVm,
   ProfileWithAvatar,
@@ -25,14 +29,21 @@ import {
   UserInformation,
   UserVm,
   UserVmWithBase,
-  UserWithBase,
+  UserWithBase, UserWithEmptyProfile, UserWithEmptyProfileVm,
   UserWithGetter,
 } from './fixtures/models/user';
 import { AddressProfile } from './fixtures/profiles/address.profile';
 import { AvatarProfile } from './fixtures/profiles/avatar.profile';
 import { BaseProfile } from './fixtures/profiles/base.profile';
-import { ProfileProfile } from './fixtures/profiles/profile.profile';
-import { ComplexUserProfile, UserProfile } from './fixtures/profiles/user.profile';
+import {
+  EmptyProfileProfile,
+  ProfileProfile,
+} from './fixtures/profiles/profile.profile';
+import {
+  ComplexUserProfile,
+  UserProfile,
+  UserWithEmptyProfileProfile,
+} from './fixtures/profiles/user.profile';
 
 describe('AutoMapper Integration - Create Map', () => {
   afterEach(Mapper.dispose.bind(Mapper));
@@ -49,8 +60,8 @@ describe('AutoMapper Integration - Create Map', () => {
       Mapper.createMap(User, UserVm);
     }).toThrowError(
       new Error(
-        `Mapping for source ${ User.toString() } and destination ${ UserVm.toString() } already exists`,
-      ),
+        `Mapping for source ${User.toString()} and destination ${UserVm.toString()} already exists`
+      )
     );
   });
 });
@@ -203,13 +214,13 @@ describe('AutoMapper Integration - Map', () => {
 
     expect(vm.profile.addresses).toBeTruthy();
     expect(vm.profile.addresses).toHaveLength(
-      complexUser.profile.addresses.length,
+      complexUser.profile.addresses.length
     );
     vm.profile.addresses.forEach((address, index) => {
       expect(address).toBeTruthy();
       expect(address).toBeInstanceOf(AddressVm);
       const { street, city, state } = complexUser.profile.addresses[index];
-      expect(address.formattedAddress).toEqual(`${ street } ${ city } ${ state }`);
+      expect(address.formattedAddress).toEqual(`${street} ${city} ${state}`);
     });
   });
 
@@ -236,13 +247,13 @@ describe('AutoMapper Integration - Map', () => {
 
     expect(vm.profile.addresses).toBeTruthy();
     expect(vm.profile.addresses).toHaveLength(
-      complexUser.profile.addresses.length,
+      complexUser.profile.addresses.length
     );
     vm.profile.addresses.forEach((address, index) => {
       expect(address).toBeTruthy();
       expect(address).toBeInstanceOf(AddressVm);
       const { street, city, state } = complexUser.profile.addresses[index];
-      expect(address.formattedAddress).toEqual(`${ street } ${ city } ${ state }`);
+      expect(address.formattedAddress).toEqual(`${street} ${city} ${state}`);
     });
   });
 
@@ -312,8 +323,8 @@ describe('AutoMapper Integration - Map', () => {
       Mapper.map(foo, Bar);
     }).toThrowError(
       new Error(
-        `Mapping not found for source ${ Foo.toString() } and destination ${ Bar.toString() }`,
-      ),
+        `Mapping not found for source ${Foo.toString()} and destination ${Bar.toString()}`
+      )
     );
   });
 
@@ -330,7 +341,7 @@ describe('AutoMapper Integration - Map', () => {
     expect(() => {
       Mapper.map(profile, ProfileWithMissingMetadataVm);
     }).toThrowError(
-      `Metadata for addresses is a primitive or Array. Consider manual map this property`,
+      `Metadata for addresses is a primitive or Array. Consider manual map this property`
     );
   });
 
@@ -361,7 +372,7 @@ describe('AutoMapper Integration - Map', () => {
     expect(() => {
       Mapper.map(profile, ProfileWithAvatarVm);
     }).toThrowError(
-      'Mapping for avatars cannot be found. Consider manual map this property with MapWith',
+      'Mapping for avatars cannot be found. Consider manual map this property with MapWith'
     );
   });
 });
@@ -373,9 +384,9 @@ describe('AutoMapper Integration - Various Syntax', () => {
         d => {
           return d.returnFooVm;
         },
-        mapFrom(function(s) {
+        mapFrom(function (s) {
           return s.returnFoo;
-        }),
+        })
       )
       .reverseMap();
   });
@@ -403,7 +414,7 @@ describe('AutoMapper Integration - Public Getter Setter', () => {
   beforeAll(() => {
     Mapper.createMap(UserWithGetter, UserVm).forMember(
       d => d.fullName,
-      mapFrom(s => s.firstName + ' ' + s.lastName),
+      mapFrom(s => s.firstName + ' ' + s.lastName)
     );
   });
 
@@ -428,7 +439,7 @@ describe('AutoMapper Integration - Callback', () => {
     Mapper.createMap(User, UserVm)
       .forMember(
         d => d.fullName,
-        mapFrom(s => s.firstName + ' ' + s.lastName),
+        mapFrom(s => s.firstName + ' ' + s.lastName)
       )
       .beforeMap(beforeCallback)
       .afterMap(afterCallback)
@@ -537,7 +548,7 @@ describe('AutoMapper Integration - ReverseMap', () => {
       .fill('')
       .map((_, index) => {
         const addressVm = new AddressVm();
-        addressVm.formattedAddress = `Street ${ index } City ${ index } State ${ index }`;
+        addressVm.formattedAddress = `Street ${index} City ${index} State ${index}`;
         return addressVm;
       });
 
@@ -563,19 +574,19 @@ describe('AutoMapper Integration - Inheritance', () => {
     })
       .forMember(
         d => d.first,
-        mapFrom(s => s.firstName),
+        mapFrom(s => s.firstName)
       )
       .forMember(
         d => d.last,
-        mapFrom(s => s.lastName),
+        mapFrom(s => s.lastName)
       )
       .forMember(
         d => d.full,
-        mapFrom(s => `${ s.firstName } ${ s.lastName }`),
+        mapFrom(s => `${s.firstName} ${s.lastName}`)
       )
       .forMember(
         d => d.aboutMe,
-        mapFrom(s => s.about),
+        mapFrom(s => s.about)
       )
       .reverseMap();
 
@@ -601,7 +612,7 @@ describe('AutoMapper Integration - Inheritance', () => {
     expect(vm).toBeInstanceOf(UserVmWithBase);
     expect(vm.first).toBe(user.firstName);
     expect(vm.last).toBe(user.lastName);
-    expect(vm.full).toBe(`${ user.firstName } ${ user.lastName }`);
+    expect(vm.full).toBe(`${user.firstName} ${user.lastName}`);
     expect(vm.aboutMe).toBe(user.about);
     expect(vm.created).toBe(user.createdDate);
     expect(vm.updated).toBe(user.updatedDate);
@@ -684,12 +695,65 @@ describe('AutoMapper Integration - PlainObject', () => {
       .fill('')
       .map((_, index) => {
         const addressVm = new AddressVm();
-        addressVm.formattedAddress = `Street ${ index } City ${ index } State ${ index }`;
+        addressVm.formattedAddress = `Street ${index} City ${index} State ${index}`;
         return addressVm;
       });
     const plainVm = JSON.parse(JSON.stringify(vm));
     const user = Mapper.map(plainVm, ComplexUser, ComplexUserVm);
     expect(user).toBeTruthy();
     expect(user).toBeInstanceOf(ComplexUser);
+  });
+});
+
+describe('AutoMapper Integration - Empty Model', () => {
+  beforeEach(() => {
+    Mapper.addProfile(BaseProfile)
+      .addProfile(EmptyProfileProfile)
+      .addProfile(UserWithEmptyProfileProfile);
+  });
+
+  afterEach(Mapper.dispose.bind(Mapper));
+
+  it('should map properly', () => {
+    const emptyProfile = new EmptyProfile();
+    emptyProfile.id = '123';
+    emptyProfile.createdDate = new Date();
+    emptyProfile.updatedDate = new Date();
+    const vm = Mapper.map(emptyProfile, EmptyProfileVm);
+    expect(vm).toBeTruthy();
+  });
+
+  it('should map plain object properly', () => {
+    const emptyProfile: EmptyProfile = {
+      id: '123',
+      createdDate: new Date(),
+      updatedDate: new Date()
+    }
+    const vm = Mapper.map(emptyProfile, EmptyProfileVm, EmptyProfile);
+    expect(vm).toBeTruthy();
+  });
+
+  it('should map when nested', () => {
+    const user = new UserWithEmptyProfile();
+    user.name = 'Chau';
+    user.profile = new EmptyProfile();
+    user.profile.id = '123';
+    user.profile.createdDate = new Date();
+    user.profile.updatedDate = new Date();
+    const vm = Mapper.map(user, UserWithEmptyProfileVm);
+    expect(vm).toBeTruthy();
+  });
+
+  it('should map plain object when nested properly', () => {
+    const user: UserWithEmptyProfile = {
+      name: 'Chau',
+      profile: {
+        id: '123',
+        createdDate: new Date(),
+        updatedDate: new Date()
+      }
+    };
+    const vm = Mapper.map(user, UserWithEmptyProfileVm, UserWithEmptyProfile);
+    expect(vm).toBeTruthy();
   });
 });

@@ -1,6 +1,7 @@
 import { AutoMap } from '../../../src';
 import { Address, AddressVm } from './address';
 import { Avatar, AvatarVm, OtherAvatar, OtherAvatarVm } from './avatar';
+import { Base, BaseVm } from './base';
 
 export class Profile {
   @AutoMap()
@@ -57,3 +58,7 @@ export class ProfileWithAvatarVm {
   @AutoMap(() => OtherAvatarVm)
   avatars!: OtherAvatarVm[];
 }
+
+export class EmptyProfile extends Base {}
+
+export class EmptyProfileVm extends BaseVm {}

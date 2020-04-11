@@ -4,15 +4,14 @@ import { isEmpty } from '../utils';
 
 export function instantiate<TModel extends Dict<TModel>>(
   model: Constructible<TModel>,
-  defaultValue: TModel = new model()
+  defaultValue?: TModel
 ): TModel {
   const metadata = metadataStorage.getMetadata(model);
 
-  if (isEmpty(metadata) || !metadata) {
-    return defaultValue;
-  }
-
   const instance = new model();
+  if (isEmpty(metadata) || !metadata) {
+    return defaultValue ? Object.assign(instance, defaultValue) : instance;
+  }
 
   for (let i = 0, len = metadata.length; i < len; i++) {
     const [key, meta] = metadata[i];

@@ -1,7 +1,7 @@
 import { AutoMap } from '../../../src';
 import { Base, BaseVm } from './base';
 import { CamelCaseJob, SnakeCaseJob } from './job';
-import { Profile, ProfileVm } from './profile';
+import { EmptyProfile, EmptyProfileVm, Profile, ProfileVm } from './profile';
 
 export class UserNoDecorator {
   firstName!: string;
@@ -148,4 +148,18 @@ export class UserWithGetter {
   public set lastName(value: string) {
     this._lastName = value;
   }
+}
+
+export class UserWithEmptyProfile {
+  @AutoMap()
+  name!: string;
+  @AutoMap(() => EmptyProfile)
+  profile!: EmptyProfile;
+}
+
+export class UserWithEmptyProfileVm {
+  @AutoMap()
+  name!: string;
+  @AutoMap(() => EmptyProfileVm)
+  profile!: EmptyProfileVm;
 }

@@ -7,7 +7,13 @@ import {
 } from '../../../src';
 import { DateToStringConverter } from '../converters/date-to-string.converter';
 import { AvatarVm } from '../models/avatar';
-import { Profile, ProfileVm } from '../models/profile';
+import { Base, BaseVm } from '../models/base';
+import {
+  EmptyProfile,
+  EmptyProfileVm,
+  Profile,
+  ProfileVm,
+} from '../models/profile';
 
 export class ProfileProfile extends ProfileBase {
   constructor(mapper: AutoMapper) {
@@ -24,5 +30,14 @@ export class ProfileProfile extends ProfileBase {
       )
       .reverseMap()
       .forPath(s => s.birthday, ignore());
+  }
+}
+
+export class EmptyProfileProfile extends ProfileBase {
+  constructor(mapper: AutoMapper) {
+    super();
+    mapper.createMap(EmptyProfile, EmptyProfileVm, {
+      includeBase: [Base, BaseVm],
+    });
   }
 }

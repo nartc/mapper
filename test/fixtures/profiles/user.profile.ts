@@ -1,4 +1,10 @@
-import { AutoMapper, mapFrom, ProfileBase } from '../../../src';
+import {
+  AutoMapper,
+  fromValue,
+  mapDefer,
+  mapFrom,
+  ProfileBase,
+} from '../../../src';
 import {
   ComplexUser,
   ComplexUserVm,
@@ -12,10 +18,27 @@ import {
 export class UserProfile extends ProfileBase {
   constructor(mapper: AutoMapper) {
     super();
-    mapper.createMap(User, UserVm).forMember(
-      d => d.fullName,
-      mapFrom(s => s.firstName + ' ' + s.lastName)
-    );
+    mapper
+      .createMap(User, UserVm)
+      .forMember(
+        d => d.fullName,
+        mapDefer(source => {
+          if (source.lastName === 'Ngo') {
+            return fromValue('Chau Ngo');
+          }
+
+          return mapFrom(s => s.firstName + ' ' + s.lastName);
+        })
+      )
+      .forMember(
+        d => d.firstName,
+        mapDefer(source => {
+          if (source.lastName === 'Ngo') {
+            return fromValue('Chau');
+          }
+          return mapFrom(s => s.firstName);
+        })
+      );
 
     mapper.createMap(User, UserInformation).forMember(
       d => d.fullName,

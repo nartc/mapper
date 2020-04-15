@@ -70,17 +70,18 @@ A `MappingProperty` is an instruction to show `@nartc/automapper` how to map a p
 ### MappingTransformation
 
 For each `MappingProperty`, `@nartc/automapper` will try to apply the `MappingTransformation` on that `MappingProperty` with its `destinationMemberPath`. A `MappingTransformation` contains
-all information that is needed to determine how a `member` should be mapped. When consuming `@nartc/automapper`, you will actually configure the `MappingTransformation`. There are currently 8 `TransformationType`:
+all information that is needed to determine how a `member` should be mapped. When consuming `@nartc/automapper`, you will actually configure the `MappingTransformation`. There are currently 9 `TransformationType`:
 
-| TransformationType | Description                                                                                 |
-| ------------------ | ------------------------------------------------------------------------------------------- |
-| Ignore             | Ignore a `member` on the `Destination`                                                      |
-| MapFrom            | Custom mapping instruction for a `member`                                                   |
-| Condition          | Conditionally mapping a _conventionally matching_ `member`                                  |
-| FromValue          | Map a raw value to a `member`                                                               |
-| MapWith            | Map nested `model` for a `member` where **auto-configuration** does not work                |
-| ConvertUsing       | Map a `member` using a `Converter`                                                          |
-| MapInitialize      | **auto-configured** mapping instruction for a `member` that is added by `@nartc/automapper` |
-| NullSubstitution   | Substitute a null value on the `Source.member` for `Destination.member`                     |
+| TransformationType | Description                                                                                         |
+| ------------------ | --------------------------------------------------------------------------------------------------- |
+| Ignore             | Ignore a `member` on the `Destination`                                                              |
+| MapFrom            | Custom mapping instruction for a `member`                                                           |
+| Condition          | Conditionally mapping a _conventionally matching_ `member`                                          |
+| FromValue          | Map a raw value to a `member`                                                                       |
+| MapWith            | Map nested `model` for a `member` where **auto-configuration** does not work                        |
+| ConvertUsing       | Map a `member` using a `Converter`                                                                  |
+| MapInitialize      | **auto-configured** mapping instruction for a `member` that is added by `@nartc/automapper`         |
+| NullSubstitution   | Substitute a null value on the `Source.member` for `Destination.member`                             |
+| MapDefer           | Defer a `MapFunction` with a function that takes in the `Source` and the current `SourceMemberPath` |
 
 There is **one** other type which is `PreCondition` that can be combined with any of the other `TransformationType` except for `MapInitialize`. We will explore each of the `TransformationType` in more details later.

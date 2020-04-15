@@ -13,7 +13,7 @@ export function initializeMappingProps<
 
   let source = instantiate(srcModel);
   const sourceProtoConstructor = getProto(source.constructor);
-  if (sourceProtoConstructor?.name) {
+  if (sourceProtoConstructor.name) {
     source = Object.assign(source, instantiate(sourceProtoConstructor));
   }
 
@@ -93,10 +93,6 @@ export function initializeMappingProps<
 function getPathRecursive(node: any, prefix: string = '', prev?: string[]) {
   let result: string[] = prev || [];
 
-  if (!isObjectLike(node)) {
-    return result;
-  }
-
   const keys = Object.getOwnPropertyNames(node).filter(removeFromPath);
   for (let i = 0, len = keys.length; i < len; i++) {
     const key = keys[i];
@@ -115,9 +111,6 @@ function getPathRecursive(node: any, prefix: string = '', prev?: string[]) {
       for (const childNode of queue) {
         const childPaths = getPathRecursive(childNode, path + '.');
         for (const childPath of childPaths) {
-          if (result.includes(childPath)) {
-            continue;
-          }
           result.push(childPath);
         }
       }

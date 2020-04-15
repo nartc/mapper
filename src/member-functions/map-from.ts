@@ -19,9 +19,9 @@ export function mapFrom<
   return [
     TransformationType.MapFrom as const,
     from as ValueSelector,
-    (source, destination, transformation) => {
+    (source, destination) => {
       if (isResolver(from)) {
-        return from.resolve(source, destination, transformation);
+        return from.resolve(source, destination);
       }
 
       return from(source);

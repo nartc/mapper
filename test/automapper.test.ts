@@ -10,7 +10,8 @@ import { Base, BaseVm } from './fixtures/models/base';
 import { Foo, FooWithReturn, FooWithReturnVm } from './fixtures/models/foo';
 import { CamelCaseJob, SnakeCaseJob } from './fixtures/models/job';
 import {
-  EmptyProfile, EmptyProfileVm,
+  EmptyProfile,
+  EmptyProfileVm,
   Profile,
   ProfileVm,
   ProfileWithAvatar,
@@ -29,7 +30,9 @@ import {
   UserInformation,
   UserVm,
   UserVmWithBase,
-  UserWithBase, UserWithEmptyProfile, UserWithEmptyProfileVm,
+  UserWithBase,
+  UserWithEmptyProfile,
+  UserWithEmptyProfileVm,
   UserWithGetter,
 } from './fixtures/models/user';
 import { AddressProfile } from './fixtures/profiles/address.profile';
@@ -189,6 +192,18 @@ describe('AutoMapper Integration - Map', () => {
     const testVm = Mapper.map(user, UserVm);
     expect(vm).toBeTruthy();
     expect(testVm).toBeTruthy();
+  });
+
+  it('should defer map when lastName is Ngo', () => {
+    const anotherUser = new User();
+    anotherUser.firstName = 'Phuong';
+    anotherUser.lastName = 'Ngo';
+    const vm = Mapper.map(anotherUser, UserVm);
+    expect(vm).toBeTruthy();
+    expect(vm.lastName).toBe(anotherUser.lastName);
+    expect(vm.firstName).not.toBe(anotherUser.firstName);
+    expect(vm.firstName).toBe('Chau');
+    expect(vm.fullName).toBe('Chau Ngo');
   });
 
   it('should map complex User to complex UserVm', () => {
@@ -727,8 +742,8 @@ describe('AutoMapper Integration - Empty Model', () => {
     const emptyProfile: EmptyProfile = {
       id: '123',
       createdDate: new Date(),
-      updatedDate: new Date()
-    }
+      updatedDate: new Date(),
+    };
     const vm = Mapper.map(emptyProfile, EmptyProfileVm, EmptyProfile);
     expect(vm).toBeTruthy();
   });
@@ -750,8 +765,8 @@ describe('AutoMapper Integration - Empty Model', () => {
       profile: {
         id: '123',
         createdDate: new Date(),
-        updatedDate: new Date()
-      }
+        updatedDate: new Date(),
+      },
     };
     const vm = Mapper.map(user, UserWithEmptyProfileVm, UserWithEmptyProfile);
     expect(vm).toBeTruthy();

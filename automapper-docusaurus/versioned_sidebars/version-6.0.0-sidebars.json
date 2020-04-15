@@ -109,10 +109,6 @@
                 {
                   "type": "doc",
                   "id": "version-6.0.0/usages/mapping-configuration/for-member/ignore"
-                },
-                {
-                  "type": "doc",
-                  "id": "version-6.0.0/usages/mapping-configuration/for-member/pre-condition"
                 }
               ]
             },
@@ -129,6 +125,14 @@
                   "id": "version-6.0.0/usages/mapping-configuration/reverse-map/for-path"
                 }
               ]
+            },
+            {
+              "type": "doc",
+              "id": "version-6.0.0/usages/mapping-configuration/pre-condition"
+            },
+            {
+              "type": "doc",
+              "id": "version-6.0.0/usages/mapping-configuration/map-defer"
             }
           ]
         },

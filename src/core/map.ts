@@ -6,11 +6,13 @@ import {
   Dict,
   FromValueFunction,
   IgnoreFunction,
+  MapDeferFunction,
   MapFromFunction,
   MapInitializeFunction,
   MapOptions,
   Mapping,
   MapWithFunction,
+  MemberMapFunction,
   MemberMapFunctionReturnClassId,
   NullSubstitutionFunction,
   TransformationType,
@@ -27,6 +29,67 @@ import {
 import { getMappingForDestination } from './get-mapping-for-destination';
 import { getMappingForNestedKey } from './get-mapping-for-nested-key';
 import { instantiate } from './instantiate';
+
+function mapMember<TSource, TDestination>(
+  mapFn: ReturnType<MemberMapFunction<TSource, TDestination>>,
+  sourceObj: TSource,
+  sourceMemberPath: string,
+  destination: TDestination,
+  mappingStorage: MappingStorage
+) {
+  let value: any;
+  if (
+    isThisMemberMap<ConditionFunction, NullSubstitutionFunction>(
+      mapFn,
+      TransformationType.Condition,
+      TransformationType.NullSubstitution
+    )
+  ) {
+    value = mapFn[MemberMapFunctionReturnClassId.fn](
+      sourceObj,
+      sourceMemberPath
+    );
+  } else if (
+    isThisMemberMap<MapFromFunction>(mapFn, TransformationType.MapFrom)
+  ) {
+    value = mapFn[MemberMapFunctionReturnClassId.fn](sourceObj, destination);
+  } else if (
+    isThisMemberMap<MapWithFunction>(mapFn, TransformationType.MapWith)
+  ) {
+    value = mapFn[MemberMapFunctionReturnClassId.fn](sourceObj, mappingStorage);
+  } else if (
+    isThisMemberMap<ConvertUsingFunction>(
+      mapFn,
+      TransformationType.ConvertUsing
+    )
+  ) {
+    value = mapFn[MemberMapFunctionReturnClassId.fn](sourceObj);
+  } else if (
+    isThisMemberMap<FromValueFunction>(mapFn, TransformationType.FromValue)
+  ) {
+    value = mapFn[MemberMapFunctionReturnClassId.fn]();
+  } else if (
+    isThisMemberMap<IgnoreFunction>(mapFn, TransformationType.Ignore)
+  ) {
+    value = null;
+  } else if (
+    isThisMemberMap<MapDeferFunction>(mapFn, TransformationType.MapDefer)
+  ) {
+    const memberMapFunction = mapFn[MemberMapFunctionReturnClassId.fn](
+      sourceObj,
+      sourceMemberPath
+    );
+    value = mapMember(
+      memberMapFunction,
+      sourceObj,
+      sourceMemberPath,
+      destination,
+      mappingStorage
+    );
+  }
+
+  return value;
+}
 
 export function map<
   TSource extends Dict<TSource> = any,
@@ -71,16 +134,6 @@ export function map<
 
     if (transformation.preCond && !transformation.preCond[0](sourceObj)) {
       set(destination, memberPath, transformation.preCond?.[1] ?? null);
-      continue;
-    }
-
-    if (
-      isThisMemberMap<IgnoreFunction>(
-        transformation.mapFn,
-        TransformationType.Ignore
-      )
-    ) {
-      set(destination, memberPath, null);
       continue;
     }
 
@@ -163,57 +216,13 @@ export function map<
       continue;
     }
 
-    let value: any;
-    if (
-      isThisMemberMap<ConditionFunction, NullSubstitutionFunction>(
-        transformation.mapFn,
-        TransformationType.Condition,
-        TransformationType.NullSubstitution
-      )
-    ) {
-      value = transformation.mapFn[MemberMapFunctionReturnClassId.fn](
-        sourceObj,
-        sourceMemberPath
-      );
-    } else if (
-      isThisMemberMap<MapFromFunction>(
-        transformation.mapFn,
-        TransformationType.MapFrom
-      )
-    ) {
-      value = transformation.mapFn[MemberMapFunctionReturnClassId.fn](
-        sourceObj,
-        destination,
-        transformation
-      );
-    } else if (
-      isThisMemberMap<MapWithFunction>(
-        transformation.mapFn,
-        TransformationType.MapWith
-      )
-    ) {
-      value = transformation.mapFn[MemberMapFunctionReturnClassId.fn](
-        sourceObj,
-        mappingStorage
-      );
-    } else if (
-      isThisMemberMap<ConvertUsingFunction>(
-        transformation.mapFn,
-        TransformationType.ConvertUsing
-      )
-    ) {
-      value = transformation.mapFn[MemberMapFunctionReturnClassId.fn](
-        sourceObj
-      );
-    } else if (
-      isThisMemberMap<FromValueFunction>(
-        transformation.mapFn,
-        TransformationType.FromValue
-      )
-    ) {
-      value = transformation.mapFn[MemberMapFunctionReturnClassId.fn]();
-    }
-
+    let value = mapMember(
+      transformation.mapFn,
+      sourceObj,
+      sourceMemberPath,
+      destination,
+      mappingStorage
+    );
     set(destination, memberPath, value);
   }
 

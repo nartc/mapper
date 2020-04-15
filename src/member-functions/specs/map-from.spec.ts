@@ -26,11 +26,7 @@ describe('MapFromFunction', () => {
 
   it('should map to foo correctly', () => {
     const mapFromFn = mapFrom(sourceSelector);
-    const result = mapFromFn[MemberMapFunctionReturnClassId.fn](
-      source,
-      null,
-      null
-    );
+    const result = mapFromFn[MemberMapFunctionReturnClassId.fn](source, null);
     expect(result).toBe('bar');
   });
 
@@ -42,11 +38,7 @@ describe('MapFromFunction', () => {
 
   it('should use resolver correctly', () => {
     const mapFromFn = mapFrom(new FooResolver());
-    const result = mapFromFn[MemberMapFunctionReturnClassId.fn](
-      source,
-      null,
-      null
-    );
+    const result = mapFromFn[MemberMapFunctionReturnClassId.fn](source, null);
     expect(result).toBe('bar');
   });
 });

@@ -2,13 +2,13 @@
 
 An object-to-object mapper by convention for TypeScript.
 
-![Travis (.com)](https://img.shields.io/travis/com/nartc/mapper?label=travis&style=for-the-badge)
-![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/@nartc/automapper?label=bundlephobia&style=for-the-badge)
-![npm](https://img.shields.io/npm/dt/@nartc/automapper?label=total&style=for-the-badge)
-![npm (scoped)](https://img.shields.io/npm/v/@nartc/automapper?style=for-the-badge)
-![NPM](https://img.shields.io/npm/l/@nartc/automapper?style=for-the-badge)
-![Coveralls github](https://img.shields.io/coveralls/github/nartc/mapper?style=for-the-badge)
-![Snyk Vulnerabilities for GitHub Repo](https://img.shields.io/snyk/vulnerabilities/github/nartc/mapper?style=for-the-badge)
+![Travis (.com)](https://img.shields.io/travis/com/nartc/mapper?label=travis)
+![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/@nartc/automapper?label=bundlephobia)
+![npm](https://img.shields.io/npm/dt/@nartc/automapper?label=total)
+![npm (scoped)](https://img.shields.io/npm/v/@nartc/automapper)
+![NPM](https://img.shields.io/npm/l/@nartc/automapper)
+![Coveralls github](https://img.shields.io/coveralls/github/nartc/mapper)
+![Snyk Vulnerabilities for GitHub Repo](https://img.shields.io/snyk/vulnerabilities/github/nartc/mapper)
 
 #### Migrations to v6
 

@@ -5,9 +5,9 @@ sidebar_label: MapDefer
 ---
 
 `mapDefer()` is a special type of `MemberMapFunction`. As the name suggests, you can use `mapDefer()` if you want to have
-additional logic before you use return an actual `MemberMapFunction` in `forMember()` or `forPath()`
+additional logic before you return an actual `MemberMapFunction` in `forMember()` or `forPath()`
 
-`mapMember()` takes in a `deferFunction` and this `deferFunction` will be executed with the `Source` object and the `SourceMemberPath`
+`mapDefer()` takes in a `deferFunction` and this `deferFunction` will be executed with the `Source` object and the `SourceMemberPath`
 that are being mapped.
 
 ```typescript

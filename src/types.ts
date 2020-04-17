@@ -24,14 +24,14 @@ export enum ObjectTag {
 }
 
 export enum TransformationType {
-  Ignore = 0,
-  MapFrom = 1,
-  Condition = 2,
-  FromValue = 3,
-  MapWith = 4,
-  ConvertUsing = 5,
-  MapInitialize = 6,
-  NullSubstitution = 7,
+  Ignore,
+  MapFrom,
+  Condition,
+  FromValue,
+  MapWith,
+  ConvertUsing,
+  MapInitialize,
+  NullSubstitution,
   MapDefer,
 }
 
@@ -252,7 +252,7 @@ export interface CreateReversedMapFluentFunction<
   ): CreateReversedMapFluentFunction<TSource, TDestination>;
 }
 
-export enum MemberMapFunctionReturnClassId {
+export const enum MemberMapFunctionReturnClassId {
   type,
   misc,
   fn,
@@ -438,7 +438,7 @@ export interface MappingProperty<
   transformation: MappingTransformation<TSource, TDestination, TSelectorReturn>;
 }
 
-export enum MappingClassId {
+export const enum MappingClassId {
   models,
   conventions,
   props,

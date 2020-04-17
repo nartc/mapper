@@ -1,8 +1,4 @@
-import {
-  MemberMapFunction,
-  MemberMapFunctionReturnClassId,
-  TransformationType,
-} from '../types';
+import { MemberMapFunction, TransformationType } from '../types';
 
 export function isThisMemberMap<TMemberMap extends MemberMapFunction>(
   mapFn: ReturnType<MemberMapFunction>,
@@ -30,7 +26,5 @@ export function isThisMemberMap(
   mapFn: ReturnType<MemberMapFunction>,
   ...types: TransformationType[]
 ) {
-  return types.some(
-    type => mapFn[MemberMapFunctionReturnClassId.type] === type
-  );
+  return types.some(type => mapFn[0] === type);
 }

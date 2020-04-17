@@ -13,7 +13,6 @@ import {
   Mapping,
   MapWithFunction,
   MemberMapFunction,
-  MemberMapFunctionReturnClassId,
   NullSubstitutionFunction,
   TransformationType,
 } from '../types';
@@ -45,29 +44,26 @@ function mapMember<TSource, TDestination>(
       TransformationType.NullSubstitution
     )
   ) {
-    value = mapFn[MemberMapFunctionReturnClassId.fn](
-      sourceObj,
-      sourceMemberPath
-    );
+    value = mapFn[2](sourceObj, sourceMemberPath);
   } else if (
     isThisMemberMap<MapFromFunction>(mapFn, TransformationType.MapFrom)
   ) {
-    value = mapFn[MemberMapFunctionReturnClassId.fn](sourceObj, destination);
+    value = mapFn[2](sourceObj, destination);
   } else if (
     isThisMemberMap<MapWithFunction>(mapFn, TransformationType.MapWith)
   ) {
-    value = mapFn[MemberMapFunctionReturnClassId.fn](sourceObj, mappingStorage);
+    value = mapFn[2](sourceObj, mappingStorage);
   } else if (
     isThisMemberMap<ConvertUsingFunction>(
       mapFn,
       TransformationType.ConvertUsing
     )
   ) {
-    value = mapFn[MemberMapFunctionReturnClassId.fn](sourceObj);
+    value = mapFn[2](sourceObj);
   } else if (
     isThisMemberMap<FromValueFunction>(mapFn, TransformationType.FromValue)
   ) {
-    value = mapFn[MemberMapFunctionReturnClassId.fn]();
+    value = mapFn[2]();
   } else if (
     isThisMemberMap<IgnoreFunction>(mapFn, TransformationType.Ignore)
   ) {
@@ -75,10 +71,7 @@ function mapMember<TSource, TDestination>(
   } else if (
     isThisMemberMap<MapDeferFunction>(mapFn, TransformationType.MapDefer)
   ) {
-    const memberMapFunction = mapFn[MemberMapFunctionReturnClassId.fn](
-      sourceObj,
-      sourceMemberPath
-    );
+    const memberMapFunction = mapFn[2](sourceObj, sourceMemberPath);
     value = mapMember(
       memberMapFunction,
       sourceObj,
@@ -148,9 +141,7 @@ export function map<
         TransformationType.MapInitialize
       )
     ) {
-      const mapInitializeValue = transformation.mapFn[
-        MemberMapFunctionReturnClassId.fn
-      ](sourceObj);
+      const mapInitializeValue = transformation.mapFn[2](sourceObj);
       if (mapInitializeValue == null) {
         set(destination, memberPath, null);
         continue;

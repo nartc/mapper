@@ -6,7 +6,6 @@ import {
   MappingClassId,
   MappingProperty,
   MemberMapFunction,
-  MemberMapFunctionReturnClassId,
   PreConditionFunction,
   Selector,
   TransformationType,
@@ -40,9 +39,7 @@ export function createMapForMember<
   if (
     isThisMemberMap<MapFromFunction>(mapMemberFn, TransformationType.MapFrom)
   ) {
-    sourcePath = getMemberPath(
-      mapMemberFn[MemberMapFunctionReturnClassId.misc]
-    );
+    sourcePath = getMemberPath(mapMemberFn[1]);
   }
 
   const paths: [string, string?] = !!sourcePath
@@ -57,7 +54,7 @@ export function createMapForMember<
     paths,
     transformation: {
       mapFn: mapMemberFn,
-      type: mapMemberFn[MemberMapFunctionReturnClassId.type],
+      type: mapMemberFn[0],
       preCond,
     },
   });

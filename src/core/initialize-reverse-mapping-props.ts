@@ -7,7 +7,6 @@ import {
   MappingClassId,
   MappingProperty,
   MapWithFunction,
-  MemberMapFunctionReturnClassId,
   Selector,
   TransformationType,
 } from '../types';
@@ -56,7 +55,7 @@ export function initializeReverseMappingProps<
           TransformationType.MapWith,
           TransformationType.MapFrom
         )
-      ? getMemberPath(transformation.mapFn[MemberMapFunctionReturnClassId.misc])
+      ? getMemberPath(transformation.mapFn[1])
       : '';
 
     if (

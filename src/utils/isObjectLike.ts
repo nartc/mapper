@@ -1,9 +1,10 @@
 import { getTag } from './getTag';
 
 export function isObjectLike(obj: any): boolean {
+  const tag = getTag(obj);
   return (
-    getTag(obj) === '[object Object]' ||
-    getTag(obj) === '[object Array]' ||
-    getTag(obj) === '[object Date]'
+    tag === '[object Object]' ||
+    tag === '[object Array]' ||
+    tag === '[object Date]'
   );
 }

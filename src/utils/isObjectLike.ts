@@ -1,10 +1,9 @@
-import { ObjectTag } from '../types';
 import { getTag } from './getTag';
 
 export function isObjectLike(obj: any): boolean {
   return (
-    getTag(obj) === ObjectTag.Object ||
-    getTag(obj) === ObjectTag.Array ||
-    getTag(obj) === ObjectTag.Date
+    getTag(obj) === '[object Object]' ||
+    getTag(obj) === '[object Array]' ||
+    getTag(obj) === '[object Date]'
   );
 }

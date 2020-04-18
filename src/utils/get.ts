@@ -1,4 +1,3 @@
-import { ObjectTag } from '../types';
 import { getTag } from './getTag';
 
 export function get<T>(
@@ -10,7 +9,7 @@ export function get<T>(
     const _path = path.split('.').filter(Boolean);
     const _val = _path.reduce((obj: any, key) => obj && obj[key], object);
     const _tag = getTag(_val);
-    return _tag !== ObjectTag.Undefined && _tag !== ObjectTag.Null
+    return _tag !== '[object Undefined]' && _tag !== '[object Null]'
       ? _val
       : defaultVal;
   }

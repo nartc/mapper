@@ -14,15 +14,6 @@ export type BaseOf<T extends Dict<T> = any, TBase = any> = [T] extends [TBase]
   ? unknown
   : never;
 
-export enum ObjectTag {
-  Undefined = '[object Undefined]',
-  Null = '[object Null]',
-  Object = '[object Object]',
-  Array = '[object Array]',
-  Date = '[object Date]',
-  Map = '[object Map]',
-}
-
 export enum TransformationType {
   Ignore,
   MapFrom,

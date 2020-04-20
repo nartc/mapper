@@ -1,0 +1,8 @@
+{
+  "extends": [
+    "config:base"
+  ],
+  "ignorePaths": [
+    "automapper-docusaurus/package.json"
+  ]
+}

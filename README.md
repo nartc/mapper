@@ -108,7 +108,7 @@ Check out the [AutoMapper TypeScript Documentations](https://automapper.netlify.
 
 ## Demo
 
-[Codesandbox Demo](https://codesandbox.io/s/automapper-demo-ntc2d)
+[Codesandbox Demo](https://codesandbox.io/s/automapper-demo-latest-ms1c3)
 
 ## Contribution
 

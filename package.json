@@ -113,7 +113,7 @@
     "ts-node": "8.9.1",
     "tsdx": "0.13.2",
     "tslib": "1.11.1",
-    "typedoc": "0.17.5",
+    "typedoc": "0.17.6",
     "typescript": "3.8.3"
   },
   "dependencies": {

@@ -37,6 +37,7 @@ export function createMappingObject<
   > = [
     [source, destination],
     [
+      options.useUndefined!,
       options.sourceMemberNamingConvention!,
       options.destinationMemberNamingConvention!,
     ],

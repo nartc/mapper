@@ -27,7 +27,8 @@ export class AutoMapper {
   private readonly _mappingStorage = new MappingStorage();
   private readonly _profileStorage = new ProfileStorage();
 
-  private defaultNamingConventions!: [
+  private defaultGlobalSettings!: [
+    boolean,
     Constructible<NamingConvention>,
     Constructible<NamingConvention>
   ];
@@ -42,13 +43,20 @@ export class AutoMapper {
    * @param {AutoMapperGlobalSettings} settings
    */
   withGlobalSettings(settings: AutoMapperGlobalSettings): AutoMapper {
-    const { sourceNamingConvention, destinationNamingConvention } = settings;
+    const {
+      useUndefined,
+      sourceNamingConvention,
+      destinationNamingConvention,
+    } = settings;
+
+    this.defaultGlobalSettings[0] = useUndefined ?? false;
+
     if (sourceNamingConvention) {
-      this.defaultNamingConventions[0] = sourceNamingConvention;
+      this.defaultGlobalSettings[1] = sourceNamingConvention;
     }
 
     if (destinationNamingConvention) {
-      this.defaultNamingConventions[1] = destinationNamingConvention;
+      this.defaultGlobalSettings[2] = destinationNamingConvention;
     }
     return this;
   }
@@ -96,8 +104,9 @@ export class AutoMapper {
       TBaseSource,
       TBaseDestination
     > = {
-      sourceMemberNamingConvention: this.defaultNamingConventions[0],
-      destinationMemberNamingConvention: this.defaultNamingConventions[1],
+      useUndefined: this.defaultGlobalSettings[0],
+      sourceMemberNamingConvention: this.defaultGlobalSettings[1],
+      destinationMemberNamingConvention: this.defaultGlobalSettings[2],
       ...options,
     };
     const mapping = createMappingObject(
@@ -339,7 +348,8 @@ export class AutoMapper {
 
   private setDefault() {
     this._profileStorage.initialize(this);
-    this.defaultNamingConventions = [
+    this.defaultGlobalSettings = [
+      false,
       defaultNamingConvention,
       defaultNamingConvention,
     ];

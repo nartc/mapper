@@ -11,11 +11,12 @@ export function mapInitialize<
   TDestination extends Dict<TDestination> = any,
   TSelectorReturn = SelectorReturn<TDestination>
 >(
+  defaultVal: undefined | null,
   ...paths: string[]
 ): ReturnType<MapInitializeFunction<TSource, TDestination, TSelectorReturn>> {
   return [
     TransformationType.MapInitialize as const,
     null,
-    source => get(source, null, ...paths),
+    source => get(source, defaultVal, ...paths),
   ];
 }

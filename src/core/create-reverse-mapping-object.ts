@@ -14,7 +14,7 @@ export function createReverseMappingObject<
   mappingStorage: MappingStorage
 ): Mapping<TDestination, TSource, TBaseDestination, TBaseSource> {
   const [source, destination] = mapping[MappingClassId.models];
-  const [sourceConvention, destinationConvention] = mapping[
+  const [useUndefined, sourceConvention, destinationConvention] = mapping[
     MappingClassId.conventions
   ];
   const bases = mapping[MappingClassId.bases];
@@ -26,7 +26,7 @@ export function createReverseMappingObject<
 
   reversedMapping = [
     [destination, source],
-    [destinationConvention, sourceConvention],
+    [useUndefined, destinationConvention, sourceConvention],
     initializeReverseMappingProps(mapping),
     [],
     bases?.slice().reverse() as [Constructible, Constructible],

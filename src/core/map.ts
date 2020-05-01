@@ -34,17 +34,21 @@ function mapMember<TSource, TDestination>(
   sourceObj: TSource,
   sourceMemberPath: string,
   destination: TDestination,
-  mappingStorage: MappingStorage
+  mappingStorage: MappingStorage,
+  defaultValue: undefined | null
 ) {
   let value: any;
   if (
-    isThisMemberMap<ConditionFunction, NullSubstitutionFunction>(
+    isThisMemberMap<NullSubstitutionFunction>(
       mapFn,
-      TransformationType.Condition,
       TransformationType.NullSubstitution
     )
   ) {
     value = mapFn[2](sourceObj, sourceMemberPath);
+  } else if (
+    isThisMemberMap<ConditionFunction>(mapFn, TransformationType.Condition)
+  ) {
+    value = mapFn[2](sourceObj, defaultValue, sourceMemberPath);
   } else if (
     isThisMemberMap<MapFromFunction>(mapFn, TransformationType.MapFrom)
   ) {
@@ -67,7 +71,7 @@ function mapMember<TSource, TDestination>(
   } else if (
     isThisMemberMap<IgnoreFunction>(mapFn, TransformationType.Ignore)
   ) {
-    value = null;
+    value = defaultValue;
   } else if (
     isThisMemberMap<MapDeferFunction>(mapFn, TransformationType.MapDefer)
   ) {
@@ -77,7 +81,8 @@ function mapMember<TSource, TDestination>(
       sourceObj,
       sourceMemberPath,
       destination,
-      mappingStorage
+      mappingStorage,
+      defaultValue
     );
   }
 
@@ -99,13 +104,14 @@ export function map<
 ): TDestination {
   const [
     [sourceModel, destinationModel],
-    [sourceConvention, destinationConvention],
+    [useUndefined, sourceConvention, destinationConvention],
     props,
     actions,
   ] = mapping as Required<Mapping<TSource, TDestination>>;
   if (!(sourceObj instanceof sourceModel)) {
     sourceObj = instantiate(sourceModel, sourceObj);
   }
+  const defaultEmptyValue = useUndefined ? undefined : null;
   const [beforeAction, afterAction] = actions || [];
   const { beforeMap, afterMap } = options;
   const configKeys = [];
@@ -126,7 +132,11 @@ export function map<
     configKeys.push(memberPath);
 
     if (transformation.preCond && !transformation.preCond[0](sourceObj)) {
-      set(destination, memberPath, transformation.preCond?.[1] ?? null);
+      set(
+        destination,
+        memberPath,
+        transformation.preCond?.[1] ?? defaultEmptyValue
+      );
       continue;
     }
 
@@ -143,7 +153,7 @@ export function map<
     ) {
       const mapInitializeValue = transformation.mapFn[2](sourceObj);
       if (mapInitializeValue == null) {
-        set(destination, memberPath, null);
+        set(destination, memberPath, defaultEmptyValue);
         continue;
       }
 
@@ -212,7 +222,8 @@ export function map<
       sourceObj,
       sourceMemberPath,
       destination,
-      mappingStorage
+      mappingStorage,
+      defaultEmptyValue
     );
     set(destination, memberPath, value);
   }

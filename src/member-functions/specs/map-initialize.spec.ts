@@ -12,7 +12,7 @@ describe('MapInitializeFunction', () => {
   };
 
   it('should return correctly', () => {
-    const mapInitFn = mapInitialize();
+    const mapInitFn = mapInitialize(null);
     expect(mapInitFn).toBeTruthy();
     expect(mapInitFn[MemberMapFunctionReturnClassId.type]).toBe(
       TransformationType.MapInitialize
@@ -24,8 +24,14 @@ describe('MapInitializeFunction', () => {
   });
 
   it('should map correctly', () => {
-    const mapInitFn = mapInitialize('foo.bar');
+    const mapInitFn = mapInitialize(null, 'foo.bar');
     const result = mapInitFn[MemberMapFunctionReturnClassId.fn](source);
     expect(result).toBe('foo');
+  });
+
+  it('should map to undefined for default val', () => {
+    const mapInitFn = mapInitialize(undefined, 'foo.baz');
+    const result = mapInitFn[MemberMapFunctionReturnClassId.fn](source);
+    expect(result).toBe(undefined);
   });
 });

@@ -96,6 +96,7 @@ export interface CreateMapOptions<
   TBaseSource extends BaseOf<TSource, TBaseSource> = any,
   TBaseDestination extends BaseOf<TDestination, TBaseDestination> = any
 > {
+  useUndefined?: boolean;
   sourceMemberNamingConvention?: Constructible<NamingConvention>;
   destinationMemberNamingConvention?: Constructible<NamingConvention>;
   includeBase?: [Constructible<TBaseSource>, Constructible<TBaseDestination>];
@@ -349,7 +350,11 @@ export interface ConditionFunction<
   (predicate: ConditionPredicate<TSource>, defaultValue?: TSelectorReturn): [
     TransformationType.Condition,
     null,
-    (source: TSource, ...sourceMemberPaths: string[]) => TSelectorReturn
+    (
+      source: TSource,
+      defaultVal: undefined | null,
+      ...sourceMemberPaths: string[]
+    ) => TSelectorReturn
   ];
 }
 
@@ -401,7 +406,7 @@ export interface MapInitializeFunction<
   TDestination extends Dict<TDestination> = any,
   TSelectorReturn = SelectorReturn<TDestination>
 > {
-  (...paths: string[]): [
+  (defaultVal: undefined | null, ...paths: string[]): [
     TransformationType.MapInitialize,
     null,
     (source: TSource) => TSelectorReturn
@@ -444,7 +449,7 @@ export type Mapping<
   TBaseDestination extends BaseOf<TDestination, TBaseDestination> = any
 > = [
   [Constructible<TSource>, Constructible<TDestination>],
-  [Constructible<NamingConvention>, Constructible<NamingConvention>],
+  [boolean, Constructible<NamingConvention>, Constructible<NamingConvention>],
   Array<
     [
       string,
@@ -465,6 +470,7 @@ export type MetadataMapList<TModel extends Dict<TModel> = any> = Array<
 >;
 
 export interface AutoMapperGlobalSettings {
+  useUndefined?: boolean;
   sourceNamingConvention?: Constructible<NamingConvention>;
   destinationNamingConvention?: Constructible<NamingConvention>;
 }

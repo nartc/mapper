@@ -18,12 +18,12 @@ export function condition<
   return [
     TransformationType.Condition as const,
     null,
-    (source, ...sourceMemberPaths) => {
+    (source, internalDefaultValue: undefined | null, ...sourceMemberPaths) => {
       if (predicate(source)) {
-        return get(source, null, ...sourceMemberPaths);
+        return get(source, internalDefaultValue, ...sourceMemberPaths);
       }
 
-      return defaultValue || null;
+      return defaultValue || internalDefaultValue;
     },
   ];
 }

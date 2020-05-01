@@ -1,5 +1,12 @@
 import { mapInitialize } from '../member-functions/map-initialize';
-import { Dict, Mapping, MappingClassId, TransformationType } from '../types';
+import {
+  Constructible,
+  Dict,
+  Mapping,
+  MappingClassId,
+  NamingConvention,
+  TransformationType,
+} from '../types';
 import { getSourcePropertyKey, isClass, isObjectLike } from '../utils';
 import { getProto } from '../utils/getProto';
 import { instantiate } from './instantiate';
@@ -23,7 +30,10 @@ export function initializeMappingProps<
   while (i--) {
     const path = destinationPaths[i];
     const sourcePath = getSourcePropertyKey(
-      mapping[MappingClassId.conventions],
+      mapping[MappingClassId.conventions].slice(1, 3) as [
+        Constructible<NamingConvention>,
+        Constructible<NamingConvention>
+      ],
       path
     );
     const dottedSourcePaths = sourcePath.split('.');
@@ -37,11 +47,14 @@ export function initializeMappingProps<
       }
     }
 
+    const defaultVal = mapping[MappingClassId.conventions][0]
+      ? undefined
+      : null;
     if (
       !source.hasOwnProperty(sourcePath) &&
       !sourceProto.hasOwnProperty(sourcePath)
     ) {
-      const convention = new mapping[MappingClassId.conventions][0]();
+      const convention = new mapping[MappingClassId.conventions][1]();
       const [first, ...paths] = sourcePath
         .split(convention.splittingExpression)
         .filter(Boolean)
@@ -69,7 +82,7 @@ export function initializeMappingProps<
           transformation: {
             type: TransformationType.MapInitialize,
             preCond: undefined,
-            mapFn: mapInitialize(...sourceMemberPath),
+            mapFn: mapInitialize(defaultVal, ...sourceMemberPath),
           },
         }),
       ]);
@@ -83,7 +96,7 @@ export function initializeMappingProps<
         transformation: {
           type: TransformationType.MapInitialize,
           preCond: undefined,
-          mapFn: mapInitialize(sourcePath),
+          mapFn: mapInitialize(defaultVal, sourcePath),
         },
       }),
     ]);

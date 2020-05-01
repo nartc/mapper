@@ -59,3 +59,5 @@ Mapping.withGlobalSettings({
 ```
 
 Now all `Source` models will have `PascalCaseNamingConvention` applied to their `properties`.
+
+> **Mapping Level** naming conventions will override **Global Level** naming conventions.

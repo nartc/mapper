@@ -1,4 +1,4 @@
-import { fromValue, ignore, MapAction, mapFrom, Mapper } from '../src';
+import { AutoMap, fromValue, ignore, MapAction, mapFrom, Mapper } from '../src';
 import { PascalCaseNamingConvention, SnakeCaseNamingConvention } from '../src/conventions';
 import { Address, AddressVm } from './fixtures/models/address';
 import { Avatar, AvatarVm, OtherAvatar } from './fixtures/models/avatar';
@@ -53,8 +53,8 @@ describe('AutoMapper Integration - Create Map', () => {
       Mapper.createMap(User, UserVm);
     }).toThrowError(
       new Error(
-        `Mapping for source ${ User.toString() } and destination ${ UserVm.toString() } already exists`,
-      ),
+        `Mapping for source ${User.toString()} and destination ${UserVm.toString()} already exists`
+      )
     );
   });
 });
@@ -219,13 +219,13 @@ describe('AutoMapper Integration - Map', () => {
 
     expect(vm.profile.addresses).toBeTruthy();
     expect(vm.profile.addresses).toHaveLength(
-      complexUser.profile.addresses.length,
+      complexUser.profile.addresses.length
     );
     vm.profile.addresses.forEach((address, index) => {
       expect(address).toBeTruthy();
       expect(address).toBeInstanceOf(AddressVm);
       const { street, city, state } = complexUser.profile.addresses[index];
-      expect(address.formattedAddress).toEqual(`${ street } ${ city } ${ state }`);
+      expect(address.formattedAddress).toEqual(`${street} ${city} ${state}`);
     });
   });
 
@@ -252,13 +252,13 @@ describe('AutoMapper Integration - Map', () => {
 
     expect(vm.profile.addresses).toBeTruthy();
     expect(vm.profile.addresses).toHaveLength(
-      complexUser.profile.addresses.length,
+      complexUser.profile.addresses.length
     );
     vm.profile.addresses.forEach((address, index) => {
       expect(address).toBeTruthy();
       expect(address).toBeInstanceOf(AddressVm);
       const { street, city, state } = complexUser.profile.addresses[index];
-      expect(address.formattedAddress).toEqual(`${ street } ${ city } ${ state }`);
+      expect(address.formattedAddress).toEqual(`${street} ${city} ${state}`);
     });
   });
 
@@ -328,8 +328,8 @@ describe('AutoMapper Integration - Map', () => {
       Mapper.map(foo, Bar);
     }).toThrowError(
       new Error(
-        `Mapping not found for source ${ Foo.toString() } and destination ${ Bar.toString() }`,
-      ),
+        `Mapping not found for source ${Foo.toString()} and destination ${Bar.toString()}`
+      )
     );
   });
 
@@ -346,7 +346,7 @@ describe('AutoMapper Integration - Map', () => {
     expect(() => {
       Mapper.map(profile, ProfileWithMissingMetadataVm);
     }).toThrowError(
-      `Metadata for addresses is a primitive or Array. Consider manual map this property`,
+      `Metadata for addresses is a primitive or Array. Consider manual map this property`
     );
   });
 
@@ -377,7 +377,7 @@ describe('AutoMapper Integration - Map', () => {
     expect(() => {
       Mapper.map(profile, ProfileWithAvatarVm);
     }).toThrowError(
-      'Mapping for avatars cannot be found. Consider manual map this property with MapWith',
+      'Mapping for avatars cannot be found. Consider manual map this property with MapWith'
     );
   });
 });
@@ -389,9 +389,9 @@ describe('AutoMapper Integration - Various Syntax', () => {
         d => {
           return d.returnFooVm;
         },
-        mapFrom(function(s) {
+        mapFrom(function (s) {
           return s.returnFoo;
-        }),
+        })
       )
       .reverseMap();
   });
@@ -419,7 +419,7 @@ describe('AutoMapper Integration - Public Getter Setter', () => {
   beforeAll(() => {
     Mapper.createMap(UserWithGetter, UserVm).forMember(
       d => d.fullName,
-      mapFrom(s => s.firstName + ' ' + s.lastName),
+      mapFrom(s => s.firstName + ' ' + s.lastName)
     );
   });
 
@@ -444,7 +444,7 @@ describe('AutoMapper Integration - Callback', () => {
     Mapper.createMap(User, UserVm)
       .forMember(
         d => d.fullName,
-        mapFrom(s => s.firstName + ' ' + s.lastName),
+        mapFrom(s => s.firstName + ' ' + s.lastName)
       )
       .beforeMap(beforeCallback)
       .afterMap(afterCallback)
@@ -553,7 +553,7 @@ describe('AutoMapper Integration - ReverseMap', () => {
       .fill('')
       .map((_, index) => {
         const addressVm = new AddressVm();
-        addressVm.formattedAddress = `Street ${ index } City ${ index } State ${ index }`;
+        addressVm.formattedAddress = `Street ${index} City ${index} State ${index}`;
         return addressVm;
       });
 
@@ -579,19 +579,19 @@ describe('AutoMapper Integration - Inheritance', () => {
     })
       .forMember(
         d => d.first,
-        mapFrom(s => s.firstName),
+        mapFrom(s => s.firstName)
       )
       .forMember(
         d => d.last,
-        mapFrom(s => s.lastName),
+        mapFrom(s => s.lastName)
       )
       .forMember(
         d => d.full,
-        mapFrom(s => `${ s.firstName } ${ s.lastName }`),
+        mapFrom(s => `${s.firstName} ${s.lastName}`)
       )
       .forMember(
         d => d.aboutMe,
-        mapFrom(s => s.about),
+        mapFrom(s => s.about)
       )
       .reverseMap();
 
@@ -617,7 +617,7 @@ describe('AutoMapper Integration - Inheritance', () => {
     expect(vm).toBeInstanceOf(UserVmWithBase);
     expect(vm.first).toBe(user.firstName);
     expect(vm.last).toBe(user.lastName);
-    expect(vm.full).toBe(`${ user.firstName } ${ user.lastName }`);
+    expect(vm.full).toBe(`${user.firstName} ${user.lastName}`);
     expect(vm.aboutMe).toBe(user.about);
     expect(vm.created).toBe(user.createdDate);
     expect(vm.updated).toBe(user.updatedDate);
@@ -700,7 +700,7 @@ describe('AutoMapper Integration - PlainObject', () => {
       .fill('')
       .map((_, index) => {
         const addressVm = new AddressVm();
-        addressVm.formattedAddress = `Street ${ index } City ${ index } State ${ index }`;
+        addressVm.formattedAddress = `Street ${index} City ${index} State ${index}`;
         return addressVm;
       });
     const plainVm = JSON.parse(JSON.stringify(vm));
@@ -779,7 +779,7 @@ describe('AutoMapper Integration - useUndefined', () => {
   it('should use undefined with create map', () => {
     Mapper.createMap(User, UserVm, { useUndefined: true }).forMember(
       d => d.fullName,
-      ignore(),
+      ignore()
     );
     const user = {};
     const vm = Mapper.map(user, UserVm, User);
@@ -787,5 +787,91 @@ describe('AutoMapper Integration - useUndefined', () => {
     expect(vm.firstName).toBeUndefined();
     expect(vm.lastName).toBeUndefined();
     expect(vm.fullName).toBeUndefined();
+  });
+});
+
+describe('AutoMapper Integration - mapping boolean', () => {
+  class Foo {
+    @AutoMap()
+    bar!: boolean;
+  }
+
+  beforeAll(() => {
+    Mapper.createMap(Foo, Foo);
+  });
+
+  afterAll(Mapper.dispose.bind(Mapper));
+
+  it('should map', () => {
+    const vm = Mapper.map({ bar: false }, Foo, Foo);
+    expect(vm).toBeTruthy();
+    expect(vm.bar).toEqual(false);
+  });
+});
+
+describe('AutoMapper Integration - mapping falsy string', () => {
+  class ProductGood {
+    @AutoMap() id!: number;
+    @AutoMap() guid!: string;
+    @AutoMap() brand!: string;
+    @AutoMap() description!: string;
+    @AutoMap() name!: string;
+    @AutoMap() quantity!: number;
+  }
+
+  class Category {
+    @AutoMap() id!: number;
+    @AutoMap() guid!: string;
+    @AutoMap() name!: string;
+    @AutoMap() description!: string;
+  }
+
+  class Product {
+    @AutoMap() id!: number;
+    @AutoMap() guid!: string;
+    @AutoMap() imageUrl!: string;
+    @AutoMap() isBundle!: boolean;
+    @AutoMap() name!: string;
+    @AutoMap() price!: string;
+    @AutoMap(() => Category) category!: Category | null;
+    @AutoMap() description!: string;
+    @AutoMap(() => ProductGood) goods!: ProductGood[];
+  }
+
+  class Cart {
+    @AutoMap() id!: number;
+    @AutoMap() guid!: string;
+    @AutoMap(() => Product) products!: Product[];
+    @AutoMap() subTotal!: string;
+    @AutoMap() status!: number; // TODO: ?
+  }
+
+  beforeAll(() => {
+    Mapper.createMap(ProductGood, ProductGood);
+    Mapper.createMap(Category, Category);
+    Mapper.createMap(Product, Product);
+    Mapper.createMap(Cart, Cart);
+  });
+
+  afterAll(Mapper.dispose.bind(Mapper));
+
+  it('should map', () => {
+    const vm = Mapper.map(
+      {
+        id: 0,
+        products: [],
+        guid: '',
+        subTotal: '0.00',
+        status: 0,
+      },
+      Cart,
+      Cart
+    );
+    expect(vm).toBeTruthy();
+    expect(vm.id).toEqual(0);
+    expect(vm.products).toEqual([]);
+    expect(vm.guid).toEqual('');
+    expect(vm.subTotal).toEqual('0.00');
+    expect(vm.status).toEqual(0);
   });
 });

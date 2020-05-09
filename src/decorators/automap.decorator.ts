@@ -7,6 +7,9 @@ export const AutoMap = (
   typeFn?: () => Function,
   depth: number = 1
 ): PropertyDecorator => (target, propertyKey) => {
+  const getMetadata = (_target: Object, _key: typeof propertyKey) =>
+    Reflect.getMetadata('design:type', _target, _key);
+
   if (typeFn) {
     metadataStorage.addMetadata(target.constructor as Constructible, [
       [propertyKey, typeFn as MetadataFunction],
@@ -17,15 +20,12 @@ export const AutoMap = (
       depth
     );
   } else {
-    const reflectedMetadata = Reflect.getMetadata(
-      'design:type',
-      target,
-      propertyKey
-    );
-    if (reflectedMetadata) {
+    let meta = getMetadata(target, propertyKey);
+    meta = meta || getMetadata(target.constructor, propertyKey);
+    if (meta) {
       storeMetadata(
         target.constructor as Constructible,
-        reflectedMetadata.prototype.constructor.name,
+        meta.prototype.constructor.name,
         propertyKey as string
       );
     }

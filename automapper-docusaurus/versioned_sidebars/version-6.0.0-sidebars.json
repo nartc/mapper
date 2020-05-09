@@ -181,6 +181,16 @@
               "id": "version-6.0.0/usages/features/javascript-support"
             }
           ]
+        },
+        {
+          "type": "category",
+          "label": "Avoids",
+          "items": [
+            {
+              "type": "doc",
+              "id": "version-6.0.0/usages/avoids/circular-dependency"
+            }
+          ]
         }
       ]
     },

@@ -1,6 +1,6 @@
 module.exports = {
   extends: ['prettier/@typescript-eslint', 'plugin:prettier/recommended'],
   rules: {
-    'no-useless-constructor': false,
+    '@typescript-eslint/no-useless-constructor': 'off',
   },
 };

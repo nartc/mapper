@@ -25,13 +25,9 @@ class SourceB {
 }
 ```
 
-This is very common when you setup your Entities using `TypeOrm`. `@nartc/automapper` will not prevent nor warn you about **Circular Dependency** just because
-it cannot detect when one occurs. And when it occurs, you will run into this error: `maximum call stack size exceeded`. This error signifies an infinity loop which
-is `@nartc/automapper` is trying to instantiate `SourceA -> SourceB -> SourceA -> SourceB -> SourceA ...` without depth limit.
-
 ### TypeOrm Example
 
-Suppose you have two Entities: Order and Person
+This is very common when you setup your Entities using `TypeOrm`. Suppose you have two Entities: Order and Person
 
 ```typescript
 @Entity()
@@ -58,28 +54,71 @@ Here, you have introduced a **Circular Dependency** with Order and Person.
 
 ### Solution
 
-One possible solution is to **NOT** decorate **circular-dependent** properties with `@AutoMap` but to manually configure the mapping for that property using `forMember()` and `mapWith()`.
+In general, you should avoid introducing **Circular Dependency** as much as possible. However, there are cases that you must have **Circular Dependency**.
+For those cases, `@nartc/automapper` has a concept of **depth** of nesting models.
 
 ```typescript
 class SourceA {
   @AutoMap()
   id: number;
+  @AutoMap(() => SourceB)
   sourceB: SourceB;
 }
 
 class SourceB {
   @AutoMap()
   id: number;
+  @AutoMap(() => SourceA)
   sourceA: SourceA;
 }
-
-Mapper.createMap(SomeSourceADto, SourceA).forMember(
-  d => d.sourceB,
-  mapWith(SourceB, s => s.sourceB)
-);
-
-Mapper.createMap(SomeSourceBDto, SourceB).forMember(
-  d => d.sourceA,
-  mapWith(SourceA, s => s.sourceB)
-);
 ```
+
+Let's assume the above models, this is how **depth** works:
+
+- Depth of 1
+
+```typescript
+SourceA {
+    sourceB: SourceB {
+        sourceA: SourceA {
+            sourceB: null;
+        }
+    }
+}
+```
+
+- Depth of 2
+
+```typescript
+SourceA {
+    sourceB: SourceB {
+        sourceA: SourceA {
+            sourceB: {
+                sourceA: SourceA {
+                    sourceB: null;
+                }
+            }
+        }
+    }
+}
+```
+
+and so on. By default, `@nartc/automapper` will apply **depth of 1** to nested models. To specify **depth**, use `@AutoMap()` decorator 2nd argument:
+
+```typescript
+class SourceA {
+  @AutoMap()
+  id: number;
+  @AutoMap(() => SourceB, 2)
+  sourceB: SourceB;
+}
+
+class SourceB {
+  @AutoMap()
+  id: number;
+  @AutoMap(() => SourceA, 2)
+  sourceA: SourceA;
+}
+```
+
+Please be advised that the bigger the **depth** is, the bigger your model is so you need to be very cautious when you start introducing **Circular Dependency**.

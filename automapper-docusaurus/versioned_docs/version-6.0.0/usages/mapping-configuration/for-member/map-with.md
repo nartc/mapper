@@ -15,7 +15,25 @@ Mapper.createMap(User, UserVm).forMember(
 ```
 
 When you run `Mapper.map(user, UserVm)`, `user.originalProfile` will be mapped to `userVm.someProfile` with `ProfileVm` as the `Destination`.
-`mapWith()` takes in two arguments: (1) is the `destination model` and (2) is the value on the `source` whose value `@nartc/automapper` will use to map `dest.<some_member>` with (1) as the `destination model`.
+`mapWith()` takes in two required arguments: (1) is the `destination model` and (2) is the value on the `source` whose value `@nartc/automapper` will use to map `dest.<some_member>` with (1) as the `destination model`.
 Please ensure you have already established the `Mapping` for whatever models you are trying to map. In this case, you need to have had established a `Mapping` for `Profile` (or whatever model that is associated with `src.originalProfile`) and `ProfileVm` in order for `mapWith()` to work.
+
+### Plain Object
+
+When you work with Plain Object, you should also consider providing the 3rd optional argument `valueModel` to help `@nartc/automapper` determine the correct model of `withValue`.
+
+```typescript
+Mapper.createMap(User, UserVm).forMember(
+  dest => dest.someProfile,
+  mapWith(
+    ProfileVm,
+    src => src.originalProfile,
+    () => Profile
+  )
+);
+
+const user = { originalProfile: { ... } }; // plain object
+Mapper.map(user, UserVm, User);
+```
 
 `mapWith()` will set the [TransformationType](../../../guides/basic-concept.md#mappingtransformation) to `MapWith`.

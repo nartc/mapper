@@ -8,7 +8,7 @@
 import React, {useEffect, useState, useRef} from 'react';
 import classnames from 'classnames';
 import Highlight, {defaultProps} from 'prism-react-renderer';
-import defaultTheme from 'prism-react-renderer/themes/vsDark';
+import defaultTheme from 'prism-react-renderer/themes/dracula';
 import Clipboard from 'clipboard';
 import rangeParser from 'parse-numeric-range';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';

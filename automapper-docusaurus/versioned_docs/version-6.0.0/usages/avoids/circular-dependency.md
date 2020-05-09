@@ -40,6 +40,7 @@ export class Order {
   person: Person;
 }
 
+@Entity()
 export class Person {
   @AutoMap()
   id: number;
@@ -122,3 +123,30 @@ class SourceB {
 ```
 
 Please be advised that the bigger the **depth** is, the bigger your model is so you need to be very cautious when you start introducing **Circular Dependency**.
+
+Another possible solution is to **NOT** decorate the circular-dependent member with `@AutoMap()` and configure the mapping for this member manually with `mapWith()`
+
+```typescript
+@Entity()
+export class Order {
+  @AutoMap()
+  id: number;
+  // ... shorten for brevity purpose
+  @ManyToOne(() => Person, person => person.orders)
+  person: Person;
+}
+
+@Entity()
+export class Person {
+  @AutoMap()
+  id: number;
+  // ... shorten for brevity purpose
+  @OneToMany(() => Order, order => order.person)
+  orders: Order[];
+}
+
+Mapper.createMap(SomeOrderDto, Order)
+    .forMember(d => d.person, mapWith(Person, s => s.person, () => SomePersonDto);
+Mapper.createMap(SomePersonDto, Person)
+    .forMember(d => d.orders, mapWith(Order, s => s.orders, () => SomeOrderDto);
+```

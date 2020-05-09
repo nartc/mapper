@@ -21,7 +21,6 @@ export const AutoMap = (
     );
   } else {
     let meta = getMetadata(target, propertyKey);
-    meta = meta || getMetadata(target.constructor, propertyKey);
     if (meta) {
       storeMetadata(
         target.constructor as Constructible,

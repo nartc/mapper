@@ -1,5 +1,8 @@
 import { AutoMap, fromValue, ignore, MapAction, mapFrom, Mapper } from '../src';
-import { PascalCaseNamingConvention, SnakeCaseNamingConvention } from '../src/conventions';
+import {
+  PascalCaseNamingConvention,
+  SnakeCaseNamingConvention,
+} from '../src/conventions';
 import { Address, AddressVm } from './fixtures/models/address';
 import { Avatar, AvatarVm, OtherAvatar } from './fixtures/models/avatar';
 import { Bar } from './fixtures/models/bar';
@@ -35,8 +38,15 @@ import {
 import { AddressProfile } from './fixtures/profiles/address.profile';
 import { AvatarProfile } from './fixtures/profiles/avatar.profile';
 import { BaseProfile } from './fixtures/profiles/base.profile';
-import { EmptyProfileProfile, ProfileProfile } from './fixtures/profiles/profile.profile';
-import { ComplexUserProfile, UserProfile, UserWithEmptyProfileProfile } from './fixtures/profiles/user.profile';
+import {
+  EmptyProfileProfile,
+  ProfileProfile,
+} from './fixtures/profiles/profile.profile';
+import {
+  ComplexUserProfile,
+  UserProfile,
+  UserWithEmptyProfileProfile,
+} from './fixtures/profiles/user.profile';
 
 describe('AutoMapper Integration - Create Map', () => {
   afterEach(Mapper.dispose.bind(Mapper));

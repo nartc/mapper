@@ -16,7 +16,8 @@ export function mapWith<
   TSelectorReturn = SelectorReturn<TDestination>
 >(
   withDestination: Constructible<Unpacked<TSelectorReturn>>,
-  withValue: ValueSelector<TSource>
+  withValue: ValueSelector<TSource>,
+  valueModel?: () => Constructible
 ): ReturnType<MapWithFunction<TSource, TDestination, TSelectorReturn>> {
   return [
     TransformationType.MapWith as const,
@@ -41,7 +42,7 @@ export function mapWith<
 
         const mapping = getMappingForDestination(
           withDestination,
-          sourceValue[0].constructor,
+          valueModel?.() || sourceValue[0].constructor,
           mappingStorage
         );
         return mapArray(sourceValue, mapping, undefined, mappingStorage) as any;
@@ -49,7 +50,7 @@ export function mapWith<
 
       const mapping = getMappingForDestination(
         withDestination,
-        sourceValue.constructor,
+        valueModel?.() || sourceValue.constructor,
         mappingStorage
       );
       return map(

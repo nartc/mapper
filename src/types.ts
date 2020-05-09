@@ -334,7 +334,8 @@ export interface MapWithFunction<
 > {
   (
     withDestination: Constructible<Unpacked<TSelectorReturn>>,
-    withValue: ValueSelector<TSource>
+    withValue: ValueSelector<TSource>,
+    valueModel?: () => Constructible
   ): [
     TransformationType.MapWith,
     ValueSelector<TSource>,

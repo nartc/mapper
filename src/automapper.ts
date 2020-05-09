@@ -10,6 +10,7 @@ import {
 } from './core';
 import { MetadataExplorer } from './explorers';
 import { MappingStorage, ProfileStorage } from './storages';
+import { instantiateDepthStorage } from './storages/instantiate-depth.storage';
 import {
   AutoMapperGlobalSettings,
   BaseOf,
@@ -330,6 +331,7 @@ export class AutoMapper {
   dispose(): void {
     this.setDefault();
     this._mappingStorage.dispose();
+    instantiateDepthStorage.dispose();
   }
 
   /**

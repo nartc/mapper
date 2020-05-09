@@ -29,6 +29,33 @@ This is very common when you setup your Entities using `TypeOrm`. `@nartc/automa
 it cannot detect when one occurs. And when it occurs, you will run into this error: `maximum call stack size exceeded`. This error signifies an infinity loop which
 is `@nartc/automapper` is trying to instantiate `SourceA -> SourceB -> SourceA -> SourceB -> SourceA ...` without depth limit.
 
+### TypeOrm Example
+
+Suppose you have two Entities: Order and Person
+
+```typescript
+@Entity()
+export class Order {
+  @AutoMap()
+  id: number;
+  // ... shorten for brevity purpose
+  @ManyToOne(() => Person, person => person.orders)
+  @AutoMap(() => Person)
+  person: Person;
+}
+
+export class Person {
+  @AutoMap()
+  id: number;
+  // ... shorten for brevity purpose
+  @OneToMany(() => Order, order => order.person)
+  @AutoMap(() => Order)
+  orders: Order[];
+}
+```
+
+Here, you have introduced a **Circular Dependency** with Order and Person.
+
 ### Solution
 
 One possible solution is to **NOT** decorate **circular-dependent** properties with `@AutoMap` but to manually configure the mapping for that property using `forMember()` and `mapWith()`.

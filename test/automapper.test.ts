@@ -1,13 +1,26 @@
-import { AutoMap, fromValue, ignore, MapAction, mapFrom, Mapper } from '../src';
+import {
+  AutoMap,
+  fromValue,
+  ignore,
+  MapAction,
+  mapFrom,
+  Mapper,
+  mapWith,
+} from '../src';
 import {
   PascalCaseNamingConvention,
   SnakeCaseNamingConvention,
 } from '../src/conventions';
 import { Address, AddressVm } from './fixtures/models/address';
 import { Avatar, AvatarVm, OtherAvatar } from './fixtures/models/avatar';
-import { Bar } from './fixtures/models/bar';
+import { Bar, BarWithFoo } from './fixtures/models/bar';
 import { Base, BaseVm } from './fixtures/models/base';
-import { Foo, FooWithReturn, FooWithReturnVm } from './fixtures/models/foo';
+import {
+  Foo,
+  FooWithBar,
+  FooWithReturn,
+  FooWithReturnVm,
+} from './fixtures/models/foo';
 import { CamelCaseJob, SnakeCaseJob } from './fixtures/models/job';
 import {
   EmptyProfile,
@@ -883,5 +896,63 @@ describe('AutoMapper Integration - mapping falsy string', () => {
     expect(vm.guid).toEqual('');
     expect(vm.subTotal).toEqual('0.00');
     expect(vm.status).toEqual(0);
+  });
+});
+
+describe('AutoMapper Integration - Circular Dependency', () => {
+  beforeAll(() => {
+    Mapper.createMap(BarWithFoo, BarWithFoo);
+    Mapper.createMap(FooWithBar, FooWithBar);
+  });
+
+  afterAll(Mapper.dispose.bind(Mapper));
+
+  it('should map', () => {
+    const vm = Mapper.map(
+      { id: '1', bar: { foo: { id: '2', bar: null }, id: '1' } },
+      FooWithBar,
+      FooWithBar
+    );
+    expect(vm).toBeTruthy();
+    expect(vm.id).toEqual('1');
+    expect(vm.bar).toBeInstanceOf(BarWithFoo);
+    expect(vm.bar?.foo).toBeInstanceOf(FooWithBar);
+  });
+});
+
+describe('AutoMapper Integration - Circular Dependency - MapWith', () => {
+  class Foo {
+    bar!: Bar;
+  }
+
+  class Bar {
+    foo!: Foo | null;
+  }
+
+  beforeAll(() => {
+    Mapper.createMap(Bar, Bar).forMember(
+      d => d.foo,
+      mapWith(
+        Foo,
+        s => s.foo,
+        () => Foo
+      )
+    );
+    Mapper.createMap(Foo, Foo).forMember(
+      d => d.bar,
+      mapWith(
+        Bar,
+        s => s.bar,
+        () => Bar
+      )
+    );
+  });
+
+  afterAll(Mapper.dispose.bind(Mapper));
+
+  it('should map', () => {
+    const vm = Mapper.map({ bar: { foo: null } }, Foo, Foo);
+    expect(vm).toBeTruthy();
+    expect(vm.bar).toBeInstanceOf(Bar);
   });
 });

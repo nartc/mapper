@@ -1,4 +1,5 @@
 import { metadataStorage } from '../storages';
+import { instantiateDepthStorage } from '../storages/instantiate-depth.storage';
 import { Constructible, Dict } from '../types';
 import { isEmpty } from '../utils';
 
@@ -8,9 +9,11 @@ export function instantiate<TModel extends Dict<TModel>>(
 ): TModel {
   const metadata = metadataStorage.getMetadata(model);
 
-  const instance = new model();
+  const instance = defaultValue
+    ? Object.assign(new model(), defaultValue)
+    : new model();
   if (isEmpty(metadata) || !metadata) {
-    return defaultValue ? Object.assign(instance, defaultValue) : instance;
+    return instance;
   }
 
   for (let i = 0, len = metadata.length; i < len; i++) {
@@ -41,7 +44,22 @@ export function instantiate<TModel extends Dict<TModel>>(
       continue;
     }
 
-    (instance as any)[key] = instantiate(metaResult, value);
+    const depth = instantiateDepthStorage.get(model, key);
+    const count = instantiateDepthStorage.getCount(model, key);
+    if (depth != null && !!count) {
+      if (depth === count) {
+        instantiateDepthStorage.resetCount(model, key);
+        break;
+      }
+    } else {
+      instantiateDepthStorage.setCount(
+        model,
+        key,
+        count != null ? count + 1 : 1
+      );
+      (instance as any)[key] = instantiate(metaResult, value);
+    }
+    instantiateDepthStorage.resetCount(model, key);
   }
 
   return instance;

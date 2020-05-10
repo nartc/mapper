@@ -17,8 +17,9 @@ function removeExtraForArrow(fnString: string): string[] {
   const _returnMatches = _returnPart.match(/return/g);
 
   if (_returnMatches?.length && _returnMatches.length > 1) {
-    _parts.pop();
-    return _parts.concat(..._returnPart.split(/return(.+)/).filter(Boolean));
+    return [_parts[0]].concat(
+      ..._returnPart.split(/return(.+)/).filter(Boolean)
+    );
   }
 
   return _parts;

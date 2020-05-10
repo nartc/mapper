@@ -47,8 +47,6 @@ export abstract class NestStorage<
     nestedKey: any,
     value: TValue
   ): void;
-
-  protected abstract dispose(): void;
 }
 
 export abstract class WeakMapNestedStorage<
@@ -86,10 +84,6 @@ export abstract class MapNestedStorage<
 > extends NestStorage<TKey, TValue, Map<any, TValue>> {
   protected constructor() {
     super();
-  }
-
-  dispose(): void {
-    this.storage = new WeakMap<TKey, Map<any, TValue>>();
   }
 
   protected setInternal<TKey extends object = any, TValue = unknown>(

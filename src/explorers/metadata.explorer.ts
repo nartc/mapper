@@ -1,4 +1,3 @@
-import { metadataStorage } from '../storages';
 import { Constructible } from '../types';
 import { storeMetadata } from '../utils';
 
@@ -38,7 +37,7 @@ export class MetadataExplorer {
     while (i--) {
       const [key, value] = metadataEntries[i];
       if (!value) {
-        metadataStorage.addMetadata(model, [[key, () => false]]);
+        storeMetadata(model, 'String', key);
         continue;
       }
 

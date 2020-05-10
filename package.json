@@ -92,7 +92,12 @@
     ],
     "setupFiles": [
       "./jest-setup.ts"
-    ]
+    ],
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "tsconfig.test.json"
+      }
+    }
   },
   "devDependencies": {
     "@commitlint/cli": "8.3.5",

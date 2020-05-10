@@ -5,7 +5,7 @@ import { storeMetadata } from '../utils';
 
 export const AutoMap = (
   typeFn?: () => Function,
-  depth: number = 1
+  depth: number = 0
 ): PropertyDecorator => (target, propertyKey) => {
   const getMetadata = (_target: Object, _key: typeof propertyKey) =>
     Reflect.getMetadata('design:type', _target, _key);

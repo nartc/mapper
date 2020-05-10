@@ -16,7 +16,6 @@ import { createReverseMapFluentFunction } from './create-reverse-map-fluent-func
 import { createReverseMappingObject } from './create-reverse-mapping-object';
 import { getMappingForDestination } from './get-mapping-for-destination';
 import { inheritBaseMapping } from './inherit-base-mapping';
-import { initializeMappingProps } from './initialize-mapping-props';
 
 export function createMapFluentFunction<
   TSource extends Dict<TSource> = any,
@@ -38,8 +37,6 @@ export function createMapFluentFunction<
   TBaseSource,
   TBaseDestination
 > {
-  initializeMappingProps(mapping);
-
   if (options.includeBase?.length) {
     const [baseSource, baseDestination] = options.includeBase;
     const baseMapping = getMappingForDestination(

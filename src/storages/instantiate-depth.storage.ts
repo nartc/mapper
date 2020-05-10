@@ -13,6 +13,13 @@ class InstantiateDepthStorage extends MapNestedStorage<Constructible, number> {
     this.recursiveCounts = new WeakMap<Constructible, Map<string, number>>();
   }
 
+  getDepthAndCount(
+    parent: Constructible,
+    member: string
+  ): [number | undefined, number | undefined] {
+    return [this.get(parent, member), this.getCount(parent, member)];
+  }
+
   setCount(parent: Constructible, member: string, count: number) {
     if (this.recursiveCounts.has(parent)) {
       this.recursiveCounts.get(parent)?.set(member, count);

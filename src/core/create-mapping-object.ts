@@ -6,6 +6,7 @@ import {
   Dict,
   Mapping,
 } from '../types';
+import { initializeMappingProps } from './initialize-mapping-props';
 
 export function createMappingObject<
   TSource extends Dict<TSource> = any,
@@ -44,6 +45,7 @@ export function createMappingObject<
     [],
     [],
   ];
+  initializeMappingProps(mapping);
   mappingStorage.set(source, destination, mapping);
   return mapping;
 }

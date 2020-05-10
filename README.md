@@ -92,15 +92,22 @@ So far, the following is supported:
 - [x] ReverseMap
 - [x] Value Converters
 - [x] Value Resolvers
-- [x] Async
+- [x] Async (Read more at [Async Support](https://automapper.netlify.app/docs/introduction/async))
 - [x] Before/After Callback
 - [x] Naming Conventions
 - [x] Null Substitution - [@lqmanh](https://github.com/lqmanh) pointed out the difference in `fromValue()` and `nullSubstitution()` use-case, and that difference is totally valid. Hence, `nullSubstitution` is now supported.
 
+- [x] Circular Dependencies
+- [x] Tree-shakable
+
 #### Unsupported features:
 
-- [ ] Type Converters - Help needed
+- [ ] Type Converters
 - [ ] Value Transformers
+
+#### Circular Dependencies
+
+Please check out the [Circular Dependencies Documentations](https://automapper.netlify.app/docs/usages/avoids/circular-dependency)
 
 ## Documentations
 

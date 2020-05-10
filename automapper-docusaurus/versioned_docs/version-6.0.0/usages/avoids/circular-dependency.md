@@ -76,6 +76,16 @@ class SourceB {
 
 Let's assume the above models, this is how **depth** works:
 
+- Depth of 0
+
+```typescript
+SourceA {
+    sourceB: SourceB {
+        sourceA: null
+    }
+}
+```
+
 - Depth of 1
 
 ```typescript
@@ -104,20 +114,20 @@ SourceA {
 }
 ```
 
-and so on. By default, `@nartc/automapper` will apply **depth of 1** to nested models. To specify **depth**, use `@AutoMap()` decorator 2nd argument:
+and so on. By default, `@nartc/automapper` will apply **depth of 0** to nested models. To specify **depth**, use `@AutoMap()` decorator 2nd argument:
 
 ```typescript
 class SourceA {
   @AutoMap()
   id: number;
-  @AutoMap(() => SourceB, 2)
+  @AutoMap(() => SourceB, 1)
   sourceB: SourceB;
 }
 
 class SourceB {
   @AutoMap()
   id: number;
-  @AutoMap(() => SourceA, 2)
+  @AutoMap(() => SourceA, 1)
   sourceA: SourceA;
 }
 ```

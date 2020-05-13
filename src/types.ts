@@ -244,12 +244,6 @@ export interface CreateReversedMapFluentFunction<
   ): CreateReversedMapFluentFunction<TSource, TDestination>;
 }
 
-export const enum MemberMapFunctionReturnClassId {
-  type,
-  misc,
-  fn,
-}
-
 export type MemberMapFunction<
   TSource extends Dict<TSource> = any,
   TDestination extends Dict<TDestination> = any,

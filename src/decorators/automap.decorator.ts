@@ -1,5 +1,5 @@
 import { metadataStorage } from '../storages';
-import { instantiateDepthStorage } from '../storages/instantiate-depth.storage';
+import { instanceStorage } from '../storages/instanceStorage';
 import { Constructible, MetadataFunction } from '../types';
 import { storeMetadata } from '../utils';
 
@@ -14,7 +14,7 @@ export const AutoMap = (
     metadataStorage.addMetadata(target.constructor as Constructible, [
       [propertyKey, typeFn as MetadataFunction],
     ]);
-    instantiateDepthStorage.set(
+    instanceStorage.set(
       target.constructor as Constructible,
       propertyKey,
       depth

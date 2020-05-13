@@ -8,7 +8,6 @@ import {
   TransformationType,
 } from '../types';
 import { getSourcePropertyKey, isClass, isObjectLike } from '../utils';
-import { getProto } from '../utils/getProto';
 import { instantiate } from './instantiate';
 
 export function initializeMappingProps<
@@ -17,14 +16,13 @@ export function initializeMappingProps<
 >(mapping: Mapping<TSource, TDestination>): void {
   const [srcModel, destModel] = mapping[MappingClassId.models];
   const destination = instantiate(destModel);
-
   let source = instantiate(srcModel);
-  const sourceProtoConstructor = getProto(source.constructor);
+  const sourceProtoConstructor = Object.getPrototypeOf(source.constructor);
   if (sourceProtoConstructor.name) {
     source = Object.assign(source, instantiate(sourceProtoConstructor));
   }
 
-  const sourceProto = getProto(source);
+  const sourceProto = Object.getPrototypeOf(source);
   const destinationPaths = getPathRecursive(destination);
   let i = destinationPaths.length;
   while (i--) {
@@ -131,7 +129,7 @@ function getPathRecursive(node: any, prefix: string = '', prev?: string[]) {
   }
 
   if (!prev) {
-    result = getPathRecursive(getProto(node), prefix, result);
+    result = getPathRecursive(Object.getPrototypeOf(node), prefix, result);
   }
 
   return result;

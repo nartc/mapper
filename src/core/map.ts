@@ -108,15 +108,21 @@ export function map<
     props,
     actions,
   ] = mapping as Required<Mapping<TSource, TDestination>>;
+
+  /**
+   * If sourceObj is a POJO (plain object)
+   * then instantiate it to become an instance of sourceModel
+   */
   if (!(sourceObj instanceof sourceModel)) {
     sourceObj = instantiate(sourceModel, sourceObj);
   }
+
   const defaultEmptyValue = useUndefined ? undefined : null;
   const [beforeAction, afterAction] = actions || [];
   const { beforeMap, afterMap } = options;
   const configKeys = [];
 
-  let destination = instantiate(destinationModel);
+  const destination = instantiate(destinationModel);
 
   if (!isArrayMap) {
     if (beforeMap) {
@@ -217,15 +223,18 @@ export function map<
       continue;
     }
 
-    let value = mapMember(
-      transformation.mapFn,
-      sourceObj,
-      sourceMemberPath,
+    set(
       destination,
-      mappingStorage,
-      defaultEmptyValue
+      memberPath,
+      mapMember(
+        transformation.mapFn,
+        sourceObj,
+        sourceMemberPath,
+        destination,
+        mappingStorage,
+        defaultEmptyValue
+      )
     );
-    set(destination, memberPath, value);
   }
 
   if (!isArrayMap) {
@@ -259,8 +268,7 @@ export function mapArray<
   }
 
   for (let i = 0, len = sourceArray.length; i < len; i++) {
-    const source = sourceArray[i];
-    destination.push(map(source, mapping, {}, mappingStorage, true));
+    destination.push(map(sourceArray[i], mapping, {}, mappingStorage, true));
   }
 
   if (afterMap) {

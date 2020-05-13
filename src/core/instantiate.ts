@@ -1,5 +1,5 @@
 import { metadataStorage } from '../storages';
-import { instantiateDepthStorage } from '../storages/instantiate-depth.storage';
+import { instanceStorage } from '../storages/instanceStorage';
 import { Constructible, Dict } from '../types';
 import { isEmpty } from '../utils';
 
@@ -10,9 +10,9 @@ export function instantiate<TModel extends Dict<TModel>>(
 ): TModel {
   const metadata = metadataStorage.getMetadata(model);
 
-  const instance = defaultValue
+  const instance = (defaultValue
     ? Object.assign(new model(), defaultValue)
-    : new model();
+    : new model()) as any;
   if (isEmpty(metadata) || !metadata) {
     return instance;
   }
@@ -22,12 +22,12 @@ export function instantiate<TModel extends Dict<TModel>>(
     const value = (defaultValue as any)?.[key];
     const metaResult = meta();
     if (!metaResult) {
-      (instance as any)[key] = value != null ? value : undefined;
+      instance[key] = value != null ? value : undefined;
       continue;
     }
 
     if (Array.isArray(metaResult)) {
-      (instance as any)[key] = value != null ? value : metaResult;
+      instance[key] = value != null ? value : metaResult;
       continue;
     }
 
@@ -35,26 +35,25 @@ export function instantiate<TModel extends Dict<TModel>>(
       metaResult.prototype.constructor.name === 'Date' ||
       metaResult.prototype.constructor.name === 'Moment'
     ) {
-      (instance as any)[key] =
-        value != null ? new metaResult(value) : new metaResult();
+      instance[key] = value != null ? new metaResult(value) : new metaResult();
       continue;
     }
 
     if (Array.isArray(value)) {
-      (instance as any)[key] = value.map(v => instantiate(metaResult, v));
+      instance[key] = value.map(v => instantiate(metaResult, v));
       continue;
     }
 
     if (parent == null || metaResult !== parent || value != null) {
-      instance[key as keyof TModel] = instantiate(metaResult, value, model);
+      instance[key] = instantiate(metaResult, value, model);
       continue;
     }
 
-    const [depth, count] = instantiateDepthStorage.getDepthAndCount(model, key);
+    const [depth, count] = instanceStorage.getDepthAndCount(model, key);
 
     if (depth != null && !!count) {
       if (depth === count) {
-        instantiateDepthStorage.resetCount(model, key);
+        instanceStorage.resetCount(model, key);
         continue;
       }
     }
@@ -63,8 +62,8 @@ export function instantiate<TModel extends Dict<TModel>>(
       continue;
     }
 
-    instantiateDepthStorage.setCount(model, key, count != null ? count + 1 : 1);
-    instance[key as keyof TModel] = instantiate(metaResult, value, model);
+    instanceStorage.setCount(model, key, count != null ? count + 1 : 1);
+    instance[key] = instantiate(metaResult, value, model);
   }
 
   return instance;

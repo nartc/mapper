@@ -1,7 +1,4 @@
-import {
-  MemberMapFunctionReturnClassId,
-  TransformationType,
-} from '../../types';
+import { TransformationType } from '../../types';
 import { ignore } from '../ignore';
 import { mapDefer } from '../map-defer';
 
@@ -10,10 +7,8 @@ describe('MapDeferFunction', () => {
     const defer = () => ignore();
     const fn = mapDefer(defer);
     expect(fn).toBeTruthy();
-    expect(fn[MemberMapFunctionReturnClassId.type]).toEqual(
-      TransformationType.MapDefer
-    );
-    expect(fn[MemberMapFunctionReturnClassId.misc]).toEqual(null);
-    expect(fn[MemberMapFunctionReturnClassId.fn]).toEqual(defer);
+    expect(fn[0]).toEqual(TransformationType.MapDefer);
+    expect(fn[1]).toEqual(null);
+    expect(fn[2]).toEqual(defer);
   });
 });

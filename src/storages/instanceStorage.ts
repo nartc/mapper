@@ -1,11 +1,11 @@
 /**
- * Internal InstantiateDepthStorage class
+ * Internal InstanceStorage class
  * @private
  */
 import { Constructible } from '../types';
 import { MapNestedStorage } from './base-storage';
 
-class InstantiateDepthStorage extends MapNestedStorage<Constructible, number> {
+class InstanceStorage extends MapNestedStorage<Constructible, number> {
   private recursiveCounts: WeakMap<Constructible, Map<string, number>>;
 
   constructor() {
@@ -41,4 +41,4 @@ class InstantiateDepthStorage extends MapNestedStorage<Constructible, number> {
   }
 }
 
-export const instantiateDepthStorage = new InstantiateDepthStorage();
+export const instanceStorage = new InstanceStorage();

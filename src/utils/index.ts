@@ -7,6 +7,5 @@ export * from './isClass';
 export * from './isThisMemberMap';
 
 export * from './get';
-export * from './getTag';
 export * from './getSourcePropertyKey';
 export * from './getMemberPath';

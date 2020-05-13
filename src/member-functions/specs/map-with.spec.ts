@@ -1,8 +1,5 @@
 import { Mapper } from '../../automapper';
-import {
-  MemberMapFunctionReturnClassId,
-  TransformationType,
-} from '../../types';
+import { TransformationType } from '../../types';
 import { mapFrom } from '../map-from';
 import { mapWith } from '../map-with';
 
@@ -16,13 +13,9 @@ describe('MapWithFunction', () => {
   it('should return correctly', () => {
     const mapWithFn = mapWith(Bar, sourceSelector);
     expect(mapWithFn).toBeTruthy();
-    expect(mapWithFn[MemberMapFunctionReturnClassId.type]).toBe(
-      TransformationType.MapWith
-    );
-    expect(mapWithFn[MemberMapFunctionReturnClassId.misc]).toBe(sourceSelector);
-    expect(mapWithFn[MemberMapFunctionReturnClassId.fn]).toBeInstanceOf(
-      Function
-    );
+    expect(mapWithFn[0]).toBe(TransformationType.MapWith);
+    expect(mapWithFn[1]).toBe(sourceSelector);
+    expect(mapWithFn[2]).toBeInstanceOf(Function);
   });
 
   class Foo {
@@ -38,10 +31,7 @@ describe('MapWithFunction', () => {
     const mapWithFn = mapWith(Bar, sourceSelector);
     const foo = new Foo();
     foo.foo = 'bar';
-    const result = mapWithFn[MemberMapFunctionReturnClassId.fn](
-      { foo },
-      Mapper.mappingStorage
-    );
+    const result = mapWithFn[2]({ foo }, Mapper.mappingStorage);
     expect(result).toBeTruthy();
     expect(result).toBeInstanceOf(Bar);
     expect(result?.bar).toBe(foo.foo);
@@ -49,12 +39,9 @@ describe('MapWithFunction', () => {
 
   it('should return null when sourceValue is empty', () => {
     const mapWithFn = mapWith(Bar, sourceSelector);
-    const result = mapWithFn[MemberMapFunctionReturnClassId.fn](
-      { foo: null },
-      Mapper.mappingStorage
-    );
+    const result = mapWithFn[2]({ foo: null }, Mapper.mappingStorage);
     expect(result).toBeNull();
-    const result2 = mapWithFn[MemberMapFunctionReturnClassId.fn](
+    const result2 = mapWithFn[2](
       {
         foo: 'test',
       },
@@ -76,20 +63,14 @@ describe('MapWithFunction', () => {
     );
     const foo = new FooTwo();
     foo.foo = ['1'];
-    const result = mapWithFn[MemberMapFunctionReturnClassId.fn](
-      { foo: [foo] },
-      Mapper.mappingStorage
-    );
+    const result = mapWithFn[2]({ foo: [foo] }, Mapper.mappingStorage);
     expect(result).toBeTruthy();
     expect(result).toHaveLength(1);
   });
 
   it('should return empty array for empty array', () => {
     const mapWithFn = mapWith(Bar, sourceSelector);
-    const result = mapWithFn[MemberMapFunctionReturnClassId.fn](
-      { foo: [[]] },
-      Mapper.mappingStorage
-    );
+    const result = mapWithFn[2]({ foo: [[]] }, Mapper.mappingStorage);
     expect(result).toBeTruthy();
     expect(result).toHaveLength(0);
   });

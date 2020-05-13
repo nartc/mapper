@@ -1,5 +1,4 @@
 import { Constructible, Dict, MetadataMap, MetadataMapList } from '../types';
-import { getProto } from '../utils/getProto';
 
 /**
  * Internal MetadataStorage class
@@ -27,7 +26,7 @@ class MetadataStorage {
     metadata: MetadataMapList<TModel>
   ) {
     const existingMetadata = this._metadataMap.get(model) || [];
-    const proto = getProto(model);
+    const proto = Object.getPrototypeOf(model);
     const existingProtoMetadata = proto
       ? this._metadataMap.get(proto) || []
       : [];

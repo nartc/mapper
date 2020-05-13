@@ -1,8 +1,4 @@
-import {
-  Converter,
-  MemberMapFunctionReturnClassId,
-  TransformationType,
-} from '../../types';
+import { Converter, TransformationType } from '../../types';
 import { convertUsing } from '../convert-using';
 
 describe('ConvertUsingFunction', () => {
@@ -22,13 +18,9 @@ describe('ConvertUsingFunction', () => {
       s => s.birthday
     );
     expect(convertUsingFn).toBeTruthy();
-    expect(convertUsingFn[MemberMapFunctionReturnClassId.type]).toBe(
-      TransformationType.ConvertUsing
-    );
-    expect(convertUsingFn[MemberMapFunctionReturnClassId.misc]).toBe(null);
-    expect(convertUsingFn[MemberMapFunctionReturnClassId.fn]).toBeInstanceOf(
-      Function
-    );
+    expect(convertUsingFn[0]).toBe(TransformationType.ConvertUsing);
+    expect(convertUsingFn[1]).toBe(null);
+    expect(convertUsingFn[2]).toBeInstanceOf(Function);
   });
 
   it('should map correctly', () => {
@@ -36,7 +28,7 @@ describe('ConvertUsingFunction', () => {
       new DateTimeConverter(),
       s => s.birthday
     );
-    const result = convertUsingFn[MemberMapFunctionReturnClassId.fn](source);
+    const result = convertUsingFn[2](source);
     expect(result).toBe(new Date('10/14/1991').toDateString());
   });
 });

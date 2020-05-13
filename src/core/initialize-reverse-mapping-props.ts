@@ -11,7 +11,6 @@ import {
   TransformationType,
 } from '../types';
 import { getMemberPath, isThisMemberMap } from '../utils';
-import { getProto } from '../utils/getProto';
 import { instantiate } from './instantiate';
 
 export function initializeReverseMappingProps<
@@ -28,7 +27,7 @@ export function initializeReverseMappingProps<
   ]
 > {
   const model = instantiate(mapping[MappingClassId.models][0]);
-  const proto = getProto(model);
+  const proto = Object.getPrototypeOf(model);
   const reversedProps: Array<[
     string,
     MappingProperty<TDestination, TSource, ReturnType<Selector<TSource>>>

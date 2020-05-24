@@ -31,11 +31,16 @@ class MetadataStorage {
       ? this._metadataMap.get(proto) || []
       : [];
 
-    this._metadataMap.set(model, [
-      ...existingProtoMetadata,
-      ...existingMetadata,
-      ...metadata,
-    ]);
+    const existingMeta = [...existingProtoMetadata, ...existingMetadata];
+
+    for (let [existKey] of existingMeta) {
+      const [key] = metadata[0];
+      if (key === existKey) {
+        return;
+      }
+    }
+
+    this._metadataMap.set(model, [...existingMeta, ...metadata]);
   }
 }
 

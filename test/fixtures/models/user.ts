@@ -1,5 +1,5 @@
 import { AutoMap } from '../../../src';
-import { Base, BaseVm } from './base';
+import { AbstractBase, AbstractBaseVm, Base, BaseVm } from './base';
 import { CamelCaseJob, SnakeCaseJob } from './job';
 import { EmptyProfile, EmptyProfileVm, Profile, ProfileVm } from './profile';
 
@@ -162,4 +162,14 @@ export class UserWithEmptyProfileVm {
   name!: string;
   @AutoMap(() => EmptyProfileVm)
   profile!: EmptyProfileVm;
+}
+
+export class UserWithAbstractBase extends AbstractBase {
+  @AutoMap()
+  name!: string;
+}
+
+export class UserWithAbstractBaseVm extends AbstractBaseVm {
+  @AutoMap()
+  name!: string;
 }

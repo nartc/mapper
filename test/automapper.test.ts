@@ -27,6 +27,8 @@ import {
   UserInformation,
   UserVm,
   UserVmWithBase,
+  UserWithAbstractBase,
+  UserWithAbstractBaseVm,
   UserWithBase,
   UserWithEmptyProfile,
   UserWithEmptyProfileVm,
@@ -938,5 +940,27 @@ describe('AutoMapper Integration - Circular Dependency', () => {
     const vm = Mapper.map({ bar: { foo: null } }, Foo, Foo);
     expect(vm).toBeTruthy();
     expect(vm.bar).toBeInstanceOf(Bar);
+  });
+});
+
+describe('AutoMapper Integration - Abstract Class', () => {
+  beforeAll(() => {
+    Mapper.createMap(UserWithAbstractBase, UserWithAbstractBaseVm).reverseMap();
+  });
+
+  afterAll(Mapper.dispose.bind(Mapper));
+
+  it('should map', () => {
+    const vm = Mapper.map(
+      {
+        createdDate: new Date(),
+        updatedDate: new Date(),
+        id: '1',
+        name: 'Chau',
+      },
+      UserWithAbstractBaseVm,
+      UserWithAbstractBase,
+    );
+    expect(vm).toBeTruthy();
   });
 });

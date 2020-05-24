@@ -21,10 +21,7 @@ describe('MetadataStorage', () => {
     const result = metadataStorage.getMetadata(Foo);
     expect(result).toBeTruthy();
     expect(spy).toHaveBeenCalledWith(Foo);
-    expect(spy).toHaveReturnedWith([
-      ...existingMetadataMap,
-      ...existingMetadataMap,
-    ]);
+    expect(spy).toHaveReturnedWith([...existingMetadataMap]);
   });
 
   it('getMetadataForKey', () => {

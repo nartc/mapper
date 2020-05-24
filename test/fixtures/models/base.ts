@@ -17,3 +17,21 @@ export class BaseVm {
   @AutoMap()
   recordId?: string;
 }
+
+export abstract class AbstractBase {
+  @AutoMap()
+  createdDate?: Date;
+  @AutoMap()
+  updatedDate?: Date;
+  @AutoMap()
+  id?: string;
+}
+
+export abstract class AbstractBaseVm {
+  @AutoMap()
+  createdDate?: Date;
+  @AutoMap()
+  updatedDate?: Date;
+  @AutoMap()
+  id?: string;
+}

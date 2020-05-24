@@ -19,7 +19,7 @@ export function instantiate<TModel extends Dict<TModel>>(
 
   for (let i = 0, len = metadata.length; i < len; i++) {
     const [key, meta] = metadata[i];
-    const value = (defaultValue as any)?.[key];
+    const value = instance[key];
     const metaResult = meta();
     if (!metaResult) {
       instance[key] = value != null ? value : undefined;
@@ -41,6 +41,11 @@ export function instantiate<TModel extends Dict<TModel>>(
 
     if (Array.isArray(value)) {
       instance[key] = value.map(v => instantiate(metaResult, v));
+      continue;
+    }
+
+    if (value == null && defaultValue != null) {
+      instance[key] = value;
       continue;
     }
 

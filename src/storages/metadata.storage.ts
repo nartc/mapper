@@ -11,7 +11,24 @@ class MetadataStorage {
   getMetadata<TModel extends Dict<TModel> = any>(
     model: Constructible<TModel>
   ): MetadataMapList<TModel> {
-    return this._metadataMap.get(model) as MetadataMapList<TModel>;
+    const metadataMapList = this._metadataMap.get(model) as MetadataMapList<
+      TModel
+    >;
+    let i = metadataMapList?.length || 0;
+
+    if (!i) {
+      return metadataMapList;
+    }
+
+    const result: MetadataMapList<TModel> = [];
+    while (i--) {
+      const [key] = metadataMapList[i];
+      if (result.some(([metaKey]) => metaKey === key)) {
+        continue;
+      }
+      result.push(metadataMapList[i]);
+    }
+    return result;
   }
 
   getMetadataForKey<TModel extends Dict<TModel> = any>(

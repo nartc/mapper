@@ -68,6 +68,24 @@ describe('MapWithFunction', () => {
     expect(result).toHaveLength(1);
   });
 
+  it('should map correctly for array of MapWith with provided source model', () => {
+    const mapWithFn = mapWith(Bar, sourceSelector, () => FooTwo);
+
+    class FooTwo {
+      foo!: string[];
+    }
+
+    Mapper.createMap(FooTwo, Bar).forMember(
+      d => d.bar,
+      mapFrom(s => s.foo.join(''))
+    );
+    const foo = new FooTwo();
+    foo.foo = ['1'];
+    const result = mapWithFn[2]({ foo: [foo] }, Mapper.mappingStorage);
+    expect(result).toBeTruthy();
+    expect(result).toHaveLength(1);
+  });
+
   it('should return empty array for empty array', () => {
     const mapWithFn = mapWith(Bar, sourceSelector);
     const result = mapWithFn[2]({ foo: [[]] }, Mapper.mappingStorage);

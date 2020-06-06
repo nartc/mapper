@@ -35,14 +35,13 @@ export function initializeMappingProps<
       path
     );
     const dottedSourcePaths = sourcePath.split('.');
-    if (dottedSourcePaths.length > 1) {
-      const [first] = dottedSourcePaths;
-      if (
-        !source.hasOwnProperty(first) ||
-        ((source as any)[first] && isClass((source as any)[first]))
-      ) {
-        continue;
-      }
+    if (
+      dottedSourcePaths.length > 1 &&
+      (!source.hasOwnProperty(dottedSourcePaths[0]) ||
+        ((source as any)[dottedSourcePaths[0]] &&
+          isClass((source as any)[dottedSourcePaths[0]])))
+    ) {
+      continue;
     }
 
     const defaultVal = mapping[MappingClassId.conventions][0]

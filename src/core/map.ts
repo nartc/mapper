@@ -6,7 +6,6 @@ import {
   Dict,
   FromValueFunction,
   IgnoreFunction,
-  MapDeferFunction,
   MapFromFunction,
   MapInitializeFunction,
   MapOptions,
@@ -72,9 +71,7 @@ function mapMember<TSource, TDestination>(
     isThisMemberMap<IgnoreFunction>(mapFn, TransformationType.Ignore)
   ) {
     value = defaultValue;
-  } else if (
-    isThisMemberMap<MapDeferFunction>(mapFn, TransformationType.MapDefer)
-  ) {
+  } else {
     const memberMapFunction = mapFn[2](sourceObj, sourceMemberPath);
     value = mapMember(
       memberMapFunction,
@@ -118,7 +115,7 @@ export function map<
   }
 
   const defaultEmptyValue = useUndefined ? undefined : null;
-  const [beforeAction, afterAction] = actions || [];
+  const [beforeAction, afterAction] = actions;
   const { beforeMap, afterMap } = options;
   const configKeys = [];
 
@@ -141,7 +138,7 @@ export function map<
       set(
         destination,
         memberPath,
-        transformation.preCond?.[1] ?? defaultEmptyValue
+        transformation.preCond[1] ?? defaultEmptyValue
       );
       continue;
     }

@@ -29,19 +29,17 @@ export function createReverseMappingObject<
     [useUndefined, destinationConvention, sourceConvention],
     initializeReverseMappingProps(mapping),
     [],
-    bases?.slice().reverse() as [Constructible, Constructible],
+    (bases?.slice().reverse() || []) as [Constructible, Constructible],
   ];
 
-  if (reversedMapping[MappingClassId.bases]) {
-    const reversedBaseMapping = getMappingForDestination(
-      reversedMapping[MappingClassId.bases]![1],
-      reversedMapping[MappingClassId.bases]![0],
-      mappingStorage,
-      true
-    );
-    if (reversedBaseMapping) {
-      inheritBaseMapping(reversedMapping, reversedBaseMapping);
-    }
+  const reversedBaseMapping = getMappingForDestination(
+    reversedMapping[MappingClassId.bases]![1],
+    reversedMapping[MappingClassId.bases]![0],
+    mappingStorage,
+    true
+  );
+  if (reversedBaseMapping) {
+    inheritBaseMapping(reversedMapping, reversedBaseMapping);
   }
 
   mappingStorage.set(destination, source, reversedMapping);

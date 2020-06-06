@@ -1,6 +1,26 @@
 import { AutoMap } from '../../../src/decorators';
 import { BarWithFoo, BarWithFooZeroDepth } from './bar';
 
+export class Temp {
+  @AutoMap()
+  t!: string;
+}
+
+export class TempVm {
+  @AutoMap()
+  t!: string;
+}
+
+export class FooWithBase extends Temp {
+  @AutoMap()
+  foo!: string;
+}
+
+export class FooWithBaseVm extends TempVm {
+  @AutoMap()
+  foo!: string;
+}
+
 export class Foo {
   foo!: string;
 }
@@ -8,6 +28,8 @@ export class Foo {
 export class FooWithReturn {
   @AutoMap()
   returnFoo!: string;
+  @AutoMap()
+  foos!: string[];
 }
 
 export class FooWithReturnVm {

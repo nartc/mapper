@@ -1,5 +1,5 @@
 import { MappingStorage, metadataStorage } from '../storages';
-import { Constructible, Dict, Mapping } from '../types';
+import { Constructible, Dict, Mapping, MetadataMap } from '../types';
 
 export function getMappingForNestedKey<
   TSource extends Dict<TSource> = any,
@@ -14,9 +14,9 @@ export function getMappingForNestedKey<
   const keyMetadata = metadataStorage.getMetadataForKey(
     destinationConstructor,
     destinationMemberKey
-  );
+  ) as MetadataMap<TDestination>;
 
-  const meta = keyMetadata?.[1]();
+  const meta = keyMetadata[1]();
   if (!meta || Array.isArray(meta)) {
     throw new Error(
       `Metadata for ${destinationMemberKey} is a primitive or Array. Consider manual map this property`

@@ -47,15 +47,18 @@ export function initializeReverseMappingProps<
       continue;
     }
 
-    const path = sourcePath
-      ? sourcePath
-      : isThisMemberMap<MapWithFunction, MapFromFunction>(
-          transformation.mapFn,
-          TransformationType.MapWith,
-          TransformationType.MapFrom
-        )
-      ? getMemberPath(transformation.mapFn[1])
-      : '';
+    let path = '';
+    if (sourcePath) {
+      path = sourcePath;
+    } else if (
+      isThisMemberMap<MapWithFunction, MapFromFunction>(
+        transformation.mapFn,
+        TransformationType.MapWith,
+        TransformationType.MapFrom
+      )
+    ) {
+      path = getMemberPath(transformation.mapFn[1]);
+    }
 
     if (
       (!model.hasOwnProperty(path) && !proto.hasOwnProperty(path)) ||

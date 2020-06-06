@@ -56,14 +56,8 @@ export function instantiate<TModel extends Dict<TModel>>(
 
     const [depth, count] = instanceStorage.getDepthAndCount(model, key);
 
-    if (depth != null && !!count) {
-      if (depth === count) {
-        instanceStorage.resetCount(model, key);
-        continue;
-      }
-    }
-
-    if (depth === 0) {
+    if ((depth != null && !!count && depth === count) || depth === 0) {
+      instanceStorage.resetCount(model, key);
       continue;
     }
 

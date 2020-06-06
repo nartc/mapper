@@ -38,7 +38,8 @@ export class UserProfile extends ProfileBase {
           }
           return mapFrom(s => s.firstName);
         })
-      );
+      )
+      .reverseMap();
 
     mapper.createMap(User, UserInformation).forMember(
       d => d.fullName,

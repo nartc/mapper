@@ -40,4 +40,9 @@ describe('SnakeCaseNamingConvention', () => {
     expect(convertedTwo).toEqual('address_street');
     expect(convertedThree).toEqual(toSplit);
   });
+
+  it('should convert to empty string if provide empty string', () => {
+    const converted = namingConvention.transformPropertyName(['']);
+    expect(converted).toEqual('');
+  });
 });

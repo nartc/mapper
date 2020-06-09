@@ -22,12 +22,19 @@ when the property is `ingore()`. There are two main reasons:
 
 #### Problem with `null`
 
-`null` does signify that a propert has been set with a value but that value is just **empty**. However, `null` is kept after serialization which
+`null` does signify that a property has been set with a value but that value is just **empty**. However, `null` is kept after serialization which
 does bring up some problems with APIs that either expect a property with a value OR that property does not exist at all.
 
 #### Solution
 
 With that said, the solution that `AutoMapper` provides is to set an option called `useUndefined` when you `createMap()`
+
+```typescript
+console.log(JSON.stringify({foo: undefined}));
+// logs {}
+console.log(JSON.stringify({foo: null}));
+// logs {foo: null}
+```
 
 ```typescript
 Mapper.createMap(Source, Destination, { useUndefined: true });

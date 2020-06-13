@@ -17,7 +17,8 @@ class MetadataStorage {
     let i = metadataMapList?.length || 0;
 
     if (!i) {
-      return metadataMapList;
+      const proto = Object.getPrototypeOf(model);
+      return proto ? this.getMetadata(proto) : metadataMapList;
     }
 
     const result: MetadataMapList<TModel> = [];

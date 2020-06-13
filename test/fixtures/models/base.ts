@@ -35,3 +35,27 @@ export abstract class AbstractBaseVm {
   @AutoMap()
   id?: string;
 }
+
+export class NestedFooBase {
+  @AutoMap()
+  id?: string;
+}
+
+export class NestedFooVmBase {
+  @AutoMap()
+  id?: string;
+}
+
+export class FooBase {
+  @AutoMap(() => NestedFooBase)
+  nestedFooBase?: NestedFooBase;
+  @AutoMap(() => NestedFooBase)
+  nestedFooBases?: NestedFooBase[];
+}
+
+export class FooVmBase {
+  @AutoMap(() => NestedFooVmBase)
+  nestedFooBase?: NestedFooVmBase;
+  @AutoMap(() => NestedFooVmBase)
+  nestedFooBases?: NestedFooVmBase[];
+}

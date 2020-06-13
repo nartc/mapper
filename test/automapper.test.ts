@@ -15,7 +15,7 @@ import {
 import { Address, AddressVm } from './fixtures/models/address';
 import { Avatar, AvatarVm, OtherAvatar } from './fixtures/models/avatar';
 import { Bar, BarWithFoo, BarWithFooZeroDepth } from './fixtures/models/bar';
-import { Base, BaseVm } from './fixtures/models/base';
+import { Base, BaseVm, FooBase, FooVmBase, NestedFooBase, NestedFooVmBase } from './fixtures/models/base';
 import {
   Foo,
   FooWithBar,
@@ -51,8 +51,8 @@ import {
   UserWithAbstractBaseVm,
   UserWithBase,
   UserWithEmptyProfile,
-  UserWithEmptyProfileVm,
-  UserWithGetter,
+  UserWithEmptyProfileVm, UserWithFooBase, UserWithFooVmBase,
+  UserWithGetter, UserWithListFooBase, UserWithListFooVmBase,
 } from './fixtures/models/user';
 import { AddressProfile } from './fixtures/profiles/address.profile';
 import { AvatarProfile } from './fixtures/profiles/avatar.profile';
@@ -633,6 +633,9 @@ describe('AutoMapper Integration - Inheritance', () => {
     Mapper.createMap(User, UserVm, { includeBase: [] as any });
     // Test includeBase without having previously created mapping for bases.
     Mapper.createMap(Avatar, AvatarVm, { includeBase: [Avatar, AvatarVm] });
+
+    Mapper.createMap(UserWithFooBase, UserWithFooVmBase, {includeBase: [FooBase, FooVmBase]});
+    Mapper.createMap(UserWithListFooBase, UserWithListFooVmBase, {includeBase: [FooBase, FooVmBase]});
   });
 
   afterAll(Mapper.dispose.bind(Mapper));
@@ -676,6 +679,28 @@ describe('AutoMapper Integration - Inheritance', () => {
     expect(user.id).toBe(vm.recordId);
     expect(user.createdDate).toEqual(vm.created);
     expect(user.updatedDate).toEqual(vm.updated);
+  });
+
+  it('should map with override property', () => {
+    const user = new UserWithFooBase();
+    user.nestedFooBase = new NestedFooBase();
+    user.nestedFooBase.id = '1';
+    const vm = Mapper.map(user, UserWithFooVmBase);
+    expect(vm).toBeTruthy();
+    expect(vm).toBeInstanceOf(UserWithFooVmBase);
+    expect(vm.nestedFooBase).toBeInstanceOf(NestedFooVmBase);
+    expect(vm.nestedFooBase.id).toBe(user.nestedFooBase.id);
+  });
+
+  it('should map with override array property', () => {
+    const user = new UserWithListFooBase();
+    user.nestedFooBases = [new NestedFooBase()];
+    user.nestedFooBases[0].id = '1';
+    const vm = Mapper.map(user, UserWithListFooVmBase);
+    expect(vm).toBeTruthy();
+    expect(vm).toBeInstanceOf(UserWithListFooVmBase);
+    expect(vm.nestedFooBases[0]).toBeInstanceOf(NestedFooVmBase);
+    expect(vm.nestedFooBases[0].id).toBe(user.nestedFooBases[0].id);
   });
 });
 
@@ -1032,8 +1057,9 @@ describe('AutoMapper Integration - IncludeBase', () => {
 
   afterAll(Mapper.dispose.bind(Mapper));
 
-  it('should', () => {
+  it('should map correctly', () => {
     const vm = Mapper.map({ foo: 'foo', t: 't' }, FooWithBaseVm, FooWithBase);
     expect(vm).toBeTruthy();
   });
 });
+

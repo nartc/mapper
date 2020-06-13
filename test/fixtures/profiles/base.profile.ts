@@ -1,5 +1,5 @@
 import { AutoMapper, mapFrom, ProfileBase } from '../../../src';
-import { Base, BaseVm } from '../models/base';
+import { Base, BaseVm, FooBase, FooVmBase, NestedFooBase, NestedFooVmBase } from '../models/base';
 
 export class BaseProfile extends ProfileBase {
   constructor(mapper: AutoMapper) {
@@ -19,5 +19,8 @@ export class BaseProfile extends ProfileBase {
         mapFrom(s => s.id)
       )
       .reverseMap();
+
+    mapper.createMap(NestedFooBase, NestedFooVmBase);
+    mapper.createMap(FooBase, FooVmBase);
   }
 }

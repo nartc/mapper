@@ -19,7 +19,7 @@
   },
   "scripts": {
     "start": "tsdx watch",
-    "build": "tsdx build",
+    "build": "tsdx build --tsconfig ./tsconfig.build.json",
     "build:docs": "typedoc --out gh-docs --target es6 --theme minimal --mode file src",
     "build:docusaurus": "cd automapper-docusaurus && npm install",
     "test": "CI=true tsdx test --no-cache",

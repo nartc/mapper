@@ -26,6 +26,8 @@ describe('AutoMap decorator', () => {
 
     expect(metadata).toBeTruthy();
     expect(metadata.length).toBe(0);
+    const barMeta = metadata.find(m => m.key === Bar.name);
+    expect(barMeta).toBeUndefined();
   });
 
   it('should call metadataStorage.addMetadata', () => {

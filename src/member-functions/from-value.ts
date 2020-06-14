@@ -1,9 +1,4 @@
-import {
-  Dict,
-  FromValueFunction,
-  SelectorReturn,
-  TransformationType,
-} from '../types';
+import { Dict, FromValueFunction, SelectorReturn } from '../types';
 
 export function fromValue<
   TSource extends Dict<TSource> = any,
@@ -12,5 +7,6 @@ export function fromValue<
 >(
   rawValue: TSelectorReturn
 ): ReturnType<FromValueFunction<TSource, TDestination, TSelectorReturn>> {
-  return [TransformationType.FromValue as const, null, () => rawValue];
+  // 3: TransformationType.FromValue
+  return [3, null, () => rawValue];
 }

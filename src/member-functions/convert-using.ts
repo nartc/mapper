@@ -4,7 +4,6 @@ import {
   Dict,
   Selector,
   SelectorReturn,
-  TransformationType,
 } from '../types';
 
 export function convertUsing<
@@ -17,7 +16,7 @@ export function convertUsing<
   value: Selector<TSource, TConvertSource>
 ): ReturnType<ConvertUsingFunction<TSource, TDestination, TSelectorReturn>> {
   return [
-    TransformationType.ConvertUsing as const,
+    5, // 5: TransformationType.ConvertUsing
     null,
     source => converter.convert(value(source)),
   ];

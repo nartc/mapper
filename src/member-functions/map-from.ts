@@ -3,7 +3,6 @@ import {
   MapFromFunction,
   Resolver,
   SelectorReturn,
-  TransformationType,
   ValueSelector,
 } from '../types';
 
@@ -17,7 +16,7 @@ export function mapFrom<
     | Resolver<TSource, TDestination, TSelectorReturn>
 ): ReturnType<MapFromFunction<TSource, TDestination, TSelectorReturn>> {
   return [
-    TransformationType.MapFrom as const,
+    1, // 1: TransformationType.MapFrom
     from as ValueSelector,
     (source, destination) => {
       if (isResolver(from)) {
@@ -29,8 +28,6 @@ export function mapFrom<
   ];
 }
 
-function isResolver(
-  fn: ValueSelector | Resolver<any, any>
-): fn is Resolver<any, any> {
+function isResolver(fn: ValueSelector | Resolver<any>): fn is Resolver<any> {
   return 'resolve' in fn;
 }

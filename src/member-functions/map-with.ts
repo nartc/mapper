@@ -4,7 +4,6 @@ import {
   Dict,
   MapWithFunction,
   SelectorReturn,
-  TransformationType,
   Unpacked,
   ValueSelector,
 } from '../types';
@@ -20,7 +19,7 @@ export function mapWith<
   valueModel?: () => Constructible
 ): ReturnType<MapWithFunction<TSource, TDestination, TSelectorReturn>> {
   return [
-    TransformationType.MapWith as const,
+    4, // 4: TransformationType.MapFrom
     withValue,
     (source, mappingStorage) => {
       const sourceValue = withValue(source);

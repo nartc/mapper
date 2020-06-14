@@ -14,7 +14,7 @@ export type BaseOf<T extends Dict<T> = any, TBase = any> = [T] extends [TBase]
   ? unknown
   : never;
 
-export enum TransformationType {
+export const enum TransformationType {
   Ignore,
   MapFrom,
   Condition,
@@ -242,6 +242,12 @@ export interface CreateReversedMapFluentFunction<
   afterMap(
     action: MapAction<TSource, TDestination>
   ): CreateReversedMapFluentFunction<TSource, TDestination>;
+}
+
+export const enum MemberMapFunctionId {
+  type,
+  misc,
+  fn,
 }
 
 export type MemberMapFunction<

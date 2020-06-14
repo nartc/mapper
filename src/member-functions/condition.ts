@@ -3,7 +3,6 @@ import {
   ConditionPredicate,
   Dict,
   SelectorReturn,
-  TransformationType,
 } from '../types';
 import { get } from '../utils';
 
@@ -16,7 +15,7 @@ export function condition<
   defaultValue?: TSelectorReturn
 ): ReturnType<ConditionFunction<TSource, TDestination, TSelectorReturn>> {
   return [
-    TransformationType.Condition as const,
+    2, // 2: TransformationType.Condition
     null,
     (source, internalDefaultValue: undefined | null, ...sourceMemberPaths) => {
       if (predicate(source)) {

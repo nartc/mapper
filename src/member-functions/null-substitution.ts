@@ -1,9 +1,4 @@
-import {
-  Dict,
-  NullSubstitutionFunction,
-  SelectorReturn,
-  TransformationType,
-} from '../types';
+import { Dict, NullSubstitutionFunction, SelectorReturn } from '../types';
 import { get } from '../utils';
 
 export function nullSubstitution<
@@ -16,7 +11,7 @@ export function nullSubstitution<
   NullSubstitutionFunction<TSource, TDestination, TSelectorReturn>
 > {
   return [
-    TransformationType.NullSubstitution as const,
+    7, // 7: TransformationType.NullSubstitution
     null,
     (source, ...sourceMemberPaths) =>
       get(source, substitution, ...sourceMemberPaths),

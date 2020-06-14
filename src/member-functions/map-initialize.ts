@@ -15,7 +15,7 @@ export function mapInitialize<
   ...paths: string[]
 ): ReturnType<MapInitializeFunction<TSource, TDestination, TSelectorReturn>> {
   return [
-    TransformationType.MapInitialize as const,
+    TransformationType.MapInitialize,
     null,
     source => get(source, defaultVal, ...paths),
   ];

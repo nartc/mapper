@@ -6,9 +6,9 @@ import {
   MappingClassId,
   MappingProperty,
   MemberMapFunction,
+  MemberMapFunctionId,
   PreConditionFunction,
   Selector,
-  TransformationType,
 } from '../types';
 import { getMemberPath, isThisMemberMap } from '../utils';
 
@@ -36,10 +36,9 @@ export function createMapForMember<
   }
 
   let sourcePath: string = '';
-  if (
-    isThisMemberMap<MapFromFunction>(mapMemberFn, TransformationType.MapFrom)
-  ) {
-    sourcePath = getMemberPath(mapMemberFn[1]);
+  // 1: TransformationType.MapFrom
+  if (isThisMemberMap<MapFromFunction>(mapMemberFn, 1)) {
+    sourcePath = getMemberPath(mapMemberFn[MemberMapFunctionId.misc]);
   }
 
   const paths: [string, string?] = !!sourcePath
@@ -54,7 +53,7 @@ export function createMapForMember<
     paths,
     transformation: {
       mapFn: mapMemberFn,
-      type: mapMemberFn[0],
+      type: mapMemberFn[MemberMapFunctionId.type],
       preCond,
     },
   });

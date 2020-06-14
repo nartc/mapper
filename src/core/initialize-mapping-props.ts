@@ -5,7 +5,6 @@ import {
   Mapping,
   MappingClassId,
   NamingConvention,
-  TransformationType,
 } from '../types';
 import { getSourcePropertyKey, isClass, isObjectLike } from '../utils';
 import { instantiate } from './instantiate';
@@ -77,7 +76,7 @@ export function initializeMappingProps<
         Object.seal({
           paths: [path],
           transformation: {
-            type: TransformationType.MapInitialize,
+            type: 6, // 6: TransformationType.MapInitialize.
             preCond: undefined,
             mapFn: mapInitialize(defaultVal, ...sourceMemberPath),
           },
@@ -91,7 +90,7 @@ export function initializeMappingProps<
       Object.seal({
         paths: [path, sourcePath],
         transformation: {
-          type: TransformationType.MapInitialize,
+          type: 6, // 6: TransformationType.MapInitialize.
           preCond: undefined,
           mapFn: mapInitialize(defaultVal, sourcePath),
         },

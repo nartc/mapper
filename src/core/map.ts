@@ -12,8 +12,8 @@ import {
   Mapping,
   MapWithFunction,
   MemberMapFunction,
+  MemberMapFunctionId,
   NullSubstitutionFunction,
-  TransformationType,
 } from '../types';
 import {
   get,
@@ -37,42 +37,38 @@ function mapMember<TSource, TDestination>(
   defaultValue: undefined | null
 ) {
   let value: any;
-  if (
-    isThisMemberMap<NullSubstitutionFunction>(
-      mapFn,
-      TransformationType.NullSubstitution
-    )
-  ) {
-    value = mapFn[2](sourceObj, sourceMemberPath);
-  } else if (
-    isThisMemberMap<ConditionFunction>(mapFn, TransformationType.Condition)
-  ) {
-    value = mapFn[2](sourceObj, defaultValue, sourceMemberPath);
-  } else if (
-    isThisMemberMap<MapFromFunction>(mapFn, TransformationType.MapFrom)
-  ) {
-    value = mapFn[2](sourceObj, destination);
-  } else if (
-    isThisMemberMap<MapWithFunction>(mapFn, TransformationType.MapWith)
-  ) {
-    value = mapFn[2](sourceObj, mappingStorage);
-  } else if (
-    isThisMemberMap<ConvertUsingFunction>(
-      mapFn,
-      TransformationType.ConvertUsing
-    )
-  ) {
-    value = mapFn[2](sourceObj);
-  } else if (
-    isThisMemberMap<FromValueFunction>(mapFn, TransformationType.FromValue)
-  ) {
-    value = mapFn[2]();
-  } else if (
-    isThisMemberMap<IgnoreFunction>(mapFn, TransformationType.Ignore)
-  ) {
+  /**
+   * 0: TransformationType.Ignore
+   * 1: TransformationType.MapFrom
+   * 2: TransformationType.Condition
+   * 3: TransformationType.FromValue
+   * 4: TransformationType.MapWith
+   * 5: TransformationType.ConvertUsing
+   * 7: TransformationType.NullSubstitution
+   */
+  if (isThisMemberMap<NullSubstitutionFunction>(mapFn, 7)) {
+    value = mapFn[MemberMapFunctionId.fn](sourceObj, sourceMemberPath);
+  } else if (isThisMemberMap<ConditionFunction>(mapFn, 2)) {
+    value = mapFn[MemberMapFunctionId.fn](
+      sourceObj,
+      defaultValue,
+      sourceMemberPath
+    );
+  } else if (isThisMemberMap<MapFromFunction>(mapFn, 1)) {
+    value = mapFn[MemberMapFunctionId.fn](sourceObj, destination);
+  } else if (isThisMemberMap<MapWithFunction>(mapFn, 4)) {
+    value = mapFn[MemberMapFunctionId.fn](sourceObj, mappingStorage);
+  } else if (isThisMemberMap<ConvertUsingFunction>(mapFn, 5)) {
+    value = mapFn[MemberMapFunctionId.fn](sourceObj);
+  } else if (isThisMemberMap<FromValueFunction>(mapFn, 3)) {
+    value = mapFn[MemberMapFunctionId.fn]();
+  } else if (isThisMemberMap<IgnoreFunction>(mapFn, 0)) {
     value = defaultValue;
   } else {
-    const memberMapFunction = mapFn[2](sourceObj, sourceMemberPath);
+    const memberMapFunction = mapFn[MemberMapFunctionId.fn](
+      sourceObj,
+      sourceMemberPath
+    );
     value = mapMember(
       memberMapFunction,
       sourceObj,
@@ -148,13 +144,11 @@ export function map<
       memberPath
     );
 
-    if (
-      isThisMemberMap<MapInitializeFunction>(
-        transformation.mapFn,
-        TransformationType.MapInitialize
-      )
-    ) {
-      const mapInitializeValue = transformation.mapFn[2](sourceObj);
+    // 6: TransformationType.MapInitialize
+    if (isThisMemberMap<MapInitializeFunction>(transformation.mapFn, 6)) {
+      const mapInitializeValue = transformation.mapFn[MemberMapFunctionId.fn](
+        sourceObj
+      );
       if (mapInitializeValue == null) {
         set(destination, memberPath, defaultEmptyValue);
         continue;

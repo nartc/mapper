@@ -8,7 +8,6 @@ import {
   MappingProperty,
   MapWithFunction,
   Selector,
-  TransformationType,
 } from '../types';
 import { getMemberPath, isThisMemberMap } from '../utils';
 import { instantiate } from './instantiate';
@@ -39,11 +38,11 @@ export function initializeReverseMappingProps<
     const { paths, transformation } = props[i][1];
     const [destPath, sourcePath] = paths;
 
-    if (
-      !sourcePath &&
-      transformation.type !== TransformationType.MapFrom &&
-      transformation.type !== TransformationType.MapWith
-    ) {
+    /**
+     * 1: TransformationType.MapFrom
+     * 4: TransformationType.MapWith
+     */
+    if (!sourcePath && transformation.type !== 1 && transformation.type !== 4) {
       continue;
     }
 
@@ -53,8 +52,8 @@ export function initializeReverseMappingProps<
     } else if (
       isThisMemberMap<MapWithFunction, MapFromFunction>(
         transformation.mapFn,
-        TransformationType.MapWith,
-        TransformationType.MapFrom
+        1,
+        4
       )
     ) {
       path = getMemberPath(transformation.mapFn[1]);
@@ -72,7 +71,7 @@ export function initializeReverseMappingProps<
       Object.seal({
         paths: [path, destPath],
         transformation: {
-          type: TransformationType.MapInitialize,
+          type: 6, // 6 is TransformationType.MapInitialize.
           preCond: undefined,
           mapFn: mapInitialize(
             mapping[MappingClassId.conventions][0] ? undefined : null,

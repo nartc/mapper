@@ -3,7 +3,6 @@ import {
   Dict,
   MapDeferFunction,
   SelectorReturn,
-  TransformationType,
 } from '../types';
 
 export function mapDefer<
@@ -13,5 +12,6 @@ export function mapDefer<
 >(
   defer: DeferFunction<TSource, TDestination, TSelectorReturn>
 ): ReturnType<MapDeferFunction<TSource, TDestination, TSelectorReturn>> {
-  return [TransformationType.MapDefer as const, null, defer];
+  // 8: TransformationType.MapDefer
+  return [8, null, defer];
 }

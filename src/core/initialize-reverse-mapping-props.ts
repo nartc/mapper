@@ -2,14 +2,13 @@ import { mapInitialize } from '../member-functions/map-initialize';
 import {
   BaseOf,
   Dict,
-  MapFromFunction,
   Mapping,
   MappingClassId,
   MappingProperty,
-  MapWithFunction,
+  MemberMapFunctionId,
   Selector,
 } from '../types';
-import { getMemberPath, isThisMemberMap } from '../utils';
+import { getMemberPath } from '../utils';
 import { instantiate } from './instantiate';
 
 export function initializeReverseMappingProps<
@@ -49,14 +48,10 @@ export function initializeReverseMappingProps<
     let path = '';
     if (sourcePath) {
       path = sourcePath;
-    } else if (
-      isThisMemberMap<MapWithFunction, MapFromFunction>(
-        transformation.mapFn,
-        1,
-        4
-      )
-    ) {
-      path = getMemberPath(transformation.mapFn[1]);
+    } else {
+      path = getMemberPath(
+        transformation.mapFn[MemberMapFunctionId.fn] as Selector
+      );
     }
 
     if (

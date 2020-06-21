@@ -2,6 +2,7 @@ import { getMappingForDestination, map, mapArray } from '../core';
 import {
   Constructible,
   Dict,
+  Mapping,
   MapWithFunction,
   SelectorReturn,
   Unpacked,
@@ -43,7 +44,7 @@ export function mapWith<
           withDestination,
           valueModel?.() || sourceValue[0].constructor,
           mappingStorage
-        );
+        ) as Mapping;
         return mapArray(sourceValue, mapping, undefined, mappingStorage) as any;
       }
 
@@ -51,7 +52,7 @@ export function mapWith<
         withDestination,
         valueModel?.() || sourceValue.constructor,
         mappingStorage
-      );
+      ) as Mapping;
       return map(
         sourceValue,
         mapping,

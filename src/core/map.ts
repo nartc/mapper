@@ -201,7 +201,7 @@ export function map<
           get(destination, null, memberPath).constructor,
           mapInitializeValue.constructor,
           mappingStorage
-        );
+        ) as Mapping;
         set(
           destination,
           memberPath,

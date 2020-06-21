@@ -167,7 +167,7 @@ export class AutoMapper {
       destination,
       source || (sourceObj.constructor as Constructible<TSource>),
       this._mappingStorage
-    );
+    ) as Mapping;
     return map(sourceObj, mapping, options, this._mappingStorage);
   }
 
@@ -203,7 +203,7 @@ export class AutoMapper {
       destination,
       source || (sourceObj.constructor as Constructible<TSource>),
       this._mappingStorage
-    );
+    ) as Mapping;
     return Promise.resolve().then(() =>
       map(sourceObj, mapping, options, this._mappingStorage)
     );
@@ -261,7 +261,7 @@ export class AutoMapper {
       destination,
       source || (sourceArr[0].constructor as Constructible<TSource>),
       this._mappingStorage
-    );
+    ) as Mapping;
 
     return mapArray(sourceArr, mapping, options, this._mappingStorage);
   }
@@ -302,7 +302,7 @@ export class AutoMapper {
       destination,
       source || (sourceArr[0].constructor as Constructible<TSource>),
       this._mappingStorage
-    );
+    ) as Mapping;
 
     return Promise.resolve().then(() =>
       mapArray(sourceArr, mapping, options, this._mappingStorage)

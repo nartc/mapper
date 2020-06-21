@@ -1,11 +1,5 @@
 import { mapInitialize } from '../member-functions/map-initialize';
-import {
-  Constructible,
-  Dict,
-  Mapping,
-  MappingClassId,
-  NamingConvention,
-} from '../types';
+import { Dict, Mapping, MappingClassId } from '../types';
 import { getSourcePropertyKey, isClass, isObjectLike } from '../utils';
 import { instantiate } from './instantiate';
 
@@ -23,14 +17,16 @@ export function initializeMappingProps<
 
   const sourceProto = Object.getPrototypeOf(source);
   const destinationPaths = getPathRecursive(destination);
+  const [
+    useUndefined,
+    sourceNamingConvention,
+    destinationNamingConvention,
+  ] = mapping[MappingClassId.conventions];
   let i = destinationPaths.length;
   while (i--) {
     const path = destinationPaths[i];
     const sourcePath = getSourcePropertyKey(
-      mapping[MappingClassId.conventions].slice(1, 3) as [
-        Constructible<NamingConvention>,
-        Constructible<NamingConvention>
-      ],
+      [sourceNamingConvention, destinationNamingConvention],
       path
     );
     const dottedSourcePaths = sourcePath.split('.');
@@ -43,14 +39,12 @@ export function initializeMappingProps<
       continue;
     }
 
-    const defaultVal = mapping[MappingClassId.conventions][0]
-      ? undefined
-      : null;
+    const defaultVal = useUndefined ? undefined : null;
     if (
       !source.hasOwnProperty(sourcePath) &&
       !sourceProto.hasOwnProperty(sourcePath)
     ) {
-      const convention = new mapping[MappingClassId.conventions][1]();
+      const convention = new sourceNamingConvention();
       const [first, ...paths] = sourcePath
         .split(convention.splittingExpression)
         .filter(Boolean)
@@ -102,13 +96,11 @@ export function initializeMappingProps<
 function getPathRecursive(node: any, prefix: string = '', prev?: string[]) {
   let result: string[] = prev || [];
 
-  const keys = Object.getOwnPropertyNames(node).filter(removeFromPath);
+  const keys = Object.getOwnPropertyNames(node);
   for (let i = 0, len = keys.length; i < len; i++) {
     const key = keys[i];
     const path = prefix + key;
-    if (!result.includes(path)) {
-      result.push(path);
-    }
+    result.push(path);
 
     const child = node[key];
     if (isObjectLike(child)) {
@@ -126,26 +118,5 @@ function getPathRecursive(node: any, prefix: string = '', prev?: string[]) {
     }
   }
 
-  if (!prev) {
-    result = getPathRecursive(Object.getPrototypeOf(node), prefix, result);
-  }
-
   return result;
-}
-
-function removeFromPath(path: string): boolean {
-  return (
-    path !== 'constructor' &&
-    path !== '__defineGetter__' &&
-    path !== '__defineSetter__' &&
-    path !== 'hasOwnProperty' &&
-    path !== '__lookupGetter__' &&
-    path !== '__lookupSetter__' &&
-    path !== 'isPrototypeOf' &&
-    path !== 'propertyIsEnumerable' &&
-    path !== 'toString' &&
-    path !== 'valueOf' &&
-    path !== '__proto__' &&
-    path !== 'toLocaleString'
-  );
 }

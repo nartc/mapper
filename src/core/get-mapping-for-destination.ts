@@ -9,7 +9,7 @@ export function getMappingForDestination<
   source: Constructible<TSource>,
   mappingStorage: MappingStorage,
   isInherit: boolean = false
-): Mapping<TSource, TDestination> {
+): Mapping<TSource, TDestination> | undefined | never {
   const mapping = mappingStorage.get(source, destination);
 
   if (!mapping && !isInherit) {

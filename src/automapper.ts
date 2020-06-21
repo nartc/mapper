@@ -92,12 +92,7 @@ export class AutoMapper {
       TBaseSource,
       TBaseDestination
     >
-  ): CreateMapFluentFunction<
-    TSource,
-    TDestination,
-    TBaseSource,
-    TBaseDestination
-  > {
+  ): CreateMapFluentFunction<TSource, TDestination> {
     MetadataExplorer.explore(source, destination);
     const mergeOptions: CreateMapOptions<
       TSource,

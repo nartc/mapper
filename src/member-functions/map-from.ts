@@ -17,7 +17,7 @@ export function mapFrom<
 ): ReturnType<MapFromFunction<TSource, TDestination, TSelectorReturn>> {
   return [
     1, // 1: TransformationType.MapFrom
-    from as ValueSelector,
+    from as ValueSelector<TSource, TDestination, TSelectorReturn>,
     (source, destination) => {
       if (isResolver(from)) {
         return from.resolve(source, destination);

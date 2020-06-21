@@ -25,10 +25,13 @@ export function createReverseMapFluentFunction<
   > = {
     forPath: (
       selector: Selector<TSource, SelectorReturn<TSource>>,
-      ...functions: (
-        | ReturnType<MemberMapFunction>
-        | ReturnType<PreConditionFunction>
-      )[]
+      ...functions: [
+        (
+          | ReturnType<PreConditionFunction<TDestination, TSource>>
+          | ReturnType<MemberMapFunction<TDestination, TSource>>
+        ),
+        ReturnType<MemberMapFunction<TDestination, TSource>>?
+      ]
     ) =>
       createMapForMember(
         mapping,

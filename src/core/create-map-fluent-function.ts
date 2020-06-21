@@ -31,12 +31,7 @@ export function createMapFluentFunction<
     TBaseDestination
   >,
   mappingStorage: MappingStorage
-): CreateMapFluentFunction<
-  TSource,
-  TDestination,
-  TBaseSource,
-  TBaseDestination
-> {
+): CreateMapFluentFunction<TSource, TDestination> {
   if (options.includeBase?.length) {
     const [baseSource, baseDestination] = options.includeBase;
     const baseMapping = getMappingForDestination(
@@ -50,19 +45,23 @@ export function createMapFluentFunction<
     }
   }
 
-  const fluentFunction: CreateMapFluentFunction<
-    TSource,
-    TDestination,
-    TBaseSource,
-    TBaseDestination
-  > = {
-    forMember: (
-      selector: Selector<TDestination, SelectorReturn<TDestination>>,
-      ...functions: Array<
-        ReturnType<MemberMapFunction> | ReturnType<PreConditionFunction>
-      >
+  const fluentFunction: CreateMapFluentFunction<TSource, TDestination> = {
+    forMember: <TMemberType = SelectorReturn<TDestination>>(
+      selector: Selector<TDestination, TMemberType>,
+      ...functions: [
+        (
+          | ReturnType<PreConditionFunction<TSource, TDestination, TMemberType>>
+          | ReturnType<MemberMapFunction<TSource, TDestination, TMemberType>>
+        ),
+        ReturnType<MemberMapFunction<TSource, TDestination, TMemberType>>?
+      ]
     ) =>
-      createMapForMember(mapping, selector, functions as any, fluentFunction),
+      createMapForMember<
+        TSource,
+        TDestination,
+        Selector<TDestination, TMemberType>,
+        typeof fluentFunction
+      >(mapping, selector, functions, fluentFunction),
     beforeMap: action => {
       mapping[MappingClassId.actions][0] = action;
       return fluentFunction;

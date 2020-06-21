@@ -1,5 +1,4 @@
 import {
-  BaseOf,
   Dict,
   MapFromFunction,
   Mapping,
@@ -15,24 +14,27 @@ import { getMemberPath, isThisMemberMap } from '../utils';
 export function createMapForMember<
   TSource extends Dict<TSource> = any,
   TDestination extends Dict<TDestination> = any,
-  TBaseSource extends BaseOf<TSource, TBaseSource> = any,
-  TBaseDestination extends BaseOf<TDestination, TBaseDestination> = any,
   TSelector extends Selector<TDestination> = Selector<TDestination>,
   TReturnType = any
 >(
-  mapping: Mapping<TSource, TDestination, TBaseSource, TBaseDestination>,
+  mapping: Mapping<TSource, TDestination>,
   selector: TSelector,
   [preCond, mapMemberFn]: [
-    ReturnType<PreConditionFunction<TSource, TDestination>>,
-    ReturnType<MemberMapFunction<TSource, TDestination>>
+    (
+      | ReturnType<PreConditionFunction<TSource, TDestination>>
+      | ReturnType<MemberMapFunction<TSource, TDestination>>
+    ),
+    ReturnType<MemberMapFunction<TSource, TDestination>>?
   ],
   fluentFunction: TReturnType
 ): TReturnType {
   const memberPath = getMemberPath(selector);
 
   if (mapMemberFn == null) {
-    mapMemberFn = preCond as any;
-    preCond = undefined as any;
+    mapMemberFn = preCond as ReturnType<
+      MemberMapFunction<TSource, TDestination>
+    >;
+    preCond = undefined;
   }
 
   let sourcePath: string = '';
@@ -54,7 +56,9 @@ export function createMapForMember<
     transformation: {
       mapFn: mapMemberFn,
       type: mapMemberFn[MemberMapFunctionId.type],
-      preCond,
+      preCond: preCond as ReturnType<
+        PreConditionFunction<TSource, TDestination>
+      >,
     },
   });
 

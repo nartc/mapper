@@ -37,6 +37,24 @@ Mapper.createMap(User, UserVm).forMember(
 );
 ```
 
+### Use `source` object
+
+If your `Converter` is going to expect the whole `source` object in `convert()` method, you can omit the `selector` argument.
+If there's no `selector` argument, `@nartc/automapper` will call `converter.convert()` with the `source` object.
+
+```typescript
+class FullNameConverter implements Converter<User, string> {
+  convert(source: User): string {
+    return source.firstName + ' ' + source.lastName;
+  }
+}
+
+Mapper.createMap(User, UserVm).forMember(
+  dest => dest.fullName,
+  convertUsing(new FullNameConverter())
+);
+```
+
 > Can you just use [MapFrom](map-from.md) instead? Absolutely yes, but a `Converter` might help you to separate the concern more if you choose to.
 
 `convertUsing()` will set the [TransformationType](../../../guides/basic-concept.md#mappingtransformation) to `ConvertUsing`.

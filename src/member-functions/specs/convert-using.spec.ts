@@ -28,9 +28,11 @@ describe('ConvertUsingFunction', () => {
       s => s.birthday
     );
     expect(convertUsingFn).toBeTruthy();
-    expect(convertUsingFn[0]).toBe(TransformationType.ConvertUsing);
-    expect(convertUsingFn[1]).toBe(null);
-    expect(convertUsingFn[2]).toBeInstanceOf(Function);
+    expect(convertUsingFn[MemberMapFunctionId.type]).toBe(
+      TransformationType.ConvertUsing
+    );
+    expect(convertUsingFn[MemberMapFunctionId.misc]).toBe(null);
+    expect(convertUsingFn[MemberMapFunctionId.fn]).toBeInstanceOf(Function);
   });
 
   it('should map correctly', () => {
@@ -38,7 +40,7 @@ describe('ConvertUsingFunction', () => {
       new DateTimeConverter(),
       s => s.birthday
     );
-    const result = convertUsingFn[2](source);
+    const result = convertUsingFn[MemberMapFunctionId.fn](source);
     expect(result).toBe(new Date('10/14/1991').toDateString());
   });
 

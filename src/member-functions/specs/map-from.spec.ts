@@ -1,4 +1,4 @@
-import { Resolver, TransformationType } from '../../types';
+import { MemberMapFunctionId, Resolver, TransformationType } from '../../types';
 import { mapFrom } from '../map-from';
 
 describe('MapFromFunction', () => {
@@ -11,14 +11,16 @@ describe('MapFromFunction', () => {
   it('should return correctly', () => {
     const mapFromFn = mapFrom(sourceSelector);
     expect(mapFromFn).toBeTruthy();
-    expect(mapFromFn[0]).toBe(TransformationType.MapFrom);
-    expect(mapFromFn[1]).toBe(sourceSelector);
-    expect(mapFromFn[2]).toBeInstanceOf(Function);
+    expect(mapFromFn[MemberMapFunctionId.type]).toBe(
+      TransformationType.MapFrom
+    );
+    expect(mapFromFn[MemberMapFunctionId.misc]).toBe(sourceSelector);
+    expect(mapFromFn[MemberMapFunctionId.fn]).toBeInstanceOf(Function);
   });
 
   it('should map to foo correctly', () => {
     const mapFromFn = mapFrom(sourceSelector);
-    const result = mapFromFn[2](source, null);
+    const result = mapFromFn[MemberMapFunctionId.fn](source, null);
     expect(result).toBe('bar');
   });
 
@@ -30,7 +32,7 @@ describe('MapFromFunction', () => {
 
   it('should use resolver correctly', () => {
     const mapFromFn = mapFrom(new FooResolver());
-    const result = mapFromFn[2](source, null);
+    const result = mapFromFn[MemberMapFunctionId.fn](source, null);
     expect(result).toBe('bar');
   });
 });

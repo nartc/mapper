@@ -1,4 +1,4 @@
-import { TransformationType } from '../../types';
+import { MemberMapFunctionId, TransformationType } from '../../types';
 import { mapInitialize } from '../map-initialize';
 
 describe('MapInitializeFunction', () => {
@@ -11,20 +11,22 @@ describe('MapInitializeFunction', () => {
   it('should return correctly', () => {
     const mapInitFn = mapInitialize(null);
     expect(mapInitFn).toBeTruthy();
-    expect(mapInitFn[0]).toBe(TransformationType.MapInitialize);
-    expect(mapInitFn[1]).toBe(null);
-    expect(mapInitFn[2]).toBeInstanceOf(Function);
+    expect(mapInitFn[MemberMapFunctionId.type]).toBe(
+      TransformationType.MapInitialize
+    );
+    expect(mapInitFn[MemberMapFunctionId.misc]).toBe(null);
+    expect(mapInitFn[MemberMapFunctionId.fn]).toBeInstanceOf(Function);
   });
 
   it('should map correctly', () => {
     const mapInitFn = mapInitialize(null, 'foo.bar');
-    const result = mapInitFn[2](source);
+    const result = mapInitFn[MemberMapFunctionId.fn](source);
     expect(result).toBe('foo');
   });
 
   it('should map to undefined for default val', () => {
     const mapInitFn = mapInitialize(undefined, 'foo.baz');
-    const result = mapInitFn[2](source);
+    const result = mapInitFn[MemberMapFunctionId.fn](source);
     expect(result).toBe(undefined);
   });
 });

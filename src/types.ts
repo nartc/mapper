@@ -114,34 +114,17 @@ export interface CreateMapFluentFunction<
 > {
   forMember<TMemberType = SelectorReturn<TDestination>>(
     selector: Selector<TDestination, TMemberType>,
-    memberMapFunction: ReturnType<
-      Exclude<
-        MemberMapFunction<TSource, TDestination, TMemberType>,
-        MapDeferFunction<TSource, TDestination, TMemberType>
-      >
+    memberMapFunction: Exclude<
+      ReturnType<MemberMapFunction<TSource, TDestination, TMemberType>>,
+      ReturnType<MapDeferFunction<TSource, TDestination, TMemberType>>
     >
   ): CreateMapFluentFunction<TSource, TDestination>;
 
   forMember<TMemberType = SelectorReturn<TDestination>>(
     selector: Selector<TDestination, TMemberType>,
-    mapDeferFn: ReturnType<
-      Extract<
-        MemberMapFunction<TSource, TDestination, TMemberType>,
-        MapDeferFunction<TSource, TDestination, TMemberType>
-      >
-    >
-  ): CreateMapFluentFunction<TSource, TDestination>;
-
-  forMember<TMemberType = SelectorReturn<TDestination>>(
-    selector: Selector<TDestination, TMemberType>,
-    preConditionFunction: ReturnType<
-      PreConditionFunction<TSource, TDestination, TMemberType>
-    >,
-    memberMapFunction: ReturnType<
-      Exclude<
-        MemberMapFunction<TSource, TDestination, TMemberType>,
-        MapDeferFunction<TSource, TDestination, TMemberType>
-      >
+    mapDeferFn: Extract<
+      ReturnType<MemberMapFunction<TSource, TDestination, TMemberType>>,
+      ReturnType<MapDeferFunction<TSource, TDestination, TMemberType>>
     >
   ): CreateMapFluentFunction<TSource, TDestination>;
 
@@ -150,11 +133,20 @@ export interface CreateMapFluentFunction<
     preConditionFunction: ReturnType<
       PreConditionFunction<TSource, TDestination, TMemberType>
     >,
-    mapDeferFn: ReturnType<
-      Extract<
-        MemberMapFunction<TSource, TDestination, TMemberType>,
-        MapDeferFunction<TSource, TDestination, TMemberType>
-      >
+    memberMapFunction: Exclude<
+      ReturnType<MemberMapFunction<TSource, TDestination, TMemberType>>,
+      ReturnType<MapDeferFunction<TSource, TDestination, TMemberType>>
+    >
+  ): CreateMapFluentFunction<TSource, TDestination>;
+
+  forMember<TMemberType = SelectorReturn<TDestination>>(
+    selector: Selector<TDestination, TMemberType>,
+    preConditionFunction: ReturnType<
+      PreConditionFunction<TSource, TDestination, TMemberType>
+    >,
+    mapDeferFn: Extract<
+      ReturnType<MemberMapFunction<TSource, TDestination, TMemberType>>,
+      ReturnType<MapDeferFunction<TSource, TDestination, TMemberType>>
     >
   ): CreateMapFluentFunction<TSource, TDestination>;
 
@@ -175,11 +167,9 @@ export interface CreateReversedMapFluentFunction<
 > {
   forPath<TMemberType = SelectorReturn<TDestination>>(
     selector: Selector<TDestination, TMemberType>,
-    memberMapFunction: ReturnType<
-      Exclude<
-        MemberMapFunction<TSource, TDestination, TMemberType>,
-        MapDeferFunction<TSource, TDestination, TMemberType>
-      >
+    memberMapFunction: Exclude<
+      ReturnType<MemberMapFunction<TSource, TDestination, TMemberType>>,
+      ReturnType<MapDeferFunction<TSource, TDestination, TMemberType>>
     >
   ): CreateReversedMapFluentFunction<TSource, TDestination>;
 
@@ -188,21 +178,17 @@ export interface CreateReversedMapFluentFunction<
     preConditionFunction: ReturnType<
       PreConditionFunction<TSource, TDestination, TMemberType>
     >,
-    memberMapFunction: ReturnType<
-      Exclude<
-        MemberMapFunction<TSource, TDestination, TMemberType>,
-        MapDeferFunction<TSource, TDestination, TMemberType>
-      >
+    memberMapFunction: Exclude<
+      ReturnType<MemberMapFunction<TSource, TDestination, TMemberType>>,
+      ReturnType<MapDeferFunction<TSource, TDestination, TMemberType>>
     >
   ): CreateReversedMapFluentFunction<TSource, TDestination>;
 
   forPath<TMemberType = SelectorReturn<TDestination>>(
     selector: Selector<TDestination, TMemberType>,
-    mapDeferFunction: ReturnType<
-      Extract<
-        MemberMapFunction<TSource, TDestination, TMemberType>,
-        MapDeferFunction<TSource, TDestination, TMemberType>
-      >
+    mapDeferFunction: Extract<
+      ReturnType<MemberMapFunction<TSource, TDestination, TMemberType>>,
+      ReturnType<MapDeferFunction<TSource, TDestination, TMemberType>>
     >
   ): CreateReversedMapFluentFunction<TSource, TDestination>;
 
@@ -211,11 +197,9 @@ export interface CreateReversedMapFluentFunction<
     preConditionFunction: ReturnType<
       PreConditionFunction<TSource, TDestination, TMemberType>
     >,
-    mapDeferFunction: ReturnType<
-      Extract<
-        MemberMapFunction<TSource, TDestination, TMemberType>,
-        MapDeferFunction<TSource, TDestination, TMemberType>
-      >
+    mapDeferFunction: Extract<
+      ReturnType<MemberMapFunction<TSource, TDestination, TMemberType>>,
+      ReturnType<MapDeferFunction<TSource, TDestination, TMemberType>>
     >
   ): CreateReversedMapFluentFunction<TSource, TDestination>;
 
@@ -266,11 +250,9 @@ export type DeferFunction<
 > = (
   source: TSource,
   sourceMemberPath: string
-) => ReturnType<
-  Exclude<
-    MemberMapFunction<TSource, TDestination, TSelectorReturn>,
-    MapDeferFunction<TSource, TDestination, TSelectorReturn>
-  >
+) => Exclude<
+  ReturnType<MemberMapFunction<TSource, TDestination, TSelectorReturn>>,
+  ReturnType<MapDeferFunction<TSource, TDestination, TSelectorReturn>>
 >;
 
 export interface MapDeferFunction<
@@ -281,7 +263,7 @@ export interface MapDeferFunction<
   (defer: DeferFunction<TSource, TDestination, TSelectorReturn>): [
     TransformationType.MapDefer,
     null,
-    DeferFunction<TSource, TDestination, TSelectorReturn>
+    typeof defer
   ];
 }
 
@@ -357,12 +339,8 @@ export interface ConvertUsingFunction<
 > {
   <TConvertSource = TSource>(
     converter: Converter<TConvertSource, TSelectorReturn>,
-    value: Selector<TSource, TConvertSource>
-  ): [
-    TransformationType.ConvertUsing,
-    null,
-    (source: TSource) => TSelectorReturn
-  ];
+    value?: Selector<TSource, TConvertSource>
+  ): [TransformationType.ConvertUsing, null, Selector<TSource, TConvertSource>];
 }
 
 export interface NullSubstitutionFunction<

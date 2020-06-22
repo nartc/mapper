@@ -13,11 +13,14 @@ export function convertUsing<
   TConvertSource = TSource
 >(
   converter: Converter<TConvertSource, TSelectorReturn>,
-  value: Selector<TSource, TConvertSource>
+  value?: Selector<TSource, TConvertSource>
 ): ReturnType<ConvertUsingFunction<TSource, TDestination, TSelectorReturn>> {
   return [
     5, // 5: TransformationType.ConvertUsing
     null,
-    source => converter.convert(value(source)),
+    source =>
+      converter.convert(
+        value?.(source) || ((source as unknown) as TConvertSource)
+      ),
   ];
 }

@@ -12,4 +12,4 @@ Without **AutoMapper**, we would have to manually map a lot of data back and for
 
 Now in **C#**, you have **AutoMapper**. Not so much in the **NodeJS** world. For **NodeJS** projects, we leverage an awesome framework called [NestJS](https://nestjs.com) 🎇. **NestJS**
 takes on *Angular-like* architecture which helps so much with building maintainable and scalable server-side applications. When working with **NestJS**, we take the same approach as we build a **.NET Core** application.
-Unfortunately, there is not one **AutoMapper for TypeScript** solution that is good enough for us which I mention in [Alternatives]() section. That's why `@nartc/automapper` is born.
+Unfortunately, there is not one **AutoMapper for TypeScript** solution that is good enough for us which I mention in [Alternatives](./alternatives.md) section. That's why `@nartc/automapper` is born.

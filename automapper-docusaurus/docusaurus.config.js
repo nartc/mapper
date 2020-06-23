@@ -69,7 +69,7 @@ module.exports = {
           items: [
             {
               label: 'GitHub',
-              href: 'https://github.com/nartc/automapper',
+              href: 'https://github.com/nartc/mapper',
             },
             {
               label: 'Twitter',

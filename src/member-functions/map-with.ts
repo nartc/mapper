@@ -24,17 +24,6 @@ export function mapWith<
     withValue,
     (source, mappingStorage) => {
       const sourceValue = withValue(source);
-      if (isEmpty(sourceValue)) {
-        return null;
-      }
-
-      if (!isClass(sourceValue)) {
-        console.warn(
-          `MapWith was invoked with a primitive. No mapping was executed`
-        );
-        return null;
-      }
-
       if (Array.isArray(sourceValue)) {
         if (isEmpty(sourceValue[0])) {
           return [];
@@ -46,6 +35,17 @@ export function mapWith<
           mappingStorage
         ) as Mapping;
         return mapArray(sourceValue, mapping, undefined, mappingStorage) as any;
+      }
+
+      if (isEmpty(sourceValue)) {
+        return null;
+      }
+
+      if (!isClass(sourceValue)) {
+        console.warn(
+          `MapWith was invoked with a primitive. No mapping was executed`
+        );
+        return null;
       }
 
       const mapping = getMappingForDestination(

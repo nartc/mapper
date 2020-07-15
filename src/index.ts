@@ -1,4 +1,5 @@
 export * from './automapper';
+export * from './conventions';
 export * from './create-map-metadata';
 export * from './types';
 export * from './decorators';

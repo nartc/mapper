@@ -119,7 +119,7 @@
     "tsdx": "0.13.2",
     "tslib": "2.0.0",
     "typedoc": "0.17.8",
-    "typescript": "3.9.6"
+    "typescript": "3.9.7"
   },
   "dependencies": {
     "lodash.set": "4.3.2"

@@ -18,9 +18,14 @@ export function convertUsing<
   return [
     5, // 5: TransformationType.ConvertUsing
     null,
-    source =>
-      converter.convert(
-        value?.(source) || ((source as unknown) as TConvertSource)
-      ),
+    source => {
+      let valueToConvert: TConvertSource;
+      if (value) {
+        valueToConvert = value(source);
+      } else {
+        valueToConvert = (source as unknown) as TConvertSource;
+      }
+      return converter.convert(valueToConvert);
+    },
   ];
 }

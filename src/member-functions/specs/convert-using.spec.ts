@@ -18,7 +18,7 @@ describe('ConvertUsingFunction', () => {
     }
   }
 
-  const source = {
+  const source: { birthday: Date; birth?: Date } = {
     birthday: new Date('10/14/1991'),
   };
 
@@ -48,5 +48,12 @@ describe('ConvertUsingFunction', () => {
     const convertUsingFn = convertUsing(new DateTimeConverter2());
     const result = convertUsingFn[MemberMapFunctionId.fn](source);
     expect(result).toBe(new Date('10/14/1991').toDateString());
+  });
+
+  it('should not use source object if valueSelector is passed in', () => {
+    const convertUsingFn = convertUsing(new DateTimeConverter(), s => s.birth);
+    expect(() => convertUsingFn[MemberMapFunctionId.fn](source)).toThrowError(
+      "Cannot read property 'toDateString' of undefined"
+    );
   });
 });

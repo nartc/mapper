@@ -36,7 +36,7 @@ function mapMember<TSource, TDestination>(
   mappingStorage: MappingStorage,
   defaultValue: undefined | null
 ) {
-  let value: any;
+  let value: unknown;
   /**
    * 0: TransformationType.Ignore
    * 1: TransformationType.MapFrom

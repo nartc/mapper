@@ -2,6 +2,7 @@ import set from 'lodash.set';
 import { MappingStorage } from '../storages';
 import {
   ConditionFunction,
+  Constructible,
   ConvertUsingFunction,
   Dict,
   FromValueFunction,
@@ -235,7 +236,35 @@ export function map<
     }
   }
 
+  assertMappingConfiguration(
+    destination,
+    configKeys,
+    sourceModel,
+    destinationModel
+  );
   return destination;
+}
+
+function assertMappingConfiguration<TSource, TDestination>(
+  destination: TDestination,
+  configKeys: string[],
+  sourceModel: Constructible<TSource>,
+  destinationModel: Constructible<TDestination>
+) {
+  const unmappedKeys = Object.keys(destination).filter(
+    k => !configKeys.includes(k)
+  );
+  if (unmappedKeys.length > 0) {
+    throw new Error(`
+Error mapping:
+- Source: ${sourceModel.toString()}
+- Destination: ${destinationModel.toString()}
+
+Unmapped properties:
+-------------------
+${unmappedKeys.join(',\n')}
+`);
+  }
 }
 
 export function mapArray<

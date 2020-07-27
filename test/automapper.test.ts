@@ -15,7 +15,14 @@ import {
 import { Address, AddressVm } from './fixtures/models/address';
 import { Avatar, AvatarVm, OtherAvatar } from './fixtures/models/avatar';
 import { Bar, BarWithFoo, BarWithFooZeroDepth } from './fixtures/models/bar';
-import { Base, BaseVm, FooBase, FooVmBase, NestedFooBase, NestedFooVmBase } from './fixtures/models/base';
+import {
+  Base,
+  BaseVm,
+  FooBase,
+  FooVmBase,
+  NestedFooBase,
+  NestedFooVmBase,
+} from './fixtures/models/base';
 import {
   Foo,
   FooWithBar,
@@ -51,8 +58,12 @@ import {
   UserWithAbstractBaseVm,
   UserWithBase,
   UserWithEmptyProfile,
-  UserWithEmptyProfileVm, UserWithFooBase, UserWithFooVmBase,
-  UserWithGetter, UserWithListFooBase, UserWithListFooVmBase,
+  UserWithEmptyProfileVm,
+  UserWithFooBase,
+  UserWithFooVmBase,
+  UserWithGetter,
+  UserWithListFooBase,
+  UserWithListFooVmBase,
 } from './fixtures/models/user';
 import { AddressProfile } from './fixtures/profiles/address.profile';
 import { AvatarProfile } from './fixtures/profiles/avatar.profile';
@@ -423,7 +434,8 @@ describe('AutoMapper Integration - Various Syntax', () => {
           return s.returnFoo;
         })
       )
-      .reverseMap();
+      .reverseMap()
+      .forPath(s => s.foos, ignore());
   });
 
   afterAll(Mapper.dispose.bind(Mapper));
@@ -634,8 +646,12 @@ describe('AutoMapper Integration - Inheritance', () => {
     // Test includeBase without having previously created mapping for bases.
     Mapper.createMap(Avatar, AvatarVm, { includeBase: [Avatar, AvatarVm] });
 
-    Mapper.createMap(UserWithFooBase, UserWithFooVmBase, {includeBase: [FooBase, FooVmBase]});
-    Mapper.createMap(UserWithListFooBase, UserWithListFooVmBase, {includeBase: [FooBase, FooVmBase]});
+    Mapper.createMap(UserWithFooBase, UserWithFooVmBase, {
+      includeBase: [FooBase, FooVmBase],
+    });
+    Mapper.createMap(UserWithListFooBase, UserWithListFooVmBase, {
+      includeBase: [FooBase, FooVmBase],
+    });
   });
 
   afterAll(Mapper.dispose.bind(Mapper));
@@ -1063,3 +1079,33 @@ describe('AutoMapper Integration - IncludeBase', () => {
   });
 });
 
+describe('AutoMapper Integration - Assert Props', () => {
+  class Foo {
+    @AutoMap()
+    f!: string;
+  }
+
+  class Bar {
+    @AutoMap()
+    b!: string;
+    @AutoMap()
+    f!: string;
+  }
+
+  it('should throw error on unmapped properties', () => {
+    Mapper.createMap(Foo, Bar);
+    const foo = new Foo();
+    foo.f = 'test';
+    expect(() => Mapper.map(foo, Bar)).toThrowError(`
+Error mapping:
+- Source: class Foo {
+    }
+- Destination: class Bar {
+    }
+
+Unmapped properties:
+-------------------
+b
+`);
+  });
+});

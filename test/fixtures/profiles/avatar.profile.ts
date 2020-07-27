@@ -28,6 +28,8 @@ export class AvatarProfile extends ProfileBase {
       .forMember(d => d.shouldBeSubstituted, nullSubstitution('sub'))
       .reverseMap()
       .forPath(s => s.url, ignore())
-      .forPath(s => s.shouldIgnore, fromValue(5));
+      .forPath(s => s.shouldIgnore, fromValue(5))
+      .forPath(s => s.forCondition, ignore())
+      .forPath(s => s.shouldBeSubstituted, ignore());
   }
 }

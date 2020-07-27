@@ -4,6 +4,7 @@ import {
   Mapping,
   MappingClassId,
   MappingProperty,
+  MapWithFunction,
   MemberMapFunction,
   MemberMapFunctionId,
   PreConditionFunction,
@@ -39,7 +40,8 @@ export function createMapForMember<
 
   let sourcePath: string = '';
   // 1: TransformationType.MapFrom
-  if (isThisMemberMap<MapFromFunction>(mapMemberFn, 1)) {
+  // 4: TransformationType.MapWith
+  if (isThisMemberMap<MapFromFunction, MapWithFunction>(mapMemberFn, 1, 4)) {
     sourcePath = getMemberPath(mapMemberFn[MemberMapFunctionId.misc]);
   }
 

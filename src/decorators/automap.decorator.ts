@@ -1,5 +1,5 @@
 import { metadataStorage } from '../storages';
-import { instanceStorage } from '../storages/instanceStorage';
+import { instanceStorage } from '../storages/instance.storage';
 import { Constructible, MetadataFunction } from '../types';
 import { storeMetadata } from '../utils';
 
@@ -7,9 +7,6 @@ export const AutoMap = (
   typeFn?: () => Function,
   depth: number = 0
 ): PropertyDecorator => (target, propertyKey) => {
-  const getMetadata = (_target: Object, _key: typeof propertyKey) =>
-    Reflect.getMetadata('design:type', _target, _key);
-
   if (typeFn) {
     metadataStorage.addMetadata(target.constructor as Constructible, [
       [propertyKey, typeFn as MetadataFunction],
@@ -20,7 +17,7 @@ export const AutoMap = (
       depth
     );
   } else {
-    let meta = getMetadata(target, propertyKey);
+    let meta = Reflect.getMetadata('design:type', target, propertyKey);
     if (meta) {
       storeMetadata(
         target.constructor as Constructible,

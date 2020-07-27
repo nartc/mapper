@@ -7,9 +7,9 @@ export function getSourcePropertyKey(
   ],
   path: string
 ): string {
-  if (isNestedPath(path)) {
-    return path
-      .split('.')
+  const splitPath = path.split('.');
+  if (splitPath.length > 1) {
+    return splitPath
       .map(key =>
         getSourcePropertyKey(
           [sourceNamingConvention, destinationNamingConvention],
@@ -25,8 +25,4 @@ export function getSourcePropertyKey(
   return !keyParts.length
     ? path
     : new sourceNamingConvention().transformPropertyName(keyParts);
-}
-
-function isNestedPath(path: string): boolean {
-  return path.split('.').length > 1;
 }

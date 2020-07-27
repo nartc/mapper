@@ -2,9 +2,10 @@ import { Selector } from '../types';
 
 export function getMemberPath(fn: Selector): string {
   const fnString = fn.toString();
-  return isArrowFn(fnString)
-    ? getPathFromSelector(removeExtraForArrow(fnString))
-    : getPathFromSelector(removeExtraForFunction(fnString));
+  if (isArrowFn(fnString)) {
+    return getPathFromSelector(removeExtraForArrow(fnString));
+  }
+  return getPathFromSelector(removeExtraForFunction(fnString));
 }
 
 function isArrowFn(fnString: string): boolean {

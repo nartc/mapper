@@ -4,9 +4,7 @@ import { MetadataExplorer } from '../metadata.explorer';
 
 describe('MetadataExplorer', () => {
   it('explore can be invoked', () => {
-    const spy = jest
-      .spyOn(MetadataExplorer, 'explore')
-      .mockImplementation(() => 'returned');
+    const spy = jest.spyOn(metadataStorage, 'addMetadata');
 
     class Foo {
       @AutoMap()
@@ -19,8 +17,8 @@ describe('MetadataExplorer', () => {
     }
 
     MetadataExplorer.explore(Foo, Bar);
-    expect(spy).toHaveBeenCalled();
-    expect(spy).toHaveReturnedWith('returned');
+    expect(spy).toHaveBeenCalledTimes(2);
+    spy.mockRestore();
   });
 
   it('should work with plugin and metadataStorage', () => {
@@ -69,8 +67,9 @@ describe('MetadataExplorer', () => {
       }
     }
 
-    MetadataExplorer.exploreMany(Address, User);
+    MetadataExplorer.explore(Address, User);
     expect(spy).toHaveBeenCalledTimes(12);
+    spy.mockRestore();
   });
 
   it('should', () => {
@@ -94,13 +93,9 @@ describe('MetadataExplorer', () => {
       }
     }
 
-    const spy = jest.spyOn(MetadataExplorer, 'exploreMany');
-    MetadataExplorer.exploreMany(Address, Address);
-    expect(spy).toHaveReturnedWith(undefined);
-    MetadataExplorer.exploreMany(Foo);
-    expect(addMetadataSpy).toHaveBeenCalledTimes(13);
-    MetadataExplorer.exploreMany(Foo);
-    expect(spy).toHaveReturnedWith(undefined);
-    expect(addMetadataSpy).toHaveBeenCalledTimes(13);
+    MetadataExplorer.explore(Address, Address);
+    MetadataExplorer.explore(Foo, Foo);
+    expect(addMetadataSpy).toHaveBeenCalledTimes(1);
+    addMetadataSpy.mockRestore();
   });
 });

@@ -5,14 +5,24 @@ describe('MetadataStorage', () => {
   // const metadataMap = [[]];
   const existingMetadataMap: MetadataMapList = [['foo', () => false]];
 
-  class Foo {
+  class Base {
+    base!: string;
+  }
+
+  class Foo extends Base {
     foo!: string;
+  }
+
+  class Bar {
+    bar!: string;
   }
 
   it('addMetadata', () => {
     const spy = jest.spyOn(metadataStorage, 'addMetadata');
     metadataStorage.addMetadata(Foo, existingMetadataMap);
     expect(spy).toHaveBeenCalledWith(Foo, existingMetadataMap);
+    metadataStorage.addMetadata(Bar, existingMetadataMap);
+    expect(spy).toHaveBeenCalledWith(Bar, existingMetadataMap);
   });
 
   it('getMetadata', () => {

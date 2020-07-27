@@ -19,7 +19,6 @@ import {
   get,
   getSourcePropertyKey,
   isClass,
-  isDate,
   isEmpty,
   isObjectLike,
   isThisMemberMap,
@@ -36,7 +35,7 @@ function mapMember<TSource, TDestination>(
   mappingStorage: MappingStorage,
   defaultValue: undefined | null
 ) {
-  let value: any;
+  let value: unknown;
   /**
    * 0: TransformationType.Ignore
    * 1: TransformationType.MapFrom
@@ -155,7 +154,7 @@ export function map<
       }
 
       if (isObjectLike(mapInitializeValue)) {
-        if (isDate(mapInitializeValue)) {
+        if (mapInitializeValue instanceof Date) {
           set(destination, memberPath, new Date(mapInitializeValue));
           continue;
         }

@@ -45,9 +45,8 @@ class MetadataStorage {
   ) {
     const existingMetadata = this._metadataMap.get(model) || [];
     const proto = Object.getPrototypeOf(model);
-    const existingProtoMetadata = proto
-      ? this._metadataMap.get(proto) || []
-      : [];
+    const existingProtoMetadata =
+      proto && !!proto.name ? this._metadataMap.get(proto) || [] : [];
 
     const existingMeta = [...existingProtoMetadata, ...existingMetadata];
 

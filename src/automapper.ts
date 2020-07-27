@@ -10,7 +10,7 @@ import {
 } from './core';
 import { MetadataExplorer } from './explorers';
 import { MappingStorage, ProfileStorage } from './storages';
-import { instanceStorage } from './storages/instanceStorage';
+import { instanceStorage } from './storages/instance.storage';
 import {
   AutoMapperGlobalSettings,
   BaseOf,

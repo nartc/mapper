@@ -73,7 +73,7 @@ export abstract class WeakMapNestedStorage<
     }
 
     if (!this.hasInternal(storage, key, nestedKey)) {
-      storage.get(key)?.set(nestedKey, value);
+      storage.get(key)!.set(nestedKey, value);
     }
   }
 }
@@ -98,7 +98,7 @@ export abstract class MapNestedStorage<
     }
 
     if (!this.hasInternal(storage, key, nestedKey)) {
-      storage.get(key)?.set(nestedKey, value);
+      storage.get(key)!.set(nestedKey, value);
     }
   }
 }

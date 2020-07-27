@@ -39,7 +39,7 @@ export class AutoMapper {
   }
 
   /**
-   * Provide global naming conventions to the models
+   * Provide global naming conventions and useUndefined to the models
    *
    * @param {AutoMapperGlobalSettings} settings
    */

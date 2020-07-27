@@ -11,12 +11,6 @@ export class MetadataExplorer {
     this.exploreInternal(destination);
   }
 
-  static exploreMany(...models: Constructible[]): void {
-    for (const model of models) {
-      this.exploreInternal(model);
-    }
-  }
-
   private static exploreInternal(model: Constructible): void {
     if (!model.prototype || this.metadataTrackMap.has(model)) {
       return;

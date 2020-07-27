@@ -1,4 +1,8 @@
-export function get<T>(object: T, defaultVal: any, ...paths: string[]): any {
+export function get<T>(
+  object: T,
+  defaultVal: unknown,
+  ...paths: string[]
+): any {
   function _getInternal(object: T, path: string) {
     const _path = path.split('.').filter(Boolean);
     const _val = _path.reduce((obj: any, key) => obj && obj[key], object);

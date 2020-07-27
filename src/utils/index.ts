@@ -1,6 +1,5 @@
 export * from './storeMetadata';
 
-export * from './isDate';
 export * from './isEmpty';
 export * from './isObjectLike';
 export * from './isClass';

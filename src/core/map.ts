@@ -19,7 +19,6 @@ import {
   get,
   getSourcePropertyKey,
   isClass,
-  isDate,
   isEmpty,
   isObjectLike,
   isThisMemberMap,
@@ -155,7 +154,7 @@ export function map<
       }
 
       if (isObjectLike(mapInitializeValue)) {
-        if (isDate(mapInitializeValue)) {
+        if (mapInitializeValue instanceof Date) {
           set(destination, memberPath, new Date(mapInitializeValue));
           continue;
         }

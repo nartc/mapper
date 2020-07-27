@@ -36,8 +36,7 @@ export class MetadataExplorer {
       }
 
       const meta = value();
-      const metaName =
-        meta.prototype?.constructor?.name || meta.constructor.name;
+      const metaName = meta.prototype.constructor.name;
       storeMetadata(model, metaName, key, meta);
     }
 

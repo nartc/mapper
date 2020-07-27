@@ -4,9 +4,7 @@ import { MetadataExplorer } from '../metadata.explorer';
 
 describe('MetadataExplorer', () => {
   it('explore can be invoked', () => {
-    const spy = jest
-      .spyOn(MetadataExplorer, 'explore')
-      .mockImplementation(() => 'returned');
+    const spy = jest.spyOn(metadataStorage, 'addMetadata');
 
     class Foo {
       @AutoMap()
@@ -19,8 +17,7 @@ describe('MetadataExplorer', () => {
     }
 
     MetadataExplorer.explore(Foo, Bar);
-    expect(spy).toHaveBeenCalled();
-    expect(spy).toHaveReturnedWith('returned');
+    expect(spy).toHaveBeenCalledTimes(2);
     spy.mockRestore();
   });
 
@@ -72,5 +69,33 @@ describe('MetadataExplorer', () => {
 
     MetadataExplorer.explore(Address, User);
     expect(spy).toHaveBeenCalledTimes(12);
+    spy.mockRestore();
+  });
+
+  it('should', () => {
+    const addMetadataSpy = jest.spyOn(metadataStorage, 'addMetadata');
+
+    class Address {
+      street!: string;
+      city!: string;
+      state!: string;
+
+      static __NARTC_AUTOMAPPER_METADATA_FACTORY() {
+        return {};
+      }
+    }
+
+    class Foo {
+      foo!: string;
+
+      static __NARTC_AUTOMAPPER_METADATA_FACTORY() {
+        return { foo: null };
+      }
+    }
+
+    MetadataExplorer.explore(Address, Address);
+    MetadataExplorer.explore(Foo, Foo);
+    expect(addMetadataSpy).toHaveBeenCalledTimes(1);
+    addMetadataSpy.mockRestore();
   });
 });

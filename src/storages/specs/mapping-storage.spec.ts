@@ -12,6 +12,7 @@ describe('MappingStorage', () => {
     const mapping = [] as any;
     mappingStorage.set(User, UserVm, mapping);
     expect(spy).toHaveBeenCalledWith(User, UserVm, mapping);
+    mappingStorage.set(User, UserVm, mapping);
   });
 
   it('get', () => {

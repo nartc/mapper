@@ -34,7 +34,12 @@ export function mapWith<
           valueModel?.() || sourceValue[0].constructor,
           mappingStorage
         ) as Mapping;
-        return mapArray(sourceValue, mapping, undefined, mappingStorage) as any;
+        return mapArray(
+          sourceValue,
+          mapping,
+          { skipUnmappedAssertion: true },
+          mappingStorage
+        ) as any;
       }
 
       if (isEmpty(sourceValue)) {
@@ -56,7 +61,7 @@ export function mapWith<
       return map(
         sourceValue,
         mapping,
-        undefined,
+        { skipUnmappedAssertion: true },
         mappingStorage
       ) as TSelectorReturn;
     },

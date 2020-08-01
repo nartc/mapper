@@ -88,10 +88,7 @@ export function map<
 >(
   sourceObj: TSource,
   mapping: Mapping<TSource, TDestination>,
-  options: MapOptions<TSource, TDestination> = {
-    beforeMap: undefined,
-    afterMap: undefined,
-  },
+  options: MapOptions<TSource, TDestination>,
   mappingStorage: MappingStorage,
   isArrayMap: boolean = false
 ): TDestination {
@@ -112,7 +109,7 @@ export function map<
 
   const defaultEmptyValue = useUndefined ? undefined : null;
   const [beforeAction, afterAction] = actions;
-  const { beforeMap, afterMap } = options;
+  const { skipUnmappedAssertion, beforeMap, afterMap } = options;
   const configKeys = [];
 
   const destination = instantiate(destinationModel);
@@ -184,7 +181,7 @@ export function map<
             mapArray(
               mapInitializeValue,
               nestedMapping,
-              undefined,
+              { skipUnmappedAssertion: options.skipUnmappedAssertion },
               mappingStorage
             )
           );
@@ -205,7 +202,12 @@ export function map<
         set(
           destination,
           memberPath,
-          map(mapInitializeValue, nestedMapping, undefined, mappingStorage)
+          map(
+            mapInitializeValue,
+            nestedMapping,
+            { skipUnmappedAssertion: options.skipUnmappedAssertion },
+            mappingStorage
+          )
         );
         continue;
       }
@@ -236,12 +238,14 @@ export function map<
     }
   }
 
-  assertMappingConfiguration(
-    destination,
-    configKeys,
-    sourceModel,
-    destinationModel
-  );
+  if (!skipUnmappedAssertion) {
+    assertMappingConfiguration(
+      destination,
+      configKeys,
+      sourceModel,
+      destinationModel
+    );
+  }
   return destination;
 }
 
@@ -273,10 +277,7 @@ export function mapArray<
 >(
   sourceArray: TSource[],
   mapping: Mapping<TSource, TDestination>,
-  options: MapOptions<TSource[], TDestination[]> = {
-    beforeMap: undefined,
-    afterMap: undefined,
-  },
+  options: MapOptions<TSource[], TDestination[]>,
   mappingStorage: MappingStorage
 ): TDestination[] {
   let destination: TDestination[] = [];
@@ -287,7 +288,15 @@ export function mapArray<
   }
 
   for (let i = 0, len = sourceArray.length; i < len; i++) {
-    destination.push(map(sourceArray[i], mapping, {}, mappingStorage, true));
+    destination.push(
+      map(
+        sourceArray[i],
+        mapping,
+        { skipUnmappedAssertion: options.skipUnmappedAssertion },
+        mappingStorage,
+        true
+      )
+    );
   }
 
   if (afterMap) {

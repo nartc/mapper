@@ -30,6 +30,7 @@ export class AutoMapper {
 
   private defaultGlobalSettings!: [
     boolean,
+    boolean,
     Constructible<NamingConvention>,
     Constructible<NamingConvention>
   ];
@@ -46,18 +47,20 @@ export class AutoMapper {
   withGlobalSettings(settings: AutoMapperGlobalSettings): AutoMapper {
     const {
       useUndefined,
+      skipUnmappedAssertion,
       sourceNamingConvention,
       destinationNamingConvention,
     } = settings;
 
     this.defaultGlobalSettings[0] = useUndefined ?? false;
+    this.defaultGlobalSettings[1] = skipUnmappedAssertion ?? false;
 
     if (sourceNamingConvention) {
-      this.defaultGlobalSettings[1] = sourceNamingConvention;
+      this.defaultGlobalSettings[2] = sourceNamingConvention;
     }
 
     if (destinationNamingConvention) {
-      this.defaultGlobalSettings[2] = destinationNamingConvention;
+      this.defaultGlobalSettings[3] = destinationNamingConvention;
     }
     return this;
   }
@@ -101,8 +104,8 @@ export class AutoMapper {
       TBaseDestination
     > = {
       useUndefined: this.defaultGlobalSettings[0],
-      sourceMemberNamingConvention: this.defaultGlobalSettings[1],
-      destinationMemberNamingConvention: this.defaultGlobalSettings[2],
+      sourceMemberNamingConvention: this.defaultGlobalSettings[2],
+      destinationMemberNamingConvention: this.defaultGlobalSettings[3],
       ...options,
     };
     const mapping = createMappingObject(
@@ -157,7 +160,10 @@ export class AutoMapper {
     TSource extends Dict<TSource> = any,
     TDestination extends Dict<TDestination> = any
   >(sourceObj: TSource, ...args: any[]): TDestination {
-    const [destination, source, options] = getMapProps(args);
+    const [destination, options, source] = getMapProps(
+      args,
+      this.defaultGlobalSettings[1]
+    );
     const mapping = getMappingForDestination(
       destination,
       source || (sourceObj.constructor as Constructible<TSource>),
@@ -193,7 +199,10 @@ export class AutoMapper {
     TSource extends Dict<TSource> = any,
     TDestination extends Dict<TDestination> = any
   >(sourceObj: TSource, ...args: any[]): Promise<TDestination> {
-    const [destination, source, options] = getMapProps(args);
+    const [destination, options, source] = getMapProps(
+      args,
+      this.defaultGlobalSettings[1]
+    );
     const mapping = getMappingForDestination(
       destination,
       source || (sourceObj.constructor as Constructible<TSource>),
@@ -251,7 +260,10 @@ export class AutoMapper {
       return [];
     }
 
-    const [destination, source, options] = getMapProps(args);
+    const [destination, options, source] = getMapProps(
+      args,
+      this.defaultGlobalSettings[1]
+    );
     const mapping = getMappingForDestination(
       destination,
       source || (sourceArr[0].constructor as Constructible<TSource>),
@@ -292,7 +304,10 @@ export class AutoMapper {
       return Promise.resolve().then(() => []);
     }
 
-    const [destination, source, options] = getMapProps(args);
+    const [destination, options, source] = getMapProps(
+      args,
+      this.defaultGlobalSettings[1]
+    );
     const mapping = getMappingForDestination(
       destination,
       source || (sourceArr[0].constructor as Constructible<TSource>),
@@ -346,6 +361,7 @@ export class AutoMapper {
   private setDefault() {
     this._profileStorage.initialize(this);
     this.defaultGlobalSettings = [
+      false,
       false,
       defaultNamingConvention,
       defaultNamingConvention,

@@ -1,6 +1,6 @@
+import { AutoMap } from '../../decorators';
 import { MapOptions } from '../../types';
 import { getMapProps } from '../get-map-props';
-import { AutoMap } from '../../decorators';
 
 describe('GetMapProps', () => {
   class Foo {
@@ -18,33 +18,40 @@ describe('GetMapProps', () => {
   const options: MapOptions = {
     beforeMap: () => {},
   };
+  const defaultOptions = {
+    skipUnmappedAssertion: false,
+    beforeMap: undefined,
+    afterMap: undefined,
+  };
 
-  it('should return array with only destination if only destination passed in', () => {
-    const result = getMapProps([destination]);
-    expect(result).toHaveLength(1);
+  it('should return array with destination and default options if only destination passed in', () => {
+    const result = getMapProps([destination], false);
+    expect(result).toHaveLength(2);
     expect(result[0]).toBe(destination);
+    expect(result[1]).toEqual(defaultOptions);
   });
 
   it('should return array with all 3 arguments', () => {
-    const result = getMapProps([destination, source, options]);
+    const result = getMapProps([destination, source, options], false);
     expect(result).toHaveLength(3);
     expect(result[0]).toBe(destination);
-    expect(result[1]).toBe(source);
-    expect(result[2]).toBe(options);
+    expect(result[1]).toEqual({ ...defaultOptions, ...options });
+    expect(result[2]).toBe(source);
   });
 
   it('should return array with destination and source', () => {
-    const result = getMapProps([destination, source]);
-    expect(result).toHaveLength(2);
+    const result = getMapProps([destination, source], false);
+    expect(result).toHaveLength(3);
     expect(result[0]).toBe(destination);
-    expect(result[1]).toBe(source);
+    expect(result[1]).toEqual(defaultOptions);
+    expect(result[2]).toBe(source);
   });
 
   it('should return array with destination and options', () => {
-    const result = getMapProps([destination, options]);
-    expect(result).toHaveLength(3);
+    const result = getMapProps([destination, options], false);
+    expect(result).toHaveLength(2);
     expect(result[0]).toBe(destination);
-    expect(result[1]).toBeUndefined();
-    expect(result[2]).toBe(options);
+    expect(result[1]).toEqual({ ...defaultOptions, ...options });
+    expect(result[2]).toBeUndefined();
   });
 });

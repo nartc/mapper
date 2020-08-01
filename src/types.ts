@@ -64,6 +64,7 @@ export interface MapOptions<
   TSource extends Dict<TSource> = any,
   TDestination extends Dict<TDestination> = any
 > {
+  skipUnmappedAssertion?: boolean;
   beforeMap?: MapAction<TSource, TDestination>;
   afterMap?: MapAction<TSource, TDestination>;
 }
@@ -429,6 +430,7 @@ export type MetadataMapList<TModel extends Dict<TModel> = any> = Array<
 
 export interface AutoMapperGlobalSettings {
   useUndefined?: boolean;
+  skipUnmappedAssertion?: boolean;
   sourceNamingConvention?: Constructible<NamingConvention>;
   destinationNamingConvention?: Constructible<NamingConvention>;
 }

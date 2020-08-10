@@ -67,8 +67,8 @@ describe('InitializeMappingProps', () => {
     const mapping = Mapper.getMapping(Foo, FooVm) as Mapping;
     initializeMappingProps(mapping);
     expect(mapping[MappingClassId.props]).toHaveLength(2);
-    expect(mapping[MappingClassId.props][0][0]).toBe('fooVm');
-    expect(mapping[MappingClassId.props][1][0]).toBe('barVm');
+    expect(mapping[MappingClassId.props][0][0]).toBe('barVm');
+    expect(mapping[MappingClassId.props][1][0]).toBe('fooVm');
   });
 
   it('should include Foo.foo in fooVm mapping property paths', () => {

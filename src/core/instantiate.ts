@@ -17,7 +17,8 @@ export function instantiate<TModel extends Dict<TModel>>(
     return instance;
   }
 
-  for (let i = 0, len = metadata.length; i < len; i++) {
+  let i = metadata.length;
+  while (i--) {
     const [key, meta] = metadata[i];
     const value = instance[key];
     const metaResult = meta();

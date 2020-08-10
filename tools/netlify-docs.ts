@@ -1,4 +1,4 @@
-const { cd, exec, echo, touch } = require('shelljs');
+const { cd, exec, echo } = require('shelljs');
 const { readFileSync } = require('fs');
 const url = require('url');
 

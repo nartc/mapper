@@ -38,6 +38,6 @@ describe('InheritBaseMapping', () => {
     expect(mapping[MappingClassId.bases]?.[0]).toBe(Base);
     expect(mapping[MappingClassId.bases]?.[1]).toBe(BaseVm);
     expect(mapping[MappingClassId.props]).toHaveLength(2);
-    expect(mapping[MappingClassId.props][0][0]).toBe('base');
+    expect(mapping[MappingClassId.props][1][0]).toBe('base');
   });
 });

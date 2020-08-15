@@ -102,7 +102,7 @@
   "devDependencies": {
     "@commitlint/cli": "9.1.1",
     "@commitlint/config-conventional": "9.1.1",
-    "@types/jest": "26.0.9",
+    "@types/jest": "26.0.10",
     "@types/lodash.set": "4.3.6",
     "commitizen": "4.1.2",
     "coveralls": "3.1.0",

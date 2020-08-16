@@ -2,7 +2,6 @@ import set from 'lodash.set';
 import { MappingStorage } from '../storages';
 import {
   ConditionFunction,
-  Constructible,
   ConvertUsingFunction,
   Dict,
   FromValueFunction,
@@ -110,7 +109,7 @@ export function map<
   const defaultEmptyValue = useUndefined ? undefined : null;
   const [beforeAction, afterAction] = actions;
   const { skipUnmappedAssertion, beforeMap, afterMap } = options;
-  const configKeys = [];
+  const configKeys: string[] = [];
 
   const destination = instantiate(destinationModel);
 
@@ -239,27 +238,11 @@ export function map<
   }
 
   if (!skipUnmappedAssertion) {
-    assertMappingConfiguration(
-      destination,
-      configKeys,
-      sourceModel,
-      destinationModel
+    const unmappedKeys = Object.keys(destination).filter(
+      k => !configKeys.includes(k)
     );
-  }
-  return destination;
-}
-
-function assertMappingConfiguration<TSource, TDestination>(
-  destination: TDestination,
-  configKeys: string[],
-  sourceModel: Constructible<TSource>,
-  destinationModel: Constructible<TDestination>
-) {
-  const unmappedKeys = Object.keys(destination).filter(
-    k => !configKeys.includes(k)
-  );
-  if (unmappedKeys.length > 0) {
-    throw new Error(`
+    if (unmappedKeys.length > 0) {
+      throw new Error(`
 Error mapping:
 - Source: ${sourceModel.toString()}
 - Destination: ${destinationModel.toString()}
@@ -268,7 +251,9 @@ Unmapped properties:
 -------------------
 ${unmappedKeys.join(',\n')}
 `);
+    }
   }
+  return destination;
 }
 
 export function mapArray<

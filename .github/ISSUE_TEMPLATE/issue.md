@@ -3,9 +3,13 @@ name: Issue
 about: Submit an issue to help us improve
 title: ''
 labels: ''
-assignees: ''
+assignees: nartc
 
 ---
+
+<!--
+If you are using AutoMapper with [NestJS](https://nestjs.com), please use [nestjsx-automapper issues page](https://github.com/nestjsx/automapper/issues). It will make it easier for me to cut a release and notify you about the fixes/updates. Thank you for your understanding!
+-->
 
 <!--
 PLEASE HELP US PROCESS GITHUB ISSUES FASTER BY PROVIDING THE FOLLOWING INFORMATION.

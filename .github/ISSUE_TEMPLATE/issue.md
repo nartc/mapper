@@ -1,6 +1,7 @@
 ---
 name: Issue
-about: Submit an issue to help us improve
+about: Submit an issue to help us improve. If you're using NestJS, please use https://github.com/nestjsx/automapper/issues
+  instead.
 title: ''
 labels: ''
 assignees: nartc

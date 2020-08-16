@@ -159,13 +159,13 @@ export function map<
 
         if (Array.isArray(mapInitializeValue)) {
           const first = mapInitializeValue[0];
-          if (isEmpty(first)) {
-            set(destination, memberPath, []);
+          if (!isObjectLike(first)) {
+            set(destination, memberPath, mapInitializeValue.slice());
             continue;
           }
 
-          if (!isObjectLike(first)) {
-            set(destination, memberPath, mapInitializeValue.slice());
+          if (isEmpty(first)) {
+            set(destination, memberPath, []);
             continue;
           }
 

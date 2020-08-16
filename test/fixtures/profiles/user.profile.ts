@@ -1,16 +1,12 @@
-import {
-  AutoMapper,
-  fromValue,
-  mapDefer,
-  mapFrom,
-  ProfileBase,
-} from '../../../src';
+import { AutoMapper, fromValue, mapDefer, mapFrom, ProfileBase } from '../../../src';
 import {
   ComplexUser,
   ComplexUserVm,
   User,
   UserInformation,
   UserVm,
+  UserWithDepartments,
+  UserWithDepartmentsVm,
   UserWithEmptyProfile,
   UserWithEmptyProfileVm,
 } from '../models/user';
@@ -28,7 +24,7 @@ export class UserProfile extends ProfileBase {
           }
 
           return mapFrom(s => s.firstName + ' ' + s.lastName);
-        })
+        }),
       )
       .forMember(
         d => d.firstName,
@@ -37,13 +33,13 @@ export class UserProfile extends ProfileBase {
             return fromValue('Chau');
           }
           return mapFrom(s => s.firstName);
-        })
+        }),
       )
       .reverseMap();
 
     mapper.createMap(User, UserInformation).forMember(
       d => d.fullName,
-      mapFrom(s => s.firstName + ' ' + s.lastName)
+      mapFrom(s => s.firstName + ' ' + s.lastName),
     );
   }
 }
@@ -55,15 +51,15 @@ export class ComplexUserProfile extends ProfileBase {
       .createMap(ComplexUser, ComplexUserVm)
       .forMember(
         d => d.first,
-        mapFrom(s => s.firstName)
+        mapFrom(s => s.firstName),
       )
       .forMember(
         d => d.last,
-        mapFrom(s => s.lastName)
+        mapFrom(s => s.lastName),
       )
       .forMember(
         d => d.full,
-        mapFrom(s => s.firstName + ' ' + s.lastName)
+        mapFrom(s => s.firstName + ' ' + s.lastName),
       )
       .reverseMap();
   }
@@ -73,5 +69,12 @@ export class UserWithEmptyProfileProfile extends ProfileBase {
   constructor(mapper: AutoMapper) {
     super();
     mapper.createMap(UserWithEmptyProfile, UserWithEmptyProfileVm);
+  }
+}
+
+export class UserWithDepartmentsProfile extends ProfileBase {
+  constructor(mapper: AutoMapper) {
+    super();
+    mapper.createMap(UserWithDepartments, UserWithDepartmentsVm);
   }
 }

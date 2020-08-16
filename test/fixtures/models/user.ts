@@ -193,3 +193,13 @@ export class UserWithListFooVmBase extends FooVmBase {
   @AutoMap(() => NestedFooVmBase)
   nestedFooBases!: NestedFooVmBase[];
 }
+
+export class UserWithDepartments {
+  @AutoMap()
+  departments!: number[];
+}
+
+export class UserWithDepartmentsVm {
+  @AutoMap()
+  departments!: number[];
+}

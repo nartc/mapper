@@ -56,7 +56,7 @@ import {
   UserVmWithBase,
   UserWithAbstractBase,
   UserWithAbstractBaseVm,
-  UserWithBase,
+  UserWithBase, UserWithDepartments, UserWithDepartmentsVm,
   UserWithEmptyProfile,
   UserWithEmptyProfileVm,
   UserWithFooBase,
@@ -75,7 +75,7 @@ import {
 } from './fixtures/profiles/profile.profile';
 import {
   ComplexUserProfile,
-  UserProfile,
+  UserProfile, UserWithDepartmentsProfile,
   UserWithEmptyProfileProfile,
 } from './fixtures/profiles/user.profile';
 
@@ -420,6 +420,14 @@ describe('AutoMapper Integration - Map', () => {
     }).toThrowError(
       'Mapping for avatars cannot be found. Consider manual map this property with MapWith',
     );
+  });
+
+  it('should map number array', () => {
+    Mapper.addProfile(UserWithDepartmentsProfile);
+    const user = new UserWithDepartments();
+    user.departments = [1, 2, 3];
+    const vm = Mapper.map(user, UserWithDepartmentsVm);
+    expect(vm).toBeTruthy();
   });
 });
 

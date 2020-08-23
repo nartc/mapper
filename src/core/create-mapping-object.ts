@@ -1,3 +1,4 @@
+import { ErrorHandler } from '../error-handler';
 import { MappingStorage } from '../storages';
 import {
   BaseOf,
@@ -25,7 +26,7 @@ export function createMappingObject<
   mappingStorage: MappingStorage
 ) {
   if (mappingStorage.has(source, destination)) {
-    throw new Error(
+    ErrorHandler.handleError(
       `Mapping for source ${source.toString()} and destination ${destination.toString()} already exists`
     );
   }

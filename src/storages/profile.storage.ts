@@ -1,4 +1,5 @@
 import { AutoMapper } from '../automapper';
+import { ErrorHandler } from '../error-handler';
 import { MappingProfile } from '../types';
 
 /**
@@ -31,7 +32,7 @@ export class ProfileStorage {
   add(mapper: AutoMapper, profile: MappingProfile): void {
     const profiles = this.profiles.get(mapper) as MappingProfile[];
     if (profiles.some(p => p.profileName === profile.profileName)) {
-      throw new Error(
+      ErrorHandler.handleError(
         `${profile.profileName} already exists on this mapper instance`
       );
     }

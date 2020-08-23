@@ -8,6 +8,7 @@ import {
   map,
   mapArray,
 } from './core';
+import { ErrorHandler } from './error-handler';
 import { MetadataExplorer } from './explorers';
 import { MappingStorage, ProfileStorage } from './storages';
 import { instanceStorage } from './storages/instance.storage';
@@ -50,6 +51,7 @@ export class AutoMapper {
       skipUnmappedAssertion,
       sourceNamingConvention,
       destinationNamingConvention,
+      throwError,
     } = settings;
 
     this.defaultGlobalSettings[0] = useUndefined ?? false;
@@ -62,6 +64,11 @@ export class AutoMapper {
     if (destinationNamingConvention) {
       this.defaultGlobalSettings[3] = destinationNamingConvention;
     }
+
+    if (throwError != null) {
+      ErrorHandler.setShouldThrow(throwError);
+    }
+
     return this;
   }
 

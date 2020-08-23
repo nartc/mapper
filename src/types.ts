@@ -433,6 +433,7 @@ export interface AutoMapperGlobalSettings {
   skipUnmappedAssertion?: boolean;
   sourceNamingConvention?: Constructible<NamingConvention>;
   destinationNamingConvention?: Constructible<NamingConvention>;
+  throwError?: boolean;
 }
 
 export type MetadataOptions<TModel extends Dict<TModel> = any> = {

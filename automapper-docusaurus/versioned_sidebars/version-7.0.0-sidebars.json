@@ -1,0 +1,224 @@
+{
+  "version-7.0.0/docs": [
+    {
+      "collapsed": true,
+      "type": "category",
+      "label": "Introduction",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-7.0.0/introduction/why"
+        },
+        {
+          "type": "doc",
+          "id": "version-7.0.0/introduction/anti-pitch"
+        },
+        {
+          "type": "doc",
+          "id": "version-7.0.0/introduction/author-use-case"
+        },
+        {
+          "type": "doc",
+          "id": "version-7.0.0/introduction/problems-with-typescript"
+        },
+        {
+          "type": "doc",
+          "id": "version-7.0.0/introduction/async"
+        },
+        {
+          "type": "doc",
+          "id": "version-7.0.0/introduction/alternatives"
+        }
+      ]
+    },
+    {
+      "collapsed": true,
+      "type": "category",
+      "label": "Guides",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-7.0.0/guides/getting-started"
+        },
+        {
+          "type": "doc",
+          "id": "version-7.0.0/guides/basic-concept"
+        }
+      ]
+    },
+    {
+      "collapsed": true,
+      "type": "category",
+      "label": "Usages",
+      "items": [
+        {
+          "collapsed": true,
+          "type": "category",
+          "label": "Initialization",
+          "items": [
+            {
+              "type": "doc",
+              "id": "version-7.0.0/usages/init/create-map"
+            },
+            {
+              "type": "doc",
+              "id": "version-7.0.0/usages/init/add-profile"
+            },
+            {
+              "type": "doc",
+              "id": "version-7.0.0/usages/init/with-global-settings"
+            },
+            {
+              "type": "doc",
+              "id": "version-7.0.0/usages/init/initialize"
+            }
+          ]
+        },
+        {
+          "collapsed": true,
+          "type": "category",
+          "label": "Mapping Configuration",
+          "items": [
+            {
+              "collapsed": true,
+              "type": "category",
+              "label": "ForMember",
+              "items": [
+                {
+                  "type": "doc",
+                  "id": "version-7.0.0/usages/mapping-configuration/for-member/basic"
+                },
+                {
+                  "type": "doc",
+                  "id": "version-7.0.0/usages/mapping-configuration/for-member/map-from"
+                },
+                {
+                  "type": "doc",
+                  "id": "version-7.0.0/usages/mapping-configuration/for-member/condition"
+                },
+                {
+                  "type": "doc",
+                  "id": "version-7.0.0/usages/mapping-configuration/for-member/from-value"
+                },
+                {
+                  "type": "doc",
+                  "id": "version-7.0.0/usages/mapping-configuration/for-member/map-with"
+                },
+                {
+                  "type": "doc",
+                  "id": "version-7.0.0/usages/mapping-configuration/for-member/converter"
+                },
+                {
+                  "type": "doc",
+                  "id": "version-7.0.0/usages/mapping-configuration/for-member/resolver"
+                },
+                {
+                  "type": "doc",
+                  "id": "version-7.0.0/usages/mapping-configuration/for-member/null-substitution"
+                },
+                {
+                  "type": "doc",
+                  "id": "version-7.0.0/usages/mapping-configuration/for-member/ignore"
+                }
+              ]
+            },
+            {
+              "collapsed": true,
+              "type": "category",
+              "label": "Reverse Mapping",
+              "items": [
+                {
+                  "type": "doc",
+                  "id": "version-7.0.0/usages/mapping-configuration/reverse-map/basic"
+                },
+                {
+                  "type": "doc",
+                  "id": "version-7.0.0/usages/mapping-configuration/reverse-map/for-path"
+                }
+              ]
+            },
+            {
+              "type": "doc",
+              "id": "version-7.0.0/usages/mapping-configuration/pre-condition"
+            },
+            {
+              "type": "doc",
+              "id": "version-7.0.0/usages/mapping-configuration/map-defer"
+            }
+          ]
+        },
+        {
+          "collapsed": true,
+          "type": "category",
+          "label": "Features",
+          "items": [
+            {
+              "type": "doc",
+              "id": "version-7.0.0/usages/features/nested-model"
+            },
+            {
+              "type": "doc",
+              "id": "version-7.0.0/usages/features/flattening"
+            },
+            {
+              "type": "doc",
+              "id": "version-7.0.0/usages/features/inheritance"
+            },
+            {
+              "type": "doc",
+              "id": "version-7.0.0/usages/features/plain-object"
+            },
+            {
+              "type": "doc",
+              "id": "version-7.0.0/usages/features/naming-convention"
+            },
+            {
+              "type": "doc",
+              "id": "version-7.0.0/usages/features/empty-value"
+            },
+            {
+              "type": "doc",
+              "id": "version-7.0.0/usages/features/getters"
+            },
+            {
+              "type": "doc",
+              "id": "version-7.0.0/usages/features/date-time"
+            },
+            {
+              "type": "doc",
+              "id": "version-7.0.0/usages/features/callbacks"
+            },
+            {
+              "type": "doc",
+              "id": "version-7.0.0/usages/features/javascript-support"
+            }
+          ]
+        },
+        {
+          "collapsed": true,
+          "type": "category",
+          "label": "Avoids",
+          "items": [
+            {
+              "type": "doc",
+              "id": "version-7.0.0/usages/avoids/circular-dependency"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "doc",
+      "id": "version-7.0.0/nest"
+    },
+    {
+      "type": "doc",
+      "id": "version-7.0.0/plugin"
+    },
+    {
+      "type": "link",
+      "label": "API Reference",
+      "href": "https://nartc.github.io/mapper/"
+    }
+  ]
+}

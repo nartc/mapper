@@ -17,7 +17,7 @@ Mapper.createMap(User, UserVm).forMember(
 
 The above mapping operation will only be proceeded if `source.age >= 10`. If `source.age < 10` (or the expression is _falsy_), then `dest.foo` will receive a `null` value.
 
-Same as [Condition](condition), `preCondition()` also takes in an optional second argument for `defaultValue` which will be used to map to `destination.<some_member>` instead of `null`.
+Same as [Condition](for-member/condition), `preCondition()` also takes in an optional second argument for `defaultValue` which will be used to map to `destination.<some_member>` instead of `null`.
 
 ```typescript
 Mapper.createMap(User, UserVm).forMember(

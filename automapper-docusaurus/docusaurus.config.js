@@ -8,14 +8,19 @@ module.exports = {
   favicon: 'img/favicon.ico',
   organizationName: 'nartc', // Usually your GitHub org/user name.
   projectName: '@nartc/mapper', // Usually your repo name.
+  onBrokenLinks: 'warn',
   themeConfig: {
     navbar: {
       title: '@nartc/automapper',
-      links: [
+      items: [
+        {
+          type: 'docsVersionDropdown',
+          position: 'left',
+        },
         {
           to: 'versions',
-          label: versions[0],
-          position: 'left',
+          label: 'All versions',
+          position: 'right',
           style: {
             whiteSpace: 'nowrap',
             padding: '0.25rem 0.5rem 0.2rem 0.25rem',

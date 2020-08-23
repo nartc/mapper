@@ -11,17 +11,45 @@ module.exports = {
       type: 'category',
       label: 'Introduction',
       items: [
-        'introduction/why',
-        'introduction/anti-pitch',
-        'introduction/author-use-case',
-        'introduction/problems-with-typescript',
-        'introduction/async',
+        {
+          type: 'doc',
+          id: 'introduction/why',
+        },
+        {
+          type: 'doc',
+          id: 'introduction/anti-pitch',
+        },
+        {
+          type: 'doc',
+          id: 'introduction/author-use-case',
+        },
+        {
+          type: 'doc',
+          id: 'introduction/problems-with-typescript',
+        },
+        {
+          type: 'doc',
+          id: 'introduction/async',
+        },
+        {
+          type: 'doc',
+          id: 'introduction/alternatives',
+        },
       ],
     },
     {
       type: 'category',
       label: 'Guides',
-      items: ['guides/getting-started', 'guides/basic-concept'],
+      items: [
+        {
+          type: 'doc',
+          id: 'guides/getting-started',
+        },
+        {
+          type: 'doc',
+          id: 'guides/basic-concept',
+        },
+      ],
     },
     {
       type: 'category',
@@ -31,9 +59,22 @@ module.exports = {
           type: 'category',
           label: 'Initialization',
           items: [
-            'usages/init/create-map',
-            'usages/init/add-profile',
-            'usages/init/initialize',
+            {
+              type: 'doc',
+              id: 'usages/init/create-map',
+            },
+            {
+              type: 'doc',
+              id: 'usages/init/add-profile',
+            },
+            {
+              type: 'doc',
+              id: 'usages/init/with-global-settings',
+            },
+            {
+              type: 'doc',
+              id: 'usages/init/initialize',
+            },
           ],
         },
         {
@@ -44,25 +85,76 @@ module.exports = {
               type: 'category',
               label: 'ForMember',
               items: [
-                'usages/mapping-configuration/for-member/basic',
-                'usages/mapping-configuration/for-member/map-from',
-                'usages/mapping-configuration/for-member/condition',
-                'usages/mapping-configuration/for-member/from-value',
-                'usages/mapping-configuration/for-member/map-with',
-                'usages/mapping-configuration/for-member/converter',
-                'usages/mapping-configuration/for-member/resolver',
-                'usages/mapping-configuration/for-member/null-substitution',
-                'usages/mapping-configuration/for-member/ignore',
-                'usages/mapping-configuration/for-member/pre-condition',
+                {
+                  type: 'doc',
+                  id:
+                    'usages/mapping-configuration/for-member/basic',
+                },
+                {
+                  type: 'doc',
+                  id:
+                    'usages/mapping-configuration/for-member/map-from',
+                },
+                {
+                  type: 'doc',
+                  id:
+                    'usages/mapping-configuration/for-member/condition',
+                },
+                {
+                  type: 'doc',
+                  id:
+                    'usages/mapping-configuration/for-member/from-value',
+                },
+                {
+                  type: 'doc',
+                  id:
+                    'usages/mapping-configuration/for-member/map-with',
+                },
+                {
+                  type: 'doc',
+                  id:
+                    'usages/mapping-configuration/for-member/converter',
+                },
+                {
+                  type: 'doc',
+                  id:
+                    'usages/mapping-configuration/for-member/resolver',
+                },
+                {
+                  type: 'doc',
+                  id:
+                    'usages/mapping-configuration/for-member/null-substitution',
+                },
+                {
+                  type: 'doc',
+                  id:
+                    'usages/mapping-configuration/for-member/ignore',
+                },
               ],
             },
             {
               type: 'category',
               label: 'Reverse Mapping',
               items: [
-                'usages/mapping-configuration/reverse-map/basic',
-                'usages/mapping-configuration/reverse-map/for-path',
+                {
+                  type: 'doc',
+                  id:
+                    'usages/mapping-configuration/reverse-map/basic',
+                },
+                {
+                  type: 'doc',
+                  id:
+                    'usages/mapping-configuration/reverse-map/for-path',
+                },
               ],
+            },
+            {
+              type: 'doc',
+              id: 'usages/mapping-configuration/pre-condition',
+            },
+            {
+              type: 'doc',
+              id: 'usages/mapping-configuration/map-defer',
             },
           ],
         },
@@ -70,14 +162,56 @@ module.exports = {
           type: 'category',
           label: 'Features',
           items: [
-            'usages/features/nested-model',
-            'usages/features/flattening',
-            'usages/features/inheritance',
-            'usages/features/plain-object',
-            'usages/features/naming-convention',
-            'usages/features/getters',
-            'usages/features/date-time',
-            'usages/features/callbacks',
+            {
+              type: 'doc',
+              id: 'usages/features/nested-model',
+            },
+            {
+              type: 'doc',
+              id: 'usages/features/flattening',
+            },
+            {
+              type: 'doc',
+              id: 'usages/features/inheritance',
+            },
+            {
+              type: 'doc',
+              id: 'usages/features/plain-object',
+            },
+            {
+              type: 'doc',
+              id: 'usages/features/naming-convention',
+            },
+            {
+              type: 'doc',
+              id: 'usages/features/empty-value',
+            },
+            {
+              type: 'doc',
+              id: 'usages/features/getters',
+            },
+            {
+              type: 'doc',
+              id: 'usages/features/date-time',
+            },
+            {
+              type: 'doc',
+              id: 'usages/features/callbacks',
+            },
+            {
+              type: 'doc',
+              id: 'usages/features/javascript-support',
+            },
+          ],
+        },
+        {
+          type: 'category',
+          label: 'Avoids',
+          items: [
+            {
+              type: 'doc',
+              id: 'usages/avoids/circular-dependency',
+            },
           ],
         },
       ],

@@ -1,4 +1,5 @@
 import { AutoMap } from '../../../src';
+import { Avatar, AvatarVm } from './avatar';
 import { AbstractBase, AbstractBaseVm, Base, BaseVm, FooBase, FooVmBase, NestedFooBase, NestedFooVmBase } from './base';
 import { CamelCaseJob, SnakeCaseJob } from './job';
 import { EmptyProfile, EmptyProfileVm, Profile, ProfileVm } from './profile';
@@ -202,4 +203,14 @@ export class UserWithDepartments {
 export class UserWithDepartmentsVm {
   @AutoMap()
   departments!: number[];
+}
+
+export class UserWithPromisedField {
+  @AutoMap(() => Avatar)
+  promised!: Promise<Avatar[]>;
+}
+
+export class UserWithPromisedFieldVm {
+  @AutoMap(() => AvatarVm)
+  promised!: AvatarVm[];
 }

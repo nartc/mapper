@@ -1,4 +1,5 @@
-import { AutoMapper, fromValue, mapDefer, mapFrom, ProfileBase } from '../../../src';
+import { AutoMapper, fromValue, ignore, mapDefer, mapFrom, ProfileBase } from '../../../src';
+import { Avatar, AvatarVm } from '../models/avatar';
 import {
   ComplexUser,
   ComplexUserVm,
@@ -9,6 +10,8 @@ import {
   UserWithDepartmentsVm,
   UserWithEmptyProfile,
   UserWithEmptyProfileVm,
+  UserWithPromisedField,
+  UserWithPromisedFieldVm,
 } from '../models/user';
 
 export class UserProfile extends ProfileBase {
@@ -76,5 +79,17 @@ export class UserWithDepartmentsProfile extends ProfileBase {
   constructor(mapper: AutoMapper) {
     super();
     mapper.createMap(UserWithDepartments, UserWithDepartmentsVm);
+  }
+}
+
+export class UserWithPromiseFieldProfile extends ProfileBase {
+  constructor(mapper: AutoMapper) {
+    super();
+    mapper.createMap(UserWithPromisedField, UserWithPromisedFieldVm)
+      .forMember(d => d.promised, ignore())
+      .afterMap(async (source, destination) => {
+        const resolvedValues = await source.promised;
+        destination.promised = mapper.mapArray(resolvedValues, AvatarVm, Avatar);
+      });
   }
 }

@@ -63,7 +63,7 @@ import {
   UserWithFooVmBase,
   UserWithGetter,
   UserWithListFooBase,
-  UserWithListFooVmBase,
+  UserWithListFooVmBase, UserWithPromisedField, UserWithPromisedFieldVm,
 } from './fixtures/models/user';
 import { AddressProfile } from './fixtures/profiles/address.profile';
 import { AvatarProfile } from './fixtures/profiles/avatar.profile';
@@ -76,7 +76,7 @@ import {
 import {
   ComplexUserProfile,
   UserProfile, UserWithDepartmentsProfile,
-  UserWithEmptyProfileProfile,
+  UserWithEmptyProfileProfile, UserWithPromiseFieldProfile,
 } from './fixtures/profiles/user.profile';
 
 describe('AutoMapper Integration - Create Map', () => {
@@ -427,6 +427,20 @@ describe('AutoMapper Integration - Map', () => {
     const user = new UserWithDepartments();
     user.departments = [1, 2, 3];
     const vm = Mapper.map(user, UserWithDepartmentsVm);
+    expect(vm).toBeTruthy();
+  });
+
+  it('should be able to use async in afterMap', async () => {
+    Mapper.addProfile(UserWithPromiseFieldProfile);
+    const user = new UserWithPromisedField();
+    const avatar = new Avatar();
+    avatar.url = 'url';
+    avatar.source = 'source';
+    avatar.shouldBeSubstituted = 'substituted';
+    avatar.forCondition = true;
+    avatar.shouldIgnore = 7;
+    user.promised = Promise.resolve([avatar]);
+    const vm = Mapper.map(user, UserWithPromisedFieldVm);
     expect(vm).toBeTruthy();
   });
 });

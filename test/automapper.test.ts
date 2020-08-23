@@ -56,14 +56,18 @@ import {
   UserVmWithBase,
   UserWithAbstractBase,
   UserWithAbstractBaseVm,
-  UserWithBase, UserWithDepartments, UserWithDepartmentsVm,
+  UserWithBase,
+  UserWithDepartments,
+  UserWithDepartmentsVm,
   UserWithEmptyProfile,
   UserWithEmptyProfileVm,
   UserWithFooBase,
   UserWithFooVmBase,
   UserWithGetter,
   UserWithListFooBase,
-  UserWithListFooVmBase, UserWithPromisedField, UserWithPromisedFieldVm,
+  UserWithListFooVmBase,
+  UserWithPromisedField,
+  UserWithPromisedFieldVm,
 } from './fixtures/models/user';
 import { AddressProfile } from './fixtures/profiles/address.profile';
 import { AvatarProfile } from './fixtures/profiles/avatar.profile';
@@ -75,8 +79,10 @@ import {
 } from './fixtures/profiles/profile.profile';
 import {
   ComplexUserProfile,
-  UserProfile, UserWithDepartmentsProfile,
-  UserWithEmptyProfileProfile, UserWithPromiseFieldProfile,
+  UserProfile,
+  UserWithDepartmentsProfile,
+  UserWithEmptyProfileProfile,
+  UserWithPromiseFieldProfile,
 } from './fixtures/profiles/user.profile';
 
 describe('AutoMapper Integration - Create Map', () => {
@@ -94,8 +100,8 @@ describe('AutoMapper Integration - Create Map', () => {
       Mapper.createMap(User, UserVm);
     }).toThrowError(
       new Error(
-        `Mapping for source ${ User.toString() } and destination ${ UserVm.toString() } already exists`,
-      ),
+        `Mapping for source ${User.toString()} and destination ${UserVm.toString()} already exists`
+      )
     );
   });
 });
@@ -260,13 +266,13 @@ describe('AutoMapper Integration - Map', () => {
 
     expect(vm.profile.addresses).toBeTruthy();
     expect(vm.profile.addresses).toHaveLength(
-      complexUser.profile.addresses.length,
+      complexUser.profile.addresses.length
     );
     vm.profile.addresses.forEach((address, index) => {
       expect(address).toBeTruthy();
       expect(address).toBeInstanceOf(AddressVm);
       const { street, city, state } = complexUser.profile.addresses[index];
-      expect(address.formattedAddress).toEqual(`${ street } ${ city } ${ state }`);
+      expect(address.formattedAddress).toEqual(`${street} ${city} ${state}`);
     });
   });
 
@@ -293,13 +299,13 @@ describe('AutoMapper Integration - Map', () => {
 
     expect(vm.profile.addresses).toBeTruthy();
     expect(vm.profile.addresses).toHaveLength(
-      complexUser.profile.addresses.length,
+      complexUser.profile.addresses.length
     );
     vm.profile.addresses.forEach((address, index) => {
       expect(address).toBeTruthy();
       expect(address).toBeInstanceOf(AddressVm);
       const { street, city, state } = complexUser.profile.addresses[index];
-      expect(address.formattedAddress).toEqual(`${ street } ${ city } ${ state }`);
+      expect(address.formattedAddress).toEqual(`${street} ${city} ${state}`);
     });
   });
 
@@ -369,8 +375,8 @@ describe('AutoMapper Integration - Map', () => {
       Mapper.map(foo, Bar);
     }).toThrowError(
       new Error(
-        `Mapping not found for source ${ Foo.toString() } and destination ${ Bar.toString() }`,
-      ),
+        `Mapping not found for source ${Foo.toString()} and destination ${Bar.toString()}`
+      )
     );
   });
 
@@ -387,7 +393,7 @@ describe('AutoMapper Integration - Map', () => {
     expect(() => {
       Mapper.map(profile, ProfileWithMissingMetadataVm);
     }).toThrowError(
-      `Metadata for addresses is a primitive or Array. Consider manual map this property`,
+      `Metadata for addresses is a primitive or Array. Consider manual map this property`
     );
   });
 
@@ -418,7 +424,7 @@ describe('AutoMapper Integration - Map', () => {
     expect(() => {
       Mapper.map(profile, ProfileWithAvatarVm);
     }).toThrowError(
-      'Mapping for avatars cannot be found. Consider manual map this property with MapWith',
+      'Mapping for avatars cannot be found. Consider manual map this property with MapWith'
     );
   });
 
@@ -452,9 +458,9 @@ describe('AutoMapper Integration - Various Syntax', () => {
         d => {
           return d.returnFooVm;
         },
-        mapFrom(function(s) {
+        mapFrom(function (s) {
           return s.returnFoo;
-        }),
+        })
       )
       .reverseMap()
       .forPath(s => s.foos, ignore());
@@ -468,7 +474,7 @@ describe('AutoMapper Integration - Various Syntax', () => {
     const vm = Mapper.map(
       { returnFoo: 'foo', foos: ['string'] },
       FooWithReturnVm,
-      FooWithReturn,
+      FooWithReturn
     );
     expect(vm).toBeTruthy();
     expect(vm.returnFooVm).toBe(foo.returnFoo);
@@ -487,7 +493,7 @@ describe('AutoMapper Integration - Public Getter Setter', () => {
   beforeAll(() => {
     Mapper.createMap(UserWithGetter, UserVm).forMember(
       d => d.fullName,
-      mapFrom(s => s.firstName + ' ' + s.lastName),
+      mapFrom(s => s.firstName + ' ' + s.lastName)
     );
   });
 
@@ -512,7 +518,7 @@ describe('AutoMapper Integration - Callback', () => {
     Mapper.createMap(User, UserVm)
       .forMember(
         d => d.fullName,
-        mapFrom(s => s.firstName + ' ' + s.lastName),
+        mapFrom(s => s.firstName + ' ' + s.lastName)
       )
       .beforeMap(beforeCallback)
       .afterMap(afterCallback)
@@ -621,7 +627,7 @@ describe('AutoMapper Integration - ReverseMap', () => {
       .fill('')
       .map((_, index) => {
         const addressVm = new AddressVm();
-        addressVm.formattedAddress = `Street ${ index } City ${ index } State ${ index }`;
+        addressVm.formattedAddress = `Street ${index} City ${index} State ${index}`;
         return addressVm;
       });
 
@@ -647,19 +653,19 @@ describe('AutoMapper Integration - Inheritance', () => {
     })
       .forMember(
         d => d.first,
-        mapFrom(s => s.firstName),
+        mapFrom(s => s.firstName)
       )
       .forMember(
         d => d.last,
-        mapFrom(s => s.lastName),
+        mapFrom(s => s.lastName)
       )
       .forMember(
         d => d.full,
-        mapFrom(s => `${ s.firstName } ${ s.lastName }`),
+        mapFrom(s => `${s.firstName} ${s.lastName}`)
       )
       .forMember(
         d => d.aboutMe,
-        mapFrom(s => s.about),
+        mapFrom(s => s.about)
       )
       .reverseMap();
 
@@ -692,7 +698,7 @@ describe('AutoMapper Integration - Inheritance', () => {
     expect(vm).toBeInstanceOf(UserVmWithBase);
     expect(vm.first).toBe(user.firstName);
     expect(vm.last).toBe(user.lastName);
-    expect(vm.full).toBe(`${ user.firstName } ${ user.lastName }`);
+    expect(vm.full).toBe(`${user.firstName} ${user.lastName}`);
     expect(vm.aboutMe).toBe(user.about);
     expect(vm.created).toBe(user.createdDate);
     expect(vm.updated).toBe(user.updatedDate);
@@ -797,7 +803,7 @@ describe('AutoMapper Integration - PlainObject', () => {
       .fill('')
       .map((_, index) => {
         const addressVm = new AddressVm();
-        addressVm.formattedAddress = `Street ${ index } City ${ index } State ${ index }`;
+        addressVm.formattedAddress = `Street ${index} City ${index} State ${index}`;
         return addressVm;
       });
     const plainVm = JSON.parse(JSON.stringify(vm));
@@ -876,7 +882,7 @@ describe('AutoMapper Integration - useUndefined', () => {
   it('should use undefined with create map', () => {
     Mapper.createMap(User, UserVm, { useUndefined: true }).forMember(
       d => d.fullName,
-      ignore(),
+      ignore()
     );
     const user = {};
     const vm = Mapper.map(user, UserVm, User);
@@ -962,7 +968,7 @@ describe('AutoMapper Integration - mapping falsy string', () => {
         status: 0,
       },
       Cart,
-      Cart,
+      Cart
     );
     expect(vm).toBeTruthy();
     expect(vm.id).toEqual(0);
@@ -988,16 +994,16 @@ describe('AutoMapper Integration - Circular Dependency', () => {
       mapWith(
         Foo,
         s => s.foo,
-        () => Foo,
-      ),
+        () => Foo
+      )
     );
     Mapper.createMap(Foo, Foo).forMember(
       d => d.bar,
       mapWith(
         Bar,
         s => s.bar,
-        () => Bar,
-      ),
+        () => Bar
+      )
     );
     Mapper.createMap(BarWithFoo, BarWithFoo);
     Mapper.createMap(FooWithBar, FooWithBar);
@@ -1011,7 +1017,7 @@ describe('AutoMapper Integration - Circular Dependency', () => {
     const vm = Mapper.map(
       { id: '1', bar: { foo: { id: '2', bar: null }, id: '1' } },
       FooWithBar,
-      FooWithBar,
+      FooWithBar
     );
     expect(vm).toBeTruthy();
     expect(vm.id).toEqual('1');
@@ -1023,7 +1029,7 @@ describe('AutoMapper Integration - Circular Dependency', () => {
     const vm = Mapper.map(
       { id: '1', bar: { foo: { id: '2', bar: null }, id: '1' } },
       FooWithBarZeroDepth,
-      FooWithBarZeroDepth,
+      FooWithBarZeroDepth
     );
     expect(vm).toBeTruthy();
     expect(vm.id).toEqual('1');
@@ -1054,7 +1060,7 @@ describe('AutoMapper Integration - Abstract Class', () => {
         name: 'Chau',
       },
       UserWithAbstractBaseVm,
-      UserWithAbstractBase,
+      UserWithAbstractBase
     );
     expect(vm).toBeTruthy();
   });
@@ -1075,7 +1081,7 @@ describe('AutoMapper Integration - PreCondition null/undefined', () => {
     Mapper.createMap(Foo, FooVm).forMember(
       d => d.foo,
       preCondition(() => false, null),
-      fromValue(5),
+      fromValue(5)
     );
   });
 
@@ -1134,7 +1140,10 @@ b
   });
 
   it('should NOT throw error if skipUnmappedAssertion is truthy', () => {
-    Mapper.withGlobalSettings({ skipUnmappedAssertion: true }).createMap(Foo, Bar);
+    Mapper.withGlobalSettings({ skipUnmappedAssertion: true }).createMap(
+      Foo,
+      Bar
+    );
     const foo = new Foo();
     foo.f = 'test';
     const bar = Mapper.map(foo, Bar);

@@ -1,4 +1,11 @@
-import { AutoMapper, fromValue, ignore, mapDefer, mapFrom, ProfileBase } from '../../../src';
+import {
+  AutoMapper,
+  fromValue,
+  ignore,
+  mapDefer,
+  mapFrom,
+  ProfileBase,
+} from '../../../src';
 import { Avatar, AvatarVm } from '../models/avatar';
 import {
   ComplexUser,
@@ -27,7 +34,7 @@ export class UserProfile extends ProfileBase {
           }
 
           return mapFrom(s => s.firstName + ' ' + s.lastName);
-        }),
+        })
       )
       .forMember(
         d => d.firstName,
@@ -36,13 +43,13 @@ export class UserProfile extends ProfileBase {
             return fromValue('Chau');
           }
           return mapFrom(s => s.firstName);
-        }),
+        })
       )
       .reverseMap();
 
     mapper.createMap(User, UserInformation).forMember(
       d => d.fullName,
-      mapFrom(s => s.firstName + ' ' + s.lastName),
+      mapFrom(s => s.firstName + ' ' + s.lastName)
     );
   }
 }
@@ -54,15 +61,15 @@ export class ComplexUserProfile extends ProfileBase {
       .createMap(ComplexUser, ComplexUserVm)
       .forMember(
         d => d.first,
-        mapFrom(s => s.firstName),
+        mapFrom(s => s.firstName)
       )
       .forMember(
         d => d.last,
-        mapFrom(s => s.lastName),
+        mapFrom(s => s.lastName)
       )
       .forMember(
         d => d.full,
-        mapFrom(s => s.firstName + ' ' + s.lastName),
+        mapFrom(s => s.firstName + ' ' + s.lastName)
       )
       .reverseMap();
   }
@@ -85,11 +92,16 @@ export class UserWithDepartmentsProfile extends ProfileBase {
 export class UserWithPromiseFieldProfile extends ProfileBase {
   constructor(mapper: AutoMapper) {
     super();
-    mapper.createMap(UserWithPromisedField, UserWithPromisedFieldVm)
+    mapper
+      .createMap(UserWithPromisedField, UserWithPromisedFieldVm)
       .forMember(d => d.promised, ignore())
       .afterMap(async (source, destination) => {
         const resolvedValues = await source.promised;
-        destination.promised = mapper.mapArray(resolvedValues, AvatarVm, Avatar);
+        destination.promised = mapper.mapArray(
+          resolvedValues,
+          AvatarVm,
+          Avatar
+        );
       });
   }
 }

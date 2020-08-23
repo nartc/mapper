@@ -1,5 +1,12 @@
 import { AutoMapper, mapFrom, ProfileBase } from '../../../src';
-import { Base, BaseVm, FooBase, FooVmBase, NestedFooBase, NestedFooVmBase } from '../models/base';
+import {
+  Base,
+  BaseVm,
+  FooBase,
+  FooVmBase,
+  NestedFooBase,
+  NestedFooVmBase,
+} from '../models/base';
 
 export class BaseProfile extends ProfileBase {
   constructor(mapper: AutoMapper) {

@@ -446,8 +446,11 @@ describe('AutoMapper Integration - Map', () => {
     avatar.forCondition = true;
     avatar.shouldIgnore = 7;
     user.promised = Promise.resolve([avatar]);
-    const vm = Mapper.map(user, UserWithPromisedFieldVm);
+    const vm = await Mapper.mapAsync(user, UserWithPromisedFieldVm);
     expect(vm).toBeTruthy();
+    expect(vm.promised).toHaveLength(1);
+    expect(vm.promised[0]).toBeInstanceOf(AvatarVm);
+    expect(vm.promised[0].url).toEqual(avatar.source);
   });
 });
 

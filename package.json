@@ -106,7 +106,7 @@
     "@types/lodash.set": "4.3.6",
     "commitizen": "4.2.1",
     "coveralls": "3.1.0",
-    "cz-conventional-changelog": "3.2.1",
+    "cz-conventional-changelog": "3.3.0",
     "eslint-plugin-prettier": "3.1.4",
     "husky": "4.2.5",
     "lint-staged": "10.2.13",

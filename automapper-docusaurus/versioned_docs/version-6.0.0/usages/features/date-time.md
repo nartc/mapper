@@ -51,7 +51,7 @@ Mapper.createMap(Foo, FooVm)
 
 > Learn more about `mapFrom()` at [ForMember](../mapping-configuration/for-member/basic.md)
 
-You can also leverage a [Converter](../mapping-configuration/for-member/convert-using.md) or a [Resolver](../mapping-configuration/for-member/resolver.md) for reusability. Again, if you have to handle more complex cases
+You can also leverage a [Converter](../mapping-configuration/for-member/converter.md) or a [Resolver](../mapping-configuration/for-member/resolver.md) for reusability. Again, if you have to handle more complex cases
 regarding `DateTime`, I highly recommend the libraries I mentioned above.
 
 ### `Moment` object

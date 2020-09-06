@@ -53,7 +53,7 @@ interface AutomapperModuleRootOptions {
 - `config`: A configuration function that will get called automatically.
 
 When you call `AutomapperModule.forRoot()`, a new instance of `AutoMapper` will be created with `AutomapperModuleRootOptions.name`. Both options are optional.
-If you pass in `AutomapperModuleRootOptions.config` and configure the `AutoMapper` instance in `forRoot()`, that is totally fine, but the following approach is recommended. Refer to [Add Profile](../usages/init/add-profile.md)
+If you pass in `AutomapperModuleRootOptions.config` and configure the `AutoMapper` instance in `forRoot()`, that is totally fine, but the following approach is recommended. Refer to [Add Profile](./usages/init/add-profile.md)
 
 2. `nestjsx-automapper` exposes a `@Profile()` decorator to decorate your `Profile` classes.
 

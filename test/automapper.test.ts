@@ -32,6 +32,13 @@ import {
   FooWithReturn,
   FooWithReturnVm,
 } from './fixtures/models/foo';
+import {
+  FooFoo,
+  FooFooFoo,
+  FooFooFooVm,
+  FooFooVm,
+} from './fixtures/models/inheritance';
+import { CampusUser, ResponseCampusUserDto } from './fixtures/models/inheritance-test';
 import { CamelCaseJob, SnakeCaseJob } from './fixtures/models/job';
 import {
   EmptyProfile,
@@ -73,6 +80,12 @@ import { AddressProfile } from './fixtures/profiles/address.profile';
 import { AvatarProfile } from './fixtures/profiles/avatar.profile';
 import { BaseProfile } from './fixtures/profiles/base.profile';
 import { FooProfile } from './fixtures/profiles/foo.profile';
+import {
+  BaseEntityProfile,
+  InheritanceCampusUserProfile,
+  InheritanceUserProfile,
+} from './fixtures/profiles/inheritance-test.profile';
+import { InheritanceProfile } from './fixtures/profiles/inheritance.profile';
 import {
   EmptyProfileProfile,
   ProfileProfile,
@@ -748,6 +761,47 @@ describe('AutoMapper Integration - Inheritance', () => {
     expect(vm).toBeInstanceOf(UserWithListFooVmBase);
     expect(vm.nestedFooBases[0]).toBeInstanceOf(NestedFooVmBase);
     expect(vm.nestedFooBases[0].id).toBe(user.nestedFooBases[0].id);
+  });
+});
+
+describe('AutoMapper Integration - Nested Inheritance', () => {
+  beforeEach(() => {
+    Mapper.addProfile(InheritanceProfile);
+    Mapper.addProfile(BaseEntityProfile)
+      .addProfile(InheritanceUserProfile)
+      .addProfile(InheritanceCampusUserProfile);
+  });
+
+  afterEach(Mapper.dispose.bind(Mapper));
+
+  it('should work with one level inheritance', () => {
+    const foo = new FooFoo();
+    foo.foo = 'foo1';
+    foo.fooFoo = 'foo2';
+
+    const vm = Mapper.map(foo, FooFooVm);
+    expect(vm).toBeTruthy();
+    expect(vm.fooVm).toEqual(foo.foo);
+    expect(vm.fooFooVm).toEqual(foo.fooFoo);
+  });
+
+  it('should work with two level inheritance', () => {
+    const foo = new FooFooFoo();
+    foo.foo = 'foo1';
+    foo.fooFoo = 'foo2';
+    foo.fooFooFoo = 'foo3';
+
+    const vm = Mapper.map(foo, FooFooFooVm);
+    expect(vm).toBeTruthy();
+  });
+
+  it('should map correctly', () => {
+    const campusUser = new CampusUser();
+    campusUser.id = '123';
+    campusUser.name = 'foo';
+    campusUser.campusId = '123';
+    const vm = Mapper.map(campusUser, ResponseCampusUserDto);
+    expect(vm).toBeTruthy();
   });
 });
 

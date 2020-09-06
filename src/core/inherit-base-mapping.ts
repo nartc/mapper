@@ -19,11 +19,14 @@ export function inheritBaseMapping<
   const baseProps = baseMapping[MappingClassId.props];
   for (let i = 0, len = baseProps.length; i < len; i++) {
     const [basePropKey, baseProp] = baseProps[i];
-    if (props.map(p => p[0]).some(pKey => pKey === basePropKey)) {
-      continue;
+    const propFromBase = Object.seal({ ...baseProp }) as MappingProperty;
+    const existProp = props.find(([pKey]) => pKey === basePropKey);
+    if (existProp) {
+      existProp[0] = basePropKey;
+      existProp[1] = propFromBase;
+    } else {
+      props.push([basePropKey, propFromBase]);
     }
-
-    props.push([basePropKey, Object.seal({ ...baseProp }) as MappingProperty]);
   }
   mapping[MappingClassId.bases] = [
     baseMapping[MappingClassId.models][0],

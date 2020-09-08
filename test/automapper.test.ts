@@ -39,6 +39,7 @@ import {
   FooFooVm,
 } from './fixtures/models/inheritance';
 import { CampusUser, ResponseCampusUserDto } from './fixtures/models/inheritance-test';
+import { CampusUserPlugin, ResponseCampusUserDtoPlugin } from './fixtures/models/inheritance-test-plugin';
 import { CamelCaseJob, SnakeCaseJob } from './fixtures/models/job';
 import {
   EmptyProfile,
@@ -80,6 +81,10 @@ import { AddressProfile } from './fixtures/profiles/address.profile';
 import { AvatarProfile } from './fixtures/profiles/avatar.profile';
 import { BaseProfile } from './fixtures/profiles/base.profile';
 import { FooProfile } from './fixtures/profiles/foo.profile';
+import {
+  BaseEntityPluginProfile, InheritanceCampusUserPluginProfile,
+  InheritanceUserPluginProfile,
+} from './fixtures/profiles/inheritance-test-plugin.profile';
 import {
   BaseEntityProfile,
   InheritanceCampusUserProfile,
@@ -801,6 +806,26 @@ describe('AutoMapper Integration - Nested Inheritance', () => {
     campusUser.name = 'foo';
     campusUser.campusId = '123';
     const vm = Mapper.map(campusUser, ResponseCampusUserDto);
+    expect(vm).toBeTruthy();
+  });
+});
+
+describe('AutoMapper Integration - Inheritance Plugin', () => {
+  beforeEach(() => {
+    Mapper.addProfile(BaseEntityPluginProfile)
+      .addProfile(InheritanceUserPluginProfile)
+      .addProfile(InheritanceCampusUserPluginProfile);
+  })
+
+  afterEach(Mapper.dispose.bind(Mapper));
+
+  it('should map correctly for plugin generated code', () => {
+    const campusUser = new CampusUserPlugin();
+    campusUser.id = '123';
+    campusUser.name = 'foo';
+    campusUser.campusId = '123';
+
+    const vm = Mapper.map(campusUser, ResponseCampusUserDtoPlugin);
     expect(vm).toBeTruthy();
   });
 });

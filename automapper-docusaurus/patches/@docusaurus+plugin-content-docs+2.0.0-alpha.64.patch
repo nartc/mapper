@@ -1,0 +1,13 @@
+diff --git a/node_modules/@docusaurus/plugin-content-docs/lib/client/docsClientUtils.js b/node_modules/@docusaurus/plugin-content-docs/lib/client/docsClientUtils.js
+index 7ca91e8..6c3ffb2 100644
+--- a/node_modules/@docusaurus/plugin-content-docs/lib/client/docsClientUtils.js
++++ b/node_modules/@docusaurus/plugin-content-docs/lib/client/docsClientUtils.js
+@@ -81,7 +81,7 @@ exports.getDocVersionSuggestions = (data, pathname) => {
+     // We only suggest another doc/version if user is not using the latest version
+     const isNotOnLatestVersion = activeDocContext.activeVersion !== latestVersion;
+     const latestDocSuggestion = isNotOnLatestVersion
+-        ? activeDocContext === null || activeDocContext === void 0 ? void 0 : activeDocContext.alternateDocVersions[latestVersion.name] : undefined;
++        ? activeDocContext === null || activeDocContext === void 0 ? void 0 : latestVersion ? activeDocContext.alternateDocVersions[latestVersion.name] : undefined : undefined;
+     const latestVersionSuggestion = isNotOnLatestVersion
+         ? latestVersion
+         : undefined;

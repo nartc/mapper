@@ -14,6 +14,10 @@ module.exports = {
       title: '@nartc/automapper',
       items: [
         {
+          type: 'docsVersionDropdown',
+          position: 'left',
+        },
+        {
           to: 'versions',
           label: 'All versions',
           position: 'right',

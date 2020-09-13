@@ -1,9 +1,11 @@
 export function isClass(fn: Function | Object): boolean {
+  const typeOfFn = typeof fn;
+  const constructorFnString = fn.constructor?.toString();
   return (
-    (typeof fn === 'object' || typeof fn === 'function') &&
+    (typeOfFn === 'object' || typeOfFn === 'function') &&
     fn.constructor &&
-    (/^\s*function/.test(fn.constructor.toString()) ||
-      /^\s*class/.test(fn.constructor.toString())) &&
-    fn.constructor.toString().includes(fn.constructor.name)
+    (/^\s*function/.test(constructorFnString) ||
+      /^\s*class/.test(constructorFnString)) &&
+    constructorFnString.includes(fn.constructor.name)
   );
 }

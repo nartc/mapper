@@ -4,6 +4,7 @@ import {
   TransformationType,
 } from '../types';
 
+// TODO(chau): use Variadic Tuple Type when upgrade to TypeScript 4.1
 export function isThisMemberMap<TMemberMap extends MemberMapFunction>(
   mapFn: ReturnType<MemberMapFunction>,
   type: TransformationType

@@ -20,7 +20,6 @@ import {
   getSourcePropertyKey,
   isClass,
   isEmpty,
-  isObjectLike,
   isThisMemberMap,
 } from '../utils';
 import { getMappingForDestination } from './get-mapping-for-destination';
@@ -150,42 +149,40 @@ export function map<
         continue;
       }
 
-      if (isObjectLike(mapInitializeValue)) {
-        if (mapInitializeValue instanceof Date) {
-          set(destination, memberPath, new Date(mapInitializeValue));
+      if (mapInitializeValue instanceof Date) {
+        set(destination, memberPath, new Date(mapInitializeValue));
+        continue;
+      }
+
+      if (Array.isArray(mapInitializeValue)) {
+        const first = mapInitializeValue[0];
+        if (typeof first !== 'object') {
+          set(destination, memberPath, mapInitializeValue.slice());
           continue;
         }
 
-        if (Array.isArray(mapInitializeValue)) {
-          const first = mapInitializeValue[0];
-          if (!isObjectLike(first)) {
-            set(destination, memberPath, mapInitializeValue.slice());
-            continue;
-          }
+        if (isEmpty(first)) {
+          set(destination, memberPath, []);
+          continue;
+        }
 
-          if (isEmpty(first)) {
-            set(destination, memberPath, []);
-            continue;
-          }
-
-          const nestedMapping = getMappingForNestedKey(
-            destinationModel,
-            memberPath as keyof TDestination,
-            first.constructor,
+        const nestedMapping = getMappingForNestedKey(
+          destinationModel,
+          memberPath as keyof TDestination,
+          first.constructor,
+          mappingStorage
+        );
+        set(
+          destination,
+          memberPath,
+          mapArray(
+            mapInitializeValue,
+            nestedMapping,
+            { skipUnmappedAssertion: options.skipUnmappedAssertion },
             mappingStorage
-          );
-          set(
-            destination,
-            memberPath,
-            mapArray(
-              mapInitializeValue,
-              nestedMapping,
-              { skipUnmappedAssertion: options.skipUnmappedAssertion },
-              mappingStorage
-            )
-          );
-          continue;
-        }
+          )
+        );
+        continue;
       }
 
       if (

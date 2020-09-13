@@ -1,5 +1,4 @@
-import { metadataStorage } from '../storages';
-import { instanceStorage } from '../storages/instance.storage';
+import { instanceStorage, metadataStorage } from '../storages';
 import { Constructible, Dict } from '../types';
 import { isEmpty } from '../utils';
 

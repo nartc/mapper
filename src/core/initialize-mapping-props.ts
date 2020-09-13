@@ -1,6 +1,6 @@
 import { mapInitialize } from '../member-functions/map-initialize';
 import { Dict, Mapping, MappingClassId } from '../types';
-import { getSourcePropertyKey, isClass, isObjectLike } from '../utils';
+import { getSourcePropertyKey, isClass } from '../utils';
 import { instantiate } from './instantiate';
 
 export function initializeMappingProps<
@@ -103,7 +103,7 @@ function getPathRecursive(node: any, prefix: string = '', prev?: string[]) {
     result.push(path);
 
     const child = node[key];
-    if (isObjectLike(child)) {
+    if (typeof child === 'object') {
       let queue = [child];
       if (Array.isArray(child)) {
         queue = child;

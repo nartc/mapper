@@ -80,9 +80,7 @@ Let's assume the above models, this is how **depth** works:
 
 ```typescript
 SourceA {
-    sourceB: SourceB {
-        sourceA: null
-    }
+    sourceB: SourceB {}
 }
 ```
 
@@ -92,7 +90,7 @@ SourceA {
 SourceA {
     sourceB: SourceB {
         sourceA: SourceA {
-            sourceB: null;
+          sourceB: SourceB {}
         }
     }
 }
@@ -106,7 +104,7 @@ SourceA {
         sourceA: SourceA {
             sourceB: {
                 sourceA: SourceA {
-                    sourceB: null;
+                  sourceB: SourceB {}
                 }
             }
         }

@@ -62,7 +62,7 @@ export function instantiate<TModel extends Dict<TModel>>(
 
     if (depth === count) {
       instanceStorage.resetCount(model, key);
-      instance[key] = undefined;
+      instance[key] = new metaResult();
       continue;
     }
 

@@ -4,8 +4,7 @@ import { isEmpty } from '../utils';
 
 export function instantiate<TModel extends Dict<TModel>>(
   model: Constructible<TModel>,
-  defaultValue?: TModel,
-  parent?: Constructible
+  defaultValue?: TModel
 ): TModel {
   const metadata = metadataStorage.getMetadata(model);
 
@@ -49,21 +48,28 @@ export function instantiate<TModel extends Dict<TModel>>(
       continue;
     }
 
-    if (parent == null || metaResult !== parent || value != null) {
-      instance[key] = instantiate(metaResult, value, model);
+    if (value != null) {
+      instance[key] = instantiate(metaResult, value);
       continue;
     }
 
-    const [depth, count] = instanceStorage.getDepthAndCount(model, key);
+    const [depth, count = 0] = instanceStorage.getDepthAndCount(model, key);
 
-    if ((depth != null && !!count && depth === count) || depth === 0) {
+    if (depth === 0) {
+      instance[key] = new metaResult();
+      continue;
+    }
+
+    if (depth === count) {
       instanceStorage.resetCount(model, key);
+      instance[key] = undefined;
       continue;
     }
 
     instanceStorage.setCount(model, key, count != null ? count + 1 : 1);
-    instance[key] = instantiate(metaResult, value, model);
+    instance[key] = instantiate(metaResult, value);
   }
 
+  instanceStorage.resetAllCount(model);
   return instance;
 }

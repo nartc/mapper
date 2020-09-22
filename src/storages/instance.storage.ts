@@ -32,6 +32,10 @@ class InstanceStorage extends MapNestedStorage<Constructible, number> {
     this.recursiveCounts.get(parent)?.set(member, 0);
   }
 
+  resetAllCount(model: Constructible) {
+    this.recursiveCounts.get(model)?.clear();
+  }
+
   private getCount(parent: Constructible, member: string): number | undefined {
     return this.getInternal(this.recursiveCounts, parent, member);
   }

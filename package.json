@@ -110,7 +110,7 @@
     "cz-conventional-changelog": "3.3.0",
     "eslint-plugin-prettier": "3.1.4",
     "husky": "4.3.0",
-    "lint-staged": "10.4.0",
+    "lint-staged": "10.4.2",
     "moment": "2.29.1",
     "prettier": "2.1.2",
     "reflect-metadata": "0.1.13",

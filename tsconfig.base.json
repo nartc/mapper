@@ -16,7 +16,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@automapper/core": ["packages/core/src/index.ts"]
+      "@automapper/core": ["packages/core/src/index.ts"],
+      "@automapper/types": ["packages/types/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

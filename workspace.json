@@ -31,6 +31,20 @@
           }
         }
       }
+    },
+    "types": {
+      "root": "packages/types",
+      "sourceRoot": "packages/types/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["packages/types/**/*.ts"]
+          }
+        }
+      }
     }
   },
   "cli": {

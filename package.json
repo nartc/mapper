@@ -23,20 +23,28 @@
     "update": "nx migrate latest",
     "workspace-schematic": "nx workspace-schematic",
     "dep-graph": "nx dep-graph",
-    "help": "nx help"
+    "help": "nx help",
+    "commit": "cz"
   },
   "private": true,
   "dependencies": {},
   "devDependencies": {
-    "@nrwl/tao": "10.4.4",
     "@nrwl/cli": "10.4.4",
+    "@nrwl/tao": "10.4.4",
     "@nrwl/workspace": "10.4.4",
-    "@types/node": "~8.9.4",
-    "dotenv": "6.2.0",
-    "ts-node": "~7.0.0",
-    "tslint": "~6.0.0",
-    "eslint": "7.10.0",
-    "typescript": "~4.0.3",
-    "prettier": "2.1.2"
+    "@types/node": "14.14.10",
+    "commitizen": "4.2.2",
+    "cz-conventional-changelog": "3.3.0",
+    "dotenv": "8.2.0",
+    "eslint": "7.14.0",
+    "prettier": "2.2.1",
+    "ts-node": "9.0.0",
+    "tslint": "6.0.0",
+    "typescript": "4.0.5"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }

@@ -116,7 +116,7 @@
     "reflect-metadata": "0.1.13",
     "semantic-release": "17.2.3",
     "shelljs": "0.8.4",
-    "ts-node": "9.0.0",
+    "ts-node": "9.1.1",
     "tsdx": "0.14.1",
     "tslib": "2.0.3",
     "typedoc": "0.18.0",

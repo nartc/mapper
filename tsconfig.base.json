@@ -10,15 +10,30 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "typeRoots": ["node_modules/@types"],
-    "lib": ["es2017", "dom"],
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2017",
+      "dom"
+    ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@automapper/core": ["packages/core/src/index.ts"],
-      "@automapper/types": ["packages/types/src/index.ts"]
+      "@automapper/core": [
+        "packages/core/src/index.ts"
+      ],
+      "@automapper/classes": [
+        "packages/classes/src/index.ts"
+      ],
+      "@automapper/models": [
+        "packages/models/src/index.ts"
+      ]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }

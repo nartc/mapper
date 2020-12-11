@@ -10,7 +10,9 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["packages/core/**/*.ts"]
+            "lintFilePatterns": [
+              "packages/core/**/*.ts"
+            ]
           }
         },
         "test": {
@@ -27,21 +29,72 @@
             "tsConfig": "packages/core/tsconfig.lib.json",
             "packageJson": "packages/core/package.json",
             "main": "packages/core/src/index.ts",
-            "assets": ["packages/core/*.md"]
+            "assets": [
+              "packages/core/*.md"
+            ]
           }
         }
       }
     },
-    "types": {
-      "root": "packages/types",
-      "sourceRoot": "packages/types/src",
+    "classes": {
+      "root": "packages/classes",
+      "sourceRoot": "packages/classes/src",
       "projectType": "library",
       "schematics": {},
       "architect": {
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["packages/types/**/*.ts"]
+            "lintFilePatterns": [
+              "packages/classes/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "packages/classes/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/packages/classes",
+            "tsConfig": "packages/classes/tsconfig.lib.json",
+            "packageJson": "packages/classes/package.json",
+            "main": "packages/classes/src/index.ts",
+            "assets": [
+              "packages/classes/*.md"
+            ]
+          }
+        }
+      }
+    },
+    "models": {
+      "root": "packages/models",
+      "sourceRoot": "packages/models/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "packages/models/**/*.ts"
+            ]
+          }
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/packages/models",
+            "tsConfig": "packages/models/tsconfig.lib.json",
+            "packageJson": "packages/models/package.json",
+            "main": "packages/models/src/index.ts",
+            "assets": [
+              "packages/models/*.md"
+            ]
           }
         }
       }

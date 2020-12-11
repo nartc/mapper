@@ -1,1 +1,1 @@
-export * from './lib/core';
+export * from './lib/create-mapper';

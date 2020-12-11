@@ -1,36 +1,33 @@
+import { AutoMapperStorage } from '@automapper/models';
+
 /**
  * Internal MappingStorage
  *
  * @private
  */
-export class MappingStorage {
-  protected storage = new WeakMap<any, WeakMap<any, any>>();
-
-  setMapping(entryKey, [nestedEntryKey, nestedEntryValue]): void {
-    this.setInternal(this.storage, entryKey, nestedEntryKey, nestedEntryValue);
-  }
-
-  hasMapping(entryKey, nestedEntryKey): boolean {
-    return this.hasInternal(this.storage, entryKey, nestedEntryKey);
-  }
-
-  getMapping(entryKey, nestedEntryKey) {
-    return this.getInternal(this.storage, entryKey, nestedEntryKey);
-  }
+export class MappingStorage extends AutoMapperStorage<'mapping'> {
+  protected storage: WeakMap<any, WeakMap<any, any>>;
 
   protected getInternal(
     storage: WeakMap<any, WeakMap<any, any>>,
-    entryKey,
-    nestedEntryKey
-  ): any {
+    entryKey: any,
+    nestedEntryKey: any
+  ): WeakMap<any, any> {
     return storage.get(entryKey)?.get(nestedEntryKey);
+  }
+
+  protected hasInternal(
+    storage: WeakMap<any, WeakMap<any, any>>,
+    entryKey: any,
+    nestedEntryKey: any
+  ): boolean {
+    return storage.get(entryKey)?.has(nestedEntryKey) ?? false;
   }
 
   protected setInternal(
     storage: WeakMap<any, WeakMap<any, any>>,
-    entryKey,
-    nestedEntryKey,
-    nestedEntryValue
+    entryKey: any,
+    [nestedEntryKey, nestedEntryValue]: [any, WeakMap<any, any>]
   ): void {
     if (!storage.has(entryKey)) {
       storage.set(
@@ -43,13 +40,5 @@ export class MappingStorage {
     if (!this.hasInternal(storage, entryKey, nestedEntryKey)) {
       storage.get(entryKey).set(nestedEntryKey, nestedEntryValue);
     }
-  }
-
-  protected hasInternal(
-    storage: WeakMap<any, WeakMap<any, any>>,
-    entryKey,
-    nestedEntryKey
-  ): boolean {
-    return storage.get(entryKey)?.has(nestedEntryKey) ?? false;
   }
 }

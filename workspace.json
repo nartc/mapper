@@ -20,7 +20,10 @@
           "options": {
             "jestConfig": "packages/core/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": [
+            "coverage/packages/core"
+          ]
         },
         "build": {
           "builder": "@nrwl/node:package",
@@ -31,8 +34,12 @@
             "main": "packages/core/src/index.ts",
             "assets": [
               "packages/core/*.md"
-            ]
-          }
+            ],
+            "buildableProjectDepsInPackageJsonType": "peerDependencies"
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
         }
       }
     },
@@ -55,7 +62,10 @@
           "options": {
             "jestConfig": "packages/classes/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": [
+            "coverage/packages/classes"
+          ]
         },
         "build": {
           "builder": "@nrwl/node:package",
@@ -66,14 +76,18 @@
             "main": "packages/classes/src/index.ts",
             "assets": [
               "packages/classes/*.md"
-            ]
-          }
+            ],
+            "buildableProjectDepsInPackageJsonType": "peerDependencies"
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
         }
       }
     },
-    "models": {
-      "root": "packages/models",
-      "sourceRoot": "packages/models/src",
+    "types": {
+      "root": "packages/types",
+      "sourceRoot": "packages/types/src",
       "projectType": "library",
       "schematics": {},
       "architect": {
@@ -81,20 +95,91 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "packages/models/**/*.ts"
+              "packages/types/**/*.ts"
             ]
           }
         },
         "build": {
           "builder": "@nrwl/node:package",
           "options": {
-            "outputPath": "dist/packages/models",
-            "tsConfig": "packages/models/tsconfig.lib.json",
-            "packageJson": "packages/models/package.json",
-            "main": "packages/models/src/index.ts",
+            "outputPath": "dist/packages/types",
+            "tsConfig": "packages/types/tsconfig.lib.json",
+            "packageJson": "packages/types/package.json",
+            "main": "packages/types/src/index.ts",
             "assets": [
-              "packages/models/*.md"
+              "packages/types/*.md"
+            ],
+            "buildableProjectDepsInPackageJsonType": "peerDependencies"
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
+        }
+      }
+    },
+    "integration-test": {
+      "root": "packages/integration-test",
+      "sourceRoot": "packages/integration-test/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "packages/integration-test/**/*.ts"
             ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "packages/integration-test/jest.config.js",
+            "passWithNoTests": true
+          },
+          "outputs": [
+            "coverage/packages/integration-test"
+          ]
+        }
+      }
+    },
+    "pojos": {
+      "root": "packages/pojos",
+      "sourceRoot": "packages/pojos/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "packages/pojos/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/packages/pojos"
+          ],
+          "options": {
+            "jestConfig": "packages/pojos/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/packages/pojos",
+            "tsConfig": "packages/pojos/tsconfig.lib.json",
+            "packageJson": "packages/pojos/package.json",
+            "main": "packages/pojos/src/index.ts",
+            "assets": [
+              "packages/pojos/*.md"
+            ],
+            "buildableProjectDepsInPackageJsonType": "peerDependencies"
           }
         }
       }

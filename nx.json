@@ -34,7 +34,13 @@
     "classes": {
       "tags": []
     },
-    "models": {
+    "types": {
+      "tags": []
+    },
+    "integration-test": {
+      "tags": []
+    },
+    "pojos": {
       "tags": []
     }
   },

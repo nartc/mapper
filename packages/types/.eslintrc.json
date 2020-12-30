@@ -1,0 +1,9 @@
+{
+  "extends": "../../.eslintrc.json",
+  "ignorePatterns": [
+    "!**/*"
+  ],
+  "rules": {
+    "@typescript-eslint/ban-types": 0
+  }
+}

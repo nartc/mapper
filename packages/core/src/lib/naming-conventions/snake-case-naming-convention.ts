@@ -1,4 +1,4 @@
-import { NamingConvention } from '@automapper/models';
+import { NamingConvention } from '@automapper/types';
 
 /**
  * SnakeCaseNamingConvention

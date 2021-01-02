@@ -43,6 +43,7 @@
     "@nrwl/node": "11.0.20",
     "@nrwl/tao": "11.0.20",
     "@nrwl/workspace": "11.0.20",
+    "@release-it/bumper": "2.0.0",
     "@release-it/conventional-changelog": "2.0.0",
     "@types/jest": "26.0.19",
     "@types/node": "12.12.38",

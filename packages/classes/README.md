@@ -4,13 +4,13 @@ This is the official plugin from `@automapper` to work with TS/ES5 Class
 
 ## Installation
 
-```bash
+```sh
 npm i @automapper/classes
 ```
 
 or with `yarn`:
 
-```bash
+```sh
 yarn add @automapper/classes
 ```
 
@@ -18,14 +18,14 @@ yarn add @automapper/classes
 
 `@automapper/classes` depends on `@automapper/core`, `@automapper/types`, and `reflect-metadata`.
 
-```bash
+```sh
 npm i @automapper/core reflect-metadata
 npm i --save-dev @automapper/types
 ```
 
 or with `yarn`:
 
-```bash
+```sh
 yarn add @automapper/core reflect-metadata
 yarn add --dev @automapper/types
 ```

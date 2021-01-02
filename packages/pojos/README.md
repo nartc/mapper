@@ -4,13 +4,13 @@ This is the official plugin from `@automapper` to work with Interfaces/Types alo
 
 ## Installation
 
-```bash
+```sh
 npm i @automapper/pojos
 ```
 
 or with `yarn`:
 
-```bash
+```sh
 yarn add @automapper/pojos
 ```
 
@@ -18,14 +18,14 @@ yarn add @automapper/pojos
 
 `@automapper/pojos` depends on `@automapper/core` and `@automapper/types`
 
-```bash
+```sh
 npm i @automapper/core
 npm i --save-dev @automapper/types
 ```
 
 or with `yarn`:
 
-```bash
+```sh
 yarn add @automapper/core
 yarn add --dev @automapper/types
 ```

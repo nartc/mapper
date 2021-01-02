@@ -12,10 +12,16 @@ This is a monorepo of `@automapper/core` and official packages.
 
 | Project | Package | Description | Version | Links |
 | ------- | ------- | ----------- | ------- | ----- |
-|**core**|[`@automapper/core`](https://npmjs.com/package/@automapper/core)|AutoMapper Core that handles mapping configuration and operations|![npm (scoped)](https://img.shields.io/npm/v/@automapper/core)|[![README](https://img.shields.io/badge/README--green.svg)](/packages/core/README.md)|
+|**core**|[`@automapper/core`](https://npmjs.com/package/@automapper/core)|Core package which handles mapping configuration and operations|![npm (scoped)](https://img.shields.io/npm/v/@automapper/core)|[![README](https://img.shields.io/badge/README--green.svg)](/packages/core/README.md)|
 |**classes**|[`@automapper/classes`](https://npmjs.com/package/@automapper/classes)|`classes` plugin to work with TS/ES6 Classes|![npm (scoped)](https://img.shields.io/npm/v/@automapper/classes)|[![README](https://img.shields.io/badge/README--green.svg)](/packages/classes/README.md)|
 |**pojos**|[`@automapper/pojos`](https://npmjs.com/package/@automapper/pojos)|`pojos` plugin to work with Interfaces/Types along with Plain Objects|![npm (scoped)](https://img.shields.io/npm/v/@automapper/pojos)|[![README](https://img.shields.io/badge/README--green.svg)](/packages/pojos/README.md)|
 |**types**|[`@automapper/types`](https://npmjs.com/package/@automapper/types)|Type Definitions that all other packages use|![npm (scoped)](https://img.shields.io/npm/v/@automapper/types)|[![README](https://img.shields.io/badge/README--green.svg)](/packages/types/README.md)|
+
+### Others
+
+| Project | Description | Links |
+|---|---|---|
+|**integration-test**|Integration tests of Core and the official plugins|[![README](https://img.shields.io/badge/README--green.svg)](/packages/integration-test/README.md)|
 
 ## Documentations
 

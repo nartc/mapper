@@ -34,6 +34,22 @@
   "publishConfig": {
     "access": "public"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nartc/mapper"
+  },
+  "author": {
+    "name": "Chau Tran",
+    "email": "nartc7789@gmail.com",
+    "url": "https://nartc.me"
+  },
+  "description": "AutoMapper TypeScript monorepo",
+  "keywords": [
+    "typescript",
+    "automapper",
+    "mapper",
+    "nx"
+  ],
   "dependencies": {},
   "devDependencies": {
     "@nrwl/cli": "11.0.20",

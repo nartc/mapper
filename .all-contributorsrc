@@ -1,0 +1,25 @@
+{
+  "projectName": "mapper",
+  "projectOwner": "nartc",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 75,
+  "commit": true,
+  "commitConvention": "angular",
+  "contributors": [
+    {
+      "login": "nartc",
+      "name": "Chau Tran",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/25516557?v=4",
+      "profile": "https://nartc.me/",
+      "contributions": [
+        "code",
+        "ideas"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7
+}

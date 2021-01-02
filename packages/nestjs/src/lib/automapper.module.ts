@@ -7,6 +7,10 @@ import type { AutomapperModuleOptions } from './interfaces';
 export class AutomapperModule {
   private static readonly logger = new Logger(AutomapperModule.name);
 
+  /**
+   *
+   * @param {AutomapperModuleOptions} forRootOptions
+   */
   static forRoot(forRootOptions: AutomapperModuleOptions): DynamicModule {
     const providers = createAutomapperProviders(forRootOptions, this.logger);
 

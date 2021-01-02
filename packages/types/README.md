@@ -1,3 +1,4 @@
-# types
+# @automapper/types
 
-This library was generated with [Nx](https://nx.dev).
+[comment]: <> (TODO: update docs site)
+This is shared type definitions for all packages of `@automapper`. Read more on [documentation site]() 

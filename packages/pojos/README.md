@@ -1,7 +1,51 @@
-# pojos
+# @automapper/pojos
 
-This library was generated with [Nx](https://nx.dev).
+This is the official plugin from `@automapper` to work with Interfaces/Types along with Plain Objects
 
-## Running unit tests
+## Installation
 
-Run `nx test pojos` to execute the unit tests via [Jest](https://jestjs.io).
+```shell
+npm i @automapper/pojos
+```
+
+or with `yarn`:
+
+```shell
+yarn add @automapper/pojos
+```
+
+#### `peerDependencies`
+
+`@automapper/pojos` depends on `@automapper/core` and `@automapper/types`
+
+```shell
+npm i @automapper/core
+npm i --save-dev @automapper/types
+```
+
+or with `yarn`:
+
+```shell
+yarn add @automapper/core
+yarn add --dev @automapper/types
+```
+
+## Usage
+
+`@automapper/pojos` provides `pojos` as a `MapPluginInitializer`. Pass `pojos` to `createMapper` to create a `Mapper`
+that uses `pojos` plugin.
+
+```ts
+import { pojos } from '@automapper/pojos';
+
+const mapper = createMapper({
+  ...,
+  pluginInitializer: pojos
+})
+
+mapper.createMap<User, UserVm>('SomeTokenForUser', 'SomeTokenForUserVm');
+mapper.map<User, UserVm>(user, 'SomeTokenForUserVm', 'SomeTokenForUser');
+```
+
+[comment]: <> (TODO: update docs site)
+Read more about this plugin on [pojos documentation]()

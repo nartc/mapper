@@ -42,6 +42,9 @@
     },
     "pojos": {
       "tags": []
+    },
+    "nestjs": {
+      "tags": []
     }
   },
   "workspaceLayout": {

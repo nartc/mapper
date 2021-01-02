@@ -54,6 +54,7 @@
   ],
   "dependencies": {},
   "devDependencies": {
+    "@nestjs/common": "7.6.5",
     "@nrwl/cli": "11.0.20",
     "@nrwl/eslint-plugin-nx": "11.0.20",
     "@nrwl/jest": "11.0.20",

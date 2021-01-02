@@ -4,5 +4,6 @@ module.exports = {
     '<rootDir>/packages/classes',
     '<rootDir>/packages/integration-test',
     '<rootDir>/packages/pojos',
+    '<rootDir>/packages/nestjs',
   ],
 };

@@ -31,7 +31,7 @@ export function createMapper<TKey = unknown>({
   name,
   pluginInitializer,
   namingConventions,
-  errorHandle: customErrorHandler,
+  errorHandler: customErrorHandler,
 }: CreateMapperOptions<TKey>): Mapper<TKey> {
   // default errorHandler to console.error
   const errorHandler = customErrorHandler || { handle: console.error };

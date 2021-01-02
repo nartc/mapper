@@ -13,7 +13,7 @@ export function setup(
     name,
     pluginInitializer,
     namingConventions,
-    errorHandle: { handle: spiedErrorHandle },
+    errorHandler: { handle: spiedErrorHandle },
   });
 
   afterEach(() => {

@@ -4,7 +4,7 @@ import type {
   Mapping,
   NamingConvention,
 } from './core';
-import type { MapPlugin } from './plugin';
+import type { MapPluginInitializer } from './plugin';
 import type { Dictionary } from './utils';
 
 export interface MapOptions<
@@ -32,6 +32,6 @@ export interface CreateMapperOptions<TKey = unknown> {
     source: NamingConvention;
     destination: NamingConvention;
   };
-  pluginInitializer: (errorHandler: ErrorHandler) => MapPlugin<TKey>;
-  errorHandle?: ErrorHandler;
+  pluginInitializer: MapPluginInitializer<TKey>;
+  errorHandler?: ErrorHandler;
 }

@@ -1,9 +1,8 @@
 import { createInitialMapping } from '@automapper/core';
 import type {
   Dictionary,
-  ErrorHandler,
   Mapping,
-  MapPlugin,
+  MapPluginInitializer,
 } from '@automapper/types';
 import { MappingClassId } from '@automapper/types';
 import 'reflect-metadata';
@@ -21,9 +20,7 @@ import { instantiate, isClass } from './utils';
  *
  * @param {ErrorHandler} errorHandler
  */
-export const classes = (
-  errorHandler: ErrorHandler
-): MapPlugin<Constructible> => {
+export const classes: MapPluginInitializer<Constructible> = (errorHandler) => {
   // Initialize all the storages
   const metadataStorage = new ClassMetadataStorage();
   const mappingStorage = new ClassMappingStorage();

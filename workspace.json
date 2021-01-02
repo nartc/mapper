@@ -183,6 +183,47 @@
           }
         }
       }
+    },
+    "nestjs": {
+      "root": "packages/nestjs",
+      "sourceRoot": "packages/nestjs/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "packages/nestjs/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/packages/nestjs"
+          ],
+          "options": {
+            "jestConfig": "packages/nestjs/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/packages/nestjs",
+            "tsConfig": "packages/nestjs/tsconfig.lib.json",
+            "packageJson": "packages/nestjs/package.json",
+            "main": "packages/nestjs/src/index.ts",
+            "assets": [
+              "packages/nestjs/*.md"
+            ],
+            "buildableProjectDepsInPackageJsonType": "peerDependencies"
+          }
+        }
+      }
     }
   },
   "cli": {

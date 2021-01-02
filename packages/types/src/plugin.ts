@@ -1,7 +1,10 @@
-import type { Mapping } from './core';
+import type { ErrorHandler, Mapping } from './core';
 import type { CreateMapOptions } from './options';
 import type { Dictionary } from './utils';
 
+/**
+ * How a plugin should provide
+ */
 export interface MapPlugin<TKey = unknown> {
   /**
    * Instruction on how a plugin should initialize a mapping for a pair of Source <> Destination
@@ -47,4 +50,11 @@ export interface MapPlugin<TKey = unknown> {
    * Optional method to clean up the plugin's storages
    */
   dispose?(): void;
+}
+
+/**
+ * Plugin initializer
+ */
+export interface MapPluginInitializer<TKey = unknown> {
+  (errorHandler: ErrorHandler): MapPlugin<TKey>;
 }

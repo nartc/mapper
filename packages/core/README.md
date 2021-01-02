@@ -4,13 +4,13 @@ This is the core package that will handle mapping configurations and mapping ope
 
 ## Installation
 
-```shell
+```bash
 npm i @automapper/core
 ```
 
 or with `yarn`
 
-```shell
+```bash
 yarn add @automapper/core
 ```
 
@@ -18,13 +18,13 @@ yarn add @automapper/core
 
 `@automapper/core` depends on `@automapper/types`
 
-```shell
+```bash
 npm i --save-dev @automapper/types
 ```
 
 or with `yarn`
 
-```shell
+```bash
 yarn add --dev @automapper/types
 ```
 

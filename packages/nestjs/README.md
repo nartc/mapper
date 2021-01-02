@@ -4,13 +4,13 @@ This is a NestJS module to integrate `@automapper` with NestJS.
 
 ## Installation
 
-```shell
+```bash
 npm i @automapper/nestjs
 ```
 
 or with `yarn`:
 
-```shell
+```bash
 yarn add @automapper/nestjs
 ```
 
@@ -19,14 +19,14 @@ yarn add @automapper/nestjs
 `@automapper/nestjs` depends on `@automapper/core` and `@automapper/types` (and some other `@nestjs/*` libraries but you
 should already have these installed in a NestJS application)
 
-```shell
+```bash
 npm i @automapper/core
 npm i --save-dev @automapper/types
 ```
 
 or with `yarn`:
 
-```shell
+```bash
 yarn add @automapper/core
 yarn add --dev @automapper/types
 ```

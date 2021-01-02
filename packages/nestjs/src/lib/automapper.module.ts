@@ -1,6 +1,6 @@
 import { DynamicModule, Global, Logger, Module } from '@nestjs/common';
+import { createAutomapperProviders } from './create-automapper-providers.util';
 import type { AutomapperModuleOptions } from './interfaces';
-import { createAutomapperProviders } from './utils';
 
 @Global()
 @Module({})

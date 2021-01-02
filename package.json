@@ -52,9 +52,14 @@
     "mapper",
     "nx"
   ],
-  "dependencies": {},
+  "dependencies": {
+  },
   "devDependencies": {
     "@nestjs/common": "7.6.5",
+    "@nestjs/core": "7.6.5",
+    "@nestjs/platform-express": "7.6.5",
+    "@nestjs/schematics": "7.2.6",
+    "@nestjs/testing": "7.6.5",
     "@nrwl/cli": "11.0.20",
     "@nrwl/eslint-plugin-nx": "11.0.20",
     "@nrwl/jest": "11.0.20",
@@ -78,8 +83,10 @@
     "prettier": "2.2.1",
     "reflect-metadata": "0.1.13",
     "release-it": "14.2.2",
+    "rxjs": "~6.5.5",
     "ts-jest": "26.4.4",
     "ts-node": "9.1.1",
+    "tslib": "2.0.3",
     "typescript": "4.0.5"
   },
   "config": {

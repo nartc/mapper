@@ -1,4 +1,3 @@
-export * from './map-initialize';
 export * from './map-from';
 export * from './map-with';
 export * from './condition';

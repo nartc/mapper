@@ -10,9 +10,7 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "packages/core/**/*.ts"
-            ]
+            "lintFilePatterns": ["packages/core/**/*.ts"]
           }
         },
         "test": {
@@ -21,9 +19,7 @@
             "jestConfig": "packages/core/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": [
-            "coverage/packages/core"
-          ]
+          "outputs": ["coverage/packages/core"]
         },
         "build": {
           "builder": "@nrwl/node:package",
@@ -32,14 +28,10 @@
             "tsConfig": "packages/core/tsconfig.lib.json",
             "packageJson": "packages/core/package.json",
             "main": "packages/core/src/index.ts",
-            "assets": [
-              "packages/core/*.md"
-            ],
+            "assets": ["packages/core/*.md"],
             "buildableProjectDepsInPackageJsonType": "peerDependencies"
           },
-          "outputs": [
-            "{options.outputPath}"
-          ]
+          "outputs": ["{options.outputPath}"]
         }
       }
     },
@@ -52,9 +44,7 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "packages/classes/**/*.ts"
-            ]
+            "lintFilePatterns": ["packages/classes/**/*.ts"]
           }
         },
         "test": {
@@ -63,9 +53,7 @@
             "jestConfig": "packages/classes/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": [
-            "coverage/packages/classes"
-          ]
+          "outputs": ["coverage/packages/classes"]
         },
         "build": {
           "builder": "@nrwl/node:package",
@@ -74,14 +62,10 @@
             "tsConfig": "packages/classes/tsconfig.lib.json",
             "packageJson": "packages/classes/package.json",
             "main": "packages/classes/src/index.ts",
-            "assets": [
-              "packages/classes/*.md"
-            ],
+            "assets": ["packages/classes/*.md"],
             "buildableProjectDepsInPackageJsonType": "peerDependencies"
           },
-          "outputs": [
-            "{options.outputPath}"
-          ]
+          "outputs": ["{options.outputPath}"]
         }
       }
     },
@@ -94,9 +78,7 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "packages/types/**/*.ts"
-            ]
+            "lintFilePatterns": ["packages/types/**/*.ts"]
           }
         },
         "build": {
@@ -106,14 +88,10 @@
             "tsConfig": "packages/types/tsconfig.lib.json",
             "packageJson": "packages/types/package.json",
             "main": "packages/types/src/index.ts",
-            "assets": [
-              "packages/types/*.md"
-            ],
+            "assets": ["packages/types/*.md"],
             "buildableProjectDepsInPackageJsonType": "peerDependencies"
           },
-          "outputs": [
-            "{options.outputPath}"
-          ]
+          "outputs": ["{options.outputPath}"]
         }
       }
     },
@@ -126,9 +104,7 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "packages/integration-test/**/*.ts"
-            ]
+            "lintFilePatterns": ["packages/integration-test/**/*.ts"]
           }
         },
         "test": {
@@ -137,9 +113,7 @@
             "jestConfig": "packages/integration-test/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": [
-            "coverage/packages/integration-test"
-          ]
+          "outputs": ["coverage/packages/integration-test"]
         }
       }
     },
@@ -151,16 +125,12 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "packages/pojos/**/*.ts"
-            ]
+            "lintFilePatterns": ["packages/pojos/**/*.ts"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/packages/pojos"
-          ],
+          "outputs": ["coverage/packages/pojos"],
           "options": {
             "jestConfig": "packages/pojos/jest.config.js",
             "passWithNoTests": true
@@ -168,17 +138,13 @@
         },
         "build": {
           "builder": "@nrwl/node:package",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/packages/pojos",
             "tsConfig": "packages/pojos/tsconfig.lib.json",
             "packageJson": "packages/pojos/package.json",
             "main": "packages/pojos/src/index.ts",
-            "assets": [
-              "packages/pojos/*.md"
-            ],
+            "assets": ["packages/pojos/*.md"],
             "buildableProjectDepsInPackageJsonType": "peerDependencies"
           }
         }
@@ -192,16 +158,12 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "packages/nestjs/**/*.ts"
-            ]
+            "lintFilePatterns": ["packages/nestjs/**/*.ts"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/packages/nestjs"
-          ],
+          "outputs": ["coverage/packages/nestjs"],
           "options": {
             "jestConfig": "packages/nestjs/jest.config.js",
             "passWithNoTests": true
@@ -209,24 +171,72 @@
         },
         "build": {
           "builder": "@nrwl/node:package",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/packages/nestjs",
             "tsConfig": "packages/nestjs/tsconfig.lib.json",
             "packageJson": "packages/nestjs/package.json",
             "main": "packages/nestjs/src/index.ts",
-            "assets": [
-              "packages/nestjs/*.md"
-            ],
+            "assets": ["packages/nestjs/*.md"],
             "buildableProjectDepsInPackageJsonType": "peerDependencies"
+          }
+        }
+      }
+    },
+    "nestjs-integration-test": {
+      "root": "packages/nestjs-integration-test",
+      "sourceRoot": "packages/nestjs-integration-test/src",
+      "projectType": "application",
+      "prefix": "nestjs-integration-test",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/packages/nestjs-integration-test",
+            "main": "packages/nestjs-integration-test/src/main.ts",
+            "tsConfig": "packages/nestjs-integration-test/tsconfig.app.json",
+            "assets": ["packages/nestjs-integration-test/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "packages/nestjs-integration-test/src/environments/environment.ts",
+                  "with": "packages/nestjs-integration-test/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "nestjs-integration-test:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["packages/nestjs-integration-test/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/packages/nestjs-integration-test"],
+          "options": {
+            "jestConfig": "packages/nestjs-integration-test/jest.config.js",
+            "passWithNoTests": true
           }
         }
       }
     }
   },
   "cli": {
-    "defaultCollection": "@nrwl/workspace"
-  }
+    "defaultCollection": "@nrwl/nest"
+  },
+  "defaultProject": "nestjs-integration-test"
 }

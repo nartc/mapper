@@ -1,8 +1,8 @@
 import { createMapper } from '@automapper/core';
 import type { Provider } from '@nestjs/common';
 import { Logger } from '@nestjs/common';
-import { getMapperToken } from '../di';
-import type { AutomapperModuleOptions } from '../interfaces';
+import { getMapperToken } from './di';
+import type { AutomapperModuleOptions } from './interfaces';
 
 export function createAutomapperProviders(
   forRootOptions: AutomapperModuleOptions,
@@ -30,7 +30,7 @@ export function createAutomapperProviders(
       name,
       pluginInitializer,
       errorHandler: errorHandler ||
-        globalErrorHandler || { handle: logger.error },
+        globalErrorHandler || { handle: logger.error.bind(logger) },
       namingConventions: namingConventions || globalNamingConventions,
     });
 
@@ -48,7 +48,7 @@ export function createAutomapperProviders(
         name,
         pluginInitializer,
         errorHandler: errorHandler ||
-          globalErrorHandler || { handle: logger.error },
+          globalErrorHandler || { handle: logger.error.bind(logger) },
         namingConventions: namingConventions || globalNamingConventions,
       });
       return {

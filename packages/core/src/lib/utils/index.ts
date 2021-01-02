@@ -12,4 +12,3 @@ export * from './is-empty.util';
 export * from './is-defined.util';
 
 export * from './extend-mappings.util';
-export * from './create-initial-mapping.util';

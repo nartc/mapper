@@ -4,14 +4,16 @@ import type {
   MappingProperty,
 } from '@automapper/types';
 import { MappingClassId } from '@automapper/types';
-import { mapInitialize } from '../member-map-functions';
-import { extendMappings } from './extend-mappings.util';
-import { getFlatteningSourcePaths } from './get-flattening-source-paths.util';
-import { getNamingConventionsFromOptions } from './get-naming-conventions-from-options.util';
-import { getNestedMetaKeyAtDestinationPath } from './get-nested-metakey-at-destination-path.util';
-import { getPathRecursive } from './get-path-recursive.util';
-import { getSourcePropertyPath } from './get-source-property-path.util';
-import { isDefined } from './is-defined.util';
+import {
+  extendMappings,
+  getFlatteningSourcePaths,
+  getNamingConventionsFromOptions,
+  getNestedMetaKeyAtDestinationPath,
+  getPathRecursive,
+  getSourcePropertyPath,
+  isDefined,
+} from '../utils';
+import { mapInitialize } from './map-initialize';
 
 function defaultIsMultipartSourcePathsInSource(
   multipartSourcePaths: string[],

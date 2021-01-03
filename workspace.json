@@ -32,6 +32,25 @@
             "buildableProjectDepsInPackageJsonType": "peerDependencies"
           },
           "outputs": ["{options.outputPath}"]
+        },
+        "publish": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "command": "npm publish",
+            "cwd": "dist/packages/core"
+          }
+        },
+        "publish-all": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "npx nx run types:publish",
+              "npx nx run core:publish",
+              "npx nx run classes:publish",
+              "npx nx run pojos:publish",
+              "npx nx run nestjs:publish"
+            ]
+          }
         }
       }
     },
@@ -66,6 +85,13 @@
             "buildableProjectDepsInPackageJsonType": "peerDependencies"
           },
           "outputs": ["{options.outputPath}"]
+        },
+        "publish": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "command": "npm publish",
+            "cwd": "dist/packages/classes"
+          }
         }
       }
     },
@@ -92,6 +118,13 @@
             "buildableProjectDepsInPackageJsonType": "peerDependencies"
           },
           "outputs": ["{options.outputPath}"]
+        },
+        "publish": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "command": "npm publish",
+            "cwd": "dist/packages/types"
+          }
         }
       }
     },
@@ -147,6 +180,13 @@
             "assets": ["packages/pojos/*.md"],
             "buildableProjectDepsInPackageJsonType": "peerDependencies"
           }
+        },
+        "publish": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "command": "npm publish",
+            "cwd": "dist/packages/pojos"
+          }
         }
       }
     },
@@ -179,6 +219,13 @@
             "main": "packages/nestjs/src/index.ts",
             "assets": ["packages/nestjs/*.md"],
             "buildableProjectDepsInPackageJsonType": "peerDependencies"
+          }
+        },
+        "publish": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "command": "npm publish",
+            "cwd": "dist/packages/nestjs"
           }
         }
       }

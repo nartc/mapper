@@ -28,8 +28,10 @@
     "release": "release-it",
     "contributors:init": "all-contributors init",
     "contributors:add": "all-contributors add",
+    "build:all": "nx run-many --all --target=build",
     "test:all": "nx run-many --all --target=test --parallel",
-    "lint:all": "nx run-many --all --target=lint"
+    "lint:all": "nx run-many --all --target=lint",
+    "publish:all": "nx run core:publish-all"
   },
   "sideEffects": false,
   "engines": {

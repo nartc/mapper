@@ -305,4 +305,47 @@ describe('Naming Conventions', () => {
       expect(vm.JobAnnualSalary).toEqual(user.job.annual_salary);
     });
   });
+
+  describe('with same casing', () => {
+    const [mapper] = setupClasses(
+      'sameCasing',
+      new CamelCaseNamingConvention()
+    );
+
+    it('should create mapper', () => {
+      expect(mapper).toBeTruthy();
+    });
+
+    it('should map', () => {
+      mapper.createMap(SimpleBar, SimpleBarVm);
+      mapper.createMap(SimpleFoo, SimpleFooVm);
+
+      const foo = new SimpleFoo();
+      foo.foo = 'Foo';
+      foo.fooBar = 123;
+      foo.bar = new SimpleBar();
+      foo.bar.bar = 'Bar';
+
+      const vm = mapper.map(foo, SimpleFooVm, SimpleFoo);
+      expect(vm.foo).toEqual(foo.foo);
+      expect(vm.bar.bar).toEqual(foo.bar.bar);
+      expect(vm.fooBar).toEqual(foo.fooBar);
+    });
+
+    it('should map with complex models', () => {
+      mapper
+        .addProfile(addressProfile)
+        .addProfile(avatarProfile)
+        .addProfile(userProfileProfile)
+        .addProfile(userProfile);
+
+      const user = getUser();
+
+      const vm = mapper.map(user, UserVm, User);
+      expect(vm).toBeTruthy();
+      // Asserting the whole VM is too repetitive
+      expect(vm.jobTitle).toEqual(user.job.title);
+      expect(vm.jobAnnualSalary).toEqual(user.job.annualSalary);
+    });
+  });
 });

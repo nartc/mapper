@@ -1,9 +1,5 @@
 import { createInitialMapping } from '@automapper/core';
-import type {
-  CreateMapOptions,
-  ErrorHandler,
-  MapPlugin,
-} from '@automapper/types';
+import type { CreateMapOptions, MapPluginInitializer } from '@automapper/types';
 import { MappingClassId } from '@automapper/types';
 import {
   PojosMappingStorage,
@@ -12,7 +8,7 @@ import {
 } from './storages';
 import { instantiate } from './utils';
 
-export const pojos = (errorHandler: ErrorHandler): MapPlugin<string> => {
+export const pojos: MapPluginInitializer<string> = (errorHandler) => {
   const metadataStorage = new PojosMetadataStorage();
   const mappingStorage = new PojosMappingStorage();
 

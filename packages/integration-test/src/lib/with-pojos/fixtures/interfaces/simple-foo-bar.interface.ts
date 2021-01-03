@@ -21,14 +21,14 @@ export interface SimpleFooVm {
 }
 
 export function createSimpleFooBarMetadata() {
-  createMetadataMap('SimpleBar', { bar: String });
-  createMetadataMap('SimpleBarVm', 'SimpleBar');
-  createMetadataMap('SimpleFoo', {
+  createMetadataMap<SimpleBar>('SimpleBar', { bar: String });
+  createMetadataMap<SimpleBarVm>('SimpleBarVm', 'SimpleBar');
+  createMetadataMap<SimpleFoo>('SimpleFoo', {
     foo: String,
     bar: 'SimpleBar',
     fooBar: Number,
   });
-  createMetadataMap('SimpleFooVm', 'SimpleFoo', {
+  createMetadataMap<SimpleFooVm>('SimpleFooVm', 'SimpleFoo', {
     bar: 'SimpleBarVm',
   });
 }

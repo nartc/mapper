@@ -1,3 +1,4 @@
+import { Dictionary } from '@automapper/types';
 import { pojosSymbolStorage } from './storages';
 
 /**
@@ -12,10 +13,49 @@ import { pojosSymbolStorage } from './storages';
  * })
  */
 
-export function createMetadataMap(
+export function createMetadataMap<TModel extends Dictionary<TModel> = unknown>(
   key: string,
-  metadataOrMetadataMap,
-  metadata?
+  metadata: {
+    [key in keyof TModel]?:
+      | StringConstructor
+      | DateConstructor
+      | NumberConstructor
+      | BooleanConstructor
+      | string;
+  }
+): void;
+export function createMetadataMap<TModel extends Dictionary<TModel> = unknown>(
+  key: string,
+  existMetadataMap: string,
+  metadata?: {
+    [key in keyof TModel]?:
+      | StringConstructor
+      | DateConstructor
+      | NumberConstructor
+      | BooleanConstructor
+      | string;
+  }
+): void;
+export function createMetadataMap<TModel extends Dictionary<TModel> = unknown>(
+  key: string,
+  metadataOrMetadataMap:
+    | string
+    | {
+        [key in keyof TModel]?:
+          | StringConstructor
+          | DateConstructor
+          | NumberConstructor
+          | BooleanConstructor
+          | string;
+      },
+  metadata?: {
+    [key in keyof TModel]?:
+      | StringConstructor
+      | DateConstructor
+      | NumberConstructor
+      | BooleanConstructor
+      | string;
+  }
 ) {
   const toMergeSymbol =
     typeof metadataOrMetadataMap === 'string'

@@ -51,5 +51,3 @@ application.
 
 [comment]: <> (TODO: update docs site)
 Read more about this on the [documentation site]()
-
-Run `nx test nestjs` to execute the unit tests via [Jest](https://jestjs.io).

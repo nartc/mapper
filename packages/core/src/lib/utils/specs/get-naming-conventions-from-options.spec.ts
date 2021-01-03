@@ -14,5 +14,10 @@ describe('getNamingConventionsFromOptions', () => {
         destination: camelCaseNamingConvention,
       })
     ).toEqual([camelCaseNamingConvention, camelCaseNamingConvention]);
+
+    expect(getNamingConventionsFromOptions(camelCaseNamingConvention)).toEqual([
+      camelCaseNamingConvention,
+      camelCaseNamingConvention,
+    ]);
   });
 });

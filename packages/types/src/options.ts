@@ -19,19 +19,23 @@ export interface CreateMapOptions<
   TSource extends Dictionary<TSource> = unknown,
   TDestination extends Dictionary<TDestination> = unknown
 > {
-  namingConventions?: {
-    source: NamingConvention;
-    destination: NamingConvention;
-  };
+  namingConventions?:
+    | NamingConvention
+    | {
+        source: NamingConvention;
+        destination: NamingConvention;
+      };
   extends?: Mapping[];
 }
 
 export interface CreateMapperOptions<TKey = unknown> {
   name: string;
-  namingConventions?: {
-    source: NamingConvention;
-    destination: NamingConvention;
-  };
   pluginInitializer: MapPluginInitializer<TKey>;
+  namingConventions?:
+    | NamingConvention
+    | {
+        source: NamingConvention;
+        destination: NamingConvention;
+      };
   errorHandler?: ErrorHandler;
 }

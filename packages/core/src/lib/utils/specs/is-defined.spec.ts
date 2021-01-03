@@ -3,6 +3,7 @@ import { isDefined } from '@automapper/core';
 describe('isDefined', () => {
   it('should return properly', () => {
     expect(isDefined(null)).toEqual(false);
+    expect(isDefined(null, true)).toEqual(true);
     expect(isDefined(undefined)).toEqual(false);
     expect(isDefined('foo')).toEqual(true);
     expect(isDefined(String)).toEqual(true);

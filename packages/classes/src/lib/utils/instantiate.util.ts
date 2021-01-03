@@ -49,7 +49,7 @@ export function instantiate<TModel extends Dictionary<TModel>>(
 
     // if is String, Number, Boolean, assign valueAtKey or undefined
     if (isPrimitiveConstructor(metaResult)) {
-      instance[key] = isDefined(valueAtKey) ? valueAtKey : undefined;
+      instance[key] = isDefined(valueAtKey, true) ? valueAtKey : undefined;
       continue;
     }
 

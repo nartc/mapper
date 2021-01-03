@@ -27,7 +27,9 @@
     "workspace-generator": "nx workspace-generator",
     "release": "release-it",
     "contributors:init": "all-contributors init",
-    "contributors:add": "all-contributors add"
+    "contributors:add": "all-contributors add",
+    "test:all": "nx run-many --all --target=test --parallel",
+    "lint:all": "nx run-many --all --target=lint"
   },
   "sideEffects": false,
   "engines": {

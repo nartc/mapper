@@ -263,24 +263,6 @@
           "options": {
             "buildTarget": "nestjs-integration-test:build:obsolete"
           }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "packages/nestjs-integration-test/**/*.ts"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/packages/nestjs-integration-test"
-          ],
-          "options": {
-            "jestConfig": "packages/nestjs-integration-test/jest.config.js",
-            "passWithNoTests": true
-          }
         }
       }
     }

@@ -6,12 +6,12 @@ sidebar_label: Technical difficulties
 
 ## Problems with TypeScript
 
-[Reflection](https://en.wikipedia.org/wiki/Reflection_(computer_programming)) plays a huge part in the *auto* portion of an AutoMapper implementation. And it is especially *not that great* in TypeScript. Let's take a look at the following snippet:
+[Reflection](<https://en.wikipedia.org/wiki/Reflection_(computer_programming)>) plays a huge part in the _auto_ portion of an AutoMapper implementation. And it is especially _not that great_ in TypeScript. Let's take a look at the following snippet:
 
 ```typescript
 class User {
-    firstName: string;
-    lastName: string;
+  firstName: string;
+  lastName: string;
 }
 ```
 
@@ -61,7 +61,7 @@ var userVm = Mapper.Map<UserVm>(user);
 ...
 ```
 
-In C#, AutoMapper will be able to *conventionally map* `User.FirstName` to `UserVm.FirstName` because of conventions. The two classes share the same property names. In TypeScript, you cannot do that **without** having to do a bit extra work. The `User` (or `UserVm`) instance in TypeScript does not contain any properties because we *never actually declared* them in the class. If you are interested in learning more about this whole process, read my [blog post](https://nartc.netlify.com/blogs/automapper-typescript/).
+In C#, AutoMapper will be able to _conventionally map_ `User.FirstName` to `UserVm.FirstName` because of conventions. The two classes share the same property names. In TypeScript, you cannot do that **without** having to do a bit extra work. The `User` (or `UserVm`) instance in TypeScript does not contain any properties because we _never actually declared_ them in the class. If you are interested in learning more about this whole process, read my [blog post](https://nartc.netlify.com/blogs/automapper-typescript/).
 
 ## Asynchronous
 
@@ -90,4 +90,3 @@ Real async support can be provided by utilizing Worker (aka. Worker Thread for N
 ### Help needed
 
 As things stand right now, I will not be able to get Worker to work with AutoMapper. Maybe Worker will improve in the future, maybe there's another runtime (Deno?!), or maybe there's someone that can come up with a brilliant idea, then I'll come back to getting Worker supported. Only then, we will have real Async.
-

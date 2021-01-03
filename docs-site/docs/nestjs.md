@@ -4,7 +4,7 @@ title: NestJS Integration
 sidebar_label: NestJS
 ---
 
-`@automapper/nestjs` is the official integration for [NestJS](https://nestjs.com). 
+`@automapper/nestjs` is the official integration for [NestJS](https://nestjs.com).
 
 ## Installation
 
@@ -36,7 +36,7 @@ Recommendation is to use `@automapper/classes` in a NestJS application.
 
 ```ts
 @Module({
-  imports: [AutomapperModule.forRoot()]
+  imports: [AutomapperModule.forRoot()],
 })
 export class AppModule {}
 ```
@@ -75,7 +75,7 @@ export interface AutomapperModuleOptions {
 - Use `@InjectMapper()` to inject the `Mapper` in NestJS's `Injectable`
   - `@InjectMapper()` accepts an optional argument `name`. This is the name of the `CreateMapperOptions` passed to `AutomapperModule.forRoot()`
   - When `singular` is `true`, `@InjectMapper()` will inject the **default** single `Mapper` initialized.
-- `AutomapperModule` is a `Global` module, so it is only needed to be imported once to have the `Mapper` available across the application 
+- `AutomapperModule` is a `Global` module, so it is only needed to be imported once to have the `Mapper` available across the application
 
 ## Profile
 
@@ -91,11 +91,11 @@ export class UserProfile extends AutomapperProfile {
   constructor(@InjectMapper() mapper: Mapper) {
     super(mapper);
   }
-  
+
   mapProfile() {
-    return mapper => {
+    return (mapper) => {
       mapper.createMap(User, UserDto);
-    }
+    };
   }
 }
 ```
@@ -104,7 +104,7 @@ Then provide `UserProfile` in a `Module`
 
 ```ts
 @Module({
-  providers: [UserProfile]
+  providers: [UserProfile],
 })
 export class UserModule {}
 ```

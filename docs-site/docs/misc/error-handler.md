@@ -20,8 +20,8 @@ By default, `@automapper/*` assigns `console.error` to `ErrorHandler#handle`.
 const mapper = createMapper({
   name,
   pluginInitializer,
-  errorHandler: message => {
+  errorHandler: (message) => {
     // custom error handler
-  }
-})
+  },
+});
 ```

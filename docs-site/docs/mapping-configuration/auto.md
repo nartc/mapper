@@ -7,6 +7,7 @@ sidebar_label: Auto in AutoMapper
 ## Matching properties
 
 We have already seen that matching properties are mapped automatically with the help of `@AutoMap()` decorator (with `classes` plugin)
+
 > For `@automapper/pojos`, there is a different approach.
 
 ```ts
@@ -76,7 +77,7 @@ class FooDto extends BaseDto {
 }
 
 mapper.createMap(Base, BaseDto);
-mapper.createMap(Foo, FooDto, { extends: [mapper.getMapping(Base, BaseDto)] })
+mapper.createMap(Foo, FooDto, { extends: [mapper.getMapping(Base, BaseDto)] });
 ```
 
 When `Mapper` executes the mapping operation from `Foo` to `FooDto`, the `base` property will also be mapped correctly based on `Mapping<Base, BaseDto>`
@@ -86,11 +87,12 @@ Custom configuration can still override the merged configuration from `extends`
 ```ts
 import { mapFrom } from '@automapper/core';
 
-mapper.createMap(Foo, FooDto, { extends: [mapper.getMapping(Base, BaseDto)] })
+mapper
+  .createMap(Foo, FooDto, { extends: [mapper.getMapping(Base, BaseDto)] })
   .forMember(
-    destination => destination.base,
-    mapFrom(source => source.foo)
-  )
+    (destination) => destination.base,
+    mapFrom((source) => source.foo)
+  );
 ```
 
 Now, `Mapper` will map `base` with `source.foo` instead of `source.base` when it executes the mapping operation from `Foo` to `FooDto`.

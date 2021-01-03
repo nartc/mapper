@@ -11,13 +11,14 @@ sidebar_label: NullSubstitution
 ```ts
 import { nullSubstitution } from '@automapper/core';
 
-mapper.createMap(User, UserDto)
+mapper
+  .createMap(User, UserDto)
   .forMember(
-    destination => destination.fullName,
+    (destination) => destination.fullName,
     nullSubstitution('full name')
-  )
+  );
 
-const user = {fullName: null}
+const user = { fullName: null };
 
 mapper.map(user, UserDto, User); // { fullName: 'full name' }
 ```

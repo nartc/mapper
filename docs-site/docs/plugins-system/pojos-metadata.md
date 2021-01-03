@@ -9,6 +9,7 @@ Different than `@automapper/classes`, `@automapper/pojos` provides a different w
 ## `createMetadataMap()`
 
 `createMetadataMap()` is a function that accepts 2 - 3 arguments:
+
 - `metaKey`: In `@automapper/classes`, a class constructor is used as the **unique** `metaKey`. In `@automapper/pojos`, we need to provide a **unique** string. Usually, the string representation of the Interface name would be sufficient
 - `metadataOrMetadataMap`: the second argument can be a `MetadataMap` object or a reference to an existing `metaKey`. This is to help with reusability for models that have similar metadata.
 - `metadataMap`: the third argument is an optional `MetadataMap` object. This is to provide additional metadata for a `metaKey` that weren't already available on the existing `metaKey` provided in the second argument. This is also used to negate any unwanted metadata from the second argument `metaKey`

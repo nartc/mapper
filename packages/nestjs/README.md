@@ -37,13 +37,14 @@ Call `AutomapperModule.forRoot()` and provide some options to initialize the `Ma
 
 ```ts
 @Module({
-  imports: [AutomapperModule.forRoot({
-    options: [{ name: '', pluginInitializer: classes }],
-    singular: true
-  })]
+  imports: [
+    AutomapperModule.forRoot({
+      options: [{ name: '', pluginInitializer: classes }],
+      singular: true,
+    }),
+  ],
 })
-export class AppModule {
-}
+export class AppModule {}
 ```
 
 `AutomapperModule` is a `Global` module so when `Mapper` object(s) are initialized, they're available across the

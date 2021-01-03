@@ -8,20 +8,21 @@ We've already seen `mapFrom()` throughout some early sections of the documentati
 
 ## Custom value from **Source**
 
-`mapFrom()` accepts a **Selector** that we will select a member from **Source** to map to the member we're configuring on **Destination** 
+`mapFrom()` accepts a **Selector** that we will select a member from **Source** to map to the member we're configuring on **Destination**
 
 ```ts
 import { mapFrom } from '@automapper/core';
 
-mapper.createMap(User, UserDto)
+mapper
+  .createMap(User, UserDto)
   .forMember(
-    destination => destination.fullName,
-    mapFrom(source => source.firstName + ' ' + source.lastName)
+    (destination) => destination.fullName,
+    mapFrom((source) => source.firstName + ' ' + source.lastName)
   )
   .forMember(
-    destination => destination.isAdult,
-    mapFrom(source => source.age >= 18)
-  )
+    (destination) => destination.isAdult,
+    mapFrom((source) => source.age >= 18)
+  );
 ```
 
 ## Value Resolver
@@ -48,15 +49,13 @@ import type { Resolver } from '@automapper/types';
 
 export const taxResolver: Resolver<Item, ItemDto, number> = {
   resolve(source) {
-    return source.type === 'A' ? source.price * 0.5 : source.price * 0.9
-  }
-}
+    return source.type === 'A' ? source.price * 0.5 : source.price * 0.9;
+  },
+};
 
-mapper.createMap(Item, ItemDto)
-  .forMember(
-    destination => destination.tax,
-    mapFrom(taxResolver)
-  )
+mapper
+  .createMap(Item, ItemDto)
+  .forMember((destination) => destination.tax, mapFrom(taxResolver));
 ```
 
 `mapFrom()` will set the `TransformationType` to `TransformationType.MapFrom`

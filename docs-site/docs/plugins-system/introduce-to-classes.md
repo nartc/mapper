@@ -15,4 +15,3 @@ npm i @automapper/classes
 # or with yarn
 yarn add @automapper/classes
 ```
-

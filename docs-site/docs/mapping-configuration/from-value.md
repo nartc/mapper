@@ -9,11 +9,12 @@ sidebar_label: FromValue
 ```ts
 import { fromValue } from '@automapper/core';
 
-mapper.createMap(User, UserDto)
+mapper
+  .createMap(User, UserDto)
   .forMember(
-    destination => destination.fullName,
+    (destination) => destination.fullName,
     fromValue('some raw value')
-  )
+  );
 ```
 
 `fromValue()` will set the `TransformationType` to `TransformationType.FromValue`

@@ -7,6 +7,7 @@ sidebar_label: Fundamentals
 We have looked at the [Basic example](getting-started/introduce-to-automapper) but in order to get into some more details of AutoMapper, we need to be aware of some of the definitions used in `@automapper/*`
 
 ## Mapper
+
 `Mapper` is the first-class citizen in `@automapper/*`. All [Mapping Configuration](mapping-configuration/auto) and Map Operations are handled by `Mapper`.
 
 `Mapper` is created by invoking `createMapper()` along with a [Plugin](plugins-system/introduce-to-plugins)
@@ -18,7 +19,6 @@ We have looked at the [Basic example](getting-started/introduce-to-automapper) b
 `Mapping` contains metadata as well as some configurations about the **Source** and **Destination**: models, naming conventions, map callbacks, [mapping properties](#mappingproperty) etc... We know what **models** mean. We will explore the other definitions in other sections.
 
 `Mapping` is created by invoking `mapper.createMap()`. Within a `Mapper`, a `Mapping` is **uni-directionally unique**. In other words, we can have both `Mapping<Source, Destination>` and `Mapping<Destination, Source>`.
-
 
 ## MappingProperty
 
@@ -36,17 +36,17 @@ There are currently 9 `TransformationType` in `@automapper/core`.
 
 These functions are all separate and pure-functions which allows for **Tree-shaking**-enabled bundler to optimize the bundle-size of the consumers.
 
-|Type|MemberMapFunction|Description|
-|---|---|---|
-|Ignore|`ignore()`|Ignore a member on the **Destination**|
-|MapFrom|`mapFrom()`|Customized instruction for a member|
-|Condition|`condition()`|If the member on the **Destination** matches with another member on the **Source**, this will conditionally map the member on the **Source** to **Destination** if some predicate is evaluated to **truthy**|
-|FromValue|`fromValue()`|Map a raw value to the member|
-|MapWith|`mapWith()`|In some cases where nested models do not work automatically, this is to specify the nested **Destination** of the member as well as the nested **Source**|
-|ConvertUsing|`convertUsing()`|Map a member using [Converters](mapping-configuration/convert-using)|
-|NullSubstitution|`nullSubstitution()`|If the member on **Source** is `null`, this will substitute the `null` value with a different value for that member on **Destination**|
-|MapDefer|`mapDefer()`|This can be used to *defer* a `TransformationType` with the **Source**. For example, if **Source** has data A, we want `MapFrom` but if **Source** has B, we want to `Ignore`|
-|MapInitialize|internal `mapInitialize()`|This is used **internally** to initialize the `MappingProperty` with the **Destination** metadata|
+| Type             | MemberMapFunction          | Description                                                                                                                                                                                                  |
+| ---------------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Ignore           | `ignore()`                 | Ignore a member on the **Destination**                                                                                                                                                                       |
+| MapFrom          | `mapFrom()`                | Customized instruction for a member                                                                                                                                                                          |
+| Condition        | `condition()`              | If the member on the **Destination** matches with another member on the **Source**, this will conditionally map the member on the **Source** to **Destination** if some predicate is evaluated to **truthy** |
+| FromValue        | `fromValue()`              | Map a raw value to the member                                                                                                                                                                                |
+| MapWith          | `mapWith()`                | In some cases where nested models do not work automatically, this is to specify the nested **Destination** of the member as well as the nested **Source**                                                    |
+| ConvertUsing     | `convertUsing()`           | Map a member using [Converters](mapping-configuration/convert-using)                                                                                                                                         |
+| NullSubstitution | `nullSubstitution()`       | If the member on **Source** is `null`, this will substitute the `null` value with a different value for that member on **Destination**                                                                       |
+| MapDefer         | `mapDefer()`               | This can be used to _defer_ a `TransformationType` with the **Source**. For example, if **Source** has data A, we want `MapFrom` but if **Source** has B, we want to `Ignore`                                |
+| MapInitialize    | internal `mapInitialize()` | This is used **internally** to initialize the `MappingProperty` with the **Destination** metadata                                                                                                            |
 
 ## NamingConvention
 
@@ -64,12 +64,12 @@ By default, `@automapper/*` does not set a default convention. [Flattening](mapp
 const mapper = createMapper({
   name,
   pluginInitializer,
-  namingConventions: new CamelCaseNamingConvention() // global
-})
+  namingConventions: new CamelCaseNamingConvention(), // global
+});
 
 // or
 
-mapper.createMap(User, UserDto, { 
-  namingConventions: new CamelCaseNamingConvention() 
-})
+mapper.createMap(User, UserDto, {
+  namingConventions: new CamelCaseNamingConvention(),
+});
 ```

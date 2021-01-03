@@ -10,7 +10,7 @@ AutoMapper is a tool that provides object-object mapping by convention. It enfor
 
 When the consumers' models and view-models are conventionally matching, mapping between these properties becomes a boring task. This is where AutoMapper comes in, to alleviate the boredom.
 
-While AutoMapper provides a powerful Mapping Configurations mechanism, it is implicitly trying to convey the motto *Conventions over Configurations*. Hence, AutoMapper is quite an opinionated tool. Some people might love it, some might hate it.
+While AutoMapper provides a powerful Mapping Configurations mechanism, it is implicitly trying to convey the motto _Conventions over Configurations_. Hence, AutoMapper is quite an opinionated tool. Some people might love it, some might hate it.
 
 [Jimmy Bogard](https://jimmybogard.com/), the author of .NET AutoMapper, writes a [blog post](https://jimmybogard.com/automappers-design-philosophy/) to express his design philosophy when he worked on .NET AutoMapper. The summary is quoted below
 
@@ -34,6 +34,7 @@ And that is the birth for `@automapper/*`
 ## What's included in `@automapper/*`?
 
 `@automapper/*` is a collection of packages:
+
 - `@automapper/core`
 - `@automapper/classes`
 - `@automapper/pojos`

@@ -1,1 +1,1 @@
-export * from './automap.decorator'
+export * from './automap.decorator';

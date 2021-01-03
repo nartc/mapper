@@ -15,7 +15,7 @@ createMapper(options: CreateMapperOptions): Mapper;
 ```ts
 export interface Mapper<TKey = unknown> {
   name: string;
-  
+
   // +2 overloads
   createMap<
     TSource extends Dictionary<TSource>,
@@ -98,11 +98,13 @@ export interface CreateMapperOptions<TKey = unknown> {
 ### Required fields
 
 #### `name`
+
 - Type: `string`
 
 Name of the `Mapper`
 
 #### `pluginInitializer`
+
 - Type: `MapPluginInitializer` (See [MapPluginInitializer](#mapplugininitializer))
 
 Plugin that the `Mapper` will be using
@@ -110,11 +112,13 @@ Plugin that the `Mapper` will be using
 ### Optional fields
 
 #### `namingConventions`
+
 - Type: `NamingConvention | { source: NamingConvention, destination: NamingConvention }`
 
 Global naming conventions for all the `Mapping` in this `Mapper`
 
 #### `errorHandler`
+
 - Type: `ErrorHandler` (See [ErrorHandler](../misc/error-handler))
 
 `ErrorHandler` that this `Mapper` uses

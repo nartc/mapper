@@ -1,2 +1,2 @@
-export * from './map-initialize'
-export * from './create-initial-mapping.util'
+export * from './map-initialize';
+export * from './create-initial-mapping.util';

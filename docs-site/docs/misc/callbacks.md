@@ -27,8 +27,8 @@ If any of the `MapAction` is provided, it will be called in correct chronologica
 ```ts
 mapper.map(user, UserDto, User, {
   beforeMap: (source, destination) => {},
-  afterMap: (source, destination) => {}
-})
+  afterMap: (source, destination) => {},
+});
 ```
 
 ## `Mapping` actions
@@ -36,9 +36,10 @@ mapper.map(user, UserDto, User, {
 When we call `mapper.createMap()`, we can chain `beforeMap` and `afterMap` to provide `Mapping` actions. These actions will be called for **ALL** mapping operations between a **Source** and a **Destination**.
 
 ```ts
-mapper.createMap(User, UserDto)
+mapper
+  .createMap(User, UserDto)
   .beforeMap((source, destination) => {})
-  .afterMap((source, destination) => {})
+  .afterMap((source, destination) => {});
 ```
 
 `Map` actions will **override** `Mapping` actions.
@@ -46,6 +47,7 @@ mapper.createMap(User, UserDto)
 ## Async actions
 
 `MapAction` is useful when we're dealing with Asynchronous values. If we want to map an async **Source#member** to a sync **Destination#member**, the appropriate way to do so is:
+
 - `ignore()` **Destination#member**
 - Use `afterMap(async () => {})` syntax to await for **Source#member** then either assign the resolved value to **Destination#member** directly or call `mapper.map()` with the resolved value.
 

@@ -37,7 +37,7 @@ export class Order {
   @AutoMap()
   id: number;
   // ... shorten for brevity purpose
-  @ManyToOne(() => Person, person => person.orders)
+  @ManyToOne(() => Person, (person) => person.orders)
   @AutoMap(() => Person)
   person: Person;
 }
@@ -47,7 +47,7 @@ export class Person {
   @AutoMap()
   id: number;
   // ... shorten for brevity purpose
-  @OneToMany(() => Order, order => order.person)
+  @OneToMany(() => Order, (order) => order.person)
   @AutoMap(() => Order)
   orders: Order[];
 }
@@ -143,7 +143,7 @@ export class Order {
   @AutoMap()
   id: number;
   // ... shorten for brevity purpose
-  @ManyToOne(() => Person, person => person.orders)
+  @ManyToOne(() => Person, (person) => person.orders)
   person: Person;
 }
 
@@ -152,26 +152,24 @@ export class Person {
   @AutoMap()
   id: number;
   // ... shorten for brevity purpose
-  @OneToMany(() => Order, order => order.person)
+  @OneToMany(() => Order, (order) => order.person)
   orders: Order[];
 }
 
-mapper.createMap(SomeOrderDto, Order)
-    .forMember(
-      d => d.person, 
-      mapWith(
-        () => Person, 
-        s => s.person, 
-        () => SomePersonDto
-      )
-    );
-mapper.createMap(SomePersonDto, Person)
-    .forMember(
-      d => d.orders, 
-      mapWith(
-        () => Order, 
-        s => s.orders, 
-        () => SomeOrderDto
-      )
-    );
+mapper.createMap(SomeOrderDto, Order).forMember(
+  (d) => d.person,
+  mapWith(
+    () => Person,
+    (s) => s.person,
+    () => SomePersonDto
+  )
+);
+mapper.createMap(SomePersonDto, Person).forMember(
+  (d) => d.orders,
+  mapWith(
+    () => Order,
+    (s) => s.orders,
+    () => SomeOrderDto
+  )
+);
 ```

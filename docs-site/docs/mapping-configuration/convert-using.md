@@ -28,8 +28,8 @@ export const dateToStringConverter: Converter<Date, string> = {
   convert(source) {
     // maybe handle validation, additional parsing, or format here
     return source.toDateString();
-  }
-}
+  },
+};
 ```
 
 ## Usage
@@ -39,11 +39,10 @@ Beside the `Converter`, `convertUsing()` accepts a second argument **Selector** 
 ```ts
 import { convertUsing } from '@automapper/core';
 
-mapper.createMap(User, UserDto)
-  .forMember(
-    destination => destination.birthday,
-    convertUsing(dateToStringConverter, source => source.birthday)
-  )
+mapper.createMap(User, UserDto).forMember(
+  (destination) => destination.birthday,
+  convertUsing(dateToStringConverter, (source) => source.birthday)
+);
 ```
 
 ## Usage without **Selector**
@@ -54,16 +53,17 @@ We can have `Converter#convert` takes in the whole **Source** object as its argu
 export const fullNameConverter: Converter<User, string> = {
   convert(source) {
     return source.firstName + ' ' + source.lastName;
-  }
-}
+  },
+};
 
 import { convertUsing } from '@automapper/core';
 
-mapper.createMap(User, UserDto)
+mapper
+  .createMap(User, UserDto)
   .forMember(
-    destination => destination.fullName,
+    (destination) => destination.fullName,
     convertUsing(fullNameConverter)
-  )
+  );
 ```
 
 `convertUsing()` will set the `TransformationType` to `TransformationType.ConvertUsing`

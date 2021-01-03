@@ -13,5 +13,3 @@ npm i @automapper/pojos
 # or with yarn
 yarn add @automapper/pojos
 ```
-
-

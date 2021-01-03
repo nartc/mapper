@@ -19,5 +19,6 @@ Different from the previous version, `@nartc/automapper`, `@automapper/core` is 
 `@automapper/core` will handle the mapping configuration and the mapping operations. Core also provides utilities to help build Plugins.
 
 Plugins will be responsible for Metadata Storing mechanism. `@automapper` works based on metadata of a certain pair of Objects which means this responsibility can now be developed in separation from the Core itself. This allows for customization to meet more use-cases. `@automapper` provides two official plugins: `@automapper/classes` and `@automapper/pojos`
+
 - `@automapper/classes` works with TS/ES5 Class which is exactly like the previous `@nartc/automapper`
 - `@automapper/pojos` helps with Interfaces/Types + POJOs.

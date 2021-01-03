@@ -47,5 +47,4 @@ mapper.createMap<User, UserVm>('SomeTokenForUser', 'SomeTokenForUserVm');
 mapper.map<User, UserVm>(user, 'SomeTokenForUserVm', 'SomeTokenForUser');
 ```
 
-[comment]: <> (TODO: update docs site)
-Read more about this plugin on [pojos documentation]()
+Read more about this plugin on [pojos documentation](https://automapperts.netlify.app/docs/plugins-system/introduce-to-pojos)

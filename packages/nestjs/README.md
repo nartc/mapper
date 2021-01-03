@@ -50,5 +50,4 @@ export class AppModule {}
 `AutomapperModule` is a `Global` module so when `Mapper` object(s) are initialized, they're available across the
 application.
 
-[comment]: <> (TODO: update docs site)
-Read more about this on the [documentation site]()
+Read more about this on the [documentation site](https://automapperts.netlify.app/docs/nestjs)

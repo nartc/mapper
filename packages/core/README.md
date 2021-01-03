@@ -49,8 +49,7 @@ export interface CreateMapperOptions<TKey = unknown> {
 
 > `TKey` is an optional type to determine what type of MetaKey that the plugin is providing. For example: `classes` plugin uses `Constructible` while `pojos` plugin uses `string` as MetaKey
 
-[comment]: <> (TODO: update docs)
-Read more about usage on [documentation site]()
+Read more about usage on [documentation site](https://automapperts.netlify.app/docs/api/create-mapper)
 
 ## Plugins
 
@@ -68,5 +67,4 @@ some utilities functions for plugins to use for initializing mappings etc...
 - `@automapper/pojos`: Work with Interfaces/Types along with POJOs. In projects that do not make use of Class, `pojos`
   can be used instead.
 
-[comment]: <> (TODO: update docs)
-Read more about plugins on [documentation site]()
+Read more about plugins on [documentation site](https://automapperts.netlify.app/docs/plugins-system/introduce-to-plugins)

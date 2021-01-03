@@ -47,5 +47,4 @@ mapper.createMap(User, UserVm);
 mapper.map(user, UserVm, User);
 ```
 
-[comment]: <> (TODO: update docs site)
-Read more about this plugin on [classes documentation]()
+Read more about this plugin on [classes documentation](https://automapperts.netlify.app/docs/plugins-system/introduce-to-classes)

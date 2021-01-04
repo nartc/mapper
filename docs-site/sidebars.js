@@ -129,6 +129,10 @@ module.exports = {
       type: 'doc',
       id: 'nestjs',
     },
+    {
+      type: 'doc',
+      id: 'migrations',
+    },
   ],
   api: [
     {

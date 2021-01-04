@@ -5,7 +5,28 @@
     "@nestjs/common": "^7.0.0",
     "@nestjs/core": "^7.0.0"
   },
+  "sideEffects": false,
+  "engines": {
+    "node": ">=10.0.0"
+  },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nartc/mapper/tree/main/packages/nestjs"
+  },
+  "author": {
+    "name": "Chau Tran",
+    "email": "nartc7789@gmail.com",
+    "url": "https://nartc.me"
+  },
+  "description": "AutoMapper TypeScript NestJS integration",
+  "keywords": [
+    "typescript",
+    "automapper",
+    "mapper",
+    "nx"
+  ],
+  "license": "MIT"
 }

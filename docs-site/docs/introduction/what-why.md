@@ -47,7 +47,7 @@ Core is that main package that deals with configuring transformation information
 
 #### `@automapper/classes`
 
-`classes` is a plugin that provides the storing mechanism for AutoMapper to store metadata of TS/ES5 Class.
+`classes` is a plugin that provides the storing mechanism for AutoMapper to store metadata of TS/ES6 Class.
 
 #### `@automapper/pojos`
 

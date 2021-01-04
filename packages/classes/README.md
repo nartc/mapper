@@ -1,6 +1,6 @@
 # @automapper/classes
 
-This is the official plugin from `@automapper` to work with TS/ES5 Class
+This is the official plugin from `@automapper` to work with TS/ES6 Class
 
 ## Installation
 

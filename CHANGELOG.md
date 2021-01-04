@@ -1,3 +1,5 @@
+# [1.0.0-beta.1](https://github.com/nartc/mapper/compare/1.0.0-beta.0...1.0.0-beta.1) (2021-01-04)
+
 # 1.0.0-beta.0 (2021-01-04)
 
 ### Bug Fixes

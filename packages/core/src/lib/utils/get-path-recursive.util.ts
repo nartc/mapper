@@ -3,6 +3,10 @@ export function getPathRecursive(
   prefix = '',
   prev: string[] = []
 ): string[] {
+  if (node == null) {
+    return;
+  }
+
   const result = prev;
 
   const keys = Object.getOwnPropertyNames(node);

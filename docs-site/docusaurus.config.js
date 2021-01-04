@@ -9,6 +9,9 @@ module.exports = {
   organizationName: 'nartc', // Usually your GitHub org/user name.
   projectName: 'mapper', // Usually your repo name.
   themeConfig: {
+    colorMode: {
+      defaultMode: 'dark',
+    },
     navbar: {
       title: 'AutoMapper TypeScript',
       logo: {

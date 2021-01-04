@@ -4,5 +4,8 @@
   "peerDependencies": {
     "@nestjs/common": "^7.0.0",
     "@nestjs/core": "^7.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

@@ -18,7 +18,7 @@
     "affected:dep-graph": "nx affected:dep-graph",
     "affected": "nx affected",
     "format": "nx format:write",
-    "format:write": "nx format:write",
+    "format:write": "nx format:write --base=main",
     "format:check": "nx format:check",
     "update": "nx migrate latest",
     "dep-graph": "nx dep-graph",

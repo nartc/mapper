@@ -1,7 +1,7 @@
 module.exports = {
   title: 'AutoMapper TypeScript',
   tagline: 'An object-object mapping solution by convention in TypeScript',
-  url: 'https://your-docusaurus-test-site.com',
+  url: 'https://automapperts.netlify.app/',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -106,8 +106,7 @@ module.exports = {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
-          editUrl:
-            'https://github.com/facebook/docusaurus/edit/master/website/',
+          editUrl: 'https://github.com/nartc/mapper/tree/main/docs-site',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),

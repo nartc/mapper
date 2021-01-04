@@ -1,4 +1,4 @@
-import { createInitialMapping } from '@automapper/core';
+import { createInitialMapping, isDefined } from '@automapper/core';
 import type {
   Dictionary,
   Mapping,
@@ -150,11 +150,14 @@ function exploreMetadata(
   ...models: Constructible[]
 ) {
   // Loop through each models passed in
-  models.forEach((model) => {
+  for (const model of models) {
     // if metadataStorage hasn't had metadata of the model
     if (!metadataStorage.has(model)) {
       // get the metadata from Reflection then populate metadataStorage and instanceStorage
       const metadataList = Reflect.getMetadata('automap:properties', model);
+      // skip if no metadata
+      if (!isDefined(metadataList)) continue;
+      // loop through metadata list
       for (const [propertyKey, { typeFn, depth }] of metadataList) {
         metadataStorage.addMetadata(model, [propertyKey, typeFn]);
         if (depth != null) {
@@ -162,7 +165,7 @@ function exploreMetadata(
         }
       }
     }
-  });
+  }
 }
 
 function prePropertiesLoop(

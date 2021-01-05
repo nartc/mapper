@@ -2,7 +2,10 @@ import type { Selector } from '@automapper/types';
 
 // TODO: support odd properties like: 'odd-property', 'odd.property'?
 export function getMemberPath(fn: Selector): string {
-  const fnString = fn.toString();
+  const fnString = fn
+    .toString()
+    // .replace(/\/\* istanbul ignore next \*\//g, '')
+    .replace(/cov_.+\n/g, '');
 
   // ES6 prop selector:
   // "x => x.prop"

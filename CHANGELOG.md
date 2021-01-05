@@ -1,3 +1,10 @@
+# [1.0.0-beta.5](https://github.com/nartc/mapper/compare/1.0.0-beta.4...1.0.0-beta.5) (2021-01-05)
+
+### Bug Fixes
+
+- **classes:** rename types.d.ts to types.ts to include with bundle ([3a15f72](https://github.com/nartc/mapper/commit/3a15f7241543c93af7301422428c790eecf5e60e))
+- **pojos:** adjust typings for createMetadataMap ([18cc504](https://github.com/nartc/mapper/commit/18cc5042b529989c00ece99d79c8789e02a43f24))
+
 # [1.0.0-beta.4](https://github.com/nartc/mapper/compare/1.0.0-beta.3...1.0.0-beta.4) (2021-01-05)
 
 ### Bug Fixes

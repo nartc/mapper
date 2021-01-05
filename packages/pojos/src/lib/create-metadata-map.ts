@@ -33,7 +33,8 @@ export function createMetadataMap<TModel extends Dictionary<TModel> = unknown>(
       | DateConstructor
       | NumberConstructor
       | BooleanConstructor
-      | string;
+      | string
+      | null;
   }
 ): void;
 export function createMetadataMap<TModel extends Dictionary<TModel> = unknown>(
@@ -54,7 +55,8 @@ export function createMetadataMap<TModel extends Dictionary<TModel> = unknown>(
       | DateConstructor
       | NumberConstructor
       | BooleanConstructor
-      | string;
+      | string
+      | null;
   }
 ) {
   const toMergeSymbol =

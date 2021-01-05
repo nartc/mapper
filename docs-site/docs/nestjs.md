@@ -36,7 +36,12 @@ Recommendation is to use `@automapper/classes` in a NestJS application.
 
 ```ts
 @Module({
-  imports: [AutomapperModule.forRoot()],
+  imports: [
+    AutomapperModule.forRoot({
+      options: [{ name: 'blah', pluginInitializer: classes }],
+      singular: true,
+    }),
+  ],
 })
 export class AppModule {}
 ```
@@ -76,6 +81,47 @@ export interface AutomapperModuleOptions {
   - `@InjectMapper()` accepts an optional argument `name`. This is the name of the `CreateMapperOptions` passed to `AutomapperModule.forRoot()`
   - When `singular` is `true`, `@InjectMapper()` will inject the **default** single `Mapper` initialized.
 - `AutomapperModule` is a `Global` module, so it is only needed to be imported once to have the `Mapper` available across the application
+
+### `singular`
+
+The main difference is as follows:
+
+```ts
+// without singular
+
+@Module({
+  imports: [
+    AutomapperModule.forRoot({
+      options: [{ name: 'blah', pluginInitializer: classes }],
+    }),
+  ],
+})
+export class AppModule {}
+
+@Injectable()
+export class Service {
+  // have to pass in the name of the mapper to InjectMapper
+  constructor(@InjectMapper('blah') private blahMapper: Mapper) {}
+}
+
+// with singular
+
+@Module({
+  imports: [
+    AutomapperModule.forRoot({
+      options: [{ name: 'blah', pluginInitializer: classes }],
+      singular: true,
+    }),
+  ],
+})
+export class AppModule {}
+
+@Injectable()
+export class Service {
+  // do not have to pass in the name of the mapper to InjectMapper
+  constructor(@InjectMapper() private blahMapper: Mapper) {}
+}
+```
 
 ## Profile
 

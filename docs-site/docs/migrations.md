@@ -195,6 +195,26 @@ mapper.createMap(User, UserDto);
 mapper.createMap(UserDto, User);
 ```
 
+### `map()` variations API changes
+
+`@nartc/automapper` works only with Class so the `map()` method in `@nartc/automapper` makes passing in the `source` type optional and will try to guess the type of `source` with: `sourceObj.constructor`.
+
+`@automapper/core` works with different type now so `source` type has been made mandatory.
+
+```ts
+// before
+Mapper.map(sourceObj, Destination);
+
+// after
+mapper.map(sourceObj, Destination, Source);
+```
+
+### `skipUnmappedAssertion` is removed
+
+In `@automapper/core`, `ErrorHandler#handle` is default to `console.error`. `skipUnmappedAssertion` was added to `@nartc/automapper` to prevent having a thrown exception leading to a crash. It is not needed with `@automapper/core`.
+
+> Note: In the event of unmapped properties, the error is still be logged to the Console. If this is something you do not want, please [open an Issue](https://github.com/nartc/mapper/issues)
+
 ## Migrate from `nestjsx-automapper`
 
 `nestjsx-automapper` will also be archived due to the release of `@automapper/nestjs` which is the official integration package with [NestJS](https://nestjs.com)

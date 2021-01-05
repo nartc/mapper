@@ -215,6 +215,22 @@ In `@automapper/core`, `ErrorHandler#handle` is default to `console.error`. `ski
 
 > Note: In the event of unmapped properties, the error is still be logged to the Console. If this is something you do not want, please [open an Issue](https://github.com/nartc/mapper/issues)
 
+### `enum` properties
+
+`@AutoMap()` on enum properties might behave differently based on the `tsconfig` that your application is using (either for serving or building). If you run into issues with Enum properties, provide additional information for `@AutoMap()`
+
+```ts
+// string enum
+@AutoMap(() => String)
+role: UserRole
+
+// number enum
+@AutoMap(() => Number)
+role: UserRole
+```
+
+This might not be the case for `@nartc/automapper` but the `@AutoMap()` decorator is reworked a little (to be lighter and more consistent) in `@automapper/classes`.
+
 ## Migrate from `nestjsx-automapper`
 
 `nestjsx-automapper` will also be archived due to the release of `@automapper/nestjs` which is the official integration package with [NestJS](https://nestjs.com)

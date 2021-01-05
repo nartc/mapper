@@ -1,3 +1,9 @@
+# [1.0.0-beta.4](https://github.com/nartc/mapper/compare/1.0.0-beta.3...1.0.0-beta.4) (2021-01-05)
+
+### Bug Fixes
+
+- **core:** remove properties added by istanbul for not failing in test coverage ([1dcdcdb](https://github.com/nartc/mapper/commit/1dcdcdb5a3ba1ebe57ac4314b15ef0c945733aa7))
+
 # [1.0.0-beta.3](https://github.com/nartc/mapper/compare/1.0.0-beta.2...1.0.0-beta.3) (2021-01-04)
 
 ### Bug Fixes

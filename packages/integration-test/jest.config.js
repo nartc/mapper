@@ -14,5 +14,9 @@ module.exports = {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../coverage/packages/integration-test',
   setupFiles: ['./jest-setup.ts'],
-  testPathIgnorePatterns: ['../../node_modules', 'src/lib/setup.spec.ts'],
+  testPathIgnorePatterns: [
+    '../../node_modules',
+    'src/lib/setup.spec.ts',
+    'src/lib/assert-vm.spec.ts',
+  ],
 };

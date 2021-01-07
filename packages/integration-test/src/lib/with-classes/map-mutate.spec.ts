@@ -1,10 +1,7 @@
 import { assertVm } from '../assert-vm.spec';
-import { setupPojos } from '../setup.spec';
-import {
-  PascalUser,
-  PascalUserVm,
-} from './fixtures/interfaces/user-pascal.interface';
-import { User, UserVm } from './fixtures/interfaces/user.interface';
+import { setupClasses } from '../setup.spec';
+import { User, UserVm } from './fixtures/models/user';
+import { PascalUser, PascalUserVm } from './fixtures/models/user-pascal';
 import {
   addressProfile,
   pascalAddressProfile,
@@ -25,8 +22,8 @@ import {
 } from './fixtures/profiles/user.profile';
 import { getPascalUser, getUser } from './utils/get-user';
 
-describe('Map - Non Flattening', () => {
-  const [mapper] = setupPojos('map');
+describe('Map Mutate', () => {
+  const [mapper] = setupClasses('mapMutate');
 
   it('should map properly', () => {
     mapper
@@ -43,8 +40,30 @@ describe('Map - Non Flattening', () => {
       },
     });
 
-    const vm = mapper.map<User, UserVm>(user, 'UserVm', 'User');
+    const vm = new UserVm();
+    mapper.map(user, UserVm, User, vm);
     assertVm(user, vm);
+  });
+
+  it('should map plain object properly', () => {
+    mapper
+      .addProfile(addressProfile)
+      .addProfile(avatarProfile)
+      .addProfile(userProfileProfile)
+      .addProfile(userProfile);
+
+    const user = getUser({
+      avatar: {
+        shouldIgnore: FOR_SHOULD_IGNORE_PASS_CONDITION,
+        shouldBeSubstituted: null,
+        forCondition: true,
+      },
+    });
+
+    const plain = Object.assign({}, user);
+    const vm = new UserVm();
+    mapper.map(plain, UserVm, User, vm);
+    assertVm(plain, vm);
   });
 
   it('should map correctly with condition, preCondition, and nullSubstitution', () => {
@@ -62,29 +81,9 @@ describe('Map - Non Flattening', () => {
       },
     });
 
-    const vm = mapper.map<User, UserVm>(user, 'UserVm', 'User');
+    const vm = new UserVm();
+    mapper.map(user, UserVm, User, vm);
     assertVm(user, vm, { shouldIgnorePassCondition: false, shouldSub: false });
-  });
-
-  it('should mapArray correctly', () => {
-    mapper
-      .addProfile(addressProfile)
-      .addProfile(avatarProfile)
-      .addProfile(userProfileProfile)
-      .addProfile(userProfile);
-
-    const user = getUser({
-      avatar: {
-        shouldIgnore: FOR_SHOULD_IGNORE_PASS_CONDITION,
-        shouldBeSubstituted: null,
-        forCondition: true,
-      },
-    });
-    const vms = mapper.mapArray<User, UserVm>([user, user], 'UserVm', 'User');
-    expect(vms.length).toEqual(2);
-    vms.forEach((vm) => {
-      assertVm(user, vm);
-    });
   });
 
   it('should mapAsync correctly', () => {
@@ -102,43 +101,10 @@ describe('Map - Non Flattening', () => {
       },
     });
 
-    mapper.mapAsync<User, UserVm>(user, 'UserVm', 'User').then((vm) => {
+    const vm = new UserVm();
+    mapper.mapAsync(user, UserVm, User, vm).then(() => {
       assertVm(user, vm);
     });
-  });
-
-  it('should mapArrayAsync correctly', () => {
-    mapper
-      .addProfile(addressProfile)
-      .addProfile(avatarProfile)
-      .addProfile(userProfileProfile)
-      .addProfile(userProfile);
-
-    const user = getUser({
-      avatar: {
-        shouldIgnore: FOR_SHOULD_IGNORE_PASS_CONDITION,
-        shouldBeSubstituted: null,
-        forCondition: true,
-      },
-    });
-    mapper
-      .mapArrayAsync<User, UserVm>([user, user], 'UserVm', 'User')
-      .then((vms) => {
-        expect(vms.length).toEqual(2);
-        vms.forEach((vm) => {
-          assertVm(user, vm);
-        });
-      });
-  });
-
-  it('should throw error when map without mapping', () => {
-    const user = getUser();
-    expect(() => mapper.map<User, UserVm>(user, 'UserVm', 'User')).toThrow();
-  });
-
-  it('should return empty array when mapArray with empty array', () => {
-    const vms = mapper.mapArray<User, UserVm>([], 'UserVm', 'User');
-    expect(vms).toEqual([]);
   });
 
   it('should map with a different casing', () => {
@@ -156,11 +122,8 @@ describe('Map - Non Flattening', () => {
       },
     });
 
-    const vm = mapper.map<PascalUser, PascalUserVm>(
-      pascalUser,
-      'PascalUserVm',
-      'PascalUser'
-    );
+    const vm = new PascalUserVm();
+    mapper.map(pascalUser, PascalUserVm, PascalUser, vm);
     expect(vm).toBeTruthy();
   });
 });

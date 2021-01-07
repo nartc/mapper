@@ -25,8 +25,8 @@ import {
 } from './fixtures/profiles/user.profile';
 import { getPascalUser, getUser } from './utils/get-user';
 
-describe('Map - Non Flattening', () => {
-  const [mapper] = setupPojos('map');
+describe('Map Mutate', () => {
+  const [mapper] = setupPojos('mapMutate');
 
   it('should map properly', () => {
     mapper
@@ -43,7 +43,8 @@ describe('Map - Non Flattening', () => {
       },
     });
 
-    const vm = mapper.map<User, UserVm>(user, 'UserVm', 'User');
+    const vm = {} as UserVm;
+    mapper.map<User, UserVm>(user, 'UserVm', 'User', vm);
     assertVm(user, vm);
   });
 
@@ -62,29 +63,9 @@ describe('Map - Non Flattening', () => {
       },
     });
 
-    const vm = mapper.map<User, UserVm>(user, 'UserVm', 'User');
+    const vm = {} as UserVm;
+    mapper.map<User, UserVm>(user, 'UserVm', 'User', vm);
     assertVm(user, vm, { shouldIgnorePassCondition: false, shouldSub: false });
-  });
-
-  it('should mapArray correctly', () => {
-    mapper
-      .addProfile(addressProfile)
-      .addProfile(avatarProfile)
-      .addProfile(userProfileProfile)
-      .addProfile(userProfile);
-
-    const user = getUser({
-      avatar: {
-        shouldIgnore: FOR_SHOULD_IGNORE_PASS_CONDITION,
-        shouldBeSubstituted: null,
-        forCondition: true,
-      },
-    });
-    const vms = mapper.mapArray<User, UserVm>([user, user], 'UserVm', 'User');
-    expect(vms.length).toEqual(2);
-    vms.forEach((vm) => {
-      assertVm(user, vm);
-    });
   });
 
   it('should mapAsync correctly', () => {
@@ -102,43 +83,10 @@ describe('Map - Non Flattening', () => {
       },
     });
 
-    mapper.mapAsync<User, UserVm>(user, 'UserVm', 'User').then((vm) => {
+    const vm = {} as UserVm;
+    mapper.mapAsync<User, UserVm>(user, 'UserVm', 'User', vm).then(() => {
       assertVm(user, vm);
     });
-  });
-
-  it('should mapArrayAsync correctly', () => {
-    mapper
-      .addProfile(addressProfile)
-      .addProfile(avatarProfile)
-      .addProfile(userProfileProfile)
-      .addProfile(userProfile);
-
-    const user = getUser({
-      avatar: {
-        shouldIgnore: FOR_SHOULD_IGNORE_PASS_CONDITION,
-        shouldBeSubstituted: null,
-        forCondition: true,
-      },
-    });
-    mapper
-      .mapArrayAsync<User, UserVm>([user, user], 'UserVm', 'User')
-      .then((vms) => {
-        expect(vms.length).toEqual(2);
-        vms.forEach((vm) => {
-          assertVm(user, vm);
-        });
-      });
-  });
-
-  it('should throw error when map without mapping', () => {
-    const user = getUser();
-    expect(() => mapper.map<User, UserVm>(user, 'UserVm', 'User')).toThrow();
-  });
-
-  it('should return empty array when mapArray with empty array', () => {
-    const vms = mapper.mapArray<User, UserVm>([], 'UserVm', 'User');
-    expect(vms).toEqual([]);
   });
 
   it('should map with a different casing', () => {
@@ -156,10 +104,12 @@ describe('Map - Non Flattening', () => {
       },
     });
 
-    const vm = mapper.map<PascalUser, PascalUserVm>(
+    const vm = {} as PascalUserVm;
+    mapper.map<PascalUser, PascalUserVm>(
       pascalUser,
       'PascalUserVm',
-      'PascalUser'
+      'PascalUser',
+      vm
     );
     expect(vm).toBeTruthy();
   });

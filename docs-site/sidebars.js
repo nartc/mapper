@@ -93,6 +93,7 @@ module.exports = {
       label: 'Miscellaneous',
       items: [
         { type: 'doc', id: 'misc/callbacks' },
+        { type: 'doc', id: 'misc/map-mutate' },
         { type: 'doc', id: 'misc/error-handler' },
         { type: 'doc', id: 'misc/limitations' },
       ],

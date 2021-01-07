@@ -1,6 +1,6 @@
 {
   "name": "@automapper/pojos",
-  "version": "1.0.0-beta.5",
+  "version": "1.0.0-beta.6",
   "sideEffects": false,
   "engines": {
     "node": ">=10.0.0"

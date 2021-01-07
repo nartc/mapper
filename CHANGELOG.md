@@ -1,3 +1,10 @@
+# [1.0.0-beta.6](https://github.com/nartc/mapper/compare/1.0.0-beta.5...1.0.0-beta.6) (2021-01-07)
+
+### Features
+
+- **core:** add ability to pass in destinationObj and mutate on map instead of return ([46e920d](https://github.com/nartc/mapper/commit/46e920db51f7c8042926064696dc894a502a509f))
+- **core:** adjust set() to have setMutate() and not return ([bdd6d17](https://github.com/nartc/mapper/commit/bdd6d1767ce74e20853b5f2bd4edaf8d7b996929))
+
 # [1.0.0-beta.5](https://github.com/nartc/mapper/compare/1.0.0-beta.4...1.0.0-beta.5) (2021-01-05)
 
 ### Bug Fixes

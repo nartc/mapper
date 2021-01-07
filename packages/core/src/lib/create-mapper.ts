@@ -19,7 +19,7 @@ import {
   MappingPropertiesClassId,
   TransformationType,
 } from '@automapper/types';
-import { map, mapArray } from './map';
+import { mapArray, mapMutate, mapReturn } from './map';
 import { getMemberPath } from './utils';
 
 /**
@@ -58,7 +58,7 @@ export function createMapper<TKey = unknown>({
       profile(this);
       return this;
     },
-    map(sourceObj, destination, source, options?) {
+    map(sourceObj, destination, source, destinationObjOrOptions?, options?) {
       const { preMap } = plugin;
 
       // run preMap if available
@@ -67,17 +67,51 @@ export function createMapper<TKey = unknown>({
       // get mapping between Source and Destination
       const mapping = this.getMapping(source, destination);
 
-      // map
-      return map(
+      // check mutate or return
+
+      // if destinationObjOrOptions has beforeMap or afterMap
+      // or destinationObjOrOptions is null/undefined => this is a mapReturn
+      // TODO(chau): this might fail if destinationObj has a beforeMap/afterMap property on the consumer side.
+      if (
+        (destinationObjOrOptions &&
+          ('beforeMap' in destinationObjOrOptions ||
+            'afterMap' in destinationObjOrOptions)) ||
+        destinationObjOrOptions == null
+      ) {
+        return mapReturn(
+          sourceInstance ?? sourceObj,
+          mapping,
+          destinationObjOrOptions,
+          this,
+          errorHandler
+        );
+      }
+
+      mapMutate(
         sourceInstance ?? sourceObj,
         mapping,
         options,
         this,
-        errorHandler
+        errorHandler,
+        destinationObjOrOptions
       );
     },
-    mapAsync(sourceObj, destination, source, options?) {
-      return Promise.resolve(this.map(sourceObj, destination, source, options));
+    mapAsync(
+      sourceObj,
+      destination,
+      source,
+      destinationObjOrOptions,
+      options?
+    ) {
+      return Promise.resolve(
+        this.map(
+          sourceObj,
+          destination,
+          source,
+          destinationObjOrOptions,
+          options
+        )
+      );
     },
     mapArray(sourceArr, destination, source, options) {
       return mapArray(

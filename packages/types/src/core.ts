@@ -269,6 +269,28 @@ export interface Mapper<TKey = unknown> {
     options?: MapOptions<TSource, TDestination>
   ): TDestination;
 
+  map<
+    TSource extends Dictionary<TSource> = unknown,
+    TDestination extends Dictionary<TDestination> = unknown
+  >(
+    sourceObj: TSource,
+    destination: new (...args: unknown[]) => TDestination,
+    source: new (...args: unknown[]) => TSource,
+    destinationObj: TDestination,
+    options?: MapOptions<TSource, TDestination>
+  ): void;
+
+  map<
+    TSource extends Dictionary<TSource>,
+    TDestination extends Dictionary<TDestination>
+  >(
+    sourceObj: TSource,
+    destination: string,
+    source: string,
+    destinationObj: TDestination,
+    options?: MapOptions<TSource, TDestination>
+  ): void;
+
   mapAsync<
     TSource extends Dictionary<TSource> = unknown,
     TDestination extends Dictionary<TDestination> = unknown
@@ -288,6 +310,28 @@ export interface Mapper<TKey = unknown> {
     source: string,
     options?: MapOptions<TSource, TDestination>
   ): Promise<TDestination>;
+
+  mapAsync<
+    TSource extends Dictionary<TSource> = unknown,
+    TDestination extends Dictionary<TDestination> = unknown
+  >(
+    sourceObj: TSource,
+    destination: new (...args: unknown[]) => TDestination,
+    source: new (...args: unknown[]) => TSource,
+    destinationObj: TDestination,
+    options?: MapOptions<TSource, TDestination>
+  ): Promise<void>;
+
+  mapAsync<
+    TSource extends Dictionary<TSource>,
+    TDestination extends Dictionary<TDestination>
+  >(
+    sourceObj: TSource,
+    destination: string,
+    source: string,
+    destinationObj: TDestination,
+    options?: MapOptions<TSource, TDestination>
+  ): Promise<void>;
 
   mapArray<
     TSource extends Dictionary<TSource> = unknown,

@@ -16,7 +16,7 @@ import type {
   NullSubstitutionFunction,
 } from '@automapper/types';
 import { MapFnClassId, TransformationType } from '@automapper/types';
-import { isEmpty, set } from './utils';
+import { isEmpty, set, setMutate } from './utils';
 
 /**
  * Instruction on how to map a particular member on the destination
@@ -112,7 +112,7 @@ ${unmappedKeys.join(',\n')}
  * @param {ErrorHandler} errorHandler - the error handler
  * @param {boolean} [isMapArray = false] - whether the map operation is in Array mode
  */
-export function map<
+export function mapReturn<
   TSource extends Dictionary<TSource> = unknown,
   TDestination extends Dictionary<TDestination> = unknown
 >(
@@ -121,6 +121,74 @@ export function map<
   options: MapOptions<TSource, TDestination>,
   mapper: Mapper,
   errorHandler: ErrorHandler,
+  isMapArray = false
+): TDestination {
+  const setMemberReturn = (
+    destinationMemberPath: string,
+    destination: TDestination
+  ) => (value: unknown) => {
+    destination = set(destination, destinationMemberPath, value);
+  };
+  return map(
+    sourceObj,
+    mapping,
+    options,
+    mapper,
+    errorHandler,
+    setMemberReturn,
+    isMapArray
+  );
+}
+
+/**
+ *
+ * @param {TSource} sourceObj - the source object
+ * @param {Mapping} mapping - the Mapping object of source <> destination
+ * @param {MapOptions} options - options used for this particular map operation
+ * @param {Mapper} mapper - the mapper instance
+ * @param {ErrorHandler} errorHandler - the error handler
+ * @param {TDestination} destinationObj - the destination obj to be mutated
+ */
+export function mapMutate<
+  TSource extends Dictionary<TSource> = unknown,
+  TDestination extends Dictionary<TDestination> = unknown
+>(
+  sourceObj: TSource,
+  mapping: Mapping<TSource, TDestination>,
+  options: MapOptions<TSource, TDestination>,
+  mapper: Mapper,
+  errorHandler: ErrorHandler,
+  destinationObj: TDestination
+): void {
+  const setMemberMutate = (destinationMember: string) => (value: unknown) => {
+    setMutate(destinationObj, destinationMember, value);
+  };
+  map(sourceObj, mapping, options, mapper, errorHandler, setMemberMutate);
+}
+
+/**
+ *
+ * @param {TSource} sourceObj - the source object
+ * @param {Mapping} mapping - the Mapping object of source <> destination
+ * @param {MapOptions} options - options used for this particular map operation
+ * @param {Mapper} mapper - the mapper instance
+ * @param {ErrorHandler} errorHandler - the error handler
+ * @param {Function} setMemberFn
+ * @param {boolean} [isMapArray = false] - whether the map operation is in Array mode
+ */
+function map<
+  TSource extends Dictionary<TSource> = unknown,
+  TDestination extends Dictionary<TDestination> = unknown
+>(
+  sourceObj: TSource,
+  mapping: Mapping<TSource, TDestination>,
+  options: MapOptions<TSource, TDestination>,
+  mapper: Mapper,
+  errorHandler: ErrorHandler,
+  setMemberFn: (
+    destinationMemberPath: string,
+    destination?: TDestination
+  ) => (value: unknown) => void,
   isMapArray = false
 ) {
   // destructure the mapping
@@ -164,8 +232,7 @@ export function map<
     ] = propsToMap[i];
 
     // Setup a shortcut function to set destinationMemberPath on destination with value as argument
-    const setMember = (value: unknown) =>
-      set(destination, destinationMemberPath, value);
+    const setMember = setMemberFn(destinationMemberPath, destination);
 
     // This destination key is being configured. Push to configuredKeys array
     configuredKeys.push(destinationMemberPath);
@@ -175,7 +242,7 @@ export function map<
       transformationPreCondPredicate &&
       !transformationPreCondPredicate(sourceObj)
     ) {
-      destination = setMember(preCondDefaultValue);
+      setMember(preCondDefaultValue);
       continue;
     }
 
@@ -190,13 +257,13 @@ export function map<
 
       // if null/undefined
       if (mapInitializedValue == null) {
-        destination = setMember(mapInitializedValue);
+        setMember(mapInitializedValue);
         continue;
       }
 
       // if isDate
       if (mapInitializedValue instanceof Date) {
-        destination = setMember(new Date(mapInitializedValue));
+        setMember(new Date(mapInitializedValue));
         continue;
       }
 
@@ -205,17 +272,17 @@ export function map<
         const [first] = mapInitializedValue;
         // if first item is a primitive
         if (typeof first !== 'object') {
-          destination = setMember(mapInitializedValue.slice());
+          setMember(mapInitializedValue.slice());
           continue;
         }
 
         // if first is empty
         if (isEmpty(first)) {
-          destination = setMember([]);
+          setMember([]);
           continue;
         }
 
-        destination = setMember(
+        setMember(
           mapArray(
             mapInitializedValue,
             nestedDestinationMemberKey,
@@ -234,24 +301,28 @@ export function map<
           nestedSourceMemberKey,
           nestedDestinationMemberKey
         );
-        destination = setMember(
+        // for nested model, we do not care about mutate or return. we will always need to return
+        setMember(
           map(
             mapInitializedValue,
             nestedMapping,
             undefined,
             mapper,
-            errorHandler
+            errorHandler,
+            (memberPath, nestedDestination) => (value) => {
+              nestedDestination = set(nestedDestination, memberPath, value);
+            }
           )
         );
         continue;
       }
 
       // if is primitive
-      destination = setMember(mapInitializedValue);
+      setMember(mapInitializedValue);
       continue;
     }
 
-    destination = setMember(
+    setMember(
       mapMember(
         transformationMapFn,
         sourceObj,
@@ -308,7 +379,7 @@ export function mapArray<
   for (let i = 0, len = sourceArray.length; i < len; i++) {
     const mapping = mapper.getMapping(source, destination);
     destinationArray.push(
-      map(
+      mapReturn(
         sourceArray[i],
         mapping as Mapping<TSource, TDestination>,
         undefined,

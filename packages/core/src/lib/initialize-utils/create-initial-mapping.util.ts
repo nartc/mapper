@@ -75,7 +75,6 @@ export function createInitialMapping(
   const destinationPaths = getPathRecursive(destinationObj);
   const namingConventions = mapping[MappingClassId.namingConventions];
   let i = destinationPaths.length;
-
   while (i--) {
     const destinationPath = destinationPaths[i];
     const destinationNestedMetadataAtPath = getNestedMetaKeyAtDestinationPath(

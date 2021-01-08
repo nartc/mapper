@@ -1,3 +1,9 @@
+# [1.0.0-beta.7](https://github.com/nartc/mapper/compare/1.0.0-beta.6...1.0.0-beta.7) (2021-01-08)
+
+### Bug Fixes
+
+- **core:** adjust getFlatteningSourcePath to take into account multiple parts path with naming conventions ([811568e](https://github.com/nartc/mapper/commit/811568ee9aa7da6ae7168a3db535054e7cf317cb))
+
 # [1.0.0-beta.6](https://github.com/nartc/mapper/compare/1.0.0-beta.5...1.0.0-beta.6) (2021-01-07)
 
 ### Features

@@ -1,3 +1,9 @@
+# [1.0.0-beta.8](https://github.com/nartc/mapper/compare/1.0.0-beta.7...1.0.0-beta.8) (2021-01-09)
+
+### Refactor
+
+- **core:** adjust public API of core ([d86af1d](https://github.com/nartc/mapper/commit/d86af1d26d7005c0dcba442f0592b42f8fca7e06))
+
 # [1.0.0-beta.7](https://github.com/nartc/mapper/compare/1.0.0-beta.6...1.0.0-beta.7) (2021-01-08)
 
 ### Bug Fixes

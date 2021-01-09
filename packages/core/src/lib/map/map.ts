@@ -16,7 +16,8 @@ import type {
   NullSubstitutionFunction,
 } from '@automapper/types';
 import { MapFnClassId, TransformationType } from '@automapper/types';
-import { isEmpty, set, setMutate } from './utils';
+import { isEmpty } from '../utils';
+import { set, setMutate } from './set.util';
 
 /**
  * Instruction on how to map a particular member on the destination

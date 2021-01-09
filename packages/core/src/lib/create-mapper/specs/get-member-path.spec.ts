@@ -1,4 +1,4 @@
-import { getMemberPath } from '@automapper/core';
+import { getMemberPath } from '../get-member-path.util';
 
 describe('getMemberPath', () => {
   interface Foo {

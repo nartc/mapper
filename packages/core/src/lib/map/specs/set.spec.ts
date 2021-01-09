@@ -1,4 +1,4 @@
-import { set } from '@automapper/core';
+import { set } from '../set.util';
 
 describe('set', () => {
   it('should set nested property', () => {

@@ -1,4 +1,4 @@
-import { getPathRecursive } from '@automapper/core';
+import { getPathRecursive } from '../get-path-recursive.util';
 
 describe('getPathRecursive', () => {
   const node = {

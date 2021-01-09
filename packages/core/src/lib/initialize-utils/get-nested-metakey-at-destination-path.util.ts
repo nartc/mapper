@@ -1,5 +1,5 @@
 import type { NamingConvention } from '@automapper/types';
-import { isDefined } from './is-defined.util';
+import { isDefined } from '../utils';
 
 export function getNestedMetaKeyAtDestinationPath(
   destinationNestedMeta: unknown[],

@@ -11,20 +11,15 @@ export function getFlatteningSourcePaths(
     .filter(Boolean)
     .filter((p) => p !== '.');
 
-  const lengthWithoutFirstPart = splitSourcePaths.length - 1;
-
-  if (!lengthWithoutFirstPart) {
-    return;
-  }
-
-  const [first, ...paths] = splitSourcePaths.slice(0, lengthWithoutFirstPart);
+  const [first, ...paths] = splitSourcePaths.slice(
+    0,
+    splitSourcePaths.length - 1
+  );
   let trueFirstPartOfSource = first;
   let stopIndex = 0;
-  let found = false;
+  let found = src.hasOwnProperty(trueFirstPartOfSource);
 
-  if (src.hasOwnProperty(trueFirstPartOfSource)) {
-    found = true;
-  } else {
+  if (!found) {
     for (let i = 0, len = paths.length; i < len; i++) {
       trueFirstPartOfSource = sourceNamingConvention.transformPropertyName([
         trueFirstPartOfSource,

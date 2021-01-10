@@ -12,7 +12,26 @@
             "enforceBuildableLibDependency": true,
             "allow": [],
             "depConstraints": [
-              { "sourceTag": "*", "onlyDependOnLibsWithTags": ["*"] }
+              {
+                "sourceTag": "type:plugin",
+                "onlyDependOnLibsWithTags": ["type:library", "type:type-defs"]
+              },
+              {
+                "sourceTag": "type:library",
+                "onlyDependOnLibsWithTags": ["type:type-defs"]
+              },
+              {
+                "sourceTag": "type:integration",
+                "onlyDependOnLibsWithTags": ["type:library", "type:type-defs"]
+              },
+              {
+                "sourceTag": "type:test",
+                "onlyDependOnLibsWithTags": [
+                  "type:library",
+                  "type:plugin",
+                  "type:type-defs"
+                ]
+              }
             ]
           }
         ]
@@ -21,7 +40,9 @@
     {
       "files": ["*.ts", "*.tsx"],
       "extends": ["plugin:@nrwl/nx/typescript"],
-      "parserOptions": { "project": "./tsconfig.*?.json" },
+      "parserOptions": {
+        "project": "./tsconfig.*?.json"
+      },
       "rules": {}
     },
     {

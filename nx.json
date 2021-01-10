@@ -24,25 +24,25 @@
   },
   "projects": {
     "core": {
-      "tags": []
+      "tags": ["type:library"]
     },
     "classes": {
-      "tags": []
+      "tags": ["type:plugin"]
     },
     "types": {
-      "tags": []
+      "tags": ["type:type-defs"]
     },
     "integration-test": {
-      "tags": []
+      "tags": ["type:test"]
     },
     "pojos": {
-      "tags": []
+      "tags": ["type:plugin"]
     },
     "nestjs": {
-      "tags": []
+      "tags": ["type:integration"]
     },
     "nestjs-integration-test": {
-      "tags": []
+      "tags": ["type:test"]
     }
   },
   "workspaceLayout": {

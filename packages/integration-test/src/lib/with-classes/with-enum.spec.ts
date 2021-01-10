@@ -11,6 +11,11 @@ import {
 describe('With Enum', () => {
   const [mapper] = setupClasses('withEnum');
 
+  enum StringEnum1 {
+    Foo = 'foo',
+    Bar = 'bar',
+  }
+
   it('should map correctly', () => {
     mapper.createMap(FooWithEnum, FooWithEnumDto);
 
@@ -18,7 +23,7 @@ describe('With Enum', () => {
     foo.externalEnum1 = ExternalEnum1.Bar;
     foo.externalStringEnum1 = ExternalStringEnum1.Foo;
     foo.enum1 = 0;
-    foo.stringEnum1 = 'bar' as any;
+    foo.stringEnum1 = 'bar' as StringEnum1;
 
     const vm = mapper.map(foo, FooWithEnumDto, FooWithEnum);
     expect(vm).toBeTruthy();

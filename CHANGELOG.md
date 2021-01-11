@@ -1,3 +1,17 @@
+# [1.0.0-beta.9](https://github.com/nartc/mapper/compare/1.0.0-beta.8...1.0.0-beta.9) (2021-01-11)
+
+### Refactor
+
+- **nestjs:** use `global` options in `DynamicModule` for `forRoot` instead of `@Global` decorator ([8f05d8f](https://github.com/nartc/mapper/commit/8f05d8faaa3520052219b1dd87386246d68e5765))
+
+### Bug Fixes
+
+- **nestjs:** adjust globalNamingConventions options to also accept a single NamingConvention ([822c790](https://github.com/nartc/mapper/commit/822c7908bea682fff87f00c06d5c88d7e7060480))
+
+### Features
+
+- **nestjs:** add MapInterceptor ([1a811e5](https://github.com/nartc/mapper/commit/1a811e528fdab2648aa43841ee23661ea9a9c17f))
+
 # [1.0.0-beta.8](https://github.com/nartc/mapper/compare/1.0.0-beta.7...1.0.0-beta.8) (2021-01-09)
 
 ### Refactor

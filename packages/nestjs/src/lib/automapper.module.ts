@@ -1,8 +1,7 @@
-import { DynamicModule, Global, Logger, Module } from '@nestjs/common';
+import { DynamicModule, Logger, Module } from '@nestjs/common';
 import { createAutomapperProviders } from './create-automapper-providers.util';
 import type { AutomapperModuleOptions } from './interfaces';
 
-@Global()
 @Module({})
 export class AutomapperModule {
   private static readonly logger = new Logger(AutomapperModule.name);
@@ -16,6 +15,7 @@ export class AutomapperModule {
 
     return {
       module: AutomapperModule,
+      global: true,
       providers,
       exports: providers,
     };

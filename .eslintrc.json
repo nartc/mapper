@@ -29,6 +29,7 @@
                 "onlyDependOnLibsWithTags": [
                   "type:library",
                   "type:plugin",
+                  "type:integration",
                   "type:type-defs"
                 ]
               }

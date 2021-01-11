@@ -236,7 +236,7 @@
       "projectType": "application",
       "prefix": "nestjs-integration-test",
       "architect": {
-        "build:obsolete": {
+        "build-obsolete": {
           "builder": "@nrwl/node:build",
           "outputs": ["{options.outputPath}"],
           "options": {
@@ -262,7 +262,7 @@
         "serve": {
           "builder": "@nrwl/node:execute",
           "options": {
-            "buildTarget": "nestjs-integration-test:build:obsolete"
+            "buildTarget": "nestjs-integration-test:build-obsolete"
           }
         }
       }

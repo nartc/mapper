@@ -1,4 +1,5 @@
 import { classes } from '@automapper/classes';
+import { CamelCaseNamingConvention } from '@automapper/core';
 import { AutomapperModule } from '@automapper/nestjs';
 import { Module } from '@nestjs/common';
 
@@ -12,7 +13,13 @@ import { UserProfile } from './profiles/user.profile';
 @Module({
   imports: [
     AutomapperModule.forRoot({
-      options: [{ name: 'classes', pluginInitializer: classes }],
+      options: [
+        {
+          name: 'classes',
+          pluginInitializer: classes,
+          namingConventions: new CamelCaseNamingConvention(),
+        },
+      ],
       singular: true,
     }),
   ],

@@ -12,11 +12,12 @@ export class AppService {
     return { message: 'Welcome to nestjs-integration-test!' };
   }
 
-  getUser() {
+  getUserVm() {
     const user = getUser();
-    const vm = this.mapper.map(user, UserVm, User);
+    return this.mapper.map(user, UserVm, User);
+  }
 
-    console.log(vm);
-    return vm;
+  getRawUser() {
+    return getUser();
   }
 }

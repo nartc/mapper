@@ -19,10 +19,12 @@ export interface AutomapperModuleOptions {
   /**
    * Global NamingConventions to pass to all mappers
    */
-  globalNamingConventions?: {
-    source: NamingConvention;
-    destination: NamingConvention;
-  };
+  globalNamingConventions?:
+    | NamingConvention
+    | {
+        source: NamingConvention;
+        destination: NamingConvention;
+      };
   /**
    * Set to true if you want to use the default Mapper token for when only one mapper is setup with forRoot
    * @default false

@@ -174,3 +174,14 @@ export class UserController {
   }
 }
 ```
+
+`MapInterceptor` has the following signature:
+
+```ts
+MapInterceptor(destinationModelType, sourceModelType, {
+  isArray?: boolean;
+  mapperName?: string;
+} & MapAction)
+```
+
+> See [MapAction](./misc/callbacks)

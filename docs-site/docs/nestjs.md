@@ -157,3 +157,20 @@ export class UserModule {}
 
 - `AutomapperProfile` enforces the sub-classes to implement a `mapProfile()` method that will return a `MappingProfile`.
 - `Profile` can have other Services injected to its constructor if needed.
+
+## `MapInterceptor`
+
+`@automapper/nestjs` provides `MapInterceptor`. In cases where you do not care about annotating the correct return type for a **Controller#method** and want your **Service** to be a little cleaner, you can utilize the `MapInterceptor` to execute the mapping.
+
+```ts
+import { MapInterceptor } from '@automapper/nestjs';
+
+export class UserController {
+  @Get('me')
+  @UseInterceptors(MapInterceptor(UserDto, User))
+  me() {
+    // userService.getMe() returns a User here and does not have mapping logic in it.
+    return this.userService.getMe();
+  }
+}
+```

@@ -16,8 +16,7 @@ yarn add @automapper/nestjs
 
 #### `peerDependencies`
 
-`@automapper/nestjs` depends on `@automapper/core` and `@automapper/types` (and some other `@nestjs/*` libraries but you
-should already have these installed in a NestJS application)
+`@automapper/nestjs` depends on `@automapper/core` and `@automapper/types` (and some other `@nestjs/*` libraries but you should already have these installed in a NestJS application)
 
 ```sh
 npm i @automapper/core

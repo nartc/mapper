@@ -14,15 +14,23 @@
             "depConstraints": [
               {
                 "sourceTag": "type:plugin",
-                "onlyDependOnLibsWithTags": ["type:library", "type:type-defs"]
+                "onlyDependOnLibsWithTags": [
+                  "type:library",
+                  "type:type-defs",
+                  "type:util"
+                ]
               },
               {
                 "sourceTag": "type:library",
-                "onlyDependOnLibsWithTags": ["type:type-defs"]
+                "onlyDependOnLibsWithTags": ["type:type-defs", "type:util"]
               },
               {
                 "sourceTag": "type:integration",
-                "onlyDependOnLibsWithTags": ["type:library", "type:type-defs"]
+                "onlyDependOnLibsWithTags": [
+                  "type:library",
+                  "type:type-defs",
+                  "type:util"
+                ]
               },
               {
                 "sourceTag": "type:test",
@@ -30,7 +38,8 @@
                   "type:library",
                   "type:plugin",
                   "type:integration",
-                  "type:type-defs"
+                  "type:type-defs",
+                  "type:util"
                 ]
               }
             ]

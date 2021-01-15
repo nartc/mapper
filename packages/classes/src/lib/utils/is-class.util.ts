@@ -3,14 +3,16 @@
  *
  * @param {Function} fn
  */
-export function isClass(fn: unknown): boolean {
+// eslint-disable-next-line @typescript-eslint/ban-types
+export function isClass(fn: Function): boolean {
   const typeOfFn = typeof fn;
-  const constructorFnString = fn.constructor?.toString();
+  const fnString = fn.toString();
+  const constructorFnString = fn.prototype?.constructor?.toString();
   return (
-    (typeOfFn === 'object' || typeOfFn === 'function') &&
-    fn.constructor &&
-    (/^\s*function/.test(constructorFnString) ||
-      /^\s*class/.test(constructorFnString)) &&
-    constructorFnString.includes(fn.constructor.name)
+    typeOfFn === 'function' &&
+    !!constructorFnString &&
+    (/^\s*function/.test(fnString) || /^\s*class/.test(fnString)) &&
+    !!fn.name &&
+    fnString.includes(fn.name)
   );
 }

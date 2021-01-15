@@ -23,7 +23,8 @@
         "packages/integration-test/src/index.ts"
       ],
       "@automapper/pojos": ["packages/pojos/src/index.ts"],
-      "@automapper/nestjs": ["packages/nestjs/src/index.ts"]
+      "@automapper/nestjs": ["packages/nestjs/src/index.ts"],
+      "@automapper/test-util": ["packages/test-util/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

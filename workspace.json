@@ -266,6 +266,19 @@
           }
         }
       }
+    },
+    "test-util": {
+      "root": "packages/test-util",
+      "sourceRoot": "packages/test-util/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["packages/test-util/**/*.ts"]
+          }
+        }
+      }
     }
   },
   "cli": {

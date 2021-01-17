@@ -1,3 +1,9 @@
+# [1.0.0](https://github.com/nartc/mapper/compare/1.0.0-beta.9...1.0.0) (2021-01-17)
+
+## Official release 1.0.0
+
+Please check out [README](./README.md) for more information
+
 # [1.0.0-beta.9](https://github.com/nartc/mapper/compare/1.0.0-beta.8...1.0.0-beta.9) (2021-01-11)
 
 ### Refactor

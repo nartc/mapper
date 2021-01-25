@@ -1,3 +1,4 @@
+import { isEmpty } from '@automapper/core';
 import type { MapOptions, Mapper } from '@automapper/types';
 import type {
   CallHandler,
@@ -22,6 +23,7 @@ function createMapInterceptor(
   options?: { isArray?: boolean; mapperName?: string }
 ): new (...args) => NestInterceptor {
   const { isArray = false, mapperName, ...mapOptions } = options || {};
+  const transformedMapOptions = isEmpty(mapOptions) ? null : mapOptions;
 
   class MixinMapInterceptor implements NestInterceptor {
     constructor(
@@ -47,7 +49,7 @@ function createMapInterceptor(
                 to as any,
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 from as any,
-                mapOptions
+                transformedMapOptions
               );
             }
 
@@ -57,7 +59,7 @@ function createMapInterceptor(
               to as any,
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               from as any,
-              mapOptions
+              transformedMapOptions
             );
           })
         );

@@ -1,3 +1,9 @@
+## [1.0.1](https://github.com/nartc/mapper/compare/1.0.0...1.0.1) (2021-01-25)
+
+### Bug Fixes
+
+- **nestjs:** make sure mapOptions passed in as null if it's empty ([93e3761](https://github.com/nartc/mapper/commit/93e37616600e79aea5d04b128d0cfe810aa0fadc)), closes [#247](https://github.com/nartc/mapper/issues/247)
+
 # [1.0.0](https://github.com/nartc/mapper/compare/1.0.0-beta.9...1.0.0) (2021-01-17)
 
 ## Official release 1.0.0

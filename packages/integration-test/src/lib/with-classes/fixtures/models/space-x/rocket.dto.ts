@@ -113,10 +113,7 @@ export class EnginesDto {
   engineLossMax: number | null;
 
   @AutoMap()
-  propellant1: string;
-
-  @AutoMap()
-  propellant2: string;
+  propellants: string[];
 
   @AutoMap(() => ThrustDto)
   thrustSeaLevel: ThrustDto;

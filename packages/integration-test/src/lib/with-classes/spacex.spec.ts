@@ -54,8 +54,10 @@ describe('SpaceX API', () => {
     expect(dto.massKg).toEqual(rocket.mass.kg);
     expect(dto.massLb).toEqual(rocket.mass.lb);
 
-    expect(dto.engines.propellant1).toEqual(rocket.engines.propellant_1);
-    expect(dto.engines.propellant2).toEqual(rocket.engines.propellant_2);
+    expect(dto.engines.propellants).toEqual([
+      rocket.engines.propellant_1,
+      rocket.engines.propellant_2,
+    ]);
     expect(dto.engines.engineLossMax).toEqual(rocket.engines.engine_loss_max);
     expect(dto.engines.layout).toEqual(rocket.engines.layout);
     expect(dto.engines.number).toEqual(rocket.engines.number);

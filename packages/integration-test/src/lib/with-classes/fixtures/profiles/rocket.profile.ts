@@ -42,15 +42,10 @@ export const rocketProfile: MappingProfile = (mapper) => {
   mapper.createMap(PayloadWeight, PayloadWeightDto);
   mapper.createMap(FirstStage, FirstStageDto);
   mapper.createMap(SecondStage, SecondStageDto);
-  mapper
-    .createMap(Engines, EnginesDto)
-    .forMember(
-      (d) => d.propellant1,
-      mapFrom((s) => s.propellant_1)
-    )
-    .forMember(
-      (d) => d.propellant2,
-      mapFrom((s) => s.propellant_2)
-    );
+  mapper.createMap(Engines, EnginesDto).forMember(
+    (d) => d.propellants,
+    mapFrom((s) => [s.propellant_1, s.propellant_2])
+  );
+
   mapper.createMap(Rocket, RocketDto);
 };

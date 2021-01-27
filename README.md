@@ -6,6 +6,9 @@
 
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
+[![Unit Test Actions](https://github.com/nartc/mapper/workflows/Unit%20Test/badge.svg)](https://github.com/nartc/mapper/actions?query=workflow%3A%22Unit+Test%22)
+[![Docusaurus Actions](https://github.com/nartc/mapper/workflows/Docusaurus/badge.svg)](https://github.com/nartc/mapper/actions?query=workflow%3ADocusaurus)
+
 This is a monorepo of `@automapper/core` and official packages.
 
 ## Packages
@@ -24,6 +27,7 @@ This is a monorepo of `@automapper/core` and official packages.
 | --------------------------- | -------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
 | **integration-test**        | Integration tests of Core and the official plugins | [![README](https://img.shields.io/badge/README--green.svg)](/packages/integration-test/README.md) |
 | **nestjs-integration-test** | Integration tests for NestJS                       | -                                                                                                 |
+| **test-util**               | Utilities for tests                                | -                                                                                                 |
 
 ## Documentations
 

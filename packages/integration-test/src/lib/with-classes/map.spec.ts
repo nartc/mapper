@@ -1,5 +1,6 @@
 import { assertVm } from '../assert-vm.spec';
 import { setupClasses } from '../setup.spec';
+import { Doctor, DoctorDto } from './fixtures/models/doctor';
 import { User, UserVm } from './fixtures/models/user';
 import { PascalUser, PascalUserVm } from './fixtures/models/user-pascal';
 import {
@@ -12,6 +13,7 @@ import {
   FOR_SHOULD_IGNORE_PASS_CONDITION,
   pascalAvatarProfile,
 } from './fixtures/profiles/avatar.profile';
+import { doctorProfile } from './fixtures/profiles/doctor.profile';
 import {
   pascalUserProfileProfile,
   userProfileProfile,
@@ -196,5 +198,16 @@ describe('Map - Non Flattening', () => {
 
     const vm = mapper.map(pascalUser, PascalUserVm, PascalUser);
     expect(vm).toBeTruthy();
+  });
+
+  it('should map doctor', () => {
+    mapper.addProfile(doctorProfile);
+    const doctor = new Doctor();
+    doctor.name = 'Chau';
+    doctor.titleTags = ['title', 'tags', 'blah'];
+
+    const dto = mapper.map(doctor, DoctorDto, Doctor);
+    expect(dto.name).toEqual(doctor.name);
+    expect(dto.titleTags).toEqual(doctor.titleTags);
   });
 });

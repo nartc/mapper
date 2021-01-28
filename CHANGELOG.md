@@ -1,3 +1,9 @@
+## [1.0.3](https://github.com/nartc/mapper/compare/1.0.2...1.0.3) (2021-01-28)
+
+### Bug Fixes
+
+- **pojos:** add Array to isPrimitiveConstructor. This is to match with the behavior in `classes` ([6415463](https://github.com/nartc/mapper/commit/64154631ce779121332f2d42aa649c265f497b8f))
+
 ## [1.0.2](https://github.com/nartc/mapper/compare/1.0.1...1.0.2) (2021-01-28)
 
 ### Bug Fixes

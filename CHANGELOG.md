@@ -1,3 +1,9 @@
+## [1.0.2](https://github.com/nartc/mapper/compare/1.0.1...1.0.2) (2021-01-28)
+
+### Bug Fixes
+
+- **classes:** isPrimitiveConstructor also returns true for Array constructor ([c5d111d](https://github.com/nartc/mapper/commit/c5d111d27a3fa1a81d99837cca665bc985bc2799)), closes [#249](https://github.com/nartc/mapper/issues/249)
+
 ## [1.0.1](https://github.com/nartc/mapper/compare/1.0.0...1.0.1) (2021-01-25)
 
 ### Bug Fixes

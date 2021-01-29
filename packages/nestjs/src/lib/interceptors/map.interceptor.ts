@@ -27,7 +27,7 @@ function createMapInterceptor(
 
   class MixinMapInterceptor implements NestInterceptor {
     constructor(
-      @Optional() @InjectMapper(mapperName) private readonly mapper: Mapper
+      @Optional() @InjectMapper(mapperName) private readonly mapper?: Mapper
     ) {}
 
     async intercept(
@@ -43,7 +43,7 @@ function createMapInterceptor(
           map((response) => {
             if (isArray) {
               if (!Array.isArray(response)) return response;
-              return this.mapper.mapArray(
+              return this.mapper?.mapArray(
                 response,
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 to as any,
@@ -53,7 +53,7 @@ function createMapInterceptor(
               );
             }
 
-            return this.mapper.map(
+            return this.mapper?.map(
               response,
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               to as any,

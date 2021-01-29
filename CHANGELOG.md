@@ -1,3 +1,9 @@
+## [1.0.4](https://github.com/nartc/mapper/compare/1.0.3...1.0.4) (2021-01-29)
+
+### Bug Fixes
+
+- **nestjs:** ensure mapper is safe for accessing with optional chaining ([83307f5](https://github.com/nartc/mapper/commit/83307f59a510c2b8dfdfa81adbe25e3453ad9a13))
+
 ## [1.0.3](https://github.com/nartc/mapper/compare/1.0.2...1.0.3) (2021-01-28)
 
 ### Bug Fixes

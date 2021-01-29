@@ -1,4 +1,5 @@
-import { DynamicModule, Logger, Module } from '@nestjs/common';
+import type { DynamicModule } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { createAutomapperProviders } from './create-automapper-providers.util';
 import type { AutomapperModuleOptions } from './interfaces';
 

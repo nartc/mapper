@@ -35,19 +35,17 @@ describe('AppService', () => {
     service = app.get<AppService>(AppService);
   });
 
-  describe('getData', () => {
-    it('should return "Welcome to nestjs-integration-test!"', () => {
-      expect(service.getData()).toEqual({
-        message: 'Welcome to nestjs-integration-test!',
-      });
+  it('should return "Welcome to nestjs-integration-test!"', () => {
+    expect(service.getData()).toEqual({
+      message: 'Welcome to nestjs-integration-test!',
     });
+  });
 
-    it('should return UserVm', () => {
-      expect(service.getUserVm()).toBeInstanceOf(UserVm);
-    });
+  it('should return UserVm', () => {
+    expect(service.getUserVm()).toBeInstanceOf(UserVm);
+  });
 
-    it('should return user', () => {
-      expect(service.getRawUser()).toBeInstanceOf(User);
-    });
+  it('should return user', () => {
+    expect(service.getRawUser()).toBeInstanceOf(User);
   });
 });

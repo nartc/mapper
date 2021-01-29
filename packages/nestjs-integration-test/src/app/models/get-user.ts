@@ -1,8 +1,36 @@
-import { Address } from './address';
-import { Avatar } from './avatar';
+import { Address, AddressVm } from './address';
+import { Avatar, AvatarVm } from './avatar';
 import { Job } from './job';
-import { User } from './user';
-import { UserProfile } from './user-profile';
+import { User, UserVm } from './user';
+import { UserProfile, UserProfileVm } from './user-profile';
+
+export function getUserVm(): UserVm {
+  const addressVm = new AddressVm();
+  addressVm.formattedAddress = '123 Acme Dr Sim Show Me';
+
+  const otherAddressVm = new AddressVm();
+  otherAddressVm.formattedAddress = '456 Rubik Dr Some October';
+
+  const avatarVm = new AvatarVm();
+  avatarVm.url = 'default url';
+  avatarVm.forCondition = true;
+
+  const profileVm = new UserProfileVm();
+  profileVm.bio = 'Introvert-ish';
+  profileVm.birthday = 'Mon Oct 14 1991';
+  profileVm.avatar = avatarVm;
+  profileVm.addresses = [addressVm, otherAddressVm];
+
+  const userVm = new UserVm();
+  userVm.first = 'Chau';
+  userVm.last = 'Tran';
+  userVm.full = 'Chau Tran';
+  userVm.jobTitle = 'Developer';
+  userVm.jobAnnualSalary = 99999;
+  userVm.profile = profileVm;
+
+  return userVm;
+}
 
 export function getUser(
   partials: {

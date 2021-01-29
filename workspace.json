@@ -264,6 +264,14 @@
           "options": {
             "buildTarget": "nestjs-integration-test:build-obsolete"
           }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/packages/nestjs-integration-test"],
+          "options": {
+            "jestConfig": "packages/nestjs-integration-test/jest.config.js",
+            "passWithNoTests": true
+          }
         }
       }
     },

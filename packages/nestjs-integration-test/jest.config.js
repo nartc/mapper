@@ -3,7 +3,7 @@ module.exports = {
   preset: '../../jest.preset.js',
   globals: {
     'ts-jest': {
-      tsConfig: '<rootDir>/tsconfig.spec.json',
+      tsconfig: '<rootDir>/tsconfig.spec.json',
     },
   },
   transform: {
@@ -11,4 +11,5 @@ module.exports = {
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
   coverageDirectory: '../../coverage/packages/nestjs-integration-test',
+  setupFiles: ['./jest-setup.ts'],
 };

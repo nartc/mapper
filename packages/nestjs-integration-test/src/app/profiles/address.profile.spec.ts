@@ -21,7 +21,7 @@ describe('addressProfile', () => {
     mapper = moduleRef.get<Mapper>(getMapperToken());
   });
 
-  it('', () => {
+  it('should map', () => {
     const address = new Address();
     address.street = 'street';
     address.city = 'city';

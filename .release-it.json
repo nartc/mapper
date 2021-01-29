@@ -12,8 +12,7 @@
     "publish": false
   },
   "git": {
-    "commitMessage": "Prepare release ${version}",
-    "tagAnnotation": "Release ${version}. See https://github.com/nartc/mapper/blob/main/CHANGELOG.md"
+    "commitMessage": "Prepare release ${version}"
   },
   "github": {
     "releaseNotes": true

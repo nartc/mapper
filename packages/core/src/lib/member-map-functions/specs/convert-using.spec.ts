@@ -10,8 +10,8 @@ describe('ConvertUsingFunction', () => {
   };
 
   const birthdayToStringConverter: Converter<{ birthday: Date }, string> = {
-    convert(source: { birthday: Date }): string {
-      return source.birthday.toDateString();
+    convert(src: { birthday: Date }): string {
+      return src.birthday.toDateString();
     },
   };
 

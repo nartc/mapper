@@ -81,13 +81,13 @@ export function instantiate<TModel extends Dictionary<TModel>>(
     // if value is not null/undefined
     if (isDefined(valueAtKey)) {
       // instantiate with value at key
-      const [instantiateResult] = instantiate(
+      const [definedInstantiateResult] = instantiate(
         instanceStorage,
         metadataStorage,
         metaResult as Constructible,
         valueAtKey
       );
-      instance[key] = instantiateResult;
+      instance[key] = definedInstantiateResult;
       continue;
     }
 

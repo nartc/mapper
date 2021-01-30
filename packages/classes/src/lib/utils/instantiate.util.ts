@@ -67,13 +67,13 @@ export function instantiate<TModel extends Dictionary<TModel>>(
     if (Array.isArray(valueAtKey)) {
       // loop through each value and recursively call instantiate with each value
       instance[key] = valueAtKey.map((val) => {
-        const [instantiateResult] = instantiate(
+        const [instantiateResultItem] = instantiate(
           instanceStorage,
           metadataStorage,
           metaResult as Constructible,
           val
         );
-        return instantiateResult;
+        return instantiateResultItem;
       });
       continue;
     }

@@ -233,7 +233,19 @@ function map<
     ] = propsToMap[i];
 
     // Setup a shortcut function to set destinationMemberPath on destination with value as argument
-    const setMember = setMemberFn(destinationMemberPath, destination);
+    const setMember = (valFn: () => unknown) => {
+      try {
+        const val = valFn();
+        return setMemberFn(destinationMemberPath, destination)(val);
+      } catch (originalError) {
+        const errorMessage = `
+Error at "${destinationMemberPath}" on ${JSON.stringify(destination)}
+---------------------------------------------------------------------
+Original error: ${originalError}`;
+        errorHandler.handle(errorMessage);
+        throw new Error(errorMessage);
+      }
+    };
 
     // This destination key is being configured. Push to configuredKeys array
     configuredKeys.push(destinationMemberPath);
@@ -243,7 +255,7 @@ function map<
       transformationPreCondPredicate &&
       !transformationPreCondPredicate(sourceObj)
     ) {
-      setMember(preCondDefaultValue);
+      setMember(() => preCondDefaultValue);
       continue;
     }
 
@@ -258,13 +270,13 @@ function map<
 
       // if null/undefined
       if (mapInitializedValue == null) {
-        setMember(mapInitializedValue);
+        setMember(() => mapInitializedValue);
         continue;
       }
 
       // if isDate
       if (mapInitializedValue instanceof Date) {
-        setMember(new Date(mapInitializedValue));
+        setMember(() => new Date(mapInitializedValue));
         continue;
       }
 
@@ -273,17 +285,17 @@ function map<
         const [first] = mapInitializedValue;
         // if first item is a primitive
         if (typeof first !== 'object') {
-          setMember(mapInitializedValue.slice());
+          setMember(() => mapInitializedValue.slice());
           continue;
         }
 
         // if first is empty
         if (isEmpty(first)) {
-          setMember([]);
+          setMember(() => []);
           continue;
         }
 
-        setMember(
+        setMember(() =>
           mapArray(
             mapInitializedValue,
             nestedDestinationMemberKey,
@@ -303,7 +315,7 @@ function map<
           nestedDestinationMemberKey
         );
         // for nested model, we do not care about mutate or return. we will always need to return
-        setMember(
+        setMember(() =>
           map(
             mapInitializedValue,
             nestedMapping,
@@ -319,11 +331,11 @@ function map<
       }
 
       // if is primitive
-      setMember(mapInitializedValue);
+      setMember(() => mapInitializedValue);
       continue;
     }
 
-    setMember(
+    setMember(() =>
       mapMember(
         transformationMapFn,
         sourceObj,

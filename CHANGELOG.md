@@ -1,3 +1,9 @@
+## [1.1.1](https://github.com/nartc/mapper/compare/1.1.0...1.1.1) (2021-01-30)
+
+### Bug Fixes
+
+- **classes:** ensure to use return value of concat() ([705cbec](https://github.com/nartc/mapper/commit/705cbecee34d935669de4f1678eb980ef7af4fd4))
+
 # [1.1.0](https://github.com/nartc/mapper/compare/1.0.4...1.1.0) (2021-01-30)
 
 ### Bug Fixes

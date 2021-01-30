@@ -46,8 +46,12 @@ export function instantiate<TModel extends Dictionary<TModel>>(
     }
 
     if (isDefined(valueAtKey)) {
-      const [result] = instantiate(metadataStorage, metaResult, valueAtKey);
-      obj[key] = result;
+      const [instantiateResult] = instantiate(
+        metadataStorage,
+        metaResult,
+        valueAtKey
+      );
+      obj[key] = instantiateResult;
       continue;
     }
 

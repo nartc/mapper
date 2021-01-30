@@ -33,7 +33,7 @@ export class PojosMetadataStorage implements MetadataStorage<string> {
     while (i--) {
       const metadata = metadataList[i];
       // skip existing
-      if (resultMetadataList.some(([metaKey]) => metaKey === metadata[0])) {
+      if (resultMetadataList.some(([key]) => key === metadata[0])) {
         continue;
       }
       resultMetadataList.push(metadataList[i]);
@@ -46,7 +46,9 @@ export class PojosMetadataStorage implements MetadataStorage<string> {
     metaKey: string,
     key: string
   ): Metadata<string> | undefined {
-    return this.getMetadata(metaKey).find(([metaKey]) => metaKey === key);
+    return this.getMetadata(metaKey).find(
+      ([innerMetaKey]) => innerMetaKey === key
+    );
   }
 
   has(metaKey: string): boolean {

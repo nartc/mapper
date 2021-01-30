@@ -13,7 +13,6 @@ import type {
   Mapping,
   MapWithFunction,
   MemberMapFunction,
-  NullSubstitutionFunction,
 } from '@automapper/types';
 import { MapFnClassId, TransformationType } from '@automapper/types';
 import { isEmpty } from '../utils';
@@ -63,9 +62,10 @@ function mapMember<TSource extends Dictionary<TSource> = unknown>(
       break;
     case TransformationType.Condition:
     case TransformationType.NullSubstitution:
-      value = (mapFn as ReturnType<
-        NullSubstitutionFunction | ConditionFunction
-      >[MapFnClassId.fn])(sourceObj, destinationMemberPath);
+      value = (mapFn as ReturnType<ConditionFunction>[MapFnClassId.fn])(
+        sourceObj,
+        destinationMemberPath
+      );
       break;
     case TransformationType.MapDefer:
       value = mapMember(

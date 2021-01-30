@@ -4,8 +4,8 @@ import { MapFnClassId, TransformationType } from '@automapper/types';
 
 describe('ConvertUsingFunction', () => {
   const dateToStringConverter: Converter<Date, string> = {
-    convert(source: Date): string {
-      return source.toDateString();
+    convert(date: Date): string {
+      return date.toDateString();
     },
   };
 

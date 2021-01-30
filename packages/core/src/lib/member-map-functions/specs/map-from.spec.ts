@@ -24,8 +24,8 @@ describe('MapFromFunction', () => {
   });
 
   const resolver: Resolver<typeof source> = {
-    resolve(source: { foo: string }) {
-      return source.foo;
+    resolve(src: { foo: string }) {
+      return src.foo;
     },
   };
 

@@ -9,6 +9,12 @@
 [![Unit Test Actions](https://github.com/nartc/mapper/workflows/Unit%20Test/badge.svg)](https://github.com/nartc/mapper/actions?query=workflow%3A%22Unit+Test%22)
 [![Docusaurus Actions](https://github.com/nartc/mapper/workflows/Docusaurus/badge.svg)](https://github.com/nartc/mapper/actions?query=workflow%3ADocusaurus)
 
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=nartc_mapper&metric=ncloc)](https://sonarcloud.io/dashboard?id=nartc_mapper)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=nartc_mapper&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=nartc_mapper)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=nartc_mapper&metric=alert_status)](https://sonarcloud.io/dashboard?id=nartc_mapper)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=nartc_mapper&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=nartc_mapper)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=nartc_mapper&metric=security_rating)](https://sonarcloud.io/dashboard?id=nartc_mapper)
+
 This is a monorepo of `@automapper/core` and official packages.
 
 ## Packages

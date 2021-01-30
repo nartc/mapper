@@ -192,7 +192,9 @@ function prePropertiesLoop(
       mapping[MappingClassId.mappings][0] = sourceInstance;
       if (sourceProtoNestedConstructible.length) {
         // update the nested constructible
-        sourceNestedConstructible.concat(sourceProtoNestedConstructible);
+        sourceNestedConstructible = sourceNestedConstructible.concat(
+          sourceProtoNestedConstructible
+        );
       }
     }
   };

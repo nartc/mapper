@@ -1,3 +1,15 @@
+# [1.1.0](https://github.com/nartc/mapper/compare/1.0.4...1.1.0) (2021-01-30)
+
+### Bug Fixes
+
+- **classes:** adjust code smell ([cf53a1f](https://github.com/nartc/mapper/commit/cf53a1f0bfcd472105a5f8fe127bd0c2b782ca53))
+- **core:** adjust code smell ([736f58d](https://github.com/nartc/mapper/commit/736f58d94012d901ccc6980c026e06afe75eba98))
+- **pojos:** adjust code smell ([4682fbf](https://github.com/nartc/mapper/commit/4682fbf7ea0f3a18a7c6c32849bf3e0d99c4721b))
+
+### Features
+
+- **core:** better error message for mapping operation error ([550d8e8](https://github.com/nartc/mapper/commit/550d8e87dbebf8e699b48454f11ef841712d732a))
+
 ## [1.0.4](https://github.com/nartc/mapper/compare/1.0.3...1.0.4) (2021-01-29)
 
 ### Bug Fixes

@@ -1,3 +1,19 @@
+# [2.0.0](https://github.com/nartc/mapper/compare/1.2.0...2.0.0) (2021-01-31)
+
+### Features
+
+- enable strict mode ([6456bec](https://github.com/nartc/mapper/commit/6456bec68becae47509d7d59bb71d24007d07503))
+- **classes:** strict mode friendly ([bac51e9](https://github.com/nartc/mapper/commit/bac51e9dc93090fd7ea4db865f99bb940b572d38))
+- **core:** strict mode friendly ([5178c3c](https://github.com/nartc/mapper/commit/5178c3caa1536aca12a9611a0471a6b2a206d50c))
+- **nestjs:** strict mode friendly ([64abad4](https://github.com/nartc/mapper/commit/64abad4c09d43449108ad63921f0e81ef5cac307))
+- **pojos:** strict mode friendly ([deedc1b](https://github.com/nartc/mapper/commit/deedc1be9bb5dca86dbfa8ad945436ead1ac2c9d))
+- **types:** strict mode friendly ([f8e6211](https://github.com/nartc/mapper/commit/f8e62111ebcfb5422ab3606587fc2288072b91b6))
+
+### BREAKING CHANGES
+
+- This release enables strict mode for automapper. The type is stricter which might
+  affect your current implementations.
+
 # [1.2.0](https://github.com/nartc/mapper/compare/1.1.1...1.2.0) (2021-01-31)
 
 ### Features

@@ -173,3 +173,20 @@ mapper.createMap(SomePersonDto, Person).forMember(
   )
 );
 ```
+
+## Strict Mode
+
+If you have `strict` mode turned on, and you have **Union Type** on your properties like: `string | null`, `number | null`, or `boolean | null`; you need to pass the `typeFn` to `@AutoMap()` like the following:
+
+```ts
+export class User {
+  @AutoMap(() => String)
+  name!: string | null;
+  @AutoMap(() => Number)
+  age!: number | null;
+  @AutoMap(() => Boolean)
+  isAdmin!: boolean | null;
+}
+```
+
+This is due to **Weak Reflection** when `strict` mode is enabled.

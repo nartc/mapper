@@ -21,3 +21,5 @@ mapper.createMap(User, UserDto).forMember(
 ```
 
 `mapDefer()` will set the `TransformationType` to `TransformationType.MapDefer`
+
+If you have `strict` mode turned on, you might need to annotate the generics of the `MemberMapFunction` like `convertUsing<User, string>()`

@@ -15,6 +15,7 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
+    "strict": true,
     "paths": {
       "@automapper/core": ["packages/core/src/index.ts"],
       "@automapper/classes": ["packages/classes/src/index.ts"],
@@ -23,8 +24,7 @@
         "packages/integration-test/src/index.ts"
       ],
       "@automapper/pojos": ["packages/pojos/src/index.ts"],
-      "@automapper/nestjs": ["packages/nestjs/src/index.ts"],
-      "@automapper/test-util": ["packages/test-util/src/index.ts"]
+      "@automapper/nestjs": ["packages/nestjs/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

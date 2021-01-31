@@ -22,8 +22,7 @@
     "integration-test": { "tags": ["type:test"] },
     "pojos": { "tags": ["type:plugin"] },
     "nestjs": { "tags": ["type:integration"] },
-    "nestjs-integration-test": { "tags": ["type:test"] },
-    "test-util": { "tags": ["type:util"] }
+    "nestjs-integration-test": { "tags": ["type:test"] }
   },
   "workspaceLayout": { "appsDir": "packages", "libsDir": "packages" }
 }

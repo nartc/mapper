@@ -4,22 +4,22 @@ import { PascalAvatar, PascalAvatarVm } from './avatar-pascal';
 
 export class PascalUserProfile {
   @AutoMap()
-  Bio: string;
+  Bio!: string;
   @AutoMap()
-  Birthday: Date;
+  Birthday!: Date;
   @AutoMap(() => PascalAvatar)
-  Avatar: PascalAvatar;
+  Avatar!: PascalAvatar;
   @AutoMap(() => PascalAddress)
-  Addresses: PascalAddress[];
+  Addresses!: PascalAddress[];
 }
 
 export class PascalUserProfileVm {
   @AutoMap()
-  Bio: string;
+  Bio!: string;
   @AutoMap()
-  Birthday: string;
+  Birthday!: string;
   @AutoMap(() => PascalAvatarVm)
-  Avatar: PascalAvatarVm;
+  Avatar!: PascalAvatarVm;
   @AutoMap(() => PascalAddressVm)
-  Addresses: PascalAddressVm[];
+  Addresses!: PascalAddressVm[];
 }

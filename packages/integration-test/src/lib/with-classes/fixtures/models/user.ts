@@ -4,26 +4,26 @@ import { UserProfile, UserProfileVm } from './user-profile';
 
 export class User {
   @AutoMap()
-  firstName: string;
+  firstName!: string;
   @AutoMap()
-  lastName: string;
+  lastName!: string;
   @AutoMap(() => UserProfile)
-  profile: UserProfile;
+  profile!: UserProfile;
   @AutoMap(() => Job)
-  job: Job;
+  job!: Job;
 }
 
 export class UserVm {
   @AutoMap()
-  first: string;
+  first!: string;
   @AutoMap()
-  last: string;
+  last!: string;
   @AutoMap()
-  full: string;
+  full!: string;
   @AutoMap(() => UserProfileVm)
-  profile: UserProfileVm;
+  profile!: UserProfileVm;
   @AutoMap()
-  jobTitle: string;
+  jobTitle!: string;
   @AutoMap()
-  jobAnnualSalary: number;
+  jobAnnualSalary!: number;
 }

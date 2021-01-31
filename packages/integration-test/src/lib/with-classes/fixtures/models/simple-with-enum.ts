@@ -16,22 +16,22 @@ enum StringEnum1 {
 
 export class FooWithEnum {
   @AutoMap()
-  enum1: Enum1;
+  enum1!: Enum1;
   @AutoMap()
-  stringEnum1: StringEnum1;
+  stringEnum1!: StringEnum1;
   @AutoMap()
-  externalEnum1: ExternalEnum1;
+  externalEnum1!: ExternalEnum1;
   @AutoMap()
-  externalStringEnum1: ExternalStringEnum1;
+  externalStringEnum1!: ExternalStringEnum1;
 }
 
 export class FooWithEnumDto {
   @AutoMap()
-  enum1: Enum1;
+  enum1!: Enum1;
   @AutoMap()
-  stringEnum1: StringEnum1;
+  stringEnum1!: StringEnum1;
   @AutoMap()
-  externalEnum1: ExternalEnum1;
+  externalEnum1!: ExternalEnum1;
   @AutoMap()
-  externalStringEnum1: ExternalStringEnum1;
+  externalStringEnum1!: ExternalStringEnum1;
 }

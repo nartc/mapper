@@ -2,16 +2,16 @@ import { AutoMap } from '@automapper/classes';
 
 export class SimpleUser {
   @AutoMap()
-  firstName: string;
+  firstName!: string;
   @AutoMap()
-  lastName: string;
+  lastName!: string;
 }
 
 export class SimpleUserVm {
   @AutoMap()
-  firstName: string;
+  firstName!: string;
   @AutoMap()
-  lastName: string;
+  lastName!: string;
   @AutoMap()
-  fullName: string;
+  fullName!: string;
 }

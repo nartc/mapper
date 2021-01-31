@@ -4,14 +4,14 @@ export interface Avatar {
   url: string;
   source: string;
   shouldIgnore: number;
-  shouldBeSubstituted: string;
+  shouldBeSubstituted: string | null;
   forCondition: boolean;
 }
 
 export interface AvatarVm {
   url: string;
   willBeIgnored: number;
-  shouldBeSubstituted: string;
+  shouldBeSubstituted: string | null;
   forCondition: boolean;
 }
 

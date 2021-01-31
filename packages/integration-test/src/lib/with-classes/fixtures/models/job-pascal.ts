@@ -2,7 +2,7 @@ import { AutoMap } from '@automapper/classes';
 
 export class PascalJob {
   @AutoMap()
-  Title: string;
+  Title!: string;
   @AutoMap()
-  AnnualSalary: number;
+  AnnualSalary!: number;
 }

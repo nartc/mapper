@@ -151,7 +151,7 @@ describe('Naming Conventions', () => {
       const foo = new SnakeSimpleFoo();
       foo.foo = 'Foo';
       foo.foo_bar = 123;
-      foo.bar = new SimpleBar();
+      foo.bar = new SnakeSimpleBar();
       foo.bar.bar = 'Bar';
 
       const vm = mapper.map(foo, SimpleFooVm, SnakeSimpleFoo);

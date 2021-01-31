@@ -2,14 +2,14 @@ import { AutoMap } from '@automapper/classes';
 
 export class PascalAddress {
   @AutoMap()
-  Street: string;
+  Street!: string;
   @AutoMap()
-  City: string;
+  City!: string;
   @AutoMap()
-  State: string;
+  State!: string;
 }
 
 export class PascalAddressVm {
   @AutoMap()
-  FormattedAddress: string;
+  FormattedAddress!: string;
 }

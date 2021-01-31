@@ -2,7 +2,7 @@ import { AutoMap } from '@automapper/classes';
 
 export class SnakeJob {
   @AutoMap()
-  title: string;
+  title!: string;
   @AutoMap()
-  annual_salary: number;
+  annual_salary!: number;
 }

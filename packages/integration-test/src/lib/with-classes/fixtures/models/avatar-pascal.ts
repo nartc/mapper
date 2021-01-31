@@ -2,24 +2,24 @@ import { AutoMap } from '@automapper/classes';
 
 export class PascalAvatar {
   @AutoMap()
-  Url: string;
+  Url!: string;
   @AutoMap()
-  Source: string;
+  Source!: string;
   @AutoMap()
-  ShouldIgnore: number;
+  ShouldIgnore!: number;
+  @AutoMap(() => String)
+  ShouldBeSubstituted!: string | null;
   @AutoMap()
-  ShouldBeSubstituted: string;
-  @AutoMap()
-  ForCondition: boolean;
+  ForCondition!: boolean;
 }
 
 export class PascalAvatarVm {
   @AutoMap()
-  Url: string;
+  Url!: string;
   @AutoMap()
-  WillBeIgnored: number;
+  WillBeIgnored!: number;
+  @AutoMap(() => String)
+  ShouldBeSubstituted!: string | null;
   @AutoMap()
-  ShouldBeSubstituted: string;
-  @AutoMap()
-  ForCondition: boolean;
+  ForCondition!: boolean;
 }

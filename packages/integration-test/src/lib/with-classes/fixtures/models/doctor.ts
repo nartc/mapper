@@ -2,14 +2,14 @@ import { AutoMap } from '@automapper/classes';
 
 export class Doctor {
   @AutoMap()
-  name: string;
+  name!: string;
   @AutoMap()
-  titleTags: string[];
+  titleTags!: string[];
 }
 
 export class DoctorDto {
   @AutoMap()
-  name: string;
+  name!: string;
   @AutoMap()
-  titleTags: string[];
+  titleTags!: string[];
 }

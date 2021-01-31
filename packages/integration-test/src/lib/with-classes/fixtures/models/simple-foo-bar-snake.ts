@@ -2,28 +2,28 @@ import { AutoMap } from '@automapper/classes';
 
 export class SnakeSimpleBar {
   @AutoMap()
-  bar: string;
+  bar!: string;
 }
 
 export class SnakeSimpleBarVm {
   @AutoMap()
-  bar: string;
+  bar!: string;
 }
 
 export class SnakeSimpleFoo {
   @AutoMap()
-  foo: string;
+  foo!: string;
   @AutoMap(() => SnakeSimpleBar)
-  bar: SnakeSimpleBar;
+  bar!: SnakeSimpleBar;
   @AutoMap()
-  foo_bar: number;
+  foo_bar!: number;
 }
 
 export class SnakeSimpleFooVm {
   @AutoMap()
-  foo: string;
+  foo!: string;
   @AutoMap(() => SnakeSimpleBarVm)
-  bar: SnakeSimpleBarVm;
+  bar!: SnakeSimpleBarVm;
   @AutoMap()
-  foo_bar: number;
+  foo_bar!: number;
 }

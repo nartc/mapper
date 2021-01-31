@@ -2,14 +2,14 @@ import { AutoMap } from '@automapper/classes';
 
 export class Address {
   @AutoMap()
-  street: string;
+  street!: string;
   @AutoMap()
-  city: string;
+  city!: string;
   @AutoMap()
-  state: string;
+  state!: string;
 }
 
 export class AddressVm {
   @AutoMap()
-  formattedAddress: string;
+  formattedAddress!: string;
 }

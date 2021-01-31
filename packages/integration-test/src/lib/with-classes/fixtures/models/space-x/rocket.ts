@@ -1,112 +1,112 @@
 import { AutoMap } from '@automapper/classes';
 
 export class Diameter {
-  @AutoMap()
-  meters: number | null;
+  @AutoMap(() => Number)
+  meters!: number | null;
 
-  @AutoMap()
-  feet: number | null;
+  @AutoMap(() => Number)
+  feet!: number | null;
 }
 
 export class ISP {
   @AutoMap()
-  sea_level: number;
+  sea_level!: number;
 
   @AutoMap()
-  vacuum: number;
+  vacuum!: number;
 }
 
 export class Thrust {
   @AutoMap()
-  kN: number;
+  kN!: number;
 
   @AutoMap()
-  lbf: number;
+  lbf!: number;
 }
 
 export class LandingLegs {
   @AutoMap()
-  number: number;
+  number!: number;
 
   @AutoMap()
-  material: null | string;
+  material!: null | string;
 }
 
 export class Mass {
   @AutoMap()
-  kg: number;
+  kg!: number;
 
   @AutoMap()
-  lb: number;
+  lb!: number;
 }
 
 export class PayloadWeight {
   @AutoMap()
-  id: string;
+  id!: string;
 
   @AutoMap()
-  name: string;
+  name!: string;
 
   @AutoMap()
-  kg: number;
+  kg!: number;
 
   @AutoMap()
-  lb: number;
+  lb!: number;
 }
 
 export class Engines {
   @AutoMap()
-  number: number;
+  number!: number;
 
   @AutoMap()
-  type: string;
+  type!: string;
 
   @AutoMap()
-  version: string;
+  version!: string;
 
   @AutoMap()
-  layout: null | string;
+  layout!: null | string;
 
   @AutoMap(() => ISP)
-  isp: ISP;
+  isp!: ISP;
+
+  @AutoMap(() => Number)
+  engine_loss_max!: number | null;
 
   @AutoMap()
-  engine_loss_max: number | null;
+  propellant_1!: string;
 
   @AutoMap()
-  propellant_1: string;
-
-  @AutoMap()
-  propellant_2: string;
+  propellant_2!: string;
 
   @AutoMap(() => Thrust)
-  thrust_sea_level: Thrust;
+  thrust_sea_level!: Thrust;
 
   @AutoMap(() => Thrust)
-  thrust_vacuum: Thrust;
+  thrust_vacuum!: Thrust;
 
   @AutoMap()
-  thrust_to_weight: number;
+  thrust_to_weight!: number;
 }
 
 export class FirstStage {
   @AutoMap()
-  reusable: boolean;
+  reusable!: boolean;
 
   @AutoMap()
-  engines: number;
+  engines!: number;
 
   @AutoMap()
-  fuel_amount_tons: number;
+  fuel_amount_tons!: number;
 
-  @AutoMap()
-  burn_time_sec: number | null;
+  @AutoMap(() => Number)
+  burn_time_sec!: number | null;
 
   @AutoMap(() => Thrust)
-  thrust_sea_level: Thrust;
+  thrust_sea_level!: Thrust;
 
   @AutoMap(() => Thrust)
-  thrust_vacuum: Thrust;
+  thrust_vacuum!: Thrust;
 
   @AutoMap()
   cores?: number;
@@ -114,18 +114,18 @@ export class FirstStage {
 
 export class CompositeFairing {
   @AutoMap(() => Diameter)
-  height: Diameter;
+  height!: Diameter;
 
   @AutoMap(() => Diameter)
-  diameter: Diameter;
+  diameter!: Diameter;
 }
 
 export class Payloads {
   @AutoMap()
-  option_1: string;
+  option_1!: string;
 
   @AutoMap(() => CompositeFairing)
-  composite_fairing: CompositeFairing;
+  composite_fairing!: CompositeFairing;
 
   @AutoMap()
   option_2?: string;
@@ -133,91 +133,91 @@ export class Payloads {
 
 export class SecondStage {
   @AutoMap()
-  reusable: boolean;
+  reusable!: boolean;
 
   @AutoMap()
-  engines: number;
+  engines!: number;
 
   @AutoMap()
-  fuel_amount_tons: number;
+  fuel_amount_tons!: number;
 
-  @AutoMap()
-  burn_time_sec: number | null;
+  @AutoMap(() => Number)
+  burn_time_sec!: number | null;
 
   @AutoMap(() => Thrust)
-  thrust: Thrust;
+  thrust!: Thrust;
 
   @AutoMap(() => Payloads)
-  payloads: Payloads;
+  payloads!: Payloads;
 }
 
 export class Rocket {
   @AutoMap()
-  id: number;
+  id!: number;
 
   @AutoMap()
-  active: boolean;
+  active!: boolean;
 
   @AutoMap()
-  stages: number;
+  stages!: number;
 
   @AutoMap()
-  boosters: number;
+  boosters!: number;
 
   @AutoMap()
-  cost_per_launch: number;
+  cost_per_launch!: number;
 
   @AutoMap()
-  success_rate_pct: number;
+  success_rate_pct!: number;
 
   @AutoMap()
-  first_flight: Date;
+  first_flight!: Date;
 
   @AutoMap()
-  country: string;
+  country!: string;
 
   @AutoMap()
-  company: string;
+  company!: string;
 
   @AutoMap(() => Diameter)
-  height: Diameter;
+  height!: Diameter;
 
   @AutoMap(() => Diameter)
-  diameter: Diameter;
+  diameter!: Diameter;
 
   @AutoMap(() => Mass)
-  mass: Mass;
+  mass!: Mass;
 
   @AutoMap(() => PayloadWeight)
-  payload_weights: PayloadWeight[];
+  payload_weights!: PayloadWeight[];
 
   @AutoMap(() => FirstStage)
-  first_stage: FirstStage;
+  first_stage!: FirstStage;
 
   @AutoMap(() => SecondStage)
-  second_stage: SecondStage;
+  second_stage!: SecondStage;
 
   @AutoMap(() => Engines)
-  engines: Engines;
+  engines!: Engines;
 
   @AutoMap(() => LandingLegs)
-  landing_legs: LandingLegs;
+  landing_legs!: LandingLegs;
 
   @AutoMap(() => String)
-  flickr_images: string[];
+  flickr_images!: string[];
 
   @AutoMap()
-  wikipedia: string;
+  wikipedia!: string;
 
   @AutoMap()
-  description: string;
+  description!: string;
 
   @AutoMap()
-  rocket_id: string;
+  rocket_id!: string;
 
   @AutoMap()
-  rocket_name: string;
+  rocket_name!: string;
 
   @AutoMap()
-  rocket_type: string;
+  rocket_type!: string;
 }

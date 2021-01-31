@@ -4,14 +4,14 @@ export interface PascalAvatar {
   Url: string;
   Source: string;
   ShouldIgnore: number;
-  ShouldBeSubstituted: string;
+  ShouldBeSubstituted: string | null;
   ForCondition: boolean;
 }
 
 export interface PascalAvatarVm {
   Url: string;
   WillBeIgnored: number;
-  ShouldBeSubstituted: string;
+  ShouldBeSubstituted: string | null;
   ForCondition: boolean;
 }
 

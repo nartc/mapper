@@ -4,26 +4,26 @@ import { SnakeUserProfile, SnakeUserProfileVm } from './user-profile-snake';
 
 export class SnakeUser {
   @AutoMap()
-  first_name: string;
+  first_name!: string;
   @AutoMap()
-  last_name: string;
+  last_name!: string;
   @AutoMap(() => SnakeUserProfile)
-  profile: SnakeUserProfile;
+  profile!: SnakeUserProfile;
   @AutoMap(() => SnakeJob)
-  job: SnakeJob;
+  job!: SnakeJob;
 }
 
 export class SnakeUserVm {
   @AutoMap()
-  first: string;
+  first!: string;
   @AutoMap()
-  last: string;
+  last!: string;
   @AutoMap()
-  full: string;
+  full!: string;
   @AutoMap(() => SnakeUserProfileVm)
-  profile: SnakeUserProfileVm;
+  profile!: SnakeUserProfileVm;
   @AutoMap()
-  job_title: string;
+  job_title!: string;
   @AutoMap()
-  job_annual_salary: number;
+  job_annual_salary!: number;
 }

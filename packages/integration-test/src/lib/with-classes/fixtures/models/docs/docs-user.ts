@@ -3,24 +3,24 @@ import { Bio, BioDto } from './docs-bio';
 
 export class User {
   @AutoMap()
-  firstName: string;
+  firstName!: string;
   @AutoMap()
-  lastName: string;
+  lastName!: string;
   @AutoMap()
-  username: string;
-  password: string;
+  username!: string;
+  password!: string;
   @AutoMap(() => Bio)
-  bio: Bio;
+  bio!: Bio;
 }
 
 export class UserDto {
   @AutoMap()
-  firstName: string;
+  firstName!: string;
   @AutoMap()
-  lastName: string;
-  fullName: string;
+  lastName!: string;
+  fullName!: string;
   @AutoMap()
-  username: string;
+  username!: string;
   @AutoMap(() => BioDto)
-  bio: BioDto;
+  bio!: BioDto;
 }

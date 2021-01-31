@@ -29,7 +29,8 @@ describe('with extends plugin', () => {
 
     const originalPreMap = originalClasses.preMap;
     originalClasses.preMap = (...args) => {
-      const originalPreMapResult = originalPreMap(...args);
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const originalPreMapResult = originalPreMap!(...args);
       nullify(originalPreMapResult[0]);
       return originalPreMapResult;
     };
@@ -95,7 +96,7 @@ describe('with extends plugin', () => {
     mapper.createMap(SimpleBar, SimpleBarVm);
     mapper.createMap(SimpleFoo, SimpleFooVm);
 
-    const foos = [];
+    const foos: SimpleFoo[] = [];
 
     const foo = new SimpleFoo();
     foo.fooBar = null;

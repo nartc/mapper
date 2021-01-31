@@ -3,18 +3,18 @@ import { Job } from './docs-job';
 
 export class Bio {
   @AutoMap(() => Job)
-  job: Job;
-  birthday: Date;
+  job!: Job;
+  birthday!: Date;
   @AutoMap()
-  avatarUrl: string;
+  avatarUrl!: string;
 }
 
 export class BioDto {
   @AutoMap()
-  jobTitle: string;
+  jobTitle!: string;
   @AutoMap()
-  jobSalary: number;
-  birthday: string;
+  jobSalary!: number;
+  birthday!: string;
   @AutoMap()
-  avatarUrl: string;
+  avatarUrl!: string;
 }

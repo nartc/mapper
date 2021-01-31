@@ -2,24 +2,24 @@ import { AutoMap } from '@automapper/classes';
 
 export class Avatar {
   @AutoMap()
-  url: string;
+  url!: string;
   @AutoMap()
-  source: string;
+  source!: string;
   @AutoMap()
-  shouldIgnore: number;
+  shouldIgnore!: number;
   @AutoMap()
-  shouldBeSubstituted: string;
+  shouldBeSubstituted!: string;
   @AutoMap()
-  forCondition: boolean;
+  forCondition!: boolean;
 }
 
 export class AvatarVm {
   @AutoMap()
-  url: string;
+  url!: string;
   @AutoMap()
-  willBeIgnored: number;
+  willBeIgnored!: number;
   @AutoMap()
-  shouldBeSubstituted: string;
+  shouldBeSubstituted!: string;
   @AutoMap()
-  forCondition: boolean;
+  forCondition!: boolean;
 }

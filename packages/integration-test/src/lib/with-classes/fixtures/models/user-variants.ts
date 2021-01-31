@@ -1,7 +1,7 @@
 import { AutoMap } from '@automapper/classes';
 
 export class UserWithGetter {
-  private _firstName: string;
+  private _firstName!: string;
   @AutoMap()
   get firstName() {
     return this._firstName;
@@ -11,7 +11,7 @@ export class UserWithGetter {
     this._firstName = value;
   }
 
-  private _lastName: string;
+  private _lastName!: string;
   @AutoMap()
   get lastName() {
     return this._lastName;
@@ -24,16 +24,16 @@ export class UserWithGetter {
 
 export class UserWithReturnKeyword {
   @AutoMap()
-  returnFirstName: string;
+  returnFirstName!: string;
   @AutoMap()
-  returnLastName: string;
+  returnLastName!: string;
 }
 
 export class UserWithReturnKeywordVm {
   @AutoMap()
-  returnReturnFirst: string;
+  returnReturnFirst!: string;
   @AutoMap()
-  returnReturnLast: string;
+  returnReturnLast!: string;
   @AutoMap()
-  returnReturnFull: string;
+  returnReturnFull!: string;
 }

@@ -4,22 +4,22 @@ import { Avatar, AvatarVm } from './avatar';
 
 export class UserProfile {
   @AutoMap()
-  bio: string;
+  bio!: string;
   @AutoMap()
-  birthday: Date;
+  birthday!: Date;
   @AutoMap(() => Avatar)
-  avatar: Avatar;
+  avatar!: Avatar;
   @AutoMap(() => Address)
-  addresses: Address[];
+  addresses!: Address[];
 }
 
 export class UserProfileVm {
   @AutoMap()
-  bio: string;
+  bio!: string;
   @AutoMap()
-  birthday: string;
+  birthday!: string;
   @AutoMap(() => AvatarVm)
-  avatar: AvatarVm;
+  avatar!: AvatarVm;
   @AutoMap(() => AddressVm)
-  addresses: AddressVm[];
+  addresses!: AddressVm[];
 }

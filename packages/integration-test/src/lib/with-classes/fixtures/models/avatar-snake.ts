@@ -2,24 +2,24 @@ import { AutoMap } from '@automapper/classes';
 
 export class SnakeAvatar {
   @AutoMap()
-  url: string;
+  url!: string;
   @AutoMap()
-  source: string;
+  source!: string;
   @AutoMap()
-  should_ignore: number;
+  should_ignore!: number;
   @AutoMap()
-  should_be_substituted: string;
+  should_be_substituted!: string;
   @AutoMap()
-  for_condition: boolean;
+  for_condition!: boolean;
 }
 
 export class SnakeAvatarVm {
   @AutoMap()
-  url: string;
+  url!: string;
   @AutoMap()
-  will_be_ignored: number;
+  will_be_ignored!: number;
   @AutoMap()
-  should_be_substituted: string;
+  should_be_substituted!: string;
   @AutoMap()
-  for_condition: boolean;
+  for_condition!: boolean;
 }

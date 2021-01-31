@@ -22,7 +22,7 @@ describe('withUnion', () => {
     const vm = mapper.map(foo, SimpleFooWithUnionVm, SimpleFooWithUnion);
     expect(vm.foo).toEqual(foo.foo);
     expect(vm.fooBar).toEqual(foo.fooBar);
-    expect(vm.bar.bar).toEqual(foo.bar.bar);
+    expect(vm.bar?.bar).toEqual(foo.bar.bar);
   });
 
   it('should map for all null', () => {

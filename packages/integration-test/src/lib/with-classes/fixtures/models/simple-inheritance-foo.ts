@@ -2,32 +2,32 @@ import { AutoMap } from '@automapper/classes';
 
 export class Foo {
   @AutoMap()
-  foo: string;
+  foo!: string;
 }
 
 export class FooVm {
   @AutoMap()
-  fooVm: string;
+  fooVm!: string;
 }
 
 export class FooFoo extends Foo {
   @AutoMap()
-  fooFoo: string;
+  fooFoo!: string;
 }
 
 export class FooFooVm extends FooVm {
   @AutoMap()
-  fooFooVm: string;
+  fooFooVm!: string;
 }
 
 export class FooFooFoo extends FooFoo {
   @AutoMap()
-  fooFooFoo: string;
+  fooFooFoo!: string;
 }
 
 export class FooFooFooVm extends FooFooVm {
   @AutoMap()
-  fooFooFooVm: string;
+  fooFooFooVm!: string;
 }
 
 export class EmptyFoo extends FooFooFoo {}

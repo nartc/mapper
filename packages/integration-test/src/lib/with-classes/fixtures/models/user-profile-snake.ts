@@ -4,22 +4,22 @@ import { SnakeAvatar, SnakeAvatarVm } from './avatar-snake';
 
 export class SnakeUserProfile {
   @AutoMap()
-  bio: string;
+  bio!: string;
   @AutoMap()
-  birthday: Date;
+  birthday!: Date;
   @AutoMap(() => SnakeAvatar)
-  avatar: SnakeAvatar;
+  avatar!: SnakeAvatar;
   @AutoMap(() => SnakeAddress)
-  addresses: SnakeAddress[];
+  addresses!: SnakeAddress[];
 }
 
 export class SnakeUserProfileVm {
   @AutoMap()
-  bio: string;
+  bio!: string;
   @AutoMap()
-  birthday: string;
+  birthday!: string;
   @AutoMap(() => SnakeAvatarVm)
-  avatar: SnakeAvatarVm;
+  avatar!: SnakeAvatarVm;
   @AutoMap(() => SnakeAddressVm)
-  addresses: SnakeAddressVm[];
+  addresses!: SnakeAddressVm[];
 }

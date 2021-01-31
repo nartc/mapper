@@ -2,28 +2,28 @@ import { AutoMap } from '@automapper/classes';
 
 export class PascalSimpleBar {
   @AutoMap()
-  Bar: string;
+  Bar!: string;
 }
 
 export class PascalSimpleBarVm {
   @AutoMap()
-  Bar: string;
+  Bar!: string;
 }
 
 export class PascalSimpleFoo {
   @AutoMap()
-  Foo: string;
+  Foo!: string;
   @AutoMap(() => PascalSimpleBar)
-  Bar: PascalSimpleBar;
+  Bar!: PascalSimpleBar;
   @AutoMap()
-  FooBar: number;
+  FooBar!: number;
 }
 
 export class PascalSimpleFooVm {
   @AutoMap()
-  Foo: string;
+  Foo!: string;
   @AutoMap(() => PascalSimpleBarVm)
-  Bar: PascalSimpleBarVm;
+  Bar!: PascalSimpleBarVm;
   @AutoMap()
-  FooBar: number;
+  FooBar!: number;
 }

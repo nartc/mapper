@@ -4,26 +4,26 @@ import { PascalUserProfile, PascalUserProfileVm } from './user-profile-pascal';
 
 export class PascalUser {
   @AutoMap()
-  FirstName: string;
+  FirstName!: string;
   @AutoMap()
-  LastName: string;
+  LastName!: string;
   @AutoMap(() => PascalUserProfile)
-  Profile: PascalUserProfile;
+  Profile!: PascalUserProfile;
   @AutoMap(() => PascalJob)
-  Job: PascalJob;
+  Job!: PascalJob;
 }
 
 export class PascalUserVm {
   @AutoMap()
-  First: string;
+  First!: string;
   @AutoMap()
-  Last: string;
+  Last!: string;
   @AutoMap()
-  Full: string;
+  Full!: string;
   @AutoMap(() => PascalUserProfileVm)
-  Profile: PascalUserProfileVm;
+  Profile!: PascalUserProfileVm;
   @AutoMap()
-  JobTitle: string;
+  JobTitle!: string;
   @AutoMap()
-  JobAnnualSalary: number;
+  JobAnnualSalary!: number;
 }

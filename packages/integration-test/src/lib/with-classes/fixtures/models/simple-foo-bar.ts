@@ -1,29 +1,29 @@
 import { AutoMap } from '@automapper/classes';
 
 export class SimpleBar {
-  @AutoMap()
-  bar: string;
+  @AutoMap(() => String)
+  bar!: string | null;
 }
 
 export class SimpleBarVm {
-  @AutoMap()
-  bar: string;
+  @AutoMap(() => String)
+  bar!: string | null;
 }
 
 export class SimpleFoo {
   @AutoMap()
-  foo: string;
+  foo!: string;
   @AutoMap(() => SimpleBar)
-  bar: SimpleBar;
-  @AutoMap()
-  fooBar: number;
+  bar!: SimpleBar;
+  @AutoMap(() => Number)
+  fooBar!: number | null;
 }
 
 export class SimpleFooVm {
   @AutoMap()
-  foo: string;
+  foo!: string;
   @AutoMap(() => SimpleBarVm)
-  bar: SimpleBarVm;
-  @AutoMap()
-  fooBar: number;
+  bar!: SimpleBarVm;
+  @AutoMap(() => Number)
+  fooBar!: number | null;
 }

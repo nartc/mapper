@@ -1,3 +1,14 @@
+# [1.2.0](https://github.com/nartc/mapper/compare/1.1.1...1.2.0) (2021-01-31)
+
+### Features
+
+- **core:** add logic to run preMapArray if available when invoking mapArray ([f1f97f3](https://github.com/nartc/mapper/commit/f1f97f30c3fd07b573951d8fdc61437ca5264256))
+- **types:** add MapArrayOptions and adjust mapArray signature ([9d2df49](https://github.com/nartc/mapper/commit/9d2df49fa77f8126e431b9ae0b3ecd05ee0f95ab))
+
+### Documentations
+
+- Add documentation on how to extend a plugin. Please check [Docs](https://automapperts.netlify.app) for more information.
+
 ## [1.1.1](https://github.com/nartc/mapper/compare/1.1.0...1.1.1) (2021-01-30)
 
 ### Bug Fixes

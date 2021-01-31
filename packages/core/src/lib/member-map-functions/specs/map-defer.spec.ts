@@ -3,13 +3,12 @@ import { MapFnClassId, TransformationType } from '@automapper/types';
 
 describe('MapDeferFunction', () => {
   it('should return correctly', () => {
-    const defer = () => ignore();
+    const defer = () => ignore() as any;
 
     const mapDeferFn = mapDefer(defer);
 
     expect(mapDeferFn).toBeTruthy();
     expect(mapDeferFn[MapFnClassId.type]).toEqual(TransformationType.MapDefer);
-    expect(mapDeferFn[MapFnClassId.misc]).toEqual(null);
     expect(mapDeferFn[MapFnClassId.fn]).toBe(defer);
   });
 });

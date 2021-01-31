@@ -6,7 +6,5 @@ describe('IgnoreFunction', () => {
     const ignoreFn = ignore();
     expect(ignoreFn).toBeTruthy();
     expect(ignoreFn[MapFnClassId.type]).toEqual(TransformationType.Ignore);
-    expect(ignoreFn[MapFnClassId.misc]).toEqual(null);
-    expect(ignoreFn[MapFnClassId.fn]).toEqual(null);
   });
 });

@@ -1,8 +1,8 @@
 export function getPathRecursive(
-  node: unknown,
+  node: any,
   prefix = '',
   prev: string[] = []
-): string[] {
+): string[] | undefined {
   if (node == null) {
     return;
   }
@@ -24,9 +24,11 @@ export function getPathRecursive(
 
       for (const childNode of queue) {
         const childPaths = getPathRecursive(childNode, path + '.');
-        for (const childPath of childPaths) {
-          if (result.includes(childPath)) continue;
-          result.push(childPath);
+        if (childPaths) {
+          for (const childPath of childPaths) {
+            if (result.includes(childPath)) continue;
+            result.push(childPath);
+          }
         }
       }
     }

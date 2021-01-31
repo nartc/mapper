@@ -15,7 +15,7 @@ import { mapInitialize } from './map-initialize';
 
 function defaultIsMultipartSourcePathsInSource(
   multipartSourcePaths: string[],
-  sourceObj: unknown
+  sourceObj: any
 ): boolean {
   return !(
     multipartSourcePaths.length > 1 &&
@@ -26,10 +26,10 @@ function defaultIsMultipartSourcePathsInSource(
 }
 
 function defaultIsDestinationPathOnSource(
-  sourceObj: unknown,
+  sourceObj: any,
   sourcePath: string
 ): boolean {
-  return !!sourceObj.hasOwnProperty(sourcePath);
+  return sourceObj.hasOwnProperty(sourcePath);
 }
 
 interface CreateInitialMappingOptions {
@@ -70,7 +70,7 @@ export function createInitialMapping(
 
   prePropertiesLoop?.(mapping);
 
-  const destinationPaths = getPathRecursive(destinationObj);
+  const destinationPaths = getPathRecursive(destinationObj) || [];
   const namingConventions = mapping[MappingClassId.namingConventions];
   let i = destinationPaths.length;
   while (i--) {
@@ -100,7 +100,7 @@ export function createInitialMapping(
       const sourcePaths = getFlatteningSourcePaths(
         sourceObj,
         sourcePath,
-        namingConventions
+        namingConventions!
       );
 
       if (!isDefined(sourcePaths)) {
@@ -111,7 +111,7 @@ export function createInitialMapping(
         destinationPath,
         Object.freeze(([
           [destinationPath],
-          [mapInitialize(...sourcePaths)],
+          [mapInitialize(...sourcePaths!)],
         ] as unknown) as MappingProperty),
         destinationNestedMetadataAtPath,
       ]);

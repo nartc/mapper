@@ -12,7 +12,7 @@ export function getSourcePropertyPath(
   const [
     sourceNamingConvention,
     destinationNamingConvention,
-  ] = namingConventions;
+  ] = namingConventions!;
 
   const splitPath = path.split('.');
   if (splitPath.length > 1) {

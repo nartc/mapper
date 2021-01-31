@@ -8,7 +8,6 @@ describe('FromValueFunction', () => {
     expect(fromValueFunction[MapFnClassId.type]).toEqual(
       TransformationType.FromValue
     );
-    expect(fromValueFunction[MapFnClassId.misc]).toEqual(null);
     expect(fromValueFunction[MapFnClassId.fn]).toBeInstanceOf(Function);
   });
 

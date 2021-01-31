@@ -1,23 +1,20 @@
 import type {
   Dictionary,
-  NullSubstitutionFunction,
+  NullSubstitutionReturn,
   SelectorReturn,
 } from '@automapper/types';
 import { TransformationType } from '@automapper/types';
 import { get } from '../utils';
 
 export function nullSubstitution<
-  TSource extends Dictionary<TSource> = unknown,
-  TDestination extends Dictionary<TDestination> = unknown,
+  TSource extends Dictionary<TSource> = any,
+  TDestination extends Dictionary<TDestination> = any,
   TSelectorReturn = SelectorReturn<TDestination>
 >(
   substitution: TSelectorReturn
-): ReturnType<
-  NullSubstitutionFunction<TSource, TDestination, TSelectorReturn>
-> {
+): NullSubstitutionReturn<TSource, TDestination, TSelectorReturn> {
   return [
     TransformationType.NullSubstitution,
-    null,
     (source, ...sourceMemberPaths) => {
       const sourceValue = get(source, ...sourceMemberPaths) as TSelectorReturn;
       return sourceValue === null ? substitution : sourceValue;

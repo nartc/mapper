@@ -1,17 +1,17 @@
 import type {
   ConditionPredicate,
   Dictionary,
-  PreConditionFunction,
+  PreConditionReturn,
   SelectorReturn,
 } from '@automapper/types';
 
 export function preCondition<
-  TSource extends Dictionary<TSource> = unknown,
-  TDestination extends Dictionary<TDestination> = unknown,
+  TSource extends Dictionary<TSource> = any,
+  TDestination extends Dictionary<TDestination> = any,
   TSelectorReturn = SelectorReturn<TDestination>
 >(
   predicate: ConditionPredicate<TSource>,
   defaultValue?: TSelectorReturn
-): ReturnType<PreConditionFunction<TSource, TDestination, TSelectorReturn>> {
+): PreConditionReturn<TSource, TDestination, TSelectorReturn> {
   return [predicate, defaultValue];
 }

@@ -28,7 +28,6 @@ describe('ConvertUsingFunction', () => {
     expect(convertUsingFn[MapFnClassId.type]).toEqual(
       TransformationType.ConvertUsing
     );
-    expect(convertUsingFn[MapFnClassId.misc]).toEqual(null);
     expect(convertUsingFn[MapFnClassId.fn]).toBeInstanceOf(Function);
   });
 

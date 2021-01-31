@@ -3,7 +3,7 @@ import type { Mapper } from '@automapper/types';
 import { MapFnClassId, TransformationType } from '@automapper/types';
 
 describe('MapWithFunction', () => {
-  const selector = (s) => s;
+  const selector = (s: any) => s;
   const withDestination = () => '';
   const withSource = () => '';
 
@@ -13,8 +13,8 @@ describe('MapWithFunction', () => {
     const mapWithFn = mapWith(withDestination, selector, withSource);
     expect(mapWithFn).toBeTruthy();
     expect(mapWithFn[MapFnClassId.type]).toEqual(TransformationType.MapWith);
-    expect(mapWithFn[MapFnClassId.misc]).toBe(selector);
     expect(mapWithFn[MapFnClassId.fn]).toBeInstanceOf(Function);
+    expect(mapWithFn[MapFnClassId.misc]).toBe(selector);
   });
 
   it('should call mapper.map', () => {

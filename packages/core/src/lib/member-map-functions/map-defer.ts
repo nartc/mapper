@@ -1,16 +1,16 @@
 import type {
   DeferFunction,
   Dictionary,
-  MapDeferFunction,
+  MapDeferReturn,
 } from '@automapper/types';
 import { SelectorReturn, TransformationType } from '@automapper/types';
 
 export function mapDefer<
-  TSource extends Dictionary<TSource> = unknown,
-  TDestination extends Dictionary<TDestination> = unknown,
+  TSource extends Dictionary<TSource> = any,
+  TDestination extends Dictionary<TDestination> = any,
   TSelectorReturn = SelectorReturn<TDestination>
 >(
   defer: DeferFunction<TSource, TDestination, TSelectorReturn>
-): ReturnType<MapDeferFunction<TSource, TDestination, TSelectorReturn>> {
-  return [TransformationType.MapDefer, null, defer];
+): MapDeferReturn<TSource, TDestination, TSelectorReturn> {
+  return [TransformationType.MapDefer, defer];
 }

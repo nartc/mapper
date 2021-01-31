@@ -9,12 +9,11 @@ describe('MapInitializeFunction', () => {
   };
 
   it('should return correctly', () => {
-    const mapInitFn = mapInitialize(null);
+    const mapInitFn = mapInitialize('');
     expect(mapInitFn).toBeTruthy();
     expect(mapInitFn[MapFnClassId.type]).toEqual(
       TransformationType.MapInitialize
     );
-    expect(mapInitFn[MapFnClassId.misc]).toEqual(null);
     expect(mapInitFn[MapFnClassId.fn]).toBeInstanceOf(Function);
   });
 

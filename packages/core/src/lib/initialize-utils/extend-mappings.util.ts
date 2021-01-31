@@ -1,7 +1,7 @@
 import type { Mapping, MappingProperty } from '@automapper/types';
 import { MappingClassId, MappingPropertiesClassId } from '@automapper/types';
 
-export function extendMappings(bases: unknown[], mapping: Mapping) {
+export function extendMappings(bases: any[], mapping: Mapping) {
   for (const mappingToExtend of bases) {
     const propsToExtend = mappingToExtend[MappingClassId.properties];
     for (let i = 0, len = propsToExtend.length; i < len; i++) {
@@ -22,7 +22,7 @@ export function extendMappings(bases: unknown[], mapping: Mapping) {
       }
     }
     mapping[MappingClassId.bases] ??= [];
-    mapping[MappingClassId.bases].push(
+    mapping[MappingClassId.bases]?.push(
       mappingToExtend[MappingClassId.mappings]
     );
   }

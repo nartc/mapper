@@ -21,7 +21,7 @@ describe('set', () => {
 });
 
 describe('setMutate', () => {
-  let obj: unknown;
+  let obj: Record<string, unknown>;
 
   beforeEach(() => {
     obj = { foo: { bar: 'foo' } };

@@ -1,6 +1,6 @@
 import type {
   Dictionary,
-  MapWithFunction,
+  MapWithReturn,
   SelectorReturn,
 } from '@automapper/types';
 import {
@@ -11,24 +11,24 @@ import {
 } from '@automapper/types';
 
 export function mapWith<
-  TSource extends Dictionary<TSource> = unknown,
-  TDestination extends Dictionary<TDestination> = unknown,
+  TSource extends Dictionary<TSource> = any,
+  TDestination extends Dictionary<TDestination> = any,
   TSelectorReturn = SelectorReturn<TDestination>
 >(
   withDestination: Fn<Unpacked<unknown | TSelectorReturn>>,
   withSourceValue: ValueSelector<TSource>,
   withSource: Fn<unknown>
-): ReturnType<MapWithFunction<TSource, TDestination, TSelectorReturn>> {
+): MapWithReturn<TSource, TDestination, TSelectorReturn> {
   return [
     TransformationType.MapWith,
-    withSourceValue,
     (source, mapper) => {
       const sourceValue = withSourceValue(source);
       return mapper.map(
-        sourceValue,
+        sourceValue as Dictionary<unknown>,
         withDestination() as string,
         withSource() as string
       );
     },
+    withSourceValue,
   ];
 }

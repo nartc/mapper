@@ -3,8 +3,8 @@ import type {
   Dictionary,
   Mapping,
   MappingProperty,
-  MemberMapFunction,
-  PreConditionFunction,
+  MemberMapReturn,
+  PreConditionReturn,
   Selector,
   SelectorReturn,
 } from '@automapper/types';
@@ -25,17 +25,18 @@ import { getMemberPath } from './get-member-path.util';
  * @param fluentFunction
  */
 export function createMapForMember<
-  TSource extends Dictionary<TSource> = unknown,
-  TDestination extends Dictionary<TDestination> = unknown,
+  TSource extends Dictionary<TSource> = any,
+  TDestination extends Dictionary<TDestination> = any,
   TMemberType = SelectorReturn<TDestination>
 >(
   mapping: Mapping<TSource, TDestination>,
   selector: Selector<TDestination, TMemberType>,
   [preCond, mapMemberFn]: [
     preCond:
-      | ReturnType<PreConditionFunction<TSource, TDestination>>
-      | ReturnType<MemberMapFunction<TSource, TDestination>>,
-    mapMemberFn?: ReturnType<MemberMapFunction<TSource, TDestination>>
+      | PreConditionReturn<TSource, TDestination>
+      | MemberMapReturn<TSource, TDestination>
+      | undefined,
+    mapMemberFn?: MemberMapReturn<TSource, TDestination>
   ],
   fluentFunction: CreateMapFluentFunction<TSource, TDestination>
 ): CreateMapFluentFunction<TSource, TDestination> {
@@ -45,7 +46,7 @@ export function createMapForMember<
 
   // reassign mapMemberFn and preCond
   if (mapMemberFn == null) {
-    mapMemberFn = preCond as ReturnType<MemberMapFunction>;
+    mapMemberFn = preCond as MemberMapReturn;
     preCond = undefined;
   }
 
@@ -57,7 +58,7 @@ export function createMapForMember<
     mapMemberFn[MapFnClassId.type] === TransformationType.MapFrom ||
     mapMemberFn[MapFnClassId.type] === TransformationType.MapWith
   ) {
-    sourcePath = getMemberPath(mapMemberFn[MapFnClassId.misc]);
+    sourcePath = getMemberPath(mapMemberFn[MapFnClassId.misc]!);
   }
 
   // initialize paths tuple
@@ -68,7 +69,7 @@ export function createMapForMember<
   // initialize MappingProperty
   const mappingProperty: MappingProperty = [
     paths,
-    [mapMemberFn, preCond as ReturnType<PreConditionFunction>],
+    [mapMemberFn, preCond as PreConditionReturn],
   ];
 
   // check existProp on mapping

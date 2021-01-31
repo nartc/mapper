@@ -1,6 +1,6 @@
 import type {
   Converter,
-  ConvertUsingFunction,
+  ConvertUsingReturn,
   Dictionary,
   Selector,
   SelectorReturn,
@@ -8,22 +8,20 @@ import type {
 import { TransformationType } from '@automapper/types';
 
 export function convertUsing<
-  TSource extends Dictionary<TSource> = unknown,
-  TDestination extends Dictionary<TDestination> = unknown,
+  TSource extends Dictionary<TSource> = any,
+  TDestination extends Dictionary<TDestination> = any,
   TSelectorReturn = SelectorReturn<TDestination>,
   TConvertSource = TSource
 >(
   converter: Converter<TConvertSource, TSelectorReturn>,
   value?: Selector<TSource, TConvertSource>
-): ReturnType<ConvertUsingFunction<TSource, TDestination, TSelectorReturn>> {
+): ConvertUsingReturn<TSource, TConvertSource> {
   return [
     TransformationType.ConvertUsing,
-    null,
     (source) => {
-      const valueToConvert: TConvertSource = value
-        ? value(source)
-        : ((source as unknown) as TConvertSource);
-      return converter.convert(valueToConvert);
+      const valueToConvert =
+        value?.(source) ?? ((source as unknown) as TConvertSource);
+      return (converter.convert(valueToConvert) as unknown) as TConvertSource;
     },
   ];
 }

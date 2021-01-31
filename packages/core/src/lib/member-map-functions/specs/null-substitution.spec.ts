@@ -8,7 +8,6 @@ describe('NullSubstitutionFunction', () => {
     expect(nullSubFn[MapFnClassId.type]).toEqual(
       TransformationType.NullSubstitution
     );
-    expect(nullSubFn[MapFnClassId.misc]).toEqual(null);
     expect(nullSubFn[MapFnClassId.fn]).toBeInstanceOf(Function);
   });
 

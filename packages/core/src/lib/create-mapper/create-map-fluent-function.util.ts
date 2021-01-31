@@ -3,8 +3,8 @@ import type {
   Dictionary,
   MapAction,
   Mapping,
-  MemberMapFunction,
-  PreConditionFunction,
+  MemberMapReturn,
+  PreConditionReturn,
   Selector,
   SelectorReturn,
 } from '@automapper/types';
@@ -17,8 +17,8 @@ import { createMapForMember } from './create-map-for-member.util';
  * @param {Mapping} mapping - Mapping object of source <> destination
  */
 export function createMapFluentFunction<
-  TSource extends Dictionary<TSource> = unknown,
-  TDestination extends Dictionary<TDestination> = unknown
+  TSource extends Dictionary<TSource> = any,
+  TDestination extends Dictionary<TDestination> = any
 >(
   mapping: Mapping<TSource, TDestination>
 ): CreateMapFluentFunction<TSource, TDestination> {
@@ -28,10 +28,10 @@ export function createMapFluentFunction<
       selector: Selector<TDestination, TMemberType>,
       ...functions: [
         (
-          | ReturnType<PreConditionFunction<TSource, TDestination, TMemberType>>
-          | ReturnType<MemberMapFunction<TSource, TDestination, TMemberType>>
+          | PreConditionReturn<TSource, TDestination, TMemberType>
+          | MemberMapReturn<TSource, TDestination, TMemberType>
         ),
-        ReturnType<MemberMapFunction<TSource, TDestination, TMemberType>>?
+        MemberMapReturn<TSource, TDestination, TMemberType>?
       ]
     ): CreateMapFluentFunction<TSource, TDestination> {
       return createMapForMember<TSource, TDestination>(

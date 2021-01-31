@@ -1,6 +1,6 @@
 import type {
   Dictionary,
-  MapFromFunction,
+  MapFromReturn,
   Resolver,
   SelectorReturn,
   ValueSelector,
@@ -8,16 +8,16 @@ import type {
 import { TransformationType } from '@automapper/types';
 
 export function mapFrom<
-  TSource extends Dictionary<TSource> = unknown,
-  TDestination extends Dictionary<TDestination> = unknown,
+  TSource extends Dictionary<TSource> = any,
+  TDestination extends Dictionary<TDestination> = any,
   TSelectorReturn = SelectorReturn<TDestination>
 >(
   from:
     | ValueSelector<TSource, TDestination, TSelectorReturn>
     | Resolver<TSource, TDestination, TSelectorReturn>
-): ReturnType<MapFromFunction<TSource, TDestination, TSelectorReturn>> {
+): MapFromReturn<TSource, TDestination, TSelectorReturn> {
   if (isResolver(from)) {
-    return [TransformationType.MapFrom, null, from.resolve.bind(from)];
+    return [TransformationType.MapFrom, from.resolve.bind(from), null];
   }
 
   return [TransformationType.MapFrom, from, from];

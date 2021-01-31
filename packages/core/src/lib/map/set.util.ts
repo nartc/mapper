@@ -1,8 +1,8 @@
-export function set<T>(
+export function set<T extends Record<string, unknown>>(
   object: T,
   path: string,
-  value: unknown
-): (T & { [p: string]: unknown }) | T {
+  value: any
+): (T & { [p: string]: any }) | T {
   const { decomposedPath, base } = decomposePath(path);
 
   if (base === undefined) {
@@ -16,12 +16,20 @@ export function set<T>(
   value =
     decomposedPath.length <= 1
       ? value
-      : set(object[base], decomposedPath.slice(1).join('.'), value);
+      : set(
+          object[base] as Record<string, unknown>,
+          decomposedPath.slice(1).join('.'),
+          value
+        );
 
   return Object.assign(object, { [base]: value });
 }
 
-export function setMutate<T>(object: T, path: string, value: unknown): void {
+export function setMutate<T extends Record<string, unknown>>(
+  object: T,
+  path: string,
+  value: unknown
+): void {
   const { decomposedPath, base } = decomposePath(path);
 
   if (base === undefined) {
@@ -33,9 +41,13 @@ export function setMutate<T>(object: T, path: string, value: unknown): void {
 
   // Determine if there is still layers to traverse
   if (decomposedPath.length <= 1) {
-    object[base] = value;
+    (object as Record<string, unknown>)[base] = value;
   } else {
-    setMutate(object[base], decomposedPath.slice(1).join('.'), value);
+    setMutate(
+      object[base] as Record<string, unknown>,
+      decomposedPath.slice(1).join('.'),
+      value
+    );
   }
 }
 
@@ -47,7 +59,7 @@ function decomposePath(
   return { base, decomposedPath };
 }
 
-function assignEmpty<T>(obj: T, base: string) {
+function assignEmpty(obj: Record<string, unknown>, base: string) {
   if (!obj.hasOwnProperty(base)) {
     obj[base] = {};
   }

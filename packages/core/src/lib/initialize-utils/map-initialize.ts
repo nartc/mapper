@@ -1,21 +1,20 @@
 import type {
   Dictionary,
-  MapInitializeFunction,
+  MapInitializeReturn,
   SelectorReturn,
 } from '@automapper/types';
 import { TransformationType } from '@automapper/types';
 import { get } from '../utils';
 
 export function mapInitialize<
-  TSource extends Dictionary<TSource> = unknown,
-  TDestination extends Dictionary<TDestination> = unknown,
+  TSource extends Dictionary<TSource> = any,
+  TDestination extends Dictionary<TDestination> = any,
   TSelectorReturn = SelectorReturn<TDestination>
 >(
   ...sourcePaths: string[]
-): ReturnType<MapInitializeFunction<TSource, TDestination, TSelectorReturn>> {
+): MapInitializeReturn<TSource, TDestination, TSelectorReturn> {
   return [
     TransformationType.MapInitialize,
-    null,
     (source) => get(source, ...sourcePaths) as TSelectorReturn,
   ];
 }

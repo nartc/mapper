@@ -13,8 +13,8 @@ describe('MapFromFunction', () => {
     const mapFromFn = mapFrom(sourceSelector);
     expect(mapFromFn).toBeTruthy();
     expect(mapFromFn[MapFnClassId.type]).toEqual(TransformationType.MapFrom);
-    expect(mapFromFn[MapFnClassId.misc]).toEqual(sourceSelector);
     expect(mapFromFn[MapFnClassId.fn]).toBeInstanceOf(Function);
+    expect(mapFromFn[MapFnClassId.misc]).toEqual(sourceSelector);
   });
 
   it('should map to foo correctly', () => {

@@ -1,18 +1,18 @@
 /* eslint-disable prefer-const */
 import type {
-  ConditionFunction,
-  ConvertUsingFunction,
+  ConditionReturn,
+  ConvertUsingReturn,
   Dictionary,
   ErrorHandler,
-  FromValueFunction,
-  MapDeferFunction,
-  MapFromFunction,
-  MapInitializeFunction,
+  FromValueReturn,
+  MapDeferReturn,
+  MapFromReturn,
+  MapInitializeReturn,
   MapOptions,
   Mapper,
   Mapping,
-  MapWithFunction,
-  MemberMapFunction,
+  MapWithReturn,
+  MemberMapReturn,
 } from '@automapper/types';
 import { MapFnClassId, TransformationType } from '@automapper/types';
 import { isEmpty } from '../utils';
@@ -21,14 +21,14 @@ import { set, setMutate } from './set.util';
 /**
  * Instruction on how to map a particular member on the destination
  *
- * @param {ReturnType<MemberMapFunction>} transformationMapFn - Transformation information of the property
+ * @param {MemberMapReturn} transformationMapFn - Transformation information of the property
  * @param {TSource} sourceObj - The sourceObject being used to map to destination
  * @param destination - destination meta key
  * @param {string} destinationMemberPath - the property path on the destination
  * @param {Mapper} mapper - the mapper instance
  */
-function mapMember<TSource extends Dictionary<TSource> = unknown>(
-  transformationMapFn: ReturnType<MemberMapFunction>,
+function mapMember<TSource extends Dictionary<TSource> = any>(
+  transformationMapFn: MemberMapReturn,
   sourceObj: TSource,
   destination: unknown,
   destinationMemberPath: string,
@@ -41,37 +41,29 @@ function mapMember<TSource extends Dictionary<TSource> = unknown>(
 
   switch (transformationType) {
     case TransformationType.MapFrom:
-      value = (mapFn as ReturnType<MapFromFunction>[MapFnClassId.fn])(
-        sourceObj,
-        destination
-      );
+      value = (mapFn as MapFromReturn[MapFnClassId.fn])(sourceObj, destination);
       break;
     case TransformationType.FromValue:
-      value = (mapFn as ReturnType<FromValueFunction>[MapFnClassId.fn])();
+      value = (mapFn as FromValueReturn[MapFnClassId.fn])();
       break;
     case TransformationType.MapWith:
-      value = (mapFn as ReturnType<MapWithFunction>[MapFnClassId.fn])(
-        sourceObj,
-        mapper
-      );
+      value = (mapFn as MapWithReturn[MapFnClassId.fn])(sourceObj, mapper);
       break;
     case TransformationType.ConvertUsing:
-      value = (mapFn as ReturnType<ConvertUsingFunction>[MapFnClassId.fn])(
-        sourceObj
-      );
+      value = (mapFn as ConvertUsingReturn[MapFnClassId.fn])(sourceObj);
       break;
     case TransformationType.Condition:
     case TransformationType.NullSubstitution:
-      value = (mapFn as ReturnType<ConditionFunction>[MapFnClassId.fn])(
+      value = (mapFn as ConditionReturn[MapFnClassId.fn])(
         sourceObj,
         destinationMemberPath
       );
       break;
     case TransformationType.MapDefer:
       value = mapMember(
-        (mapFn as ReturnType<MapDeferFunction>[MapFnClassId.fn])(
+        (mapFn as MapDeferReturn[MapFnClassId.fn])(
           sourceObj
-        ) as ReturnType<MemberMapFunction>,
+        ) as MemberMapReturn,
         sourceObj,
         destination,
         destinationMemberPath,
@@ -86,7 +78,7 @@ function mapMember<TSource extends Dictionary<TSource> = unknown>(
  * Depends on implementation of plugin.initializeMapping
  */
 function assertUnmappedProperties<
-  TDestination extends Dictionary<TDestination> = unknown
+  TDestination extends Dictionary<TDestination> = any
 >(
   destination: TDestination,
   configuredKeys: string[],
@@ -114,8 +106,8 @@ ${unmappedKeys.join(',\n')}
  * @param {boolean} [isMapArray = false] - whether the map operation is in Array mode
  */
 export function mapReturn<
-  TSource extends Dictionary<TSource> = unknown,
-  TDestination extends Dictionary<TDestination> = unknown
+  TSource extends Dictionary<TSource> = any,
+  TDestination extends Dictionary<TDestination> = any
 >(
   sourceObj: TSource,
   mapping: Mapping<TSource, TDestination>,
@@ -126,9 +118,9 @@ export function mapReturn<
 ): TDestination {
   const setMemberReturn = (
     destinationMemberPath: string,
-    destination: TDestination
+    destination?: TDestination
   ) => (value: unknown) => {
-    destination = set(destination, destinationMemberPath, value);
+    destination = set(destination!, destinationMemberPath, value);
   };
   return map(
     sourceObj,
@@ -151,8 +143,8 @@ export function mapReturn<
  * @param {TDestination} destinationObj - the destination obj to be mutated
  */
 export function mapMutate<
-  TSource extends Dictionary<TSource> = unknown,
-  TDestination extends Dictionary<TDestination> = unknown
+  TSource extends Dictionary<TSource> = any,
+  TDestination extends Dictionary<TDestination> = any
 >(
   sourceObj: TSource,
   mapping: Mapping<TSource, TDestination>,
@@ -178,8 +170,8 @@ export function mapMutate<
  * @param {boolean} [isMapArray = false] - whether the map operation is in Array mode
  */
 function map<
-  TSource extends Dictionary<TSource> = unknown,
-  TDestination extends Dictionary<TDestination> = unknown
+  TSource extends Dictionary<TSource> = any,
+  TDestination extends Dictionary<TDestination> = any
 >(
   sourceObj: TSource,
   mapping: Mapping<TSource, TDestination>,
@@ -266,7 +258,7 @@ Original error: ${originalError}`;
     ) {
       const mapInitializedValue = (transformationMapFn[
         MapFnClassId.fn
-      ] as ReturnType<MapInitializeFunction>[MapFnClassId.fn])(sourceObj);
+      ] as MapInitializeReturn[1])(sourceObj);
 
       // if null/undefined
       if (mapInitializedValue == null) {
@@ -300,7 +292,7 @@ Original error: ${originalError}`;
             mapInitializedValue,
             nestedDestinationMemberKey,
             nestedSourceMemberKey,
-            undefined,
+            {},
             mapper,
             errorHandler
           )
@@ -318,8 +310,8 @@ Original error: ${originalError}`;
         setMember(() =>
           map(
             mapInitializedValue,
-            nestedMapping,
-            undefined,
+            nestedMapping!,
+            {},
             mapper,
             errorHandler,
             (memberPath, nestedDestination) => (value) => {
@@ -369,8 +361,8 @@ Original error: ${originalError}`;
  * @param {ErrorHandler} errorHandler - error handler
  */
 export function mapArray<
-  TSource extends Dictionary<TSource> = unknown,
-  TDestination extends Dictionary<TDestination> = unknown
+  TSource extends Dictionary<TSource> = any,
+  TDestination extends Dictionary<TDestination> = any
 >(
   sourceArray: TSource[],
   destination: unknown,
@@ -395,7 +387,7 @@ export function mapArray<
       mapReturn(
         sourceArray[i],
         mapping as Mapping<TSource, TDestination>,
-        undefined,
+        {},
         mapper,
         errorHandler,
         true

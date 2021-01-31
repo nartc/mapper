@@ -12,7 +12,6 @@ describe('ConditionFunction', () => {
     expect(conditionFn[MapFnClassId.type]).toEqual(
       TransformationType.Condition
     );
-    expect(conditionFn[MapFnClassId.misc]).toEqual(null);
     expect(conditionFn[MapFnClassId.fn]).toBeInstanceOf(Function);
   });
 

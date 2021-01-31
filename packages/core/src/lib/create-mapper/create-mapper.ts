@@ -1,6 +1,8 @@
 import type {
   CreateMapOptions,
   CreateMapperOptions,
+  MapArrayOptions,
+  MapOptions,
   Mapper,
   MappingProfile,
 } from '@automapper/types';
@@ -17,7 +19,7 @@ export function createMapper<TKey = unknown>({
   pluginInitializer,
   namingConventions,
   errorHandler: customErrorHandler,
-}: CreateMapperOptions<TKey>): Mapper<TKey> {
+}: CreateMapperOptions<TKey>): Mapper {
   // default errorHandler to console.error
   const errorHandler = customErrorHandler || { handle: console.error };
 
@@ -26,7 +28,7 @@ export function createMapper<TKey = unknown>({
 
   return {
     name,
-    createMap(source, destination, options: CreateMapOptions = {}) {
+    createMap(source: any, destination: any, options: CreateMapOptions = {}) {
       // if namingConventions isn't passed in for this Mapping pair, use the global ones
       if (options && !options.namingConventions) {
         options.namingConventions = namingConventions;
@@ -36,14 +38,20 @@ export function createMapper<TKey = unknown>({
       const mapping = plugin.initializeMapping(source, destination, options);
 
       // return the FluentFunction for chaining
-      return createMapFluentFunction(mapping);
+      return createMapFluentFunction(mapping!);
     },
     getMapping: plugin.getMapping.bind(plugin),
     addProfile(profile: MappingProfile) {
       profile(this);
       return this;
     },
-    map(sourceObj, destination, source, destinationObjOrOptions?, options?) {
+    map(
+      sourceObj: any,
+      destination: any,
+      source: any,
+      destinationObjOrOptions?: any,
+      options?: MapOptions
+    ) {
       const { preMap } = plugin;
 
       // run preMap if available
@@ -65,7 +73,7 @@ export function createMapper<TKey = unknown>({
       ) {
         return mapReturn(
           sourceInstance ?? sourceObj,
-          mapping,
+          mapping!,
           destinationObjOrOptions,
           this,
           errorHandler
@@ -74,19 +82,19 @@ export function createMapper<TKey = unknown>({
 
       mapMutate(
         sourceInstance ?? sourceObj,
-        mapping,
-        options,
+        mapping!,
+        options || {},
         this,
         errorHandler,
         destinationObjOrOptions
       );
     },
     mapAsync(
-      sourceObj,
-      destination,
-      source,
-      destinationObjOrOptions,
-      options?
+      sourceObj: any,
+      destination: any,
+      source: any,
+      destinationObjOrOptions: any,
+      options?: MapOptions
     ) {
       return Promise.resolve(
         this.map(
@@ -98,7 +106,12 @@ export function createMapper<TKey = unknown>({
         )
       );
     },
-    mapArray(sourceArr, destination, source, options) {
+    mapArray(
+      sourceArr: any[],
+      destination: any,
+      source: any,
+      options?: MapArrayOptions
+    ) {
       // default runPreMap to true
       const { runPreMap = true } = options || {};
       let adjustedSourceArr = sourceArr;
@@ -112,12 +125,17 @@ export function createMapper<TKey = unknown>({
         adjustedSourceArr,
         destination,
         source,
-        options,
+        options || {},
         this,
         errorHandler
       );
     },
-    mapArrayAsync(sourceArr, destination, source, options) {
+    mapArrayAsync(
+      sourceArr: any[],
+      destination: any,
+      source: any,
+      options?: MapArrayOptions
+    ) {
       return Promise.resolve(
         this.mapArray(sourceArr, destination, source, options)
       );

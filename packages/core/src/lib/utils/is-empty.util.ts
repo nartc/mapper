@@ -1,4 +1,4 @@
-export function isEmpty(value: unknown): boolean {
+export function isEmpty(value: any): boolean {
   if (Array.isArray(value)) {
     return !value.length;
   }

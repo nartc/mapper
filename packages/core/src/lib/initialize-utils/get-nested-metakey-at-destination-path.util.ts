@@ -2,10 +2,10 @@ import type { NamingConvention } from '@automapper/types';
 import { isDefined } from '../utils';
 
 export function getNestedMetaKeyAtDestinationPath(
-  destinationNestedMeta: unknown[],
-  sourceNestedMeta: unknown[],
+  destinationNestedMeta: any[],
+  sourceNestedMeta: any[],
   destinationPath: string,
-  namingConventions: [NamingConvention, NamingConvention]
+  namingConventions: [NamingConvention, NamingConvention] | undefined
 ) {
   let destinationNestedMetaKeyAtPath: [unknown, unknown];
 
@@ -19,7 +19,7 @@ export function getNestedMetaKeyAtDestinationPath(
       const [
         sourceNamingConvention,
         destinationNamingConvention,
-      ] = namingConventions;
+      ] = namingConventions!;
       sourceNestedMetaAtPath = sourceNestedMeta.find(
         ([snmPath]) =>
           destinationNamingConvention.transformPropertyName(
@@ -42,5 +42,7 @@ export function getNestedMetaKeyAtDestinationPath(
     }
   }
 
-  return destinationNestedMetaKeyAtPath;
+  return destinationNestedMetaKeyAtPath! != null
+    ? destinationNestedMetaKeyAtPath
+    : undefined;
 }

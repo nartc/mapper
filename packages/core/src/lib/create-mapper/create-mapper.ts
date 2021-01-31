@@ -99,8 +99,17 @@ export function createMapper<TKey = unknown>({
       );
     },
     mapArray(sourceArr, destination, source, options) {
+      // default runPreMap to true
+      const { runPreMap = true } = options || {};
+      let adjustedSourceArr = sourceArr;
+
+      // run preMapArray if available
+      if (runPreMap && plugin.preMapArray) {
+        adjustedSourceArr = plugin.preMapArray(source, adjustedSourceArr);
+      }
+
       return mapArray(
-        sourceArr,
+        adjustedSourceArr,
         destination,
         source,
         options,

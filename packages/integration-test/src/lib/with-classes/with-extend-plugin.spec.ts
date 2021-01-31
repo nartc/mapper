@@ -34,6 +34,13 @@ describe('with extends plugin', () => {
       return originalPreMapResult;
     };
 
+    originalClasses.preMapArray = (source, sourceArr) => {
+      return sourceArr.map((srcItem) => {
+        nullify(srcItem);
+        return srcItem;
+      });
+    };
+
     return originalClasses;
   };
 
@@ -64,6 +71,12 @@ describe('with extends plugin', () => {
     expect(vm.bar).toEqual(undefined);
   });
 
+  function assertUndefinedVm(vm: SimpleFooVm, foo: SimpleFoo) {
+    expect(vm.foo).toEqual(foo.foo);
+    expect(vm.fooBar).toEqual(undefined);
+    expect(vm.bar.bar).toEqual(undefined);
+  }
+
   it('should map null to undefined for nested', () => {
     mapper.createMap(SimpleBar, SimpleBarVm);
     mapper.createMap(SimpleFoo, SimpleFooVm);
@@ -75,8 +88,32 @@ describe('with extends plugin', () => {
     foo.bar.bar = null;
 
     const vm = mapper.map(foo, SimpleFooVm, SimpleFoo);
-    expect(vm.foo).toEqual(foo.foo);
-    expect(vm.fooBar).toEqual(undefined);
-    expect(vm.bar.bar).toEqual(undefined);
+    assertUndefinedVm(vm, foo);
+  });
+
+  it('should map null to undefined for mapArray', () => {
+    mapper.createMap(SimpleBar, SimpleBarVm);
+    mapper.createMap(SimpleFoo, SimpleFooVm);
+
+    const foos = [];
+
+    const foo = new SimpleFoo();
+    foo.fooBar = null;
+    foo.foo = 'foo';
+    foo.bar = new SimpleBar();
+    foo.bar.bar = null;
+    foos.push(foo);
+
+    const foo2 = new SimpleFoo();
+    foo2.fooBar = null;
+    foo2.foo = 'foo';
+    foo2.bar = new SimpleBar();
+    foo2.bar.bar = null;
+    foos.push(foo2);
+
+    const vms = mapper.mapArray(foos, SimpleFooVm, SimpleFoo);
+    vms.forEach((vm, index) => {
+      assertUndefinedVm(vm, foos[index]);
+    });
   });
 });

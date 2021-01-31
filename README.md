@@ -33,7 +33,6 @@ This is a monorepo of `@automapper/core` and official packages.
 | --------------------------- | -------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
 | **integration-test**        | Integration tests of Core and the official plugins | [![README](https://img.shields.io/badge/README--green.svg)](/packages/integration-test/README.md) |
 | **nestjs-integration-test** | Integration tests for NestJS                       | -                                                                                                 |
-| **test-util**               | Utilities for tests                                | -                                                                                                 |
 
 ## Documentations
 

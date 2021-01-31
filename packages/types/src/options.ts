@@ -15,6 +15,13 @@ export interface MapOptions<
   afterMap?: MapAction<TSource, TDestination>;
 }
 
+export interface MapArrayOptions<
+  TSource extends Dictionary<TSource> = unknown,
+  TDestination extends Dictionary<TDestination> = unknown
+> extends MapOptions<TSource[], TDestination[]> {
+  runPreMap?: boolean;
+}
+
 export interface CreateMapOptions<
   TSource extends Dictionary<TSource> = unknown,
   TDestination extends Dictionary<TDestination> = unknown

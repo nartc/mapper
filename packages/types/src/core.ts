@@ -1,5 +1,5 @@
 import { TransformationType } from './enums';
-import type { CreateMapOptions, MapOptions } from './options';
+import type { CreateMapOptions, MapArrayOptions, MapOptions } from './options';
 import type {
   Dictionary,
   Fn,
@@ -340,7 +340,7 @@ export interface Mapper<TKey = unknown> {
     sourceArray: TSource[],
     destination: new (...args: unknown[]) => TDestination,
     source: new (...args: unknown[]) => TSource,
-    options?: MapOptions<TSource[], TDestination[]>
+    options?: MapArrayOptions<TSource, TDestination>
   ): TDestination[];
 
   mapArray<
@@ -350,7 +350,7 @@ export interface Mapper<TKey = unknown> {
     sourceArray: TSource[],
     destination: string,
     source: string,
-    options?: MapOptions<TSource[], TDestination[]>
+    options?: MapArrayOptions<TSource, TDestination>
   ): TDestination[];
 
   mapArrayAsync<
@@ -360,7 +360,7 @@ export interface Mapper<TKey = unknown> {
     sourceArray: TSource[],
     destination: new (...args: unknown[]) => TDestination,
     source: new (...args: unknown[]) => TSource,
-    options?: MapOptions<TSource[], TDestination[]>
+    options?: MapArrayOptions<TSource, TDestination>
   ): Promise<TDestination[]>;
 
   mapArrayAsync<
@@ -370,7 +370,7 @@ export interface Mapper<TKey = unknown> {
     sourceArray: TSource[],
     destination: string,
     source: string,
-    options?: MapOptions<TSource[], TDestination[]>
+    options?: MapArrayOptions<TSource, TDestination>
   ): Promise<TDestination[]>;
 
   dispose(): void;

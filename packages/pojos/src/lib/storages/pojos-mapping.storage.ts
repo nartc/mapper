@@ -12,7 +12,7 @@ export class PojosMappingStorage implements MappingStorage<string> {
     return this.storage.get(source)?.get(destination);
   }
 
-  has(source: string, destination: string): boolean {
+  has(source: string, destination: string): boolean | undefined {
     return this.storage.get(source)?.has(destination);
   }
 

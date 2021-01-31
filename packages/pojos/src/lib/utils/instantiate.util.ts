@@ -16,19 +16,23 @@ export function instantiate<TModel extends Dictionary<TModel>>(
     return [obj];
   }
 
-  const nestedMetadataMap = [];
+  const nestedMetadataMap: unknown[] = [];
   let i = metadata.length;
   while (i--) {
     const [key, meta] = metadata[i];
-    const valueAtKey = obj[key];
+    const valueAtKey = (obj as Record<string, unknown>)[key];
     const metaResult = meta();
 
     if (isPrimitiveConstructor(metaResult)) {
-      obj[key] = isDefined(valueAtKey) ? valueAtKey : undefined;
+      (obj as Record<string, unknown>)[key] = isDefined(valueAtKey)
+        ? valueAtKey
+        : undefined;
       continue;
     }
     if (isDateConstructor(metaResult)) {
-      obj[key] = isDefined(valueAtKey) ? new Date(valueAtKey) : new Date();
+      (obj as Record<string, unknown>)[key] = isDefined(valueAtKey)
+        ? new Date(valueAtKey as number)
+        : new Date();
       continue;
     }
 
@@ -38,7 +42,7 @@ export function instantiate<TModel extends Dictionary<TModel>>(
 
     nestedMetadataMap.push([key, metaResult]);
     if (Array.isArray(valueAtKey)) {
-      obj[key] = valueAtKey.map((val) => {
+      (obj as Record<string, unknown>)[key] = valueAtKey.map((val) => {
         const [childObj] = instantiate(metadataStorage, metaResult, val);
         return childObj;
       });
@@ -49,19 +53,19 @@ export function instantiate<TModel extends Dictionary<TModel>>(
       const [instantiateResult] = instantiate(
         metadataStorage,
         metaResult,
-        valueAtKey
+        valueAtKey as Dictionary<unknown>
       );
-      obj[key] = instantiateResult;
+      (obj as Record<string, unknown>)[key] = instantiateResult;
       continue;
     }
 
     if (isDefined(defaultValue)) {
-      obj[key] = valueAtKey;
+      (obj as Record<string, unknown>)[key] = valueAtKey;
       continue;
     }
 
     const [result] = instantiate(metadataStorage, metaResult);
-    obj[key] = result;
+    (obj as Record<string, unknown>)[key] = result;
   }
 
   return [obj, nestedMetadataMap];

@@ -40,8 +40,8 @@ export const pojos: MapPluginInitializer<string> = (errorHandler) => {
       return createInitialMapping(
         sourceObj,
         destinationObj,
-        sourceNestedMetadataMap,
-        destinationNestedMetadataMap,
+        sourceNestedMetadataMap as unknown[],
+        destinationNestedMetadataMap as unknown[],
         (mapping) => {
           mappingStorage.set(source, destination, mapping);
         },

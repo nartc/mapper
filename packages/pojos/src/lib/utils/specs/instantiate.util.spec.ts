@@ -1,16 +1,13 @@
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import {
-  createSpyObject,
-  resetAllWhenMocks,
-  when,
-} from '@automapper/test-util';
+import { createSpyObj } from 'jest-createspyobj';
+import { resetAllWhenMocks, when } from 'jest-when';
 import { PojosMetadataStorage } from '../../storages';
 import { instantiate } from '../instantiate.util';
 
 describe('instantiate', () => {
-  const mockedMetadataStorage = createSpyObject(PojosMetadataStorage, {
-    getMetadata: jest.fn(),
-  });
+  const mockedMetadataStorage = createSpyObj<PojosMetadataStorage>(
+    PojosMetadataStorage,
+    ['getMetadata']
+  );
 
   interface Bar {
     bar: string;
@@ -98,17 +95,15 @@ describe('instantiate', () => {
     when(mockedMetadataStorage.getMetadata)
       .calledWith('Foo')
       .mockReturnValueOnce([
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        ['foo', () => String as any],
+        ['foo', () => (String as unknown) as string],
         ['bar', () => 'Bar'],
       ]);
 
     when(mockedMetadataStorage.getMetadata)
       .calledWith('Bar')
       .mockReturnValueOnce([
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        ['bar', () => String as any],
-        ['date', () => Date],
+        ['bar', () => (String as unknown) as string],
+        ['date', () => (Date as unknown) as Date],
       ]);
   }
 });

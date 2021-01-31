@@ -35,7 +35,7 @@ class PojosSymbolStorage {
     propertyKey: string,
     metadata: ReturnType<Metadata<string>[MetadataClassId.metadataFn]>
   ][] {
-    return this.storage.get(key);
+    return this.storage.get(key) || [];
   }
 
   has(key: symbol): boolean {

@@ -13,7 +13,7 @@ import { pojosSymbolStorage } from './storages';
  * })
  */
 
-export function createMetadataMap<TModel extends Dictionary<TModel> = unknown>(
+export function createMetadataMap<TModel extends Dictionary<TModel> = any>(
   key: string,
   metadata: {
     [key in keyof TModel]?:
@@ -24,7 +24,7 @@ export function createMetadataMap<TModel extends Dictionary<TModel> = unknown>(
       | string;
   }
 ): void;
-export function createMetadataMap<TModel extends Dictionary<TModel> = unknown>(
+export function createMetadataMap<TModel extends Dictionary<TModel> = any>(
   key: string,
   existMetadataMap: string,
   metadata?: {
@@ -37,7 +37,7 @@ export function createMetadataMap<TModel extends Dictionary<TModel> = unknown>(
       | null;
   }
 ): void;
-export function createMetadataMap<TModel extends Dictionary<TModel> = unknown>(
+export function createMetadataMap<TModel extends Dictionary<TModel> = any>(
   key: string,
   metadataOrMetadataMap:
     | string
@@ -81,7 +81,7 @@ export function createMetadataMap<TModel extends Dictionary<TModel> = unknown>(
     return;
   }
 
-  const result = [];
+  const result: unknown[] = [];
   for (const [existProp, existMeta] of toMergeMetadata) {
     if (entries.some(([entryProp]) => existProp === entryProp)) {
       continue;
@@ -93,6 +93,6 @@ export function createMetadataMap<TModel extends Dictionary<TModel> = unknown>(
   result.push(...entries);
   pojosSymbolStorage.set(
     symbol,
-    result.filter(([, meta]) => meta !== null)
+    result.filter(([, meta]: any) => meta !== null) as []
   );
 }

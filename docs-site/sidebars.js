@@ -121,8 +121,18 @@ module.exports = {
           ],
         },
         {
-          type: 'doc',
-          id: 'plugins-system/create-plugin',
+          type: 'category',
+          label: 'Customization',
+          items: [
+            {
+              type: 'doc',
+              id: 'plugins-system/create-plugin',
+            },
+            {
+              type: 'doc',
+              id: 'plugins-system/extend-plugin',
+            },
+          ],
         },
       ],
     },

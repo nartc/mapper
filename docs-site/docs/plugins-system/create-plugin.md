@@ -73,6 +73,17 @@ export interface MapPlugin<TKey = unknown> {
   ): [sourceInstance: TSource, destinationInstance: TDestination];
 
   /**
+   * An optional pre-mapArray function to prepare the sourceArray before mapArray
+   *
+   * @param source - a key to be used to identify the information about a particular Source
+   * @param sourceArr - an array of TSource
+   */
+  preMapArray?<TSource extends Dictionary<TSource> = unknown>(
+    source: TKey,
+    sourceArr: TSource[]
+  ): TSource[];
+
+  /**
    * Optional method to clean up the plugin's storages
    */
   dispose?(): void;

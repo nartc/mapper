@@ -11,7 +11,7 @@ export type Dictionary<T> = { [key in keyof T]?: unknown };
 export type Fn<T> = () => T;
 
 export interface Selector<
-  TObject extends Dictionary<TObject> = unknown,
+  TObject extends Dictionary<TObject> = any,
   TReturnType = unknown
 > {
   (obj: TObject): TReturnType;
@@ -22,15 +22,15 @@ export type SelectorReturn<TObject extends Dictionary<TObject>> = ReturnType<
 >;
 
 export interface ValueSelector<
-  TSource extends Dictionary<TSource> = unknown,
-  TDestination extends Dictionary<TDestination> = unknown,
+  TSource extends Dictionary<TSource> = any,
+  TDestination extends Dictionary<TDestination> = any,
   TValueReturn = SelectorReturn<TDestination>
 > {
   (source: TSource): TValueReturn;
 }
 
 export interface TransformerMetadataFactory<
-  TModel extends Dictionary<TModel> = unknown
+  TModel extends Dictionary<TModel> = any
 > {
   __NARTC_AUTOMAPPER_METADATA_FACTORY?: () => Dictionary<TModel>;
 }

@@ -24,20 +24,10 @@ export const enum MappingPropertiesClassId {
   nestedMappingPair,
 }
 
-export const enum MappingPropertyClassId {
-  paths,
-  transformation,
-}
-
-export const enum MappingTransformationClassId {
-  mapFn,
-  preCond,
-}
-
 export const enum MapFnClassId {
   type,
-  misc,
   fn,
+  misc,
 }
 
 export const enum MetadataClassId {

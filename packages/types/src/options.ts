@@ -8,23 +8,23 @@ import type { MapPluginInitializer } from './plugin';
 import type { Dictionary } from './utils';
 
 export interface MapOptions<
-  TSource extends Dictionary<TSource> = unknown,
-  TDestination extends Dictionary<TDestination> = unknown
+  TSource extends Dictionary<TSource> = any,
+  TDestination extends Dictionary<TDestination> = any
 > {
   beforeMap?: MapAction<TSource, TDestination>;
   afterMap?: MapAction<TSource, TDestination>;
 }
 
 export interface MapArrayOptions<
-  TSource extends Dictionary<TSource> = unknown,
-  TDestination extends Dictionary<TDestination> = unknown
+  TSource extends Dictionary<TSource> = any,
+  TDestination extends Dictionary<TDestination> = any
 > extends MapOptions<TSource[], TDestination[]> {
   runPreMap?: boolean;
 }
 
 export interface CreateMapOptions<
-  TSource extends Dictionary<TSource> = unknown,
-  TDestination extends Dictionary<TDestination> = unknown
+  TSource extends Dictionary<TSource> = any,
+  TDestination extends Dictionary<TDestination> = any
 > {
   namingConventions?:
     | NamingConvention
@@ -32,7 +32,7 @@ export interface CreateMapOptions<
         source: NamingConvention;
         destination: NamingConvention;
       };
-  extends?: Mapping[];
+  extends?: (Mapping | undefined)[];
 }
 
 export interface CreateMapperOptions<TKey = unknown> {

@@ -18,7 +18,7 @@ export interface MapPlugin<TKey = unknown> {
     source: TKey,
     destination: TKey,
     options?: CreateMapOptions
-  ): Mapping;
+  ): Mapping | undefined;
 
   /**
    * Get the Mapping for a pair of Source <> Destination
@@ -26,7 +26,7 @@ export interface MapPlugin<TKey = unknown> {
    * @param source - a key to be used to identify the information about a particular Source
    * @param destination - a key to be used to identify the information about a particular Destination
    */
-  getMapping(source: TKey, destination: TKey): Mapping;
+  getMapping(source: any, destination: any): Mapping | undefined;
 
   /**
    * An optional pre-map function to prepare the source and destination before map
@@ -37,8 +37,8 @@ export interface MapPlugin<TKey = unknown> {
    * @param destinationObj - a plain object that takes the shape of the destination
    */
   preMap?<
-    TSource extends Dictionary<TSource> = unknown,
-    TDestination extends Dictionary<TDestination> = unknown
+    TSource extends Dictionary<TSource> = any,
+    TDestination extends Dictionary<TDestination> = any
   >(
     source: TKey,
     destination: TKey,
@@ -52,7 +52,7 @@ export interface MapPlugin<TKey = unknown> {
    * @param source - a key to be used to identify the information about a particular Source
    * @param sourceArr - an array of TSource
    */
-  preMapArray?<TSource extends Dictionary<TSource> = unknown>(
+  preMapArray?<TSource extends Dictionary<TSource> = any>(
     source: TKey,
     sourceArr: TSource[]
   ): TSource[];

@@ -1,5 +1,5 @@
+import { AutoMap } from '@automapper/classes';
 import 'reflect-metadata';
-import { AutoMap } from '../automap.decorator';
 
 describe('AutomapDecorator', () => {
   const spiedReflectDefine = jest.spyOn(Reflect, 'defineMetadata');
@@ -8,7 +8,7 @@ describe('AutomapDecorator', () => {
   describe('for primitives', () => {
     class Bar {
       @AutoMap()
-      bar: string;
+      bar!: string;
     }
 
     it('should call getMetadata', () => {
@@ -35,7 +35,7 @@ describe('AutomapDecorator', () => {
   describe('for typeFn', () => {
     class Foo {
       @AutoMap(() => Date)
-      date: Date;
+      date!: Date;
     }
 
     it('should call defineMetadata', () => {

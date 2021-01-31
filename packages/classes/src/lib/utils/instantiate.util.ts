@@ -33,7 +33,7 @@ export function instantiate<TModel extends Dictionary<TModel>>(
   }
 
   // initialize a nestedConstructible with empty []
-  const nestedConstructible = [];
+  const nestedConstructible: unknown[] = [];
   let i = metadata.length;
 
   // reversed loop
@@ -42,20 +42,24 @@ export function instantiate<TModel extends Dictionary<TModel>>(
     const [key, meta] = metadata[i];
 
     // get the value at the current key
-    const valueAtKey = instance[key];
+    const valueAtKey = (instance as Record<string, unknown>)[key];
 
     // call the meta fn to get the metaResult of the current key
     const metaResult = meta();
 
     // if is String, Number, Boolean, assign valueAtKey or undefined
     if (isPrimitiveConstructor(metaResult)) {
-      instance[key] = isDefined(valueAtKey, true) ? valueAtKey : undefined;
+      (instance as Record<string, unknown>)[key] = isDefined(valueAtKey, true)
+        ? valueAtKey
+        : undefined;
       continue;
     }
 
     // if is Date, assign a new Date value
     if (isDateConstructor(metaResult)) {
-      instance[key] = isDefined(valueAtKey) ? new Date(valueAtKey) : new Date();
+      (instance as Record<string, unknown>)[key] = isDefined(valueAtKey)
+        ? new Date(valueAtKey as number)
+        : new Date();
       continue;
     }
 
@@ -66,7 +70,7 @@ export function instantiate<TModel extends Dictionary<TModel>>(
     // if the value at key is an array
     if (Array.isArray(valueAtKey)) {
       // loop through each value and recursively call instantiate with each value
-      instance[key] = valueAtKey.map((val) => {
+      (instance as Record<string, unknown>)[key] = valueAtKey.map((val) => {
         const [instantiateResultItem] = instantiate(
           instanceStorage,
           metadataStorage,
@@ -85,16 +89,16 @@ export function instantiate<TModel extends Dictionary<TModel>>(
         instanceStorage,
         metadataStorage,
         metaResult as Constructible,
-        valueAtKey
+        valueAtKey as Dictionary<unknown>
       );
-      instance[key] = definedInstantiateResult;
+      (instance as Record<string, unknown>)[key] = definedInstantiateResult;
       continue;
     }
 
     // if value is null/undefined but defaultValue is not
     // should assign straightaway
     if (isDefined(defaultValue)) {
-      instance[key] = valueAtKey;
+      (instance as Record<string, unknown>)[key] = valueAtKey;
       continue;
     }
 
@@ -104,7 +108,9 @@ export function instantiate<TModel extends Dictionary<TModel>>(
 
     // if no depth, just instantiate with new keyword without recursive
     if (depth === 0) {
-      instance[key] = new (metaResult as Constructible)();
+      (instance as Record<string, unknown>)[
+        key
+      ] = new (metaResult as Constructible)();
       continue;
     }
 
@@ -112,7 +118,9 @@ export function instantiate<TModel extends Dictionary<TModel>>(
     // reset the count then assign with new keyword
     if (depth === count) {
       instanceStorage.resetCount(model, key);
-      instance[key] = new (metaResult as Constructible)();
+      (instance as Record<string, unknown>)[
+        key
+      ] = new (metaResult as Constructible)();
       continue;
     }
 
@@ -123,7 +131,7 @@ export function instantiate<TModel extends Dictionary<TModel>>(
       metadataStorage,
       metaResult as Constructible
     );
-    instance[key] = instantiateResult;
+    (instance as Record<string, unknown>)[key] = instantiateResult;
   }
 
   // after all, resetAllCount on the current model

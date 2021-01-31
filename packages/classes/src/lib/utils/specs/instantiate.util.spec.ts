@@ -1,32 +1,27 @@
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import {
-  createSpyObject,
-  resetAllWhenMocks,
-  when,
-} from '@automapper/test-util';
+import { createSpyObj } from 'jest-createspyobj';
+import { resetAllWhenMocks, when } from 'jest-when';
 import { ClassInstanceStorage, ClassMetadataStorage } from '../../storages';
 import { instantiate } from '../instantiate.util';
 
 describe('instantiate', () => {
-  const mockedInstanceStorage = createSpyObject(ClassInstanceStorage, {
-    resetAllCount: jest.fn(),
-    getDepthAndCount: jest.fn(),
-    resetCount: jest.fn(),
-    setCount: jest.fn(),
-  });
+  const mockedInstanceStorage = createSpyObj<ClassInstanceStorage>(
+    ClassInstanceStorage,
+    ['resetAllCount', 'getDepthAndCount', 'resetCount', 'setCount']
+  );
 
-  const mockedMetadataStorage = createSpyObject(ClassMetadataStorage, {
-    getMetadata: jest.fn(),
-  });
+  const mockedMetadataStorage = createSpyObj<ClassMetadataStorage>(
+    ClassMetadataStorage,
+    ['getMetadata']
+  );
 
   class Bar {
-    bar: string;
-    date: Date;
+    bar!: string;
+    date!: Date;
   }
 
   class Foo {
-    foo: string;
-    bar: Bar;
+    foo!: string;
+    bar!: Bar;
   }
 
   const defaultDate = new Date('10/14/1991');
@@ -59,25 +54,35 @@ describe('instantiate', () => {
       mockWithoutDepth();
 
       const fooInstance = new Foo();
-      fooInstance.foo = undefined;
+      fooInstance.foo = '';
       fooInstance.bar = new Bar();
 
       const result = parameterizedInstantiate();
-      expect(result).toEqual([fooInstance, [['bar', Bar]]]);
+      expect(result).toEqual([
+        { ...fooInstance, foo: undefined },
+        [['bar', Bar]],
+      ]);
     });
 
     it('should return proper instance with depth', () => {
       mockWithDepth();
 
       const fooInstance = new Foo();
-      fooInstance.foo = undefined;
+      fooInstance.foo = '';
       fooInstance.bar = new Bar();
-      fooInstance.bar.bar = undefined;
+      fooInstance.bar.bar = '';
       fooInstance.bar.date = defaultDate;
 
       const result = parameterizedInstantiate();
       result[0].bar.date = defaultDate;
-      expect(result).toEqual([fooInstance, [['bar', Bar]]]);
+      expect(result).toEqual([
+        {
+          ...fooInstance,
+          foo: undefined,
+          bar: { ...fooInstance.bar, bar: undefined },
+        },
+        [['bar', Bar]],
+      ]);
     });
   });
 

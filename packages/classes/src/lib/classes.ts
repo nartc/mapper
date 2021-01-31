@@ -69,8 +69,8 @@ export const classes: MapPluginInitializer<Constructible> = (errorHandler) => {
       return createInitialMapping(
         sourceInstance,
         destinationInstance,
-        sourceNestedConstructible,
-        destinationNestedConstructible,
+        sourceNestedConstructible as unknown[],
+        destinationNestedConstructible as unknown[],
         (mapping) => {
           mappingStorage.set(source, destination, mapping);
         },
@@ -83,7 +83,7 @@ export const classes: MapPluginInitializer<Constructible> = (errorHandler) => {
             metadataStorage,
             instanceStorage,
             sourceInstance,
-            sourceNestedConstructible
+            sourceNestedConstructible as unknown[]
           ),
           // classes plugin needs to check for sourcePaths on the prototype of Source
           isMultipartSourcePathsInSource,
@@ -106,19 +106,19 @@ export const classes: MapPluginInitializer<Constructible> = (errorHandler) => {
 
       // run preMap to get new instances of source and destination for mapping[MappingClassId.mappings]
       // this is to prevent mutation
-      mapping[MappingClassId.mappings] = this.preMap(source, destination);
+      mapping[MappingClassId.mappings] = this.preMap!(source, destination);
 
       // return the mapping
       return mapping;
     },
     preMap<
-      TSource extends Dictionary<TSource> = unknown,
-      TDestination extends Dictionary<TDestination> = unknown
+      TSource extends Dictionary<TSource> = any,
+      TDestination extends Dictionary<TDestination> = any
     >(
-      source,
-      destination,
-      sourceObj: TSource = undefined,
-      destinationObj: TDestination = undefined
+      source: Constructible<TSource>,
+      destination: Constructible<TDestination>,
+      sourceObj?: TSource,
+      destinationObj?: TDestination
     ) {
       // Prepare the sourceInstance/destinationInstance with plain object sourceObj and destinationObj
       const [sourceInstance] = instantiate(
@@ -190,7 +190,7 @@ function prePropertiesLoop(
       sourceInstance = Object.assign(sourceInstance, sourceProtoInstance);
       // update the sourceInstance on the mapping
       mapping[MappingClassId.mappings][0] = sourceInstance;
-      if (sourceProtoNestedConstructible.length) {
+      if ((sourceProtoNestedConstructible as unknown[]).length) {
         // update the nested constructible
         sourceNestedConstructible = sourceNestedConstructible.concat(
           sourceProtoNestedConstructible
@@ -200,7 +200,10 @@ function prePropertiesLoop(
   };
 }
 
-function isMultipartSourcePathsInSource(dottedSourcePaths, sourceInstance) {
+function isMultipartSourcePathsInSource(
+  dottedSourcePaths: string[],
+  sourceInstance: any
+) {
   return !(
     dottedSourcePaths.length > 1 &&
     (!sourceInstance.hasOwnProperty(dottedSourcePaths[0]) ||
@@ -209,8 +212,8 @@ function isMultipartSourcePathsInSource(dottedSourcePaths, sourceInstance) {
   );
 }
 
-function isDestinationPathOnSource(sourceProto: unknown) {
-  return (sourceObj: unknown, sourcePath: string) => {
+function isDestinationPathOnSource(sourceProto: any) {
+  return (sourceObj: any, sourcePath: string) => {
     return !(
       !sourceObj.hasOwnProperty(sourcePath) &&
       !sourceProto.hasOwnProperty(sourcePath) &&

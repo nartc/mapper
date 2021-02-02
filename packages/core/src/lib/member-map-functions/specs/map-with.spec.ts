@@ -7,7 +7,7 @@ describe('MapWithFunction', () => {
   const withDestination = () => '';
   const withSource = () => '';
 
-  const mapper = { map: jest.fn() };
+  const mapper = { map: jest.fn(), mapArray: jest.fn() };
 
   it('should return correctly', () => {
     const mapWithFn = mapWith(withDestination, selector, withSource);
@@ -22,6 +22,17 @@ describe('MapWithFunction', () => {
     mapWithFn[MapFnClassId.fn]({}, (mapper as unknown) as Mapper);
     expect(mapper.map).toHaveBeenCalledWith(
       {},
+      withDestination(),
+      withSource()
+    );
+  });
+
+  it('should call mapper.mapArray', () => {
+    const arrSelector = (s: any) => [];
+    const mapWithFn = mapWith(withDestination, arrSelector, withSource);
+    mapWithFn[MapFnClassId.fn]({}, (mapper as unknown) as Mapper);
+    expect(mapper.mapArray).toHaveBeenCalledWith(
+      [],
       withDestination(),
       withSource()
     );

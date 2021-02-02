@@ -23,6 +23,15 @@ export function mapWith<
     TransformationType.MapWith,
     (source, mapper) => {
       const sourceValue = withSourceValue(source);
+
+      if (Array.isArray(sourceValue)) {
+        return (mapper.mapArray(
+          sourceValue,
+          withDestination() as string,
+          withSource() as string
+        ) as unknown) as TSelectorReturn;
+      }
+
       return mapper.map(
         sourceValue as Dictionary<unknown>,
         withDestination() as string,

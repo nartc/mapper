@@ -1,3 +1,9 @@
+## [2.0.1](https://github.com/nartc/mapper/compare/2.0.0...2.0.1) (2021-02-02)
+
+### Bug Fixes
+
+- **core:** ensure to call mapArray with mapWith if sourceValue is an Array ([0eef348](https://github.com/nartc/mapper/commit/0eef348221265869f047339af8422d3292eacee8)), closes [#253](https://github.com/nartc/mapper/issues/253)
+
 # [2.0.0](https://github.com/nartc/mapper/compare/1.2.0...2.0.0) (2021-01-31)
 
 ### Features

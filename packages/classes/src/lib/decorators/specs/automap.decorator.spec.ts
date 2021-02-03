@@ -1,4 +1,4 @@
-import { AutoMap } from '@automapper/classes';
+import { AutoMap, AUTOMAP_PROPERTIES_METADATA_KEY } from '@automapper/classes';
 import 'reflect-metadata';
 
 describe('AutomapDecorator', () => {
@@ -24,7 +24,7 @@ describe('AutomapDecorator', () => {
     it('should call defineMetadata', () => {
       spiedReflectGet.mockReturnValueOnce(String);
       expect(spiedReflectDefine).toHaveBeenCalledWith(
-        'automap:properties',
+        AUTOMAP_PROPERTIES_METADATA_KEY,
         [['bar', { typeFn: expect.any(Function) }]],
         Bar
       );
@@ -40,7 +40,7 @@ describe('AutomapDecorator', () => {
 
     it('should call defineMetadata', () => {
       expect(spiedReflectDefine).toHaveBeenCalledWith(
-        'automap:properties',
+        AUTOMAP_PROPERTIES_METADATA_KEY,
         [['date', { typeFn: expect.any(Function), depth: 0 }]],
         Foo
       );

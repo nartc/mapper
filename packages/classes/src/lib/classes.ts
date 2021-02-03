@@ -6,6 +6,7 @@ import type {
 } from '@automapper/types';
 import { MappingClassId } from '@automapper/types';
 import 'reflect-metadata';
+import { AUTOMAP_PROPERTIES_METADATA_KEY } from './constants';
 import {
   ClassInstanceStorage,
   ClassMappingStorage,
@@ -154,7 +155,10 @@ function exploreMetadata(
     // if metadataStorage hasn't had metadata of the model
     if (!metadataStorage.has(model)) {
       // get the metadata from Reflection then populate metadataStorage and instanceStorage
-      const metadataList = Reflect.getMetadata('automap:properties', model);
+      const metadataList = Reflect.getMetadata(
+        AUTOMAP_PROPERTIES_METADATA_KEY,
+        model
+      );
       // skip if no metadata
       if (!isDefined(metadataList)) continue;
       // loop through metadata list

@@ -1,3 +1,13 @@
+# [2.1.0](https://github.com/nartc/mapper/compare/2.0.1...2.1.0) (2021-02-03)
+
+### Bug Fixes
+
+- adjust config ([b074b21](https://github.com/nartc/mapper/commit/b074b21aeb004dac188c6e93eb99317c5c7710e0))
+
+### Features
+
+- **classes:** add AUTOMAP_PROPERTIES_METADATA_KEY to public api ([1165380](https://github.com/nartc/mapper/commit/116538006a94e0efa3170c31c859385fca356264))
+
 ## [2.0.1](https://github.com/nartc/mapper/compare/2.0.0...2.0.1) (2021-02-02)
 
 ### Bug Fixes

@@ -1,5 +1,5 @@
 export function getPathRecursive(
-  node: any,
+  node: unknown,
   prefix = '',
   prev: string[] = []
 ): string[] | undefined {

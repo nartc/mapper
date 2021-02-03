@@ -3,7 +3,7 @@ import { MapFnClassId, TransformationType } from '@automapper/types';
 
 describe('MapDeferFunction', () => {
   it('should return correctly', () => {
-    const defer = () => ignore() as any;
+    const defer = () => ignore();
 
     const mapDeferFn = mapDefer(defer);
 

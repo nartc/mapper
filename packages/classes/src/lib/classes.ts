@@ -202,7 +202,7 @@ function prePropertiesLoop(
 
 function isMultipartSourcePathsInSource(
   dottedSourcePaths: string[],
-  sourceInstance: any
+  sourceInstance: unknown
 ) {
   return !(
     dottedSourcePaths.length > 1 &&
@@ -212,7 +212,7 @@ function isMultipartSourcePathsInSource(
   );
 }
 
-function isDestinationPathOnSource(sourceProto: any) {
+function isDestinationPathOnSource(sourceProto: unknown) {
   return (sourceObj: any, sourcePath: string) => {
     return !(
       !sourceObj.hasOwnProperty(sourcePath) &&

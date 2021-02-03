@@ -15,7 +15,6 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "strict": true,
     "paths": {
       "@automapper/core": ["packages/core/src/index.ts"],
       "@automapper/classes": ["packages/classes/src/index.ts"],

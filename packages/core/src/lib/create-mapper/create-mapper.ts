@@ -28,7 +28,7 @@ export function createMapper<TKey = unknown>({
 
   return {
     name,
-    createMap(source: any, destination: any, options: CreateMapOptions = {}) {
+    createMap(source, destination, options: CreateMapOptions = {}) {
       // if namingConventions isn't passed in for this Mapping pair, use the global ones
       if (options && !options.namingConventions) {
         options.namingConventions = namingConventions;
@@ -46,10 +46,10 @@ export function createMapper<TKey = unknown>({
       return this;
     },
     map(
-      sourceObj: any,
-      destination: any,
-      source: any,
-      destinationObjOrOptions?: any,
+      sourceObj,
+      destination,
+      source,
+      destinationObjOrOptions?,
       options?: MapOptions
     ) {
       const { preMap } = plugin;
@@ -90,10 +90,10 @@ export function createMapper<TKey = unknown>({
       );
     },
     mapAsync(
-      sourceObj: any,
-      destination: any,
-      source: any,
-      destinationObjOrOptions: any,
+      sourceObj,
+      destination,
+      source,
+      destinationObjOrOptions?,
       options?: MapOptions
     ) {
       return Promise.resolve(
@@ -106,12 +106,7 @@ export function createMapper<TKey = unknown>({
         )
       );
     },
-    mapArray(
-      sourceArr: any[],
-      destination: any,
-      source: any,
-      options?: MapArrayOptions
-    ) {
+    mapArray(sourceArr, destination, source, options?: MapArrayOptions) {
       // default runPreMap to true
       const { runPreMap = true } = options || {};
       let adjustedSourceArr = sourceArr;
@@ -130,12 +125,7 @@ export function createMapper<TKey = unknown>({
         errorHandler
       );
     },
-    mapArrayAsync(
-      sourceArr: any[],
-      destination: any,
-      source: any,
-      options?: MapArrayOptions
-    ) {
+    mapArrayAsync(sourceArr, destination, source, options?: MapArrayOptions) {
       return Promise.resolve(
         this.mapArray(sourceArr, destination, source, options)
       );

@@ -1,8 +1,8 @@
 export function set<T extends Record<string, unknown>>(
   object: T,
   path: string,
-  value: any
-): (T & { [p: string]: any }) | T {
+  value: unknown
+): (T & { [p: string]: unknown }) | T {
   const { decomposedPath, base } = decomposePath(path);
 
   if (base === undefined) {

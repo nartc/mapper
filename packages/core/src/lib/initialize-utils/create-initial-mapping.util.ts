@@ -15,7 +15,7 @@ import { mapInitialize } from './map-initialize';
 
 function defaultIsMultipartSourcePathsInSource(
   multipartSourcePaths: string[],
-  sourceObj: any
+  sourceObj: unknown
 ): boolean {
   return !(
     multipartSourcePaths.length > 1 &&
@@ -26,7 +26,7 @@ function defaultIsMultipartSourcePathsInSource(
 }
 
 function defaultIsDestinationPathOnSource(
-  sourceObj: any,
+  sourceObj: unknown,
   sourcePath: string
 ): boolean {
   return sourceObj.hasOwnProperty(sourcePath);

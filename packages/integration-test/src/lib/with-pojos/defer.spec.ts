@@ -15,7 +15,7 @@ describe('Defer', () => {
       .createMap<SimpleUser, SimpleUserVm>('SimpleUser', 'SimpleUserVm')
       .forMember(
         (d) => d.fullName,
-        mapDefer(() => mapFrom((s) => s.firstName + ' ' + s.lastName) as any)
+        mapDefer(() => mapFrom((s) => s.firstName + ' ' + s.lastName))
       );
 
     const user = {
@@ -38,7 +38,7 @@ describe('Defer', () => {
       .forMember(
         (d) => d.fullName,
         preCondition((s) => s.firstName === 'Phuong'),
-        mapDefer(() => mapFrom((s) => s.firstName + ' ' + s.lastName) as any)
+        mapDefer(() => mapFrom((s) => s.firstName + ' ' + s.lastName))
       );
 
     const user = {

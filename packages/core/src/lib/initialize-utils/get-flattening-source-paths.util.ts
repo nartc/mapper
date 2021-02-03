@@ -1,7 +1,7 @@
 import type { NamingConvention } from '@automapper/types';
 
 export function getFlatteningSourcePaths(
-  src: any,
+  src: unknown,
   srcPath: string,
   namingConventions: [NamingConvention, NamingConvention]
 ) {

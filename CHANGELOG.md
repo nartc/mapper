@@ -1,3 +1,9 @@
+## [2.1.1](https://github.com/nartc/mapper/compare/2.1.0...2.1.1) (2021-02-06)
+
+### Bug Fixes
+
+- **core:** null/undefined check for source in map and mapArray ([b37d29a](https://github.com/nartc/mapper/commit/b37d29af616e2bc257a58058acdeab2a5e856710))
+
 # [2.1.0](https://github.com/nartc/mapper/compare/2.0.1...2.1.0) (2021-02-03)
 
 ### Bug Fixes

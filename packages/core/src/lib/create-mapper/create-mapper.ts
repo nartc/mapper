@@ -52,6 +52,11 @@ export function createMapper<TKey = unknown>({
       destinationObjOrOptions?,
       options?: MapOptions
     ) {
+      // if source is null/undefined, return
+      if (sourceObj == null) {
+        return sourceObj;
+      }
+
       const { preMap } = plugin;
 
       // run preMap if available
@@ -107,6 +112,11 @@ export function createMapper<TKey = unknown>({
       );
     },
     mapArray(sourceArr, destination, source, options?: MapArrayOptions) {
+      // if source is null/undefined, return
+      if (sourceArr == null) {
+        return sourceArr;
+      }
+
       // default runPreMap to true
       const { runPreMap = true } = options || {};
       let adjustedSourceArr = sourceArr;

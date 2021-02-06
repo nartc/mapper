@@ -47,6 +47,20 @@ describe('Map - Non Flattening', () => {
     assertVm(user, vm);
   });
 
+  it('should return null/undefined if source is null/undefined', () => {
+    mapper
+      .addProfile(addressProfile)
+      .addProfile(avatarProfile)
+      .addProfile(userProfileProfile)
+      .addProfile(userProfile);
+
+    let vm = mapper.map<User, UserVm>(undefined, 'UserVm', 'User');
+    expect(vm).toEqual(undefined);
+
+    vm = mapper.map<User, UserVm>(null, 'UserVm', 'User');
+    expect(vm).toEqual(null);
+  });
+
   it('should map correctly with condition, preCondition, and nullSubstitution', () => {
     mapper
       .addProfile(addressProfile)

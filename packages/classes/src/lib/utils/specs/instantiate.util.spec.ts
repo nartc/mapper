@@ -1,6 +1,7 @@
 import { createSpyObj } from 'jest-createspyobj';
 import { resetAllWhenMocks, when } from 'jest-when';
 import { ClassInstanceStorage, ClassMetadataStorage } from '../../storages';
+import { Constructible } from '../../types';
 import { instantiate } from '../instantiate.util';
 
 describe('instantiate', () => {
@@ -123,27 +124,35 @@ describe('instantiate', () => {
     });
   });
 
+  function fooMatcher(model: Constructible) {
+    return model === Foo;
+  }
+
+  function barMatcher(model: Constructible) {
+    return model === Bar;
+  }
+
   function mockEmpty() {
     when(mockedInstanceStorage.getDepthAndCount)
-      .calledWith(Foo, 'bar')
+      .calledWith(fooMatcher as any, 'bar')
       .mockReturnValueOnce([0, 0]);
     when(mockedMetadataStorage.getMetadata)
-      .calledWith(Foo)
+      .calledWith(fooMatcher as any)
       .mockReturnValueOnce([]);
   }
 
   function mockWithoutDepth() {
     when(mockedInstanceStorage.getDepthAndCount)
-      .calledWith(Foo, 'bar')
+      .calledWith(fooMatcher as any, 'bar')
       .mockReturnValueOnce([0, 0]);
     when(mockedMetadataStorage.getMetadata)
-      .calledWith(Foo)
+      .calledWith(fooMatcher as any)
       .mockReturnValueOnce([
         ['foo', () => String],
         ['bar', () => Bar],
       ]);
     when(mockedMetadataStorage.getMetadata)
-      .calledWith(Bar)
+      .calledWith(barMatcher as any)
       .mockReturnValueOnce([
         ['bar', () => String],
         ['date', () => Date],
@@ -152,16 +161,16 @@ describe('instantiate', () => {
 
   function mockWithDepth() {
     when(mockedInstanceStorage.getDepthAndCount)
-      .calledWith(Foo, 'bar')
+      .calledWith(fooMatcher as any, 'bar')
       .mockReturnValueOnce([1, 0]);
     when(mockedMetadataStorage.getMetadata)
-      .calledWith(Foo)
+      .calledWith(fooMatcher as any)
       .mockReturnValueOnce([
         ['foo', () => String],
         ['bar', () => Bar],
       ]);
     when(mockedMetadataStorage.getMetadata)
-      .calledWith(Bar)
+      .calledWith(barMatcher as any)
       .mockReturnValueOnce([
         ['bar', () => String],
         ['date', () => Date],

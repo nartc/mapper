@@ -1,3 +1,15 @@
+## [2.2.1](https://github.com/nartc/mapper/compare/2.2.0...2.2.1) (2021-02-14)
+
+### Bug Fixes
+
+- **core:** move isDateConstructor and isPrimitiveConstructor from plugins to core ([997528b](https://github.com/nartc/mapper/commit/997528b0c2d8dca5a85c384e40aaf11f4b17d542))
+- **core:** utilize extraArguments in mapArray ([ac5bb40](https://github.com/nartc/mapper/commit/ac5bb4030a9b67fc8c143e3fcd7c8e4550031780))
+
+### Refactor
+
+- **core**: clean up misc ([61f4f65](https://github.com/nartc/mapper/commit/61f4f65c6a12ff6de7ea963d89f2f8df5e968931))
+- **classes/pojos**: use `isDateConstructor` and `isPrimitiveConstructor` from core ([b1dc211](https://github.com/nartc/mapper/commit/b1dc2112aa3a0084229a1531424084e222748c00), [66a2f33](https://github.com/nartc/mapper/commit/66a2f33528ddbea5ab0fb8cd891a0e9b1ca9a796))
+
 # [2.2.0](https://github.com/nartc/mapper/compare/2.1.1...2.2.0) (2021-02-14)
 
 ### Features

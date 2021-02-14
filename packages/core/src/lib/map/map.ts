@@ -5,6 +5,7 @@ import type {
   Dictionary,
   ErrorHandler,
   FromValueReturn,
+  MapArrayOptions,
   MapDeferReturn,
   MapFromReturn,
   MapInitializeReturn,
@@ -305,7 +306,7 @@ Original error: ${originalError}`;
             mapInitializedValue,
             nestedDestinationMemberKey,
             nestedSourceMemberKey,
-            {},
+            { extraArguments },
             mapper,
             errorHandler
           )
@@ -370,7 +371,7 @@ Original error: ${originalError}`;
  * @param {TSource[]} sourceArray - the array of source items to map
  * @param destination - destination meta key
  * @param source - source meta key
- * @param {MapOptions} options - the map options for this particular map operation
+ * @param {MapArrayOptions} options - the map options for this particular map operation
  * @param {Mapper} mapper - the mapper instance
  * @param {ErrorHandler} errorHandler - error handler
  */
@@ -381,15 +382,15 @@ export function mapArray<
   sourceArray: TSource[],
   destination: unknown,
   source: unknown,
-  options: MapOptions<TSource[], TDestination[]>,
+  options: MapArrayOptions<TSource, TDestination>,
   mapper: Mapper,
   errorHandler: ErrorHandler
 ) {
-  // intialize an empty array
+  // initialize an empty array
   let destinationArray: TDestination[] = [];
 
   // destructure mapOptions
-  const { beforeMap, afterMap } = options ?? {};
+  const { beforeMap, afterMap, extraArguments } = options ?? {};
 
   // run beforeMap for the whole map operation
   beforeMap?.(sourceArray, []);
@@ -401,7 +402,7 @@ export function mapArray<
       mapReturn(
         sourceArray[i],
         mapping as Mapping<TSource, TDestination>,
-        {},
+        { extraArguments },
         mapper,
         errorHandler,
         true

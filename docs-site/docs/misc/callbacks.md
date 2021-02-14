@@ -19,6 +19,7 @@ export interface MapOptions<
 > {
   beforeMap?: MapAction<TSource, TDestination>;
   afterMap?: MapAction<TSource, TDestination>;
+  extraArguments?: Record<string, unknown>; // <-- to be used with mapWithArguments()
 }
 ```
 

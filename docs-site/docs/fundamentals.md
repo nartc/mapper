@@ -46,6 +46,7 @@ These functions are all separate and pure-functions which allows for **Tree-shak
 | ConvertUsing     | `convertUsing()`           | Map a member using [Converters](mapping-configuration/convert-using)                                                                                                                                         |
 | NullSubstitution | `nullSubstitution()`       | If the member on **Source** is `null`, this will substitute the `null` value with a different value for that member on **Destination**                                                                       |
 | MapDefer         | `mapDefer()`               | This can be used to _defer_ a `TransformationType` with the **Source**. For example, if **Source** has data A, we want `MapFrom` but if **Source** has B, we want to `Ignore`                                |
+| MapWithArguments | `mapWithArguments()`       | This can be used to _map_ with extra arguments where the arguments come in at runtime when `map()` is invoked                                                                                                |
 | MapInitialize    | internal `mapInitialize()` | This is used **internally** to initialize the `MappingProperty` with the **Destination** metadata                                                                                                            |
 
 ## NamingConvention

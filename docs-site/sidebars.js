@@ -78,6 +78,10 @@ module.exports = {
             },
             {
               type: 'doc',
+              id: 'mapping-configuration/map-with-arguments',
+            },
+            {
+              type: 'doc',
               id: 'mapping-configuration/map-defer',
             },
           ],

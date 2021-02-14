@@ -1,3 +1,10 @@
+# [2.2.0](https://github.com/nartc/mapper/compare/2.1.1...2.2.0) (2021-02-14)
+
+### Features
+
+- **core:** add mapWithArguments ([2732300](https://github.com/nartc/mapper/commit/2732300a7454cc9c266d2a2b5e0714d59fd4f1ae))
+- **types:** add mapWithArguments to typing definitions ([4b52da3](https://github.com/nartc/mapper/commit/4b52da34947e8fe6cd74e60e7f14435ad7d6f939))
+
 ## [2.1.1](https://github.com/nartc/mapper/compare/2.1.0...2.1.1) (2021-02-06)
 
 ### Bug Fixes

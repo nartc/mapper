@@ -7,7 +7,7 @@ import {
 } from './fixtures/models/simple-foo-bar-with-union';
 
 describe('withUnion', () => {
-  const [mapper] = setupClasses('mapper');
+  const [mapper] = setupClasses('withUnion');
 
   it('should map', () => {
     mapper.createMap(SimpleBarWithUnion, SimpleBarWithUnionVm);

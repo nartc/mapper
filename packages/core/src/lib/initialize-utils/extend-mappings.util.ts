@@ -1,4 +1,4 @@
-import type { Mapping, MappingProperty } from '@automapper/types';
+import type { Mapping } from '@automapper/types';
 import { MappingClassId, MappingPropertiesClassId } from '@automapper/types';
 
 export function extendMappings(bases: unknown[], mapping: Mapping) {
@@ -11,18 +11,16 @@ export function extendMappings(bases: unknown[], mapping: Mapping) {
       );
       if (existProp) {
         existProp[MappingPropertiesClassId.path] = propToExtendKey;
-        existProp[MappingPropertiesClassId.property] = Object.freeze(
-          propToExtendMappingProp
-        ) as MappingProperty;
+        existProp[MappingPropertiesClassId.property] = propToExtendMappingProp;
       } else {
         mapping[MappingClassId.properties].push([
           propToExtendKey,
-          Object.freeze(propToExtendMappingProp) as MappingProperty,
+          propToExtendMappingProp,
         ]);
       }
     }
     mapping[MappingClassId.bases] ??= [];
-    mapping[MappingClassId.bases]?.push(
+    mapping[MappingClassId.bases]!.push(
       mappingToExtend[MappingClassId.mappings]
     );
   }

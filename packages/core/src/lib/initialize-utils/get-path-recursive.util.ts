@@ -1,3 +1,10 @@
+/**
+ * Loop through an object and recursively get paths of each property
+ *
+ * @param node
+ * @param prefix
+ * @param prev
+ */
 export function getPathRecursive(
   node: unknown,
   prefix = '',
@@ -17,10 +24,7 @@ export function getPathRecursive(
 
     const child = node[key];
     if (typeof child === 'object') {
-      let queue = [child];
-      if (Array.isArray(child)) {
-        queue = child;
-      }
+      const queue = Array.isArray(child) ? child : [child];
 
       for (const childNode of queue) {
         const childPaths = getPathRecursive(childNode, path + '.');

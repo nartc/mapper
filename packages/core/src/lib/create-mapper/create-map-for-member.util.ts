@@ -51,7 +51,7 @@ export function createMapForMember<
   }
 
   // initialize sourcePath
-  let sourcePath = '';
+  let sourcePath: string;
 
   // if the transformation is MapFrom or MapWith, we have information on the source value selector
   if (
@@ -61,14 +61,9 @@ export function createMapForMember<
     sourcePath = getMemberPath(mapMemberFn[MapFnClassId.misc]!);
   }
 
-  // initialize paths tuple
-  const paths: [member: string, source?: string] = !sourcePath
-    ? [memberPath]
-    : [memberPath, sourcePath];
-
   // initialize MappingProperty
   const mappingProperty: MappingProperty = [
-    paths,
+    [memberPath, sourcePath],
     [mapMemberFn, preCond as PreConditionReturn],
   ];
 
@@ -80,10 +75,10 @@ export function createMapForMember<
   // if exists, overrides
   if (existProp != null) {
     existProp[MappingPropertiesClassId.property] = mappingProperty;
-    return fluentFunction;
+  } else {
+    // push MappingProperty to mapping
+    mapping[MappingClassId.properties].push([memberPath, mappingProperty]);
   }
 
-  // push MappingProperty to mapping
-  mapping[MappingClassId.properties].push([memberPath, mappingProperty]);
   return fluentFunction;
 }

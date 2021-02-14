@@ -1,5 +1,10 @@
 import type { NamingConvention } from '@automapper/types';
 
+/**
+ * Convert namingConventions params to [convention, convention] format
+ *
+ * @param namingConventions
+ */
 export function getNamingConventionsFromOptions(
   namingConventions?:
     | NamingConvention

@@ -1,8 +1,4 @@
-import type {
-  CreateMapOptions,
-  Mapping,
-  MappingProperty,
-} from '@automapper/types';
+import type { CreateMapOptions, Mapping } from '@automapper/types';
 import { MappingClassId } from '@automapper/types';
 import { isDefined } from '../utils';
 import { extendMappings } from './extend-mappings.util';
@@ -109,10 +105,7 @@ export function createInitialMapping(
 
       mapping[MappingClassId.properties].push([
         destinationPath,
-        Object.freeze(([
-          [destinationPath],
-          [mapInitialize(...sourcePaths!)],
-        ] as unknown) as MappingProperty),
+        [[destinationPath], [mapInitialize(...sourcePaths!)]],
         destinationNestedMetadataAtPath,
       ]);
       continue;
@@ -125,10 +118,7 @@ export function createInitialMapping(
 
     mapping[MappingClassId.properties].push([
       destinationPath,
-      Object.freeze(([
-        [destinationPath, sourcePath],
-        [mapInitialize(sourcePath)],
-      ] as unknown) as MappingProperty),
+      [[destinationPath, sourcePath], [mapInitialize(sourcePath)]],
       destinationNestedMetadataAtPath,
     ]);
   }

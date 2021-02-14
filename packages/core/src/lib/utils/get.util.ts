@@ -1,5 +1,5 @@
 export function get<T>(object: T, ...paths: string[]): unknown {
-  if (!paths?.length) {
+  if (!paths.length) {
     return;
   }
 

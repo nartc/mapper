@@ -59,7 +59,8 @@ export type MemberMapReturnNoDefer<
   | FromValueReturn<TSource, TDestination, TSelectorReturn>
   | ConvertUsingReturn<TSource>
   | NullSubstitutionReturn<TSource, TDestination, TSelectorReturn>
-  | IgnoreReturn;
+  | IgnoreReturn
+  | MapWithArgumentsReturn<TSource, TDestination, TSelectorReturn>;
 
 export type PreConditionReturn<
   TSource extends Dictionary<TSource> = any,
@@ -145,6 +146,18 @@ export type NullSubstitutionReturn<
 ];
 
 export type IgnoreReturn = [type: TransformationType.Ignore];
+
+export type MapWithArgumentsReturn<
+  TSource extends Dictionary<TSource> = any,
+  TDestination extends Dictionary<TDestination> = any,
+  TSelectorReturn = SelectorReturn<TDestination>
+> = [
+  type: TransformationType.MapWithArguments,
+  fn: (
+    source: TSource,
+    extraArguments: Record<string, unknown>
+  ) => TSelectorReturn
+];
 
 export type MapInitializeReturn<
   TSource extends Dictionary<TSource> = any,
@@ -376,6 +389,15 @@ export interface CreateMapFluentFunction<
 
   forMember<TMemberType = SelectorReturn<TDestination>>(
     selector: Selector<TDestination, TMemberType>,
+    memberMapFunction: MapWithArgumentsReturn<
+      TSource,
+      TDestination,
+      TMemberType
+    >
+  ): CreateMapFluentFunction<TSource, TDestination>;
+
+  forMember<TMemberType = SelectorReturn<TDestination>>(
+    selector: Selector<TDestination, TMemberType>,
     preConditionFunction: PreConditionReturn<
       TSource,
       TDestination,
@@ -456,6 +478,20 @@ export interface CreateMapFluentFunction<
       TMemberType
     >,
     memberMapFunction: IgnoreReturn
+  ): CreateMapFluentFunction<TSource, TDestination>;
+
+  forMember<TMemberType = SelectorReturn<TDestination>>(
+    selector: Selector<TDestination, TMemberType>,
+    preConditionFunction: PreConditionReturn<
+      TSource,
+      TDestination,
+      TMemberType
+    >,
+    memberMapFunction: MapWithArgumentsReturn<
+      TSource,
+      TDestination,
+      TMemberType
+    >
   ): CreateMapFluentFunction<TSource, TDestination>;
 
   forMember<TMemberType = SelectorReturn<TDestination>>(

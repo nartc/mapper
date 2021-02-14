@@ -8,6 +8,7 @@ export const enum TransformationType {
   MapInitialize,
   NullSubstitution,
   MapDefer,
+  MapWithArguments,
 }
 
 export const enum MappingClassId {

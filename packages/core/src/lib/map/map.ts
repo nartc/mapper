@@ -11,6 +11,7 @@ import type {
   MapOptions,
   Mapper,
   Mapping,
+  MapWithArgumentsReturn,
   MapWithReturn,
   MemberMapReturn,
 } from '@automapper/types';
@@ -25,6 +26,7 @@ import { set, setMutate } from './set.util';
  * @param {TSource} sourceObj - The sourceObject being used to map to destination
  * @param destination - destination meta key
  * @param {string} destinationMemberPath - the property path on the destination
+ * @param {Record<string, any>} extraArguments
  * @param {Mapper} mapper - the mapper instance
  */
 function mapMember<TSource extends Dictionary<TSource> = any>(
@@ -32,6 +34,7 @@ function mapMember<TSource extends Dictionary<TSource> = any>(
   sourceObj: TSource,
   destination: unknown,
   destinationMemberPath: string,
+  extraArguments: Record<string, unknown>,
   mapper: Mapper
 ) {
   let value: unknown;
@@ -59,6 +62,12 @@ function mapMember<TSource extends Dictionary<TSource> = any>(
         destinationMemberPath
       );
       break;
+    case TransformationType.MapWithArguments:
+      value = (mapFn as MapWithArgumentsReturn[MapFnClassId.fn])(
+        sourceObj,
+        extraArguments
+      );
+      break;
     case TransformationType.MapDefer:
       value = mapMember(
         (mapFn as MapDeferReturn[MapFnClassId.fn])(
@@ -67,6 +76,7 @@ function mapMember<TSource extends Dictionary<TSource> = any>(
         sourceObj,
         destination,
         destinationMemberPath,
+        extraArguments,
         mapper
       );
       break;
@@ -195,8 +205,11 @@ function map<
   const configuredKeys: string[] = [];
 
   // deconstruct MapOptions
-  const { beforeMap: mapBeforeAction, afterMap: mapAfterAction } =
-    options ?? {};
+  const {
+    beforeMap: mapBeforeAction,
+    afterMap: mapAfterAction,
+    extraArguments,
+  } = options ?? {};
 
   // Before Map
   // Do not run before map when in Map Array mode
@@ -333,6 +346,7 @@ Original error: ${originalError}`;
         sourceObj,
         destination,
         destinationMemberPath,
+        extraArguments,
         mapper
       )
     );

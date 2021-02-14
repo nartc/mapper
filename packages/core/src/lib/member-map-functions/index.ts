@@ -7,3 +7,4 @@ export * from './ignore';
 export * from './null-substitution';
 export * from './pre-condition';
 export * from './map-defer';
+export * from './map-with-arguments';

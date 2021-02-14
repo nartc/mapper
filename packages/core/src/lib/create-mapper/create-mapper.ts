@@ -73,7 +73,8 @@ export function createMapper<TKey = unknown>({
       if (
         (destinationObjOrOptions &&
           ('beforeMap' in destinationObjOrOptions ||
-            'afterMap' in destinationObjOrOptions)) ||
+            'afterMap' in destinationObjOrOptions ||
+            'extraArguments' in destinationObjOrOptions)) ||
         destinationObjOrOptions == null
       ) {
         return mapReturn(

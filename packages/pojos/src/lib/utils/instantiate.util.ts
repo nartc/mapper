@@ -1,8 +1,11 @@
-import { isDefined, isEmpty } from '@automapper/core';
+import {
+  isDateConstructor,
+  isDefined,
+  isEmpty,
+  isPrimitiveConstructor,
+} from '@automapper/core';
 import type { Dictionary } from '@automapper/types';
 import { PojosMetadataStorage } from '../storages';
-import { isDateConstructor } from './is-date-constructor.util';
-import { isPrimitiveConstructor } from './is-primitive-constructor.util';
 
 export function instantiate<TModel extends Dictionary<TModel>>(
   metadataStorage: PojosMetadataStorage,

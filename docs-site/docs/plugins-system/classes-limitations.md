@@ -89,7 +89,7 @@ SourceA {
 
 - Depth of 1
 
-```typescript
+```
 SourceA {
     sourceB: SourceB {
         sourceA: SourceA {
@@ -101,7 +101,7 @@ SourceA {
 
 - Depth of 2
 
-```typescript
+```
 SourceA {
     sourceB: SourceB {
         sourceA: SourceA {
@@ -115,7 +115,7 @@ SourceA {
 }
 ```
 
-and so on. By default, `@automapper/classes` will apply **depth of 0** to nested models. To specify **depth**, use `@AutoMap()` decorator second argument:
+By default, `@automapper/classes` will apply **depth of 0** to nested models. To specify **depth**, use `@AutoMap()` decorator second argument:
 
 ```ts
 class SourceA {

@@ -10,7 +10,7 @@ sidebar_label: Architecture
 
 ## Semantic Versioning
 
-`@automapper/*` will follow [SemVer](https://semver.org/) specification for releasing fixes and features. When a package is bumped, the other packages will also be bumped. A major version might or might not be accompanied with a `beta` or `rc` release.
+`@automapper/*` will follow [SemVer](https://semver.org/) specification for releasing fixes and features. When a package is bumped, the other packages will also be bumped. A major version might or might not be accompanied by a `beta` or `rc` release.
 
 ## Plugin-based approach
 

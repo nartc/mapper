@@ -40,4 +40,4 @@ PR is most definitely welcomed to fix this limitation.
 
 ## Circular Dependencies
 
-See [`@automapper/classes` Limitations](../plugins-system/classes-limitations)
+See [`@automapper/classes` Limitations](../plugins-system/classes-limitations.md)

@@ -18,7 +18,7 @@ yarn add @automapper/pojos
 
 The only differences between `@automapper/pojos` and `@automapper/classes` are:
 
-- `createMetadataMap` to store metadata instead of `@AutoMap()` decorator. See [createMetadataMap](pojos-metadata)
+- `createMetadataMap` to store metadata instead of `@AutoMap()` decorator. See [createMetadataMap](pojos-metadata.md)
 - Use unique `string` as `metaKey` instead of class constructor (eg: `"User"` vs `User`)
 
 ```ts

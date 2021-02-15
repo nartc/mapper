@@ -22,7 +22,7 @@ yarn add -D @automapper/types
 
 #### Pick plugin(s)
 
-Pick one or more plugins you want to use. At least one plugin is required. For brevity purpose of the documentations, I will use `@automapper/classes` throughout when a plugin is mentioned. To learn more about Plugins, go to [Plugins](../plugins-system/introduce-to-plugins) section.
+Pick one or more plugins you want to use. At least one plugin is required. For brevity purpose of the documentations, I will use `@automapper/classes` throughout when a plugin is mentioned. To learn more about Plugins, go to [Plugins](../plugins-system/introduce-to-plugins.md) section.
 
 ```bash
 npm i @automapper/classes

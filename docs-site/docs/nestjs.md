@@ -184,4 +184,4 @@ MapInterceptor(destinationModelType, sourceModelType, {
 } & MapAction)
 ```
 
-> See [MapAction](./misc/callbacks)
+> See [MapAction](misc/callbacks.md)

@@ -105,7 +105,7 @@ Name of the `Mapper`
 
 #### `pluginInitializer`
 
-- Type: `MapPluginInitializer` (See [MapPluginInitializer](#mapplugininitializer))
+- Type: `MapPluginInitializer` (See [`MapPluginInitializer`](#mapplugininitializer))
 
 Plugin that the `Mapper` will be using
 
@@ -119,7 +119,7 @@ Global naming conventions for all the `Mapping` in this `Mapper`
 
 #### `errorHandler`
 
-- Type: `ErrorHandler` (See [ErrorHandler](../misc/error-handler))
+- Type: `ErrorHandler` (See [ErrorHandler](../misc/error-handler.md))
 
 `ErrorHandler` that this `Mapper` uses
 
@@ -131,7 +131,7 @@ export interface MapPluginInitializer<TKey = unknown> {
 }
 ```
 
-See [MapPlugin](#mapplugin)
+See [`MapPlugin`](#mapplugin)
 
 ## `MapPlugin`
 

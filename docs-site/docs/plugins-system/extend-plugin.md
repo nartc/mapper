@@ -4,7 +4,7 @@ title: Extend plugin
 sidebar_label: Extend plugin
 ---
 
-In addition to [creating your own plugins](create-plugin), you can also **extend existing plugins**. After all, plugins are just `Object`.
+In addition to [creating your own plugins](create-plugin.md), you can also **extend existing plugins**. After all, plugins are just `Object`.
 
 The following example shows how to extend `@automapper/classes` to convert all `null` values to `undefined` by customizing `preMap()` and `preMapArray()` on `classes` plugin.
 

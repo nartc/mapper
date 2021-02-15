@@ -6,7 +6,7 @@ sidebar_label: Technical difficulties
 
 ## Problems with TypeScript
 
-[Reflection](<https://en.wikipedia.org/wiki/Reflection_(computer_programming)>) plays a huge part in the _auto_ portion of an AutoMapper implementation. And it is especially _not that great_ in TypeScript. Let's take a look at the following snippet:
+[Reflection](<https://en.wikipedia.org/wiki/Reflection_(computer_programming)>) plays a huge part in the _auto_ portion of an AutoMapper implementation. It is especially _not that great_ in TypeScript. Let's take a look at the following snippet:
 
 ```typescript
 class User {

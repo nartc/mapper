@@ -270,7 +270,7 @@ The difference between `fullName` and `jobTitle` (or `jobSalary`) is that `jobTi
 
 ## How to fix
 
-To fix `fullName` and `birthday`, we are going to tap into the Mapping Configuration portion of AutoMapper, which is quite powerful. For `jobTitle` and `jobSalary`, we will utilize **Flattening** capability with [Naming Conventions](../fundamentals/#namingconvention)
+To fix `fullName` and `birthday`, we are going to tap into the Mapping Configuration portion of AutoMapper, which is quite powerful. For `jobTitle` and `jobSalary`, we will utilize **Flattening** capability with [NamingConvention](../fundamentals.md#namingconvention)
 
 Let's remind every one of our Mapping creation
 
@@ -325,7 +325,7 @@ mapper
   );
 ```
 
-`mapper.createMap` accepts an optional third argument `CreateMapOptions` where we can provide a `namingConventions` object with `source` convention and `destination` convention. Here, we provide `CamelCaseNamingConvention` for both. With [NamingConventions](../fundamentals/#namingconvention), AutoMapper has enough information to apply basic **Flattening** to the mapping.
+`mapper.createMap` accepts an optional third argument `CreateMapOptions` where we can provide a `namingConventions` object with `source` convention and `destination` convention. Here, we provide `CamelCaseNamingConvention` for both. With [NamingConvention](../fundamentals.md#namingconvention), AutoMapper has enough information to apply basic **Flattening** to the mapping.
 
 > `namingConventions` can also take in a single `NamingConvention` if both models use the same `NamingConvention`.
 >
@@ -357,7 +357,7 @@ Let's re-execute `getUserDto()` and we will now see a complete `UserDto`
 - Without AutoMapper, our mapping logic is not maintainable and scalable. We have tight coupling between DTOs and Entities.
 - AutoMapper brings **Separation of Concern** and **Conventions over Configuration** to our mapping logic.
   - `firstName`, `lastName`, `username`, and `bio` are _auto-mapped_ correctly
-  - `jobTitle` and `jobSalary` are _flatten_ and _auto-mapped_ correctly with [NamingConventions](../fundamentals/#namingconvention)
+  - `jobTitle` and `jobSalary` are _flatten_ and _auto-mapped_ correctly with [NamingConvention](../fundamentals.md#namingconvention)
 - Mapping Configuration is powerful and highly customizable. `fullName` and `birthday` are some of the simplest examples of what Mapping Configuration can provide.
 - There are some gotchas:
   - Order of Mapping matters. Because `Bio` and `BioDto` are nested models of `User` and `UserDto`, we create their Mapping first.

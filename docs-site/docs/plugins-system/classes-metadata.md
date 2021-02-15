@@ -24,4 +24,4 @@ This is to store the metadata of all the models used within the `Mapper`
 
 ### ClassInstanceStorage
 
-This is to store the recursive count and recursive depth of a particular model. The reason for this storage is to handle [Circular Dependencies](classes-limitations/#circular-dependencies)
+This is to store the recursive count and recursive depth of a particular model. The reason for this storage is to handle [Circular Dependencies](classes-limitations.md#circular-dependencies)

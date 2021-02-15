@@ -8,5 +8,5 @@ sidebar_label: Introduction
 
 `@automapper/*` currently provides two official plugins:
 
-- [@automapper/classes](introduce-to-classes)
-- [@automapper/pojos](introduce-to-pojos)
+- [@automapper/classes](introduce-to-classes.md)
+- [@automapper/pojos](introduce-to-pojos.md)

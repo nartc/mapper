@@ -278,7 +278,7 @@ import { classes } from '@automapper/classes';
 export class AppModule {}
 ```
 
-### `Profile`
+### `MappingProfile`
 
 ```ts
 // before

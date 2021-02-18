@@ -96,3 +96,74 @@ mapper
 ```
 
 Now, `Mapper` will map `base` with `source.foo` instead of `source.base` when it executes the mapping operation from `Foo` to `FooDto`.
+
+## Arrays of objects
+
+Arrays of objects are **auto-mapped** if they also follow convention. Assume the following case:
+
+```ts
+export class Address {
+  @AutoMap()
+  street: string;
+  @AutoMap()
+  city: string;
+  @AutoMap()
+  state: string;
+}
+
+export class User {
+  @AutoMap(() => Address)
+  addresses: Address[];
+}
+
+export class AddressDto {
+  @AutoMap()
+  formattedAddress: string;
+}
+
+export class UserDto {
+  @AutoMap(() => AddressDto)
+  addresses: AddressDto[];
+}
+```
+
+Notice that `User#addresses` and `UserDto#addresses` are **conventionally matching**. If we provide the metadata (with `AutoMap` like above) and create the respective `Mapping`, `@automapper/*` should be able to **automatically** map `User#addresses` as `Address[]` to `UserDto#addresses` as `AddressDto[]`
+
+```ts
+mapper.createMap(Address, AddressDto).forMember(
+  (d) => d.formattedAddress,
+  mapFrom((s) => s.street + ' ' + s.city + ' ' + s.state)
+);
+
+mapper.createMap(User, UserDto);
+```
+
+Check out this [Stackblitz](https://stackblitz.com/edit/typescript-automapper-jlxuv8) for usage with `pojos`
+
+## Enums
+
+`@automapper/*` does not care about Enum type because ultimately the value type of these enum properties are either `string` or `number`. To work with enums, please provide `String` or `Number` to your enum properties. This applies to both `classes` and `pojos` plugins
+
+```ts
+// classes
+
+export enum UserRole {
+  Admin = 'admin',
+  User = 'user',
+}
+
+export class User {
+  @AutoMap(() => String) // because UserRole is a string enum
+  role: UserRole;
+}
+
+// pojos
+
+export interface User {
+  role: UserRole;
+}
+
+createMetadataMap<User>('User', {
+  role: String, // because UserRole is a string enum
+});
+```

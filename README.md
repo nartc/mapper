@@ -38,6 +38,10 @@ This is a monorepo of `@automapper/core` and official packages.
 
 See [Documentations](https://automapperts.netlify.app)
 
+## Miscellaneous
+
+`@automapper/*` is a later iteration of the legacy `@nartc/automapper`. `@nartc/automapper` is archived and is placed in this repo under [legacy branch](https://github.com/nartc/mapper/tree/legacy)
+
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
@@ -57,4 +61,4 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification.
-Contributions of any kind welcome! Please check out our [contributing guide](CONTRIBUTING.MD)
+Contributions of any kind welcome! Please check out our [contributing guide](CONTRIBUTING.md)

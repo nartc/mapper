@@ -1,9 +1,14 @@
 {
   "npmScope": "automapper",
-  "affected": { "defaultBase": "main" },
+  "affected": {
+    "defaultBase": "main"
+  },
   "implicitDependencies": {
     "workspace.json": "*",
-    "package.json": { "dependencies": "*", "devDependencies": "*" },
+    "package.json": {
+      "dependencies": "*",
+      "devDependencies": "*"
+    },
     "tsconfig.base.json": "*",
     "tslint.json": "*",
     ".eslintrc.json": "*",
@@ -12,17 +17,39 @@
   "tasksRunnerOptions": {
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
-      "options": { "cacheableOperations": ["build", "lint", "test", "e2e"] }
+      "options": {
+        "cacheableOperations": ["build", "lint", "test", "e2e"]
+      }
     }
   },
   "projects": {
-    "core": { "tags": ["type:library"] },
-    "classes": { "tags": ["type:plugin"] },
-    "types": { "tags": ["type:type-defs"] },
-    "integration-test": { "tags": ["type:test"] },
-    "pojos": { "tags": ["type:plugin"] },
-    "nestjs": { "tags": ["type:integration"] },
-    "nestjs-integration-test": { "tags": ["type:test"] }
+    "core": {
+      "tags": ["type:library"]
+    },
+    "classes": {
+      "tags": ["type:plugin"]
+    },
+    "types": {
+      "tags": ["type:type-defs"]
+    },
+    "integration-test": {
+      "tags": ["type:test"]
+    },
+    "pojos": {
+      "tags": ["type:plugin"]
+    },
+    "nestjs": {
+      "tags": ["type:integration"]
+    },
+    "nestjs-integration-test": {
+      "tags": ["type:test"]
+    },
+    "experimental-transformer-plugin": {
+      "tags": ["type:transformer-plugin"]
+    }
   },
-  "workspaceLayout": { "appsDir": "packages", "libsDir": "packages" }
+  "workspaceLayout": {
+    "appsDir": "packages",
+    "libsDir": "packages"
+  }
 }

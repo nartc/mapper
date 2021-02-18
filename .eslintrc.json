@@ -42,8 +42,13 @@
                   "type:plugin",
                   "type:integration",
                   "type:type-defs",
-                  "type:util"
+                  "type:util",
+                  "type:transformer-plugin"
                 ]
+              },
+              {
+                "sourceTag": "type:transformer-plugin",
+                "onlyDependOnLibsWithTags": ["type:plugin"]
               }
             ]
           }

@@ -21,7 +21,8 @@ export function createMetadataMap<TModel extends Dictionary<TModel> = any>(
       | DateConstructor
       | NumberConstructor
       | BooleanConstructor
-      | string;
+      | string
+      | null;
   }
 ): void;
 export function createMetadataMap<TModel extends Dictionary<TModel> = any>(
@@ -34,7 +35,8 @@ export function createMetadataMap<TModel extends Dictionary<TModel> = any>(
       | NumberConstructor
       | BooleanConstructor
       | string
-      | null;
+      | null
+      | false;
   }
 ): void;
 export function createMetadataMap<TModel extends Dictionary<TModel> = any>(
@@ -47,7 +49,8 @@ export function createMetadataMap<TModel extends Dictionary<TModel> = any>(
           | DateConstructor
           | NumberConstructor
           | BooleanConstructor
-          | string;
+          | string
+          | null;
       },
   metadata?: {
     [key in keyof TModel]?:
@@ -56,7 +59,8 @@ export function createMetadataMap<TModel extends Dictionary<TModel> = any>(
       | NumberConstructor
       | BooleanConstructor
       | string
-      | null;
+      | null
+      | false;
   }
 ) {
   const toMergeSymbol =
@@ -93,6 +97,6 @@ export function createMetadataMap<TModel extends Dictionary<TModel> = any>(
   result.push(...entries);
   pojosSymbolStorage.set(
     symbol,
-    result.filter(([, meta]: any) => meta !== null) as []
+    result.filter(([, meta]: any) => meta !== false) as []
   );
 }

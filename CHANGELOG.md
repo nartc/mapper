@@ -1,3 +1,9 @@
+## [3.0.3](https://github.com/nartc/mapper/compare/3.0.2...3.0.3) (2021-02-19)
+
+### Bug Fixes
+
+- **experimental/transformer-plugin:** adjust merging options with default options ([c4c123b](https://github.com/nartc/mapper/commit/c4c123b1058ea317cdc36de612d801d7b595186d))
+
 ## [3.0.2](https://github.com/nartc/mapper/compare/3.0.1...3.0.2) (2021-02-19)
 
 ### Bug Fixes

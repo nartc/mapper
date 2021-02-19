@@ -1,5 +1,5 @@
 import * as tss from 'typescript/lib/tsserverlibrary';
-import { AutomapperTransformerPluginOptions } from './lib/interfaces';
+import type { AutomapperTransformerPluginOptions } from './lib/interfaces';
 import { ModelVisitor } from './lib/model-visitor';
 import { isFilenameMatched } from './lib/plugin-utils';
 
@@ -10,8 +10,9 @@ const defaultOptions: AutomapperTransformerPluginOptions = {
 
 export default function automapperTransformerPlugin(
   program: tss.Program,
-  options: AutomapperTransformerPluginOptions = defaultOptions
+  options: AutomapperTransformerPluginOptions
 ) {
+  options = { ...defaultOptions, ...options };
   return {
     before(context: tss.TransformationContext) {
       modelVisitor.reset();
@@ -31,7 +32,7 @@ export default function automapperTransformerPlugin(
 }
 
 export const before = (
-  options: AutomapperTransformerPluginOptions = defaultOptions,
+  options: AutomapperTransformerPluginOptions,
   program: tss.Program
 ) => automapperTransformerPlugin(program, options).before;
 

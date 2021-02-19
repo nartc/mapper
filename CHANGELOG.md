@@ -1,13 +1,9 @@
-## [3.0.4](https://github.com/nartc/mapper/compare/3.0.3...3.0.4) (2021-02-19)
+## [3.0.5](https://github.com/nartc/mapper/compare/3.0.2...3.0.5) (2021-02-19)
 
 ### Bug Fixes
 
+- **classes:** merge metadata from Reflection and Factory fn ([393a7d3](https://github.com/nartc/mapper/commit/393a7d385a9b843c9f923407895c7ad26d441337))
 - **experimental/transformer-plugin:** fix options ([bac5074](https://github.com/nartc/mapper/commit/bac507469237f299d2f2ea7d2298baed5d2fcbed))
-
-## [3.0.3](https://github.com/nartc/mapper/compare/3.0.2...3.0.3) (2021-02-19)
-
-### Bug Fixes
-
 - **experimental/transformer-plugin:** adjust merging options with default options ([c4c123b](https://github.com/nartc/mapper/commit/c4c123b1058ea317cdc36de612d801d7b595186d))
 
 ## [3.0.2](https://github.com/nartc/mapper/compare/3.0.1...3.0.2) (2021-02-19)

@@ -524,6 +524,7 @@ export type MappingTransformation<
   TSelectorReturn = SelectorReturn<TDestination>
 > = [
   mapFn: MemberMapReturn<TSource, TDestination, TSelectorReturn>,
+  isNullMetadata?: boolean,
   preCond?: PreConditionReturn<TSource, TDestination, TSelectorReturn>
 ];
 export type MappingProperty<

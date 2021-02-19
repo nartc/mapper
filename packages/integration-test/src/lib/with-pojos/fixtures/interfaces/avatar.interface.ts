@@ -25,8 +25,8 @@ export function createAvatarMetadata() {
   });
 
   createMetadataMap('AvatarVm', 'Avatar', {
-    source: null,
-    shouldIgnore: null,
+    source: false,
+    shouldIgnore: false,
     willBeIgnored: Number,
   });
 }

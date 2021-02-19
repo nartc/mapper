@@ -25,8 +25,8 @@ export function createAvatarPascalMetadata() {
   });
 
   createMetadataMap('PascalAvatarVm', 'PascalAvatar', {
-    Source: null,
-    ShouldIgnore: null,
+    Source: false,
+    ShouldIgnore: false,
     WillBeIgnored: Number,
   });
 }

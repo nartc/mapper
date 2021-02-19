@@ -25,8 +25,8 @@ export function createAvatarSnakeMetadata() {
   });
 
   createMetadataMap('SnakeAvatarVm', 'SnakeAvatar', {
-    source: null,
-    should_ignore: null,
+    source: false,
+    should_ignore: false,
     will_be_ignored: Number,
   });
 }

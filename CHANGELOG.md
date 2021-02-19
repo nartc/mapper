@@ -1,3 +1,9 @@
+## [3.0.1](https://github.com/nartc/mapper/compare/3.0.0...3.0.1) (2021-02-19)
+
+### Bug Fixes
+
+- **experimental/transformer-plugin:** move into classes ([05aae8a](https://github.com/nartc/mapper/commit/05aae8ab113b31408ef3f6ccdcdb3fd2393eba2a))
+
 # [3.0.0](https://github.com/nartc/mapper/compare/2.2.1...3.0.0) (2021-02-19)
 
 ### Bug Fixes

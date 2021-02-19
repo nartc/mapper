@@ -28,7 +28,7 @@ describe('MapWithFunction', () => {
   });
 
   it('should call mapper.mapArray', () => {
-    const arrSelector = (s: any) => [];
+    const arrSelector = () => [];
     const mapWithFn = mapWith(withDestination, arrSelector, withSource);
     mapWithFn[MapFnClassId.fn]({}, (mapper as unknown) as Mapper);
     expect(mapper.mapArray).toHaveBeenCalledWith(

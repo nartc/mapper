@@ -52,7 +52,7 @@ describe('instantiate', () => {
 
       const result = parameterizedInstantiate();
       expect(result).toEqual([
-        { foo: undefined, bar: { bar: undefined, date: expect.any(Date) } },
+        { foo: undefined, bar: { bar: undefined, date: undefined } },
         [['bar', 'Bar']],
       ]);
     });

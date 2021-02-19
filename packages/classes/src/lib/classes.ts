@@ -6,7 +6,10 @@ import type {
 } from '@automapper/types';
 import { MappingClassId } from '@automapper/types';
 import 'reflect-metadata';
-import { AUTOMAP_PROPERTIES_METADATA_KEY } from './constants';
+import {
+  AUTOMAP_PROPERTIES_METADATA_KEY,
+  AUTOMAPPER_METADATA_FACTORY_KEY,
+} from './constants';
 import {
   ClassInstanceStorage,
   ClassMappingStorage,
@@ -86,6 +89,9 @@ export const classes: MapPluginInitializer<Constructible> = (errorHandler) => {
             sourceInstance,
             sourceNestedConstructible as unknown[]
           ),
+          isMetadataNullAtKey: (key) => {
+            return metadataStorage.getMetadataForKey(destination, key) === null;
+          },
           // classes plugin needs to check for sourcePaths on the prototype of Source
           isMultipartSourcePathsInSource,
           // classes plugin needs to check for the destinationPath (sourcePath) on the prototype of Source
@@ -155,12 +161,15 @@ function exploreMetadata(
     // if metadataStorage hasn't had metadata of the model
     if (!metadataStorage.has(model)) {
       // get the metadata from Reflection then populate metadataStorage and instanceStorage
-      const metadataList = Reflect.getMetadata(
+      let metadataList = Reflect.getMetadata(
         AUTOMAP_PROPERTIES_METADATA_KEY,
         model
       );
-      // skip if no metadata
-      if (!isDefined(metadataList)) continue;
+      // if no metadata, try getting from METADATA_FACTORY function
+      if (!isDefined(metadataList)) {
+        metadataList = (model as any)[AUTOMAPPER_METADATA_FACTORY_KEY]?.();
+        if (!isDefined(metadataList)) continue;
+      }
       // loop through metadata list
       for (const [propertyKey, { typeFn, depth }] of metadataList) {
         metadataStorage.addMetadata(model, [propertyKey, typeFn]);

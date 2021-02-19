@@ -1,3 +1,9 @@
+## [3.0.2](https://github.com/nartc/mapper/compare/3.0.1...3.0.2) (2021-02-19)
+
+### Bug Fixes
+
+- **experimental/transformer-plugin:** fix publish ([c90047a](https://github.com/nartc/mapper/commit/c90047a88bf22a220a462a39e7e9aadb53e25a4d)), closes [#261](https://github.com/nartc/mapper/issues/261)
+
 ## [3.0.1](https://github.com/nartc/mapper/compare/3.0.0...3.0.1) (2021-02-19)
 
 ### Bug Fixes

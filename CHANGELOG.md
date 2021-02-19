@@ -1,3 +1,23 @@
+# [3.0.0](https://github.com/nartc/mapper/compare/2.2.1...3.0.0) (2021-02-19)
+
+### Bug Fixes
+
+- **classes:** treat property as primitives if metaResult is null. Default Date to undefined if valueAtKey is undefined ([8e17527](https://github.com/nartc/mapper/commit/8e17527dc27dedfea6060a44f4bb5cbbcd62f224)), closes [#254](https://github.com/nartc/mapper/issues/254)
+- **core:** treat null metadata/Date same as null value aka just map the value. add logic for isNullMetadata to MappingPropert ([97f260d](https://github.com/nartc/mapper/commit/97f260d4507d3829acf5f0b24bc7bc4edd875f83))
+- **pojos:** treat property as primitives if metaResult is null. Date member to be returned as undefined if valueAtKey is undefined ([3e474ab](https://github.com/nartc/mapper/commit/3e474ab4cf5932c2ab34efe88e0cfeaf0c70973f))
+- **types:** add isNullMetadata to MappingTransformation ([a0b39d9](https://github.com/nartc/mapper/commit/a0b39d999baaafd10b77178c346ef58c3ab08a93))
+
+### Features
+
+- **classes:** add logic to take advantage of transformer plugin if used ([f3aca21](https://github.com/nartc/mapper/commit/f3aca21124424f5effed5a03627bacf52dd1c94f))
+- **experimental/transformer-plugin:** add transformer plugin for classes package ([67cdd29](https://github.com/nartc/mapper/commit/67cdd29a5abee34a977e29b8161dadff14a612b4))
+- **pojos:** allow to pass in null for createMetadataMap to treat something as primitives ([7357ad5](https://github.com/nartc/mapper/commit/7357ad5692c0380eac4ef11a9ef62f14d8392a5e))
+
+### BREAKING CHANGES
+
+- **pojos:** Previously, `null` was used to **skip** properties. Now, use `false` instead,
+  `null` means something else.
+
 ## [2.2.1](https://github.com/nartc/mapper/compare/2.2.0...2.2.1) (2021-02-14)
 
 ### Bug Fixes

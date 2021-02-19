@@ -111,7 +111,9 @@ After compilation, the members will be gone, but the static function will stay m
 
 ## Why experimental?
 
-`@automapper/classes/experimental/transformer-plugin` utilizes [TypeScript Compiler API](https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API) to traverse and manipulate the **Abstract Syntax Tree (AST)** to automate the process of decorating the Classes.
+`@automapper/classes/experimental/transformer-plugin` utilizes [TypeScript Compiler API](https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API) to traverse and manipulate the **Abstract Syntax Tree (AST)** to automate the process of decorating the Classes. And, there is a **Disclaimer**
+
+> Keep in mind that this is not yet a stable API - we’re releasing this as version 0.5, and things will be changing over time. As a first iteration, there will be a few rough edges. We encourage any and all feedback from the community to improve the API. To allow users to transition between future releases, we will be documenting any API Breaking Changes per new release.
 
 ## Limitations
 
@@ -200,7 +202,7 @@ export default {
 
 ### ttypescript
 
-ttypescript patches typescript in order to use transformers in tsconfig.json. See [ttypescript's README](https://github.com/cevek/ttypescript) for how to use this with module bundlers such as webpack or Rollup.
+`ttypescript` patches `typescript` in order to use transformers in `tsconfig.json`. See [ttypescript's README](https://github.com/cevek/ttypescript) for how to use this with module bundlers such as webpack or Rollup.
 
 ```
 {

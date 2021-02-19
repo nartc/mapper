@@ -36,9 +36,9 @@ Packages under **experimental** are either:
 
 Please be cautious when using these packages.
 
-| Project               | Description                                                         | Links                                                                                                                    |
-| --------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| **tranformer-plugin** | A transformer plugin to minimize boiler-plate for `classes` package | [![README](https://img.shields.io/badge/README--green.svg)](/packages/classes/experimental/transformer-plugin/README.md) |
+| Project                | Description                                                         | Links                                                                                                                    |
+| ---------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| **transformer-plugin** | A transformer plugin to minimize boiler-plate for `classes` package | [![README](https://img.shields.io/badge/README--green.svg)](/packages/classes/experimental/transformer-plugin/README.md) |
 
 ### Others
 

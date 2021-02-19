@@ -27,6 +27,19 @@ This is a monorepo of `@automapper/core` and official packages.
 | **nestjs**  | [`@automapper/nestjs`](https://npmjs.com/package/@automapper/nestjs)   | ![npm (scoped)](https://img.shields.io/npm/v/@automapper/nestjs)  | [![README](https://img.shields.io/badge/README--green.svg)](/packages/nestjs/README.md) ![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/@automapper/nestjs) ![NPM](https://img.shields.io/npm/l/@automapper/nestjs)    |
 | **types**   | [`@automapper/types`](https://npmjs.com/package/@automapper/types)     | ![npm (scoped)](https://img.shields.io/npm/v/@automapper/types)   | [![README](https://img.shields.io/badge/README--green.svg)](/packages/types/README.md) ![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/@automapper/types) ![NPM](https://img.shields.io/npm/l/@automapper/types)       |
 
+### Experimental
+
+Packages under **experimental** are either:
+
+- Not ready for production
+- Using experimental feature of the ecosystem (TypeScript)
+
+Please be cautious when using these packages.
+
+| Project               | Description                                                         | Links                                                                                                                    |
+| --------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| **tranformer-plugin** | A transformer plugin to minimize boiler-plate for `classes` package | [![README](https://img.shields.io/badge/README--green.svg)](/packages/classes/experimental/transformer-plugin/README.md) |
+
 ### Others
 
 | Project                     | Description                                        | Links                                                                                             |

@@ -167,3 +167,7 @@ createMetadataMap<User>('User', {
   role: String, // because UserRole is a string enum
 });
 ```
+
+## (`classes` only) Transformer Plugin
+
+Verbosity with `@AutoMap()` cannot be denied. If you're feeling adventurous, take a look at [Transformer Plugin](../plugins-system/classes-transformer-plugin.md) to learn how to alleviate the boiler-plate pain point.

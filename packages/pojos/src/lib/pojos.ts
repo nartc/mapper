@@ -45,7 +45,12 @@ export const pojos: MapPluginInitializer<string> = (errorHandler) => {
         (mapping) => {
           mappingStorage.set(source, destination, mapping);
         },
-        options
+        options,
+        {
+          isMetadataNullAtKey: (key) => {
+            return metadataStorage.getMetadataForKey(destination, key) === null;
+          },
+        }
       );
     },
     getMapping(source: string, destination: string) {

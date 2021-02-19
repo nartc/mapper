@@ -26,7 +26,7 @@ export function instantiate<TModel extends Dictionary<TModel>>(
     const valueAtKey = (obj as Record<string, unknown>)[key];
     const metaResult = meta();
 
-    if (isPrimitiveConstructor(metaResult)) {
+    if (isPrimitiveConstructor(metaResult) || metaResult === null) {
       (obj as Record<string, unknown>)[key] = isDefined(valueAtKey)
         ? valueAtKey
         : undefined;
@@ -35,7 +35,7 @@ export function instantiate<TModel extends Dictionary<TModel>>(
     if (isDateConstructor(metaResult)) {
       (obj as Record<string, unknown>)[key] = isDefined(valueAtKey)
         ? new Date(valueAtKey as number)
-        : new Date();
+        : undefined;
       continue;
     }
 

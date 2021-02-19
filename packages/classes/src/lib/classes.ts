@@ -160,16 +160,13 @@ function exploreMetadata(
   for (const model of models) {
     // if metadataStorage hasn't had metadata of the model
     if (!metadataStorage.has(model)) {
-      // get the metadata from Reflection then populate metadataStorage and instanceStorage
-      let metadataList = Reflect.getMetadata(
-        AUTOMAP_PROPERTIES_METADATA_KEY,
-        model
-      );
-      // if no metadata, try getting from METADATA_FACTORY function
-      if (!isDefined(metadataList)) {
-        metadataList = (model as any)[AUTOMAPPER_METADATA_FACTORY_KEY]?.();
-        if (!isDefined(metadataList)) continue;
-      }
+      // get the metadata from Reflection and AUTOMAPPER_METADATA_FACTORY then populate metadataStorage and instanceStorage
+      const metadataList = [
+        ...(Reflect.getMetadata(AUTOMAP_PROPERTIES_METADATA_KEY, model) || []),
+        ...((model as any)[AUTOMAPPER_METADATA_FACTORY_KEY]?.() || []),
+      ];
+      // if no metadata, skip
+      if (!isDefined(metadataList)) continue;
       // loop through metadata list
       for (const [propertyKey, { typeFn, depth }] of metadataList) {
         metadataStorage.addMetadata(model, [propertyKey, typeFn]);

@@ -229,6 +229,7 @@ function map<
         ,
         [
           transformationMapFn,
+          isMetadataNull = false,
           [
             transformationPreCondPredicate,
             preCondDefaultValue = undefined,
@@ -272,17 +273,17 @@ Original error: ${originalError}`;
     ) {
       const mapInitializedValue = (transformationMapFn[
         MapFnClassId.fn
-      ] as MapInitializeReturn[1])(sourceObj);
+      ] as MapInitializeReturn[MapFnClassId.fn])(sourceObj);
 
       // if null/undefined
-      if (mapInitializedValue == null) {
-        setMember(() => mapInitializedValue);
-        continue;
-      }
-
       // if isDate
-      if (mapInitializedValue instanceof Date) {
-        setMember(() => new Date(mapInitializedValue));
+      // if metadata is null, treat as-is
+      if (
+        mapInitializedValue == null ||
+        mapInitializedValue instanceof Date ||
+        isMetadataNull
+      ) {
+        setMember(() => mapInitializedValue);
         continue;
       }
 

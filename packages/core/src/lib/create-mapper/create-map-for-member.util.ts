@@ -64,7 +64,7 @@ export function createMapForMember<
   // initialize MappingProperty
   const mappingProperty: MappingProperty = [
     [memberPath, sourcePath],
-    [mapMemberFn, preCond as PreConditionReturn],
+    [mapMemberFn, false, preCond as PreConditionReturn],
   ];
 
   // check existProp on mapping

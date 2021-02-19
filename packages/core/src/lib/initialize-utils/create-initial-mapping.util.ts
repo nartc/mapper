@@ -37,6 +37,7 @@ interface CreateInitialMappingOptions {
     sourceObj: unknown,
     sourcePath: string
   ) => boolean;
+  isMetadataNullAtKey?: (key: string) => boolean;
   prePropertiesLoop?: (mapping: Mapping) => void;
 }
 
@@ -52,6 +53,7 @@ export function createInitialMapping(
   const {
     isMultipartSourcePathsInSource = defaultIsMultipartSourcePathsInSource,
     isDestinationPathOnSource = defaultIsDestinationPathOnSource,
+    isMetadataNullAtKey = () => false,
     prePropertiesLoop,
   } = createInitialMappingOptions ?? {};
   const { extends: bases = [], namingConventions: conventions } = options ?? {};
@@ -105,7 +107,13 @@ export function createInitialMapping(
 
       mapping[MappingClassId.properties].push([
         destinationPath,
-        [[destinationPath], [mapInitialize(...sourcePaths!)]],
+        [
+          [destinationPath],
+          [
+            mapInitialize(...sourcePaths!),
+            isMetadataNullAtKey(destinationPath),
+          ],
+        ],
         destinationNestedMetadataAtPath,
       ]);
       continue;
@@ -118,7 +126,10 @@ export function createInitialMapping(
 
     mapping[MappingClassId.properties].push([
       destinationPath,
-      [[destinationPath, sourcePath], [mapInitialize(sourcePath)]],
+      [
+        [destinationPath, sourcePath],
+        [mapInitialize(sourcePath), isMetadataNullAtKey(destinationPath)],
+      ],
       destinationNestedMetadataAtPath,
     ]);
   }

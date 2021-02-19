@@ -48,8 +48,7 @@
               "npx nx run core:publish",
               "npx nx run classes:publish",
               "npx nx run pojos:publish",
-              "npx nx run nestjs:publish",
-              "npx nx run classes-experimental-transformer-plugin:publish"
+              "npx nx run nestjs:publish"
             ]
           }
         }

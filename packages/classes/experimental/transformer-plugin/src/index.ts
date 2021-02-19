@@ -10,7 +10,7 @@ const defaultOptions: AutomapperTransformerPluginOptions = {
 
 export default function automapperTransformerPlugin(
   program: tss.Program,
-  options: AutomapperTransformerPluginOptions
+  options: AutomapperTransformerPluginOptions = {}
 ) {
   options = { ...defaultOptions, ...options };
   return {

@@ -44,7 +44,7 @@
     "nestjs-integration-test": {
       "tags": ["type:test"]
     },
-    "experimental-transformer-plugin": {
+    "classes-experimental-transformer-plugin": {
       "tags": ["type:transformer-plugin"]
     }
   },

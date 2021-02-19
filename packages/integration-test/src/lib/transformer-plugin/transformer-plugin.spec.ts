@@ -1,4 +1,4 @@
-import automapperTransformerPlugin from '@automapper/experimental/transformer-plugin';
+import automapperTransformerPlugin from '@automapper/classes/experimental/transformer-plugin';
 import * as tss from 'typescript/lib/tsserverlibrary';
 import {
   userModelText,

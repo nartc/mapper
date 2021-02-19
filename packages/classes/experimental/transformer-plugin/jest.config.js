@@ -1,6 +1,6 @@
 module.exports = {
-  displayName: 'experimental-transformer-plugin',
-  preset: '../../../jest.preset.js',
+  displayName: 'classes-experimental-transformer-plugin',
+  preset: '../../../../jest.preset.js',
   globals: {
     'ts-jest': {
       tsConfig: '<rootDir>/tsconfig.spec.json',
@@ -11,5 +11,5 @@ module.exports = {
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory:
-    '../../../coverage/packages/experimental/transformer-plugin',
+    '../../../../coverage/packages/classes/experimental/transformer-plugin',
 };

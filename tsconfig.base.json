@@ -24,8 +24,8 @@
       ],
       "@automapper/pojos": ["packages/pojos/src/index.ts"],
       "@automapper/nestjs": ["packages/nestjs/src/index.ts"],
-      "@automapper/experimental/transformer-plugin": [
-        "packages/experimental/transformer-plugin/src/index.ts"
+      "@automapper/classes/experimental/transformer-plugin": [
+        "packages/classes/experimental/transformer-plugin/src/index.ts"
       ]
     }
   },

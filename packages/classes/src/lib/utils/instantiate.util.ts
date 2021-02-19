@@ -50,19 +50,20 @@ export function instantiate<TModel extends Dictionary<TModel>>(
     // call the meta fn to get the metaResult of the current key
     const metaResult = meta();
 
-    // if is String, Number, Boolean, assign valueAtKey or undefined
-    if (isPrimitiveConstructor(metaResult)) {
+    // if is String, Number, Boolean, Array, assign valueAtKey or undefined
+    // null meta means this has any type or an arbitrary object, treat as primitives
+    if (isPrimitiveConstructor(metaResult) || metaResult === null) {
       (instance as Record<string, unknown>)[key] = isDefined(valueAtKey, true)
         ? valueAtKey
         : undefined;
       continue;
     }
 
-    // if is Date, assign a new Date value
+    // if is Date, assign a new Date value if valueAtKey is defined, otherwise, undefined
     if (isDateConstructor(metaResult)) {
       (instance as Record<string, unknown>)[key] = isDefined(valueAtKey)
         ? new Date(valueAtKey as number)
-        : new Date();
+        : undefined;
       continue;
     }
 

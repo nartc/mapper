@@ -117,7 +117,7 @@ After compilation, the members will be gone, but the static function will stay m
 
 ## Limitations
 
-Currently, `@automapper/classes/experimental/transformer-plugin` will handle most `Nullable` (`type | null`) and `Maybe` (`propKey?: type`) cases. However, for complex cases where you have unions with different types (`string | number | boolean` or `ClassA | ClassB`), please consider decorate the property (field) manually with @AutoMap() decorator.
+Currently, `@automapper/classes/experimental/transformer-plugin` will handle most `Nullable` (`type | null`) and `Maybe` (`propKey?: type`) cases. However, for complex cases where you have unions with different types (`string | number | boolean` or `ClassA | ClassB`), please consider decorate the property (field) manually with `@AutoMap()` decorator.
 
 ## Usage
 

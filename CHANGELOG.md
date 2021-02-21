@@ -1,3 +1,9 @@
+## [3.0.6](https://github.com/nartc/mapper/compare/3.0.5...3.0.6) (2021-02-21)
+
+### Bug Fixes
+
+- **experimental/transformer-plugin:** adjust transformer plugin to have a workaround for ESM ([1f862d0](https://github.com/nartc/mapper/commit/1f862d02885f83a58e18705fdbbc45716211a0c0))
+
 ## [3.0.5](https://github.com/nartc/mapper/compare/3.0.2...3.0.5) (2021-02-19)
 
 ### Bug Fixes

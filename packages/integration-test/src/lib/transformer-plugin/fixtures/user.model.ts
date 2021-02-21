@@ -114,3 +114,30 @@ class User {
 }
 exports.User = User;
 `;
+
+export const userModelTranspiledTextESM = `var Role;
+(function (Role) {
+    Role[Role["ADMIN"] = 0] = "ADMIN";
+    Role[Role["USER"] = 1] = "USER";
+})(Role || (Role = {}));
+var StringEnum;
+(function (StringEnum) {
+    StringEnum["FOO"] = "foo";
+    StringEnum["BAR"] = "bar";
+})(StringEnum || (StringEnum = {}));
+class Address {
+    static __AUTOMAPPER_METADATA_FACTORY__() {
+        return [["street", { typeFn: () => String }]];
+    }
+}
+class Profile {
+    static __AUTOMAPPER_METADATA_FACTORY__() {
+        return [["bio", { typeFn: () => String }], ["age", { typeFn: () => String }], ["role", { typeFn: () => Number }], ["roles", { typeFn: () => Number }], ["maybeRole", { typeFn: () => Number }], ["maybeRoles", { typeFn: () => Number }], ["nullableRole", { typeFn: () => Number }], ["stringEnum", { typeFn: () => String }], ["stringEnums", { typeFn: () => String }], ["maybeStringEnum", { typeFn: () => String }], ["maybeStringEnums", { typeFn: () => String }], ["nullableStringEnum", { typeFn: () => String }]];
+    }
+}
+export class User {
+    static __AUTOMAPPER_METADATA_FACTORY__() {
+        return [["firstName", { typeFn: () => String }], ["lastName", { typeFn: () => String }], ["profile", { typeFn: () => Profile, depth: 0 }], ["addresses", { typeFn: () => Address, depth: 0 }], ["otherAddresses", { typeFn: () => Address, depth: 0 }], ["flag", { typeFn: () => Boolean }], ["foo", { typeFn: () => null, depth: 0 }], ["nullable", { typeFn: () => String }], ["primitives", { typeFn: () => String }], ["nullableType", { typeFn: () => Address, depth: 0 }], ["maybePrimitives", { typeFn: () => String }], ["nullablePrimitives", { typeFn: () => String }], ["maybeType", { typeFn: () => Address, depth: 0 }]];
+    }
+}
+`;

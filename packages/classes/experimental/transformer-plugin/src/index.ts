@@ -3,7 +3,6 @@ import type { AutomapperTransformerPluginOptions } from './lib/interfaces';
 import { ModelVisitor } from './lib/model-visitor';
 import { isFilenameMatched } from './lib/plugin-utils';
 
-const modelVisitor = new ModelVisitor();
 const defaultOptions: AutomapperTransformerPluginOptions = {
   modelFileNameSuffix: ['.model.ts', '.dto.ts', '.vm.ts'],
 };
@@ -15,7 +14,7 @@ export default function automapperTransformerPlugin(
   options = { ...defaultOptions, ...options };
   return {
     before(context: tss.TransformationContext) {
-      modelVisitor.reset();
+      ModelVisitor.reset();
       return (sourceFile: tss.SourceFile): tss.SourceFile => {
         if (
           isFilenameMatched(
@@ -23,7 +22,7 @@ export default function automapperTransformerPlugin(
             sourceFile.fileName
           )
         ) {
-          return modelVisitor.visit(sourceFile, context, program);
+          return ModelVisitor.visit(sourceFile, context, program);
         }
         return sourceFile;
       };

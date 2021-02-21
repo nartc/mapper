@@ -50,13 +50,13 @@ export class ModelVisitor {
   private static readonly importsMap = new Map<string, ImportDeclaration>();
   private static isCommonJS = false;
 
-  reset() {
-    ModelVisitor.metadataMap.clear();
-    ModelVisitor.importsMap.clear();
-    ModelVisitor.isCommonJS = false;
+  static reset() {
+    this.metadataMap.clear();
+    this.importsMap.clear();
+    this.isCommonJS = false;
   }
 
-  visit(
+  static visit(
     sourceFile: SourceFile,
     context: TransformationContext,
     program: Program
@@ -65,11 +65,7 @@ export class ModelVisitor {
     ModelVisitor.isCommonJS =
       context.getCompilerOptions().module === ModuleKind.CommonJS;
 
-    function visitor(
-      modelVisitor: ModelVisitor,
-      ctx: TransformationContext,
-      sf: SourceFile
-    ): Visitor {
+    function visitor(ctx: TransformationContext, sf: SourceFile): Visitor {
       const _visitor: Visitor = (node) => {
         if (isImportDeclaration(node)) {
           ModelVisitor.importsMap.set(
@@ -125,10 +121,7 @@ export class ModelVisitor {
       return _visitor;
     }
 
-    const _sourceFile = visitNode(
-      sourceFile,
-      visitor(this, context, sourceFile)
-    );
+    const _sourceFile = visitNode(sourceFile, visitor(context, sourceFile));
 
     if (ModelVisitor.isCommonJS) {
       return _sourceFile;

@@ -1,5 +1,34 @@
 import { AUTOMAPPER_METADATA_FACTORY_KEY } from '@automapper/classes';
-import * as tss from 'typescript/lib/tsserverlibrary';
+import type {
+  ArrowFunction,
+  ClassDeclaration,
+  GetAccessorDeclaration,
+  Identifier,
+  ImportDeclaration,
+  NodeArray,
+  NodeFactory,
+  ObjectLiteralExpression,
+  Program,
+  PropertyAssignment,
+  PropertyDeclaration,
+  SourceFile,
+  Statement,
+  StringLiteral,
+  TransformationContext,
+  Type,
+  TypeChecker,
+  Visitor,
+} from 'typescript/lib/tsserverlibrary';
+import {
+  isClassDeclaration,
+  isGetAccessorDeclaration,
+  isImportDeclaration,
+  isPropertyDeclaration,
+  ModuleKind,
+  SyntaxKind,
+  visitEachChild,
+  visitNode,
+} from 'typescript/lib/tsserverlibrary';
 import {
   hasPropertyKey,
   isAnyType,
@@ -14,34 +43,51 @@ import {
 } from './plugin-utils';
 
 export class ModelVisitor {
-  private readonly metadataMap = new Map<string, Record<string, unknown>>();
+  private static readonly metadataMap = new Map<
+    string,
+    Record<string, unknown>
+  >();
+  private static readonly importsMap = new Map<string, ImportDeclaration>();
+  private static isCommonJS = false;
 
   reset() {
-    this.metadataMap.clear();
+    ModelVisitor.metadataMap.clear();
+    ModelVisitor.importsMap.clear();
+    ModelVisitor.isCommonJS = false;
   }
 
   visit(
-    sourceFile: tss.SourceFile,
-    context: tss.TransformationContext,
-    program: tss.Program
-  ): tss.SourceFile {
+    sourceFile: SourceFile,
+    context: TransformationContext,
+    program: Program
+  ): SourceFile {
     const typeChecker = program.getTypeChecker();
+    ModelVisitor.isCommonJS =
+      context.getCompilerOptions().module === ModuleKind.CommonJS;
 
     function visitor(
       modelVisitor: ModelVisitor,
-      ctx: tss.TransformationContext,
-      sf: tss.SourceFile
-    ): tss.Visitor {
-      const _visitor: tss.Visitor = (node) => {
-        if (tss.isClassDeclaration(node)) {
-          node = tss.visitEachChild(node, _visitor, ctx);
-          return modelVisitor.addMetadataFactory(
-            node as tss.ClassDeclaration,
+      ctx: TransformationContext,
+      sf: SourceFile
+    ): Visitor {
+      const _visitor: Visitor = (node) => {
+        if (isImportDeclaration(node)) {
+          ModelVisitor.importsMap.set(
+            (node.moduleSpecifier as StringLiteral).text,
+            ModelVisitor.cloneImportDeclaration(ctx.factory, node)
+          );
+          return node;
+        }
+
+        if (isClassDeclaration(node)) {
+          node = visitEachChild(node, _visitor, ctx);
+          return ModelVisitor.addMetadataFactory(
+            node as ClassDeclaration,
             ctx.factory
           );
         }
 
-        if (tss.isPropertyDeclaration(node) || tss.isGetAccessor(node)) {
+        if (isPropertyDeclaration(node) || isGetAccessorDeclaration(node)) {
           const decorators = node.decorators;
           const existingAutoMapDecorator = getDecoratorOrUndefinedByNames(
             [AUTOMAPPER_DECORATOR_NAME],
@@ -55,15 +101,15 @@ export class ModelVisitor {
 
           const isPropertyStaticOrPrivate = (node.modifiers || []).some(
             (modifier) =>
-              modifier.kind === tss.SyntaxKind.StaticKeyword ||
-              modifier.kind === tss.SyntaxKind.PrivateKeyword
+              modifier.kind === SyntaxKind.StaticKeyword ||
+              modifier.kind === SyntaxKind.PrivateKeyword
           );
 
           if (isPropertyStaticOrPrivate) {
             return node;
           }
 
-          modelVisitor.inspectNode(
+          ModelVisitor.inspectNode(
             ctx.factory,
             node,
             typeChecker,
@@ -73,19 +119,42 @@ export class ModelVisitor {
           return node;
         }
 
-        return tss.visitEachChild(node, _visitor, ctx);
+        return visitEachChild(node, _visitor, ctx);
       };
 
       return _visitor;
     }
 
-    return tss.visitNode(sourceFile, visitor(this, context, sourceFile));
+    const _sourceFile = visitNode(
+      sourceFile,
+      visitor(this, context, sourceFile)
+    );
+
+    if (ModelVisitor.isCommonJS) {
+      return _sourceFile;
+    }
+
+    return context.factory.updateSourceFile(
+      _sourceFile,
+      [
+        ...((ModelVisitor.importsMap.values() as unknown) as Statement[]),
+      ].concat(
+        (_sourceFile.statements || ([] as Statement[])).filter(
+          (statement) => statement.kind !== SyntaxKind.ImportDeclaration
+        )
+      ),
+      _sourceFile.isDeclarationFile,
+      _sourceFile.referencedFiles,
+      _sourceFile.typeReferenceDirectives,
+      _sourceFile.hasNoDefaultLib,
+      _sourceFile.libReferenceDirectives
+    );
   }
 
-  private addMetadataFactory(
-    classNode: tss.ClassDeclaration,
-    factory: tss.NodeFactory
-  ): tss.ClassDeclaration {
+  private static addMetadataFactory(
+    classNode: ClassDeclaration,
+    factory: NodeFactory
+  ): ClassDeclaration {
     const classMetadata = this.getClassMetadata(classNode);
     if (!classMetadata) {
       return classNode;
@@ -97,7 +166,7 @@ export class ModelVisitor {
           factory.createObjectLiteralExpression(
             ModelVisitor.getMetadataObjectLiteralExpression(
               factory,
-              (val as tss.PropertyAssignment).initializer as tss.ArrowFunction
+              (val as PropertyAssignment).initializer as ArrowFunction
             )
           ),
         ])
@@ -105,7 +174,7 @@ export class ModelVisitor {
     );
     const method = factory.createMethodDeclaration(
       undefined,
-      [factory.createModifier(tss.SyntaxKind.StaticKeyword)],
+      [factory.createModifier(SyntaxKind.StaticKeyword)],
       undefined,
       factory.createIdentifier(AUTOMAPPER_METADATA_FACTORY_KEY),
       undefined,
@@ -127,14 +196,14 @@ export class ModelVisitor {
   }
 
   private static getMetadataObjectLiteralExpression(
-    factory: tss.NodeFactory,
-    arrowFn: tss.ArrowFunction
+    factory: NodeFactory,
+    arrowFn: ArrowFunction
   ) {
-    const properties: tss.PropertyAssignment[] = [
+    const properties: PropertyAssignment[] = [
       factory.createPropertyAssignment('typeFn', arrowFn),
     ];
 
-    const arrowFnBodyText = (arrowFn.body as tss.Identifier)?.text;
+    const arrowFnBodyText = (arrowFn.body as Identifier)?.text;
 
     if (
       arrowFnBodyText &&
@@ -152,20 +221,20 @@ export class ModelVisitor {
     );
   }
 
-  private getClassMetadata(classNode: tss.ClassDeclaration): unknown {
+  private static getClassMetadata(classNode: ClassDeclaration): unknown {
     if (!classNode.name) {
       return;
     }
     return this.metadataMap.get(classNode.name.getText());
   }
 
-  private addClassMetadata(
-    propertyNode: tss.PropertyDeclaration | tss.GetAccessorDeclaration,
-    objectLiteral: tss.ObjectLiteralExpression,
-    sourceFile: tss.SourceFile
+  private static addClassMetadata(
+    propertyNode: PropertyDeclaration | GetAccessorDeclaration,
+    objectLiteral: ObjectLiteralExpression,
+    sourceFile: SourceFile
   ): void {
     const hostClass = propertyNode.parent;
-    const className = (hostClass as tss.ClassDeclaration).name?.getText();
+    const className = (hostClass as ClassDeclaration).name?.getText();
     if (!className) {
       return;
     }
@@ -175,7 +244,7 @@ export class ModelVisitor {
     if (
       !propertyName ||
       (propertyNode.name &&
-        propertyNode.name.kind === tss.SyntaxKind.ComputedPropertyName)
+        propertyNode.name.kind === SyntaxKind.ComputedPropertyName)
     ) {
       return;
     }
@@ -186,12 +255,12 @@ export class ModelVisitor {
     });
   }
 
-  private inspectNode(
-    factory: tss.NodeFactory,
-    node: tss.PropertyDeclaration | tss.GetAccessorDeclaration,
-    typeChecker: tss.TypeChecker,
-    existingProperties: tss.NodeArray<tss.PropertyAssignment> = factory.createNodeArray<tss.PropertyAssignment>(),
-    sourceFile: tss.SourceFile
+  private static inspectNode(
+    factory: NodeFactory,
+    node: PropertyDeclaration | GetAccessorDeclaration,
+    typeChecker: TypeChecker,
+    existingProperties: NodeArray<PropertyAssignment> = factory.createNodeArray<PropertyAssignment>(),
+    sourceFile: SourceFile
   ): void {
     const properties = [
       ...existingProperties,
@@ -205,19 +274,19 @@ export class ModelVisitor {
     ];
     const objectLiteral = factory.createObjectLiteralExpression(
       properties
-        .reduce((a, b) => a.concat(b), [] as tss.PropertyAssignment[])
+        .reduce((a, b) => a.concat(b), [] as PropertyAssignment[])
         .filter(Boolean)
     );
     this.addClassMetadata(node, objectLiteral, sourceFile);
   }
 
   private static createPropertyAssignment(
-    node: tss.PropertyDeclaration | tss.GetAccessorDeclaration,
-    typeChecker: tss.TypeChecker,
-    existingProperties: tss.NodeArray<tss.PropertyAssignment>,
+    node: PropertyDeclaration | GetAccessorDeclaration,
+    typeChecker: TypeChecker,
+    existingProperties: NodeArray<PropertyAssignment>,
     hostFileName: string,
-    factory: tss.NodeFactory
-  ): tss.PropertyAssignment | undefined {
+    factory: NodeFactory
+  ): PropertyAssignment | undefined {
     const key = node.name?.getText();
     if (!key || hasPropertyKey(key, existingProperties)) {
       return undefined;
@@ -252,7 +321,26 @@ export class ModelVisitor {
       return undefined;
     }
 
-    typeReference = replaceImportPath(typeReference, hostFileName);
+    if (typeReference.includes('import')) {
+      if (ModelVisitor.isCommonJS) {
+        typeReference = replaceImportPath(typeReference, hostFileName);
+      } else {
+        typeReference = typeReference.split('.').pop();
+      }
+    }
+
+    return this.createArrowFunctionWithTypeReference(
+      factory,
+      key,
+      typeReference
+    );
+  }
+
+  private static createArrowFunctionWithTypeReference(
+    factory: NodeFactory,
+    key: string,
+    typeReference: string
+  ): PropertyAssignment {
     return factory.createPropertyAssignment(
       key,
       factory.createArrowFunction(
@@ -266,10 +354,22 @@ export class ModelVisitor {
     );
   }
 
+  private static cloneImportDeclaration(
+    factory: NodeFactory,
+    importDeclaration: ImportDeclaration
+  ) {
+    return factory.createImportDeclaration(
+      importDeclaration.decorators,
+      importDeclaration.modifiers,
+      importDeclaration.importClause,
+      importDeclaration.moduleSpecifier
+    );
+  }
+
   private static shouldCreateNullNode(
-    type: tss.Type,
-    typeChecker: tss.TypeChecker,
-    node: tss.PropertyDeclaration | tss.GetAccessorDeclaration
+    type: Type,
+    typeChecker: TypeChecker,
+    node: PropertyDeclaration | GetAccessorDeclaration
   ): boolean {
     return isTypeLiteral(type) || isAnyType(type, typeChecker, node);
   }

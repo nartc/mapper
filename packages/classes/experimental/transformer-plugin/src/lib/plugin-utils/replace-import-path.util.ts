@@ -4,9 +4,6 @@ export function replaceImportPath(
   typeReference: string,
   fileName: string
 ): string | undefined {
-  if (!typeReference.includes('import')) {
-    return typeReference;
-  }
   let importPath = /\("([^)]).+(")/.exec(typeReference)?.[0];
   if (!importPath) {
     return undefined;

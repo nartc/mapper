@@ -6,7 +6,7 @@
  * @param prev
  */
 export function getPathRecursive(
-  node: unknown,
+  node: Record<string, unknown>,
   prefix = '',
   prev: string[] = []
 ): string[] | undefined {

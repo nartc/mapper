@@ -11,7 +11,7 @@ import { mapInitialize } from './map-initialize';
 
 function defaultIsMultipartSourcePathsInSource(
   multipartSourcePaths: string[],
-  sourceObj: unknown
+  sourceObj: Record<string, unknown>
 ): boolean {
   return !(
     multipartSourcePaths.length > 1 &&
@@ -22,7 +22,7 @@ function defaultIsMultipartSourcePathsInSource(
 }
 
 function defaultIsDestinationPathOnSource(
-  sourceObj: unknown,
+  sourceObj: Record<string, unknown>,
   sourcePath: string
 ): boolean {
   return sourceObj.hasOwnProperty(sourcePath);
@@ -42,8 +42,8 @@ interface CreateInitialMappingOptions {
 }
 
 export function createInitialMapping(
-  sourceObj: unknown,
-  destinationObj: unknown,
+  sourceObj: Record<string, unknown>,
+  destinationObj: Record<string, unknown>,
   sourceNestedMetadataMap: unknown[],
   destinationNestedMetadataMap: unknown[],
   saveMapping: (mapping: Mapping) => void,

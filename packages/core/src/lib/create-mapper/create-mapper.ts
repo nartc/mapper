@@ -28,7 +28,7 @@ export function createMapper<TKey = unknown>({
 
   return {
     name,
-    createMap(source, destination, options: CreateMapOptions = {}) {
+    createMap(source: any, destination: any, options: CreateMapOptions = {}) {
       // if namingConventions isn't passed in for this Mapping pair, use the global ones
       if (options && !options.namingConventions) {
         options.namingConventions = namingConventions;
@@ -46,10 +46,10 @@ export function createMapper<TKey = unknown>({
       return this;
     },
     map(
-      sourceObj,
-      destination,
-      source,
-      destinationObjOrOptions?,
+      sourceObj: Record<string, unknown>,
+      destination: any,
+      source: any,
+      destinationObjOrOptions?: Record<string, unknown>,
       options?: MapOptions
     ) {
       // if source is null/undefined, return
@@ -80,7 +80,7 @@ export function createMapper<TKey = unknown>({
         return mapReturn(
           sourceInstance ?? sourceObj,
           mapping!,
-          destinationObjOrOptions,
+          destinationObjOrOptions as MapOptions,
           this,
           errorHandler
         );
@@ -96,10 +96,10 @@ export function createMapper<TKey = unknown>({
       );
     },
     mapAsync(
-      sourceObj,
-      destination,
-      source,
-      destinationObjOrOptions?,
+      sourceObj: Record<string, unknown>,
+      destination: any,
+      source: any,
+      destinationObjOrOptions?: Record<string, unknown>,
       options?: MapOptions
     ) {
       return Promise.resolve(
@@ -112,7 +112,12 @@ export function createMapper<TKey = unknown>({
         )
       );
     },
-    mapArray(sourceArr, destination, source, options?: MapArrayOptions) {
+    mapArray(
+      sourceArr: Record<string, unknown>[],
+      destination: any,
+      source: any,
+      options?: MapArrayOptions
+    ) {
       // if source is null/undefined, return
       if (sourceArr == null) {
         return sourceArr;
@@ -136,7 +141,12 @@ export function createMapper<TKey = unknown>({
         errorHandler
       );
     },
-    mapArrayAsync(sourceArr, destination, source, options?: MapArrayOptions) {
+    mapArrayAsync(
+      sourceArr: Record<string, unknown>[],
+      destination: any,
+      source: any,
+      options?: MapArrayOptions
+    ) {
       return Promise.resolve(
         this.mapArray(sourceArr, destination, source, options)
       );

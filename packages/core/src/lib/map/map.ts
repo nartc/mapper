@@ -35,7 +35,7 @@ function mapMember<TSource extends Dictionary<TSource> = any>(
   sourceObj: TSource,
   destination: unknown,
   destinationMemberPath: string,
-  extraArguments: Record<string, unknown>,
+  extraArguments: Record<string, unknown> | undefined,
   mapper: Mapper
 ) {
   let value: unknown;
@@ -66,7 +66,7 @@ function mapMember<TSource extends Dictionary<TSource> = any>(
     case TransformationType.MapWithArguments:
       value = (mapFn as MapWithArgumentsReturn[MapFnClassId.fn])(
         sourceObj,
-        extraArguments
+        extraArguments || {}
       );
       break;
     case TransformationType.MapDefer:

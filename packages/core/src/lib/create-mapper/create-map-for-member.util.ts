@@ -51,7 +51,7 @@ export function createMapForMember<
   }
 
   // initialize sourcePath
-  let sourcePath: string;
+  let sourcePath = '';
 
   // if the transformation is MapFrom or MapWith, we have information on the source value selector
   if (

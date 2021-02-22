@@ -5,7 +5,7 @@ export abstract class AutomapperProfile {
 
   protected constructor(mapper: Mapper) {
     this.mapper = mapper;
-    this.mapper.addProfile(this.mapProfile());
+    Promise.resolve().then(() => this.mapper.addProfile(this.mapProfile()));
   }
 
   abstract mapProfile(): MappingProfile;

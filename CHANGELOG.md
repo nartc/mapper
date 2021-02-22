@@ -1,3 +1,9 @@
+## [3.0.7](https://github.com/nartc/mapper/compare/3.0.6...3.0.7) (2021-02-22)
+
+### Bug Fixes
+
+- **nestjs:** move addProfile code to the micro task queue ([70b268c](https://github.com/nartc/mapper/commit/70b268cd6f93aab4592253eb48a54df10554214c)), closes [#264](https://github.com/nartc/mapper/issues/264)
+
 ## [3.0.6](https://github.com/nartc/mapper/compare/3.0.5...3.0.6) (2021-02-21)
 
 ### Bug Fixes

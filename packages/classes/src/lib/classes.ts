@@ -93,7 +93,11 @@ export const classes: MapPluginInitializer<Constructible> = (errorHandler) => {
             return metadataStorage.getMetadataForKey(destination, key) === null;
           },
           // classes plugin needs to check for sourcePaths on the prototype of Source
-          isMultipartSourcePathsInSource,
+          isMultipartSourcePathsInSource: (multipartSourcePaths, sourceObj) =>
+            isMultipartSourcePathsInSource(
+              multipartSourcePaths,
+              sourceObj as Record<string, unknown>
+            ),
           // classes plugin needs to check for the destinationPath (sourcePath) on the prototype of Source
           isDestinationPathOnSource: isDestinationPathOnSource(sourceProto),
         }
@@ -212,17 +216,18 @@ function prePropertiesLoop(
 
 function isMultipartSourcePathsInSource(
   dottedSourcePaths: string[],
-  sourceInstance: unknown
+  sourceInstance: Record<string, unknown>
 ) {
   return !(
     dottedSourcePaths.length > 1 &&
     (!sourceInstance.hasOwnProperty(dottedSourcePaths[0]) ||
       (sourceInstance[dottedSourcePaths[0]] &&
-        isClass(sourceInstance[dottedSourcePaths[0]])))
+        // eslint-disable-next-line @typescript-eslint/ban-types
+        isClass((sourceInstance[dottedSourcePaths[0]] as unknown) as Function)))
   );
 }
 
-function isDestinationPathOnSource(sourceProto: unknown) {
+function isDestinationPathOnSource(sourceProto: Record<string, unknown>) {
   return (sourceObj: any, sourcePath: string) => {
     return !(
       !sourceObj.hasOwnProperty(sourcePath) &&

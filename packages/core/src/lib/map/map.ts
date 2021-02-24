@@ -216,7 +216,9 @@ function map<
   // Do not run before map when in Map Array mode
   if (!isMapArray) {
     const beforeMap = mapBeforeAction ?? mappingBeforeAction;
-    beforeMap?.(sourceObj, destination);
+    if (beforeMap) {
+      beforeMap(sourceObj, destination);
+    }
   }
 
   // map
@@ -358,7 +360,9 @@ Original error: ${originalError}`;
   // Do not map for when in Map Array mode
   if (!isMapArray) {
     const afterMap = mapAfterAction ?? mappingAfterAction;
-    afterMap?.(sourceObj, destination);
+    if (afterMap) {
+      afterMap(sourceObj, destination);
+    }
   }
 
   // Check unmapped properties
@@ -394,15 +398,19 @@ export function mapArray<
   const { beforeMap, afterMap, extraArguments } = options ?? {};
 
   // run beforeMap for the whole map operation
-  beforeMap?.(sourceArray, []);
+  if (beforeMap) {
+    beforeMap(sourceArray, destinationArray);
+  }
 
   // loop through each item and run map() for each
   for (let i = 0, len = sourceArray.length; i < len; i++) {
-    const mapping = mapper.getMapping(source, destination);
     destinationArray.push(
       mapReturn(
         sourceArray[i],
-        mapping as Mapping<TSource, TDestination>,
+        mapper.getMapping(source, destination) as Mapping<
+          TSource,
+          TDestination
+        >,
         { extraArguments },
         mapper,
         errorHandler,
@@ -412,7 +420,9 @@ export function mapArray<
   }
 
   // run afterMap for the whole map operation
-  afterMap?.(sourceArray, destinationArray);
+  if (afterMap) {
+    afterMap(sourceArray, destinationArray);
+  }
 
   return destinationArray;
 }

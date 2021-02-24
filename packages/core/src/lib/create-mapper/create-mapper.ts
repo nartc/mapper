@@ -60,7 +60,9 @@ export function createMapper<TKey = unknown>({
       const { preMap } = plugin;
 
       // run preMap if available
-      const [sourceInstance] = preMap?.(source, destination, sourceObj) ?? [];
+      const [sourceInstance] = preMap
+        ? preMap(source, destination, sourceObj)
+        : [];
 
       // get mapping between Source and Destination
       const mapping = this.getMapping(source, destination);
@@ -152,7 +154,9 @@ export function createMapper<TKey = unknown>({
       );
     },
     dispose() {
-      plugin.dispose?.();
+      if (plugin.dispose) {
+        plugin.dispose();
+      }
     },
   };
 }

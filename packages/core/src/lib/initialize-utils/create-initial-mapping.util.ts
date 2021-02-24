@@ -66,7 +66,9 @@ export function createInitialMapping(
     undefined,
   ];
 
-  prePropertiesLoop?.(mapping);
+  if (prePropertiesLoop) {
+    prePropertiesLoop(mapping);
+  }
 
   const destinationPaths = getPathRecursive(destinationObj) || [];
   const namingConventions = mapping[MappingClassId.namingConventions];

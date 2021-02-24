@@ -19,7 +19,10 @@ export function extendMappings(bases: any[], mapping: Mapping) {
         ]);
       }
     }
-    mapping[MappingClassId.bases] ??= [];
+
+    if (mapping[MappingClassId.bases] == null) {
+      mapping[MappingClassId.bases] = [];
+    }
     mapping[MappingClassId.bases]!.push(
       mappingToExtend[MappingClassId.mappings]
     );

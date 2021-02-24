@@ -399,7 +399,7 @@ export function mapArray<
 
   // run beforeMap for the whole map operation
   if (beforeMap) {
-    beforeMap(sourceArray, destinationArray);
+    beforeMap(sourceArray, []);
   }
 
   // loop through each item and run map() for each

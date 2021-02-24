@@ -1,3 +1,14 @@
+## [3.0.8](https://github.com/nartc/mapper/compare/3.0.7...3.0.8) (2021-02-24)
+
+### Bug Fixes
+
+- **classes:** clean up optional chaining operator on function calls ([e6c3299](https://github.com/nartc/mapper/commit/e6c329908c3133c275c1f69c71303e3ab390733d))
+- **core:** clean up optional chaining ([d223d79](https://github.com/nartc/mapper/commit/d223d791a5ed3de75e47eae87a596ffde77efe82))
+- **core:** run beforeMap in mapArray with an empty array instead ([2975071](https://github.com/nartc/mapper/commit/2975071965b25b814cdee1b13ed7e5faa10b63d3))
+- **nestjs:** revert back to resolved Promise. nextTick seems to run a little behind ([5a91c31](https://github.com/nartc/mapper/commit/5a91c31460c0c3d92f45801cd4d670dbafad0114))
+- **nestjs:** use process.nextTick instead of resolved Promise ([4dd8da6](https://github.com/nartc/mapper/commit/4dd8da60d4c96069b343add34bed15abb2432dfb))
+- **pojos:** clean up optional chaining operator on function calls ([65304a7](https://github.com/nartc/mapper/commit/65304a783a456650031c8685584dd437ac0eb4e7))
+
 ## [3.0.7](https://github.com/nartc/mapper/compare/3.0.6...3.0.7) (2021-02-22)
 
 ### Bug Fixes

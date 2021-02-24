@@ -52,7 +52,10 @@ export class ClassInstanceStorage {
   }
 
   resetAllCount(parent: Constructible): void {
-    this.recursiveCountStorage.get(parent)?.clear();
+    const count = this.recursiveCountStorage.get(parent);
+    if (count) {
+      count.clear();
+    }
   }
 
   dispose(): void {
@@ -68,7 +71,8 @@ export class ClassInstanceStorage {
     parent: Constructible,
     member: string
   ): number | undefined {
-    return storage.get(parent)?.get(member);
+    const parentVal = storage.get(parent);
+    return parentVal ? parentVal.get(member) : undefined;
   }
 
   private static setInternal(
@@ -92,6 +96,7 @@ export class ClassInstanceStorage {
     parent: Constructible,
     member: string
   ): boolean {
-    return storage.get(parent)?.has(member) ?? false;
+    const parentVal = storage.get(parent);
+    return parentVal ? parentVal.has(member) : false;
   }
 }

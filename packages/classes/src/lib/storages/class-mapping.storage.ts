@@ -16,7 +16,8 @@ export class ClassMappingStorage implements MappingStorage<Constructible> {
   >();
 
   get(source: Constructible, destination: Constructible): Mapping | undefined {
-    return this.storage.get(source)?.get(destination);
+    const sourceVal = this.storage.get(source);
+    return sourceVal ? sourceVal.get(destination) : undefined;
   }
 
   set(
@@ -38,7 +39,8 @@ export class ClassMappingStorage implements MappingStorage<Constructible> {
   }
 
   has(source: Constructible, destination: Constructible): boolean {
-    return this.storage.get(source)?.has(destination) ?? false;
+    const sourceVal = this.storage.get(source);
+    return sourceVal ? sourceVal.has(destination) : false;
   }
 
   dispose(): void {

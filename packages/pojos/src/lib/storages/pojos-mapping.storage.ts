@@ -9,11 +9,13 @@ export class PojosMappingStorage implements MappingStorage<string> {
   private storage = new Map<string, Map<string, Mapping>>();
 
   get(source: string, destination: string): Mapping | undefined {
-    return this.storage.get(source)?.get(destination);
+    const sourceVal = this.storage.get(source);
+    return sourceVal ? sourceVal.get(destination) : undefined;
   }
 
   has(source: string, destination: string): boolean | undefined {
-    return this.storage.get(source)?.has(destination);
+    const sourceVal = this.storage.get(source);
+    return sourceVal ? sourceVal.has(destination) : undefined;
   }
 
   set(source: string, destination: string, mapping: Mapping): void {
@@ -26,7 +28,8 @@ export class PojosMappingStorage implements MappingStorage<string> {
     }
 
     if (!this.has(source, destination)) {
-      this.storage.get(source)?.set(destination, mapping);
+      const sourceVal = this.storage.get(source);
+      sourceVal && sourceVal.set(destination, mapping);
     }
   }
 

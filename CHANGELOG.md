@@ -1,3 +1,9 @@
+## [3.0.9](https://github.com/nartc/mapper/compare/3.0.8...3.0.9) (2021-02-26)
+
+### Bug Fixes
+
+- **core:** use isEmpty to check for nested metakey instead of using length ([0329e6e](https://github.com/nartc/mapper/commit/0329e6eab6327f33ffae36177afb18bcd3255055))
+
 ## [3.0.8](https://github.com/nartc/mapper/compare/3.0.7...3.0.8) (2021-02-24)
 
 ### Bug Fixes

@@ -1,3 +1,9 @@
+## [3.0.10](https://github.com/nartc/mapper/compare/3.0.9...3.0.10) (2021-02-26)
+
+### Bug Fixes
+
+- **classes:** make sure to reassign metadataList ([ebd53dc](https://github.com/nartc/mapper/commit/ebd53dcf2ddf4562b0645d9f55720f980398e710))
+
 ## [3.0.9](https://github.com/nartc/mapper/compare/3.0.8...3.0.9) (2021-02-26)
 
 ### Bug Fixes

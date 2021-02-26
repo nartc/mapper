@@ -1,6 +1,7 @@
 import { InjectMapper } from '@automapper/nestjs';
 import type { Mapper } from '@automapper/types';
 import { Injectable } from '@nestjs/common';
+import { Bar, Foo, FooVm } from './models/foo';
 import { getUser } from './models/get-user';
 import { User, UserVm } from './models/user';
 
@@ -19,5 +20,14 @@ export class AppService {
 
   getRawUser() {
     return getUser();
+  }
+
+  getFooVm() {
+    const foo = new Foo();
+    foo.foo = 'testing';
+    foo.bar = new Bar();
+    foo.bar.bar = 'testing bar';
+
+    return this.mapper.mapArray([foo], FooVm, Foo);
   }
 }

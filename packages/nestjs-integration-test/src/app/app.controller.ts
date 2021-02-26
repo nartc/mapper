@@ -23,4 +23,9 @@ export class AppController {
   getRawUser() {
     return this.appService.getRawUser();
   }
+
+  @Get('foo')
+  getFooVm() {
+    return this.appService.getFooVm();
+  }
 }

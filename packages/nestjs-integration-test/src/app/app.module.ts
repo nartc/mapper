@@ -7,6 +7,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AddressProfile } from './profiles/address.profile';
 import { AvatarProfile } from './profiles/avatar.profile';
+import { FooProfile } from './profiles/foo.profile';
 import { UserProfileProfile } from './profiles/user-profile.profile';
 import { UserProfile } from './profiles/user.profile';
 
@@ -26,10 +27,11 @@ import { UserProfile } from './profiles/user.profile';
   controllers: [AppController],
   providers: [
     AppService,
-    AvatarProfile,
     AddressProfile,
+    AvatarProfile,
     UserProfileProfile,
     UserProfile,
+    FooProfile,
   ],
 })
 export class AppModule {}

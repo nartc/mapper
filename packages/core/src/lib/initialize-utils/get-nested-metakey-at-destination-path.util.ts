@@ -1,5 +1,5 @@
 import type { NamingConvention } from '@automapper/types';
-import { isDefined } from '../utils';
+import { isDefined, isEmpty } from '../utils';
 
 export function getNestedMetaKeyAtDestinationPath(
   destinationNestedMeta: any[],
@@ -9,7 +9,7 @@ export function getNestedMetaKeyAtDestinationPath(
 ) {
   let destinationNestedMetaKeyAtPath: [unknown, unknown];
 
-  if (destinationNestedMeta.length && sourceNestedMeta.length) {
+  if (!isEmpty(sourceNestedMeta) && !isEmpty(destinationNestedMeta)) {
     let sourceNestedMetaAtPath;
     const destinationNestedMetaAtPath = destinationNestedMeta.find(
       ([dnmPath]) => dnmPath === destinationPath

@@ -165,11 +165,11 @@ function exploreMetadata(
     // if metadataStorage hasn't had metadata of the model
     if (!metadataStorage.has(model)) {
       // get the metadata from Reflection and AUTOMAPPER_METADATA_FACTORY then populate metadataStorage and instanceStorage
-      const metadataList =
+      let metadataList =
         Reflect.getMetadata(AUTOMAP_PROPERTIES_METADATA_KEY, model) || [];
 
       if ((model as any)[AUTOMAPPER_METADATA_FACTORY_KEY]) {
-        metadataList.concat(
+        metadataList = metadataList.concat(
           (model as any)[AUTOMAPPER_METADATA_FACTORY_KEY]() || []
         );
       }

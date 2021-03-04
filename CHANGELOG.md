@@ -1,3 +1,9 @@
+## [3.0.11](https://github.com/nartc/mapper/compare/3.0.10...3.0.11) (2021-03-04)
+
+### Bug Fixes
+
+- **core:** null check for source selector on MapFrom ([a489d9c](https://github.com/nartc/mapper/commit/a489d9c72f007b3f6e66d2c91d7895a200621410))
+
 ## [3.0.10](https://github.com/nartc/mapper/compare/3.0.9...3.0.10) (2021-02-26)
 
 ### Bug Fixes

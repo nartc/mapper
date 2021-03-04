@@ -55,10 +55,11 @@ export function createMapForMember<
 
   // if the transformation is MapFrom or MapWith, we have information on the source value selector
   if (
-    mapMemberFn[MapFnClassId.type] === TransformationType.MapFrom ||
-    mapMemberFn[MapFnClassId.type] === TransformationType.MapWith
+    (mapMemberFn[MapFnClassId.type] === TransformationType.MapFrom ||
+      mapMemberFn[MapFnClassId.type] === TransformationType.MapWith) &&
+    mapMemberFn[MapFnClassId.misc] != null
   ) {
-    sourcePath = getMemberPath(mapMemberFn[MapFnClassId.misc]!);
+    sourcePath = getMemberPath(mapMemberFn[MapFnClassId.misc]);
   }
 
   // initialize MappingProperty

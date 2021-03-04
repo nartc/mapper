@@ -1,8 +1,18 @@
 import { mapFrom } from '@automapper/core';
-import type { MappingProfile } from '@automapper/types';
+import type { MappingProfile, Resolver } from '@automapper/types';
 import { User, UserVm } from '../models/user';
 import { PascalUser, PascalUserVm } from '../models/user-pascal';
 import { SnakeUser, SnakeUserVm } from '../models/user-snake';
+
+const fullNameResolver: Resolver<
+  User,
+  UserVm | PascalUserVm | SnakeUserVm,
+  string
+> = {
+  resolve(source: User): string {
+    return source.firstName + ' ' + source.lastName;
+  },
+};
 
 export const userProfile: MappingProfile = (mapper) => {
   mapper
@@ -15,10 +25,7 @@ export const userProfile: MappingProfile = (mapper) => {
       (d) => d.last,
       mapFrom((s) => s.lastName)
     )
-    .forMember(
-      (d) => d.full,
-      mapFrom((s) => s.firstName + ' ' + s.lastName)
-    );
+    .forMember((d) => d.full, mapFrom(fullNameResolver));
 
   mapper
     .createMap(User, PascalUserVm)
@@ -30,10 +37,7 @@ export const userProfile: MappingProfile = (mapper) => {
       (d) => d.Last,
       mapFrom((s) => s.lastName)
     )
-    .forMember(
-      (d) => d.Full,
-      mapFrom((s) => s.firstName + ' ' + s.lastName)
-    );
+    .forMember((d) => d.Full, mapFrom(fullNameResolver));
 
   mapper
     .createMap(User, SnakeUserVm)
@@ -45,10 +49,7 @@ export const userProfile: MappingProfile = (mapper) => {
       (d) => d.last,
       mapFrom((s) => s.lastName)
     )
-    .forMember(
-      (d) => d.full,
-      mapFrom((s) => s.firstName + ' ' + s.lastName)
-    );
+    .forMember((d) => d.full, mapFrom(fullNameResolver));
 };
 
 export const pascalUserProfile: MappingProfile = (mapper) => {

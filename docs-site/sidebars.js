@@ -127,6 +127,11 @@ module.exports = {
         },
         {
           type: 'category',
+          label: 'Sequelize',
+          items: [{ type: 'doc', id: 'plugins-system/introduce-to-sequelize' }],
+        },
+        {
+          type: 'category',
           label: 'Customization',
           items: [
             {

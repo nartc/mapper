@@ -10,3 +10,4 @@ sidebar_label: Introduction
 
 - [@automapper/classes](introduce-to-classes.md)
 - [@automapper/pojos](introduce-to-pojos.md)
+- [@automapper/sequelize](introduce-to-sequelize.md)

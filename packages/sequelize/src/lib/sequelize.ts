@@ -31,9 +31,15 @@ export const sequelize: (
       destination: Constructible<TModel>,
       destinationObj?: TModel
     ): TModel {
-      return init
-        ? init((destination as unknown) as Model, destinationObj)
-        : new destination(destinationObj);
+      const isSequelizeModel = 'sequelize' in destination;
+      if (isSequelizeModel) {
+        if (init) {
+          return init((destination as unknown) as Model, destinationObj);
+        }
+        return new destination(destinationObj);
+      }
+
+      return destinationObj;
     },
   };
 };

@@ -55,6 +55,17 @@ export interface MapPlugin<TKey = unknown> {
   ): [sourceInstance: TSource, destinationInstance: TDestination];
 
   /**
+   * An optional post-map function to post-process the destination after map
+   *
+   * @param destination - a key to be used to identify the information about a particular Destination
+   * @param destinationObj - a plain object that takes the shape of the destination
+   */
+  postMap?<TDestination extends Dictionary<TDestination> = any>(
+    destination: TKey,
+    destinationObj?: TDestination
+  ): TDestination;
+
+  /**
    * An optional pre-mapArray function to prepare the sourceArray before mapArray
    *
    * @param source - a key to be used to identify the information about a particular Source

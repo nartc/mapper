@@ -61,7 +61,7 @@ export function createMapper<TKey = unknown>({
 
       // run preMap if available
       const [sourceInstance] = preMap
-        ? preMap(source, destination, sourceObj)
+        ? preMap.bind(plugin)(source, destination, sourceObj)
         : [];
 
       // get mapping between Source and Destination

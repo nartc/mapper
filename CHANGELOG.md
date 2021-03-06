@@ -1,3 +1,18 @@
+# [3.1.0](https://github.com/nartc/mapper/compare/3.0.11...3.1.0) (2021-03-06)
+
+### Bug Fixes
+
+- **classes:** move all single functions to exported utils ([219b917](https://github.com/nartc/mapper/commit/219b917de42c90c87a051f555422627c4c094bab))
+- **core:** make sure to bind plugin to preMap this context ([19479a3](https://github.com/nartc/mapper/commit/19479a3d022d598f68e08216f1c97ca30b2401d2))
+- **types:** add instantiate to MapPlugin public API ([53343f9](https://github.com/nartc/mapper/commit/53343f9494c31b6a434ed05e05977b65f1201ced))
+
+### Features
+
+- **classes:** expose Constructible type ([2c3eaf0](https://github.com/nartc/mapper/commit/2c3eaf0a369892a73f3ec88fcff8aadc3223d054))
+- **classes:** expose instantiate ([b2dd592](https://github.com/nartc/mapper/commit/b2dd59292a1441ec0b4ba4d4893805de680788e7))
+- **pojos:** expose instantiate as public API ([528b193](https://github.com/nartc/mapper/commit/528b193ce579278e152eecd5a4f9b95f9183ff5f))
+- **sequelize:** add sequelize plugin ([b9105bb](https://github.com/nartc/mapper/commit/b9105bb23a8ab3c3970ea29022c14c1a031e813d))
+
 ## [3.0.11](https://github.com/nartc/mapper/compare/3.0.10...3.0.11) (2021-03-04)
 
 ### Bug Fixes

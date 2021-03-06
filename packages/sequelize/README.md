@@ -1,6 +1,6 @@
 # @automapper/sequelize
 
-This is the official plugin from `@automapper` to work with `Sequelize` enabled projects
+This is the official plugin from `@automapper` to work with `Sequelize` enabled projects. `sequelize` is essentially extending from `classes` with some modification to work with `Sequelize#Model` type.
 
 ## Installation
 

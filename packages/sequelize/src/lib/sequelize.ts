@@ -2,18 +2,14 @@ import type { Constructible } from '@automapper/classes';
 import { classes } from '@automapper/classes';
 import type { Dictionary, MapPluginInitializer } from '@automapper/types';
 import type { Model } from 'sequelize';
+import { SequelizeInitializerOptions } from './types';
 
-export const sequelize: <
-  TGetterResult extends Record<string, unknown> = any,
-  TModel extends Model<TGetterResult> = Model<TGetterResult>
->(
-  valueGetter?: (model: TModel) => TGetterResult
-) => MapPluginInitializer<Constructible> = <
-  TGetterResult extends Record<string, unknown> = any,
-  TModel extends Model<TGetterResult> = Model<TGetterResult>
->(
-  valueGetter?: (model: TModel) => TGetterResult
-) => (errorHandler) => {
+export const sequelize: (
+  options: SequelizeInitializerOptions
+) => MapPluginInitializer<Constructible> = ({
+  valueGetter,
+  init,
+}: SequelizeInitializerOptions) => (errorHandler) => {
   const originalClasses = classes(errorHandler);
 
   return {
@@ -23,13 +19,21 @@ export const sequelize: <
       obj?: TInstanceModel
     ) {
       const original = originalClasses.instantiate(model, obj);
-      const instance = (original[0] as unknown) as TModel;
+      const instance = (original[0] as unknown) as Model;
       original[0] = (valueGetter
         ? valueGetter(instance)
         : instance.get
         ? instance.get()
         : instance) as TInstanceModel;
       return original;
+    },
+    postMap<TModel extends Dictionary<TModel> = any>(
+      destination: Constructible<TModel>,
+      destinationObj?: TModel
+    ): TModel {
+      return init
+        ? init((destination as unknown) as Model, destinationObj)
+        : new destination(destinationObj);
     },
   };
 };

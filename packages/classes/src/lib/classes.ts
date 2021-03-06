@@ -1,22 +1,20 @@
-import { createInitialMapping, isDefined } from '@automapper/core';
-import type {
-  Dictionary,
-  Mapping,
-  MapPluginInitializer,
-} from '@automapper/types';
+import { createInitialMapping } from '@automapper/core';
+import type { Dictionary, MapPluginInitializer } from '@automapper/types';
 import { MappingClassId } from '@automapper/types';
 import 'reflect-metadata';
-import {
-  AUTOMAP_PROPERTIES_METADATA_KEY,
-  AUTOMAPPER_METADATA_FACTORY_KEY,
-} from './constants';
 import {
   ClassInstanceStorage,
   ClassMappingStorage,
   ClassMetadataStorage,
 } from './storages';
 import type { Constructible } from './types';
-import { instantiate, isClass } from './utils';
+import {
+  exploreMetadata,
+  instantiate,
+  isDestinationPathOnSource,
+  isMultipartSourcePathsInSource,
+  prePropertiesLoop,
+} from './utils';
 
 /**
  *
@@ -154,90 +152,3 @@ export const classes: MapPluginInitializer<Constructible> = (errorHandler) => {
     },
   };
 };
-
-function exploreMetadata(
-  metadataStorage: ClassMetadataStorage,
-  instanceStorage: ClassInstanceStorage,
-  ...models: Constructible[]
-) {
-  // Loop through each models passed in
-  for (const model of models) {
-    // if metadataStorage hasn't had metadata of the model
-    if (!metadataStorage.has(model)) {
-      // get the metadata from Reflection and AUTOMAPPER_METADATA_FACTORY then populate metadataStorage and instanceStorage
-      let metadataList =
-        Reflect.getMetadata(AUTOMAP_PROPERTIES_METADATA_KEY, model) || [];
-
-      if ((model as any)[AUTOMAPPER_METADATA_FACTORY_KEY]) {
-        metadataList = metadataList.concat(
-          (model as any)[AUTOMAPPER_METADATA_FACTORY_KEY]() || []
-        );
-      }
-
-      // if no metadata, skip
-      if (!isDefined(metadataList)) continue;
-      // loop through metadata list
-      for (const [propertyKey, { typeFn, depth }] of metadataList) {
-        metadataStorage.addMetadata(model, [propertyKey, typeFn]);
-        if (depth != null) {
-          instanceStorage.setDepth(model, propertyKey, depth);
-        }
-      }
-    }
-  }
-}
-
-function prePropertiesLoop(
-  source: Constructible,
-  metadataStorage: ClassMetadataStorage,
-  instanceStorage: ClassInstanceStorage,
-  sourceInstance: unknown,
-  sourceNestedConstructible: unknown[]
-) {
-  return (mapping: Mapping) => {
-    // get prototype of the constructor
-    const sourceProtoConstructor = Object.getPrototypeOf(source.constructor);
-    // if it has name, then it's not anonymous Function
-    if (sourceProtoConstructor.name) {
-      // try to instantiate the proto constructor
-      const [sourceProtoInstance, sourceProtoNestedConstructible] = instantiate(
-        instanceStorage,
-        metadataStorage,
-        sourceProtoConstructor
-      );
-      // merge the instance of the proto with the sourceInstance
-      sourceInstance = Object.assign(sourceInstance, sourceProtoInstance);
-      // update the sourceInstance on the mapping
-      mapping[MappingClassId.mappings][0] = sourceInstance;
-      if ((sourceProtoNestedConstructible as unknown[]).length) {
-        // update the nested constructible
-        sourceNestedConstructible = sourceNestedConstructible.concat(
-          sourceProtoNestedConstructible
-        );
-      }
-    }
-  };
-}
-
-function isMultipartSourcePathsInSource(
-  dottedSourcePaths: string[],
-  sourceInstance: Record<string, unknown>
-) {
-  return !(
-    dottedSourcePaths.length > 1 &&
-    (!sourceInstance.hasOwnProperty(dottedSourcePaths[0]) ||
-      (sourceInstance[dottedSourcePaths[0]] &&
-        // eslint-disable-next-line @typescript-eslint/ban-types
-        isClass((sourceInstance[dottedSourcePaths[0]] as unknown) as Function)))
-  );
-}
-
-function isDestinationPathOnSource(sourceProto: Record<string, unknown>) {
-  return (sourceObj: any, sourcePath: string) => {
-    return !(
-      !sourceObj.hasOwnProperty(sourcePath) &&
-      !sourceProto.hasOwnProperty(sourcePath) &&
-      !Object.getPrototypeOf(sourceObj).hasOwnProperty(sourcePath)
-    );
-  };
-}

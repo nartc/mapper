@@ -13,3 +13,17 @@ npm i @automapper/sequelize
 # or with yarn
 yarn add @automapper/sequelize
 ```
+
+## Usage
+
+```ts
+import { sequelize } from '@automapper/sequelize';
+
+const mapper = createMapper({
+  ...,
+  pluginInitializer: sequelize() // or sequelize(model => model.get(getterOptions))
+})
+
+mapper.createMap(User, UserVm);
+mapper.map(user, UserVm, User);
+```

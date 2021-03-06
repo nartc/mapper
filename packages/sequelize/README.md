@@ -38,7 +38,7 @@ yarn add --dev @types/sequelize @automapper/types
 - `valueGetter` is an optional getter that, if passed in, will be used to extract the value of the model after instantiation. By default, it will use `sequelize#Model.get()` if it's available.
 
 ```ts
-import { classes } from '@automapper/classes';
+import { sequelize } from '@automapper/sequelize';
 
 const mapper = createMapper({
   ...,

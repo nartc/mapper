@@ -1,4 +1,4 @@
-import { Dictionary, TransformerMetadataFactory } from '@automapper/types';
+import type { Dictionary, TransformerMetadataFactory } from '@automapper/types';
 
 export interface Constructible<TModel extends Dictionary<TModel> = any>
   extends TransformerMetadataFactory<TModel> {

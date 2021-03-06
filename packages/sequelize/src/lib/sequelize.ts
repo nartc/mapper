@@ -5,11 +5,11 @@ import type { Model } from 'sequelize';
 import { SequelizeInitializerOptions } from './types';
 
 export const sequelize: (
-  options: SequelizeInitializerOptions
+  options?: SequelizeInitializerOptions
 ) => MapPluginInitializer<Constructible> = ({
   valueGetter,
   init,
-}: SequelizeInitializerOptions) => (errorHandler) => {
+}: SequelizeInitializerOptions = {}) => (errorHandler) => {
   const originalClasses = classes(errorHandler);
 
   return {

@@ -1,3 +1,9 @@
+## [3.2.2](https://github.com/nartc/mapper/compare/3.2.1...3.2.2) (2021-03-06)
+
+### Bug Fixes
+
+- **sequelize:** only run intiialize on sequelize model ([05c3d82](https://github.com/nartc/mapper/commit/05c3d825f52944c4b739f2c9cbed1af1e69b658f))
+
 ## [3.2.1](https://github.com/nartc/mapper/compare/3.2.0...3.2.1) (2021-03-06)
 
 ### Bug Fixes

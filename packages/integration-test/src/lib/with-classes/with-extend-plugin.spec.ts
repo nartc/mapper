@@ -30,7 +30,9 @@ describe('with extends plugin', () => {
     const originalPreMap = originalClasses.preMap;
     originalClasses.preMap = (...args) => {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const originalPreMapResult = originalPreMap!(...args);
+      const originalPreMapResult = originalPreMap!.bind(originalClasses)(
+        ...args
+      );
       nullify(originalPreMapResult[0]);
       return originalPreMapResult;
     };

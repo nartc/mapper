@@ -57,7 +57,7 @@ export function createMapper<TKey = unknown>({
         return sourceObj;
       }
 
-      const { preMap } = plugin;
+      const { preMap, postMap } = plugin;
 
       // run preMap if available
       const [sourceInstance] = preMap
@@ -79,13 +79,15 @@ export function createMapper<TKey = unknown>({
             'extraArguments' in destinationObjOrOptions)) ||
         destinationObjOrOptions == null
       ) {
-        return mapReturn(
+        const result = mapReturn(
           sourceInstance ?? sourceObj,
           mapping!,
           destinationObjOrOptions as MapOptions,
           this,
           errorHandler
         );
+
+        return postMap ? postMap.bind(plugin)(destination, result) : result;
       }
 
       mapMutate(
@@ -96,6 +98,9 @@ export function createMapper<TKey = unknown>({
         errorHandler,
         destinationObjOrOptions
       );
+      if (postMap) {
+        destinationObjOrOptions = postMap(destination, destinationObjOrOptions);
+      }
     },
     mapAsync(
       sourceObj: Record<string, unknown>,

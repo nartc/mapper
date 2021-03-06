@@ -1,3 +1,11 @@
+# [3.2.0](https://github.com/nartc/mapper/compare/3.1.0...3.2.0) (2021-03-06)
+
+### Features
+
+- **core:** use postMap if available ([fb22792](https://github.com/nartc/mapper/commit/fb227929bc47445f0db669a8aa5c36e2b51b5f82))
+- **sequelize:** add postMap to instantiate a Model instance from map result ([9552516](https://github.com/nartc/mapper/commit/9552516db1a73e630d2983789800dd60b1728a99))
+- **types:** add postMap to MapPlugin ([bbdd895](https://github.com/nartc/mapper/commit/bbdd895afaca40238a6affdec1de0fe3f7e99435))
+
 # [3.1.0](https://github.com/nartc/mapper/compare/3.0.11...3.1.0) (2021-03-06)
 
 ### Bug Fixes

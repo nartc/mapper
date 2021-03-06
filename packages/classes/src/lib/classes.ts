@@ -29,6 +29,12 @@ export const classes: MapPluginInitializer<Constructible> = (errorHandler) => {
   const instanceStorage = new ClassInstanceStorage();
 
   return {
+    instantiate<TModel extends Dictionary<TModel> = any>(
+      model: Constructible<TModel>,
+      obj?: TModel
+    ) {
+      return instantiate(instanceStorage, metadataStorage, model, obj);
+    },
     initializeMapping(source, destination, options?) {
       // If a mapping already exists, handle error and return;
       if (mappingStorage.has(source, destination)) {
@@ -52,15 +58,12 @@ export const classes: MapPluginInitializer<Constructible> = (errorHandler) => {
        * ```
        * `Foo#bar` is a nested constructible
        */
-      const [destinationInstance, destinationNestedConstructible] = instantiate(
-        instanceStorage,
-        metadataStorage,
-        destination
-      );
+      const [
+        destinationInstance,
+        destinationNestedConstructible,
+      ] = this.instantiate(destination);
 
-      const [sourceInstance, sourceNestedConstructible] = instantiate(
-        instanceStorage,
-        metadataStorage,
+      const [sourceInstance, sourceNestedConstructible] = this.instantiate(
         source
       );
 
@@ -130,15 +133,8 @@ export const classes: MapPluginInitializer<Constructible> = (errorHandler) => {
       destinationObj?: TDestination
     ) {
       // Prepare the sourceInstance/destinationInstance with plain object sourceObj and destinationObj
-      const [sourceInstance] = instantiate(
-        instanceStorage,
-        metadataStorage,
-        source,
-        sourceObj
-      );
-      const [destinationInstance] = instantiate(
-        instanceStorage,
-        metadataStorage,
+      const [sourceInstance] = this.instantiate(source, sourceObj);
+      const [destinationInstance] = this.instantiate(
         destination,
         destinationObj
       );

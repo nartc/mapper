@@ -46,6 +46,9 @@
     },
     "classes-experimental-transformer-plugin": {
       "tags": ["type:transformer-plugin"]
+    },
+    "sequelize": {
+      "tags": ["type:plugin"]
     }
   },
   "workspaceLayout": {

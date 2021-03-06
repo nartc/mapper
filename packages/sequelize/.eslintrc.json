@@ -1,0 +1,9 @@
+{
+  "extends": ["../../.eslintrc.json"],
+  "ignorePatterns": ["!**/*"],
+  "rules": {
+    "@typescript-eslint/no-non-null-assertion": 0,
+    "no-prototype-builtins": 0,
+    "@typescript-eslint/no-explicit-any": 0
+  }
+}

@@ -26,7 +26,8 @@
       "@automapper/nestjs": ["packages/nestjs/src/index.ts"],
       "@automapper/classes/experimental/transformer-plugin": [
         "packages/classes/experimental/transformer-plugin/src/index.ts"
-      ]
+      ],
+      "@automapper/sequelize": ["packages/sequelize/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

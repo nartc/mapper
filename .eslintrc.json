@@ -20,7 +20,8 @@
                 "onlyDependOnLibsWithTags": [
                   "type:library",
                   "type:type-defs",
-                  "type:util"
+                  "type:util",
+                  "type:plugin"
                 ]
               },
               {

@@ -29,6 +29,14 @@ export interface MapPlugin<TKey = unknown> {
   getMapping(source: any, destination: any): Mapping | undefined;
 
   /**
+   * Instantiation logic of a plugin
+   */
+  instantiate<TModel extends Dictionary<TModel> = any>(
+    model: any,
+    obj?: TModel
+  ): [instance: TModel, nestedMetadata?: any[]];
+
+  /**
    * An optional pre-map function to prepare the source and destination before map
    *
    * @param source - a key to be used to identify the information about a particular Source

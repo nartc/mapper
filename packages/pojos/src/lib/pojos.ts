@@ -1,5 +1,9 @@
 import { createInitialMapping } from '@automapper/core';
-import type { CreateMapOptions, MapPluginInitializer } from '@automapper/types';
+import type {
+  CreateMapOptions,
+  Dictionary,
+  MapPluginInitializer,
+} from '@automapper/types';
 import { MappingClassId } from '@automapper/types';
 import {
   PojosMappingStorage,
@@ -13,6 +17,12 @@ export const pojos: MapPluginInitializer<string> = (errorHandler) => {
   const mappingStorage = new PojosMappingStorage();
 
   return {
+    instantiate<TModel extends Dictionary<TModel> = any>(
+      model: string,
+      obj?: TModel
+    ) {
+      return instantiate(metadataStorage, model, obj);
+    },
     initializeMapping(
       source: string,
       destination: string,
@@ -27,15 +37,11 @@ export const pojos: MapPluginInitializer<string> = (errorHandler) => {
 
       exploreMetadata(metadataStorage, source, destination);
 
-      const [destinationObj, destinationNestedMetadataMap] = instantiate(
-        metadataStorage,
+      const [destinationObj, destinationNestedMetadataMap] = this.instantiate(
         destination
       );
 
-      const [sourceObj, sourceNestedMetadataMap] = instantiate(
-        metadataStorage,
-        source
-      );
+      const [sourceObj, sourceNestedMetadataMap] = this.instantiate(source);
 
       return createInitialMapping(
         sourceObj,
@@ -62,8 +68,8 @@ export const pojos: MapPluginInitializer<string> = (errorHandler) => {
         return;
       }
 
-      const [sourceObj] = instantiate(metadataStorage, source);
-      const [destinationObj] = instantiate(metadataStorage, destination);
+      const [sourceObj] = this.instantiate(source);
+      const [destinationObj] = this.instantiate(destination);
 
       mapping[MappingClassId.mappings] = [sourceObj, destinationObj];
       return mapping;

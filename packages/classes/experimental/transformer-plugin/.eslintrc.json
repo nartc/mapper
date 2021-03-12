@@ -1,5 +1,24 @@
 {
   "extends": "../../../../.eslintrc.json",
   "ignorePatterns": ["!**/*"],
-  "rules": {}
+  "rules": {},
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "parserOptions": {
+        "project": [
+          "packages/classes/experimental/transformer-plugin/tsconfig.*?.json"
+        ]
+      },
+      "rules": {}
+    },
+    {
+      "files": ["*.ts", "*.tsx"],
+      "rules": {}
+    },
+    {
+      "files": ["*.js", "*.jsx"],
+      "rules": {}
+    }
+  ]
 }

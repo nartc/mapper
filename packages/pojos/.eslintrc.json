@@ -5,5 +5,22 @@
     "@typescript-eslint/no-non-null-assertion": 0,
     "no-prototype-builtins": 0,
     "@typescript-eslint/no-explicit-any": 0
-  }
+  },
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "parserOptions": {
+        "project": ["packages/pojos/tsconfig.*?.json"]
+      },
+      "rules": {}
+    },
+    {
+      "files": ["*.ts", "*.tsx"],
+      "rules": {}
+    },
+    {
+      "files": ["*.js", "*.jsx"],
+      "rules": {}
+    }
+  ]
 }

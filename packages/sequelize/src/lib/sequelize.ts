@@ -2,7 +2,7 @@ import type { Constructible } from '@automapper/classes';
 import { classes } from '@automapper/classes';
 import type { Dictionary, MapPluginInitializer } from '@automapper/types';
 import type { Model } from 'sequelize';
-import { SequelizeInitializerOptions } from './types';
+import type { SequelizeInitializerOptions } from './types';
 
 export const sequelize: (
   options?: SequelizeInitializerOptions

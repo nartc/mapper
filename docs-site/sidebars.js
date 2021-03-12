@@ -115,6 +115,7 @@ module.exports = {
             { type: 'doc', id: 'plugins-system/classes-metadata' },
             { type: 'doc', id: 'plugins-system/classes-limitations' },
             { type: 'doc', id: 'plugins-system/classes-transformer-plugin' },
+            { type: 'doc', id: 'plugins-system/classes-mapped-types' },
           ],
         },
         {

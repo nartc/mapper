@@ -1,3 +1,13 @@
+# [3.3.0](https://github.com/nartc/mapper/compare/3.2.2...3.3.0) (2021-03-12)
+
+### Bug Fixes
+
+- **classes:** expose getMetadataList as public API ([b5bde21](https://github.com/nartc/mapper/commit/b5bde21f49f42d21cb8e2ab1aca48d6a5fbb7ab9))
+
+### Features
+
+- **classes/mapped-types:** add Mapped Types ([46e02ba](https://github.com/nartc/mapper/commit/46e02ba9fc55f2c9472b53de29dbc831b5b0d846))
+
 ## [3.2.2](https://github.com/nartc/mapper/compare/3.2.1...3.2.2) (2021-03-06)
 
 ### Bug Fixes

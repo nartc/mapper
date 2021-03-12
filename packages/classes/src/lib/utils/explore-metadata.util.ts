@@ -16,14 +16,7 @@ export function exploreMetadata(
     // if metadataStorage hasn't had metadata of the model
     if (!metadataStorage.has(model)) {
       // get the metadata from Reflection and AUTOMAPPER_METADATA_FACTORY then populate metadataStorage and instanceStorage
-      let metadataList =
-        Reflect.getMetadata(AUTOMAP_PROPERTIES_METADATA_KEY, model) || [];
-
-      if ((model as any)[AUTOMAPPER_METADATA_FACTORY_KEY]) {
-        metadataList = metadataList.concat(
-          (model as any)[AUTOMAPPER_METADATA_FACTORY_KEY]() || []
-        );
-      }
+      const metadataList = getMetadataList(model);
 
       // if no metadata, skip
       if (!isDefined(metadataList)) continue;
@@ -36,4 +29,19 @@ export function exploreMetadata(
       }
     }
   }
+}
+
+export function getMetadataList(
+  model: Constructible
+): [string, { typeFn: any; depth?: number }][] {
+  let metadataList =
+    Reflect.getMetadata(AUTOMAP_PROPERTIES_METADATA_KEY, model) || [];
+
+  if ((model as any)[AUTOMAPPER_METADATA_FACTORY_KEY]) {
+    metadataList = metadataList.concat(
+      (model as any)[AUTOMAPPER_METADATA_FACTORY_KEY]() || []
+    );
+  }
+
+  return metadataList;
 }

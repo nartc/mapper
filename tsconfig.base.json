@@ -27,7 +27,10 @@
       "@automapper/classes/experimental/transformer-plugin": [
         "packages/classes/experimental/transformer-plugin/src/index.ts"
       ],
-      "@automapper/sequelize": ["packages/sequelize/src/index.ts"]
+      "@automapper/sequelize": ["packages/sequelize/src/index.ts"],
+      "@automapper/classes/mapped-types": [
+        "packages/classes/mapped-types/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

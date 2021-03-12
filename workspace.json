@@ -352,6 +352,39 @@
           }
         }
       }
+    },
+    "classes-mapped-types": {
+      "root": "packages/classes/mapped-types",
+      "sourceRoot": "packages/classes/mapped-types/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["packages/classes/mapped-types/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/packages/classes/mapped-types"],
+          "options": {
+            "jestConfig": "packages/classes/mapped-types/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/packages/classes/mapped-types",
+            "tsConfig": "packages/classes/mapped-types/tsconfig.lib.json",
+            "packageJson": "packages/classes/mapped-types/package.json",
+            "main": "packages/classes/mapped-types/src/index.ts",
+            "assets": ["packages/classes/mapped-types/*.md"],
+            "buildableProjectDepsInPackageJsonType": "peerDependencies"
+          }
+        }
+      }
     }
   },
   "cli": {

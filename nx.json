@@ -24,10 +24,10 @@
   },
   "projects": {
     "core": {
-      "tags": ["type:library"]
+      "tags": ["scope:core", "type:library"]
     },
     "classes": {
-      "tags": ["type:plugin"]
+      "tags": ["scope:classes", "type:plugin"]
     },
     "types": {
       "tags": ["type:type-defs"]
@@ -45,10 +45,13 @@
       "tags": ["type:test"]
     },
     "classes-experimental-transformer-plugin": {
-      "tags": ["type:transformer-plugin"]
+      "tags": ["scope:classes", "type:transformer-plugin"]
     },
     "sequelize": {
       "tags": ["type:plugin"]
+    },
+    "classes-mapped-types": {
+      "tags": ["scope:classes", "type:utility"]
     }
   },
   "workspaceLayout": {

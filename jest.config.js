@@ -8,5 +8,6 @@ module.exports = {
     '<rootDir>/packages/nestjs-integration-test',
     '<rootDir>/packages/experimental/transformer-plugin',
     '<rootDir>/packages/sequelize',
+    '<rootDir>/packages/classes/mapped-types',
   ],
 };

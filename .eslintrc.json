@@ -20,21 +20,16 @@
                 "onlyDependOnLibsWithTags": [
                   "type:library",
                   "type:type-defs",
-                  "type:util",
                   "type:plugin"
                 ]
               },
               {
                 "sourceTag": "type:library",
-                "onlyDependOnLibsWithTags": ["type:type-defs", "type:util"]
+                "onlyDependOnLibsWithTags": ["type:type-defs"]
               },
               {
                 "sourceTag": "type:integration",
-                "onlyDependOnLibsWithTags": [
-                  "type:library",
-                  "type:type-defs",
-                  "type:util"
-                ]
+                "onlyDependOnLibsWithTags": ["type:library", "type:type-defs"]
               },
               {
                 "sourceTag": "type:test",
@@ -43,13 +38,28 @@
                   "type:plugin",
                   "type:integration",
                   "type:type-defs",
-                  "type:util",
                   "type:transformer-plugin"
                 ]
               },
               {
                 "sourceTag": "type:transformer-plugin",
                 "onlyDependOnLibsWithTags": ["type:plugin"]
+              },
+              {
+                "sourceTag": "type:utility",
+                "onlyDependOnLibsWithTags": [
+                  "type:library",
+                  "type:type-defs",
+                  "type:plugin"
+                ]
+              },
+              {
+                "sourceTag": "scope:classes",
+                "onlyDependOnLibsWithTags": [
+                  "type:type-defs",
+                  "scope:core",
+                  "scope:classes"
+                ]
               }
             ]
           }

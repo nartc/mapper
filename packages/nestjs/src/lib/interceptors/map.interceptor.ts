@@ -1,4 +1,3 @@
-import { isEmpty } from '@automapper/core';
 import type { MapOptions, Mapper } from '@automapper/types';
 import type {
   CallHandler,
@@ -9,7 +8,12 @@ import { mixin, Optional } from '@nestjs/common';
 import type { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { InjectMapper } from '../di';
-import { memoize } from './memoize.util';
+import {
+  getTransformOptions,
+  memoize,
+  shouldSkipTransform,
+  transformArray,
+} from '../utils';
 
 export const MapInterceptor: (
   to: unknown,
@@ -20,10 +24,11 @@ export const MapInterceptor: (
 function createMapInterceptor(
   to: unknown,
   from: unknown,
-  options?: { isArray?: boolean; mapperName?: string }
+  options?: { isArray?: boolean; mapperName?: string } & MapOptions
 ): new (...args: any[]) => NestInterceptor {
-  const { isArray = false, mapperName, ...mapOptions } = options || {};
-  const transformedMapOptions = isEmpty(mapOptions) ? undefined : mapOptions;
+  const { isArray, mapperName, transformedMapOptions } = getTransformOptions(
+    options
+  );
 
   class MixinMapInterceptor implements NestInterceptor {
     constructor(
@@ -34,7 +39,7 @@ function createMapInterceptor(
       context: ExecutionContext,
       next: CallHandler
     ): Promise<Observable<unknown>> {
-      if (!this.mapper || !to || !from) {
+      if (shouldSkipTransform(this.mapper, to, from)) {
         return next.handle();
       }
 
@@ -42,22 +47,18 @@ function createMapInterceptor(
         return next.handle().pipe(
           map((response) => {
             if (isArray) {
-              if (!Array.isArray(response)) return response;
-              return this.mapper?.mapArray(
+              return transformArray(
                 response,
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                to as any,
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                from as any,
+                this.mapper,
+                to,
+                from,
                 transformedMapOptions
               );
             }
 
             return this.mapper?.map(
               response,
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               to as any,
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               from as any,
               transformedMapOptions
             );

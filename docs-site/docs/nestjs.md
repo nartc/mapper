@@ -181,7 +181,40 @@ export class UserController {
 MapInterceptor(destinationModelType, sourceModelType, {
   isArray?: boolean;
   mapperName?: string;
-} & MapAction)
+} & MapOptions)
 ```
 
-> See [MapAction](misc/callbacks.md)
+> See [MapOptions](misc/callbacks.md)
+
+## `MapPipe`
+
+`@automapper/nestjs` provides `MapPipe`. When you want to transform the incoming request body before it gets to the route handler, you can utilize `MapPipe` to achieve this behavior
+
+```ts
+@Post('/from-body')
+postFromBody(@Body(MapPipe(UserDto, User)) user: UserDto) {
+    // from the request perspective, user coming in as an User object but will be mapped to UserDto with MapPipe
+    return user;
+}
+```
+
+`MapPipe` only works with `@Body` or `@Query`.
+
+```ts
+@Get('/from-query')
+getFromQuery(@Query(MapPipe(UserDto, User)) user: UserDto) {
+    // from the request perspective, user coming in as an User object but will be mapped to UserDto with MapPipe
+    return user;
+}
+```
+
+> Note that when you send a request with `Body` or `Query`, the data is serialized. Data-type like `Date` will come in the request handler as `string`. Hence, please be cautious of the mapping configuration when you use `MapPipe`
+
+`MapPipe` has the same signature as `MapInterceptor`
+
+```ts
+MapPipe(destinationModelType, sourceModelType, {
+  isArray?: boolean;
+  mapperName?: string;
+} & MapOptions)
+```

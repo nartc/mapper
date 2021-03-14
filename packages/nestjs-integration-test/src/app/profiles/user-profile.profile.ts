@@ -6,7 +6,8 @@ import { Avatar, AvatarVm } from '../models/avatar';
 import { UserProfile, UserProfileVm } from '../models/user-profile';
 
 export const dateToStringConverter: Converter<Date, string> = {
-  convert(source: Date): string {
+  convert(source: Date | string): string {
+    if (typeof source === 'string') return new Date(source).toDateString();
     return source.toDateString();
   },
 };

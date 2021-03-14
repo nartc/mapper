@@ -55,4 +55,31 @@ describe('AppController', () => {
       .expect(200)
       .expect(JSON.parse(JSON.stringify(getUserVm())));
   });
+
+  it('POST /from-body', () => {
+    return request(app.getHttpServer())
+      .post('/from-body')
+      .set('Content-Type', 'application/json')
+      .send(getUser())
+      .expect(201)
+      .expect(JSON.parse(JSON.stringify(getUserVm())));
+  });
+
+  it('POST /from-body-data', () => {
+    return request(app.getHttpServer())
+      .post('/from-body-data')
+      .set('Content-Type', 'application/json')
+      .send({ data: getUser() })
+      .expect(201)
+      .expect({ vm: JSON.parse(JSON.stringify(getUserVm())) });
+  });
+
+  it('POST /from-body-array', () => {
+    return request(app.getHttpServer())
+      .post('/from-body-array')
+      .set('Content-Type', 'application/json')
+      .send({ data: [getUser()] })
+      .expect(201)
+      .expect({ vm: [JSON.parse(JSON.stringify(getUserVm()))] });
+  });
 });

@@ -1,3 +1,17 @@
+## [3.4.0](https://github.com/nartc/mapper/compare/3.3.0...3.4.0) (2021-03-14)
+
+### Features
+
+- **nestjs:** add MapPipe to transform Query and Body ([d8198e0](https://github.com/nartc/mapper/commit/d8198e00f7874c4324a22d7ef3fbdd3023b23fc6))
+
+### Bug Fixes
+
+- **core:** add non-null assertion to mapMemberFn[misc] when transformation type is MapFrom/MapWith ([746e94e](https://github.com/nartc/mapper/commit/746e94ec6c9e077fd5000789a2dbf97cb7a79a15))
+
+### Documentations
+
+- add docs about MapPipe ([8a8d673](https://github.com/nartc/mapper/commit/8a8d673944674f3dd390634f87c2a03e37c7b6d2))
+
 # [3.3.0](https://github.com/nartc/mapper/compare/3.2.2...3.3.0) (2021-03-12)
 
 ### Bug Fixes

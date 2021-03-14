@@ -59,7 +59,7 @@ export function createMapForMember<
       mapMemberFn[MapFnClassId.type] === TransformationType.MapWith) &&
     mapMemberFn[MapFnClassId.misc] != null
   ) {
-    sourcePath = getMemberPath(mapMemberFn[MapFnClassId.misc]);
+    sourcePath = getMemberPath(mapMemberFn[MapFnClassId.misc]!);
   }
 
   // initialize MappingProperty

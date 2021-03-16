@@ -56,6 +56,15 @@ describe('AppController', () => {
       .expect(JSON.parse(JSON.stringify(getUserVm())));
   });
 
+  it('GET /raw-array', () => {
+    mockedAppService.getRawUser.mockReturnValueOnce(getUser());
+
+    return request(app.getHttpServer())
+      .get('/raw-array')
+      .expect(200)
+      .expect(JSON.parse(JSON.stringify([getUserVm()])));
+  });
+
   it('POST /from-body', () => {
     return request(app.getHttpServer())
       .post('/from-body')

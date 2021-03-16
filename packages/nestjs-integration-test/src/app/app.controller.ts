@@ -25,9 +25,15 @@ export class AppController {
   }
 
   @Get('raw')
-  @UseInterceptors(MapInterceptor(UserVm, User))
+  @UseInterceptors(MapInterceptor(UserVm, User, {}))
   getRawUser() {
     return this.appService.getRawUser();
+  }
+
+  @Get('raw-array')
+  @UseInterceptors(MapInterceptor(UserVm, User, { isArray: true }))
+  getRawUserArray() {
+    return [this.appService.getRawUser()];
   }
 
   @Get('foo')

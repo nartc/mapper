@@ -48,7 +48,7 @@ function createMapPipe(
           );
         }
 
-        return this.mapper.map(
+        return this.mapper?.map(
           value,
           to as any,
           from as any,

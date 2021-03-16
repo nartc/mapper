@@ -2,7 +2,7 @@ import { isEmpty } from '@automapper/core';
 import type { MapOptions, Mapper } from '@automapper/types';
 
 export function shouldSkipTransform(
-  mapper: Mapper,
+  mapper: Mapper | undefined,
   to: unknown,
   from: unknown
 ): boolean {
@@ -11,19 +11,19 @@ export function shouldSkipTransform(
 
 export function transformArray(
   value: unknown,
-  mapper: Mapper,
+  mapper: Mapper | undefined,
   to: any,
   from: any,
   options?: MapOptions
 ) {
   if (!Array.isArray(value)) return value;
-  return mapper.mapArray(value, to, from, options);
+  return mapper?.mapArray(value, to, from, options);
 }
 
 export function getTransformOptions(
   options?: { isArray?: boolean; mapperName?: string } & MapOptions
 ): {
-  mapperName: string;
+  mapperName?: string;
   isArray: boolean;
   transformedMapOptions?: MapOptions;
 } {

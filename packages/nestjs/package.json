@@ -1,6 +1,6 @@
 {
   "name": "@automapper/nestjs",
-  "version": "3.4.0",
+  "version": "3.4.1",
   "peerDependencies": {
     "@nestjs/common": "^7.0.0",
     "@nestjs/core": "^7.0.0"

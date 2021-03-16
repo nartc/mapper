@@ -1,3 +1,9 @@
+### [3.4.1](https://github.com/nartc/mapper/compare/3.4.0...3.4.1) (2021-03-16)
+
+### Bug Fixes
+
+- **nestjs:** fix memoize util ([e56887b](https://github.com/nartc/mapper/commit/e56887b0a0dacebd7522acd895c7dc9a53b257b4))
+
 ## [3.4.0](https://github.com/nartc/mapper/compare/3.3.0...3.4.0) (2021-03-14)
 
 ### Features

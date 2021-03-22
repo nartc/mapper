@@ -328,7 +328,7 @@ Original error: ${originalError}`;
           map(
             mapInitializedValue,
             nestedMapping!,
-            {},
+            { extraArguments },
             mapper,
             errorHandler,
             (memberPath, nestedDestination) => (value) => {

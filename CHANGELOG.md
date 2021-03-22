@@ -1,3 +1,10 @@
+### [3.4.2](https://github.com/nartc/mapper/compare/3.4.1...3.4.2) (2021-03-22)
+
+
+### Bug Fixes
+
+* **core:** pass extraArguments down to nested mapping ([10465be](https://github.com/nartc/mapper/commit/10465be62102f8914eaadc5fe29e6897670b59c7))
+
 ### [3.4.1](https://github.com/nartc/mapper/compare/3.4.0...3.4.1) (2021-03-16)
 
 ### Bug Fixes

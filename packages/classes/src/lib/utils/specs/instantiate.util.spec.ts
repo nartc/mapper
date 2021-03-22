@@ -1,7 +1,6 @@
 import { createSpyObj } from 'jest-createspyobj';
 import { resetAllWhenMocks, when } from 'jest-when';
 import { ClassInstanceStorage, ClassMetadataStorage } from '../../storages';
-import { Constructible } from '../../types';
 import { instantiate } from '../instantiate.util';
 
 describe('instantiate', () => {
@@ -124,13 +123,8 @@ describe('instantiate', () => {
     });
   });
 
-  function fooMatcher(model: Constructible) {
-    return model === Foo;
-  }
-
-  function barMatcher(model: Constructible) {
-    return model === Bar;
-  }
+  const fooMatcher = when(((model) => model === Foo) as any);
+  const barMatcher = when(((model) => model === Bar) as any);
 
   function mockEmpty() {
     when(mockedInstanceStorage.getDepthAndCount)

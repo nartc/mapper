@@ -7,6 +7,12 @@ describe('MapWithArgumentsFunction', () => {
     extraArguments: { foo: string }
   ) => source[extraArguments.foo];
 
+  const resolver = {
+    resolve(source: any, extraArguments: { foo: string }) {
+      return source[extraArguments.foo];
+    },
+  };
+
   it('should return correctly', () => {
     const mapWithArgumentsFn = mapWithArguments(withArgumentsResolver);
     expect(mapWithArgumentsFn).toBeTruthy();
@@ -23,5 +29,14 @@ describe('MapWithArgumentsFunction', () => {
       { foo: 'foo' }
     );
     expect(result).toEqual('this is awesome');
+  });
+
+  it('should use resolver correctly', () => {
+    const mapWithArgumentsFn = mapWithArguments(resolver);
+    const result = mapWithArgumentsFn[MapFnClassId.fn](
+      { foo: 'this is awesome resolver' },
+      { foo: 'foo' }
+    );
+    expect(result).toEqual('this is awesome resolver');
   });
 });

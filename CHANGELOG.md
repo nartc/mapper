@@ -1,9 +1,40 @@
-### [3.4.2](https://github.com/nartc/mapper/compare/3.4.1...3.4.2) (2021-03-22)
+## [3.5.0](https://github.com/nartc/mapper/compare/3.4.2...3.5.0) (2021-04-07)
 
+### Features
+
+- **classes:** add logic to handle getter only properties ([d081ac6](https://github.com/nartc/mapper/commit/d081ac65440ccae0af703ada9354003871305bb3))
+
+#### Deprecations:
+
+- **classes:** `AutoMap` decorator now accepts an `AutoMapOptions` instead. The other usage have been marked **deprecated**.
+
+```ts
+class Foo {
+  // before
+  @AutoMap(() => Bar)
+  bar: Bar;
+
+  // after
+  @AutoMap({ typeFn: () => Baz })
+  baz: Baz;
+}
+```
+
+- **core:** allow mapWithArguments to accept Resolver ([8f1dfc6](https://github.com/nartc/mapper/commit/8f1dfc6f27d829aec16e0ffc79d31edab6316569))
+
+### Refactor
+
+- **core:** move isResolver to utils ([ea2bc42](https://github.com/nartc/mapper/commit/ea2bc429c3cebe247589778a6ab99a9374d96799))
+
+### Documentations
+
+- update docs deps and add new docs ([16719ff](https://github.com/nartc/mapper/commit/16719ff596a6a0c1d52ff91d98e13bd7db5d0064))
+
+### [3.4.2](https://github.com/nartc/mapper/compare/3.4.1...3.4.2) (2021-03-22)
 
 ### Bug Fixes
 
-* **core:** pass extraArguments down to nested mapping ([10465be](https://github.com/nartc/mapper/commit/10465be62102f8914eaadc5fe29e6897670b59c7))
+- **core:** pass extraArguments down to nested mapping ([10465be](https://github.com/nartc/mapper/commit/10465be62102f8914eaadc5fe29e6897670b59c7))
 
 ### [3.4.1](https://github.com/nartc/mapper/compare/3.4.0...3.4.1) (2021-03-16)
 

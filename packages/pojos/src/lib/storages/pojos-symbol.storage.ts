@@ -3,8 +3,7 @@
  *
  * @private
  */
-import type { Metadata } from '@automapper/types';
-import { MetadataClassId } from '@automapper/types';
+import type { Metadata, MetadataClassId } from '@automapper/types';
 
 class PojosSymbolStorage {
   private storage = new Map<

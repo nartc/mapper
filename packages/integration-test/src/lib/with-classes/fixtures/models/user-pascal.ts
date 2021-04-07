@@ -7,9 +7,9 @@ export class PascalUser {
   FirstName!: string;
   @AutoMap()
   LastName!: string;
-  @AutoMap(() => PascalUserProfile)
+  @AutoMap({ typeFn: () => PascalUserProfile })
   Profile!: PascalUserProfile;
-  @AutoMap(() => PascalJob)
+  @AutoMap({ typeFn: () => PascalJob })
   Job!: PascalJob;
 }
 
@@ -20,7 +20,7 @@ export class PascalUserVm {
   Last!: string;
   @AutoMap()
   Full!: string;
-  @AutoMap(() => PascalUserProfileVm)
+  @AutoMap({ typeFn: () => PascalUserProfileVm })
   Profile!: PascalUserProfileVm;
   @AutoMap()
   JobTitle!: string;

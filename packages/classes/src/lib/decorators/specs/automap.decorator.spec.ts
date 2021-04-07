@@ -25,7 +25,12 @@ describe('AutomapDecorator', () => {
       spiedReflectGet.mockReturnValueOnce(String);
       expect(spiedReflectDefine).toHaveBeenCalledWith(
         AUTOMAP_PROPERTIES_METADATA_KEY,
-        [['bar', { typeFn: expect.any(Function) }]],
+        [
+          [
+            'bar',
+            { typeFn: expect.any(Function), depth: 0, isGetterOnly: undefined },
+          ],
+        ],
         Bar
       );
       spiedReflectGet.mockReset();
@@ -34,7 +39,7 @@ describe('AutomapDecorator', () => {
 
   describe('for typeFn', () => {
     class Foo {
-      @AutoMap(() => Date)
+      @AutoMap({ typeFn: () => Date })
       date!: Date;
     }
 

@@ -7,9 +7,9 @@ export class User {
   firstName!: string;
   @AutoMap()
   lastName!: string;
-  @AutoMap(() => UserProfile)
+  @AutoMap({ typeFn: () => UserProfile })
   profile!: UserProfile;
-  @AutoMap(() => Job)
+  @AutoMap({ typeFn: () => Job })
   job!: Job;
 }
 
@@ -20,7 +20,7 @@ export class UserVm {
   last!: string;
   @AutoMap()
   full!: string;
-  @AutoMap(() => UserProfileVm)
+  @AutoMap({ typeFn: () => UserProfileVm })
   profile!: UserProfileVm;
   @AutoMap()
   jobTitle!: string;

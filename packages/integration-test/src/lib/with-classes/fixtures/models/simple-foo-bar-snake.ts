@@ -13,7 +13,7 @@ export class SnakeSimpleBarVm {
 export class SnakeSimpleFoo {
   @AutoMap()
   foo!: string;
-  @AutoMap(() => SnakeSimpleBar)
+  @AutoMap({ typeFn: () => SnakeSimpleBar })
   bar!: SnakeSimpleBar;
   @AutoMap()
   foo_bar!: number;
@@ -22,7 +22,7 @@ export class SnakeSimpleFoo {
 export class SnakeSimpleFooVm {
   @AutoMap()
   foo!: string;
-  @AutoMap(() => SnakeSimpleBarVm)
+  @AutoMap({ typeFn: () => SnakeSimpleBarVm })
   bar!: SnakeSimpleBarVm;
   @AutoMap()
   foo_bar!: number;

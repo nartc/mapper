@@ -7,7 +7,7 @@ export class Avatar {
   source!: string;
   @AutoMap()
   shouldIgnore!: number;
-  @AutoMap(() => String)
+  @AutoMap({ typeFn: () => String })
   shouldBeSubstituted!: string | null;
   @AutoMap()
   forCondition!: boolean;
@@ -18,7 +18,7 @@ export class AvatarVm {
   url!: string;
   @AutoMap()
   willBeIgnored!: number;
-  @AutoMap(() => String)
+  @AutoMap({ typeFn: () => String })
   shouldBeSubstituted!: string | null;
   @AutoMap()
   forCondition!: boolean;

@@ -1,29 +1,29 @@
 import { AutoMap } from '@automapper/classes';
 
 export class SimpleBarWithUnion {
-  @AutoMap(() => String)
+  @AutoMap({ typeFn: () => String })
   bar!: string | null;
 }
 
 export class SimpleBarWithUnionVm {
-  @AutoMap(() => String)
+  @AutoMap({ typeFn: () => String })
   bar!: string | null;
 }
 
 export class SimpleFooWithUnion {
-  @AutoMap(() => String)
+  @AutoMap({ typeFn: () => String })
   foo!: string | null;
-  @AutoMap(() => SimpleBarWithUnion)
+  @AutoMap({ typeFn: () => SimpleBarWithUnion })
   bar!: SimpleBarWithUnion | null;
-  @AutoMap(() => Number)
+  @AutoMap({ typeFn: () => Number })
   fooBar!: number | null;
 }
 
 export class SimpleFooWithUnionVm {
-  @AutoMap(() => String)
+  @AutoMap({ typeFn: () => String })
   foo!: string | null;
-  @AutoMap(() => SimpleBarWithUnionVm)
+  @AutoMap({ typeFn: () => SimpleBarWithUnionVm })
   bar!: SimpleBarWithUnionVm | null;
-  @AutoMap(() => Number)
+  @AutoMap({ typeFn: () => Number })
   fooBar!: number | null;
 }

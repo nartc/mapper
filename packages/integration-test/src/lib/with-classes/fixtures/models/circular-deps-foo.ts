@@ -4,13 +4,13 @@ import { BarWithFoo, BarWithFooZeroDepth } from './circular-deps-bar';
 export class FooWithBar {
   @AutoMap()
   id!: string;
-  @AutoMap(() => BarWithFoo, 1)
+  @AutoMap({ typeFn: () => BarWithFoo, depth: 1 })
   bar!: BarWithFoo | null;
 }
 
 export class FooWithBarZeroDepth {
   @AutoMap()
   id!: string;
-  @AutoMap(() => BarWithFooZeroDepth)
+  @AutoMap({ typeFn: () => BarWithFooZeroDepth })
   bar!: BarWithFooZeroDepth | null;
 }

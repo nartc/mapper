@@ -7,9 +7,9 @@ export class UserProfile {
   bio!: string;
   @AutoMap()
   birthday!: Date;
-  @AutoMap(() => Avatar)
+  @AutoMap({ typeFn: () => Avatar })
   avatar!: Avatar;
-  @AutoMap(() => Address)
+  @AutoMap({ typeFn: () => Address })
   addresses!: Address[];
 }
 
@@ -18,8 +18,8 @@ export class UserProfileVm {
   bio!: string;
   @AutoMap()
   birthday!: string;
-  @AutoMap(() => AvatarVm)
+  @AutoMap({ typeFn: () => AvatarVm })
   avatar!: AvatarVm;
-  @AutoMap(() => AddressVm)
+  @AutoMap({ typeFn: () => AddressVm })
   addresses!: AddressVm[];
 }

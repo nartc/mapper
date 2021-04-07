@@ -7,9 +7,9 @@ export class SnakeUserProfile {
   bio!: string;
   @AutoMap()
   birthday!: Date;
-  @AutoMap(() => SnakeAvatar)
+  @AutoMap({ typeFn: () => SnakeAvatar })
   avatar!: SnakeAvatar;
-  @AutoMap(() => SnakeAddress)
+  @AutoMap({ typeFn: () => SnakeAddress })
   addresses!: SnakeAddress[];
 }
 
@@ -18,8 +18,8 @@ export class SnakeUserProfileVm {
   bio!: string;
   @AutoMap()
   birthday!: string;
-  @AutoMap(() => SnakeAvatarVm)
+  @AutoMap({ typeFn: () => SnakeAvatarVm })
   avatar!: SnakeAvatarVm;
-  @AutoMap(() => SnakeAddressVm)
+  @AutoMap({ typeFn: () => SnakeAddressVm })
   addresses!: SnakeAddressVm[];
 }

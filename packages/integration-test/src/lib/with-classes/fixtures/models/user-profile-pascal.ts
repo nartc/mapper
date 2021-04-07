@@ -7,9 +7,9 @@ export class PascalUserProfile {
   Bio!: string;
   @AutoMap()
   Birthday!: Date;
-  @AutoMap(() => PascalAvatar)
+  @AutoMap({ typeFn: () => PascalAvatar })
   Avatar!: PascalAvatar;
-  @AutoMap(() => PascalAddress)
+  @AutoMap({ typeFn: () => PascalAddress })
   Addresses!: PascalAddress[];
 }
 
@@ -18,8 +18,8 @@ export class PascalUserProfileVm {
   Bio!: string;
   @AutoMap()
   Birthday!: string;
-  @AutoMap(() => PascalAvatarVm)
+  @AutoMap({ typeFn: () => PascalAvatarVm })
   Avatar!: PascalAvatarVm;
-  @AutoMap(() => PascalAddressVm)
+  @AutoMap({ typeFn: () => PascalAddressVm })
   Addresses!: PascalAddressVm[];
 }

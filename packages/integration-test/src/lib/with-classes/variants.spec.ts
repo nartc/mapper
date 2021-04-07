@@ -3,6 +3,7 @@ import { setupClasses } from '../setup.spec';
 import { SimpleUserVm } from './fixtures/models/simple-user';
 import {
   UserWithGetter,
+  UserWithOnlyGetter,
   UserWithReturnKeyword,
   UserWithReturnKeywordVm,
 } from './fixtures/models/user-variants';
@@ -24,6 +25,19 @@ describe('Variants', () => {
     expect(vm.firstName).toEqual(user.firstName);
     expect(vm.lastName).toEqual(user.lastName);
     expect(vm.fullName).toEqual(user.firstName + ' ' + user.lastName);
+  });
+
+  it('should map with model with ONLY getters', () => {
+    mapper.createMap(UserWithOnlyGetter, SimpleUserVm).forMember(
+      (d) => d.fullName,
+      mapFrom((s) => s.firstName + ' ' + s.lastName)
+    );
+
+    const user = new UserWithOnlyGetter();
+    user.setFirstName('Chau').setLastName('Tran');
+
+    const vm = mapper.map(user, SimpleUserVm, UserWithOnlyGetter);
+    expect(vm.firstName).toEqual(user.firstName);
   });
 
   it('should map with model with properties with return keyword', () => {

@@ -7,7 +7,7 @@ export class PascalAvatar {
   Source!: string;
   @AutoMap()
   ShouldIgnore!: number;
-  @AutoMap(() => String)
+  @AutoMap({ typeFn: () => String })
   ShouldBeSubstituted!: string | null;
   @AutoMap()
   ForCondition!: boolean;
@@ -18,7 +18,7 @@ export class PascalAvatarVm {
   Url!: string;
   @AutoMap()
   WillBeIgnored!: number;
-  @AutoMap(() => String)
+  @AutoMap({ typeFn: () => String })
   ShouldBeSubstituted!: string | null;
   @AutoMap()
   ForCondition!: boolean;

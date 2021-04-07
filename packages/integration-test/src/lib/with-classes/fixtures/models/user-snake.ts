@@ -7,9 +7,9 @@ export class SnakeUser {
   first_name!: string;
   @AutoMap()
   last_name!: string;
-  @AutoMap(() => SnakeUserProfile)
+  @AutoMap({ typeFn: () => SnakeUserProfile })
   profile!: SnakeUserProfile;
-  @AutoMap(() => SnakeJob)
+  @AutoMap({ typeFn: () => SnakeJob })
   job!: SnakeJob;
 }
 
@@ -20,7 +20,7 @@ export class SnakeUserVm {
   last!: string;
   @AutoMap()
   full!: string;
-  @AutoMap(() => SnakeUserProfileVm)
+  @AutoMap({ typeFn: () => SnakeUserProfileVm })
   profile!: SnakeUserProfileVm;
   @AutoMap()
   job_title!: string;

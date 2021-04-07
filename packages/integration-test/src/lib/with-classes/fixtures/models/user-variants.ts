@@ -22,6 +22,30 @@ export class UserWithGetter {
   }
 }
 
+export class UserWithOnlyGetter {
+  private _firstName!: string;
+  @AutoMap()
+  get firstName(): string {
+    return this._firstName;
+  }
+
+  private _lastName!: string;
+  @AutoMap()
+  get lastName(): string {
+    return this._lastName;
+  }
+
+  setFirstName(v: string) {
+    this._firstName = v;
+    return this;
+  }
+
+  setLastName(v: string) {
+    this._lastName = v;
+    return this;
+  }
+}
+
 export class UserWithReturnKeyword {
   @AutoMap()
   returnFirstName!: string;

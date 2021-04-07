@@ -13,7 +13,7 @@ export class PascalSimpleBarVm {
 export class PascalSimpleFoo {
   @AutoMap()
   Foo!: string;
-  @AutoMap(() => PascalSimpleBar)
+  @AutoMap({ typeFn: () => PascalSimpleBar })
   Bar!: PascalSimpleBar;
   @AutoMap()
   FooBar!: number;
@@ -22,7 +22,7 @@ export class PascalSimpleFoo {
 export class PascalSimpleFooVm {
   @AutoMap()
   Foo!: string;
-  @AutoMap(() => PascalSimpleBarVm)
+  @AutoMap({ typeFn: () => PascalSimpleBarVm })
   Bar!: PascalSimpleBarVm;
   @AutoMap()
   FooBar!: number;

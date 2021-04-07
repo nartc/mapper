@@ -6,6 +6,7 @@ import type {
   ValueSelector,
 } from '@automapper/types';
 import { TransformationType } from '@automapper/types';
+import { isResolver } from '../utils';
 
 export function mapFrom<
   TSource extends Dictionary<TSource> = any,
@@ -21,8 +22,4 @@ export function mapFrom<
   }
 
   return [TransformationType.MapFrom, from, from];
-}
-
-function isResolver(fn: ValueSelector | Resolver): fn is Resolver {
-  return 'resolve' in fn;
 }

@@ -22,4 +22,22 @@ const dto = mapper.map(someUser, UserDto, User, {
 });
 ```
 
+## Value Resolver
+
+[Resolver](./map-from.md) can also be used with `mapWithArguments`
+
+```ts
+export const taxResolver: Resolver<Item, { percentage: number }, number> = {
+  resolve(source, { percentage }) {
+    return source.price * percentage;
+  },
+};
+
+mapper
+  .createMap(Item, ItemDto)
+  .forMember((destination) => destination.tax, mapWithArguments(taxResolver));
+
+mapper.map(item, ItemDto, Item, { extraArguments: { percentage: 0.5 } };
+```
+
 `mapWithArguments()` will set the `TransformationType` to `TransformationType.MapWithArguments`

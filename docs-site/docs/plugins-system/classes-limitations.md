@@ -15,14 +15,14 @@ When designing your data models, both Domain and DTO (or View Model), you will p
 class SourceA {
   @AutoMap()
   id: number;
-  @AutoMap(() => SourceB)
+  @AutoMap({ typeFn: () => SourceB })
   sourceB: SourceB;
 }
 
 class SourceB {
   @AutoMap()
   id: number;
-  @AutoMap(() => SourceA)
+  @AutoMap({ typeFn: () => SourceA })
   sourceA: SourceA;
 }
 ```
@@ -38,7 +38,7 @@ export class Order {
   id: number;
   // ... shorten for brevity purpose
   @ManyToOne(() => Person, (person) => person.orders)
-  @AutoMap(() => Person)
+  @AutoMap({ typeFn: () => Person })
   person: Person;
 }
 
@@ -48,7 +48,7 @@ export class Person {
   id: number;
   // ... shorten for brevity purpose
   @OneToMany(() => Order, (order) => order.person)
-  @AutoMap(() => Order)
+  @AutoMap({ typeFn: () => Order })
   orders: Order[];
 }
 ```
@@ -63,14 +63,14 @@ In general, you should avoid introducing **Circular Dependency** as much as poss
 class SourceA {
   @AutoMap()
   id: number;
-  @AutoMap(() => SourceB)
+  @AutoMap({ typeFn: () => SourceB })
   sourceB: SourceB;
 }
 
 class SourceB {
   @AutoMap()
   id: number;
-  @AutoMap(() => SourceA)
+  @AutoMap({ typeFn: () => SourceA })
   sourceA: SourceA;
 }
 ```
@@ -121,14 +121,14 @@ By default, `@automapper/classes` will apply **depth of 0** to nested models. To
 class SourceA {
   @AutoMap()
   id: number;
-  @AutoMap(() => SourceB, 1)
+  @AutoMap({ typeFn: () => SourceB, depth: 1 })
   sourceB: SourceB;
 }
 
 class SourceB {
   @AutoMap()
   id: number;
-  @AutoMap(() => SourceA, 1)
+  @AutoMap({ typeFn: () => SourceA, depth: 1 })
   sourceA: SourceA;
 }
 ```
@@ -180,11 +180,11 @@ If you have `strict` mode turned on, and you have **Union Type** on your propert
 
 ```ts
 export class User {
-  @AutoMap(() => String)
+  @AutoMap({ typeFn: () => String })
   name!: string | null;
-  @AutoMap(() => Number)
+  @AutoMap({ typeFn: () => Number })
   age!: number | null;
-  @AutoMap(() => Boolean)
+  @AutoMap({ typeFn: () => Boolean })
   isAdmin!: boolean | null;
 }
 ```

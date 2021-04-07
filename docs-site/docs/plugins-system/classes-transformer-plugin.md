@@ -49,7 +49,7 @@ class User {
   firstName: string;
   @AutoMap()
   lastName: string;
-  @AutoMap(() => Profile)
+  @AutoMap({ typeFn: () => Profile })
   profile: Profile;
 }
 ```

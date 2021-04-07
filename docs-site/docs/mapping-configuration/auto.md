@@ -35,7 +35,7 @@ class Bar {
 class Foo {
   @AutoMap()
   foo: string;
-  @AutoMap(() => Bar)
+  @AutoMap({ typeFn: () => Bar })
   bar: Bar;
 }
 
@@ -112,7 +112,7 @@ export class Address {
 }
 
 export class User {
-  @AutoMap(() => Address)
+  @AutoMap({ typeFn: () => Address })
   addresses: Address[];
 }
 
@@ -122,7 +122,7 @@ export class AddressDto {
 }
 
 export class UserDto {
-  @AutoMap(() => AddressDto)
+  @AutoMap({ typeFn: () => AddressDto })
   addresses: AddressDto[];
 }
 ```
@@ -153,7 +153,7 @@ export enum UserRole {
 }
 
 export class User {
-  @AutoMap(() => String) // because UserRole is a string enum
+  @AutoMap({ typeFn: () => String }) // because UserRole is a string enum
   role: UserRole;
 }
 

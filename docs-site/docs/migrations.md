@@ -221,11 +221,11 @@ In `@automapper/core`, `ErrorHandler#handle` is default to `console.error`. `ski
 
 ```ts
 // string enum
-@AutoMap(() => String)
+@AutoMap({ typeFn: () => String })
 role: UserRole
 
 // number enum
-@AutoMap(() => Number)
+@AutoMap({ typeFn: () => Number })
 role: UserRole
 ```
 

@@ -138,12 +138,12 @@ export class User {
 
   password: string;
 
-  @AutoMap(() => Bio)
+  @AutoMap({ typeFn: () => Bio })
   bio: Bio;
 }
 
 export class Bio {
-  @AutoMap(() => Job)
+  @AutoMap({ typeFn: () => Job })
   job: Job;
 
   birthday: Date;
@@ -176,7 +176,7 @@ export class UserDto {
   @AutoMap()
   username: string;
 
-  @AutoMap(() => BioDto)
+  @AutoMap({ typeFn: () => BioDto })
   bio: BioDto;
 }
 
@@ -379,12 +379,12 @@ export class User {
 
   password: string;
 
-  @AutoMap(() => Bio)
+  @AutoMap({ typeFn: () => Bio })
   bio: Bio;
 }
 
 export class Bio {
-  @AutoMap(() => Job)
+  @AutoMap({ typeFn: () => Job })
   job: Job;
 
   birthday: Date;
@@ -413,7 +413,7 @@ export class UserDto {
   @AutoMap()
   username: string;
 
-  @AutoMap(() => BioDto)
+  @AutoMap({ typeFn: () => BioDto })
   bio: BioDto;
 }
 

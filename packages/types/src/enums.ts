@@ -34,4 +34,5 @@ export const enum MapFnClassId {
 export const enum MetadataClassId {
   propertyKey,
   metadataFn,
+  isGetterOnly,
 }

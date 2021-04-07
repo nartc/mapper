@@ -21,8 +21,11 @@ export function exploreMetadata(
       // if no metadata, skip
       if (!isDefined(metadataList)) continue;
       // loop through metadata list
-      for (const [propertyKey, { typeFn, depth }] of metadataList) {
-        metadataStorage.addMetadata(model, [propertyKey, typeFn]);
+      for (const [
+        propertyKey,
+        { typeFn, depth, isGetterOnly },
+      ] of metadataList) {
+        metadataStorage.addMetadata(model, [propertyKey, typeFn, isGetterOnly]);
         if (depth != null) {
           instanceStorage.setDepth(model, propertyKey, depth);
         }
@@ -33,7 +36,7 @@ export function exploreMetadata(
 
 export function getMetadataList(
   model: Constructible
-): [string, { typeFn: any; depth?: number }][] {
+): [string, { typeFn: any; depth?: number; isGetterOnly?: boolean }][] {
   let metadataList =
     Reflect.getMetadata(AUTOMAP_PROPERTIES_METADATA_KEY, model) || [];
 

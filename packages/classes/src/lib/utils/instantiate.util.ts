@@ -42,7 +42,12 @@ export function instantiate<TModel extends Dictionary<TModel>>(
   // reversed loop
   while (i--) {
     // destructure
-    const [key, meta] = metadata[i];
+    const [key, meta, isGetterOnly] = metadata[i];
+
+    // skip getter only completely
+    if (isGetterOnly) {
+      continue;
+    }
 
     // get the value at the current key
     const valueAtKey = (instance as Record<string, unknown>)[key];

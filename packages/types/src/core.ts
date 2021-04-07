@@ -584,7 +584,8 @@ export interface MappingStorage<TKey> extends Disposable {
 
 export type Metadata<TMetaType = unknown> = [
   property: string,
-  metaTypeFn: () => String | Number | Boolean | Date | TMetaType
+  metaTypeFn: () => String | Number | Boolean | Date | TMetaType,
+  isGetterOnly?: boolean
 ];
 
 export interface ErrorHandler {

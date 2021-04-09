@@ -31,11 +31,14 @@ export function AutoMap(
   depth?: number
 ): PropertyDecorator;
 /**
- * AutoMap decorator to decorate fields in classes to store metadata of that field
+ * AutoMap decorator to decorate fields in classes to store metadata of that field with a config object
  *
  * @param {AutoMapOptions} config
  */
 export function AutoMap(config: AutoMapOptions): PropertyDecorator;
+/**
+ * AutoMap decorator to decorate fields in classes to store metadata.
+ */
 export function AutoMap(): PropertyDecorator;
 export function AutoMap(
   typeFnOrConfig?: AutoMapOptions | (() => Constructible),

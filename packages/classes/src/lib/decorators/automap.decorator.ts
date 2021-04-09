@@ -46,7 +46,11 @@ export function AutoMap(
     depth
   );
   return (target, propertyKey) => {
-    const newMetadata = { depth: _depth };
+    const newMetadata: {
+      typeFn?: () => unknown;
+      isGetterOnly?: boolean;
+      depth: number;
+    } = { depth: _depth };
 
     const existingMetadataList =
       Reflect.getMetadata(
@@ -56,17 +60,17 @@ export function AutoMap(
 
     // Getting Type
     if (typeFn) {
-      newMetadata['typeFn'] = typeFn;
+      newMetadata.typeFn = typeFn;
     } else {
       const meta = Reflect.getMetadata('design:type', target, propertyKey);
       if (meta) {
-        newMetadata['typeFn'] = () => meta;
+        newMetadata.typeFn = () => meta;
       }
     }
 
     // Getting Only-getter
     if (isGetterOnly != null) {
-      newMetadata['isGetterOnly'] = isGetterOnly;
+      newMetadata.isGetterOnly = isGetterOnly;
     } else {
       // paramtypes gives information about the setter.
       // it will be null if this is not a getter
@@ -76,14 +80,17 @@ export function AutoMap(
         target,
         propertyKey
       );
-      newMetadata['isGetterOnly'] = paramsType && !(paramsType as []).length;
+      newMetadata.isGetterOnly = paramsType && !(paramsType as []).length;
     }
 
-    Reflect.defineMetadata(
-      AUTOMAP_PROPERTIES_METADATA_KEY,
-      [...existingMetadataList, [propertyKey, newMetadata]],
-      target.constructor
-    );
+    // Only set metadata if typeFn is not null
+    if (newMetadata.typeFn != null) {
+      Reflect.defineMetadata(
+        AUTOMAP_PROPERTIES_METADATA_KEY,
+        [...existingMetadataList, [propertyKey, newMetadata]],
+        target.constructor
+      );
+    }
   };
 }
 

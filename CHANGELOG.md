@@ -1,3 +1,13 @@
+### [3.5.2](https://github.com/nartc/mapper/compare/3.5.1...3.5.2) (2021-04-09)
+
+### Bug Fixes
+
+- **types:** remove all named tuples to support TS <4 ([9de3c72](https://github.com/nartc/mapper/commit/9de3c72284a975538a1f5b3676047b0407690cd9))
+
+### Documentations
+
+- **classes:** add more comments to AutoMap decorator ([b00a01c](https://github.com/nartc/mapper/commit/b00a01c486da3470676cc24fc35c6ab76339dc36))
+
 ### [3.5.1](https://github.com/nartc/mapper/compare/3.5.0...3.5.1) (2021-04-09)
 
 ### Bug Fixes

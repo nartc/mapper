@@ -1,3 +1,9 @@
+### [3.5.1](https://github.com/nartc/mapper/compare/3.5.0...3.5.1) (2021-04-09)
+
+### Bug Fixes
+
+- **classes:** only save metadata if typeFn is not null ([3f03f8c](https://github.com/nartc/mapper/commit/3f03f8c2ae9ba43e4b545167878c566378dafe39))
+
 ## [3.5.0](https://github.com/nartc/mapper/compare/3.4.2...3.5.0) (2021-04-07)
 
 ### Features

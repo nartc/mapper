@@ -52,7 +52,7 @@ export interface MapPlugin<TKey = unknown> {
     destination: TKey,
     sourceObj?: TSource,
     destinationObj?: TDestination
-  ): [sourceInstance: TSource, destinationInstance: TDestination];
+  ): [TSource, TDestination];
 
   /**
    * An optional post-map function to post-process the destination after map

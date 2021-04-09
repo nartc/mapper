@@ -86,8 +86,8 @@ export type MapDeferReturn<
   TDestination extends Dictionary<TDestination> = any,
   TSelectorReturn = SelectorReturn<TDestination>
 > = [
-  type: TransformationType.MapDefer,
-  fn: DeferFunction<TSource, TDestination, TSelectorReturn>
+  TransformationType.MapDefer,
+  DeferFunction<TSource, TDestination, TSelectorReturn>
 ];
 
 export type MapFromReturn<
@@ -95,9 +95,9 @@ export type MapFromReturn<
   TDestination extends Dictionary<TDestination> = any,
   TSelectorReturn = SelectorReturn<TDestination>
 > = [
-  type: TransformationType.MapFrom,
-  fn: (source: TSource, destination?: TDestination) => TSelectorReturn,
-  misc: ValueSelector<TSource, TDestination, TSelectorReturn> | null
+  TransformationType.MapFrom,
+  (source: TSource, destination?: TDestination) => TSelectorReturn,
+  ValueSelector<TSource, TDestination, TSelectorReturn> | null
 ];
 
 export type MapWithReturn<
@@ -105,12 +105,9 @@ export type MapWithReturn<
   TDestination extends Dictionary<TDestination> = any,
   TSelectorReturn = SelectorReturn<TDestination>
 > = [
-  type: TransformationType.MapWith,
-  fn: (
-    sourceObj: TSource,
-    mapper: Mapper
-  ) => TSelectorReturn | undefined | null,
-  misc: ValueSelector<TSource>
+  TransformationType.MapWith,
+  (sourceObj: TSource, mapper: Mapper) => TSelectorReturn | undefined | null,
+  ValueSelector<TSource>
 ];
 
 export type ConditionReturn<
@@ -118,55 +115,46 @@ export type ConditionReturn<
   TDestination extends Dictionary<TDestination> = any,
   TSelectorReturn = SelectorReturn<TDestination>
 > = [
-  type: TransformationType.Condition,
-  fn: (source: TSource, ...sourceMemberPaths: string[]) => TSelectorReturn
+  TransformationType.Condition,
+  (source: TSource, ...sourceMemberPaths: string[]) => TSelectorReturn
 ];
 
 export type FromValueReturn<
   TSource extends Dictionary<TSource> = any,
   TDestination extends Dictionary<TDestination> = any,
   TSelectorReturn = SelectorReturn<TDestination>
-> = [type: TransformationType.FromValue, fn: () => TSelectorReturn];
+> = [TransformationType.FromValue, () => TSelectorReturn];
 
 export type ConvertUsingReturn<
   TSource extends Dictionary<TSource> = any,
   TConvertSource = TSource
-> = [
-  type: TransformationType.ConvertUsing,
-  fn: Selector<TSource, TConvertSource>
-];
+> = [TransformationType.ConvertUsing, Selector<TSource, TConvertSource>];
 
 export type NullSubstitutionReturn<
   TSource extends Dictionary<TSource> = any,
   TDestination extends Dictionary<TDestination> = any,
   TSelectorReturn = SelectorReturn<TDestination>
 > = [
-  type: TransformationType.NullSubstitution,
-  fn: (source: TSource, ...sourceMemberPaths: string[]) => TSelectorReturn
+  TransformationType.NullSubstitution,
+  (source: TSource, ...sourceMemberPaths: string[]) => TSelectorReturn
 ];
 
-export type IgnoreReturn = [type: TransformationType.Ignore];
+export type IgnoreReturn = [TransformationType.Ignore];
 
 export type MapWithArgumentsReturn<
   TSource extends Dictionary<TSource> = any,
   TDestination extends Dictionary<TDestination> = any,
   TSelectorReturn = SelectorReturn<TDestination>
 > = [
-  type: TransformationType.MapWithArguments,
-  fn: (
-    source: TSource,
-    extraArguments: Record<string, unknown>
-  ) => TSelectorReturn
+  TransformationType.MapWithArguments,
+  (source: TSource, extraArguments: Record<string, unknown>) => TSelectorReturn
 ];
 
 export type MapInitializeReturn<
   TSource extends Dictionary<TSource> = any,
   TDestination extends Dictionary<TDestination> = any,
   TSelectorReturn = SelectorReturn<TDestination>
-> = [
-  type: TransformationType.MapInitialize,
-  fn: Selector<TSource, TSelectorReturn>
-];
+> = [TransformationType.MapInitialize, Selector<TSource, TSelectorReturn>];
 
 export interface Mapper {
   name: string;
@@ -523,25 +511,25 @@ export type MappingTransformation<
   TDestination extends Dictionary<TDestination> = any,
   TSelectorReturn = SelectorReturn<TDestination>
 > = [
-  mapFn: MemberMapReturn<TSource, TDestination, TSelectorReturn>,
-  isNullMetadata?: boolean,
-  preCond?: PreConditionReturn<TSource, TDestination, TSelectorReturn>
+  MemberMapReturn<TSource, TDestination, TSelectorReturn>,
+  boolean?,
+  PreConditionReturn<TSource, TDestination, TSelectorReturn>?
 ];
 export type MappingProperty<
   TSource extends Dictionary<TSource> = any,
   TDestination extends Dictionary<TDestination> = any,
   TSelectorReturn = SelectorReturn<TDestination>
 > = readonly [
-  paths: [target: string, origin?: string],
-  transformation: MappingTransformation<TSource, TDestination, TSelectorReturn>
+  [target: string, origin?: string],
+  MappingTransformation<TSource, TDestination, TSelectorReturn>
 ];
 
 export type Mapping<
   TSource extends Dictionary<TSource> = any,
   TDestination extends Dictionary<TDestination> = any
 > = [
-  mappings: [source: TSource, destination: TDestination],
-  properties: Array<
+  [source: TSource, destination: TDestination],
+  Array<
     [
       path: string,
       mappingProperty: MappingProperty<
@@ -552,12 +540,12 @@ export type Mapping<
       nestedMappingPair?: [unknown, unknown]
     ]
   >,
-  actions: [
+  [
     beforeMap?: MapAction<TSource, TDestination>,
     afterMap?: MapAction<TSource, TDestination>
   ],
-  namingConventions?: [source: NamingConvention, destination: NamingConvention],
-  bases?: [baseSource: unknown, baseDestination: unknown][]
+  [source: NamingConvention, destination: NamingConvention]?,
+  [baseSource: unknown, baseDestination: unknown][]?
 ];
 
 export interface Disposable {
@@ -583,9 +571,9 @@ export interface MappingStorage<TKey> extends Disposable {
 }
 
 export type Metadata<TMetaType = unknown> = [
-  property: string,
-  metaTypeFn: () => String | Number | Boolean | Date | TMetaType,
-  isGetterOnly?: boolean
+  string,
+  () => String | Number | Boolean | Date | TMetaType,
+  boolean?
 ];
 
 export interface ErrorHandler {

@@ -14,9 +14,33 @@ When dealing with Date Time, we should utilize Custom Configuration instead of r
 
 ```ts
 const selector = (destination) => destination.foo.bar;
+// or even
+const selector = (d: IFoo) => d['foo'].bar;
+
+// ES5 version
+function selector(destination) {
+  return destination.foo.bar;
+}
 ```
 
-This `selector` will be parsed at some point to extract `foo.bar` as property path. One limitation is that if your object contains property name like: `kebab-case-property` or `dotted.property`, the parser won't be able to parse the property path.
+This `selector` will be parsed at some point to extract `foo.bar` as property path.
+
+But, for the following cases, the parser won't be able to parse to get the right property path:
+
+```ts
+const selector = (d) => d[' a ']; // You could use getters to circumvent this one
+
+// ES5 version with computed property names
+function selector(destination) {
+  return destination['foo'].bar;
+}
+
+// Real computed names
+const selector = (d) => d['fo' + 'o'];
+const selector = (d) => d[`foo`];
+const selector = (d) => d[`${'foo'}`];
+// and so on...
+```
 
 ### Property name with number or special characters
 

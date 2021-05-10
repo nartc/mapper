@@ -18,6 +18,17 @@ describe('set', () => {
     result = set({ foo: { bar: 'foo' } }, 'foo.baz', 'baz');
     expect(result).toEqual({ foo: { bar: 'foo', baz: 'baz' } });
   });
+
+  it('should add property to obj for empty and trailing dot paths', () => {
+    let result = set({}, '', 'foo');
+    expect(result).toEqual({ '': 'foo' });
+
+    result = set({}, 'foo.', 'bar');
+    expect(result).toEqual({ foo: { '': 'bar' } });
+
+    result = set({ foo: {} }, 'foo.', 'bar');
+    expect(result).toEqual({ foo: { '': 'bar' } });
+  });
 });
 
 describe('setMutate', () => {

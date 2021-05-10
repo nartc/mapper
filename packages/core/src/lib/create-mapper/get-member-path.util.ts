@@ -1,6 +1,20 @@
 import type { Selector } from '@automapper/types';
 
-// TODO: support odd properties like: 'odd-property', 'odd.property'?
+import { getMembersFromArrowFunctionExpr } from './get-members.util';
+
+/**
+ * Get a dot-separated string of the properties selected by a given `fn` selector
+ * function.
+ *
+ * @example
+ * ```js
+ * getMemberPath(s => s.foo.bar) === 'foo.bar'
+ * getMemberPath(s => s['foo']) === 'foo'
+ * getMemberPath(s => s.foo['']) === 'foo.'
+ * // invalid usage
+ * getMemberPath(s => s) === ''
+ * ```
+ */
 export function getMemberPath(fn: Selector): string {
   const fnString = fn
     .toString()
@@ -10,12 +24,12 @@ export function getMemberPath(fn: Selector): string {
   // ES6 prop selector:
   // "x => x.prop"
   if (fnString.includes('=>')) {
-    const cleaned = cleanseAssertionOperators(
-      fnString.substring(fnString.indexOf('.') + 1)
-    );
-
-    if (cleaned.includes('=>')) return '';
-    return cleaned;
+    const cleaned = cleanseAssertionOperators(fnString);
+    // Note that we don't need to remove the `return` keyword because, for instance,
+    // `(x) => { return x.prop }` will be turn into `x=>returnx.prop` (cleaned)
+    // thus we'll still be able to get only the string `prop` properly.
+    const members = getMembersFromArrowFunctionExpr(cleaned);
+    return members ? members.join('.') : '';
   }
 
   // ES5 prop selector:
@@ -37,6 +51,11 @@ export function getMemberPath(fn: Selector): string {
   return '';
 }
 
+/**
+ * @param {string} parsedName
+ * @returns {string} The given `parseName` but without curly brackets, blank
+ * spaces, semicolons, parentheses, "?" and "!" characters.
+ */
 function cleanseAssertionOperators(parsedName: string): string {
-  return parsedName.replace(/[?!]/g, '').replace(/(?:\s|;|{|}|\(|\)|)+/gm, '');
+  return parsedName.replace(/[\s{}()?!;]+/gm, '');
 }

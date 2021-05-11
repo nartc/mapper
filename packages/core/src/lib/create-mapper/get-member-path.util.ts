@@ -44,6 +44,9 @@ const RE_FN_SELECTOR_PROPS = /(?:(?<=\[)(['"])(.*?)\1)|(?:(?<=\.)[^.[]+)/g;
  * @returns `null` if the given `fnSelector` doesn't match with anything.
  */
 export function getMembers(fnSelectorStr: string): string[] | null {
+  // Making sure that the shared constant `/g` regex is in its initial state.
+  RE_FN_SELECTOR_PROPS.lastIndex = 0;
+
   let matches = RE_FN_SELECTOR_PROPS.exec(fnSelectorStr);
 
   if (!matches) return null;

@@ -17,9 +17,13 @@ const selector = (destination) => destination.foo.bar;
 // or even
 const selector = (d: IFoo) => d['foo'].bar;
 
-// ES5 version
+// ES5 version works as well
 function selector(destination) {
   return destination.foo.bar;
+}
+// with computed property names also works
+function selector(destination) {
+  return destination['foo'].bar;
 }
 ```
 
@@ -30,14 +34,9 @@ But, for the following cases, the parser won't be able to parse to get the right
 ```ts
 const selector = (d) => d[' a ']; // You could use getters to circumvent this one
 
-// ES5 version with computed property names
-function selector(destination) {
-  return destination['foo'].bar;
-}
-
 // Real computed names
 const selector = (d) => d['fo' + 'o'];
-const selector = (d) => d[`foo`];
+const selector = (d) => d[`foo`]; // you cannot use template strings!
 const selector = (d) => d[`${'foo'}`];
 // and so on...
 ```

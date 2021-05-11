@@ -1,6 +1,65 @@
 import type { Selector } from '@automapper/types';
 
-import { getMembersFromArrowFunctionExpr } from './get-members.util';
+/**
+ * An regular expression to match will all property names of a given cleaned
+ * arrow function expression. Note that if there is some computed names thus
+ * they are returning if the quotes.
+ *
+ * @example
+ * ```js
+ * "s=>s.foo['bar']".match(RE_ARROW_FN_SELECTOR_PROPS)
+ * // will return
+ * ["foo", "'bar'"]
+ * ```
+ *
+ * ### Explanation:
+ * ```
+ * (?:        // (begin of non-capturing group)
+ *   (?<=     // (begin of positive lookbehind)
+ *     \[     // matches a  literal "[" but without including it in the match result
+ *   )        // (end of positive lookbehind)
+ *   (        // (begin capturing group #1)
+ *     ['"]   // match one occurrence of a single or double quotes characters
+ *   )        // (end capturing group #1)
+ *   (        // (begin capturing group #2)
+ *     .*?    // followed by 0 or more of any character, but match as few characters as possible (which is 0)
+ *   )        // (end capturing group #2)
+ *   \1       // followed by the result of capture group #1
+ * )          // (end of non-capturing group)
+ * |          // Or matches with...
+ * (?:        // (begin of non-capturing group)
+ *   (?<=     // (begin of positive lookbehind)
+ *     \.     // matches a literal "." but without including it in the match result
+ *   )        // (end of positive lookbehind)
+ *   [^.[]+   // followed by 1 or more occurrences of any character but "." nor "["
+ * )          // (end of non-capturing group)
+ * ```
+ */
+const RE_FN_SELECTOR_PROPS = /(?:(?<=\[)(['"])(.*?)\1)|(?:(?<=\.)[^.[]+)/g;
+
+/**
+ * For a given cleaned and serialzed JS function selector expression, return a
+ * list of all members that were selected.
+ *
+ * @returns `null` if the given `fnSelector` doesn't match with anything.
+ */
+export function getMembers(fnSelectorStr: string): string[] | null {
+  let matches = RE_FN_SELECTOR_PROPS.exec(fnSelectorStr);
+
+  if (!matches) return null;
+
+  const members: string[] = [];
+  do {
+    // Use the value of the second captured group or the entire match, since
+    // we do not want to capture the matching quotes (when any)
+    const propFound = matches[2] ?? matches[0];
+    //                           ^^ Using the nullish operator since the left
+    //                              side could be an empty string, which is falsy.
+    members.push(propFound);
+  } while ((matches = RE_FN_SELECTOR_PROPS.exec(fnSelectorStr)));
+
+  return members;
+}
 
 /**
  * Get a dot-separated string of the properties selected by a given `fn` selector
@@ -21,38 +80,18 @@ export function getMemberPath(fn: Selector): string {
     // .replace(/\/\* istanbul ignore next \*\//g, '')
     .replace(/cov_.+\n/g, '');
 
-  // ES6 prop selector:
-  // "x => x.prop"
-  if (fnString.includes('=>')) {
-    const cleaned = cleanseAssertionOperators(fnString);
-    // Note that we don't need to remove the `return` keyword because, for instance,
-    // `(x) => { return x.prop }` will be turn into `x=>returnx.prop` (cleaned)
-    // thus we'll still be able to get only the string `prop` properly.
-    const members = getMembersFromArrowFunctionExpr(cleaned);
-    return members ? members.join('.') : '';
-  }
+  const cleaned = cleanseAssertionOperators(fnString);
 
-  // ES5 prop selector:
-  // "function (x) { return x.prop; }"
-  // webpack production build excludes the spaces and optional trailing semicolon:
-  //   "function(x){return x.prop}"
-  // FYI - during local dev testing i observed carriage returns after the curly brackets as well
-  // Note by maintainer: See https://github.com/IRCraziestTaxi/ts-simple-nameof/pull/13#issuecomment-567171802 for
-  // explanation of this regex.
-  const matchRegex = /function\s*\(\w+\)\s*{[\r\n\s]*return\s+\w+\.((\w+\.)*(\w+))/i;
+  // Note that we don't need to remove the `return` keyword because, for instance,
+  // `(x) => { return x.prop }` will be turn into `x=>returnx.prop` (cleaned)
+  // thus we'll still be able to get only the string `prop` properly.
+  // The same for `function (x){}`
+  const members = getMembers(cleaned);
 
-  const es5Match = fnString.match(matchRegex);
-
-  if (es5Match) {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return es5Match[1]!;
-  }
-
-  return '';
+  return members ? members.join('.') : '';
 }
 
 /**
- * @param {string} parsedName
  * @returns {string} The given `parseName` but without curly brackets, blank
  * spaces, semicolons, parentheses, "?" and "!" characters.
  */

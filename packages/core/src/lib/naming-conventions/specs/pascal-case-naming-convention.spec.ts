@@ -1,4 +1,4 @@
-import { PascalCaseNamingConvention } from '@automapper/core';
+import { PascalCaseNamingConvention } from '../pascal-case-naming-convention';
 
 describe('PascalCaseNamingConvention', () => {
   const one = ['address'];

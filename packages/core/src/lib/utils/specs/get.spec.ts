@@ -1,4 +1,4 @@
-import { get } from '@automapper/core';
+import { get } from '../get.util';
 
 describe('get', () => {
   const obj = { foo: { bar: 'bar' } };

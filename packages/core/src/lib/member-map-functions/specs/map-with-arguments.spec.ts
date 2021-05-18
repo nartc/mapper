@@ -1,5 +1,5 @@
-import { mapWithArguments } from '@automapper/core';
 import { MapFnClassId, TransformationType } from '@automapper/types';
+import { mapWithArguments } from '../map-with-arguments';
 
 describe('MapWithArgumentsFunction', () => {
   const withArgumentsResolver = (

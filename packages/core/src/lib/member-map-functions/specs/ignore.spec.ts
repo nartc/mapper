@@ -1,5 +1,5 @@
-import { ignore } from '@automapper/core';
 import { MapFnClassId, TransformationType } from '@automapper/types';
+import { ignore } from '../ignore';
 
 describe('IgnoreFunction', () => {
   it('should return correctly', () => {

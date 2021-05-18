@@ -1,4 +1,4 @@
-import { DEFAULT_MAPPER_TOKEN, getMapperToken } from '@automapper/nestjs';
+import { DEFAULT_MAPPER_TOKEN, getMapperToken } from '../get-mapper-token';
 
 describe('getMapperToken', () => {
   it('should return properly', () => {

@@ -1,7 +1,7 @@
 import {
   CamelCaseNamingConvention,
   PascalCaseNamingConvention,
-} from '@automapper/core';
+} from '../../naming-conventions';
 import { getSourcePropertyPath } from '../get-source-property-path.util';
 
 describe('getSourcePropertyPath', () => {

@@ -1,4 +1,4 @@
-import { CamelCaseNamingConvention } from '@automapper/core';
+import { CamelCaseNamingConvention } from '../camel-case-naming-convention';
 
 describe('CamelCaseNamingConvention', () => {
   const one = ['Address'];

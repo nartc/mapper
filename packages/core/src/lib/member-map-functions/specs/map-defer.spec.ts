@@ -1,5 +1,6 @@
-import { ignore, mapDefer } from '@automapper/core';
 import { MapFnClassId, TransformationType } from '@automapper/types';
+import { ignore } from '../ignore';
+import { mapDefer } from '../map-defer';
 
 describe('MapDeferFunction', () => {
   it('should return correctly', () => {

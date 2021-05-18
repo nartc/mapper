@@ -1,4 +1,4 @@
-import { isDefined } from '@automapper/core';
+import { isDefined } from '../is-defined.util';
 
 describe('isDefined', () => {
   it('should return properly', () => {

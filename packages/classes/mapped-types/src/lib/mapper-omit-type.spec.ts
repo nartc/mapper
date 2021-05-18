@@ -1,7 +1,7 @@
 import { AutoMap, classes } from '@automapper/classes';
-import { MapperOmitType } from '@automapper/classes/mapped-types';
 import { createMapper, mapFrom } from '@automapper/core';
 import type { Mapper } from '@automapper/types';
+import { MapperOmitType } from './mapper-omit-type';
 
 describe(MapperOmitType.name, () => {
   let mapper: Mapper;

@@ -1,6 +1,6 @@
-import { mapFrom } from '@automapper/core';
 import type { Resolver } from '@automapper/types';
 import { MapFnClassId, TransformationType } from '@automapper/types';
+import { mapFrom } from '../map-from';
 
 describe('MapFromFunction', () => {
   const source = {

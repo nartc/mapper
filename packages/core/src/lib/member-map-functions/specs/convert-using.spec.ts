@@ -1,6 +1,6 @@
-import { convertUsing } from '@automapper/core';
 import type { Converter } from '@automapper/types';
 import { MapFnClassId, TransformationType } from '@automapper/types';
+import { convertUsing } from '../convert-using';
 
 describe('ConvertUsingFunction', () => {
   const dateToStringConverter: Converter<Date, string> = {

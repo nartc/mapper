@@ -1,6 +1,6 @@
-import { mapWith } from '@automapper/core';
 import type { Mapper } from '@automapper/types';
 import { MapFnClassId, TransformationType } from '@automapper/types';
+import { mapWith } from '../map-with';
 
 describe('MapWithFunction', () => {
   const selector = (s: any) => s;

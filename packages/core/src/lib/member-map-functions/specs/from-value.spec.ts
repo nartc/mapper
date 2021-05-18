@@ -1,5 +1,5 @@
-import { fromValue } from '@automapper/core';
 import { MapFnClassId, TransformationType } from '@automapper/types';
+import { fromValue } from '../from-value';
 
 describe('FromValueFunction', () => {
   it('should return correctly', () => {

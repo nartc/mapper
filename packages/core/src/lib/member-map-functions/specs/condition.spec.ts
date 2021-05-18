@@ -1,5 +1,5 @@
-import { condition } from '@automapper/core';
 import { MapFnClassId, TransformationType } from '@automapper/types';
+import { condition } from '../condition';
 
 describe('ConditionFunction', () => {
   const source = {

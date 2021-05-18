@@ -1,4 +1,4 @@
-import { preCondition } from '@automapper/core';
+import { preCondition } from '../pre-condition';
 
 describe('PreConditionFunction', () => {
   it('should return correctly', () => {

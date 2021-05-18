@@ -1,4 +1,4 @@
-import { CamelCaseNamingConvention } from '@automapper/core';
+import { CamelCaseNamingConvention } from '../../naming-conventions';
 import { getNamingConventionsFromOptions } from '../get-naming-conventions-from-options.util';
 
 describe('getNamingConventionsFromOptions', () => {

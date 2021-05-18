@@ -1,4 +1,4 @@
-import { isEmpty } from '@automapper/core';
+import { isEmpty } from '../is-empty.util';
 
 describe('isEmpty', () => {
   it('should return properly', () => {

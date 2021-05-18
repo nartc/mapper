@@ -1,5 +1,5 @@
-import { mapInitialize } from '@automapper/core';
 import { MapFnClassId, TransformationType } from '@automapper/types';
+import { mapInitialize } from '../map-initialize';
 
 describe('MapInitializeFunction', () => {
   const source = {

@@ -1,4 +1,4 @@
-import { SnakeCaseNamingConvention } from '@automapper/core';
+import { SnakeCaseNamingConvention } from '../snake-case-naming-convention';
 
 describe('SnakeCaseNamingConvention', () => {
   const one = ['address'];

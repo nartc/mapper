@@ -1,5 +1,6 @@
-import { AutoMap, AUTOMAP_PROPERTIES_METADATA_KEY } from '@automapper/classes';
 import 'reflect-metadata';
+import { AUTOMAP_PROPERTIES_METADATA_KEY } from '../../constants';
+import { AutoMap } from '../automap.decorator';
 
 describe('AutomapDecorator', () => {
   const spiedReflectDefine = jest.spyOn(Reflect, 'defineMetadata');

@@ -1,5 +1,5 @@
-import { nullSubstitution } from '@automapper/core';
 import { MapFnClassId, TransformationType } from '@automapper/types';
+import { nullSubstitution } from '../null-substitution';
 
 describe('NullSubstitutionFunction', () => {
   it('should return correctly', () => {

@@ -1,3 +1,15 @@
+## [4.0.0](https://github.com/nartc/mapper/compare/3.5.2...4.0.0) (2021-05-18)
+
+### ⚠ BREAKING CHANGES
+
+- Upgrade to Nx 12.3.3
+
+### Features
+
+- upgrade Nx ([ea0eff6](https://github.com/nartc/mapper/commit/ea0eff6b34cd79eb9db9492eed2f7b63f58366cc))
+- upgrade packages ([329828e](https://github.com/nartc/mapper/commit/329828e47023eccd3306fa7df9268dcb80ea7975))
+- **core:** add partial support for ES6 computed property names ([#293](https://github.com/nartc/mapper/issues/293)) ([93d3f66](https://github.com/nartc/mapper/commit/93d3f66a97313fdbdb1798d789e366fba4e501ac)), closes [#289](https://github.com/nartc/mapper/issues/289)
+
 ### [3.5.2](https://github.com/nartc/mapper/compare/3.5.1...3.5.2) (2021-04-09)
 
 ### Bug Fixes

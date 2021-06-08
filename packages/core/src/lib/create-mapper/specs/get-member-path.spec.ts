@@ -2,7 +2,7 @@ import { getMembers, getMemberPath } from '../get-member-path.util';
 
 describe('getMembers', () => {
   describe('cases that are allowed', () => {
-    const cases = [
+    const cases: Array<[(obj: any) => any, string[] | null]> = [
       [(something) => something.foo, ['foo']],
       [(s) => s.foo, ['foo']],
       [(s) => s.foo.bar, ['foo', 'bar']],
@@ -39,10 +39,13 @@ describe('getMembers', () => {
       [(s) => s[''], ['']],
       [(s) => s.foo[''], ['foo', '']],
       [(s) => s[''].foo, ['', 'foo']],
-    ].map<[serializedSelector: string, members: string[]]>(([fn, expected]) => [
-      fn.toString(),
-      expected as string[],
-    ]);
+
+      [(s) => s['fo' + 'o'], ['foo']], // expected to be ['foo']
+      // eslint-disable-next-line no-constant-condition
+      [(s) => s[true ? 'foo' : 'bar'], ['foo']], // expected to be ['foo']
+      [(s) => s[true && 'foo'], ['foo']], // expected to be ['foo']
+      [(s) => s[`a`], ['a']] // To discourage the use of computed names
+    ];
 
     test.each(cases)(
       'for "%s" should return %p list',
@@ -54,23 +57,14 @@ describe('getMembers', () => {
   });
 
   describe('cases that are disallowed', () => {
-    const cases = [
+    const cases: Array<[(obj: any) => any, (string | symbol)[] | null]> = [
       [(s) => s, null], // Not a real one tho
       [(s) => s`foo`, null],
-
-      // Known limitations that should be avoided in user land code because
-      // they will produce wrong outputs and cannot be detected beforehand
-      [(s) => s['fo' + 'o'], ['fo']], // expected to be ['foo']
-      // eslint-disable-next-line no-constant-condition
-      [(s) => s[true ? 'foo' : 'bar'], null], // expected to be ['foo']
-      [(s) => s[true && 'foo'], null], // expected to be ['foo']
-
+      [(s) => s[`foo`](), null], //user mustn't call the proxy method
+      [() => null, null], // if null passed
+      [() => undefined, null], // if undefined passed
       [(s) => s[Symbol()], null], // I'm not sure if we should support this
-      [(s) => s[`a`], null], // To discourage the use of computed names
-    ].map<[serializedSelector: string, members: string[]]>(([fn, expected]) => [
-      fn.toString(),
-      expected as string[],
-    ]);
+    ];
 
     test.each(cases)(
       'for "%s" should return %p',
@@ -98,6 +92,16 @@ describe('getMemberPath', () => {
     'even[odd].prop': string;
     á: string;
     with_sṕéçiâl_chàrs: string;
+    [' foo ']: {
+      [' bar ']: {
+        baz: string;
+      }
+    }
+    [' odd-property ']: {
+      [' odd+property ']: {
+        baz: string;
+      }
+    }
   }
 
   it('should return properly for ES6 arrow syntax', () => {
@@ -131,6 +135,15 @@ describe('getMemberPath', () => {
 
     path = getMemberPath((s: Foo) => s['with_sṕéçiâl_chàrs']);
     expect(path).toEqual('with_sṕéçiâl_chàrs');
+
+    path = getMemberPath((s: Foo) => s[' foo ']);
+    expect(path).toEqual(' foo ');
+
+    path = getMemberPath((s: Foo) => s['odd' + '-' + 'property']);
+    expect(path).toEqual('odd-property');
+
+    path = getMemberPath((s: Foo) => s[`${'odd-property'}`]);
+    expect(path).toEqual('odd-property');
   });
 
   it('should return properly for nested path for ES6 arrow syntax', () => {
@@ -144,6 +157,15 @@ describe('getMemberPath', () => {
 
     path = getMemberPath((s: Foo) => s.bar.baz['']);
     expect(path).toEqual('bar.baz.');
+
+    path = getMemberPath((s: Foo) => s[' foo '][' bar '].baz);
+    expect(path).toEqual(' foo . bar .baz');
+
+    path = getMemberPath((s: Foo) => s['odd' + '-' + 'property']['odd' + '+' + 'property']);
+    expect(path).toEqual('odd-property.odd+property');
+
+    path = getMemberPath((s: Foo) => s[`${'odd-property'}`][`${'odd+property'}`].baz);
+    expect(path).toEqual('odd-property.odd+property.baz');
   });
 
   it('should return properly for ES5 function syntax', () => {
@@ -163,6 +185,16 @@ describe('getMemberPath', () => {
       return s['foo'];
     });
     expect(path).toEqual('foo');
+
+    path = getMemberPath(function (s: Foo) {
+      return s[' odd' + '-' + 'property '];
+    });
+    expect(path).toEqual(' odd-property ');
+
+    path = getMemberPath(function (s: Foo) {
+      return s[`${'odd-property'}`]
+    });
+    expect(path).toEqual('odd-property');
   });
 
   it('should return properly for nested path for ES5 function syntax', () => {
@@ -211,21 +243,5 @@ describe('getMemberPath', () => {
       return s['returnFoo'];
     });
     expect(path).toEqual('returnFoo');
-  });
-
-  describe('For non supported use cases', () => {
-    it('should return the wrong output', () => {
-      let path: ReturnType<typeof getMemberPath>;
-
-      path = getMemberPath((s: Foo) => s[' foo ']);
-      expect(path).toEqual('foo');
-
-      path = getMemberPath((s: Foo) => s['odd' + '-' + 'property']);
-      expect(path).toEqual('odd');
-
-      // Since template strings are not allowed
-      path = getMemberPath((s: Foo) => s[`${'odd-property'}`]);
-      expect(path).toEqual('');
-    });
   });
 });

@@ -1,21 +1,20 @@
-import type { Selector } from '@automapper/types';
+import type { Dictionary, Selector } from '@automapper/types';
 
-const PROXY_OBJECT = createProxy(() => undefined);
+const PROXY_TARGET = (): undefined => undefined;
+const PROXY_OBJECT = createProxy(PROXY_TARGET);
 
 /**
- * For a given cleaned and serialzed JS function selector expression, return a
- * list of all members that were selected.
+ * For a given JS function selector, return a list of all members that were selected.
  *
  * @returns `null` if the given `fnSelector` doesn't match with anything.
  */
-export function getMembers(fnSelector: Selector<any, unknown | (() => string[])>): string[] | null {
-  // Making sure that the shared constant `/g` regex is in its initial state.
+export function getMembers(fnSelector: Selector<unknown, unknown | (() => string[])>): string[] | null {
   const resultProxy = fnSelector(PROXY_OBJECT) as () => string[];
   if (typeof resultProxy !== 'function') {
     return null;
   }
-  const members: string[] = Array.isArray(resultProxy) ? resultProxy : resultProxy();
-  if (members.length === 0 || members.find(m => typeof m === 'symbol')) {
+  const members: string[] = resultProxy();
+  if (members.length === 0 || members.some(m => typeof m !== 'string')) {
     return null;
   }
   return members;
@@ -35,12 +34,7 @@ export function getMembers(fnSelector: Selector<any, unknown | (() => string[])>
  * ```
  */
 export function getMemberPath(fn: Selector): string {
-  // Note that we don't need to remove the `return` keyword because, for instance,
-  // `(x) => { return x.prop }` will be turn into `x=>returnx.prop` (cleaned)
-  // thus we'll still be able to get only the string `prop` properly.
-  // The same for `function (x){}`
   const members = getMembers(fn);
-
   return members ? members.join('.') : '';
 }
 
@@ -48,15 +42,14 @@ export function getMemberPath(fn: Selector): string {
  * @returns {Proxy} A proxy that's wrap on the target object and track of
  * the path of accessed nested properties
  */
-// eslint-disable-next-line @typescript-eslint/ban-types
-function createProxy<T extends object>(target: T, path: string[] = []): T {
+function createProxy<T extends Dictionary<T>>(target: T, path: string[] = []): T {
   const realTraps: ProxyHandler<T> = {
-    get(target: T, p: string): any {
+    get(target: T, p: string): typeof PROXY_TARGET {
       const childPath = path.slice();
       childPath.push(p);
-      return createProxy(() => undefined, childPath);
+      return createProxy(PROXY_TARGET, childPath);
     },
-    apply(): any {
+    apply(): string[] {
       return path;
     }
   };

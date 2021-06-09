@@ -1,3 +1,15 @@
+## [4.1.0](https://github.com/nartc/mapper/compare/4.0.0...4.1.0) (2021-06-09)
+
+### Features
+
+- **core:** use proxy to get members from selector function ([#301](https://github.com/nartc/mapper/issues/301)) ([704c6ad](https://github.com/nartc/mapper/commit/704c6adc984d62c63e179394512762d88777c8aa))
+
+### Documentations
+
+- add [@micalevisk](https://github.com/micalevisk) as a contributor ([29500ad](https://github.com/nartc/mapper/commit/29500ad0708ad81810c06ad4cf9c558e4c537aa5))
+- add @AliYusuf95 as a contributor ([956aceb](https://github.com/nartc/mapper/commit/956aceb3d2b98c2afb396146348da790f5b31a3a))
+- update docusaurus beta ([9e09d67](https://github.com/nartc/mapper/commit/9e09d6726b82412fe03c6a79aee5528d63166a03))
+
 ## [4.0.0](https://github.com/nartc/mapper/compare/3.5.2...4.0.0) (2021-05-18)
 
 ### ⚠ BREAKING CHANGES

@@ -29,7 +29,7 @@
       "infile": "CHANGELOG.md"
     },
     "@release-it/bumper": {
-      "out": ["package.json", "package-lock.json", "packages/**/package*.json"]
+      "out": ["packages/**/package*.json"]
     }
   },
   "npm": {

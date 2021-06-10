@@ -60,7 +60,7 @@ describe('instantiate', () => {
       const result = parameterizedInstantiate();
       expect(result).toEqual([
         { ...fooInstance, foo: undefined },
-        [['bar', Bar]],
+        [[['bar'], Bar]],
       ]);
     });
 
@@ -81,7 +81,7 @@ describe('instantiate', () => {
           foo: undefined,
           bar: { ...fooInstance.bar, bar: undefined },
         },
-        [['bar', Bar]],
+        [[['bar'], Bar]],
       ]);
     });
   });
@@ -112,14 +112,14 @@ describe('instantiate', () => {
       mockWithoutDepth();
 
       const result = parameterizedInstantiate();
-      expect(result).toEqual([defaultFoo, [['bar', Bar]]]);
+      expect(result).toEqual([defaultFoo, [[['bar'], Bar]]]);
     });
 
     it('should return proper instance with depth', () => {
       mockWithDepth();
 
       const result = parameterizedInstantiate();
-      expect(result).toEqual([defaultFoo, [['bar', Bar]]]);
+      expect(result).toEqual([defaultFoo, [[['bar'], Bar]]]);
     });
   });
 
@@ -128,7 +128,7 @@ describe('instantiate', () => {
 
   function mockEmpty() {
     when(mockedInstanceStorage.getDepthAndCount)
-      .calledWith(fooMatcher as any, 'bar')
+      .calledWith(fooMatcher as any, ['bar'])
       .mockReturnValueOnce([0, 0]);
     when(mockedMetadataStorage.getMetadata)
       .calledWith(fooMatcher as any)
@@ -137,37 +137,37 @@ describe('instantiate', () => {
 
   function mockWithoutDepth() {
     when(mockedInstanceStorage.getDepthAndCount)
-      .calledWith(fooMatcher as any, 'bar')
+      .calledWith(fooMatcher as any, ['bar'])
       .mockReturnValueOnce([0, 0]);
     when(mockedMetadataStorage.getMetadata)
       .calledWith(fooMatcher as any)
       .mockReturnValueOnce([
-        ['foo', () => String],
-        ['bar', () => Bar],
+        [['foo'], () => String],
+        [['bar'], () => Bar],
       ]);
     when(mockedMetadataStorage.getMetadata)
       .calledWith(barMatcher as any)
       .mockReturnValueOnce([
-        ['bar', () => String],
-        ['date', () => Date],
+        [['bar'], () => String],
+        [['date'], () => Date],
       ]);
   }
 
   function mockWithDepth() {
     when(mockedInstanceStorage.getDepthAndCount)
-      .calledWith(fooMatcher as any, 'bar')
+      .calledWith(fooMatcher as any, ['bar'])
       .mockReturnValueOnce([1, 0]);
     when(mockedMetadataStorage.getMetadata)
       .calledWith(fooMatcher as any)
       .mockReturnValueOnce([
-        ['foo', () => String],
-        ['bar', () => Bar],
+        [['foo'], () => String],
+        [['bar'], () => Bar],
       ]);
     when(mockedMetadataStorage.getMetadata)
       .calledWith(barMatcher as any)
       .mockReturnValueOnce([
-        ['bar', () => String],
-        ['date', () => Date],
+        [['bar'], () => String],
+        [['date'], () => Date],
       ]);
   }
 });

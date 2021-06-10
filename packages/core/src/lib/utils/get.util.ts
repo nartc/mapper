@@ -1,21 +1,14 @@
-export function get<T>(object: T, ...paths: string[]): unknown {
-  if (!paths.length) {
+export function get<T>(object: T, path: (string | symbol)[] = []): unknown {
+  if (!path.length) {
     return;
   }
 
-  function _getInternal(innerObject: T, path: string) {
-    const _path = path.split('.').filter(Boolean);
-    return _path.reduce((obj: any, key) => obj && obj[key], innerObject);
+  let index: number
+  const length = path.length
+
+  for (index = 0; index < length && object != null; index++) {
+    object = object[path[index]];
   }
 
-  let val = _getInternal(object, paths[0]);
-  for (let i = 1, len = paths.length; i < len; i++) {
-    if (val != null) {
-      val = _getInternal(val, paths[i]);
-      continue;
-    }
-    val = _getInternal(object, paths[i]);
-  }
-
-  return val;
+  return (index && index == length) ? object : undefined
 }

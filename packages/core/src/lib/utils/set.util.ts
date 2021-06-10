@@ -1,6 +1,6 @@
 export function set<T extends Record<string, unknown>>(
   object: T,
-  path: string,
+  path: string[],
   value: unknown
 ): (T & { [p: string]: unknown }) | T {
   const { decomposedPath, base } = decomposePath(path);
@@ -18,7 +18,7 @@ export function set<T extends Record<string, unknown>>(
       ? value
       : set(
           object[base] as Record<string, unknown>,
-          decomposedPath.slice(1).join('.'),
+          decomposedPath.slice(1),
           value
         );
 
@@ -27,7 +27,7 @@ export function set<T extends Record<string, unknown>>(
 
 export function setMutate<T extends Record<string, unknown>>(
   object: T,
-  path: string,
+  path: string[],
   value: unknown
 ): void {
   const { decomposedPath, base } = decomposePath(path);
@@ -45,17 +45,20 @@ export function setMutate<T extends Record<string, unknown>>(
   } else {
     setMutate(
       object[base] as Record<string, unknown>,
-      decomposedPath.slice(1).join('.'),
+      decomposedPath.slice(1),
       value
     );
   }
 }
 
 function decomposePath(
-  path: string
+  path: string[]
 ): { decomposedPath: string[]; base: string } {
-  const decomposedPath = path.split('.');
-  const base = decomposedPath[0];
+  if (path.length < 1) {
+    return { base: undefined, decomposedPath: undefined };
+  }
+  const decomposedPath = path;
+  const base = path[0];
   return { base, decomposedPath };
 }
 

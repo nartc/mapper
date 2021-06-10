@@ -23,9 +23,9 @@ function defaultIsMultipartSourcePathsInSource(
 
 function defaultIsDestinationPathOnSource(
   sourceObj: Record<string, unknown>,
-  sourcePath: string
+  sourcePath: string[]
 ): boolean {
-  return sourceObj.hasOwnProperty(sourcePath);
+  return sourcePath.length === 1 && sourceObj.hasOwnProperty(sourcePath[0]);
 }
 
 interface CreateInitialMappingOptions {
@@ -35,9 +35,9 @@ interface CreateInitialMappingOptions {
   ) => boolean;
   isDestinationPathOnSource?: (
     sourceObj: unknown,
-    sourcePath: string
+    sourcePath: string[]
   ) => boolean;
-  isMetadataNullAtKey?: (key: string) => boolean;
+  isMetadataNullAtKey?: (key: string[]) => boolean;
   prePropertiesLoop?: (mapping: Mapping) => void;
 }
 
@@ -87,8 +87,7 @@ export function createInitialMapping(
       namingConventions
     );
 
-    const dottedSourcePaths = sourcePath.split('.');
-    if (!isMultipartSourcePathsInSource(dottedSourcePaths, sourceObj)) {
+    if (!isMultipartSourcePathsInSource(sourcePath, sourceObj)) {
       continue;
     }
 
@@ -112,7 +111,7 @@ export function createInitialMapping(
         [
           [destinationPath],
           [
-            mapInitialize(...sourcePaths!),
+            mapInitialize(sourcePaths!),
             isMetadataNullAtKey(destinationPath),
           ],
         ],

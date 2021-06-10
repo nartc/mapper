@@ -17,9 +17,9 @@ export function condition<
 ): ConditionReturn<TSource, TDestination, TSelectorReturn> {
   return [
     TransformationType.Condition,
-    (source, ...sourceMemberPaths) => {
+    (source, sourceMemberPaths) => {
       if (predicate(source)) {
-        return get(source, ...sourceMemberPaths) as TSelectorReturn;
+        return get(source, sourceMemberPaths) as TSelectorReturn;
       }
 
       return defaultValue as TSelectorReturn;

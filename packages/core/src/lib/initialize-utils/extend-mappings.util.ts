@@ -1,13 +1,14 @@
 import type { Mapping } from '@automapper/types';
 import { MappingClassId, MappingPropertiesClassId } from '@automapper/types';
+import { isSamePath } from '../utils';
 
-export function extendMappings(bases: any[], mapping: Mapping) {
+export function extendMappings(bases: Mapping[], mapping: Mapping) {
   for (const mappingToExtend of bases) {
     const propsToExtend = mappingToExtend[MappingClassId.properties];
     for (let i = 0, len = propsToExtend.length; i < len; i++) {
       const [propToExtendKey, propToExtendMappingProp] = propsToExtend[i];
       const existProp = mapping[MappingClassId.properties].find(
-        ([pKey]) => pKey === propToExtendKey
+        ([pKey]) => isSamePath(pKey, propToExtendKey)
       );
       if (existProp) {
         existProp[MappingPropertiesClassId.path] = propToExtendKey;

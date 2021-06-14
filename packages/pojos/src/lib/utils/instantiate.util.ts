@@ -22,8 +22,7 @@ export function instantiate<TModel extends Dictionary<TModel>>(
   }
 
   const nestedMetadataMap: unknown[] = [];
-  let i = metadata.length;
-  while (i--) {
+  for (let i = 0; i < metadata.length; i++) {
     const [key, meta] = metadata[i];
     const valueAtKey = get(obj as Record<string, unknown>, key);
     const metaResult = meta();

@@ -18,16 +18,15 @@ export class ClassMetadataStorage implements MetadataStorage<Constructible> {
 
   getMetadata(model: Constructible): Array<Metadata<Constructible>> {
     const metadataList = this.storage.get(model) ?? [];
-    let i = metadataList.length;
 
     // empty metadata
-    if (!i) {
+    if (!metadataList.length) {
       // try to get the metadata on the prototype of the class
       return model.name ? this.getMetadata(Object.getPrototypeOf(model)) : [];
     }
 
     const resultMetadataList: Array<Metadata<Constructible>> = [];
-    while (i--) {
+    for (let i = 0; i < metadataList.length; i++) {
       const metadata = metadataList[i];
       // skip existing
       if (resultMetadataList.some(([metaKey]) => isSamePath(metaKey, metadata[0]))) {

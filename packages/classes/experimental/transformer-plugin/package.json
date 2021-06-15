@@ -1,6 +1,6 @@
 {
   "name": "@automapper/classes/experimental/transformer-plugin",
-  "version": "4.1.0",
+  "version": "4.2.0",
   "sideEffects": false,
   "publishConfig": {
     "access": "public"

@@ -1,3 +1,9 @@
+## [4.2.0](https://github.com/nartc/mapper/compare/4.1.0...4.2.0) (2021-06-15)
+
+### Features
+
+- use array to store paths ([#303](https://github.com/nartc/mapper/issues/303)) ([d201093](https://github.com/nartc/mapper/commit/d20109363db3549874cc54071f802c747d551de5))
+
 ## [4.1.0](https://github.com/nartc/mapper/compare/4.0.0...4.1.0) (2021-06-09)
 
 ### Features

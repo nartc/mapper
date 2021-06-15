@@ -51,9 +51,10 @@ export function setMutate<T extends Record<string, unknown>>(
   }
 }
 
-function decomposePath(
-  path: string[]
-): { decomposedPath: string[]; base: string } {
+function decomposePath(path: string[]): {
+  decomposedPath: string[];
+  base: string;
+} {
   if (path.length < 1) {
     return { base: undefined, decomposedPath: undefined };
   }

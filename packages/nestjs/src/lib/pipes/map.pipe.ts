@@ -20,9 +20,8 @@ function createMapPipe(
   from: unknown,
   options?: { isArray?: boolean; mapperName?: string }
 ): new (...args: any[]) => PipeTransform {
-  const { isArray, mapperName, transformedMapOptions } = getTransformOptions(
-    options
-  );
+  const { isArray, mapperName, transformedMapOptions } =
+    getTransformOptions(options);
 
   class MixinMapPipe implements PipeTransform {
     constructor(

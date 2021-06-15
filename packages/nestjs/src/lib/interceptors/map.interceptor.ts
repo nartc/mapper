@@ -26,9 +26,8 @@ function createMapInterceptor(
   from: unknown,
   options?: { isArray?: boolean; mapperName?: string } & MapOptions
 ): new (...args: any[]) => NestInterceptor {
-  const { isArray, mapperName, transformedMapOptions } = getTransformOptions(
-    options
-  );
+  const { isArray, mapperName, transformedMapOptions } =
+    getTransformOptions(options);
 
   class MixinMapInterceptor implements NestInterceptor {
     constructor(

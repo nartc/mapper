@@ -3,7 +3,7 @@ import {
   CustomKeyBar,
   CustomKeyBarVm,
   CustomKeyFoo,
-  CustomKeyFooVm
+  CustomKeyFooVm,
 } from '../models/custom-keys';
 
 export const customKeyProfile: MappingProfile = (mapper) => {

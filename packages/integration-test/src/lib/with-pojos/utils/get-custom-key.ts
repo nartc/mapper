@@ -1,4 +1,7 @@
-import { CustomKeyBar, CustomKeyFoo } from '../fixtures/interfaces/custom-keys.interface';
+import {
+  CustomKeyBar,
+  CustomKeyFoo,
+} from '../fixtures/interfaces/custom-keys.interface';
 
 export function getCustomKeyFoo(
   partials: {

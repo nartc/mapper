@@ -2,12 +2,12 @@ import { setupClasses } from '../setup.spec';
 import {
   Foo,
   FooDto,
-  FooFoo, FooFooDto,
-  FooFooFoo, FooFooFooDto
+  FooFoo,
+  FooFooDto,
+  FooFooFoo,
+  FooFooFooDto,
 } from './fixtures/models/deep-nest';
-import {
-  deepNestedFooFooFooProfile
-} from './fixtures/profiles/deep-nest-override.profile';
+import { deepNestedFooFooFooProfile } from './fixtures/profiles/deep-nest-override.profile';
 
 describe('Override Deep Nest models', () => {
   const [mapper] = setupClasses('deep-nest-override');

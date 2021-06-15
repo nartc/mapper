@@ -19,12 +19,12 @@ export function convertUsing<
   return [
     TransformationType.ConvertUsing,
     (source) => {
-      let valueToConvert = (source as unknown) as TConvertSource;
+      let valueToConvert = source as unknown as TConvertSource;
 
       if (value) {
         valueToConvert = value(source);
       }
-      return (converter.convert(valueToConvert) as unknown) as TConvertSource;
+      return converter.convert(valueToConvert) as unknown as TConvertSource;
     },
   ];
 }

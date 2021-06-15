@@ -3,7 +3,7 @@ import { get } from '../get.util';
 describe('get', () => {
   const obj = {
     foo: { bar: 'bar' },
-    ['.startDot']: { ['mid.Dot']: { ['endDot.']: 'custom' } }
+    ['.startDot']: { ['mid.Dot']: { ['endDot.']: 'custom' } },
   };
 
   it('should return bar', () => {

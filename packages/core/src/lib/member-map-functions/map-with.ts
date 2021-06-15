@@ -25,11 +25,11 @@ export function mapWith<
       const sourceValue = withSourceValue(source);
 
       if (Array.isArray(sourceValue)) {
-        return (mapper.mapArray(
+        return mapper.mapArray(
           sourceValue,
           withDestination() as string,
           withSource() as string
-        ) as unknown) as TSelectorReturn;
+        ) as unknown as TSelectorReturn;
       }
 
       return mapper.map(

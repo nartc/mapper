@@ -1,9 +1,13 @@
 import { assertVm } from '../assert-vm.spec';
 import { setupClasses } from '../setup.spec';
+import {
+  CustomKeyBar,
+  CustomKeyFoo,
+  CustomKeyFooVm,
+} from './fixtures/models/custom-keys';
 import { Doctor, DoctorDto } from './fixtures/models/doctor';
 import { User, UserVm } from './fixtures/models/user';
 import { PascalUser, PascalUserVm } from './fixtures/models/user-pascal';
-import { CustomKeyBar, CustomKeyFoo, CustomKeyFooVm } from './fixtures/models/custom-keys';
 import {
   addressProfile,
   pascalAddressProfile,
@@ -14,6 +18,7 @@ import {
   FOR_SHOULD_IGNORE_PASS_CONDITION,
   pascalAvatarProfile,
 } from './fixtures/profiles/avatar.profile';
+import { customKeyProfile } from './fixtures/profiles/custom-key.profile';
 import { doctorProfile } from './fixtures/profiles/doctor.profile';
 import {
   pascalUserProfileProfile,
@@ -24,7 +29,6 @@ import {
   userProfile,
 } from './fixtures/profiles/user.profile';
 import { getPascalUser, getUser } from './utils/get-user';
-import { customKeyProfile } from './fixtures/profiles/custom-key.profile';
 
 describe('Map - Non Flattening', () => {
   const [mapper] = setupClasses('map');

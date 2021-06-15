@@ -72,12 +72,19 @@ describe('setMutate', () => {
     expect(obj).toEqual({ foo: { bar: 'foo' }, ['.startDot']: 'foo' });
 
     setMutate(obj, ['foo', 'mid.Dot', '.startDot'], 'bar');
-    expect(obj).toEqual({ foo: { bar: 'foo', ['mid.Dot']: { ['.startDot']: 'bar' } }, ['.startDot']: 'foo' });
+    expect(obj).toEqual({
+      foo: { bar: 'foo', ['mid.Dot']: { ['.startDot']: 'bar' } },
+      ['.startDot']: 'foo',
+    });
 
     setMutate(obj, ['foo', 'endDot.', ''], 'bar');
     expect(obj).toEqual({
-      foo: { bar: 'foo', ['mid.Dot']: { ['.startDot']: 'bar' }, ['endDot.']: { ['']: 'bar' } },
-      ['.startDot']: 'foo'
+      foo: {
+        bar: 'foo',
+        ['mid.Dot']: { ['.startDot']: 'bar' },
+        ['endDot.']: { ['']: 'bar' },
+      },
+      ['.startDot']: 'foo',
     });
   });
 });

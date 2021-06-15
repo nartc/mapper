@@ -23,10 +23,7 @@ const DATA_SYMBOL = Symbol('map-data');
  */
 export class ClassInstanceStorage {
   private depthStorage = new WeakMap<Constructible, ArrayKeyedMap>();
-  private recursiveCountStorage = new WeakMap<
-    Constructible,
-    ArrayKeyedMap
-  >();
+  private recursiveCountStorage = new WeakMap<Constructible, ArrayKeyedMap>();
 
   getDepthAndCount(
     parent: Constructible,
@@ -72,10 +69,7 @@ export class ClassInstanceStorage {
   }
 
   dispose(): void {
-    this.recursiveCountStorage = new WeakMap<
-      Constructible,
-      ArrayKeyedMap
-    >();
+    this.recursiveCountStorage = new WeakMap<Constructible, ArrayKeyedMap>();
     this.depthStorage = new WeakMap<Constructible, ArrayKeyedMap>();
   }
 
@@ -95,12 +89,12 @@ export class ClassInstanceStorage {
     value: number
   ): void {
     if (!storage.has(parent)) {
-      storage.set(parent, arrayMapSet(new Map(), member, value))
+      storage.set(parent, arrayMapSet(new Map(), member, value));
       return;
     }
 
     if (!this.hasInternal(storage, parent, member)) {
-      arrayMapSet(storage.get(parent), member, value)
+      arrayMapSet(storage.get(parent), member, value);
     }
   }
 
@@ -114,7 +108,11 @@ export class ClassInstanceStorage {
   }
 }
 
-function arrayMapSet(root: ArrayKeyedMap, path: string[], value: number): ArrayKeyedMap {
+function arrayMapSet(
+  root: ArrayKeyedMap,
+  path: string[],
+  value: number
+): ArrayKeyedMap {
   let map = root;
   for (const item of path) {
     let nextMap = (map as PathMap).get(item) as PathMap;

@@ -95,7 +95,7 @@ function assertUnmappedProperties<
   errorHandler: ErrorHandler
 ) {
   const unmappedKeys = Object.keys(destination).filter(
-    (k) => !configuredKeys.some(ck => ck[0] === k)
+    (k) => !configuredKeys.some((ck) => ck[0] === k)
   );
   if (unmappedKeys.length) {
     errorHandler.handle(`
@@ -126,12 +126,11 @@ export function mapReturn<
   errorHandler: ErrorHandler,
   isMapArray = false
 ): TDestination {
-  const setMemberReturn = (
-    destinationMemberPath: string[],
-    destination?: TDestination
-  ) => (value: unknown) => {
-    destination = set(destination!, destinationMemberPath, value);
-  };
+  const setMemberReturn =
+    (destinationMemberPath: string[], destination?: TDestination) =>
+    (value: unknown) => {
+      destination = set(destination!, destinationMemberPath, value);
+    };
   return map(
     sourceObj,
     mapping,
@@ -195,11 +194,8 @@ function map<
   isMapArray = false
 ) {
   // destructure the mapping
-  let [
-    [, destination],
-    propsToMap,
-    [mappingBeforeAction, mappingAfterAction],
-  ] = mapping;
+  let [[, destination], propsToMap, [mappingBeforeAction, mappingAfterAction]] =
+    mapping;
 
   // initialize an array of keys that have already been configured
   const configuredKeys: string[][] = [];
@@ -271,9 +267,11 @@ Original error: ${originalError}`;
       transformationMapFn[MapFnClassId.type] ===
       TransformationType.MapInitialize
     ) {
-      const mapInitializedValue = (transformationMapFn[
-        MapFnClassId.fn
-      ] as MapInitializeReturn[MapFnClassId.fn])(sourceObj);
+      const mapInitializedValue = (
+        transformationMapFn[
+          MapFnClassId.fn
+        ] as MapInitializeReturn[MapFnClassId.fn]
+      )(sourceObj);
 
       // if null/undefined
       // if isDate

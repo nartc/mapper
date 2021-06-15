@@ -12,15 +12,15 @@ describe('getSourcePropertyPath', () => {
 
   it('should return path as-is if namingConventions are not provided', () => {
     const sourcePath = getSourcePropertyPath(['foo', 'bar']);
-    expect(sourcePath).toEqual(['foo','bar']);
+    expect(sourcePath).toEqual(['foo', 'bar']);
   });
 
   it('should return path with namingConventions', () => {
     let sourcePath = getSourcePropertyPath(
-      ['Foo','Bar'],
+      ['Foo', 'Bar'],
       camelPascalNamingConventions
     );
-    expect(sourcePath).toEqual(['foo','bar']);
+    expect(sourcePath).toEqual(['foo', 'bar']);
 
     sourcePath = getSourcePropertyPath(
       ['FooBarBaz'],

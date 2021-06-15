@@ -3,8 +3,9 @@ import type {
   CreateMapperOptions,
   MapArrayOptions,
   MapOptions,
-  Mapper, Mapping,
-  MappingProfile
+  Mapper,
+  Mapping,
+  MappingProfile,
 } from '@automapper/types';
 import { mapArray, mapMutate, mapReturn } from '../map';
 import { createMapFluentFunction } from './create-map-fluent-function.util';

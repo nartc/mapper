@@ -44,10 +44,11 @@ export function AutoMap(
   typeFnOrConfig?: AutoMapOptions | (() => Constructible),
   depth = 0
 ): PropertyDecorator {
-  const { isGetterOnly, typeFn, depth: _depth = 0 } = getConfig(
-    typeFnOrConfig,
-    depth
-  );
+  const {
+    isGetterOnly,
+    typeFn,
+    depth: _depth = 0,
+  } = getConfig(typeFnOrConfig, depth);
   return (target, propertyKey) => {
     const newMetadata: {
       typeFn?: () => unknown;

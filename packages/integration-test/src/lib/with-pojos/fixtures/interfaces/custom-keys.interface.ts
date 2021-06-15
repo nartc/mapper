@@ -1,7 +1,7 @@
 import { createMetadataMap } from '@automapper/pojos';
 
 export interface CustomKeyBar {
-  '.startDot': string | null
+  '.startDot': string | null;
 }
 
 export interface CustomKeyBarVm {
@@ -12,14 +12,14 @@ export interface CustomKeyFoo {
   '.startDot': string;
   'mid.Dot': CustomKeyBar;
   'endDot.': number | null;
-  normalKey: string
+  normalKey: string;
 }
 
 export interface CustomKeyFooVm {
   '.startDot': string;
   'mid.Dot': CustomKeyBarVm;
   'endDot.': number | null;
-  normalKey: string
+  normalKey: string;
 }
 
 export function createCustomKeyFooMetadata() {

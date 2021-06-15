@@ -24,24 +24,20 @@ describe('SnakeCaseNamingConvention', () => {
   it('should convert camelCase to snake_case', () => {
     const convertedOne = snakeCaseNamingConvention.transformPropertyName(one);
     const convertedTwo = snakeCaseNamingConvention.transformPropertyName(two);
-    const convertedThree = snakeCaseNamingConvention.transformPropertyName(
-      three
-    );
+    const convertedThree =
+      snakeCaseNamingConvention.transformPropertyName(three);
     expect(convertedOne).toEqual('address');
     expect(convertedTwo).toEqual('address_street');
     expect(convertedThree).toEqual(toSplit);
   });
 
   it('should convert PascalCase to snake_case', () => {
-    const convertedOne = snakeCaseNamingConvention.transformPropertyName(
-      pascalOne
-    );
-    const convertedTwo = snakeCaseNamingConvention.transformPropertyName(
-      pascalTwo
-    );
-    const convertedThree = snakeCaseNamingConvention.transformPropertyName(
-      pascalThree
-    );
+    const convertedOne =
+      snakeCaseNamingConvention.transformPropertyName(pascalOne);
+    const convertedTwo =
+      snakeCaseNamingConvention.transformPropertyName(pascalTwo);
+    const convertedThree =
+      snakeCaseNamingConvention.transformPropertyName(pascalThree);
     expect(convertedOne).toEqual('address');
     expect(convertedTwo).toEqual('address_street');
     expect(convertedThree).toEqual(toSplit);

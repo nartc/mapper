@@ -9,6 +9,6 @@ export function isMultipartSourcePathsInSource(
     (!sourceInstance.hasOwnProperty(sourcePaths[0]) ||
       (sourceInstance[sourcePaths[0]] &&
         // eslint-disable-next-line @typescript-eslint/ban-types
-        isClass((sourceInstance[sourcePaths[0]]) as Function)))
+        isClass(sourceInstance[sourcePaths[0]] as Function)))
   );
 }

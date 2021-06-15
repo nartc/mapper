@@ -1,32 +1,31 @@
+import { fromValue } from '@automapper/core';
 import type { MappingProfile } from '@automapper/types';
 import {
-  Foo, FooBar, FooBarBaz, FooBarBazDto,
+  Foo,
+  FooBar,
+  FooBarBaz,
+  FooBarBazDto,
   FooBarBazQux,
-  FooBarBazQuxDto, FooBarDto,
+  FooBarBazQuxDto,
+  FooBarDto,
   FooDto,
   FooFoo,
   FooFooDto,
   FooFooFoo,
-  FooFooFooDto
+  FooFooFooDto,
 } from '../models/deep-nest';
-import { fromValue } from '@automapper/core';
-
 
 export const deepNestedFooFooFooProfile: MappingProfile = (mapper) => {
-  mapper.createMap(FooFooFoo, FooFooFooDto).forMember(
-    (dest) => dest.foo,
-    fromValue('FooFooFoo Custom Value')
-  );
-  mapper.createMap(FooFoo, FooFooDto).forMember(
-    (dest) => dest.foo.foo,
-    fromValue('FooFoo Custom Value')
-  );
-  mapper.createMap(Foo, FooDto).forMember(
-    (dest) => dest.foo.foo.foo,
-    fromValue('Foo Custom Value')
-  );
+  mapper
+    .createMap(FooFooFoo, FooFooFooDto)
+    .forMember((dest) => dest.foo, fromValue('FooFooFoo Custom Value'));
+  mapper
+    .createMap(FooFoo, FooFooDto)
+    .forMember((dest) => dest.foo.foo, fromValue('FooFoo Custom Value'));
+  mapper
+    .createMap(Foo, FooDto)
+    .forMember((dest) => dest.foo.foo.foo, fromValue('Foo Custom Value'));
 };
-
 
 export const deepNestedFooBarBazQuxProfile: MappingProfile = (mapper) => {
   mapper.createMap(FooBarBazQux, FooBarBazQuxDto);

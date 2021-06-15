@@ -1,10 +1,10 @@
 import {
   get,
-  setMutate,
   isDateConstructor,
   isDefined,
   isEmpty,
   isPrimitiveConstructor,
+  setMutate,
 } from '@automapper/core';
 import type { Dictionary } from '@automapper/types';
 import { PojosMetadataStorage } from '../storages';
@@ -28,9 +28,7 @@ export function instantiate<TModel extends Dictionary<TModel>>(
     const metaResult = meta();
 
     if (isPrimitiveConstructor(metaResult) || metaResult === null) {
-      const value = isDefined(valueAtKey)
-        ? valueAtKey
-        : undefined;
+      const value = isDefined(valueAtKey) ? valueAtKey : undefined;
       setMutate(obj as Record<string, unknown>, key, value);
       continue;
     }

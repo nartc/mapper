@@ -16,20 +16,23 @@ export function getNestedMetaKeyAtDestinationPath(
     )?.[1];
 
     if (isDefined(namingConventions)) {
-      const [
-        sourceNamingConvention,
-        destinationNamingConvention,
-      ] = namingConventions!;
-      sourceNestedMetaAtPath = sourceNestedMeta.find(
-        ([snmPath]: [string[]]) =>
-          isSamePath(snmPath.map(s =>
+      const [sourceNamingConvention, destinationNamingConvention] =
+        namingConventions!;
+      sourceNestedMetaAtPath = sourceNestedMeta.find(([snmPath]: [string[]]) =>
+        isSamePath(
+          snmPath.map((s) =>
             destinationNamingConvention.transformPropertyName(
-              s.split(sourceNamingConvention.splittingExpression).filter(Boolean))
-          ), destinationPath)
+              s
+                .split(sourceNamingConvention.splittingExpression)
+                .filter(Boolean)
+            )
+          ),
+          destinationPath
+        )
       )?.[1];
     } else {
-      sourceNestedMetaAtPath = sourceNestedMeta.find(
-        ([snmPath]: [string[]]) => isSamePath(snmPath, destinationPath)
+      sourceNestedMetaAtPath = sourceNestedMeta.find(([snmPath]: [string[]]) =>
+        isSamePath(snmPath, destinationPath)
       )?.[1];
     }
 

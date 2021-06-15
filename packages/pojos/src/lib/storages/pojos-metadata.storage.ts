@@ -1,5 +1,5 @@
-import type { Metadata, MetadataStorage } from '@automapper/types';
 import { isSamePath } from '@automapper/core';
+import type { Metadata, MetadataStorage } from '@automapper/types';
 
 /**
  * Internal PojosMetadataStorage
@@ -46,8 +46,8 @@ export class PojosMetadataStorage implements MetadataStorage<string> {
     metaKey: string,
     key: string[]
   ): Metadata<string> | undefined {
-    return this.getMetadata(metaKey).find(
-      ([innerMetaKey]) => isSamePath(innerMetaKey, key)
+    return this.getMetadata(metaKey).find(([innerMetaKey]) =>
+      isSamePath(innerMetaKey, key)
     );
   }
 

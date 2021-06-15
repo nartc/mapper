@@ -1,6 +1,10 @@
 import { assertVm } from '../assert-vm.spec';
 import { setupPojos } from '../setup.spec';
 import {
+  CustomKeyFoo,
+  CustomKeyFooVm,
+} from './fixtures/interfaces/custom-keys.interface';
+import {
   PascalUser,
   PascalUserVm,
 } from './fixtures/interfaces/user-pascal.interface';
@@ -15,6 +19,7 @@ import {
   FOR_SHOULD_IGNORE_PASS_CONDITION,
   pascalAvatarProfile,
 } from './fixtures/profiles/avatar.profile';
+import { customKeyProfile } from './fixtures/profiles/custom-keys.profile';
 import {
   pascalUserProfileProfile,
   userProfileProfile,
@@ -23,10 +28,8 @@ import {
   pascalUserProfile,
   userProfile,
 } from './fixtures/profiles/user.profile';
-import { getPascalUser, getUser } from './utils/get-user';
 import { getCustomKeyFoo } from './utils/get-custom-key';
-import { CustomKeyFoo, CustomKeyFooVm } from './fixtures/interfaces/custom-keys.interface';
-import { customKeyProfile } from './fixtures/profiles/custom-keys.profile';
+import { getPascalUser, getUser } from './utils/get-user';
 
 describe('Map - Non Flattening', () => {
   const [mapper] = setupPojos('map');
@@ -182,8 +185,7 @@ describe('Map - Non Flattening', () => {
   });
 
   it('should map custom keys', () => {
-    mapper
-      .addProfile(customKeyProfile);
+    mapper.addProfile(customKeyProfile);
 
     const foo = getCustomKeyFoo();
 

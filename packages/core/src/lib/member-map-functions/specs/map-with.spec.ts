@@ -19,7 +19,7 @@ describe('MapWithFunction', () => {
 
   it('should call mapper.map', () => {
     const mapWithFn = mapWith(withDestination, selector, withSource);
-    mapWithFn[MapFnClassId.fn]({}, (mapper as unknown) as Mapper);
+    mapWithFn[MapFnClassId.fn]({}, mapper as unknown as Mapper);
     expect(mapper.map).toHaveBeenCalledWith(
       {},
       withDestination(),
@@ -30,7 +30,7 @@ describe('MapWithFunction', () => {
   it('should call mapper.mapArray', () => {
     const arrSelector = () => [];
     const mapWithFn = mapWith(withDestination, arrSelector, withSource);
-    mapWithFn[MapFnClassId.fn]({}, (mapper as unknown) as Mapper);
+    mapWithFn[MapFnClassId.fn]({}, mapper as unknown as Mapper);
     expect(mapper.mapArray).toHaveBeenCalledWith(
       [],
       withDestination(),

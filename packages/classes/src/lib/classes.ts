@@ -58,14 +58,11 @@ export const classes: MapPluginInitializer<Constructible> = (errorHandler) => {
        * ```
        * `Foo#bar` is a nested constructible
        */
-      const [
-        destinationInstance,
-        destinationNestedConstructible,
-      ] = this.instantiate(destination);
+      const [destinationInstance, destinationNestedConstructible] =
+        this.instantiate(destination);
 
-      const [sourceInstance, sourceNestedConstructible] = this.instantiate(
-        source
-      );
+      const [sourceInstance, sourceNestedConstructible] =
+        this.instantiate(source);
 
       // Get a hold of the prototype of Source (in case of inheritance with extends keyword)
       const sourceProto = Object.getPrototypeOf(source);

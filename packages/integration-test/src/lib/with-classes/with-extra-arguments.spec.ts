@@ -12,18 +12,15 @@ describe('withExtraArguments', () => {
   const [mapper] = setupClasses('withExtraArguments');
 
   beforeEach(() => {
-    const fooBarResolver: Resolver<
-      SimpleFoo,
-      { multiplier: number },
-      number
-    > = {
-      resolve(
-        source: SimpleFoo,
-        { multiplier }: { multiplier: number }
-      ): number {
-        return source.fooBar * multiplier;
-      },
-    };
+    const fooBarResolver: Resolver<SimpleFoo, { multiplier: number }, number> =
+      {
+        resolve(
+          source: SimpleFoo,
+          { multiplier }: { multiplier: number }
+        ): number {
+          return source.fooBar * multiplier;
+        },
+      };
     mapper.createMap(SimpleBar, SimpleBarVm).forMember(
       (d) => d.bar,
       mapWithArguments(

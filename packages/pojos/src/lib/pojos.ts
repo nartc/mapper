@@ -37,9 +37,8 @@ export const pojos: MapPluginInitializer<string> = (errorHandler) => {
 
       exploreMetadata(metadataStorage, source, destination);
 
-      const [destinationObj, destinationNestedMetadataMap] = this.instantiate(
-        destination
-      );
+      const [destinationObj, destinationNestedMetadataMap] =
+        this.instantiate(destination);
 
       const [sourceObj, sourceNestedMetadataMap] = this.instantiate(source);
 

@@ -1,4 +1,4 @@
-import { getMembers, getMemberPath } from '../get-member-path.util';
+import { getMemberPath, getMembers } from '../get-member-path.util';
 
 describe('getMembers', () => {
   describe('cases that are allowed', () => {
@@ -44,7 +44,7 @@ describe('getMembers', () => {
       // eslint-disable-next-line no-constant-condition
       [(s) => s[true ? 'foo' : 'bar'], ['foo']], // expected to be ['foo']
       [(s) => s[true && 'foo'], ['foo']], // expected to be ['foo']
-      [(s) => s[`a`], ['a']] // To discourage the use of computed names
+      [(s) => s[`a`], ['a']], // To discourage the use of computed names
     ];
 
     test.each(cases)(
@@ -95,13 +95,13 @@ describe('getMemberPath', () => {
     [' foo ']: {
       [' bar ']: {
         baz: string;
-      }
-    }
+      };
+    };
     [' odd-property ']: {
       [' odd+property ']: {
         baz: string;
-      }
-    }
+      };
+    };
   }
 
   it('should return properly for ES6 arrow syntax', () => {
@@ -159,22 +159,26 @@ describe('getMemberPath', () => {
     let path: ReturnType<typeof getMemberPath>;
 
     path = getMemberPath((s: Foo) => s.bar.baz);
-    expect(path).toEqual(['bar','baz']);
+    expect(path).toEqual(['bar', 'baz']);
 
     path = getMemberPath((s: Foo) => s['bar']['baz']);
-    expect(path).toEqual(['bar','baz']);
+    expect(path).toEqual(['bar', 'baz']);
 
     path = getMemberPath((s: Foo) => s.bar.baz['']);
-    expect(path).toEqual(['bar','baz', '']);
+    expect(path).toEqual(['bar', 'baz', '']);
 
     path = getMemberPath((s: Foo) => s[' foo '][' bar '].baz);
-    expect(path).toEqual([' foo ',' bar ','baz']);
+    expect(path).toEqual([' foo ', ' bar ', 'baz']);
 
-    path = getMemberPath((s: Foo) => s['odd' + '-' + 'property']['odd' + '+' + 'property']);
-    expect(path).toEqual(['odd-property','odd+property']);
+    path = getMemberPath(
+      (s: Foo) => s['odd' + '-' + 'property']['odd' + '+' + 'property']
+    );
+    expect(path).toEqual(['odd-property', 'odd+property']);
 
-    path = getMemberPath((s: Foo) => s[`${'odd-property'}`][`${'odd+property'}`].baz);
-    expect(path).toEqual(['odd-property','odd+property','baz']);
+    path = getMemberPath(
+      (s: Foo) => s[`${'odd-property'}`][`${'odd+property'}`].baz
+    );
+    expect(path).toEqual(['odd-property', 'odd+property', 'baz']);
 
     path = getMemberPath((s: Foo) => s.bar.baz['']['']['']);
     expect(path).toEqual(['bar', 'baz', '', '', '']);
@@ -207,7 +211,7 @@ describe('getMemberPath', () => {
     expect(path).toEqual([' odd-property ']);
 
     path = getMemberPath(function (s: Foo) {
-      return s[`${'odd-property'}`]
+      return s[`${'odd-property'}`];
     });
     expect(path).toEqual(['odd-property']);
   });
@@ -218,12 +222,12 @@ describe('getMemberPath', () => {
     path = getMemberPath(function (s: Foo) {
       return s.bar.baz;
     });
-    expect(path).toEqual(['bar','baz']);
+    expect(path).toEqual(['bar', 'baz']);
 
     path = getMemberPath(function (s: Foo) {
       return s['bar']['baz'];
     });
-    expect(path).toEqual(['bar','baz']);
+    expect(path).toEqual(['bar', 'baz']);
   });
 
   it('should return properly for properties with return keyword', () => {
@@ -247,7 +251,7 @@ describe('getMemberPath', () => {
     path = getMemberPath((s: Foo) => {
       return s.bar['baz'];
     });
-    expect(path).toEqual(['bar','baz']);
+    expect(path).toEqual(['bar', 'baz']);
 
     path = getMemberPath(function (s: Foo) {
       return s.returnFoo;
@@ -272,7 +276,7 @@ describe('getMemberPath', () => {
     });
     expect(path).toEqual(['mid.Dot', '.startDot']);
 
-    path = getMemberPath(function(s: Foo) {
+    path = getMemberPath(function (s: Foo) {
       return s['endDot.'];
     });
     expect(path).toEqual(['endDot.']);

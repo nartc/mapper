@@ -8,13 +8,15 @@ const PROXY_OBJECT = createProxy(PROXY_TARGET);
  *
  * @returns `null` if the given `fnSelector` doesn't match with anything.
  */
-export function getMembers(fnSelector: Selector<unknown, unknown | (() => string[])>): string[] | null {
+export function getMembers(
+  fnSelector: Selector<unknown, unknown | (() => string[])>
+): string[] | null {
   const resultProxy = fnSelector(PROXY_OBJECT) as () => string[];
   if (typeof resultProxy !== 'function') {
     return null;
   }
   const members: string[] = resultProxy();
-  if (members.length === 0 || members.some(m => typeof m !== 'string')) {
+  if (members.length === 0 || members.some((m) => typeof m !== 'string')) {
     return null;
   }
   return members;
@@ -42,7 +44,10 @@ export function getMemberPath(fn: Selector): string[] {
  * @returns {Proxy} A proxy that's wrap on the target object and track of
  * the path of accessed nested properties
  */
-function createProxy<T extends Dictionary<T>>(target: T, path: string[] = []): T {
+function createProxy<T extends Dictionary<T>>(
+  target: T,
+  path: string[] = []
+): T {
   const realTraps: ProxyHandler<T> = {
     get(target: T, p: string): typeof PROXY_TARGET {
       const childPath = path.slice();
@@ -51,7 +56,7 @@ function createProxy<T extends Dictionary<T>>(target: T, path: string[] = []): T
     },
     apply(): string[] {
       return path;
-    }
+    },
   };
   return new Proxy(target, realTraps);
 }

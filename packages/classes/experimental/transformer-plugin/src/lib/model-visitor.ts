@@ -129,9 +129,7 @@ export class ModelVisitor {
 
     return context.factory.updateSourceFile(
       _sourceFile,
-      [
-        ...((ModelVisitor.importsMap.values() as unknown) as Statement[]),
-      ].concat(
+      [...(ModelVisitor.importsMap.values() as unknown as Statement[])].concat(
         (_sourceFile.statements || ([] as Statement[])).filter(
           (statement) => statement.kind !== SyntaxKind.ImportDeclaration
         )

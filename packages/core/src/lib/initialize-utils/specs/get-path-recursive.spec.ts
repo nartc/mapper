@@ -28,14 +28,14 @@ describe('getPathRecursive', () => {
   const resultPaths = [
     ['foo'],
     ['bar'],
-    ['bar','baz'],
+    ['bar', 'baz'],
     ['baz'],
     ['barBaz'],
-    ['barBaz','fooBar'],
-    ['barBaz','fooBar','barFoo'],
+    ['barBaz', 'fooBar'],
+    ['barBaz', 'fooBar', 'barFoo'],
     ['mid.Dot'],
-    ['mid.Dot','.startDot'],
-    ['mid.Dot','endDot.'],
+    ['mid.Dot', '.startDot'],
+    ['mid.Dot', 'endDot.'],
   ];
 
   it('should work', () => {

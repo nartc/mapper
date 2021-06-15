@@ -109,10 +109,7 @@ export function createInitialMapping(
         destinationPath,
         [
           [destinationPath],
-          [
-            mapInitialize(sourcePaths!),
-            isMetadataNullAtKey(destinationPath),
-          ],
+          [mapInitialize(sourcePaths!), isMetadataNullAtKey(destinationPath)],
         ],
         destinationNestedMetadataAtPath,
       ]);

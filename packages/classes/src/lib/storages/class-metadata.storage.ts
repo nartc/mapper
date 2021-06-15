@@ -1,6 +1,6 @@
+import { isSamePath } from '@automapper/core';
 import type { Metadata, MetadataStorage } from '@automapper/types';
 import type { Constructible } from '../types';
-import { isSamePath } from '@automapper/core';
 
 /**
  * Internal ClassMetadataStorage
@@ -29,7 +29,9 @@ export class ClassMetadataStorage implements MetadataStorage<Constructible> {
     for (let i = 0; i < metadataList.length; i++) {
       const metadata = metadataList[i];
       // skip existing
-      if (resultMetadataList.some(([metaKey]) => isSamePath(metaKey, metadata[0]))) {
+      if (
+        resultMetadataList.some(([metaKey]) => isSamePath(metaKey, metadata[0]))
+      ) {
         continue;
       }
       resultMetadataList.push(metadataList[i]);
@@ -42,7 +44,9 @@ export class ClassMetadataStorage implements MetadataStorage<Constructible> {
     model: Constructible,
     key: string[]
   ): Metadata<Constructible> | undefined {
-    return this.getMetadata(model).find(([metaKey]) => isSamePath(metaKey, key));
+    return this.getMetadata(model).find(([metaKey]) =>
+      isSamePath(metaKey, key)
+    );
   }
 
   addMetadata(model: Constructible, metadata: Metadata<Constructible>): void {

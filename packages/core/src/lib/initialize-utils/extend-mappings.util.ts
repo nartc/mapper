@@ -7,8 +7,8 @@ export function extendMappings(bases: Mapping[], mapping: Mapping) {
     const propsToExtend = mappingToExtend[MappingClassId.properties];
     for (let i = 0, len = propsToExtend.length; i < len; i++) {
       const [propToExtendKey, propToExtendMappingProp] = propsToExtend[i];
-      const existProp = mapping[MappingClassId.properties].find(
-        ([pKey]) => isSamePath(pKey, propToExtendKey)
+      const existProp = mapping[MappingClassId.properties].find(([pKey]) =>
+        isSamePath(pKey, propToExtendKey)
       );
       if (existProp) {
         existProp[MappingPropertiesClassId.path] = propToExtendKey;

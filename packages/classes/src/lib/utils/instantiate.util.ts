@@ -1,10 +1,10 @@
 import {
   get,
-  setMutate,
   isDateConstructor,
   isDefined,
   isEmpty,
-  isPrimitiveConstructor
+  isPrimitiveConstructor,
+  setMutate,
 } from '@automapper/core';
 import type { Dictionary } from '@automapper/types';
 import type { ClassInstanceStorage, ClassMetadataStorage } from '../storages';
@@ -59,9 +59,7 @@ export function instantiate<TModel extends Dictionary<TModel>>(
     // if is String, Number, Boolean, Array, assign valueAtKey or undefined
     // null meta means this has any type or an arbitrary object, treat as primitives
     if (isPrimitiveConstructor(metaResult) || metaResult === null) {
-      const value = isDefined(valueAtKey, true)
-        ? valueAtKey
-        : undefined;
+      const value = isDefined(valueAtKey, true) ? valueAtKey : undefined;
       setMutate(instance as Record<string, unknown>, key, value);
       continue;
     }
@@ -90,7 +88,7 @@ export function instantiate<TModel extends Dictionary<TModel>>(
           val
         );
         return instantiateResultItem;
-      })
+      });
       setMutate(instance as Record<string, unknown>, key, value);
       continue;
     }
@@ -104,7 +102,11 @@ export function instantiate<TModel extends Dictionary<TModel>>(
         metaResult as Constructible,
         valueAtKey as Dictionary<unknown>
       );
-      setMutate(instance as Record<string, unknown>, key, definedInstantiateResult);
+      setMutate(
+        instance as Record<string, unknown>,
+        key,
+        definedInstantiateResult
+      );
       continue;
     }
 
@@ -121,7 +123,11 @@ export function instantiate<TModel extends Dictionary<TModel>>(
 
     // if no depth, just instantiate with new keyword without recursive
     if (depth === 0) {
-      setMutate(instance as Record<string, unknown>, key, new (metaResult as Constructible)());
+      setMutate(
+        instance as Record<string, unknown>,
+        key,
+        new (metaResult as Constructible)()
+      );
       continue;
     }
 
@@ -129,7 +135,11 @@ export function instantiate<TModel extends Dictionary<TModel>>(
     // reset the count then assign with new keyword
     if (depth === count) {
       instanceStorage.resetCount(model, key);
-      setMutate(instance as Record<string, unknown>, key, new (metaResult as Constructible)());
+      setMutate(
+        instance as Record<string, unknown>,
+        key,
+        new (metaResult as Constructible)()
+      );
       continue;
     }
 

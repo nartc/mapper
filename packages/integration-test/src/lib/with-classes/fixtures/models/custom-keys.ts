@@ -18,7 +18,7 @@ export class CustomKeyFoo {
   @AutoMap({ typeFn: () => Number })
   ['endDot.']!: number | null;
   @AutoMap({ typeFn: () => String })
-  normalKey!: string
+  normalKey!: string;
 }
 
 export class CustomKeyFooVm {
@@ -29,5 +29,5 @@ export class CustomKeyFooVm {
   @AutoMap({ typeFn: () => Number })
   ['endDot.']!: number | null;
   @AutoMap({ typeFn: () => String })
-  normalKey!: string
+  normalKey!: string;
 }

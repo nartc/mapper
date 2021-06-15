@@ -23,9 +23,8 @@ export function createAutomapperProviders(
       throw new Error(error);
     }
 
-    const [
-      { name, namingConventions, errorHandler, pluginInitializer },
-    ] = options;
+    const [{ name, namingConventions, errorHandler, pluginInitializer }] =
+      options;
     const mapper = createMapper({
       name,
       pluginInitializer,

@@ -14,8 +14,8 @@ import {
   MappingPropertiesClassId,
   TransformationType,
 } from '@automapper/types';
-import { getMemberPath } from './get-member-path.util';
 import { isSamePath } from '../utils';
+import { getMemberPath } from './get-member-path.util';
 
 /**
  *
@@ -56,7 +56,7 @@ export function createMapForMember<
 
   // if the transformation is MapWith, we have information on the source value selector
   if (
-    (mapMemberFn[MapFnClassId.type] === TransformationType.MapWith) &&
+    mapMemberFn[MapFnClassId.type] === TransformationType.MapWith &&
     mapMemberFn[MapFnClassId.misc] != null
   ) {
     sourcePath = getMemberPath(mapMemberFn[MapFnClassId.misc]!);
@@ -69,8 +69,8 @@ export function createMapForMember<
   ];
 
   // check existProp on mapping
-  const existProp = mapping[MappingClassId.properties].find(
-    ([propName]) => isSamePath(propName, memberPath)
+  const existProp = mapping[MappingClassId.properties].find(([propName]) =>
+    isSamePath(propName, memberPath)
   );
 
   // if exists, overrides

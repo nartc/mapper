@@ -95,15 +95,15 @@ describe('instantiate', () => {
     when(mockedMetadataStorage.getMetadata)
       .calledWith('Foo')
       .mockReturnValueOnce([
-        [['foo'], () => (String as unknown) as string],
+        [['foo'], () => String as unknown as string],
         [['bar'], () => 'Bar'],
       ]);
 
     when(mockedMetadataStorage.getMetadata)
       .calledWith('Bar')
       .mockReturnValueOnce([
-        [['bar'], () => (String as unknown) as string],
-        [['date'], () => (Date as unknown) as Date],
+        [['bar'], () => String as unknown as string],
+        [['date'], () => Date as unknown as Date],
       ]);
   }
 });

@@ -9,14 +9,15 @@ export function getSourcePropertyPath(
     return path;
   }
 
-  const [
-    sourceNamingConvention,
-    destinationNamingConvention,
-  ] = namingConventions!;
+  const [sourceNamingConvention, destinationNamingConvention] =
+    namingConventions!;
 
-  const keyParts = path.map(s => s.split(destinationNamingConvention.splittingExpression)
-    .filter(Boolean)).filter(p => p.length > 0);
+  const keyParts = path
+    .map((s) =>
+      s.split(destinationNamingConvention.splittingExpression).filter(Boolean)
+    )
+    .filter((p) => p.length > 0);
   return !keyParts.length
     ? path
-    : keyParts.map(p => sourceNamingConvention.transformPropertyName(p));
+    : keyParts.map((p) => sourceNamingConvention.transformPropertyName(p));
 }

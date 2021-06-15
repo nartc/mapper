@@ -1,3 +1,5 @@
+import { uniquePaths } from '../utils';
+
 /**
  * Loop through an object and recursively get paths of each property
  *
@@ -7,19 +9,20 @@
  */
 export function getPathRecursive(
   node: Record<string, unknown>,
-  prefix = '',
-  prev: string[] = []
-): string[] | undefined {
+  prefix: string[] = [],
+  prev: string[][] = []
+): string[][] | undefined {
   if (node == null) {
     return;
   }
 
   const result = prev;
+  let hadChildPaths = false;
 
   const keys = Object.getOwnPropertyNames(node);
   for (let i = 0, len = keys.length; i < len; i++) {
     const key = keys[i];
-    const path = prefix + key;
+    const path: string[] = [].concat(...prefix, key);
     result.push(path);
 
     const child = node[key];
@@ -27,16 +30,17 @@ export function getPathRecursive(
       const queue = Array.isArray(child) ? child : [child];
 
       for (const childNode of queue) {
-        const childPaths = getPathRecursive(childNode, path + '.');
+        const childPaths = getPathRecursive(childNode, path);
         if (childPaths) {
-          for (const childPath of childPaths) {
-            if (result.includes(childPath)) continue;
-            result.push(childPath);
-          }
+          hadChildPaths = true;
+          result.push(...childPaths);
         }
       }
     }
   }
 
+  if (hadChildPaths) {
+    return uniquePaths(result);
+  }
   return result;
 }

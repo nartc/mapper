@@ -1,5 +1,18 @@
 import type { Constructible } from '../types';
 
+/*
+  # Implementation strategy
+  Create a tree of `Map`s, such that indexing the tree recursively (with items
+  of a key array, sequentially), traverses the tree, so that when the key array
+  is exhausted, the tree node we arrive at contains the value for that key
+  array under the guaranteed-unique `Symbol` key `dataSymbol`.
+*/
+
+type DataMap = Map<symbol, number>;
+type PathMap = Map<string, PathMap | DataMap>;
+type ArrayKeyedMap = PathMap | DataMap;
+const DATA_SYMBOL = Symbol('map-data');
+
 /**
  * Internal ClassInstanceStorage
  *
@@ -9,24 +22,24 @@ import type { Constructible } from '../types';
  * @private
  */
 export class ClassInstanceStorage {
-  private depthStorage = new WeakMap<Constructible, Map<string, number>>();
+  private depthStorage = new WeakMap<Constructible, ArrayKeyedMap>();
   private recursiveCountStorage = new WeakMap<
     Constructible,
-    Map<string, number>
+    ArrayKeyedMap
   >();
 
   getDepthAndCount(
     parent: Constructible,
-    member: string
+    member: string[]
   ): [depth?: number, count?: number] {
     return [this.getDepth(parent, member), this.getCount(parent, member)];
   }
 
-  getDepth(parent: Constructible, member: string): number | undefined {
+  getDepth(parent: Constructible, member: string[]): number | undefined {
     return ClassInstanceStorage.getInternal(this.depthStorage, parent, member);
   }
 
-  getCount(parent: Constructible, member: string): number | undefined {
+  getCount(parent: Constructible, member: string[]): number | undefined {
     return ClassInstanceStorage.getInternal(
       this.recursiveCountStorage,
       parent,
@@ -34,11 +47,11 @@ export class ClassInstanceStorage {
     );
   }
 
-  setDepth(parent: Constructible, member: string, depth: number): void {
+  setDepth(parent: Constructible, member: string[], depth: number): void {
     ClassInstanceStorage.setInternal(this.depthStorage, parent, member, depth);
   }
 
-  setCount(parent: Constructible, member: string, count: number): void {
+  setCount(parent: Constructible, member: string[], count: number): void {
     ClassInstanceStorage.setInternal(
       this.recursiveCountStorage,
       parent,
@@ -47,7 +60,7 @@ export class ClassInstanceStorage {
     );
   }
 
-  resetCount(parent: Constructible, member: string): void {
+  resetCount(parent: Constructible, member: string[]): void {
     this.setCount(parent, member, 0);
   }
 
@@ -61,42 +74,80 @@ export class ClassInstanceStorage {
   dispose(): void {
     this.recursiveCountStorage = new WeakMap<
       Constructible,
-      Map<string, number>
+      ArrayKeyedMap
     >();
-    this.depthStorage = new WeakMap<Constructible, Map<string, number>>();
+    this.depthStorage = new WeakMap<Constructible, ArrayKeyedMap>();
   }
 
   private static getInternal(
-    storage: WeakMap<Constructible, Map<string, number>>,
+    storage: WeakMap<Constructible, ArrayKeyedMap>,
     parent: Constructible,
-    member: string
+    member: string[]
   ): number | undefined {
     const parentVal = storage.get(parent);
-    return parentVal ? parentVal.get(member) : undefined;
+    return parentVal ? arrayMapGet(parentVal, member) : undefined;
   }
 
   private static setInternal(
-    storage: WeakMap<Constructible, Map<string, number>>,
+    storage: WeakMap<Constructible, ArrayKeyedMap>,
     parent: Constructible,
-    member: string,
+    member: string[],
     value: number
   ): void {
     if (!storage.has(parent)) {
-      storage.set(parent, new Map<string, number>().set(member, value));
+      storage.set(parent, arrayMapSet(new Map(), member, value))
       return;
     }
 
     if (!this.hasInternal(storage, parent, member)) {
-      storage.get(parent)!.set(member, value);
+      arrayMapSet(storage.get(parent), member, value)
     }
   }
 
   private static hasInternal(
-    storage: WeakMap<Constructible, Map<string, number>>,
+    storage: WeakMap<Constructible, ArrayKeyedMap>,
     parent: Constructible,
-    member: string
+    member: string[]
   ): boolean {
     const parentVal = storage.get(parent);
-    return parentVal ? parentVal.has(member) : false;
+    return parentVal ? arrayMapHas(parentVal, member) : false;
   }
+}
+
+function arrayMapSet(root: ArrayKeyedMap, path: string[], value: number): ArrayKeyedMap {
+  let map = root;
+  for (const item of path) {
+    let nextMap = (map as PathMap).get(item) as PathMap;
+    if (!nextMap) {
+      // Create next map if none exists
+      nextMap = new Map();
+      (map as PathMap).set(item, nextMap);
+    }
+    map = nextMap;
+  }
+  // Reached end of path.  Set the data symbol to the given value
+  (map as DataMap).set(DATA_SYMBOL, value);
+  return root;
+}
+
+function arrayMapHas(root: ArrayKeyedMap, path: string[]): boolean {
+  let map = root;
+  for (const item of path) {
+    const nextMap = (map as PathMap).get(item);
+    if (nextMap) {
+      map = nextMap;
+    } else {
+      return false;
+    }
+  }
+  return (map as DataMap).has(DATA_SYMBOL);
+}
+
+function arrayMapGet(root: ArrayKeyedMap, path: string[]): number | undefined {
+  let map = root;
+  for (const item of path) {
+    map = (map as PathMap).get(item);
+    if (!map) return undefined;
+  }
+  return (map as DataMap).get(DATA_SYMBOL);
 }

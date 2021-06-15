@@ -1,4 +1,6 @@
 import {
+  get,
+  setMutate,
   isDateConstructor,
   isDefined,
   isEmpty,
@@ -20,22 +22,23 @@ export function instantiate<TModel extends Dictionary<TModel>>(
   }
 
   const nestedMetadataMap: unknown[] = [];
-  let i = metadata.length;
-  while (i--) {
+  for (let i = 0; i < metadata.length; i++) {
     const [key, meta] = metadata[i];
-    const valueAtKey = (obj as Record<string, unknown>)[key];
+    const valueAtKey = get(obj as Record<string, unknown>, key);
     const metaResult = meta();
 
     if (isPrimitiveConstructor(metaResult) || metaResult === null) {
-      (obj as Record<string, unknown>)[key] = isDefined(valueAtKey)
+      const value = isDefined(valueAtKey)
         ? valueAtKey
         : undefined;
+      setMutate(obj as Record<string, unknown>, key, value);
       continue;
     }
     if (isDateConstructor(metaResult)) {
-      (obj as Record<string, unknown>)[key] = isDefined(valueAtKey)
+      const value = isDefined(valueAtKey)
         ? new Date(valueAtKey as number)
         : undefined;
+      setMutate(obj as Record<string, unknown>, key, value);
       continue;
     }
 
@@ -45,10 +48,11 @@ export function instantiate<TModel extends Dictionary<TModel>>(
 
     nestedMetadataMap.push([key, metaResult]);
     if (Array.isArray(valueAtKey)) {
-      (obj as Record<string, unknown>)[key] = valueAtKey.map((val) => {
+      const value = valueAtKey.map((val) => {
         const [childObj] = instantiate(metadataStorage, metaResult, val);
         return childObj;
       });
+      setMutate(obj as Record<string, unknown>, key, value);
       continue;
     }
 
@@ -58,17 +62,17 @@ export function instantiate<TModel extends Dictionary<TModel>>(
         metaResult,
         valueAtKey as Dictionary<unknown>
       );
-      (obj as Record<string, unknown>)[key] = instantiateResult;
+      setMutate(obj as Record<string, unknown>, key, instantiateResult);
       continue;
     }
 
     if (isDefined(defaultValue)) {
-      (obj as Record<string, unknown>)[key] = valueAtKey;
+      setMutate(obj as Record<string, unknown>, key, valueAtKey);
       continue;
     }
 
     const [result] = instantiate(metadataStorage, metaResult);
-    (obj as Record<string, unknown>)[key] = result;
+    setMutate(obj as Record<string, unknown>, key, result);
   }
 
   return [obj, nestedMetadataMap];

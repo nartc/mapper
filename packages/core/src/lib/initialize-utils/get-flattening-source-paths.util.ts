@@ -2,14 +2,14 @@ import type { NamingConvention } from '@automapper/types';
 
 export function getFlatteningSourcePaths(
   src: Record<string, unknown>,
-  srcPath: string,
+  srcPath: string[],
   namingConventions: [NamingConvention, NamingConvention]
-) {
+): string[] | undefined {
   const [sourceNamingConvention] = namingConventions;
-  const splitSourcePaths = srcPath
-    .split(sourceNamingConvention.splittingExpression)
-    .filter(Boolean)
-    .filter((p) => p !== '.');
+  const splitSourcePaths: string[] = [].concat(...srcPath.map(s =>
+    s.split(sourceNamingConvention.splittingExpression)
+      .filter(Boolean))
+  );
 
   const [first, ...paths] = splitSourcePaths.slice(
     0,
@@ -23,7 +23,7 @@ export function getFlatteningSourcePaths(
     for (let i = 0, len = paths.length; i < len; i++) {
       trueFirstPartOfSource = sourceNamingConvention.transformPropertyName([
         trueFirstPartOfSource,
-        paths[i],
+        paths[i]
       ]);
       if (src.hasOwnProperty(trueFirstPartOfSource)) {
         stopIndex = i + 1;
@@ -37,13 +37,10 @@ export function getFlatteningSourcePaths(
     return;
   }
 
-  return [
-    [trueFirstPartOfSource]
-      .concat(
-        sourceNamingConvention.transformPropertyName(
-          splitSourcePaths.slice(stopIndex + 1, splitSourcePaths.length + 1)
-        )
-      )
-      .join('.'),
-  ];
+  return [].concat(
+    trueFirstPartOfSource,
+    sourceNamingConvention.transformPropertyName(
+      splitSourcePaths.slice(stopIndex + 1, splitSourcePaths.length + 1)
+    )
+  );
 }

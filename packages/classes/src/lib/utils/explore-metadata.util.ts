@@ -25,9 +25,9 @@ export function exploreMetadata(
         propertyKey,
         { typeFn, depth, isGetterOnly },
       ] of metadataList) {
-        metadataStorage.addMetadata(model, [propertyKey, typeFn, isGetterOnly]);
+        metadataStorage.addMetadata(model, [[propertyKey], typeFn, isGetterOnly]);
         if (depth != null) {
-          instanceStorage.setDepth(model, propertyKey, depth);
+          instanceStorage.setDepth(model, [propertyKey], depth);
         }
       }
     }

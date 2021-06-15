@@ -3,8 +3,8 @@ import type {
   CreateMapperOptions,
   MapArrayOptions,
   MapOptions,
-  Mapper,
-  MappingProfile,
+  Mapper, Mapping,
+  MappingProfile
 } from '@automapper/types';
 import { mapArray, mapMutate, mapReturn } from '../map';
 import { createMapFluentFunction } from './create-map-fluent-function.util';
@@ -65,7 +65,7 @@ export function createMapper<TKey = unknown>({
         : [];
 
       // get mapping between Source and Destination
-      const mapping = this.getMapping(source, destination);
+      const mapping: Mapping = this.getMapping(source, destination);
 
       // check mutate or return
 

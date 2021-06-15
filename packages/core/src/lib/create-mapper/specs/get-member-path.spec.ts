@@ -109,63 +109,78 @@ describe('getMemberPath', () => {
 
     const namedOne = (s: Foo) => s.foo;
     path = getMemberPath(namedOne);
-    expect(path).toEqual('foo');
+    expect(path).toEqual(['foo']);
 
     const namedOne2 = (s: Foo) => s['foo'];
     path = getMemberPath(namedOne2);
-    expect(path).toEqual('foo');
+    expect(path).toEqual(['foo']);
 
     path = getMemberPath((s: Foo) => s['snake_case']);
-    expect(path).toEqual('snake_case');
+    expect(path).toEqual(['snake_case']);
 
     path = getMemberPath((s: Foo) => s.snake_case);
-    expect(path).toEqual('snake_case');
+    expect(path).toEqual(['snake_case']);
 
     path = getMemberPath((s: Foo) => s['odd-property']);
-    expect(path).toEqual('odd-property');
+    expect(path).toEqual(['odd-property']);
 
     path = getMemberPath((s: Foo) => s.snake_case);
-    expect(path).toEqual('snake_case');
+    expect(path).toEqual(['snake_case']);
 
     path = getMemberPath((s: Foo) => s['even[odd].prop']);
-    expect(path).toEqual('even[odd].prop');
+    expect(path).toEqual(['even[odd].prop']);
 
     path = getMemberPath((s: Foo) => s.á);
-    expect(path).toEqual('á');
+    expect(path).toEqual(['á']);
 
     path = getMemberPath((s: Foo) => s['with_sṕéçiâl_chàrs']);
-    expect(path).toEqual('with_sṕéçiâl_chàrs');
+    expect(path).toEqual(['with_sṕéçiâl_chàrs']);
 
     path = getMemberPath((s: Foo) => s[' foo ']);
-    expect(path).toEqual(' foo ');
+    expect(path).toEqual([' foo ']);
 
     path = getMemberPath((s: Foo) => s['odd' + '-' + 'property']);
-    expect(path).toEqual('odd-property');
+    expect(path).toEqual(['odd-property']);
 
     path = getMemberPath((s: Foo) => s[`${'odd-property'}`]);
-    expect(path).toEqual('odd-property');
+    expect(path).toEqual(['odd-property']);
+
+    path = getMemberPath((s: Foo) => s['.startDot']);
+    expect(path).toEqual(['.startDot']);
+
+    path = getMemberPath((s: Foo) => s['mid.Dot']);
+    expect(path).toEqual(['mid.Dot']);
+
+    path = getMemberPath((s: Foo) => s['endDot.']);
+    expect(path).toEqual(['endDot.']);
   });
 
   it('should return properly for nested path for ES6 arrow syntax', () => {
     let path: ReturnType<typeof getMemberPath>;
 
     path = getMemberPath((s: Foo) => s.bar.baz);
-    expect(path).toEqual('bar.baz');
+    expect(path).toEqual(['bar','baz']);
 
     path = getMemberPath((s: Foo) => s['bar']['baz']);
-    expect(path).toEqual('bar.baz');
+    expect(path).toEqual(['bar','baz']);
 
     path = getMemberPath((s: Foo) => s.bar.baz['']);
-    expect(path).toEqual('bar.baz.');
+    expect(path).toEqual(['bar','baz', '']);
 
     path = getMemberPath((s: Foo) => s[' foo '][' bar '].baz);
-    expect(path).toEqual(' foo . bar .baz');
+    expect(path).toEqual([' foo ',' bar ','baz']);
 
     path = getMemberPath((s: Foo) => s['odd' + '-' + 'property']['odd' + '+' + 'property']);
-    expect(path).toEqual('odd-property.odd+property');
+    expect(path).toEqual(['odd-property','odd+property']);
 
     path = getMemberPath((s: Foo) => s[`${'odd-property'}`][`${'odd+property'}`].baz);
-    expect(path).toEqual('odd-property.odd+property.baz');
+    expect(path).toEqual(['odd-property','odd+property','baz']);
+
+    path = getMemberPath((s: Foo) => s.bar.baz['']['']['']);
+    expect(path).toEqual(['bar', 'baz', '', '', '']);
+
+    path = getMemberPath((s: Foo) => s['mid.Dot']['.startDot']);
+    expect(path).toEqual(['mid.Dot', '.startDot']);
   });
 
   it('should return properly for ES5 function syntax', () => {
@@ -174,27 +189,27 @@ describe('getMemberPath', () => {
     path = getMemberPath(function (s: Foo) {
       return s.foo;
     });
-    expect(path).toEqual('foo');
+    expect(path).toEqual(['foo']);
 
     path = getMemberPath(function namedOne(s: Foo) {
       return s.foo;
     });
-    expect(path).toEqual('foo');
+    expect(path).toEqual(['foo']);
 
     path = getMemberPath(function (s: Foo) {
       return s['foo'];
     });
-    expect(path).toEqual('foo');
+    expect(path).toEqual(['foo']);
 
     path = getMemberPath(function (s: Foo) {
       return s[' odd' + '-' + 'property '];
     });
-    expect(path).toEqual(' odd-property ');
+    expect(path).toEqual([' odd-property ']);
 
     path = getMemberPath(function (s: Foo) {
       return s[`${'odd-property'}`]
     });
-    expect(path).toEqual('odd-property');
+    expect(path).toEqual(['odd-property']);
   });
 
   it('should return properly for nested path for ES5 function syntax', () => {
@@ -203,45 +218,63 @@ describe('getMemberPath', () => {
     path = getMemberPath(function (s: Foo) {
       return s.bar.baz;
     });
-    expect(path).toEqual('bar.baz');
+    expect(path).toEqual(['bar','baz']);
 
     path = getMemberPath(function (s: Foo) {
       return s['bar']['baz'];
     });
-    expect(path).toEqual('bar.baz');
+    expect(path).toEqual(['bar','baz']);
   });
 
   it('should return properly for properties with return keyword', () => {
     let path: ReturnType<typeof getMemberPath>;
 
     path = getMemberPath((s: Foo) => s.returnFoo);
-    expect(path).toEqual('returnFoo');
+    expect(path).toEqual(['returnFoo']);
     path = getMemberPath((s: Foo) => s['returnFoo']);
-    expect(path).toEqual('returnFoo');
+    expect(path).toEqual(['returnFoo']);
 
     path = getMemberPath((s: Foo) => {
       return s.returnFoo;
     });
-    expect(path).toEqual('returnFoo');
+    expect(path).toEqual(['returnFoo']);
 
     path = getMemberPath((s: Foo) => {
       return s['returnFoo'];
     });
-    expect(path).toEqual('returnFoo');
+    expect(path).toEqual(['returnFoo']);
 
     path = getMemberPath((s: Foo) => {
       return s.bar['baz'];
     });
-    expect(path).toEqual('bar.baz');
+    expect(path).toEqual(['bar','baz']);
 
     path = getMemberPath(function (s: Foo) {
       return s.returnFoo;
     });
-    expect(path).toEqual('returnFoo');
+    expect(path).toEqual(['returnFoo']);
 
     path = getMemberPath(function (s: Foo) {
       return s['returnFoo'];
     });
-    expect(path).toEqual('returnFoo');
+    expect(path).toEqual(['returnFoo']);
+
+    path = getMemberPath((s: Foo) => s['.startDot']);
+    expect(path).toEqual(['.startDot']);
+
+    path = getMemberPath((s: Foo) => {
+      return s['mid.Dot'];
+    });
+    expect(path).toEqual(['mid.Dot']);
+
+    path = getMemberPath(function (s: Foo) {
+      return s['mid.Dot']['.startDot'];
+    });
+    expect(path).toEqual(['mid.Dot', '.startDot']);
+
+    path = getMemberPath(function(s: Foo) {
+      return s['endDot.'];
+    });
+    expect(path).toEqual(['endDot.']);
   });
 });

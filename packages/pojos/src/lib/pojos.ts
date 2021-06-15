@@ -90,7 +90,7 @@ function exploreMetadata(
     if (!metadataStorage.has(key)) {
       const metadataList = pojosSymbolStorage.get(Symbol.for(key));
       for (const [propertyKey, metadata] of metadataList) {
-        metadataStorage.addMetadata(key, [propertyKey, () => metadata]);
+        metadataStorage.addMetadata(key, [[propertyKey], () => metadata]);
       }
     }
   });

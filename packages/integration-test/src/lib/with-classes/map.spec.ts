@@ -3,6 +3,7 @@ import { setupClasses } from '../setup.spec';
 import { Doctor, DoctorDto } from './fixtures/models/doctor';
 import { User, UserVm } from './fixtures/models/user';
 import { PascalUser, PascalUserVm } from './fixtures/models/user-pascal';
+import { CustomKeyBar, CustomKeyFoo, CustomKeyFooVm } from './fixtures/models/custom-keys';
 import {
   addressProfile,
   pascalAddressProfile,
@@ -23,6 +24,7 @@ import {
   userProfile,
 } from './fixtures/profiles/user.profile';
 import { getPascalUser, getUser } from './utils/get-user';
+import { customKeyProfile } from './fixtures/profiles/custom-key.profile';
 
 describe('Map - Non Flattening', () => {
   const [mapper] = setupClasses('map');
@@ -223,5 +225,22 @@ describe('Map - Non Flattening', () => {
     const dto = mapper.map(doctor, DoctorDto, Doctor);
     expect(dto.name).toEqual(doctor.name);
     expect(dto.titleTags).toEqual(doctor.titleTags);
+  });
+
+  it('should map custom keys', () => {
+    mapper.addProfile(customKeyProfile);
+    const foo = new CustomKeyFoo();
+
+    foo.normalKey = 'Normal';
+    foo['.startDot'] = 'Foo';
+    foo['endDot.'] = 123;
+    foo['mid.Dot'] = new CustomKeyBar();
+    foo['mid.Dot']['.startDot'] = 'Bar';
+
+    const vm = mapper.map(foo, CustomKeyFooVm, CustomKeyFoo);
+    expect(vm.normalKey).toEqual(foo.normalKey);
+    expect(vm['.startDot']).toEqual(foo['.startDot']);
+    expect(vm['mid.Dot']['.startDot']).toEqual(foo['mid.Dot']['.startDot']);
+    expect(vm['endDot.']).toEqual(foo['endDot.']);
   });
 });

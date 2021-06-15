@@ -9,7 +9,7 @@ describe('MapInitializeFunction', () => {
   };
 
   it('should return correctly', () => {
-    const mapInitFn = mapInitialize('');
+    const mapInitFn = mapInitialize(['']);
     expect(mapInitFn).toBeTruthy();
     expect(mapInitFn[MapFnClassId.type]).toEqual(
       TransformationType.MapInitialize
@@ -18,13 +18,13 @@ describe('MapInitializeFunction', () => {
   });
 
   it('should map correctly', () => {
-    const mapInitFn = mapInitialize('foo.bar');
+    const mapInitFn = mapInitialize(['foo', 'bar']);
     const result = mapInitFn[MapFnClassId.fn](source);
     expect(result).toEqual(source.foo.bar);
   });
 
   it('should map to undefined for default val', () => {
-    const mapInitFn = mapInitialize('foo.baz');
+    const mapInitFn = mapInitialize(['foo', 'baz']);
     const result = mapInitFn[MapFnClassId.fn](source);
     expect(result).toEqual(undefined);
   });

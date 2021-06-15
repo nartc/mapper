@@ -2,9 +2,9 @@ import type { NamingConvention } from '@automapper/types';
 import { isDefined } from '../utils';
 
 export function getSourcePropertyPath(
-  path: string,
+  path: string[],
   namingConventions?: Readonly<[NamingConvention, NamingConvention]>
-): string {
+): string[] {
   if (!isDefined(namingConventions)) {
     return path;
   }
@@ -14,17 +14,9 @@ export function getSourcePropertyPath(
     destinationNamingConvention,
   ] = namingConventions!;
 
-  const splitPath = path.split('.');
-  if (splitPath.length > 1) {
-    return splitPath
-      .map((key) => getSourcePropertyPath(key, namingConventions))
-      .join('.');
-  }
-
-  const keyParts = path
-    .split(destinationNamingConvention.splittingExpression)
-    .filter(Boolean);
+  const keyParts = path.map(s => s.split(destinationNamingConvention.splittingExpression)
+    .filter(Boolean)).filter(p => p.length > 0);
   return !keyParts.length
     ? path
-    : sourceNamingConvention.transformPropertyName(keyParts);
+    : keyParts.map(p => sourceNamingConvention.transformPropertyName(p));
 }

@@ -1,4 +1,5 @@
 import type { Metadata, MetadataStorage } from '@automapper/types';
+import { isSamePath } from '@automapper/core';
 
 /**
  * Internal PojosMetadataStorage
@@ -13,7 +14,7 @@ export class PojosMetadataStorage implements MetadataStorage<string> {
     const exists = this.storage.get(metaKey) ?? [];
 
     // if already exists, break
-    if (exists.some(([existKey]) => existKey === metadata[0])) {
+    if (exists.some(([existKey]) => isSamePath(existKey, metadata[0]))) {
       return;
     }
 
@@ -22,18 +23,17 @@ export class PojosMetadataStorage implements MetadataStorage<string> {
 
   getMetadata(metaKey: string): Array<Metadata<string>> {
     const metadataList = this.storage.get(metaKey) ?? [];
-    let i = metadataList.length;
 
     // empty metadata
-    if (!i) {
+    if (!metadataList.length) {
       return [];
     }
 
     const resultMetadataList: Array<Metadata<string>> = [];
-    while (i--) {
+    for (let i = 0; i < metadataList.length; i++) {
       const metadata = metadataList[i];
       // skip existing
-      if (resultMetadataList.some(([key]) => key === metadata[0])) {
+      if (resultMetadataList.some(([key]) => isSamePath(key, metadata[0]))) {
         continue;
       }
       resultMetadataList.push(metadataList[i]);
@@ -44,10 +44,10 @@ export class PojosMetadataStorage implements MetadataStorage<string> {
 
   getMetadataForKey(
     metaKey: string,
-    key: string
+    key: string[]
   ): Metadata<string> | undefined {
     return this.getMetadata(metaKey).find(
-      ([innerMetaKey]) => innerMetaKey === key
+      ([innerMetaKey]) => isSamePath(innerMetaKey, key)
     );
   }
 

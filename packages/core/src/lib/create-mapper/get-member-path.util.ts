@@ -33,9 +33,9 @@ export function getMembers(fnSelector: Selector<unknown, unknown | (() => string
  * getMemberPath(s => s) === ''
  * ```
  */
-export function getMemberPath(fn: Selector): string {
+export function getMemberPath(fn: Selector): string[] {
   const members = getMembers(fn);
-  return members ? members.join('.') : '';
+  return members ? members : [];
 }
 
 /**

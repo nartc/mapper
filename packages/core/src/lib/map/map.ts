@@ -17,8 +17,7 @@ import type {
   MemberMapReturn,
 } from '@automapper/types';
 import { MapFnClassId, TransformationType } from '@automapper/types';
-import { isEmpty } from '../utils';
-import { set, setMutate } from './set.util';
+import { isEmpty, set, setMutate } from '../utils';
 
 /**
  * Instruction on how to map a particular member on the destination
@@ -34,7 +33,7 @@ function mapMember<TSource extends Dictionary<TSource> = any>(
   transformationMapFn: MemberMapReturn,
   sourceObj: TSource,
   destination: unknown,
-  destinationMemberPath: string,
+  destinationMemberPath: string[],
   extraArguments: Record<string, unknown> | undefined,
   mapper: Mapper
 ) {
@@ -92,11 +91,11 @@ function assertUnmappedProperties<
   TDestination extends Dictionary<TDestination> = any
 >(
   destination: TDestination,
-  configuredKeys: string[],
+  configuredKeys: string[][],
   errorHandler: ErrorHandler
 ) {
   const unmappedKeys = Object.keys(destination).filter(
-    (k) => !configuredKeys.includes(k)
+    (k) => !configuredKeys.some(ck => ck[0] === k)
   );
   if (unmappedKeys.length) {
     errorHandler.handle(`
@@ -128,7 +127,7 @@ export function mapReturn<
   isMapArray = false
 ): TDestination {
   const setMemberReturn = (
-    destinationMemberPath: string,
+    destinationMemberPath: string[],
     destination?: TDestination
   ) => (value: unknown) => {
     destination = set(destination!, destinationMemberPath, value);
@@ -164,7 +163,7 @@ export function mapMutate<
   errorHandler: ErrorHandler,
   destinationObj: TDestination
 ): void {
-  const setMemberMutate = (destinationMember: string) => (value: unknown) => {
+  const setMemberMutate = (destinationMember: string[]) => (value: unknown) => {
     setMutate(destinationObj, destinationMember, value);
   };
   map(sourceObj, mapping, options, mapper, errorHandler, setMemberMutate);
@@ -190,7 +189,7 @@ function map<
   mapper: Mapper,
   errorHandler: ErrorHandler,
   setMemberFn: (
-    destinationMemberPath: string,
+    destinationMemberPath: string[],
     destination?: TDestination
   ) => (value: unknown) => void,
   isMapArray = false
@@ -203,7 +202,7 @@ function map<
   ] = mapping;
 
   // initialize an array of keys that have already been configured
-  const configuredKeys: string[] = [];
+  const configuredKeys: string[][] = [];
 
   // deconstruct MapOptions
   const {
@@ -222,8 +221,7 @@ function map<
   }
 
   // map
-  let i = propsToMap.length;
-  while (i--) {
+  for (let i = 0; i < propsToMap.length; i++) {
     // Destructure a props on Mapping which is [propertyKey, MappingProperty, nested?]
     const [
       destinationMemberPath,

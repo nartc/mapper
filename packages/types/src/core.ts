@@ -116,7 +116,7 @@ export type ConditionReturn<
   TSelectorReturn = SelectorReturn<TDestination>
 > = [
   TransformationType.Condition,
-  (source: TSource, ...sourceMemberPaths: string[]) => TSelectorReturn
+  (source: TSource, sourceMemberPath: string[]) => TSelectorReturn
 ];
 
 export type FromValueReturn<
@@ -136,7 +136,7 @@ export type NullSubstitutionReturn<
   TSelectorReturn = SelectorReturn<TDestination>
 > = [
   TransformationType.NullSubstitution,
-  (source: TSource, ...sourceMemberPaths: string[]) => TSelectorReturn
+  (source: TSource, sourceMemberPath: string[]) => TSelectorReturn
 ];
 
 export type IgnoreReturn = [TransformationType.Ignore];
@@ -520,7 +520,7 @@ export type MappingProperty<
   TDestination extends Dictionary<TDestination> = any,
   TSelectorReturn = SelectorReturn<TDestination>
 > = readonly [
-  [target: string, origin?: string],
+  [target: string[], origin?: string[]],
   MappingTransformation<TSource, TDestination, TSelectorReturn>
 ];
 
@@ -531,7 +531,7 @@ export type Mapping<
   [source: TSource, destination: TDestination],
   Array<
     [
-      path: string,
+      path: string[],
       mappingProperty: MappingProperty<
         TSource,
         TDestination,
@@ -555,7 +555,7 @@ export interface Disposable {
 export interface MetadataStorage<TKey, TType = unknown> extends Disposable {
   getMetadata(metaKey: TKey): Array<Metadata<TType>>;
 
-  getMetadataForKey(metaKey: TKey, key: string): Metadata<TType> | undefined;
+  getMetadataForKey(metaKey: TKey, key: string[]): Metadata<TType> | undefined;
 
   addMetadata(metaKey: TKey, metadata: Metadata<TType>): void;
 
@@ -571,7 +571,7 @@ export interface MappingStorage<TKey> extends Disposable {
 }
 
 export type Metadata<TMetaType = unknown> = [
-  string,
+  string[],
   () => String | Number | Boolean | Date | TMetaType,
   boolean?
 ];

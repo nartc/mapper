@@ -15,6 +15,7 @@ import {
   TransformationType,
 } from '@automapper/types';
 import { getMemberPath } from './get-member-path.util';
+import { isSamePath } from '../utils';
 
 /**
  *
@@ -51,7 +52,7 @@ export function createMapForMember<
   }
 
   // initialize sourcePath
-  let sourcePath = '';
+  let sourcePath: string[] = [];
 
   // if the transformation is MapWith, we have information on the source value selector
   if (
@@ -69,7 +70,7 @@ export function createMapForMember<
 
   // check existProp on mapping
   const existProp = mapping[MappingClassId.properties].find(
-    ([propName]) => propName === memberPath
+    ([propName]) => isSamePath(propName, memberPath)
   );
 
   // if exists, overrides

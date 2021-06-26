@@ -105,6 +105,16 @@ yarn add @automapper/{core,classes}
 yarn add -D @automapper/types
 ```
 
+
+## Enable decorators metadata
+
+Make sure the following decorator switches are on in your `tsconfig`:
+
+```json
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+```
+
 ## Create a `Mapper`
 
 In some separate file called `mapper.ts`, we will start initializing our `Mapper`

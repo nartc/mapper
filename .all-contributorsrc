@@ -37,6 +37,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "robsonhermes",
+      "name": "Robson Hermes",
+      "avatar_url": "https://avatars.githubusercontent.com/u/26451017?v=4",
+      "profile": "https://github.com/robsonhermes",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7

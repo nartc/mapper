@@ -94,9 +94,13 @@ function assertUnmappedProperties<
   configuredKeys: string[][],
   errorHandler: ErrorHandler
 ) {
-  const unmappedKeys = Object.keys(destination).filter(
-    (k) => !configuredKeys.some((ck) => ck[0] === k)
-  );
+  const unmappedKeys = Object.keys(destination).filter((k) => {
+    const isAlreadyConfigured = configuredKeys.some((ck) => ck[0] === k);
+    const isWritable =
+      Object.getOwnPropertyDescriptor(destination, k).writable === true;
+    return !isAlreadyConfigured && isWritable;
+  });
+
   if (unmappedKeys.length) {
     errorHandler.handle(`
 Unmapped properties:

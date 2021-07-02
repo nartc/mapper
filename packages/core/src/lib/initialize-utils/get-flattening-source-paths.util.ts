@@ -6,7 +6,7 @@ export function getFlatteningSourcePaths(
   namingConventions: [NamingConvention, NamingConvention]
 ): string[] | undefined {
   const [sourceNamingConvention] = namingConventions;
-  const splitSourcePaths: string[] = [].concat(
+  const splitSourcePaths: string[] = ([] as string[]).concat(
     ...srcPath.map((s) =>
       s.split(sourceNamingConvention.splittingExpression).filter(Boolean)
     )
@@ -38,7 +38,7 @@ export function getFlatteningSourcePaths(
     return;
   }
 
-  return [].concat(
+  return ([] as string[]).concat(
     trueFirstPartOfSource,
     sourceNamingConvention.transformPropertyName(
       splitSourcePaths.slice(stopIndex + 1, splitSourcePaths.length + 1)

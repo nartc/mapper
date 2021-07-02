@@ -66,7 +66,7 @@ export function createMapper<TKey = unknown>({
         : [];
 
       // get mapping between Source and Destination
-      const mapping: Mapping = this.getMapping(source, destination);
+      const mapping: Mapping | undefined = this.getMapping(source, destination);
 
       // check mutate or return
 

@@ -56,7 +56,7 @@ function decomposePath(path: string[]): {
   base: string;
 } {
   if (path.length < 1) {
-    return { base: undefined, decomposedPath: undefined };
+    return { base: '', decomposedPath: [] };
   }
   const decomposedPath = path;
   const base = path[0];

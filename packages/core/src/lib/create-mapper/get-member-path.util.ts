@@ -9,7 +9,7 @@ const PROXY_OBJECT = createProxy(PROXY_TARGET);
  * @returns `null` if the given `fnSelector` doesn't match with anything.
  */
 export function getMembers(
-  fnSelector: Selector<unknown, unknown | (() => string[])>
+  fnSelector: Selector<any, any | (() => string[])>
 ): string[] | null {
   const resultProxy = fnSelector(PROXY_OBJECT) as () => string[];
   if (typeof resultProxy !== 'function') {

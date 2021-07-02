@@ -89,12 +89,12 @@ export class ClassInstanceStorage {
     value: number
   ): void {
     if (!storage.has(parent)) {
-      storage.set(parent, arrayMapSet(new Map(), member, value));
+      storage.set(parent, arrayMapSet(new Map(), member, value)!);
       return;
     }
 
     if (!this.hasInternal(storage, parent, member)) {
-      arrayMapSet(storage.get(parent), member, value);
+      arrayMapSet(storage.get(parent)!, member, value);
     }
   }
 
@@ -144,7 +144,7 @@ function arrayMapHas(root: ArrayKeyedMap, path: string[]): boolean {
 function arrayMapGet(root: ArrayKeyedMap, path: string[]): number | undefined {
   let map = root;
   for (const item of path) {
-    map = (map as PathMap).get(item);
+    map = (map as PathMap).get(item)!;
     if (!map) return undefined;
   }
   return (map as DataMap).get(DATA_SYMBOL);

@@ -22,7 +22,7 @@ export function getPathRecursive(
   const keys = Object.getOwnPropertyNames(node);
   for (let i = 0, len = keys.length; i < len; i++) {
     const key = keys[i];
-    const path: string[] = [].concat(...prefix, key);
+    const path: string[] = ([] as string[]).concat(...prefix, key);
     result.push(path);
 
     const child = node[key];

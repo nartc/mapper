@@ -132,7 +132,9 @@ export function createInitialMapping(
   }
 
   // Inherit base mappings
-  extendMappings(bases, mapping);
+  if (bases.length) {
+    extendMappings(bases as Mapping[], mapping!);
+  }
 
   saveMapping(mapping);
 

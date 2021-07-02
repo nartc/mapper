@@ -5,9 +5,10 @@ import { Module } from '@nestjs/common';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { FooExtendModule } from './foo-extend/foo-extend.module';
+import { FooModule } from './foo/foo.module';
 import { AddressProfile } from './profiles/address.profile';
 import { AvatarProfile } from './profiles/avatar.profile';
-import { FooProfile } from './profiles/foo.profile';
 import { UserProfileProfile } from './profiles/user-profile.profile';
 import { UserProfile } from './profiles/user.profile';
 
@@ -23,6 +24,8 @@ import { UserProfile } from './profiles/user.profile';
       ],
       singular: true,
     }),
+    FooModule,
+    FooExtendModule,
   ],
   controllers: [AppController],
   providers: [
@@ -31,7 +34,6 @@ import { UserProfile } from './profiles/user.profile';
     AvatarProfile,
     UserProfileProfile,
     UserProfile,
-    FooProfile,
   ],
 })
 export class AppModule {}

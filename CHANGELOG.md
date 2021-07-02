@@ -1,3 +1,19 @@
+### [4.2.1](https://github.com/nartc/mapper/compare/4.2.0...4.2.1) (2021-07-02)
+
+### Bug Fixes
+
+- **core:** only add writable property to unmappedKeys ([aa565aa](https://github.com/nartc/mapper/commit/aa565aab0d55b3a0f474ab5a487f84e256062ab0))
+
+### Documentations
+
+- add [@robsonhermes](https://github.com/robsonhermes) as a contributor ([04f5755](https://github.com/nartc/mapper/commit/04f57553f42ebef634e9153c99da944d14bad73d))
+- clean up whitespace ([6e7d199](https://github.com/nartc/mapper/commit/6e7d199666672722946cdf87e4c54f059e887c30))
+- **component:** added required tsconfig switches for @AutoMap ([#309](https://github.com/nartc/mapper/issues/309)) ([7d6ab91](https://github.com/nartc/mapper/commit/7d6ab91b4318f5086f37026e21e300ab398a399a)), closes [#307](https://github.com/nartc/mapper/issues/307)
+
+### Refactor
+
+- **core:** adjust typings ([23f1fa0](https://github.com/nartc/mapper/commit/23f1fa0b932244b7e59bf28c4e544db06f127824))
+
 ## [4.2.0](https://github.com/nartc/mapper/compare/4.1.0...4.2.0) (2021-06-15)
 
 ### Features

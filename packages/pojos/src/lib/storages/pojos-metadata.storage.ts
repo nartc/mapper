@@ -30,7 +30,11 @@ export class PojosMetadataStorage implements MetadataStorage<string> {
     }
 
     const resultMetadataList: Array<Metadata<string>> = [];
-    for (let i = 0; i < metadataList.length; i++) {
+    for (
+      let i = 0, metadataListLen = metadataList.length;
+      i < metadataListLen;
+      i++
+    ) {
       const metadata = metadataList[i];
       // skip existing
       if (resultMetadataList.some(([key]) => isSamePath(key, metadata[0]))) {

@@ -1,3 +1,11 @@
+### [4.2.2](https://github.com/nartc/mapper/compare/4.2.1...4.2.2) (2021-07-08)
+
+### Refactor
+
+- **classes:** use cached length for loops ([21435b7](https://github.com/nartc/mapper/commit/21435b7a8c458cc69138e6931196f318bd9358ab))
+- **core:** use cached length for loops; misc. variable changes ([697ee81](https://github.com/nartc/mapper/commit/697ee8198d7265ac99df25e71c1fd5fbef2a3110))
+- **pojos:** use cached length for loops ([6740a5d](https://github.com/nartc/mapper/commit/6740a5d49084ff3fea947c8532c79e66713f512d))
+
 ### [4.2.1](https://github.com/nartc/mapper/compare/4.2.0...4.2.1) (2021-07-02)
 
 ### Bug Fixes

@@ -40,8 +40,7 @@ export function instantiate<TModel extends Dictionary<TModel>>(
   // initialize a nestedConstructible with empty []
   const nestedConstructible: unknown[] = [];
 
-  // reversed loop
-  for (let i = 0; i < metadata.length; i++) {
+  for (let i = 0, metadataLen = metadata.length; i < metadataLen; i++) {
     // destructure
     const [key, meta, isGetterOnly] = metadata[i];
 

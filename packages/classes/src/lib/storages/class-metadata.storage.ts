@@ -26,7 +26,11 @@ export class ClassMetadataStorage implements MetadataStorage<Constructible> {
     }
 
     const resultMetadataList: Array<Metadata<Constructible>> = [];
-    for (let i = 0; i < metadataList.length; i++) {
+    for (
+      let i = 0, metadataListLen = metadataList.length;
+      i < metadataListLen;
+      i++
+    ) {
       const metadata = metadataList[i];
       // skip existing
       if (

@@ -21,7 +21,7 @@ import { getMemberPath } from './get-member-path.util';
  *
  * @param {Mapping} mapping - Mapping between source <> destination
  * @param {Selector} selector - the member selector on `forMember(selector)`
- * @param preCond
+ * @param preCondOrMapMemberFn
  * @param mapMemberFn
  * @param fluentFunction
  */
@@ -32,8 +32,8 @@ export function createMapForMember<
 >(
   mapping: Mapping<TSource, TDestination>,
   selector: Selector<TDestination, TMemberType>,
-  [preCond, mapMemberFn]: [
-    preCond:
+  [preCondOrMapMemberFn, mapMemberFn]: [
+    preCondOrMapMemberFn:
       | PreConditionReturn<TSource, TDestination>
       | MemberMapReturn<TSource, TDestination>
       | undefined,
@@ -47,8 +47,8 @@ export function createMapForMember<
 
   // reassign mapMemberFn and preCond
   if (mapMemberFn == null) {
-    mapMemberFn = preCond as MemberMapReturn;
-    preCond = undefined;
+    mapMemberFn = preCondOrMapMemberFn as MemberMapReturn;
+    preCondOrMapMemberFn = undefined;
   }
 
   // initialize sourcePath
@@ -65,7 +65,7 @@ export function createMapForMember<
   // initialize MappingProperty
   const mappingProperty: MappingProperty = [
     [memberPath, sourcePath],
-    [mapMemberFn, false, preCond as PreConditionReturn],
+    [mapMemberFn, false, preCondOrMapMemberFn as PreConditionReturn],
   ];
 
   // check existProp on mapping

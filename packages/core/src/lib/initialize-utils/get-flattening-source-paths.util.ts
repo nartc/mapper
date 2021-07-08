@@ -38,10 +38,10 @@ export function getFlatteningSourcePaths(
     return;
   }
 
-  return ([] as string[]).concat(
+  return [
     trueFirstPartOfSource,
     sourceNamingConvention.transformPropertyName(
       splitSourcePaths.slice(stopIndex + 1, splitSourcePaths.length + 1)
-    )
-  );
+    ),
+  ];
 }

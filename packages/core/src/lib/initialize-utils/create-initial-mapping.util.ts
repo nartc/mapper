@@ -72,7 +72,11 @@ export function createInitialMapping(
 
   const destinationPaths = getPathRecursive(destinationObj) || [];
   const namingConventions = mapping[MappingClassId.namingConventions];
-  for (let i = 0; i < destinationPaths.length; i++) {
+  for (
+    let i = 0, destinationPathsLen = destinationPaths.length;
+    i < destinationPathsLen;
+    i++
+  ) {
     const destinationPath = destinationPaths[i];
     const destinationNestedMetadataAtPath = getNestedMetaKeyAtDestinationPath(
       destinationNestedMetadataMap,
@@ -89,6 +93,8 @@ export function createInitialMapping(
     if (!isMultipartSourcePathsInSource(sourcePath, sourceObj)) {
       continue;
     }
+
+    const isMetadataNull = isMetadataNullAtKey(destinationPath);
 
     // With namingConventions, flattening can happen
     if (
@@ -107,10 +113,7 @@ export function createInitialMapping(
 
       mapping[MappingClassId.properties].push([
         destinationPath,
-        [
-          [destinationPath],
-          [mapInitialize(sourcePaths!), isMetadataNullAtKey(destinationPath)],
-        ],
+        [[destinationPath], [mapInitialize(sourcePaths!), isMetadataNull]],
         destinationNestedMetadataAtPath,
       ]);
       continue;
@@ -125,7 +128,7 @@ export function createInitialMapping(
       destinationPath,
       [
         [destinationPath, sourcePath],
-        [mapInitialize(sourcePath), isMetadataNullAtKey(destinationPath)],
+        [mapInitialize(sourcePath), isMetadataNull],
       ],
       destinationNestedMetadataAtPath,
     ]);

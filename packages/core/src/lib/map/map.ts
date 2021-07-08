@@ -26,7 +26,7 @@ import { isEmpty, set, setMutate } from '../utils';
  * @param {TSource} sourceObj - The sourceObject being used to map to destination
  * @param destination - destination meta key
  * @param {string} destinationMemberPath - the property path on the destination
- * @param {Record<string, any>} extraArguments
+ * @param extraArguments - a dictionary of extra arguments to be used with MapWithArguments
  * @param {Mapper} mapper - the mapper instance
  */
 function mapMember<TSource extends Dictionary<TSource> = any>(
@@ -91,11 +91,11 @@ function assertUnmappedProperties<
   TDestination extends Dictionary<TDestination> = any
 >(
   destination: TDestination,
-  configuredKeys: string[][],
+  configuredKeys: string[],
   errorHandler: ErrorHandler
 ) {
   const unmappedKeys = Object.keys(destination).filter((k) => {
-    const isAlreadyConfigured = configuredKeys.some((ck) => ck[0] === k);
+    const isAlreadyConfigured = configuredKeys.some((ck) => ck === k);
     const isWritable =
       Object.getOwnPropertyDescriptor(destination, k).writable === true;
     return !isAlreadyConfigured && isWritable;
@@ -130,18 +130,16 @@ export function mapReturn<
   errorHandler: ErrorHandler,
   isMapArray = false
 ): TDestination {
-  const setMemberReturn =
-    (destinationMemberPath: string[], destination?: TDestination) =>
-    (value: unknown) => {
-      destination = set(destination!, destinationMemberPath, value);
-    };
   return map(
     sourceObj,
     mapping,
     options,
     mapper,
     errorHandler,
-    setMemberReturn,
+    (destinationMemberPath: string[], destination: TDestination) =>
+      (value: unknown) => {
+        destination = set(destination, destinationMemberPath, value);
+      },
     isMapArray
   );
 }
@@ -166,10 +164,16 @@ export function mapMutate<
   errorHandler: ErrorHandler,
   destinationObj: TDestination
 ): void {
-  const setMemberMutate = (destinationMember: string[]) => (value: unknown) => {
-    setMutate(destinationObj, destinationMember, value);
-  };
-  map(sourceObj, mapping, options, mapper, errorHandler, setMemberMutate);
+  map(
+    sourceObj,
+    mapping,
+    options,
+    mapper,
+    errorHandler,
+    (destinationMember: string[]) => (value: unknown) => {
+      setMutate(destinationObj, destinationMember, value);
+    }
+  );
 }
 
 /**
@@ -202,7 +206,7 @@ function map<
     mapping;
 
   // initialize an array of keys that have already been configured
-  const configuredKeys: string[][] = [];
+  const configuredKeys: string[] = [];
 
   // deconstruct MapOptions
   const {
@@ -221,7 +225,7 @@ function map<
   }
 
   // map
-  for (let i = 0; i < propsToMap.length; i++) {
+  for (let i = 0, propsLen = propsToMap.length; i < propsLen; i++) {
     // Destructure a props on Mapping which is [propertyKey, MappingProperty, nested?]
     const [
       destinationMemberPath,
@@ -255,7 +259,7 @@ Original error: ${originalError}`;
     };
 
     // This destination key is being configured. Push to configuredKeys array
-    configuredKeys.push(destinationMemberPath);
+    configuredKeys.push(destinationMemberPath[0]);
 
     // Pre Condition check
     if (

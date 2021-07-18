@@ -66,6 +66,47 @@ describe('Map Mutate', () => {
     assertVm(plain, vm);
   });
 
+  it('should not map undefined properly', () => {
+    mapper
+      .addProfile(addressProfile)
+      .addProfile(avatarProfile)
+      .addProfile(userProfileProfile)
+      .addProfile(userProfile);
+
+    const originalUser = getUser();
+    const user = { ...originalUser };
+
+    const vm = new UserVm();
+    vm.first = 'foo';
+
+    mapper.map(vm, User, UserVm, user);
+    expect(user.firstName).toEqual(vm.first);
+    expect(user.lastName).toEqual(originalUser.lastName);
+    expect(user.profile).toEqual(originalUser.profile);
+    expect(user.job).toEqual(originalUser.job);
+  });
+
+  it('should map null and falsy properly', () => {
+    mapper
+      .addProfile(addressProfile)
+      .addProfile(avatarProfile)
+      .addProfile(userProfileProfile)
+      .addProfile(userProfile);
+
+    const originalUser = getUser();
+    const user = { ...originalUser };
+
+    const vm = new UserVm();
+    vm.first = null;
+    vm.last = '';
+
+    mapper.map(vm, User, UserVm, user);
+    expect(user.firstName).toEqual(vm.first);
+    expect(user.lastName).toEqual(vm.last);
+    expect(user.profile).toEqual(originalUser.profile);
+    expect(user.job).toEqual(originalUser.job);
+  });
+
   it('should map correctly with condition, preCondition, and nullSubstitution', () => {
     mapper
       .addProfile(addressProfile)

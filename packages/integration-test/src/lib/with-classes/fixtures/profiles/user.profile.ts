@@ -50,6 +50,17 @@ export const userProfile: MappingProfile = (mapper) => {
       mapFrom((s) => s.lastName)
     )
     .forMember((d) => d.full, mapFrom(fullNameResolver));
+
+  mapper
+    .createMap(UserVm, User)
+    .forMember(
+      (d) => d.firstName,
+      mapFrom((s) => s.first),
+    )
+    .forMember(
+      (d) => d.lastName,
+      mapFrom((s) => s.last),
+    );
 };
 
 export const pascalUserProfile: MappingProfile = (mapper) => {

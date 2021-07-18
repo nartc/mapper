@@ -171,6 +171,9 @@ export function mapMutate<
     mapper,
     errorHandler,
     (destinationMember: string[]) => (value: unknown) => {
+      if (value === undefined) {
+        return;
+      }
       setMutate(destinationObj, destinationMember, value);
     }
   );

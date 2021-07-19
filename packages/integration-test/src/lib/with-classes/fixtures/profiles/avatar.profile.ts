@@ -29,6 +29,10 @@ export const avatarProfile: MappingProfile = (mapper) => {
     .forMember((d) => d.shouldBeSubstituted, nullSubstitution('sub'));
 
   mapper
+    .createMap(AvatarVm, Avatar)
+    .forMember((d) => d.shouldIgnore, ignore());
+
+  mapper
     .createMap(Avatar, PascalAvatarVm)
     .forMember(
       (d) => d.Url,

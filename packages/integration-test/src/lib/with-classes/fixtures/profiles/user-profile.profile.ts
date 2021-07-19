@@ -1,4 +1,4 @@
-import { convertUsing, mapWith } from '@automapper/core';
+import { convertUsing, mapWith, mapFrom } from '@automapper/core';
 import type { MappingProfile } from '@automapper/types';
 import { dateToStringConverter } from '../converters/date-to-string.converter';
 import { Avatar, AvatarVm } from '../models/avatar';
@@ -28,6 +28,13 @@ export const userProfileProfile: MappingProfile = (mapper) => {
     .forMember(
       (d) => d.birthday,
       convertUsing(dateToStringConverter, (s) => s.birthday)
+    );
+
+  mapper
+    .createMap(UserProfileVm, UserProfile)
+    .forMember(
+      (d) => d.birthday,
+      mapFrom(s => s.birthday && new Date(s.birthday)),
     );
 
   mapper

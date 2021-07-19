@@ -17,7 +17,7 @@ import type {
   MemberMapReturn,
 } from '@automapper/types';
 import { MapFnClassId, TransformationType } from '@automapper/types';
-import { isEmpty, set, setMutate } from '../utils';
+import { isEmpty, set, setMutate, get } from '../utils';
 
 /**
  * Instruction on how to map a particular member on the destination
@@ -177,6 +177,9 @@ export function mapMutate<
       }
       setMutate(destinationObj, destinationMember, value);
     },
+    getMemberFn: (memberPath: string[] | undefined) => {
+      return get(destinationObj, memberPath) as Record<string, unknown>;
+    }
   });
 }
 
@@ -203,6 +206,7 @@ interface MapParameter<TSource extends Dictionary<TSource> = any,
  * @param {Mapper} mapper - the mapper instance
  * @param {ErrorHandler} errorHandler - the error handler
  * @param {Function} setMemberFn
+ * @param {Function} getMemberFn
  * @param {boolean} [isMapArray = false] - whether the map operation is in Array mode
  */
 function map<TSource extends Dictionary<TSource> = any,
@@ -213,6 +217,7 @@ function map<TSource extends Dictionary<TSource> = any,
   mapper,
   errorHandler,
   setMemberFn,
+  getMemberFn,
   isMapArray = false,
 }: MapParameter) {
   // destructure the mapping
@@ -341,6 +346,28 @@ Original error: ${originalError}`;
           nestedSourceMemberKey,
           nestedDestinationMemberKey
         );
+
+        // nested mutate
+        const destinationMemberValue = getMemberFn?.(destinationMemberPath);
+        if (destinationMemberValue !== undefined) {
+          map({
+            sourceObj: mapInitializedValue,
+            mapping: nestedMapping!,
+            options: { extraArguments },
+            mapper,
+            errorHandler,
+            setMemberFn: (memberPath) => (value) => {
+              if (value !== undefined) {
+                setMutate(destinationMemberValue, memberPath, value);
+              }
+            },
+            getMemberFn: (memberPath) => {
+              return get(destinationMemberValue, memberPath) as Record<string, unknown>;
+            }
+          });
+          continue;
+        }
+
         // for nested model, we do not care about mutate or return. we will always need to return
         setMember(() =>
           map({

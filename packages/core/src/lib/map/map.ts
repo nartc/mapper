@@ -171,15 +171,8 @@ export function mapMutate<
     options,
     mapper,
     errorHandler,
-    setMemberFn: (destinationMember: string[]) => (value: unknown) => {
-      if (value === undefined) {
-        return;
-      }
-      setMutate(destinationObj, destinationMember, value);
-    },
-    getMemberFn: (memberPath: string[] | undefined) => {
-      return get(destinationObj, memberPath) as Record<string, unknown>;
-    }
+    setMemberFn: setMemberMutateFn(destinationObj),
+    getMemberFn: getMemberMutateFn(destinationObj)
   });
 }
 
@@ -356,14 +349,8 @@ Original error: ${originalError}`;
             options: { extraArguments },
             mapper,
             errorHandler,
-            setMemberFn: (memberPath) => (value) => {
-              if (value !== undefined) {
-                setMutate(destinationMemberValue, memberPath, value);
-              }
-            },
-            getMemberFn: (memberPath) => {
-              return get(destinationMemberValue, memberPath) as Record<string, unknown>;
-            }
+            setMemberFn: setMemberMutateFn(destinationMemberValue),
+            getMemberFn: getMemberMutateFn(destinationMemberValue)
           });
           continue;
         }
@@ -470,4 +457,16 @@ export function mapArray<
   }
 
   return destinationArray;
+}
+
+function setMemberMutateFn(destinationObj: Record<string, unknown>) {
+  return (destinationMember: string[]) => (value) => {
+    if (value !== undefined) {
+      setMutate(destinationObj, destinationMember, value);
+    }
+  };
+}
+
+function getMemberMutateFn(destinationObj: Record<string, unknown>) {
+  return (memberPath: string[] | undefined) => get(destinationObj, memberPath) as Record<string, unknown>;
 }

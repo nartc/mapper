@@ -130,18 +130,19 @@ export function mapReturn<
   errorHandler: ErrorHandler,
   isMapArray = false
 ): TDestination {
-  return map(
+  return map({
     sourceObj,
     mapping,
     options,
     mapper,
     errorHandler,
-    (destinationMemberPath: string[], destination: TDestination) =>
-      (value: unknown) => {
-        destination = set(destination, destinationMemberPath, value);
-      },
-    isMapArray
-  );
+    setMemberFn:
+      (destinationMemberPath: string[], destination: TDestination) =>
+        (value: unknown) => {
+          destination = set(destination, destinationMemberPath, value);
+        },
+    isMapArray,
+  });
 }
 
 /**
@@ -164,19 +165,34 @@ export function mapMutate<
   errorHandler: ErrorHandler,
   destinationObj: TDestination
 ): void {
-  map(
+  map({
     sourceObj,
     mapping,
     options,
     mapper,
     errorHandler,
-    (destinationMember: string[]) => (value: unknown) => {
+    setMemberFn: (destinationMember: string[]) => (value: unknown) => {
       if (value === undefined) {
         return;
       }
       setMutate(destinationObj, destinationMember, value);
-    }
-  );
+    },
+  });
+}
+
+interface MapParameter<TSource extends Dictionary<TSource> = any,
+  TDestination extends Dictionary<TDestination> = any> {
+  sourceObj: TSource;
+  mapping: Mapping<TSource, TDestination>;
+  options: MapOptions<TSource, TDestination>;
+  mapper: Mapper;
+  errorHandler: ErrorHandler;
+  setMemberFn: (
+    destinationMemberPath: string[],
+    destination?: TDestination,
+  ) => (value: unknown) => void;
+  getMemberFn?: (destinationMemberPath: string[] | undefined) => Record<string, unknown>;
+  isMapArray?: boolean;
 }
 
 /**
@@ -189,21 +205,16 @@ export function mapMutate<
  * @param {Function} setMemberFn
  * @param {boolean} [isMapArray = false] - whether the map operation is in Array mode
  */
-function map<
-  TSource extends Dictionary<TSource> = any,
-  TDestination extends Dictionary<TDestination> = any
->(
-  sourceObj: TSource,
-  mapping: Mapping<TSource, TDestination>,
-  options: MapOptions<TSource, TDestination>,
-  mapper: Mapper,
-  errorHandler: ErrorHandler,
-  setMemberFn: (
-    destinationMemberPath: string[],
-    destination?: TDestination
-  ) => (value: unknown) => void,
-  isMapArray = false
-) {
+function map<TSource extends Dictionary<TSource> = any,
+  TDestination extends Dictionary<TDestination> = any>({
+  sourceObj,
+  mapping,
+  options,
+  mapper,
+  errorHandler,
+  setMemberFn,
+  isMapArray = false,
+}: MapParameter) {
   // destructure the mapping
   let [[, destination], propsToMap, [mappingBeforeAction, mappingAfterAction]] =
     mapping;
@@ -332,16 +343,16 @@ Original error: ${originalError}`;
         );
         // for nested model, we do not care about mutate or return. we will always need to return
         setMember(() =>
-          map(
-            mapInitializedValue,
-            nestedMapping!,
-            { extraArguments },
+          map({
+            sourceObj: mapInitializedValue,
+            mapping: nestedMapping!,
+            options: { extraArguments },
             mapper,
             errorHandler,
-            (memberPath, nestedDestination) => (value) => {
+            setMemberFn: (memberPath, nestedDestination) => (value) => {
               nestedDestination = set(nestedDestination, memberPath, value);
-            }
-          )
+            },
+          }),
         );
         continue;
       }

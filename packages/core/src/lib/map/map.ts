@@ -136,11 +136,7 @@ export function mapReturn<
     options,
     mapper,
     errorHandler,
-    setMemberFn:
-      (destinationMemberPath: string[], destination: TDestination) =>
-        (value: unknown) => {
-          destination = set(destination, destinationMemberPath, value);
-        },
+    setMemberFn: setMemberReturnFn,
     isMapArray,
   });
 }
@@ -363,9 +359,7 @@ Original error: ${originalError}`;
             options: { extraArguments },
             mapper,
             errorHandler,
-            setMemberFn: (memberPath, nestedDestination) => (value) => {
-              nestedDestination = set(nestedDestination, memberPath, value);
-            },
+            setMemberFn: setMemberReturnFn,
           }),
         );
         continue;
@@ -469,4 +463,13 @@ function setMemberMutateFn(destinationObj: Record<string, unknown>) {
 
 function getMemberMutateFn(destinationObj: Record<string, unknown>) {
   return (memberPath: string[] | undefined) => get(destinationObj, memberPath) as Record<string, unknown>;
+}
+
+function setMemberReturnFn<TDestination extends Dictionary<TDestination> = any>(
+  destinationMemberPath: string[],
+  destination: TDestination
+) {
+  return (value: unknown) => {
+    destination = set(destination, destinationMemberPath, value);
+  };
 }

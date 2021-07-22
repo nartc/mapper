@@ -12,4 +12,5 @@ module.exports = {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../../coverage/packages/classes/mapped-types',
   setupFiles: ['./jest-setup.ts'],
+  testEnvironment: 'node',
 };

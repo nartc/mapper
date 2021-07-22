@@ -16,21 +16,21 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@automapper/core": ["packages/core/src/index.ts"],
       "@automapper/classes": ["packages/classes/src/index.ts"],
-      "@automapper/types": ["packages/types/src/index.ts"],
-      "@automapper/integration-test": [
-        "packages/integration-test/src/index.ts"
-      ],
-      "@automapper/pojos": ["packages/pojos/src/index.ts"],
-      "@automapper/nestjs": ["packages/nestjs/src/index.ts"],
       "@automapper/classes/experimental/transformer-plugin": [
         "packages/classes/experimental/transformer-plugin/src/index.ts"
       ],
-      "@automapper/sequelize": ["packages/sequelize/src/index.ts"],
       "@automapper/classes/mapped-types": [
         "packages/classes/mapped-types/src/index.ts"
-      ]
+      ],
+      "@automapper/core": ["packages/core/src/index.ts"],
+      "@automapper/integration-test": [
+        "packages/integration-test/src/index.ts"
+      ],
+      "@automapper/nestjs": ["packages/nestjs/src/index.ts"],
+      "@automapper/pojos": ["packages/pojos/src/index.ts"],
+      "@automapper/sequelize": ["packages/sequelize/src/index.ts"],
+      "@automapper/types": ["packages/types/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

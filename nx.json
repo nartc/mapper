@@ -23,20 +23,20 @@
     }
   },
   "projects": {
-    "core": {
-      "tags": ["scope:core", "type:library"]
-    },
     "classes": {
       "tags": ["scope:classes", "type:plugin"]
     },
-    "types": {
-      "tags": ["type:type-defs"]
+    "classes-experimental-transformer-plugin": {
+      "tags": ["scope:classes", "type:transformer-plugin"]
+    },
+    "classes-mapped-types": {
+      "tags": ["scope:classes", "type:utility"]
+    },
+    "core": {
+      "tags": ["scope:core", "type:library"]
     },
     "integration-test": {
       "tags": ["type:test"]
-    },
-    "pojos": {
-      "tags": ["type:plugin"]
     },
     "nestjs": {
       "tags": ["type:integration"]
@@ -44,18 +44,26 @@
     "nestjs-integration-test": {
       "tags": ["type:test"]
     },
-    "classes-experimental-transformer-plugin": {
-      "tags": ["scope:classes", "type:transformer-plugin"]
+    "pojos": {
+      "tags": ["type:plugin"]
     },
     "sequelize": {
       "tags": ["type:plugin"]
     },
-    "classes-mapped-types": {
-      "tags": ["scope:classes", "type:utility"]
+    "types": {
+      "tags": ["type:type-defs"]
     }
   },
   "workspaceLayout": {
     "appsDir": "packages",
     "libsDir": "packages"
+  },
+  "targetDependencies": {
+    "build": [
+      {
+        "target": "build",
+        "projects": "dependencies"
+      }
+    ]
   }
 }

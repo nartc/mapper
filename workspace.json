@@ -1,6 +1,117 @@
 {
   "version": 1,
   "projects": {
+    "classes": {
+      "root": "packages/classes",
+      "sourceRoot": "packages/classes/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["packages/classes/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "packages/classes/jest.config.js",
+            "passWithNoTests": true
+          },
+          "outputs": ["coverage/packages/classes"]
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/packages/classes",
+            "tsConfig": "packages/classes/tsconfig.lib.json",
+            "packageJson": "packages/classes/package.json",
+            "main": "packages/classes/src/index.ts",
+            "assets": ["packages/classes/*.md"],
+            "buildableProjectDepsInPackageJsonType": "peerDependencies"
+          },
+          "outputs": ["{options.outputPath}"]
+        },
+        "publish": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "command": "npm publish",
+            "cwd": "dist/packages/classes"
+          }
+        }
+      }
+    },
+    "classes-experimental-transformer-plugin": {
+      "root": "packages/classes/experimental/transformer-plugin",
+      "sourceRoot": "packages/classes/experimental/transformer-plugin/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "packages/classes/experimental/transformer-plugin/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/packages/classes/experimental/transformer-plugin"
+          ],
+          "options": {
+            "jestConfig": "packages/classes/experimental/transformer-plugin/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/packages/classes/experimental/transformer-plugin",
+            "tsConfig": "packages/classes/experimental/transformer-plugin/tsconfig.lib.json",
+            "packageJson": "packages/classes/experimental/transformer-plugin/package.json",
+            "main": "packages/classes/experimental/transformer-plugin/src/index.ts",
+            "assets": ["packages/classes/experimental/transformer-plugin/*.md"],
+            "buildableProjectDepsInPackageJsonType": "peerDependencies"
+          }
+        }
+      }
+    },
+    "classes-mapped-types": {
+      "root": "packages/classes/mapped-types",
+      "sourceRoot": "packages/classes/mapped-types/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["packages/classes/mapped-types/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/packages/classes/mapped-types"],
+          "options": {
+            "jestConfig": "packages/classes/mapped-types/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/packages/classes/mapped-types",
+            "tsConfig": "packages/classes/mapped-types/tsconfig.lib.json",
+            "packageJson": "packages/classes/mapped-types/package.json",
+            "main": "packages/classes/mapped-types/src/index.ts",
+            "assets": ["packages/classes/mapped-types/*.md"],
+            "buildableProjectDepsInPackageJsonType": "peerDependencies"
+          }
+        }
+      }
+    },
     "core": {
       "root": "packages/core",
       "sourceRoot": "packages/core/src",
@@ -55,80 +166,6 @@
         }
       }
     },
-    "classes": {
-      "root": "packages/classes",
-      "sourceRoot": "packages/classes/src",
-      "projectType": "library",
-      "schematics": {},
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["packages/classes/**/*.ts"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "packages/classes/jest.config.js",
-            "passWithNoTests": true
-          },
-          "outputs": ["coverage/packages/classes"]
-        },
-        "build": {
-          "builder": "@nrwl/node:package",
-          "options": {
-            "outputPath": "dist/packages/classes",
-            "tsConfig": "packages/classes/tsconfig.lib.json",
-            "packageJson": "packages/classes/package.json",
-            "main": "packages/classes/src/index.ts",
-            "assets": ["packages/classes/*.md"],
-            "buildableProjectDepsInPackageJsonType": "peerDependencies"
-          },
-          "outputs": ["{options.outputPath}"]
-        },
-        "publish": {
-          "builder": "@nrwl/workspace:run-commands",
-          "options": {
-            "command": "npm publish",
-            "cwd": "dist/packages/classes"
-          }
-        }
-      }
-    },
-    "types": {
-      "root": "packages/types",
-      "sourceRoot": "packages/types/src",
-      "projectType": "library",
-      "schematics": {},
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["packages/types/**/*.ts"]
-          }
-        },
-        "build": {
-          "builder": "@nrwl/node:package",
-          "options": {
-            "outputPath": "dist/packages/types",
-            "tsConfig": "packages/types/tsconfig.lib.json",
-            "packageJson": "packages/types/package.json",
-            "main": "packages/types/src/index.ts",
-            "assets": ["packages/types/*.md"],
-            "buildableProjectDepsInPackageJsonType": "peerDependencies"
-          },
-          "outputs": ["{options.outputPath}"]
-        },
-        "publish": {
-          "builder": "@nrwl/workspace:run-commands",
-          "options": {
-            "command": "npm publish",
-            "cwd": "dist/packages/types"
-          }
-        }
-      }
-    },
     "integration-test": {
       "root": "packages/integration-test",
       "sourceRoot": "packages/integration-test/src",
@@ -148,46 +185,6 @@
             "passWithNoTests": true
           },
           "outputs": ["coverage/packages/integration-test"]
-        }
-      }
-    },
-    "pojos": {
-      "root": "packages/pojos",
-      "sourceRoot": "packages/pojos/src",
-      "projectType": "library",
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["packages/pojos/**/*.ts"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/packages/pojos"],
-          "options": {
-            "jestConfig": "packages/pojos/jest.config.js",
-            "passWithNoTests": true
-          }
-        },
-        "build": {
-          "builder": "@nrwl/node:package",
-          "outputs": ["{options.outputPath}"],
-          "options": {
-            "outputPath": "dist/packages/pojos",
-            "tsConfig": "packages/pojos/tsconfig.lib.json",
-            "packageJson": "packages/pojos/package.json",
-            "main": "packages/pojos/src/index.ts",
-            "assets": ["packages/pojos/*.md"],
-            "buildableProjectDepsInPackageJsonType": "peerDependencies"
-          }
-        },
-        "publish": {
-          "builder": "@nrwl/workspace:run-commands",
-          "options": {
-            "command": "npm publish",
-            "cwd": "dist/packages/pojos"
-          }
         }
       }
     },
@@ -276,26 +273,22 @@
         }
       }
     },
-    "classes-experimental-transformer-plugin": {
-      "root": "packages/classes/experimental/transformer-plugin",
-      "sourceRoot": "packages/classes/experimental/transformer-plugin/src",
+    "pojos": {
+      "root": "packages/pojos",
+      "sourceRoot": "packages/pojos/src",
       "projectType": "library",
       "architect": {
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "packages/classes/experimental/transformer-plugin/**/*.ts"
-            ]
+            "lintFilePatterns": ["packages/pojos/**/*.ts"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/packages/classes/experimental/transformer-plugin"
-          ],
+          "outputs": ["coverage/packages/pojos"],
           "options": {
-            "jestConfig": "packages/classes/experimental/transformer-plugin/jest.config.js",
+            "jestConfig": "packages/pojos/jest.config.js",
             "passWithNoTests": true
           }
         },
@@ -303,12 +296,19 @@
           "builder": "@nrwl/node:package",
           "outputs": ["{options.outputPath}"],
           "options": {
-            "outputPath": "dist/packages/classes/experimental/transformer-plugin",
-            "tsConfig": "packages/classes/experimental/transformer-plugin/tsconfig.lib.json",
-            "packageJson": "packages/classes/experimental/transformer-plugin/package.json",
-            "main": "packages/classes/experimental/transformer-plugin/src/index.ts",
-            "assets": ["packages/classes/experimental/transformer-plugin/*.md"],
+            "outputPath": "dist/packages/pojos",
+            "tsConfig": "packages/pojos/tsconfig.lib.json",
+            "packageJson": "packages/pojos/package.json",
+            "main": "packages/pojos/src/index.ts",
+            "assets": ["packages/pojos/*.md"],
             "buildableProjectDepsInPackageJsonType": "peerDependencies"
+          }
+        },
+        "publish": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "command": "npm publish",
+            "cwd": "dist/packages/pojos"
           }
         }
       }
@@ -353,35 +353,35 @@
         }
       }
     },
-    "classes-mapped-types": {
-      "root": "packages/classes/mapped-types",
-      "sourceRoot": "packages/classes/mapped-types/src",
+    "types": {
+      "root": "packages/types",
+      "sourceRoot": "packages/types/src",
       "projectType": "library",
+      "schematics": {},
       "architect": {
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["packages/classes/mapped-types/**/*.ts"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/packages/classes/mapped-types"],
-          "options": {
-            "jestConfig": "packages/classes/mapped-types/jest.config.js",
-            "passWithNoTests": true
+            "lintFilePatterns": ["packages/types/**/*.ts"]
           }
         },
         "build": {
           "builder": "@nrwl/node:package",
-          "outputs": ["{options.outputPath}"],
           "options": {
-            "outputPath": "dist/packages/classes/mapped-types",
-            "tsConfig": "packages/classes/mapped-types/tsconfig.lib.json",
-            "packageJson": "packages/classes/mapped-types/package.json",
-            "main": "packages/classes/mapped-types/src/index.ts",
-            "assets": ["packages/classes/mapped-types/*.md"],
+            "outputPath": "dist/packages/types",
+            "tsConfig": "packages/types/tsconfig.lib.json",
+            "packageJson": "packages/types/package.json",
+            "main": "packages/types/src/index.ts",
+            "assets": ["packages/types/*.md"],
             "buildableProjectDepsInPackageJsonType": "peerDependencies"
+          },
+          "outputs": ["{options.outputPath}"]
+        },
+        "publish": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "command": "npm publish",
+            "cwd": "dist/packages/types"
           }
         }
       }

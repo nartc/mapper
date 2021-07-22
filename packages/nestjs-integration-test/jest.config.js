@@ -12,4 +12,5 @@ module.exports = {
   moduleFileExtensions: ['ts', 'js', 'html'],
   coverageDirectory: '../../coverage/packages/nestjs-integration-test',
   setupFiles: ['./jest-setup.ts'],
+  testEnvironment: 'node',
 };

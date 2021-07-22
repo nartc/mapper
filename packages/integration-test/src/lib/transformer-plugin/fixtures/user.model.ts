@@ -98,16 +98,42 @@ var StringEnum;
     StringEnum["BAR"] = "bar";
 })(StringEnum || (StringEnum = {}));
 class Address {
+    street;
     static __AUTOMAPPER_METADATA_FACTORY__() {
         return [["street", { typeFn: () => String }]];
     }
 }
 class Profile {
+    bio;
+    age;
+    role;
+    roles;
+    maybeRole;
+    maybeRoles;
+    nullableRole;
+    stringEnum;
+    stringEnums;
+    maybeStringEnum;
+    maybeStringEnums;
+    nullableStringEnum;
     static __AUTOMAPPER_METADATA_FACTORY__() {
         return [["bio", { typeFn: () => String }], ["age", { typeFn: () => String }], ["role", { typeFn: () => Number }], ["roles", { typeFn: () => Number }], ["maybeRole", { typeFn: () => Number }], ["maybeRoles", { typeFn: () => Number }], ["nullableRole", { typeFn: () => Number }], ["stringEnum", { typeFn: () => String }], ["stringEnums", { typeFn: () => String }], ["maybeStringEnum", { typeFn: () => String }], ["maybeStringEnums", { typeFn: () => String }], ["nullableStringEnum", { typeFn: () => String }]];
     }
 }
 class User {
+    firstName;
+    lastName;
+    profile;
+    addresses;
+    otherAddresses;
+    flag;
+    foo;
+    nullable;
+    primitives;
+    nullableType;
+    maybePrimitives;
+    nullablePrimitives;
+    maybeType;
     static __AUTOMAPPER_METADATA_FACTORY__() {
         return [["firstName", { typeFn: () => String }], ["lastName", { typeFn: () => String }], ["profile", { typeFn: () => Profile, depth: 0 }], ["addresses", { typeFn: () => Address, depth: 0 }], ["otherAddresses", { typeFn: () => Address, depth: 0 }], ["flag", { typeFn: () => Boolean }], ["foo", { typeFn: () => null, depth: 0 }], ["nullable", { typeFn: () => String }], ["primitives", { typeFn: () => String }], ["nullableType", { typeFn: () => Address, depth: 0 }], ["maybePrimitives", { typeFn: () => String }], ["nullablePrimitives", { typeFn: () => String }], ["maybeType", { typeFn: () => Address, depth: 0 }]];
     }
@@ -126,16 +152,42 @@ var StringEnum;
     StringEnum["BAR"] = "bar";
 })(StringEnum || (StringEnum = {}));
 class Address {
+    street;
     static __AUTOMAPPER_METADATA_FACTORY__() {
         return [["street", { typeFn: () => String }]];
     }
 }
 class Profile {
+    bio;
+    age;
+    role;
+    roles;
+    maybeRole;
+    maybeRoles;
+    nullableRole;
+    stringEnum;
+    stringEnums;
+    maybeStringEnum;
+    maybeStringEnums;
+    nullableStringEnum;
     static __AUTOMAPPER_METADATA_FACTORY__() {
         return [["bio", { typeFn: () => String }], ["age", { typeFn: () => String }], ["role", { typeFn: () => Number }], ["roles", { typeFn: () => Number }], ["maybeRole", { typeFn: () => Number }], ["maybeRoles", { typeFn: () => Number }], ["nullableRole", { typeFn: () => Number }], ["stringEnum", { typeFn: () => String }], ["stringEnums", { typeFn: () => String }], ["maybeStringEnum", { typeFn: () => String }], ["maybeStringEnums", { typeFn: () => String }], ["nullableStringEnum", { typeFn: () => String }]];
     }
 }
 export class User {
+    firstName;
+    lastName;
+    profile;
+    addresses;
+    otherAddresses;
+    flag;
+    foo;
+    nullable;
+    primitives;
+    nullableType;
+    maybePrimitives;
+    nullablePrimitives;
+    maybeType;
     static __AUTOMAPPER_METADATA_FACTORY__() {
         return [["firstName", { typeFn: () => String }], ["lastName", { typeFn: () => String }], ["profile", { typeFn: () => Profile, depth: 0 }], ["addresses", { typeFn: () => Address, depth: 0 }], ["otherAddresses", { typeFn: () => Address, depth: 0 }], ["flag", { typeFn: () => Boolean }], ["foo", { typeFn: () => null, depth: 0 }], ["nullable", { typeFn: () => String }], ["primitives", { typeFn: () => String }], ["nullableType", { typeFn: () => Address, depth: 0 }], ["maybePrimitives", { typeFn: () => String }], ["nullablePrimitives", { typeFn: () => String }], ["maybeType", { typeFn: () => Address, depth: 0 }]];
     }

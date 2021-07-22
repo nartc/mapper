@@ -62,7 +62,11 @@ describe('AppController', () => {
     return request(app.getHttpServer())
       .get('/raw-array')
       .expect(200)
-      .expect(JSON.parse(JSON.stringify([getUserVm()])));
+      .expect((response) => {
+        expect(response.body).toEqual(
+          JSON.parse(JSON.stringify([getUserVm()]))
+        );
+      });
   });
 
   it('POST /from-body', () => {

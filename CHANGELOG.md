@@ -1,3 +1,27 @@
+## [5.0.0](https://github.com/nartc/mapper/compare/4.2.2...5.0.0) (2021-07-22)
+
+### ⚠ BREAKING CHANGES
+
+- Cutting a new major version due upgrade to NestJS v8
+
+### Features
+
+- update Nx ([04e3673](https://github.com/nartc/mapper/commit/04e3673c34fe97bb9ed1c0d4fa189941a9513b40))
+- upgrade nest 8 ([f23ee9a](https://github.com/nartc/mapper/commit/f23ee9a5148886ec1e112572b821164a59cb8c34)), closes [#313](https://github.com/nartc/mapper/issues/313)
+
+### Bug Fixes
+
+- should not map undefined value when mapMutate ([#317](https://github.com/nartc/mapper/issues/317)) ([416e498](https://github.com/nartc/mapper/commit/416e498c9b7007c313365814c02e6beadf50ef5f))
+
+### Refactor
+
+- **core:** extract setMemberReturn function ([b67d5ee](https://github.com/nartc/mapper/commit/b67d5ee1d3d8e2bf1a26aafa1a08656c3a8a1282))
+
+### Documentations
+
+- add [@huybn5776](https://github.com/huybn5776) as a contributor ([2414b79](https://github.com/nartc/mapper/commit/2414b792b739ff799c05ed1d6da3f010f03181b0))
+- update docusaurus and adjust extend plugin example ([023b67d](https://github.com/nartc/mapper/commit/023b67dfcd1938a15fb128bd6059027b187f7f5a)), closes [#320](https://github.com/nartc/mapper/issues/320)
+
 ### [4.2.2](https://github.com/nartc/mapper/compare/4.2.1...4.2.2) (2021-07-08)
 
 ### Refactor

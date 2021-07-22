@@ -1,3 +1,9 @@
+### [5.0.1](https://github.com/nartc/mapper/compare/5.0.0...5.0.1) (2021-07-22)
+
+### Bug Fixes
+
+- **nestjs:** bump peerDeps ([11fbc5c](https://github.com/nartc/mapper/commit/11fbc5cc3a4838792920874a956bad9ebc4eaec9))
+
 ## [5.0.0](https://github.com/nartc/mapper/compare/4.2.2...5.0.0) (2021-07-22)
 
 ### ⚠ BREAKING CHANGES

@@ -2,7 +2,7 @@
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 
-[![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors-)
 
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
@@ -70,6 +70,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/micalevisk"><img src="https://avatars.githubusercontent.com/u/13461315?v=4?s=75" width="75px;" alt=""/><br /><sub><b>Micael Levi L. Cavalcante</b></sub></a><br /><a href="https://github.com/nartc/mapper/commits?author=micalevisk" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/AliYusuf95"><img src="https://avatars.githubusercontent.com/u/17704100?v=4?s=75" width="75px;" alt=""/><br /><sub><b>Ali Yusuf</b></sub></a><br /><a href="https://github.com/nartc/mapper/commits?author=AliYusuf95" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/robsonhermes"><img src="https://avatars.githubusercontent.com/u/26451017?v=4?s=75" width="75px;" alt=""/><br /><sub><b>Robson Hermes</b></sub></a><br /><a href="https://github.com/nartc/mapper/commits?author=robsonhermes" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/huybn5776"><img src="https://avatars.githubusercontent.com/u/6702287?v=4?s=75" width="75px;" alt=""/><br /><sub><b>Huybn</b></sub></a><br /><a href="https://github.com/nartc/mapper/commits?author=huybn5776" title="Code">💻</a></td>
   </tr>
 </table>
 

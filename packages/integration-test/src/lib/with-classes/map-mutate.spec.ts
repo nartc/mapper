@@ -21,6 +21,8 @@ import {
   userProfile,
 } from './fixtures/profiles/user.profile';
 import { getPascalUser, getUser } from './utils/get-user';
+import { UserProfileVm } from './fixtures/models/user-profile';
+import { AvatarVm } from './fixtures/models/avatar';
 
 describe('Map Mutate', () => {
   const [mapper] = setupClasses('mapMutate');
@@ -105,6 +107,34 @@ describe('Map Mutate', () => {
     expect(user.lastName).toEqual(vm.last);
     expect(user.profile).toEqual(originalUser.profile);
     expect(user.job).toEqual(originalUser.job);
+  });
+
+  it('should not map undefined properly of nested field', () => {
+    mapper
+      .addProfile(addressProfile)
+      .addProfile(avatarProfile)
+      .addProfile(userProfileProfile)
+      .addProfile(userProfile);
+
+    const originalUser = getUser();
+    const user = { ...getUser() };
+
+    const vm = new UserVm();
+    vm.profile = {
+      bio: 'Outgoing-ish',
+      avatar: { url: 'uniform-resource-locator.com' } as AvatarVm,
+    } as UserProfileVm;
+
+    mapper.map(vm, User, UserVm, user);
+    expect(user.profile.bio).toEqual(vm.profile.bio);
+    expect(user.profile.avatar.url).toEqual(vm.profile.avatar.url);
+
+    expect(user.profile.birthday).toEqual(originalUser.profile.birthday);
+    expect(user.profile.avatar.source).toEqual(originalUser.profile.avatar.source);
+    expect(user.profile.avatar.shouldIgnore).toEqual(originalUser.profile.avatar.shouldIgnore);
+    expect(user.profile.avatar.shouldBeSubstituted).toEqual(originalUser.profile.avatar.shouldBeSubstituted);
+    expect(user.profile.avatar.forCondition).toEqual(originalUser.profile.avatar.forCondition);
+    expect(user.profile.addresses).toEqual(originalUser.profile.addresses);
   });
 
   it('should map correctly with condition, preCondition, and nullSubstitution', () => {

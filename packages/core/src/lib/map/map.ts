@@ -17,7 +17,7 @@ import type {
   MemberMapReturn,
 } from '@automapper/types';
 import { MapFnClassId, TransformationType } from '@automapper/types';
-import { isEmpty, set, setMutate } from '../utils';
+import { isEmpty, set, setMutate, get } from '../utils';
 
 /**
  * Instruction on how to map a particular member on the destination
@@ -130,18 +130,15 @@ export function mapReturn<
   errorHandler: ErrorHandler,
   isMapArray = false
 ): TDestination {
-  return map(
+  return map({
     sourceObj,
     mapping,
     options,
     mapper,
     errorHandler,
-    (destinationMemberPath: string[], destination: TDestination) =>
-      (value: unknown) => {
-        destination = set(destination, destinationMemberPath, value);
-      },
-    isMapArray
-  );
+    setMemberFn: setMemberReturnFn,
+    isMapArray,
+  });
 }
 
 /**
@@ -164,19 +161,30 @@ export function mapMutate<
   errorHandler: ErrorHandler,
   destinationObj: TDestination
 ): void {
-  map(
+  map({
     sourceObj,
     mapping,
     options,
     mapper,
     errorHandler,
-    (destinationMember: string[]) => (value: unknown) => {
-      if (value === undefined) {
-        return;
-      }
-      setMutate(destinationObj, destinationMember, value);
-    }
-  );
+    setMemberFn: setMemberMutateFn(destinationObj),
+    getMemberFn: getMemberMutateFn(destinationObj)
+  });
+}
+
+interface MapParameter<TSource extends Dictionary<TSource> = any,
+  TDestination extends Dictionary<TDestination> = any> {
+  sourceObj: TSource;
+  mapping: Mapping<TSource, TDestination>;
+  options: MapOptions<TSource, TDestination>;
+  mapper: Mapper;
+  errorHandler: ErrorHandler;
+  setMemberFn: (
+    destinationMemberPath: string[],
+    destination?: TDestination,
+  ) => (value: unknown) => void;
+  getMemberFn?: (destinationMemberPath: string[] | undefined) => Record<string, unknown>;
+  isMapArray?: boolean;
 }
 
 /**
@@ -187,23 +195,20 @@ export function mapMutate<
  * @param {Mapper} mapper - the mapper instance
  * @param {ErrorHandler} errorHandler - the error handler
  * @param {Function} setMemberFn
+ * @param {Function} getMemberFn
  * @param {boolean} [isMapArray = false] - whether the map operation is in Array mode
  */
-function map<
-  TSource extends Dictionary<TSource> = any,
-  TDestination extends Dictionary<TDestination> = any
->(
-  sourceObj: TSource,
-  mapping: Mapping<TSource, TDestination>,
-  options: MapOptions<TSource, TDestination>,
-  mapper: Mapper,
-  errorHandler: ErrorHandler,
-  setMemberFn: (
-    destinationMemberPath: string[],
-    destination?: TDestination
-  ) => (value: unknown) => void,
-  isMapArray = false
-) {
+function map<TSource extends Dictionary<TSource> = any,
+  TDestination extends Dictionary<TDestination> = any>({
+  sourceObj,
+  mapping,
+  options,
+  mapper,
+  errorHandler,
+  setMemberFn,
+  getMemberFn,
+  isMapArray = false,
+}: MapParameter) {
   // destructure the mapping
   let [[, destination], propsToMap, [mappingBeforeAction, mappingAfterAction]] =
     mapping;
@@ -330,18 +335,32 @@ Original error: ${originalError}`;
           nestedSourceMemberKey,
           nestedDestinationMemberKey
         );
-        // for nested model, we do not care about mutate or return. we will always need to return
-        setMember(() =>
-          map(
-            mapInitializedValue,
-            nestedMapping!,
-            { extraArguments },
+
+        // nested mutate
+        const destinationMemberValue = getMemberFn?.(destinationMemberPath);
+        if (destinationMemberValue !== undefined) {
+          map({
+            sourceObj: mapInitializedValue,
+            mapping: nestedMapping!,
+            options: { extraArguments },
             mapper,
             errorHandler,
-            (memberPath, nestedDestination) => (value) => {
-              nestedDestination = set(nestedDestination, memberPath, value);
-            }
-          )
+            setMemberFn: setMemberMutateFn(destinationMemberValue),
+            getMemberFn: getMemberMutateFn(destinationMemberValue)
+          });
+          continue;
+        }
+
+        // for nested model, we do not care about mutate or return. we will always need to return
+        setMember(() =>
+          map({
+            sourceObj: mapInitializedValue,
+            mapping: nestedMapping!,
+            options: { extraArguments },
+            mapper,
+            errorHandler,
+            setMemberFn: setMemberReturnFn,
+          }),
         );
         continue;
       }
@@ -432,4 +451,25 @@ export function mapArray<
   }
 
   return destinationArray;
+}
+
+function setMemberMutateFn(destinationObj: Record<string, unknown>) {
+  return (destinationMember: string[]) => (value) => {
+    if (value !== undefined) {
+      setMutate(destinationObj, destinationMember, value);
+    }
+  };
+}
+
+function getMemberMutateFn(destinationObj: Record<string, unknown>) {
+  return (memberPath: string[] | undefined) => get(destinationObj, memberPath) as Record<string, unknown>;
+}
+
+function setMemberReturnFn<TDestination extends Dictionary<TDestination> = any>(
+  destinationMemberPath: string[],
+  destination: TDestination
+) {
+  return (value: unknown) => {
+    destination = set(destination, destinationMemberPath, value);
+  };
 }

@@ -34,7 +34,7 @@ const customClasses = (errorHandler: ErrorHandler) => {
 
   // customize the preMap
   originalClasses.preMap = (...args) => {
-    const originalPreMapResult = originalPreMap(...args);
+    const originalPreMapResult = originalPreMap.apply(originalClasses, args);
     nullify(originalPreMapResult[0]);
     return originalPreMapResult;
   };

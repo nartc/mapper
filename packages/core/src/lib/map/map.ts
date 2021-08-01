@@ -1,4 +1,3 @@
-/* eslint-disable prefer-const */
 import type {
   ConditionReturn,
   ConvertUsingReturn,
@@ -17,7 +16,7 @@ import type {
   MemberMapReturn,
 } from '@automapper/types';
 import { MapFnClassId, TransformationType } from '@automapper/types';
-import { isEmpty, set, setMutate, get } from '../utils';
+import { get, isEmpty, set, setMutate } from '../utils';
 
 /**
  * Instruction on how to map a particular member on the destination
@@ -168,12 +167,14 @@ export function mapMutate<
     mapper,
     errorHandler,
     setMemberFn: setMemberMutateFn(destinationObj),
-    getMemberFn: getMemberMutateFn(destinationObj)
+    getMemberFn: getMemberMutateFn(destinationObj),
   });
 }
 
-interface MapParameter<TSource extends Dictionary<TSource> = any,
-  TDestination extends Dictionary<TDestination> = any> {
+interface MapParameter<
+  TSource extends Dictionary<TSource> = any,
+  TDestination extends Dictionary<TDestination> = any
+> {
   sourceObj: TSource;
   mapping: Mapping<TSource, TDestination>;
   options: MapOptions<TSource, TDestination>;
@@ -181,9 +182,11 @@ interface MapParameter<TSource extends Dictionary<TSource> = any,
   errorHandler: ErrorHandler;
   setMemberFn: (
     destinationMemberPath: string[],
-    destination?: TDestination,
+    destination?: TDestination
   ) => (value: unknown) => void;
-  getMemberFn?: (destinationMemberPath: string[] | undefined) => Record<string, unknown>;
+  getMemberFn?: (
+    destinationMemberPath: string[] | undefined
+  ) => Record<string, unknown>;
   isMapArray?: boolean;
 }
 
@@ -198,8 +201,10 @@ interface MapParameter<TSource extends Dictionary<TSource> = any,
  * @param {Function} getMemberFn
  * @param {boolean} [isMapArray = false] - whether the map operation is in Array mode
  */
-function map<TSource extends Dictionary<TSource> = any,
-  TDestination extends Dictionary<TDestination> = any>({
+function map<
+  TSource extends Dictionary<TSource> = any,
+  TDestination extends Dictionary<TDestination> = any
+>({
   sourceObj,
   mapping,
   options,
@@ -210,8 +215,11 @@ function map<TSource extends Dictionary<TSource> = any,
   isMapArray = false,
 }: MapParameter) {
   // destructure the mapping
-  let [[, destination], propsToMap, [mappingBeforeAction, mappingAfterAction]] =
-    mapping;
+  const [
+    [, destination],
+    propsToMap,
+    [mappingBeforeAction, mappingAfterAction],
+  ] = mapping;
 
   // initialize an array of keys that have already been configured
   const configuredKeys: string[] = [];
@@ -346,7 +354,7 @@ Original error: ${originalError}`;
             mapper,
             errorHandler,
             setMemberFn: setMemberMutateFn(destinationMemberValue),
-            getMemberFn: getMemberMutateFn(destinationMemberValue)
+            getMemberFn: getMemberMutateFn(destinationMemberValue),
           });
           continue;
         }
@@ -360,7 +368,7 @@ Original error: ${originalError}`;
             mapper,
             errorHandler,
             setMemberFn: setMemberReturnFn,
-          }),
+          })
         );
         continue;
       }
@@ -383,7 +391,7 @@ Original error: ${originalError}`;
   }
 
   // After map
-  // Do not map for when in Map Array mode
+  // Do not run for when in Map Array mode
   if (!isMapArray) {
     const afterMap = mapAfterAction ?? mappingAfterAction;
     if (afterMap) {
@@ -418,7 +426,7 @@ export function mapArray<
   errorHandler: ErrorHandler
 ) {
   // initialize an empty array
-  let destinationArray: TDestination[] = [];
+  const destinationArray: TDestination[] = [];
 
   // destructure mapOptions
   const { beforeMap, afterMap, extraArguments } = options ?? {};
@@ -462,7 +470,8 @@ function setMemberMutateFn(destinationObj: Record<string, unknown>) {
 }
 
 function getMemberMutateFn(destinationObj: Record<string, unknown>) {
-  return (memberPath: string[] | undefined) => get(destinationObj, memberPath) as Record<string, unknown>;
+  return (memberPath: string[] | undefined) =>
+    get(destinationObj, memberPath) as Record<string, unknown>;
 }
 
 function setMemberReturnFn<TDestination extends Dictionary<TDestination> = any>(

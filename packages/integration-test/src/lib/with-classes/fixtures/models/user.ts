@@ -11,10 +11,6 @@ export class User {
   profile!: UserProfile;
   @AutoMap({ typeFn: () => Job })
   job!: Job;
-
-  get fullName(): string {
-    return this.firstName + ' ' + this.lastName;
-  }
 }
 
 export class UserVm {

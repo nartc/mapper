@@ -24,11 +24,7 @@ export class UserProfileProfile extends AutomapperProfile {
         .createMap(UserProfile, UserProfileVm)
         .forMember(
           (d) => d.avatar,
-          mapWith(
-            () => AvatarVm,
-            (s) => s.avatar,
-            () => Avatar
-          )
+          mapWith(AvatarVm, Avatar, (s) => s.avatar)
         )
         .forMember(
           (d) => d.birthday,

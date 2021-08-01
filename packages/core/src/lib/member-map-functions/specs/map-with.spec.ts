@@ -4,13 +4,13 @@ import { mapWith } from '../map-with';
 
 describe('MapWithFunction', () => {
   const selector = (s: any) => s;
-  const withDestination = () => '';
-  const withSource = () => '';
+  const withDestination = '';
+  const withSource = '';
 
   const mapper = { map: jest.fn(), mapArray: jest.fn() };
 
   it('should return correctly', () => {
-    const mapWithFn = mapWith(withDestination, selector, withSource);
+    const mapWithFn = mapWith(withDestination, withSource, selector);
     expect(mapWithFn).toBeTruthy();
     expect(mapWithFn[MapFnClassId.type]).toEqual(TransformationType.MapWith);
     expect(mapWithFn[MapFnClassId.fn]).toBeInstanceOf(Function);
@@ -18,23 +18,19 @@ describe('MapWithFunction', () => {
   });
 
   it('should call mapper.map', () => {
-    const mapWithFn = mapWith(withDestination, selector, withSource);
+    const mapWithFn = mapWith(withDestination, withSource, selector);
     mapWithFn[MapFnClassId.fn]({}, mapper as unknown as Mapper);
-    expect(mapper.map).toHaveBeenCalledWith(
-      {},
-      withDestination(),
-      withSource()
-    );
+    expect(mapper.map).toHaveBeenCalledWith({}, withDestination, withSource);
   });
 
   it('should call mapper.mapArray', () => {
     const arrSelector = () => [];
-    const mapWithFn = mapWith(withDestination, arrSelector, withSource);
+    const mapWithFn = mapWith(withDestination, withSource, arrSelector);
     mapWithFn[MapFnClassId.fn]({}, mapper as unknown as Mapper);
     expect(mapper.mapArray).toHaveBeenCalledWith(
       [],
-      withDestination(),
-      withSource()
+      withDestination,
+      withSource
     );
   });
 });

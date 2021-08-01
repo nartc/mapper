@@ -24,11 +24,7 @@ export class FooProfile extends AutomapperProfile {
         )
         .forMember(
           (d) => d.barVm,
-          mapWith(
-            () => BarVm,
-            (s) => s.bar,
-            () => Bar
-          )
+          mapWith(BarVm, Bar, (s) => s.bar)
         );
     };
   }

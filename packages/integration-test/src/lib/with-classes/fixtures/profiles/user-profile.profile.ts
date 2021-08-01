@@ -1,4 +1,4 @@
-import { convertUsing, mapWith, mapFrom } from '@automapper/core';
+import { convertUsing, mapFrom, mapWith } from '@automapper/core';
 import type { MappingProfile } from '@automapper/types';
 import { dateToStringConverter } from '../converters/date-to-string.converter';
 import { Avatar, AvatarVm } from '../models/avatar';
@@ -19,33 +19,23 @@ export const userProfileProfile: MappingProfile = (mapper) => {
     .createMap(UserProfile, UserProfileVm)
     .forMember(
       (d) => d.avatar,
-      mapWith(
-        () => AvatarVm,
-        (s) => s.avatar,
-        () => Avatar
-      )
+      mapWith(AvatarVm, Avatar, (source) => source.avatar)
     )
     .forMember(
       (d) => d.birthday,
       convertUsing(dateToStringConverter, (s) => s.birthday)
     );
 
-  mapper
-    .createMap(UserProfileVm, UserProfile)
-    .forMember(
-      (d) => d.birthday,
-      mapFrom(s => s.birthday && new Date(s.birthday)),
-    );
+  mapper.createMap(UserProfileVm, UserProfile).forMember(
+    (d) => d.birthday,
+    mapFrom((s) => s.birthday && new Date(s.birthday))
+  );
 
   mapper
     .createMap(UserProfile, PascalUserProfileVm)
     .forMember(
       (d) => d.Avatar,
-      mapWith(
-        () => PascalAvatarVm,
-        (s) => s.avatar,
-        () => Avatar
-      )
+      mapWith(PascalAvatarVm, Avatar, (s) => s.avatar)
     )
     .forMember(
       (d) => d.Birthday,
@@ -56,11 +46,7 @@ export const userProfileProfile: MappingProfile = (mapper) => {
     .createMap(UserProfile, SnakeUserProfileVm)
     .forMember(
       (d) => d.avatar,
-      mapWith(
-        () => SnakeAvatarVm,
-        (s) => s.avatar,
-        () => Avatar
-      )
+      mapWith(SnakeAvatarVm, Avatar, (s) => s.avatar)
     )
     .forMember(
       (d) => d.birthday,
@@ -73,11 +59,7 @@ export const pascalUserProfileProfile: MappingProfile = (mapper) => {
     .createMap(PascalUserProfile, PascalUserProfileVm)
     .forMember(
       (d) => d.Avatar,
-      mapWith(
-        () => PascalAvatarVm,
-        (s) => s.Avatar,
-        () => PascalAvatar
-      )
+      mapWith(PascalAvatarVm, PascalAvatar, (s) => s.Avatar)
     )
     .forMember(
       (d) => d.Birthday,
@@ -88,11 +70,7 @@ export const pascalUserProfileProfile: MappingProfile = (mapper) => {
     .createMap(PascalUserProfile, UserProfileVm)
     .forMember(
       (d) => d.avatar,
-      mapWith(
-        () => AvatarVm,
-        (s) => s.Avatar,
-        () => PascalAvatar
-      )
+      mapWith(AvatarVm, PascalAvatar, (s) => s.Avatar)
     )
     .forMember(
       (d) => d.birthday,
@@ -103,11 +81,7 @@ export const pascalUserProfileProfile: MappingProfile = (mapper) => {
     .createMap(PascalUserProfile, SnakeUserProfileVm)
     .forMember(
       (d) => d.avatar,
-      mapWith(
-        () => SnakeAvatarVm,
-        (s) => s.Avatar,
-        () => PascalAvatar
-      )
+      mapWith(SnakeAvatarVm, PascalAvatar, (s) => s.Avatar)
     )
     .forMember(
       (d) => d.birthday,
@@ -120,11 +94,7 @@ export const snakeUserProfileProfile: MappingProfile = (mapper) => {
     .createMap(SnakeUserProfile, SnakeUserProfileVm)
     .forMember(
       (d) => d.avatar,
-      mapWith(
-        () => SnakeAvatarVm,
-        (s) => s.avatar,
-        () => SnakeAvatar
-      )
+      mapWith(SnakeAvatarVm, SnakeAvatar, (s) => s.avatar)
     )
     .forMember(
       (d) => d.birthday,
@@ -135,11 +105,7 @@ export const snakeUserProfileProfile: MappingProfile = (mapper) => {
     .createMap(SnakeUserProfile, UserProfileVm)
     .forMember(
       (d) => d.avatar,
-      mapWith(
-        () => AvatarVm,
-        (s) => s.avatar,
-        () => SnakeAvatar
-      )
+      mapWith(AvatarVm, SnakeAvatar, (s) => s.avatar)
     )
     .forMember(
       (d) => d.birthday,
@@ -150,11 +116,7 @@ export const snakeUserProfileProfile: MappingProfile = (mapper) => {
     .createMap(SnakeUserProfile, PascalUserProfileVm)
     .forMember(
       (d) => d.Avatar,
-      mapWith(
-        () => PascalAvatarVm,
-        (s) => s.avatar,
-        () => SnakeAvatar
-      )
+      mapWith(PascalAvatarVm, SnakeAvatar, (s) => s.avatar)
     )
     .forMember(
       (d) => d.Birthday,

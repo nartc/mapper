@@ -8,22 +8,20 @@ By default, `@automapper/core` will be able to map nested models for matching pr
 
 `mapWith()` accepts three arguments:
 
-- `withDestination()`: a function that returns the nested model to map **to**
+- `withDestination`: the nested model to map **to**
+- `withSource`: the nested model to map **with**
 - `withSourceValue()`: a function that accepts the **Source** and returns a value from a member of the **Source**
-- `withSource()`: a function that returns the nested model to map **with**
 
 ```ts
 import { mapWith } from '@automapper/core';
 
 mapper.createMap(User, UserDto).forMember(
   (destination) => destination.someProfile,
-  mapWith(
-    () => ProfileDto,
-    (source) => source.originalProfile,
-    () => Profile
-  )
+  mapWith(ProfileDto, Profile, (source) => source.originalProfile)
 );
 ```
+
+Though this might look confusing, you can use the following narrative to make it easier to understand: "For `destination.someProfile`, I want to map with `ProfileDto` and `Profile`, with the value of `source.originalProfile`"
 
 `mapWith()` will set the `TransformationType` to `TransformationType.MapWith`
 

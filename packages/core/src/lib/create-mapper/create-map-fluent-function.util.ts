@@ -42,12 +42,12 @@ export function createMapFluentFunction<
       );
     },
     beforeMap(mapAction: MapAction<TSource, TDestination>) {
-      // assign mapAction to mapping
+      // assign before mapAction to mapping
       mapping[MappingClassId.actions][0] = mapAction;
       return fluentFunction;
     },
     afterMap(mapAction: MapAction<TSource, TDestination>) {
-      // assign mapAction to mapping
+      // assign after mapAction to mapping
       mapping[MappingClassId.actions][1] = mapAction;
       return fluentFunction;
     },

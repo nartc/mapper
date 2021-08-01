@@ -9,6 +9,7 @@ import type {
 } from '@automapper/types';
 import { mapArray, mapMutate, mapReturn } from '../map';
 import { createMapFluentFunction } from './create-map-fluent-function.util';
+import { mappingNullCheck } from '../utils';
 
 /**
  * Method to create a Mapper with a plugin
@@ -67,6 +68,9 @@ export function createMapper<TKey = unknown>({
 
       // get mapping between Source and Destination
       const mapping: Mapping | undefined = this.getMapping(source, destination);
+
+      // null check mapping and fail fast
+      mappingNullCheck(mapping, errorHandler, source, destination);
 
       // check mutate or return
 

@@ -16,7 +16,7 @@ import type {
   MemberMapReturn,
 } from '@automapper/types';
 import { MapFnClassId, TransformationType } from '@automapper/types';
-import { get, isEmpty, set, setMutate } from '../utils';
+import { get, isEmpty, mappingNullCheck, set, setMutate } from '../utils';
 
 /**
  * Instruction on how to map a particular member on the destination
@@ -344,6 +344,13 @@ Original error: ${originalError}`;
           nestedDestinationMemberKey
         );
 
+        mappingNullCheck(
+          nestedMapping,
+          errorHandler,
+          nestedSourceMemberKey,
+          nestedDestinationMemberKey
+        );
+
         // nested mutate
         const destinationMemberValue = getMemberFn?.(destinationMemberPath);
         if (destinationMemberValue !== undefined) {
@@ -438,13 +445,17 @@ export function mapArray<
 
   // loop through each item and run map() for each
   for (let i = 0, len = sourceArray.length; i < len; i++) {
+    const mapping = mapper.getMapping(source, destination) as Mapping<
+      TSource,
+      TDestination
+    >;
+
+    mappingNullCheck(mapping, errorHandler, source, destination);
+
     destinationArray.push(
       mapReturn(
         sourceArray[i],
-        mapper.getMapping(source, destination) as Mapping<
-          TSource,
-          TDestination
-        >,
+        mapping,
         { extraArguments },
         mapper,
         errorHandler,

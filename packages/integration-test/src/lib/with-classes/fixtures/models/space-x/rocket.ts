@@ -1,10 +1,10 @@
 import { AutoMap } from '@automapper/classes';
 
 export class Diameter {
-  @AutoMap(() => Number)
+  @AutoMap({ typeFn: () => Number })
   meters!: number | null;
 
-  @AutoMap(() => Number)
+  @AutoMap({ typeFn: () => Number })
   feet!: number | null;
 }
 
@@ -67,10 +67,10 @@ export class Engines {
   @AutoMap()
   layout!: null | string;
 
-  @AutoMap(() => ISP)
+  @AutoMap({ typeFn: () => ISP })
   isp!: ISP;
 
-  @AutoMap(() => Number)
+  @AutoMap({ typeFn: () => Number })
   engine_loss_max!: number | null;
 
   @AutoMap()
@@ -79,10 +79,10 @@ export class Engines {
   @AutoMap()
   propellant_2!: string;
 
-  @AutoMap(() => Thrust)
+  @AutoMap({ typeFn: () => Thrust })
   thrust_sea_level!: Thrust;
 
-  @AutoMap(() => Thrust)
+  @AutoMap({ typeFn: () => Thrust })
   thrust_vacuum!: Thrust;
 
   @AutoMap()
@@ -99,13 +99,13 @@ export class FirstStage {
   @AutoMap()
   fuel_amount_tons!: number;
 
-  @AutoMap(() => Number)
+  @AutoMap({ typeFn: () => Number })
   burn_time_sec!: number | null;
 
-  @AutoMap(() => Thrust)
+  @AutoMap({ typeFn: () => Thrust })
   thrust_sea_level!: Thrust;
 
-  @AutoMap(() => Thrust)
+  @AutoMap({ typeFn: () => Thrust })
   thrust_vacuum!: Thrust;
 
   @AutoMap()
@@ -113,10 +113,10 @@ export class FirstStage {
 }
 
 export class CompositeFairing {
-  @AutoMap(() => Diameter)
+  @AutoMap({ typeFn: () => Diameter })
   height!: Diameter;
 
-  @AutoMap(() => Diameter)
+  @AutoMap({ typeFn: () => Diameter })
   diameter!: Diameter;
 }
 
@@ -124,7 +124,7 @@ export class Payloads {
   @AutoMap()
   option_1!: string;
 
-  @AutoMap(() => CompositeFairing)
+  @AutoMap({ typeFn: () => CompositeFairing })
   composite_fairing!: CompositeFairing;
 
   @AutoMap()
@@ -141,13 +141,13 @@ export class SecondStage {
   @AutoMap()
   fuel_amount_tons!: number;
 
-  @AutoMap(() => Number)
+  @AutoMap({ typeFn: () => Number })
   burn_time_sec!: number | null;
 
-  @AutoMap(() => Thrust)
+  @AutoMap({ typeFn: () => Thrust })
   thrust!: Thrust;
 
-  @AutoMap(() => Payloads)
+  @AutoMap({ typeFn: () => Payloads })
   payloads!: Payloads;
 }
 
@@ -179,31 +179,31 @@ export class Rocket {
   @AutoMap()
   company!: string;
 
-  @AutoMap(() => Diameter)
+  @AutoMap({ typeFn: () => Diameter })
   height!: Diameter;
 
-  @AutoMap(() => Diameter)
+  @AutoMap({ typeFn: () => Diameter })
   diameter!: Diameter;
 
-  @AutoMap(() => Mass)
+  @AutoMap({ typeFn: () => Mass })
   mass!: Mass;
 
-  @AutoMap(() => PayloadWeight)
+  @AutoMap({ typeFn: () => PayloadWeight })
   payload_weights!: PayloadWeight[];
 
-  @AutoMap(() => FirstStage)
+  @AutoMap({ typeFn: () => FirstStage })
   first_stage!: FirstStage;
 
-  @AutoMap(() => SecondStage)
+  @AutoMap({ typeFn: () => SecondStage })
   second_stage!: SecondStage;
 
-  @AutoMap(() => Engines)
+  @AutoMap({ typeFn: () => Engines })
   engines!: Engines;
 
-  @AutoMap(() => LandingLegs)
+  @AutoMap({ typeFn: () => LandingLegs })
   landing_legs!: LandingLegs;
 
-  @AutoMap(() => String)
+  @AutoMap({ typeFn: () => String })
   flickr_images!: string[];
 
   @AutoMap()

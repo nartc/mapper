@@ -18,19 +18,6 @@ export interface AutoMapOptions {
 }
 
 /**
- * deprecated - AutoMap decorator to decorate fields in classes to store metadata of that field.
- *
- * @param {() => Constructible} [typeFn] - if this is a nested model, it should have a `typeFn`
- * @param {number} [depth = 0] - how deep should this model gets instantiated
- *
- * @deprecated
- * @see Use {@link AutoMapOptions} instead
- */
-export function AutoMap(
-  typeFn: () => Constructible,
-  depth?: number
-): PropertyDecorator;
-/**
  * AutoMap decorator to decorate fields in classes to store metadata of that field with a config object
  *
  * @param {AutoMapOptions} config
@@ -41,20 +28,19 @@ export function AutoMap(config: AutoMapOptions): PropertyDecorator;
  */
 export function AutoMap(): PropertyDecorator;
 export function AutoMap(
-  typeFnOrConfig?: AutoMapOptions | (() => Constructible),
-  depth = 0
+  config?: AutoMapOptions
 ): PropertyDecorator {
   const {
     isGetterOnly,
     typeFn,
-    depth: _depth = 0,
-  } = getConfig(typeFnOrConfig, depth);
+    depth = 0
+  } = config || {};
   return (target, propertyKey) => {
     const newMetadata: {
       typeFn?: () => unknown;
       isGetterOnly?: boolean;
       depth: number;
-    } = { depth: _depth };
+    } = { depth };
 
     const existingMetadataList =
       Reflect.getMetadata(
@@ -96,15 +82,4 @@ export function AutoMap(
       );
     }
   };
-}
-
-function getConfig(
-  typeFnOrConfig?: AutoMapOptions | (() => Constructible),
-  depth?: number
-): AutoMapOptions {
-  if (typeof typeFnOrConfig === 'function') {
-    return { typeFn: typeFnOrConfig, depth: depth || 0 };
-  }
-
-  return typeFnOrConfig || {};
 }

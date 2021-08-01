@@ -16,7 +16,7 @@ describe(MapperPickType.name, () => {
     foo: string;
     @AutoMap()
     bar: number;
-    @AutoMap(() => Baz)
+    @AutoMap({ typeFn: () => Baz })
     baz: Baz;
   }
 

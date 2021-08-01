@@ -32,13 +32,13 @@ export class FirstStageDto {
   @AutoMap()
   fuelAmountTons!: number;
 
-  @AutoMap(() => Number)
+  @AutoMap({ typeFn: () => Number })
   burnTimeSec!: number | null;
 
-  @AutoMap(() => ThrustDto)
+  @AutoMap({ typeFn: () => ThrustDto })
   thrustSeaLevel!: ThrustDto;
 
-  @AutoMap(() => ThrustDto)
+  @AutoMap({ typeFn: () => ThrustDto })
   thrustVacuum!: ThrustDto;
 
   @AutoMap()
@@ -46,16 +46,16 @@ export class FirstStageDto {
 }
 
 export class CompositeFairingDto {
-  @AutoMap(() => Number)
+  @AutoMap({ typeFn: () => Number })
   heightMeters!: number | null;
 
-  @AutoMap(() => Number)
+  @AutoMap({ typeFn: () => Number })
   heightFeet!: number | null;
 
-  @AutoMap(() => Number)
+  @AutoMap({ typeFn: () => Number })
   diameterMeters!: number | null;
 
-  @AutoMap(() => Number)
+  @AutoMap({ typeFn: () => Number })
   diameterFeet!: number | null;
 }
 
@@ -63,7 +63,7 @@ export class PayloadsDto {
   @AutoMap()
   option1!: string;
 
-  @AutoMap(() => CompositeFairingDto)
+  @AutoMap({ typeFn: () => CompositeFairingDto })
   compositeFairing!: CompositeFairingDto;
 
   @AutoMap()
@@ -80,7 +80,7 @@ export class SecondStageDto {
   @AutoMap()
   fuelAmountTons!: number;
 
-  @AutoMap(() => Number)
+  @AutoMap({ typeFn: () => Number })
   burnTimeSec!: number | null;
 
   @AutoMap()
@@ -109,16 +109,16 @@ export class EnginesDto {
   @AutoMap()
   ispVacuum!: number;
 
-  @AutoMap(() => Number)
+  @AutoMap({ typeFn: () => Number })
   engineLossMax!: number | null;
 
   @AutoMap()
   propellants!: string[];
 
-  @AutoMap(() => ThrustDto)
+  @AutoMap({ typeFn: () => ThrustDto })
   thrustSeaLevel!: ThrustDto;
 
-  @AutoMap(() => ThrustDto)
+  @AutoMap({ typeFn: () => ThrustDto })
   thrustVacuum!: ThrustDto;
 
   @AutoMap()
@@ -153,40 +153,40 @@ export class RocketDto {
   @AutoMap()
   company!: string;
 
-  @AutoMap(() => Number)
+  @AutoMap({ typeFn: () => Number })
   heightMeters!: number | null;
 
-  @AutoMap(() => Number)
+  @AutoMap({ typeFn: () => Number })
   heightFeet!: number | null;
 
-  @AutoMap(() => Number)
+  @AutoMap({ typeFn: () => Number })
   diameterMeters!: number | null;
 
-  @AutoMap(() => Number)
+  @AutoMap({ typeFn: () => Number })
   diameterFeet!: number | null;
 
-  @AutoMap(() => Number)
+  @AutoMap({ typeFn: () => Number })
   massKg!: number | null;
 
-  @AutoMap(() => Number)
+  @AutoMap({ typeFn: () => Number })
   massLb!: number | null;
 
-  @AutoMap(() => PayloadWeightDto)
+  @AutoMap({ typeFn: () => PayloadWeightDto })
   payloadWeights!: PayloadWeightDto[];
 
-  @AutoMap(() => FirstStageDto)
+  @AutoMap({ typeFn: () => FirstStageDto })
   firstStage!: FirstStageDto;
 
-  @AutoMap(() => SecondStageDto)
+  @AutoMap({ typeFn: () => SecondStageDto })
   secondStage!: SecondStageDto;
 
-  @AutoMap(() => EnginesDto)
+  @AutoMap({ typeFn: () => EnginesDto })
   engines!: EnginesDto;
 
   @AutoMap()
   landingLegsNumber!: number;
 
-  @AutoMap(() => String)
+  @AutoMap({ typeFn: () => String })
   landingLegsMaterial!: string | null;
 
   @AutoMap()

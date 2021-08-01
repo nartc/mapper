@@ -9,7 +9,7 @@ export class User {
   @AutoMap()
   username!: string;
   password!: string;
-  @AutoMap(() => Bio)
+  @AutoMap({ typeFn: () => Bio })
   bio!: Bio;
 }
 
@@ -21,6 +21,6 @@ export class UserDto {
   fullName!: string;
   @AutoMap()
   username!: string;
-  @AutoMap(() => BioDto)
+  @AutoMap({ typeFn: () => BioDto })
   bio!: BioDto;
 }

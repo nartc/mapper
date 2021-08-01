@@ -14,7 +14,7 @@ describe(MapperIntersectionType.name, () => {
   class Foo {
     @AutoMap()
     foo: string;
-    @AutoMap(() => Baz)
+    @AutoMap({ typeFn: () => Baz })
     baz: Baz;
   }
 

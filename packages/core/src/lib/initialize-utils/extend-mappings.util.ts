@@ -3,7 +3,8 @@ import { MappingClassId, MappingPropertiesClassId } from '@automapper/types';
 import { isSamePath } from '../utils';
 
 export function extendMappings(bases: Mapping[], mapping: Mapping) {
-  for (const mappingToExtend of bases) {
+  for (let i = 0, basesLen = bases.length; i < basesLen; i++) {
+    const mappingToExtend = bases[i];
     const propsToExtend = mappingToExtend[MappingClassId.properties];
     for (let i = 0, len = propsToExtend.length; i < len; i++) {
       const [propToExtendKey, propToExtendMappingProp] = propsToExtend[i];

@@ -52,9 +52,8 @@ export const pojos: MapPluginInitializer<string> = (errorHandler) => {
         },
         options,
         {
-          isMetadataNullAtKey: (key) => {
-            return metadataStorage.getMetadataForKey(destination, key) === null;
-          },
+          isMetadataNullAtKey: (key) =>
+            metadataStorage.getMetadataForKey(destination, key) === null,
         }
       );
     },

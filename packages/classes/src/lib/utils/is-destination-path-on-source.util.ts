@@ -1,4 +1,4 @@
-export function isDestinationPathOnSource(
+export function isDerivedSourcePathOnSourceClasses(
   sourceProto: Record<string, unknown>
 ) {
   return (sourceObj: any, sourcePath: string[]) => {

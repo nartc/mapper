@@ -21,7 +21,7 @@ function defaultIsMultipartSourcePathsInSource(
   );
 }
 
-function defaultIsDestinationPathOnSource(
+function defaultIsDerivedSourcePathOnSource(
   sourceObj: Record<string, unknown>,
   sourcePath: string[]
 ): boolean {
@@ -33,7 +33,7 @@ interface CreateInitialMappingOptions {
     multipartSourcePaths: string[],
     sourceObj: unknown
   ) => boolean;
-  isDestinationPathOnSource?: (
+  isDerivedSourcePathOnSource?: (
     sourceObj: unknown,
     sourcePath: string[]
   ) => boolean;
@@ -52,7 +52,7 @@ export function createInitialMapping(
 ): Mapping {
   const {
     isMultipartSourcePathsInSource = defaultIsMultipartSourcePathsInSource,
-    isDestinationPathOnSource = defaultIsDestinationPathOnSource,
+    isDerivedSourcePathOnSource = defaultIsDerivedSourcePathOnSource,
     isMetadataNullAtKey = () => false,
     prePropertiesLoop,
   } = createInitialMappingOptions ?? {};
@@ -98,7 +98,7 @@ export function createInitialMapping(
 
     // With namingConventions, flattening can happen
     if (
-      !isDestinationPathOnSource(sourceObj, sourcePath) &&
+      !isDerivedSourcePathOnSource(sourceObj, sourcePath) &&
       isDefined(namingConventions)
     ) {
       const sourcePaths = getFlatteningSourcePaths(
@@ -120,7 +120,7 @@ export function createInitialMapping(
     }
 
     // Skip if there's no destinationPath on source
-    if (!isDestinationPathOnSource(sourceObj, sourcePath)) {
+    if (!isDerivedSourcePathOnSource(sourceObj, sourcePath)) {
       continue;
     }
 

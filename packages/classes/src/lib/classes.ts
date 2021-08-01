@@ -11,7 +11,7 @@ import type { Constructible } from './types';
 import {
   exploreMetadata,
   instantiate,
-  isDestinationPathOnSource,
+  isDerivedSourcePathOnSourceClasses,
   isMultipartSourcePathsInSource,
   prePropertiesLoop,
 } from './utils';
@@ -97,7 +97,8 @@ export const classes: MapPluginInitializer<Constructible> = (errorHandler) => {
               sourceObj as Record<string, unknown>
             ),
           // classes plugin needs to check for the destinationPath (sourcePath) on the prototype of Source
-          isDestinationPathOnSource: isDestinationPathOnSource(sourceProto),
+          isDerivedSourcePathOnSource:
+            isDerivedSourcePathOnSourceClasses(sourceProto),
         }
       );
     },

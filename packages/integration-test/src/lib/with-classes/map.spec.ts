@@ -48,6 +48,10 @@ describe('Map - Non Flattening', () => {
       },
     });
 
+    const test = new User();
+    test.firstName = 'Chau';
+    test.lastName = 'Tran';
+
     const vm = mapper.map(user, UserVm, User);
     assertVm(user, vm);
   });

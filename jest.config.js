@@ -1,13 +1,8 @@
+const { getJestProjects } = require('@nrwl/jest');
+
 module.exports = {
   projects: [
-    '<rootDir>/packages/core',
-    '<rootDir>/packages/classes',
-    '<rootDir>/packages/integration-test',
-    '<rootDir>/packages/pojos',
-    '<rootDir>/packages/nestjs',
-    '<rootDir>/packages/nestjs-integration-test',
+    ...getJestProjects(),
     '<rootDir>/packages/experimental/transformer-plugin',
-    '<rootDir>/packages/sequelize',
-    '<rootDir>/packages/classes/mapped-types',
   ],
 };

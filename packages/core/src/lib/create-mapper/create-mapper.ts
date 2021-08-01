@@ -63,7 +63,7 @@ export function createMapper<TKey = unknown>({
       // run preMap if available
       const [sourceInstance] = preMap
         ? preMap.bind(plugin)(source, destination, sourceObj)
-        : [];
+        : [sourceObj];
 
       // get mapping between Source and Destination
       const mapping: Mapping | undefined = this.getMapping(source, destination);
@@ -81,7 +81,7 @@ export function createMapper<TKey = unknown>({
         destinationObjOrOptions == null
       ) {
         const result = mapReturn(
-          sourceInstance ?? sourceObj,
+          sourceInstance,
           mapping!,
           destinationObjOrOptions as MapOptions,
           this,
@@ -92,7 +92,7 @@ export function createMapper<TKey = unknown>({
       }
 
       mapMutate(
-        sourceInstance ?? sourceObj,
+        sourceInstance,
         mapping!,
         options || {},
         this,
@@ -133,15 +133,14 @@ export function createMapper<TKey = unknown>({
 
       // default runPreMap to true
       const { runPreMap = true } = options || {};
-      let adjustedSourceArr = sourceArr;
 
       // run preMapArray if available
       if (runPreMap && plugin.preMapArray) {
-        adjustedSourceArr = plugin.preMapArray(source, adjustedSourceArr);
+        sourceArr = plugin.preMapArray(source, sourceArr);
       }
 
       return mapArray(
-        adjustedSourceArr,
+        sourceArr,
         destination,
         source,
         options || {},

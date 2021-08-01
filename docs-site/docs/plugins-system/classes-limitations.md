@@ -190,3 +190,50 @@ export class User {
 ```
 
 This is due to **Weak Reflection** when `strict` mode is enabled.
+
+## Nested Array property
+
+If your model contain array property and does not specify any `forMember()` rule for them, then you *MUST* provide `typeFn` for it.
+
+```ts
+class User {
+  @AutoMap()
+  firstName!: string;
+  @AutoMap()
+  lastName!: string;
+  @AutoMap()
+  profile!: UserProfile;
+  @AutoMap({ typeFn: () => Job }) // <- it's required for nested array property
+  jobs!: Job[];
+}
+
+mapper.createMap(User, UserVm);
+```
+
+AutoMapper will attempt to get the data type of the property through reflection. In most cases, it will work without any problem, but for array property, it will only result an  `Array` type instead of `Job[]` above. It's currently an [open issue](https://github.com/microsoft/TypeScript/issues/7169) of TypeScript.
+
+Or you can also use `mapWith()` to let AutoMapper know its type.
+
+```ts
+class User {
+  @AutoMap()
+  firstName!: string;
+  @AutoMap()
+  lastName!: string;
+  @AutoMap()
+  profile!: UserProfile;
+  @AutoMap() // <- omit typeFn
+  jobs!: Job[];
+}
+
+mapper
+  .createMap(User, UserVm)
+  .forMember(
+    (d) => d.jobs,
+    mapWith(
+      () => JobVm,
+      (s) => s.profile,
+      () => Job
+    )
+  );
+```

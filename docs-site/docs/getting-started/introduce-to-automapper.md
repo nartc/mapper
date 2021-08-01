@@ -208,7 +208,7 @@ We did the following:
 - Removed the mapping logic in the DTOs
 - Decorated all the properties with the same name with `@AutoMap()`. For nested model like `BioDto`, we provide a `typeFn` to `@AutoMap()`
 
-> You can omit `typeFn` for non-array nested model, but for array property it's required. For more detail please check [Classes Limitations](plugins-system/classes-limitations/#nested-array-property)
+> You can omit `typeFn` for non-array nested model, but for array property it's required. For more detail please check [Classes Limitations](../plugins-system/classes-limitations.md#nested-array-property)
 
 ## Create a `Mapping<User, UserDto>`
 

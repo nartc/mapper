@@ -17,3 +17,24 @@ export class TypeConverterDestination {
   @AutoMap()
   value3!: boolean;
 }
+
+export class TypeConverterCamelSource {
+  @AutoMap()
+  valueOne!: string;
+  @AutoMap()
+  valueTwo!: string;
+}
+
+export class TypeConverterSnakeDestination {
+  @AutoMap()
+  value_one!: number;
+  @AutoMap()
+  value_two!: Date;
+}
+
+export class TypeConverterPascalDestination {
+  @AutoMap()
+  ValueOne!: number;
+  @AutoMap()
+  ValueTwo!: Date;
+}

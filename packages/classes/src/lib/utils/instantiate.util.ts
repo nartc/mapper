@@ -55,6 +55,9 @@ export function instantiate<TModel extends Dictionary<TModel>>(
     // call the meta fn to get the metaResult of the current key
     const metaResult = meta();
 
+    // push to nestedConstructible
+    nestedConstructible.push([key, metaResult as Constructible]);
+
     // if is String, Number, Boolean, Array, assign valueAtKey or undefined
     // null meta means this has any type or an arbitrary object, treat as primitives
     if (isPrimitiveConstructor(metaResult) || metaResult === null) {
@@ -71,10 +74,6 @@ export function instantiate<TModel extends Dictionary<TModel>>(
       setMutate(instance as Record<string, unknown>, key, value);
       continue;
     }
-
-    // This current key must be a nested model
-    // push to nestedConstructible
-    nestedConstructible.push([key, metaResult as Constructible]);
 
     // if the value at key is an array
     if (Array.isArray(valueAtKey)) {

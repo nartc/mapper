@@ -2,6 +2,8 @@ import { TransformationType } from './enums';
 import type { CreateMapOptions, MapArrayOptions, MapOptions } from './options';
 import type {
   Dictionary,
+  PrimitiveConstructorWithDate,
+  PrimitiveWithDate,
   Selector,
   SelectorReturn,
   ValueSelector,
@@ -158,6 +160,17 @@ export type MapInitializeReturn<
 
 export interface Mapper {
   name: string;
+
+  addTypeConverter<
+    TSourceType extends PrimitiveConstructorWithDate = PrimitiveConstructorWithDate,
+    TDestinationType extends PrimitiveConstructorWithDate = PrimitiveConstructorWithDate
+  >(
+    source: TSourceType,
+    destination: TDestinationType,
+    converter:
+      | ValueSelector<ReturnType<TSourceType>, ReturnType<TDestinationType>>
+      | Converter<ReturnType<TSourceType>, ReturnType<TDestinationType>>
+  ): Mapper;
 
   createMap<
     TSource extends Dictionary<TSource> = any,
@@ -572,7 +585,7 @@ export interface MappingStorage<TKey> extends Disposable {
 
 export type Metadata<TMetaType = unknown> = [
   string[],
-  () => String | Number | Boolean | Date | TMetaType,
+  () => PrimitiveWithDate | TMetaType,
   boolean?
 ];
 

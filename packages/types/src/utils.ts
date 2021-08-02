@@ -8,7 +8,19 @@ export type Unpacked<T> = T extends (infer U)[]
   ? U
   : T;
 export type Dictionary<T> = { [key in keyof T]?: unknown };
-export type Fn<T> = () => T;
+
+export type Primitive = String | Number | Boolean;
+
+export type PrimitiveWithDate = Primitive | Date;
+
+export type PrimitiveConstructor =
+  | StringConstructor
+  | NumberConstructor
+  | BooleanConstructor;
+
+export type PrimitiveConstructorWithDate =
+  | PrimitiveConstructor
+  | DateConstructor;
 
 export interface Selector<
   TObject extends Dictionary<TObject> = any,

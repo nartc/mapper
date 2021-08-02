@@ -20,6 +20,11 @@ export function applyTypeConverters(
     i++
   ) {
     const initializeProp = initializedProps[i];
+    if (
+      initializeProp == null ||
+      initializeProp[MappingPropertiesClassId.nestedMappingPair] == null
+    )
+      continue;
     const [destinationType, sourceType] =
       initializeProp[MappingPropertiesClassId.nestedMappingPair];
     const typeConverter = typeConverters

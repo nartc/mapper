@@ -53,7 +53,10 @@ describe('instantiate', () => {
       const result = parameterizedInstantiate();
       expect(result).toEqual([
         { foo: undefined, bar: { bar: undefined, date: undefined } },
-        [[['bar'], 'Bar']],
+        [
+          [['foo'], String],
+          [['bar'], 'Bar'],
+        ],
       ]);
     });
   });
@@ -81,7 +84,13 @@ describe('instantiate', () => {
 
       const result = parameterizedInstantiate();
 
-      expect(result).toEqual([defaultFoo, [[['bar'], 'Bar']]]);
+      expect(result).toEqual([
+        defaultFoo,
+        [
+          [['foo'], String],
+          [['bar'], 'Bar'],
+        ],
+      ]);
     });
   });
 

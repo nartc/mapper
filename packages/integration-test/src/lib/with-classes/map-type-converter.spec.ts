@@ -6,7 +6,7 @@ import {
 } from './fixtures/models/type-converter';
 
 describe('Map - TypeConverter', () => {
-  const [mapper] = setupClasses('typeConveterMapper');
+  const [mapper] = setupClasses('typeConverterMapper');
 
   it('should map correctly', () => {
     mapper.addProfile(typeConverterProfile);

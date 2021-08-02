@@ -60,7 +60,10 @@ describe('instantiate', () => {
       const result = parameterizedInstantiate();
       expect(result).toEqual([
         { ...fooInstance, foo: undefined },
-        [[['bar'], Bar]],
+        [
+          [['foo'], String],
+          [['bar'], Bar],
+        ],
       ]);
     });
 
@@ -76,12 +79,14 @@ describe('instantiate', () => {
       const result = parameterizedInstantiate();
       result[0].bar.date = defaultDate;
       expect(result).toEqual([
-        {
-          ...fooInstance,
+        Object.assign(fooInstance, {
           foo: undefined,
-          bar: { ...fooInstance.bar, bar: undefined },
-        },
-        [[['bar'], Bar]],
+          bar: Object.assign(fooInstance.bar, { bar: undefined }),
+        }),
+        [
+          [['foo'], String],
+          [['bar'], Bar],
+        ],
       ]);
     });
   });
@@ -112,14 +117,26 @@ describe('instantiate', () => {
       mockWithoutDepth();
 
       const result = parameterizedInstantiate();
-      expect(result).toEqual([defaultFoo, [[['bar'], Bar]]]);
+      expect(result).toEqual([
+        defaultFoo,
+        [
+          [['foo'], String],
+          [['bar'], Bar],
+        ],
+      ]);
     });
 
     it('should return proper instance with depth', () => {
       mockWithDepth();
 
       const result = parameterizedInstantiate();
-      expect(result).toEqual([defaultFoo, [[['bar'], Bar]]]);
+      expect(result).toEqual([
+        defaultFoo,
+        [
+          [['foo'], String],
+          [['bar'], Bar],
+        ],
+      ]);
     });
   });
 

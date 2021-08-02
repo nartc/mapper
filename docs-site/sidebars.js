@@ -90,6 +90,10 @@ module.exports = {
           type: 'doc',
           id: 'mapping-configuration/pre-condition',
         },
+        {
+          type: 'doc',
+          id: 'mapping-configuration/custom-type-converter',
+        },
       ],
     },
     {

@@ -55,7 +55,7 @@ export function createMapper<TKey = unknown>({
       );
       return this;
     },
-    createMap(source: any, destination: any, options: CreateMapOptions = {}) {
+    createMap(source, destination, options: CreateMapOptions = {}) {
       // if namingConventions isn't passed in for this Mapping pair, use the global ones
       if (options && !options.namingConventions) {
         options.namingConventions = namingConventions;
@@ -79,8 +79,8 @@ export function createMapper<TKey = unknown>({
     },
     map(
       sourceObj: Record<string, unknown>,
-      destination: any,
-      source: any,
+      destination,
+      source,
       destinationObjOrOptions?: Record<string, unknown>,
       options?: MapOptions
     ) {
@@ -139,8 +139,8 @@ export function createMapper<TKey = unknown>({
     },
     mapAsync(
       sourceObj: Record<string, unknown>,
-      destination: any,
-      source: any,
+      destination,
+      source,
       destinationObjOrOptions?: Record<string, unknown>,
       options?: MapOptions
     ) {
@@ -156,8 +156,8 @@ export function createMapper<TKey = unknown>({
     },
     mapArray(
       sourceArr: Record<string, unknown>[],
-      destination: any,
-      source: any,
+      destination,
+      source,
       options?: MapArrayOptions
     ) {
       // if source is null/undefined, return
@@ -184,8 +184,8 @@ export function createMapper<TKey = unknown>({
     },
     mapArrayAsync(
       sourceArr: Record<string, unknown>[],
-      destination: any,
-      source: any,
+      destination,
+      source,
       options?: MapArrayOptions
     ) {
       return Promise.resolve(

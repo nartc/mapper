@@ -27,6 +27,8 @@ export function instantiate<TModel extends Dictionary<TModel>>(
     const valueAtKey = get(obj as Record<string, unknown>, key);
     const metaResult = meta();
 
+    nestedMetadataMap.push([key, metaResult]);
+
     if (isPrimitiveConstructor(metaResult) || metaResult === null) {
       const value = isDefined(valueAtKey) ? valueAtKey : undefined;
       setMutate(obj as Record<string, unknown>, key, value);
@@ -44,7 +46,6 @@ export function instantiate<TModel extends Dictionary<TModel>>(
       continue;
     }
 
-    nestedMetadataMap.push([key, metaResult]);
     if (Array.isArray(valueAtKey)) {
       const value = valueAtKey.map((val) => {
         const [childObj] = instantiate(metadataStorage, metaResult, val);

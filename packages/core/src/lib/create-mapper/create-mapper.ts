@@ -65,7 +65,9 @@ export function createMapper<TKey = unknown>({
       const mapping = plugin.initializeMapping(source, destination, options);
 
       // apply typeConverters
-      applyTypeConverters(mapping, typeConverters);
+      if (mapping) {
+        applyTypeConverters(mapping, typeConverters);
+      }
 
       // return the FluentFunction for chaining
       return createMapFluentFunction(mapping!);

@@ -1,3 +1,123 @@
+## [6.0.0](https://github.com/nartc/mapper/compare/5.0.1...6.0.0) (2021-08-02)
+
+### ⚠ BREAKING CHANGES
+
+- **core:** `mapWith` signature now accepts the models directly instead of a deferred function.
+  This allows to use `mapWith` easier
+
+```ts
+// before
+mapWith(
+  () => Dto,
+  (s) => s.value,
+  () => Source
+);
+
+// after
+mapWith(Dto, Source, (s) => s.value);
+```
+
+- **classes:** AutoMap only accepts an optional config object now. Positional arguments overload
+  has been removed
+
+```ts
+// deprecated and removed
+@AutoMap(() => Foo)
+
+// please migrate
+@AutoMap({typeFn: () => Foo})
+```
+
+### Features
+
+- **classes:** remove AutoMap without config object ([95479ca](https://github.com/nartc/mapper/commit/95479cad401dc81c81aac8da16ff0d84fe8b9372))
+- **core:** add basic TypeConverter for primitives ([83fd239](https://github.com/nartc/mapper/commit/83fd239cbebc48562beebb69c317d616a383e03d))
+
+Sometimes, you need to set a common converter for one type to another when the property names are matching between a `Source` and a `Destination`. For example, suppose we have a `Source` type:
+
+```ts
+export class Source {
+  @AutoMap()
+  value1!: string;
+  @AutoMap()
+  value2!: string;
+  @AutoMap()
+  value3!: string;
+}
+```
+
+and you would like to map it to the following `Destination` type:
+
+```ts
+export class Destination {
+  @AutoMap()
+  value1!: number;
+  @AutoMap()
+  value2!: Date;
+  @AutoMap()
+  value3!: boolean;
+}
+```
+
+If we were to try and map `Source -> Destination` as-is, we would end up with mismatch values and types on the `Destination`. Eg: `Source.value1` will be mapped to `Destination.value1` even though the types of each `value1` are different. `Destination.value1` will end up with `string` value even though it is declared as `number`. This is because AutoMapper does not know anything and will not try to make any assumptions about these value types.
+
+To solve this issue, you must supply **Custom Type Converters** to a specific `Mapper`:
+
+```ts
+const mapper = createMapper(/*...*/);
+
+mapper
+  .addTypeConverter(String, Number, (str) => parseInt(str))
+  .addTypeConverter(String, Date, (str) => new Date(str))
+  .addTypeConverter(String, Boolean, (str) => Boolean(str));
+
+mapper.createMap(Source, Destination);
+```
+
+Here, we're telling AutoMapper:
+
+- If you are mapping a `String` to a `Number`, use `parseInt()`
+- If you are mapping a `String` to a `Date`, use `new Date()`
+- If you are mapping a `String` to a `Boolean`, use `Boolean()`
+
+```ts
+const source = new Source();
+source.value1 = '123';
+source.value2 = '10/14/1991';
+source.value3 = 'truthy';
+
+const destination = mapper.map(source, Destination, Source);
+/**
+ * Destination {
+    value1: 123, // number
+    value2: Mon Oct 14 1991 00:00:00 GMT-0500 (Central Daylight Time), // a Date instance
+    value3; true // boolean
+ * }
+ */
+```
+
+- **core:** adjust mapWith signature ([2df08ac](https://github.com/nartc/mapper/commit/2df08ac629239aece8909e8961dcc977510567d8))
+
+### Bug Fixes
+
+- **core:** fail fast when mapping is not found ([95a196f](https://github.com/nartc/mapper/commit/95a196f470b401ccb04e612085e83458d0442104))
+- **core:** null check mapping before applying typeConverters ([5d87147](https://github.com/nartc/mapper/commit/5d87147c0aad0c59be7f7f1a3fe789f259df1ce5))
+- **core:** null check mappingProp and nestedMappingPair before continue ([850cafb](https://github.com/nartc/mapper/commit/850cafbe0e659b265ae84a65cb1870560e5a5fd4))
+
+### Refactor
+
+- **classes:** always add metaResult to nestedConstructible (to account for primitives) ([5717928](https://github.com/nartc/mapper/commit/5717928e8f0126f159db4c3d4a64ff719d7d011d))
+- **core:** clean up createMapper with less null coalescing ([cdcc39a](https://github.com/nartc/mapper/commit/cdcc39af87f7390723ccf053e3c4aac56f9e7a52))
+- **core:** clean up initialize mappings ([8239789](https://github.com/nartc/mapper/commit/82397896a84593142aa8ae4647fd3bc9dc55ff81))
+- **core:** reformat map ([81992a1](https://github.com/nartc/mapper/commit/81992a1367d6bc07601b8eadff8ee4a35b70f93c))
+- **pojos:** always add metaResult to nestedMetadata (to account for primitives) ([00cce02](https://github.com/nartc/mapper/commit/00cce0229b43110f638465f9f0e27e195c4a93cb))
+
+### Documentations
+
+- add Custom Type Converter ([05f02a5](https://github.com/nartc/mapper/commit/05f02a584c96ac2f921c628cf0c988d6edb0a307))
+- **classes:** add comment about limitation of array properties ([#326](https://github.com/nartc/mapper/issues/326)) ([866e311](https://github.com/nartc/mapper/commit/866e311765ff36e4665220ea02e04fd04b28bff7))
+- **classes:** fix link issue ([#327](https://github.com/nartc/mapper/issues/327)) ([2030b50](https://github.com/nartc/mapper/commit/2030b503e29835d4cd5c2b72cf63313da522d3c6))
+
 ### [5.0.1](https://github.com/nartc/mapper/compare/5.0.0...5.0.1) (2021-07-22)
 
 ### Bug Fixes

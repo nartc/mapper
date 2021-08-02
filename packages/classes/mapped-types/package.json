@@ -1,6 +1,6 @@
 {
   "name": "@automapper/classes/mapped-types",
-  "version": "5.0.1",
+  "version": "6.0.0",
   "sideEffects": false,
   "publishConfig": {
     "access": "public"

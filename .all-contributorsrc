@@ -55,6 +55,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "jasonmerino",
+      "name": "Jason Merino",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1660279?v=4",
+      "profile": "http://jasonmerino.me/",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7

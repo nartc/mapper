@@ -27,7 +27,7 @@ With the Swagger Documentations exposed, we can combine that with tools like [NS
 
 The models exposed to Swagger are View Models, which are either flattened version of the Domain Models, or contain properties that match with the Domain Models. If you haven't noticed already, we would have to manually map these models back and forth a lot if it weren't for .NET AutoMapper.
 
-Recently, we venture more into the [NodeJS](https://nodejs.org/en/) world with the release of [NestJS](https://nestjs.com) framework. Without much consideration, we try to re-use the architecture we use with .NET in NestJS and one fatal missing piece is no AutoMapper solution in TypeScript that assembles the .NET one.
+Recently, we venture more into the [NodeJS](https://nodejs.org/en/) world with the release of [NestJS](https://nestjs.com) framework. Without much consideration, we try to re-use the architecture we use with .NET in NestJS and one fatal missing piece is no AutoMapper solution in TypeScript that resembles the .NET one.
 
 And that is the birth for `@automapper/*`
 

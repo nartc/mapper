@@ -1,3 +1,18 @@
+### [6.0.1](https://github.com/nartc/mapper/compare/6.0.0...6.0.1) (2021-08-16)
+
+
+### Documentations
+
+* add [@jasonmerino](https://github.com/jasonmerino) as a contributor ([809e447](https://github.com/nartc/mapper/commit/809e4476f0c07c9c13ddcd21389fbb06ac17f581))
+
+
+### Refactor
+
+* **classes:** clean up typings ([45edfda](https://github.com/nartc/mapper/commit/45edfdadd133fd9f0cb52b7bae2e0f8623884fdd))
+* **core:** clean up core libs ([ddb11e5](https://github.com/nartc/mapper/commit/ddb11e5e9cf742281d794201dbcae1008fbd896d))
+* **core:** remove some any types ([cdc2f9a](https://github.com/nartc/mapper/commit/cdc2f9a9ebecf37c26788b834ccf319bf4db5a7a))
+* **pojos:** clean up typings ([f43705a](https://github.com/nartc/mapper/commit/f43705a39b7862b2ad9163bd39699aeb4dcd20db))
+
 ## [6.0.0](https://github.com/nartc/mapper/compare/5.0.1...6.0.0) (2021-08-02)
 
 ### ⚠ BREAKING CHANGES

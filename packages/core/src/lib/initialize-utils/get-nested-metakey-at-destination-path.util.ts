@@ -2,8 +2,8 @@ import type { NamingConvention } from '@automapper/types';
 import { isDefined, isEmpty, isSamePath } from '../utils';
 
 export function getNestedMetaKeyAtDestinationPath(
-  destinationNestedMeta: any[],
-  sourceNestedMeta: any[],
+  destinationNestedMeta: unknown[],
+  sourceNestedMeta: unknown[],
   destinationPath: string[],
   namingConventions: [NamingConvention, NamingConvention] | undefined
 ) {

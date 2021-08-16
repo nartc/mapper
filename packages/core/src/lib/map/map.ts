@@ -1,112 +1,37 @@
 import type {
-  ConditionReturn,
-  ConvertUsingReturn,
   Dictionary,
   ErrorHandler,
-  FromValueReturn,
   MapArrayOptions,
-  MapDeferReturn,
-  MapFromReturn,
   MapInitializeReturn,
   MapOptions,
   Mapper,
   Mapping,
-  MapWithArgumentsReturn,
-  MapWithReturn,
-  MemberMapReturn,
 } from '@automapper/types';
 import { MapFnClassId, TransformationType } from '@automapper/types';
 import { get, isEmpty, mappingNullCheck, set, setMutate } from '../utils';
+import { mapMember } from './map-member';
+import { assertUnmappedProperties } from './assert-unmapped-properties';
 
-/**
- * Instruction on how to map a particular member on the destination
- *
- * @param {MemberMapReturn} transformationMapFn - Transformation information of the property
- * @param {TSource} sourceObj - The sourceObject being used to map to destination
- * @param destination - destination meta key
- * @param {string} destinationMemberPath - the property path on the destination
- * @param extraArguments - a dictionary of extra arguments to be used with MapWithArguments
- * @param {Mapper} mapper - the mapper instance
- */
-function mapMember<TSource extends Dictionary<TSource> = any>(
-  transformationMapFn: MemberMapReturn,
-  sourceObj: TSource,
-  destination: unknown,
-  destinationMemberPath: string[],
-  extraArguments: Record<string, unknown> | undefined,
-  mapper: Mapper
-) {
-  let value: unknown;
-  const transformationType: TransformationType =
-    transformationMapFn[MapFnClassId.type];
-  const mapFn = transformationMapFn[MapFnClassId.fn];
-
-  switch (transformationType) {
-    case TransformationType.MapFrom:
-      value = (mapFn as MapFromReturn[MapFnClassId.fn])(sourceObj, destination);
-      break;
-    case TransformationType.FromValue:
-      value = (mapFn as FromValueReturn[MapFnClassId.fn])();
-      break;
-    case TransformationType.MapWith:
-      value = (mapFn as MapWithReturn[MapFnClassId.fn])(sourceObj, mapper);
-      break;
-    case TransformationType.ConvertUsing:
-      value = (mapFn as ConvertUsingReturn[MapFnClassId.fn])(sourceObj);
-      break;
-    case TransformationType.Condition:
-    case TransformationType.NullSubstitution:
-      value = (mapFn as ConditionReturn[MapFnClassId.fn])(
-        sourceObj,
-        destinationMemberPath
-      );
-      break;
-    case TransformationType.MapWithArguments:
-      value = (mapFn as MapWithArgumentsReturn[MapFnClassId.fn])(
-        sourceObj,
-        extraArguments || {}
-      );
-      break;
-    case TransformationType.MapDefer:
-      value = mapMember(
-        (mapFn as MapDeferReturn[MapFnClassId.fn])(
-          sourceObj
-        ) as MemberMapReturn,
-        sourceObj,
-        destination,
-        destinationMemberPath,
-        extraArguments,
-        mapper
-      );
-      break;
-  }
-  return value;
+function setMemberMutateFn(destinationObj: Record<string, unknown>) {
+  return (destinationMember: string[]) => (value) => {
+    if (value !== undefined) {
+      setMutate(destinationObj, destinationMember, value);
+    }
+  };
 }
 
-/**
- * Depends on implementation of plugin.initializeMapping
- */
-function assertUnmappedProperties<
-  TDestination extends Dictionary<TDestination> = any
->(
-  destination: TDestination,
-  configuredKeys: string[],
-  errorHandler: ErrorHandler
-) {
-  const unmappedKeys = Object.keys(destination).filter((k) => {
-    const isAlreadyConfigured = configuredKeys.some((ck) => ck === k);
-    const isWritable =
-      Object.getOwnPropertyDescriptor(destination, k).writable === true;
-    return !isAlreadyConfigured && isWritable;
-  });
+function getMemberMutateFn(destinationObj: Record<string, unknown>) {
+  return (memberPath: string[] | undefined) =>
+    get(destinationObj, memberPath) as Record<string, unknown>;
+}
 
-  if (unmappedKeys.length) {
-    errorHandler.handle(`
-Unmapped properties:
--------------------
-${unmappedKeys.join(',\n')}
-`);
-  }
+function setMemberReturnFn<TDestination extends Dictionary<TDestination> = any>(
+  destinationMemberPath: string[],
+  destination: TDestination
+) {
+  return (value: unknown) => {
+    destination = set(destination, destinationMemberPath, value);
+  };
 }
 
 /**
@@ -470,26 +395,4 @@ export function mapArray<
   }
 
   return destinationArray;
-}
-
-function setMemberMutateFn(destinationObj: Record<string, unknown>) {
-  return (destinationMember: string[]) => (value) => {
-    if (value !== undefined) {
-      setMutate(destinationObj, destinationMember, value);
-    }
-  };
-}
-
-function getMemberMutateFn(destinationObj: Record<string, unknown>) {
-  return (memberPath: string[] | undefined) =>
-    get(destinationObj, memberPath) as Record<string, unknown>;
-}
-
-function setMemberReturnFn<TDestination extends Dictionary<TDestination> = any>(
-  destinationMemberPath: string[],
-  destination: TDestination
-) {
-  return (value: unknown) => {
-    destination = set(destination, destinationMemberPath, value);
-  };
 }

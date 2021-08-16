@@ -1,18 +1,15 @@
 import type {
   CreateMapFluentFunction,
   Dictionary,
-  MapAction,
   Mapping,
   MemberMapReturn,
   PreConditionReturn,
-  Selector,
-  SelectorReturn,
 } from '@automapper/types';
 import { MappingClassId } from '@automapper/types';
 import { createMapForMember } from './create-map-for-member.util';
 
 /**
- * Method to create FluentFunction for chaining forMember etc...
+ * Method to create FluentFunction for chaining forMember, beforeMap, and afterMap
  *
  * @param {Mapping} mapping - Mapping object of source <> destination
  */
@@ -22,36 +19,29 @@ export function createMapFluentFunction<
 >(
   mapping: Mapping<TSource, TDestination>
 ): CreateMapFluentFunction<TSource, TDestination> {
-  // initialize fluentFunction
-  const fluentFunction: CreateMapFluentFunction<TSource, TDestination> = {
-    forMember<TMemberType = SelectorReturn<TDestination>>(
-      selector: Selector<TDestination, TMemberType>,
+  return {
+    forMember(
+      selector,
       ...functions: [
         (
-          | PreConditionReturn<TSource, TDestination, TMemberType>
-          | MemberMapReturn<TSource, TDestination, TMemberType>
+          | PreConditionReturn<TSource, TDestination>
+          | MemberMapReturn<TSource, TDestination>
         ),
-        MemberMapReturn<TSource, TDestination, TMemberType>?
+        MemberMapReturn<TSource, TDestination>?
       ]
-    ): CreateMapFluentFunction<TSource, TDestination> {
-      return createMapForMember<TSource, TDestination>(
-        mapping,
-        selector,
-        functions,
-        fluentFunction
-      );
+    ) {
+      createMapForMember(mapping, selector, functions);
+      return this;
     },
-    beforeMap(mapAction: MapAction<TSource, TDestination>) {
+    beforeMap(mapAction) {
       // assign before mapAction to mapping
       mapping[MappingClassId.actions][0] = mapAction;
-      return fluentFunction;
+      return this;
     },
-    afterMap(mapAction: MapAction<TSource, TDestination>) {
+    afterMap(mapAction) {
       // assign after mapAction to mapping
       mapping[MappingClassId.actions][1] = mapAction;
-      return fluentFunction;
+      return this;
     },
   };
-
-  return fluentFunction;
 }

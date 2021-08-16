@@ -1,5 +1,4 @@
 import type {
-  CreateMapFluentFunction,
   Dictionary,
   Mapping,
   MappingProperty,
@@ -23,7 +22,6 @@ import { getMemberPath } from './get-member-path.util';
  * @param {Selector} selector - the member selector on `forMember(selector)`
  * @param preCondOrMapMemberFn
  * @param mapMemberFn
- * @param fluentFunction
  */
 export function createMapForMember<
   TSource extends Dictionary<TSource> = any,
@@ -38,9 +36,8 @@ export function createMapForMember<
       | MemberMapReturn<TSource, TDestination>
       | undefined,
     mapMemberFn?: MemberMapReturn<TSource, TDestination>
-  ],
-  fluentFunction: CreateMapFluentFunction<TSource, TDestination>
-): CreateMapFluentFunction<TSource, TDestination> {
+  ]
+): void {
   // get the memberPath from the selector
   // eg: `s => s.foo.bar` returns `foo.bar`
   const memberPath = getMemberPath(selector);
@@ -80,6 +77,4 @@ export function createMapForMember<
     // push MappingProperty to mapping
     mapping[MappingClassId.properties].push([memberPath, mappingProperty]);
   }
-
-  return fluentFunction;
 }

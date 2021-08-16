@@ -6,7 +6,6 @@ import type {
   MapOptions,
   Mapper,
   Mapping,
-  MappingProfile,
   PrimitiveConstructorWithDate,
   ValueSelector,
 } from '@automapper/types';
@@ -73,7 +72,7 @@ export function createMapper<TKey = unknown>({
       return createMapFluentFunction(mapping!);
     },
     getMapping: plugin.getMapping.bind(plugin),
-    addProfile(profile: MappingProfile) {
+    addProfile(profile) {
       profile(this);
       return this;
     },
@@ -93,7 +92,7 @@ export function createMapper<TKey = unknown>({
 
       // run preMap if available
       const [sourceInstance] = preMap
-        ? preMap.bind(plugin)(source, destination, sourceObj)
+        ? preMap.apply(plugin, [source, destination, sourceObj])
         : [sourceObj];
 
       // get mapping between Source and Destination
@@ -122,7 +121,11 @@ export function createMapper<TKey = unknown>({
           errorHandler
         );
 
-        return postMap ? postMap.bind(plugin)(destination, result) : result;
+        if (postMap) {
+          return postMap.apply(plugin, [destination, result]);
+        }
+
+        return result;
       }
 
       mapMutate(
@@ -170,7 +173,7 @@ export function createMapper<TKey = unknown>({
 
       // run preMapArray if available
       if (runPreMap && plugin.preMapArray) {
-        sourceArr = plugin.preMapArray(source, sourceArr);
+        sourceArr = plugin.preMapArray.apply(plugin, [source, sourceArr]);
       }
 
       return mapArray(

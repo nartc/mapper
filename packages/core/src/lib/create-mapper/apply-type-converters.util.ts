@@ -6,6 +6,13 @@ import type {
 } from '@automapper/types';
 import { MapFnClassId, MappingPropertiesClassId } from '@automapper/types';
 
+/**
+ *
+ * Apply converters if available to mapInitialize on createMap
+ *
+ * @param mapping
+ * @param typeConverters
+ */
 export function applyTypeConverters(
   mapping: Mapping,
   typeConverters: WeakMap<
@@ -37,7 +44,7 @@ export function applyTypeConverters(
         ];
 
       initializeProp[MappingPropertiesClassId.property][1][0][MapFnClassId.fn] =
-        (source: unknown) => {
+        (source) => {
           if ('convert' in typeConverter) {
             return typeConverter.convert(
               (originalMapInitializeFn as ValueSelector)(source)

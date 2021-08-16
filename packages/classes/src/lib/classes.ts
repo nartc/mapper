@@ -1,5 +1,5 @@
 import { createInitialMapping } from '@automapper/core';
-import type { Dictionary, MapPluginInitializer } from '@automapper/types';
+import type { MapPluginInitializer } from '@automapper/types';
 import { MappingClassId } from '@automapper/types';
 import 'reflect-metadata';
 import {
@@ -29,10 +29,7 @@ export const classes: MapPluginInitializer<Constructible> = (errorHandler) => {
   const instanceStorage = new ClassInstanceStorage();
 
   return {
-    instantiate<TModel extends Dictionary<TModel> = any>(
-      model: Constructible<TModel>,
-      obj?: TModel
-    ) {
+    instantiate(model, obj?) {
       return instantiate(instanceStorage, metadataStorage, model, obj);
     },
     initializeMapping(source, destination, options?) {
@@ -121,15 +118,7 @@ export const classes: MapPluginInitializer<Constructible> = (errorHandler) => {
       // return the mapping
       return mapping;
     },
-    preMap<
-      TSource extends Dictionary<TSource> = any,
-      TDestination extends Dictionary<TDestination> = any
-    >(
-      source: Constructible<TSource>,
-      destination: Constructible<TDestination>,
-      sourceObj?: TSource,
-      destinationObj?: TDestination
-    ) {
+    preMap(source, destination, sourceObj?, destinationObj?) {
       // Prepare the sourceInstance/destinationInstance with plain object sourceObj and destinationObj
       const [sourceInstance] = this.instantiate(source, sourceObj);
       const [destinationInstance] = this.instantiate(

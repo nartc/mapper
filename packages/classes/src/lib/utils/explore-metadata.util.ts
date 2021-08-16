@@ -5,6 +5,7 @@ import {
 } from '../constants';
 import type { ClassInstanceStorage, ClassMetadataStorage } from '../storages';
 import type { Constructible } from '../types';
+import type { PrimitiveWithDate } from '@automapper/types';
 
 export function exploreMetadata(
   metadataStorage: ClassMetadataStorage,
@@ -38,15 +39,20 @@ export function exploreMetadata(
   }
 }
 
-export function getMetadataList(
-  model: Constructible
-): [string, { typeFn: any; depth?: number; isGetterOnly?: boolean }][] {
+export function getMetadataList(model: Constructible): [
+  string,
+  {
+    typeFn: () => Constructible | PrimitiveWithDate;
+    depth?: number;
+    isGetterOnly?: boolean;
+  }
+][] {
   let metadataList =
     Reflect.getMetadata(AUTOMAP_PROPERTIES_METADATA_KEY, model) || [];
 
-  if ((model as any)[AUTOMAPPER_METADATA_FACTORY_KEY]) {
+  if (model[AUTOMAPPER_METADATA_FACTORY_KEY]) {
     metadataList = metadataList.concat(
-      (model as any)[AUTOMAPPER_METADATA_FACTORY_KEY]() || []
+      model[AUTOMAPPER_METADATA_FACTORY_KEY]() || []
     );
   }
 

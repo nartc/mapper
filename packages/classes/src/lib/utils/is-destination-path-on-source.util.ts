@@ -1,7 +1,7 @@
 export function isDerivedSourcePathOnSourceClasses(
   sourceProto: Record<string, unknown>
 ) {
-  return (sourceObj: any, sourcePath: string[]) => {
+  return (sourceObj: unknown, sourcePath: string[]) => {
     return (
       sourcePath.length === 1 &&
       !(

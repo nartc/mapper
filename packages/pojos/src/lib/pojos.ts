@@ -1,33 +1,22 @@
 import { createInitialMapping } from '@automapper/core';
-import type {
-  CreateMapOptions,
-  Dictionary,
-  MapPluginInitializer,
-} from '@automapper/types';
+import type { MapPluginInitializer } from '@automapper/types';
 import { MappingClassId } from '@automapper/types';
 import {
   PojosMappingStorage,
   PojosMetadataStorage,
   pojosSymbolStorage,
 } from './storages';
-import { instantiate } from './utils';
+import { exploreMetadata, instantiate } from './utils';
 
 export const pojos: MapPluginInitializer<string> = (errorHandler) => {
   const metadataStorage = new PojosMetadataStorage();
   const mappingStorage = new PojosMappingStorage();
 
   return {
-    instantiate<TModel extends Dictionary<TModel> = any>(
-      model: string,
-      obj?: TModel
-    ) {
+    instantiate(model, obj?) {
       return instantiate(metadataStorage, model, obj);
     },
-    initializeMapping(
-      source: string,
-      destination: string,
-      options?: CreateMapOptions
-    ) {
+    initializeMapping(source, destination, options?) {
       if (mappingStorage.has(source, destination)) {
         errorHandler.handle(
           `Mapping for source ${source} and destination ${destination} already exists`
@@ -57,7 +46,7 @@ export const pojos: MapPluginInitializer<string> = (errorHandler) => {
         }
       );
     },
-    getMapping(source: string, destination: string) {
+    getMapping(source, destination) {
       const mapping = mappingStorage.get(source, destination);
       if (!mapping) {
         errorHandler.handle(
@@ -79,17 +68,3 @@ export const pojos: MapPluginInitializer<string> = (errorHandler) => {
     },
   };
 };
-
-function exploreMetadata(
-  metadataStorage: PojosMetadataStorage,
-  ...keys: string[]
-) {
-  keys.forEach((key) => {
-    if (!metadataStorage.has(key)) {
-      const metadataList = pojosSymbolStorage.get(Symbol.for(key));
-      for (const [propertyKey, metadata] of metadataList) {
-        metadataStorage.addMetadata(key, [[propertyKey], () => metadata]);
-      }
-    }
-  });
-}

@@ -1,3 +1,10 @@
+### [6.0.2](https://github.com/nartc/mapper/compare/6.0.1...6.0.2) (2021-08-22)
+
+
+### Bug Fixes
+
+* **core:** add prototype properties (getters, setters) to destinationPath ([15ad713](https://github.com/nartc/mapper/commit/15ad713fd0acf86ad19124178ce0f18b19bdb1a1)), closes [#334](https://github.com/nartc/mapper/issues/334)
+
 ### [6.0.1](https://github.com/nartc/mapper/compare/6.0.0...6.0.1) (2021-08-16)
 
 

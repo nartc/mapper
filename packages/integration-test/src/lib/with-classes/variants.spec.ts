@@ -27,6 +27,18 @@ describe('Variants', () => {
     expect(vm.fullName).toEqual(user.firstName + ' ' + user.lastName);
   });
 
+  it('should map back to model with getters', () => {
+    mapper.createMap(SimpleUserVm, UserWithGetter);
+
+    const simpleUser = new SimpleUserVm();
+    simpleUser.firstName = 'Chau';
+    simpleUser.lastName = 'Tran';
+
+    const user = mapper.map(simpleUser, UserWithGetter, SimpleUserVm);
+    expect(user.firstName).toEqual(simpleUser.firstName);
+    expect(user.lastName).toEqual(simpleUser.lastName);
+  });
+
   it('should map with model with ONLY getters', () => {
     mapper.createMap(UserWithOnlyGetter, SimpleUserVm).forMember(
       (d) => d.fullName,

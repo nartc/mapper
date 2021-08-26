@@ -1,3 +1,10 @@
+## [6.1.0](https://github.com/nartc/mapper/compare/6.0.2...6.1.0) (2021-08-26)
+
+
+### Features
+
+* **core:** add forSelf ([140a37c](https://github.com/nartc/mapper/commit/140a37c7228aacfbaced12bf8c147e5ea048446b))
+
 ### [6.0.2](https://github.com/nartc/mapper/compare/6.0.1...6.0.2) (2021-08-22)
 
 

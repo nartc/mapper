@@ -8,6 +8,7 @@ import type {
   SelectorReturn,
   ValueSelector,
 } from './utils';
+import type { MapPlugin } from './plugin';
 
 export interface ConditionPredicate<TSource extends Dictionary<TSource> = any> {
   (source: TSource): boolean;
@@ -160,6 +161,8 @@ export type MapInitializeReturn<
 
 export interface Mapper {
   name: string;
+
+  plugin: MapPlugin;
 
   addTypeConverter<
     TSourceType extends PrimitiveConstructorWithDate = PrimitiveConstructorWithDate,
@@ -510,6 +513,16 @@ export interface CreateMapFluentFunction<
     mapDeferFn: MapDeferReturn<TSource, TDestination, TMemberType>
   ): CreateMapFluentFunction<TSource, TDestination>;
 
+  forSelf<TWith extends Dictionary<TWith> = any>(
+    source: new (...args: unknown[]) => TWith,
+    selector: Selector<TSource, TWith>
+  ): CreateMapFluentFunction<TSource, TDestination>;
+
+  forSelf(
+    source: string,
+    selector: Selector<TSource>
+  ): CreateMapFluentFunction<TSource, TDestination>;
+
   beforeMap(
     action: MapAction<TSource, TDestination>
   ): CreateMapFluentFunction<TSource, TDestination>;
@@ -532,7 +545,7 @@ export type MappingProperty<
   TSource extends Dictionary<TSource> = any,
   TDestination extends Dictionary<TDestination> = any,
   TSelectorReturn = SelectorReturn<TDestination>
-> = readonly [
+> = [
   [target: string[], origin?: string[]],
   MappingTransformation<TSource, TDestination, TSelectorReturn>
 ];
@@ -557,6 +570,7 @@ export type Mapping<
     beforeMap?: MapAction<TSource, TDestination>,
     afterMap?: MapAction<TSource, TDestination>
   ],
+  Mapper,
   [source: NamingConvention, destination: NamingConvention]?,
   [baseSource: unknown, baseDestination: unknown][]?
 ];

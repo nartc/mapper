@@ -9,6 +9,7 @@ import type {
   PrimitiveConstructorWithDate,
   ValueSelector,
 } from '@automapper/types';
+import { MappingClassId } from '@automapper/types';
 import { mapArray, mapMutate, mapReturn } from '../map';
 import { createMapFluentFunction } from './create-map-fluent-function.util';
 import { mappingNullCheck } from '../utils';
@@ -39,6 +40,7 @@ export function createMapper<TKey = unknown>({
 
   return {
     name,
+    plugin,
     addTypeConverter(source, destination, converter) {
       const sourceTypeConverters = typeConverters.get(source);
       if (sourceTypeConverters) {
@@ -63,8 +65,9 @@ export function createMapper<TKey = unknown>({
       // create the initial mapping between source and destination
       const mapping = plugin.initializeMapping(source, destination, options);
 
-      // apply typeConverters
       if (mapping) {
+        mapping[MappingClassId.mapper] = this;
+        // apply typeConverters
         applyTypeConverters(mapping, typeConverters);
       }
 

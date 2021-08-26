@@ -7,6 +7,7 @@ import type {
 } from '@automapper/types';
 import { MappingClassId } from '@automapper/types';
 import { createMapForMember } from './create-map-for-member.util';
+import { createMapForSelf } from './create-map-for-self.util';
 
 /**
  * Method to create FluentFunction for chaining forMember, beforeMap, and afterMap
@@ -31,6 +32,10 @@ export function createMapFluentFunction<
       ]
     ) {
       createMapForMember(mapping, selector, functions);
+      return this;
+    },
+    forSelf(source, selector) {
+      createMapForSelf(mapping, source, selector);
       return this;
     },
     beforeMap(mapAction) {

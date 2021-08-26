@@ -62,10 +62,10 @@ export function createInitialMapping(
     [sourceObj, destinationObj],
     [],
     [],
+    undefined,
     getNamingConventionsFromOptions(conventions),
     undefined,
   ];
-
   if (prePropertiesLoop) {
     prePropertiesLoop(mapping);
   }

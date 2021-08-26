@@ -15,6 +15,7 @@ export const enum MappingClassId {
   mappings,
   properties,
   actions,
+  mapper,
   namingConventions,
   bases,
 }

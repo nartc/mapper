@@ -1,3 +1,10 @@
+### [6.1.1](https://github.com/nartc/mapper/compare/6.1.0...6.1.1) (2021-08-27)
+
+
+### Bug Fixes
+
+* **core:** ensure forMember (custom) will always override forSelf ([ef7471a](https://github.com/nartc/mapper/commit/ef7471ac7a5edbd8728b12b21b3df8e370b50b8f))
+
 ## [6.1.0](https://github.com/nartc/mapper/compare/6.0.2...6.1.0) (2021-08-26)
 
 

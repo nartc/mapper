@@ -4,7 +4,12 @@ import type {
   PrimitiveConstructorWithDate,
   ValueSelector,
 } from '@automapper/types';
-import { MapFnClassId, MappingPropertiesClassId } from '@automapper/types';
+import {
+  MapFnClassId,
+  MappingPropertiesClassId,
+  MappingPropertyClassId,
+  MappingTransformationClassId,
+} from '@automapper/types';
 
 /**
  *
@@ -39,21 +44,24 @@ export function applyTypeConverters(
       ?.get(destinationType as PrimitiveConstructorWithDate);
     if (typeConverter) {
       const originalMapInitializeFn =
-        initializeProp[MappingPropertiesClassId.property][1][0][
-          MapFnClassId.fn
-        ];
+        initializeProp[MappingPropertiesClassId.property][
+          MappingPropertyClassId.transformation
+        ][MappingTransformationClassId.memberMapFn][MapFnClassId.fn];
 
-      initializeProp[MappingPropertiesClassId.property][1][0][MapFnClassId.fn] =
-        (source) => {
-          if ('convert' in typeConverter) {
-            return typeConverter.convert(
-              (originalMapInitializeFn as ValueSelector)(source)
-            );
-          }
-          return typeConverter(
+      initializeProp[MappingPropertiesClassId.property][
+        MappingPropertyClassId.transformation
+      ][MappingTransformationClassId.memberMapFn][MapFnClassId.fn] = (
+        source
+      ) => {
+        if ('convert' in typeConverter) {
+          return typeConverter.convert(
             (originalMapInitializeFn as ValueSelector)(source)
           );
-        };
+        }
+        return typeConverter(
+          (originalMapInitializeFn as ValueSelector)(source)
+        );
+      };
     }
   }
 }

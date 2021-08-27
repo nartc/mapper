@@ -74,4 +74,25 @@ describe('Map - Self', () => {
     expect(dto.quantity).toEqual(cartItem.quantity);
     expect(dto.total).toEqual(cartItem.quantity * item.price);
   });
+
+  it('should map correctly for forMember that overrides BEFORE forSelf', () => {
+    mapper.createMap(Item, CartItemDto);
+    mapper
+      .createMap(CartItem, CartItemDto)
+      .forMember((d) => d.name, fromValue('override before name'))
+      .forSelf(Item, (src) => src.item);
+
+    const item = new Item();
+    item.name = 'item1';
+    item.price = 123;
+    const cartItem = new CartItem();
+    cartItem.item = item;
+    cartItem.quantity = 10;
+
+    const dto = mapper.map(cartItem, CartItemDto, CartItem);
+    expect(dto.name).toEqual('override before name');
+    expect(dto.price).toEqual(item.price);
+    expect(dto.quantity).toEqual(cartItem.quantity);
+    expect(dto.total).toEqual(cartItem.quantity * item.price);
+  });
 });

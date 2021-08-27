@@ -1,11 +1,13 @@
+import type { Mapping, Selector } from '@automapper/types';
 import {
-  Mapping,
+  MapFnClassId,
   MappingClassId,
   MappingPropertiesClassId,
-  Selector,
+  MappingPropertyClassId,
+  MappingTransformationClassId,
   TransformationType,
 } from '@automapper/types';
-import { get } from '@automapper/core';
+import { get } from '../utils';
 
 export function createMapForSelf<TSource, TDestination>(
   mapping: Mapping<TSource, TDestination>,
@@ -19,11 +21,11 @@ export function createMapForSelf<TSource, TDestination>(
 
   for (let i = 0, keysLen = sourceInstanceKeys.length; i < keysLen; i++) {
     const key = sourceInstanceKeys[i];
-    const foundMapInitialized = mapping[MappingClassId.properties].find(
-      ([[path]]) => path === key
+    const foundMapProperty = mapping[MappingClassId.properties].find(
+      (property) => property[MappingPropertiesClassId.path].indexOf(key) === 0
     );
 
-    if (!foundMapInitialized) {
+    if (!foundMapProperty) {
       mapping[MappingClassId.properties].push([
         [key],
         [
@@ -38,7 +40,16 @@ export function createMapForSelf<TSource, TDestination>(
         ],
       ]);
     } else {
-      foundMapInitialized[MappingPropertiesClassId.property][1][0] = [
+      if (
+        foundMapProperty[MappingPropertiesClassId.property][
+          MappingPropertyClassId.transformation
+        ][MappingTransformationClassId.memberMapFn][MapFnClassId.type] !==
+        TransformationType.MapInitialize
+      )
+        continue;
+      foundMapProperty[MappingPropertiesClassId.property][
+        MappingPropertyClassId.transformation
+      ][MappingTransformationClassId.memberMapFn] = [
         TransformationType.MapInitialize,
         (originalSource) => get(selector(originalSource), [key]),
       ];

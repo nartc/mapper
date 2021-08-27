@@ -26,6 +26,22 @@ export const enum MappingPropertiesClassId {
   nestedMappingPair,
 }
 
+export const enum MappingPropertyClassId {
+  targetAndOrigin,
+  transformation,
+}
+
+export const enum MappingPropertyTargetOriginClassId {
+  target,
+  origin,
+}
+
+export const enum MappingTransformationClassId {
+  memberMapFn,
+  metadataNullFlag,
+  preCond,
+}
+
 export const enum MapFnClassId {
   type,
   fn,

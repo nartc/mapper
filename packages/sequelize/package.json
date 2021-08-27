@@ -3,7 +3,7 @@
   "version": "6.1.1",
   "peerDependencies": {
     "reflect-metadata": "~0.1.13",
-    "sequelize": "~6.5.0"
+    "sequelize": "^6.5.0"
   },
   "sideEffects": false,
   "engines": {

@@ -1,3 +1,10 @@
+### [6.1.2](https://github.com/nartc/mapper/compare/6.1.1...6.1.2) (2021-08-30)
+
+
+### Bug Fixes
+
+* **nestjs:** make sure to support Nest7 as well ([8235720](https://github.com/nartc/mapper/commit/8235720c93d264154d3c22d7a40a1a034e441025))
+
 ### [6.1.1](https://github.com/nartc/mapper/compare/6.1.0...6.1.1) (2021-08-27)
 
 

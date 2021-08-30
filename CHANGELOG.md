@@ -1,3 +1,10 @@
+### [6.1.3](https://github.com/nartc/mapper/compare/6.1.2...6.1.3) (2021-08-30)
+
+
+### Bug Fixes
+
+* **core:** ensure properties that aren't on destination won't be mapped from forSelf ([390b8bb](https://github.com/nartc/mapper/commit/390b8bb4cd4a7c4cb2170434f1c75a762ce75774))
+
 ### [6.1.2](https://github.com/nartc/mapper/compare/6.1.1...6.1.2) (2021-08-30)
 
 

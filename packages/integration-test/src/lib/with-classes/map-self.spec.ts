@@ -8,6 +8,8 @@ describe('Map - Self', () => {
     name: string;
     @AutoMap()
     price: number;
+    @AutoMap()
+    stock: number;
   }
 
   class CartItem {
@@ -43,6 +45,7 @@ describe('Map - Self', () => {
     const item = new Item();
     item.name = 'item1';
     item.price = 123;
+    item.stock = 456;
     const cartItem = new CartItem();
     cartItem.item = item;
     cartItem.quantity = 10;
@@ -52,6 +55,7 @@ describe('Map - Self', () => {
     expect(dto.price).toEqual(item.price);
     expect(dto.quantity).toEqual(cartItem.quantity);
     expect(dto.total).toEqual(cartItem.quantity * item.price);
+    expect(dto['stock']).toBeUndefined();
   });
 
   it('should map correctly for forMember that overrides forSelf', () => {
@@ -73,6 +77,7 @@ describe('Map - Self', () => {
     expect(dto.price).toEqual(item.price);
     expect(dto.quantity).toEqual(cartItem.quantity);
     expect(dto.total).toEqual(cartItem.quantity * item.price);
+    expect(dto['stock']).toBeUndefined();
   });
 
   it('should map correctly for forMember that overrides BEFORE forSelf', () => {
@@ -94,5 +99,6 @@ describe('Map - Self', () => {
     expect(dto.price).toEqual(item.price);
     expect(dto.quantity).toEqual(cartItem.quantity);
     expect(dto.total).toEqual(cartItem.quantity * item.price);
+    expect(dto['stock']).toBeUndefined();
   });
 });

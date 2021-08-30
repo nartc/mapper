@@ -15,6 +15,7 @@ export function createMapForSelf<TSource, TDestination>(
   selector: Selector<TSource>
 ) {
   const mapper = mapping[MappingClassId.mapper];
+  const [, destinationInstance] = mapping[MappingClassId.mappings];
 
   const [sourceInstance] = mapper.plugin.instantiate(source);
   const sourceInstanceKeys = Object.keys(sourceInstance);
@@ -26,6 +27,7 @@ export function createMapForSelf<TSource, TDestination>(
     );
 
     if (!foundMapProperty) {
+      if (!(key in destinationInstance)) continue;
       mapping[MappingClassId.properties].push([
         [key],
         [
@@ -39,20 +41,21 @@ export function createMapForSelf<TSource, TDestination>(
           ],
         ],
       ]);
-    } else {
-      if (
-        foundMapProperty[MappingPropertiesClassId.property][
-          MappingPropertyClassId.transformation
-        ][MappingTransformationClassId.memberMapFn][MapFnClassId.type] !==
-        TransformationType.MapInitialize
-      )
-        continue;
+      continue;
+    }
+
+    if (
       foundMapProperty[MappingPropertiesClassId.property][
         MappingPropertyClassId.transformation
-      ][MappingTransformationClassId.memberMapFn] = [
-        TransformationType.MapInitialize,
-        (originalSource) => get(selector(originalSource), [key]),
-      ];
-    }
+      ][MappingTransformationClassId.memberMapFn][MapFnClassId.type] !==
+      TransformationType.MapInitialize
+    )
+      continue;
+    foundMapProperty[MappingPropertiesClassId.property][
+      MappingPropertyClassId.transformation
+    ][MappingTransformationClassId.memberMapFn] = [
+      TransformationType.MapInitialize,
+      (originalSource) => get(selector(originalSource), [key]),
+    ];
   }
 }

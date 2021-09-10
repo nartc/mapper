@@ -1,3 +1,10 @@
+### [6.1.4](https://github.com/nartc/mapper/compare/6.1.3...6.1.4) (2021-09-10)
+
+
+### Bug Fixes
+
+* **transformer-plugin:** try get typeReference and null check for property assignment ([d447783](https://github.com/nartc/mapper/commit/d447783e846e6a1e2e2b7783b66db1902c078313))
+
 ### [6.1.3](https://github.com/nartc/mapper/compare/6.1.2...6.1.3) (2021-08-30)
 
 

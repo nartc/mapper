@@ -13,6 +13,8 @@ class Address {
 class Profile {
   bio: string;
   age: string;
+  date: Date;
+  num: number;
   role: Role;
   roles: Role[];
   maybeRole?: Role;
@@ -56,6 +58,8 @@ class Address {
 class Profile {
   bio!: string;
   age!: string;
+  date!: Date;
+  num!: number;
   role!: Role;
   roles!: Role[];
   maybeRole?: Role;
@@ -106,6 +110,8 @@ class Address {
 class Profile {
     bio;
     age;
+    date;
+    num;
     role;
     roles;
     maybeRole;
@@ -117,7 +123,7 @@ class Profile {
     maybeStringEnums;
     nullableStringEnum;
     static __AUTOMAPPER_METADATA_FACTORY__() {
-        return [["bio", { typeFn: () => String }], ["age", { typeFn: () => String }], ["role", { typeFn: () => Number }], ["roles", { typeFn: () => Number }], ["maybeRole", { typeFn: () => Number }], ["maybeRoles", { typeFn: () => Number }], ["nullableRole", { typeFn: () => Number }], ["stringEnum", { typeFn: () => String }], ["stringEnums", { typeFn: () => String }], ["maybeStringEnum", { typeFn: () => String }], ["maybeStringEnums", { typeFn: () => String }], ["nullableStringEnum", { typeFn: () => String }]];
+        return [["bio", { typeFn: () => String }], ["age", { typeFn: () => String }], ["date", { typeFn: () => Date }], ["num", { typeFn: () => Number }], ["role", { typeFn: () => Number }], ["roles", { typeFn: () => Number }], ["maybeRole", { typeFn: () => Number }], ["maybeRoles", { typeFn: () => Number }], ["nullableRole", { typeFn: () => Number }], ["stringEnum", { typeFn: () => String }], ["stringEnums", { typeFn: () => String }], ["maybeStringEnum", { typeFn: () => String }], ["maybeStringEnums", { typeFn: () => String }], ["nullableStringEnum", { typeFn: () => String }]];
     }
 }
 class User {
@@ -160,6 +166,8 @@ class Address {
 class Profile {
     bio;
     age;
+    date;
+    num;
     role;
     roles;
     maybeRole;
@@ -171,7 +179,7 @@ class Profile {
     maybeStringEnums;
     nullableStringEnum;
     static __AUTOMAPPER_METADATA_FACTORY__() {
-        return [["bio", { typeFn: () => String }], ["age", { typeFn: () => String }], ["role", { typeFn: () => Number }], ["roles", { typeFn: () => Number }], ["maybeRole", { typeFn: () => Number }], ["maybeRoles", { typeFn: () => Number }], ["nullableRole", { typeFn: () => Number }], ["stringEnum", { typeFn: () => String }], ["stringEnums", { typeFn: () => String }], ["maybeStringEnum", { typeFn: () => String }], ["maybeStringEnums", { typeFn: () => String }], ["nullableStringEnum", { typeFn: () => String }]];
+        return [["bio", { typeFn: () => String }], ["age", { typeFn: () => String }], ["date", { typeFn: () => Date }], ["num", { typeFn: () => Number }], ["role", { typeFn: () => Number }], ["roles", { typeFn: () => Number }], ["maybeRole", { typeFn: () => Number }], ["maybeRoles", { typeFn: () => Number }], ["nullableRole", { typeFn: () => Number }], ["stringEnum", { typeFn: () => String }], ["stringEnums", { typeFn: () => String }], ["maybeStringEnum", { typeFn: () => String }], ["maybeStringEnums", { typeFn: () => String }], ["nullableStringEnum", { typeFn: () => String }]];
     }
 }
 export class User {

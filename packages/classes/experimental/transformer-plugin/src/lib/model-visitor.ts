@@ -17,6 +17,7 @@ import type {
   TransformationContext,
   Type,
   TypeChecker,
+  TypeReferenceNode,
   Visitor,
 } from 'typescript/lib/tsserverlibrary';
 import {
@@ -151,17 +152,23 @@ export class ModelVisitor {
       return classNode;
     }
     const returnValue = factory.createArrayLiteralExpression(
-      Object.entries(classMetadata).map(([key, val]) =>
-        factory.createArrayLiteralExpression([
-          factory.createStringLiteral(key),
-          factory.createObjectLiteralExpression(
-            ModelVisitor.getMetadataObjectLiteralExpression(
-              factory,
-              (val as PropertyAssignment).initializer as ArrowFunction
-            )
-          ),
-        ])
-      )
+      Object.entries(classMetadata).reduce((expressions, [key, val]) => {
+        if (val) {
+          expressions.push(
+            factory.createArrayLiteralExpression([
+              factory.createStringLiteral(key),
+              factory.createObjectLiteralExpression(
+                ModelVisitor.getMetadataObjectLiteralExpression(
+                  factory,
+                  (val as PropertyAssignment).initializer as ArrowFunction
+                )
+              ),
+            ])
+          );
+        }
+
+        return expressions;
+      }, [])
     );
     const method = factory.createMethodDeclaration(
       undefined,
@@ -309,6 +316,10 @@ export class ModelVisitor {
     let typeReference = getTypeReferenceAsString(type, typeChecker);
 
     if (!typeReference) {
+      typeReference = this.tryGetTypeReferenceFromNodeType(node);
+    }
+
+    if (!typeReference) {
       return undefined;
     }
 
@@ -325,6 +336,13 @@ export class ModelVisitor {
       key,
       typeReference
     );
+  }
+
+  private static tryGetTypeReferenceFromNodeType(
+    node: ts.PropertyDeclaration | ts.GetAccessorDeclaration
+  ): string | undefined {
+    return ((node.type as TypeReferenceNode).typeName as Identifier)
+      ?.escapedText as string;
   }
 
   private static createArrowFunctionWithTypeReference(

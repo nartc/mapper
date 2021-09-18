@@ -27,7 +27,7 @@ export function mapMember<TSource extends Dictionary<TSource> = any>(
   sourceObj: TSource,
   destination: unknown,
   destinationMemberPath: string[],
-  extraArguments: Record<string, unknown> | undefined,
+  extraArguments: Record<string, any> | undefined,
   mapper: Mapper
 ) {
   let value: unknown;

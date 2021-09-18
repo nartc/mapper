@@ -13,7 +13,7 @@ export interface MapOptions<
 > {
   beforeMap?: MapAction<TSource, TDestination>;
   afterMap?: MapAction<TSource, TDestination>;
-  extraArguments?: Record<string, unknown>;
+  extraArguments?: Record<string, any>;
 }
 
 export interface MapArrayOptions<

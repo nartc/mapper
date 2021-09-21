@@ -1,3 +1,23 @@
+## [6.2.0](https://github.com/nartc/mapper/compare/6.1.4...6.2.0) (2021-09-21)
+
+
+### Features
+
+* **classes:** store source and destination on mapping; use .name instead of toString() ([6b0530c](https://github.com/nartc/mapper/commit/6b0530cb03e4ee407524ea1599165c7f045dfd94))
+* **core:** start storing Source and Destination keys on Mapping ([73d19a3](https://github.com/nartc/mapper/commit/73d19a3474c916581c1ccdc9e451e306606752f9))
+* **core:** support strong type extraArguments ([0cd5119](https://github.com/nartc/mapper/commit/0cd51191ea529b4214a45d31b1582084684b4f16))
+* **pojos:** store source and destination on mapping ([2fd60bc](https://github.com/nartc/mapper/commit/2fd60bc36426b492175a33ffc680512269cd833c))
+
+
+### Bug Fixes
+
+* **types:** replace unknown record type in mapWithArguments by any ([#347](https://github.com/nartc/mapper/issues/347)) ([8160498](https://github.com/nartc/mapper/commit/816049834b5938e82cceb5933a3092a9c09e307b)), closes [#346](https://github.com/nartc/mapper/issues/346)
+
+
+### Documentations
+
+* remove 'odd-property name' limitation ([99e0efd](https://github.com/nartc/mapper/commit/99e0efd5a636c9530c0529deeef9761237d8addf))
+
 ### [6.1.4](https://github.com/nartc/mapper/compare/6.1.3...6.1.4) (2021-09-10)
 
 

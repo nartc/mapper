@@ -34,7 +34,7 @@ describe('Creation', () => {
     mapper.createMap(SimpleBar, SimpleBarVm);
     expect(spiedErrorHandler).toHaveBeenNthCalledWith(
       1,
-      `Mapping for source ${SimpleBar.toString()} and destination ${SimpleBarVm.toString()} already exists`
+      `Mapping for source ${SimpleBar.name} and destination ${SimpleBarVm.name} already exists`
     );
   });
 

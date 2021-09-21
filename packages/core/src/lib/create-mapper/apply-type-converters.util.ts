@@ -25,7 +25,7 @@ export function applyTypeConverters(
     WeakMap<PrimitiveConstructorWithDate, ValueSelector | Converter>
   >
 ): void {
-  const [, initializedProps] = mapping;
+  const [, , initializedProps] = mapping;
   for (
     let i = 0, initializedPropsLen = initializedProps.length;
     i < initializedPropsLen;

@@ -36,7 +36,7 @@ export const classes: MapPluginInitializer<Constructible> = (errorHandler) => {
       // If a mapping already exists, handle error and return;
       if (mappingStorage.has(source, destination)) {
         errorHandler.handle(
-          `Mapping for source ${source.toString()} and destination ${destination.toString()} already exists`
+          `Mapping for source ${source.name} and destination ${destination.name} already exists`
         );
         return;
       }
@@ -71,6 +71,7 @@ export const classes: MapPluginInitializer<Constructible> = (errorHandler) => {
         sourceNestedConstructible as unknown[],
         destinationNestedConstructible as unknown[],
         (mapping) => {
+          mapping[MappingClassId.keys] = [source, destination];
           mappingStorage.set(source, destination, mapping);
         },
         options,
@@ -106,7 +107,7 @@ export const classes: MapPluginInitializer<Constructible> = (errorHandler) => {
       // handle error and fail fast if not found
       if (!mapping) {
         errorHandler.handle(
-          `Mapping not found for source ${source.toString()} and destination ${destination.toString()}`
+          `Mapping not found for source ${source.name} and destination ${destination.name}`
         );
         return;
       }

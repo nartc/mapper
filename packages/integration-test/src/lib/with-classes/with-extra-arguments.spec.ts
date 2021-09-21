@@ -8,6 +8,10 @@ import {
   SimpleFooVm,
 } from './fixtures/models/simple-foo-bar';
 
+interface Extra {
+  multiplier: number;
+}
+
 describe('withExtraArguments', () => {
   const [mapper] = setupClasses('withExtraArguments');
 
@@ -42,8 +46,10 @@ describe('withExtraArguments', () => {
     foo.foo = 'foo';
     foo.fooBar = 2;
 
+    const extra: Extra = { multiplier: 2 };
+
     let vm = mapper.map(foo, SimpleFooVm, SimpleFoo, {
-      extraArguments: { multiplier: 2 },
+      extraArguments: extra,
     });
     expect(vm.foo).toEqual(foo.foo);
     expect(vm.fooBar).toEqual(foo.fooBar * 2);

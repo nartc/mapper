@@ -9,17 +9,19 @@ import type { Dictionary } from './utils';
 
 export interface MapOptions<
   TSource extends Dictionary<TSource> = any,
-  TDestination extends Dictionary<TDestination> = any
+  TDestination extends Dictionary<TDestination> = any,
+  TExtraArguments extends Record<string, any> = Record<string, any>
 > {
   beforeMap?: MapAction<TSource, TDestination>;
   afterMap?: MapAction<TSource, TDestination>;
-  extraArguments?: Record<string, unknown>;
+  extraArguments?: TExtraArguments;
 }
 
 export interface MapArrayOptions<
   TSource extends Dictionary<TSource> = any,
-  TDestination extends Dictionary<TDestination> = any
-> extends MapOptions<TSource[], TDestination[]> {
+  TDestination extends Dictionary<TDestination> = any,
+  TExtraArguments extends Record<string, any> = Record<string, any>
+> extends MapOptions<TSource[], TDestination[], TExtraArguments> {
   runPreMap?: boolean;
 }
 

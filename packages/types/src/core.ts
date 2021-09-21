@@ -218,126 +218,138 @@ export interface Mapper {
 
   map<
     TSource extends Dictionary<TSource> = any,
-    TDestination extends Dictionary<TDestination> = any
+    TDestination extends Dictionary<TDestination> = any,
+    TExtraArguments extends Record<string, any> = Record<string, any>
   >(
     sourceObj: TSource,
     destination: new (...args: unknown[]) => TDestination,
     source: new (...args: unknown[]) => TSource,
-    options?: MapOptions<TSource, TDestination>
+    options?: MapOptions<TSource, TDestination, TExtraArguments>
   ): TDestination;
 
   map<
     TSource extends Dictionary<TSource>,
-    TDestination extends Dictionary<TDestination>
+    TDestination extends Dictionary<TDestination>,
+    TExtraArguments extends Record<string, any> = Record<string, any>
   >(
     sourceObj: TSource,
     destination: string,
     source: string,
-    options?: MapOptions<TSource, TDestination>
+    options?: MapOptions<TSource, TDestination, TExtraArguments>
   ): TDestination;
 
   map<
     TSource extends Dictionary<TSource> = any,
-    TDestination extends Dictionary<TDestination> = any
+    TDestination extends Dictionary<TDestination> = any,
+    TExtraArguments extends Record<string, any> = Record<string, any>
   >(
     sourceObj: TSource,
     destination: new (...args: unknown[]) => TDestination,
     source: new (...args: unknown[]) => TSource,
     destinationObj: TDestination,
-    options?: MapOptions<TSource, TDestination>
+    options?: MapOptions<TSource, TDestination, TExtraArguments>
   ): void;
 
   map<
     TSource extends Dictionary<TSource>,
-    TDestination extends Dictionary<TDestination>
+    TDestination extends Dictionary<TDestination>,
+    TExtraArguments extends Record<string, any> = Record<string, any>
   >(
     sourceObj: TSource,
     destination: string,
     source: string,
     destinationObj: TDestination,
-    options?: MapOptions<TSource, TDestination>
+    options?: MapOptions<TSource, TDestination, TExtraArguments>
   ): void;
 
   mapAsync<
     TSource extends Dictionary<TSource> = any,
-    TDestination extends Dictionary<TDestination> = any
+    TDestination extends Dictionary<TDestination> = any,
+    TExtraArguments extends Record<string, any> = Record<string, any>
   >(
     sourceObj: TSource,
     destination: new (...args: unknown[]) => TDestination,
     source: new (...args: unknown[]) => TSource,
-    options?: MapOptions<TSource, TDestination>
+    options?: MapOptions<TSource, TDestination, TExtraArguments>
   ): Promise<TDestination>;
 
   mapAsync<
     TSource extends Dictionary<TSource>,
-    TDestination extends Dictionary<TDestination>
+    TDestination extends Dictionary<TDestination>,
+    TExtraArguments extends Record<string, any> = Record<string, any>
   >(
     sourceObj: TSource,
     destination: string,
     source: string,
-    options?: MapOptions<TSource, TDestination>
+    options?: MapOptions<TSource, TDestination, TExtraArguments>
   ): Promise<TDestination>;
 
   mapAsync<
     TSource extends Dictionary<TSource> = any,
-    TDestination extends Dictionary<TDestination> = any
+    TDestination extends Dictionary<TDestination> = any,
+    TExtraArguments extends Record<string, any> = Record<string, any>
   >(
     sourceObj: TSource,
     destination: new (...args: unknown[]) => TDestination,
     source: new (...args: unknown[]) => TSource,
     destinationObj: TDestination,
-    options?: MapOptions<TSource, TDestination>
+    options?: MapOptions<TSource, TDestination, TExtraArguments>
   ): Promise<void>;
 
   mapAsync<
     TSource extends Dictionary<TSource>,
-    TDestination extends Dictionary<TDestination>
+    TDestination extends Dictionary<TDestination>,
+    TExtraArguments extends Record<string, any> = Record<string, any>
   >(
     sourceObj: TSource,
     destination: string,
     source: string,
     destinationObj: TDestination,
-    options?: MapOptions<TSource, TDestination>
+    options?: MapOptions<TSource, TDestination, TExtraArguments>
   ): Promise<void>;
 
   mapArray<
     TSource extends Dictionary<TSource> = any,
-    TDestination extends Dictionary<TDestination> = any
+    TDestination extends Dictionary<TDestination> = any,
+    TExtraArguments extends Record<string, any> = Record<string, any>
   >(
     sourceArray: TSource[],
     destination: new (...args: unknown[]) => TDestination,
     source: new (...args: unknown[]) => TSource,
-    options?: MapArrayOptions<TSource, TDestination>
+    options?: MapArrayOptions<TSource, TDestination, TExtraArguments>
   ): TDestination[];
 
   mapArray<
     TSource extends Dictionary<TSource>,
-    TDestination extends Dictionary<TDestination>
+    TDestination extends Dictionary<TDestination>,
+    TExtraArguments extends Record<string, any> = Record<string, any>
   >(
     sourceArray: TSource[],
     destination: string,
     source: string,
-    options?: MapArrayOptions<TSource, TDestination>
+    options?: MapArrayOptions<TSource, TDestination, TExtraArguments>
   ): TDestination[];
 
   mapArrayAsync<
     TSource extends Dictionary<TSource> = any,
-    TDestination extends Dictionary<TDestination> = any
+    TDestination extends Dictionary<TDestination> = any,
+    TExtraArguments extends Record<string, any> = Record<string, any>
   >(
     sourceArray: TSource[],
     destination: new (...args: unknown[]) => TDestination,
     source: new (...args: unknown[]) => TSource,
-    options?: MapArrayOptions<TSource, TDestination>
+    options?: MapArrayOptions<TSource, TDestination, TExtraArguments>
   ): Promise<TDestination[]>;
 
   mapArrayAsync<
     TSource extends Dictionary<TSource>,
-    TDestination extends Dictionary<TDestination>
+    TDestination extends Dictionary<TDestination>,
+    TExtraArguments extends Record<string, any> = Record<string, any>
   >(
     sourceArray: TSource[],
     destination: string,
     source: string,
-    options?: MapArrayOptions<TSource, TDestination>
+    options?: MapArrayOptions<TSource, TDestination, TExtraArguments>
   ): Promise<TDestination[]>;
 
   dispose(): void;
@@ -555,6 +567,10 @@ export type Mapping<
   TDestination extends Dictionary<TDestination> = any
 > = [
   [source: TSource, destination: TDestination],
+  [
+    source: (new (...args: unknown[]) => TSource) | string,
+    destination: (new (...args: unknown[]) => TDestination) | string
+  ],
   Array<
     [
       path: string[],

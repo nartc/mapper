@@ -37,6 +37,7 @@ export const pojos: MapPluginInitializer<string> = (errorHandler) => {
         sourceNestedMetadataMap as unknown[],
         destinationNestedMetadataMap as unknown[],
         (mapping) => {
+          mapping[MappingClassId.keys] = [source, destination];
           mappingStorage.set(source, destination, mapping);
         },
         options,

@@ -1,3 +1,10 @@
+### [6.2.1](https://github.com/nartc/mapper/compare/6.2.0...6.2.1) (2021-09-21)
+
+
+### Bug Fixes
+
+* **core:** ensure applyTypeConverter to work correctly ([0f1b689](https://github.com/nartc/mapper/commit/0f1b6894efbbb61dd9e95366dae31bbaa9700ede))
+
 ## [6.2.0](https://github.com/nartc/mapper/compare/6.1.4...6.2.0) (2021-09-21)
 
 

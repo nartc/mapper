@@ -150,7 +150,7 @@ export type MapWithArgumentsReturn<
   TSelectorReturn = SelectorReturn<TDestination>
 > = [
   TransformationType.MapWithArguments,
-  (source: TSource, extraArguments: Record<string, unknown>) => TSelectorReturn
+  (source: TSource, extraArguments: Record<string, any>) => TSelectorReturn
 ];
 
 export type MapInitializeReturn<

@@ -13,6 +13,7 @@ export const enum TransformationType {
 
 export const enum MappingClassId {
   mappings,
+  keys,
   properties,
   actions,
   mapper,

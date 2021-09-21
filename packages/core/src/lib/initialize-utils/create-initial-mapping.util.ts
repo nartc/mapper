@@ -60,6 +60,7 @@ export function createInitialMapping(
 
   const mapping: Mapping = [
     [sourceObj, destinationObj],
+    [null, null],
     [],
     [],
     undefined,

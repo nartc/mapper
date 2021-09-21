@@ -138,10 +138,11 @@ function map<
   setMemberFn,
   getMemberFn,
   isMapArray = false,
-}: MapParameter) {
+}: MapParameter<TSource, TDestination>) {
   // destructure the mapping
   const [
     [, destination],
+    [sourceKey, destinationKey],
     propsToMap,
     [mappingBeforeAction, mappingAfterAction],
   ] = mapping;
@@ -332,7 +333,13 @@ Original error: ${originalError}`;
   }
 
   // Check unmapped properties
-  assertUnmappedProperties(destination, configuredKeys, errorHandler);
+  assertUnmappedProperties(
+    destination,
+    configuredKeys,
+    sourceKey,
+    destinationKey,
+    errorHandler
+  );
 
   return destination;
 }

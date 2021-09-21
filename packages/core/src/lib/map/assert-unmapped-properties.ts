@@ -8,6 +8,8 @@ export function assertUnmappedProperties<
 >(
   destination: TDestination,
   configuredKeys: string[],
+  sourceKey: unknown,
+  destinationKey: unknown,
   errorHandler: ErrorHandler
 ) {
   const unmappedKeys = Object.keys(destination).filter((destinationKey) => {
@@ -21,8 +23,11 @@ export function assertUnmappedProperties<
   });
 
   if (unmappedKeys.length) {
+    const parentInfo = `${sourceKey['name'] ?? sourceKey} -> ${
+      destinationKey['name'] ?? destinationKey
+    }`;
     errorHandler.handle(`
-Unmapped properties:
+Unmapped properties for ${parentInfo}:
 -------------------
 ${unmappedKeys.join(',\n')}
 `);

@@ -64,20 +64,36 @@ body:
       label: "Minimum reproduction code"
       description: "An URL to some project that reproduces this issue."
 
-  - type: dropdown
-    attributes:
-      label: "Project"
-      description: "Which package do **you think** your issue is related to?"
-      options:
-        - "@automapper/core"
-        - "@automapper/classes"
-        - "@automapper/nestjs"
-        - "@automapper/pojos"
-        - "@automapper/sequelize"
-        - "@automapper/types"
-        - "I don't know. Or some 3rd-party lib."
+  - type: checkboxes
     validations:
       required: true
+    attributes:
+      label: "Package"
+      description: "Which package do **you think** your issue is related to?"
+      options:
+        - label: "I don't know."
+        - label: "<code>@automapper/core</code>"
+        - label: "<code>@automapper/classes</code>"
+        - label: "<code>@automapper/nestjs</code>"
+        - label: "<code>@automapper/pojos</code>"
+        - label: "<code>@automapper/sequelize</code>"
+        - label: "<code>@automapper/types</code>"
+        - label: "Other (see below)"
+
+  - type: input
+    validations:
+      required: false
+    attributes:
+      label: "Other package and its version"
+      description: "If your issue is related to some package that is not listed above, write its name & version below"
+
+  - type: input
+    validations:
+      required: true
+    attributes:
+      label: "AutoMapper version"
+      description: "Which version of `@automapper/*` (the ones you've selected above) are you using?"
+      value: "6.2.1"
 
   - type: textarea
     validations:

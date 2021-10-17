@@ -3,10 +3,25 @@
 
 name: Unit Test
 on:
+  # Allow triggering this workflow manually via GitHub CLI/web
+  workflow_dispatch:
+
   push:
     branches: [ main ]
+    paths:
+      - '**.ts'
+      - '**.js'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'yarn.lock'
   pull_request:
     branches: [ main ]
+    paths:
+      - '**.ts'
+      - '**.js'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'yarn.lock'
 
 jobs:
   jest:

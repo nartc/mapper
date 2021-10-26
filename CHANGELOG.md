@@ -1,3 +1,15 @@
+## [6.3.0](https://github.com/nartc/mapper/compare/6.2.1...6.3.0) (2021-10-26)
+
+
+### Features
+
+* **classes:** add shim file for browsers ([#354](https://github.com/nartc/mapper/issues/354)) ([4feff72](https://github.com/nartc/mapper/commit/4feff72fd01f5ef4c1f48fccbb938fc2faaa3236)), closes [#353](https://github.com/nartc/mapper/issues/353)
+
+
+### Bug Fixes
+
+* **classes:** widen Constructible type ([a394e5c](https://github.com/nartc/mapper/commit/a394e5c63eee15d8743a1043f6944c4fd7e429c4)), closes [#365](https://github.com/nartc/mapper/issues/365)
+
 ### [6.2.1](https://github.com/nartc/mapper/compare/6.2.0...6.2.1) (2021-09-21)
 
 

@@ -254,6 +254,12 @@ or with options
 
 ### NestJS with Nx
 
+Nx v12.8 adds support for TypeScript Compiler plugins via an option called `tsPlugins` in their `@nrwl/node:build` executor, which is what `@nrwl/nest` is using for building the application.
+
+Read more about the usage here: [Nx 12.8 Blog post](https://blog.nrwl.io/micro-frontends-using-module-federation-presets-for-react-and-storybook-typescript-compiler-4120cf134816)
+
+#### Pre 12.8
+
 **NestJS** in Nx workspace utilizes `nrwl/node:build` executor (formerly, builder) which allows you to pass in a custom Webpack config. However, to turn on Transformer, there's still this [open issue](https://github.com/nrwl/nx/issues/2147) in which you can find multiple solutions/workarounds as of the moment.
 
 ### Angular

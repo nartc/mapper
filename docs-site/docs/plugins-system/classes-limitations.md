@@ -158,19 +158,11 @@ export class Person {
 
 mapper.createMap(SomeOrderDto, Order).forMember(
   (d) => d.person,
-  mapWith(
-    () => Person,
-    (s) => s.person,
-    () => SomePersonDto
-  )
+  mapWith(Person, SomePersonDto, (s) => s.person)
 );
 mapper.createMap(SomePersonDto, Person).forMember(
   (d) => d.orders,
-  mapWith(
-    () => Order,
-    (s) => s.orders,
-    () => SomeOrderDto
-  )
+  mapWith(Order, SomeOrderDto, (s) => s.orders)
 );
 ```
 
@@ -193,7 +185,7 @@ This is due to **Weak Reflection** when `strict` mode is enabled.
 
 ## Nested Array property
 
-If your model contain array property and does not specify any `forMember()` rule for them, then you *MUST* provide `typeFn` for it.
+If your model contain array property and does not specify any `forMember()` rule for them, then you _MUST_ provide `typeFn` for it.
 
 ```ts
 class User {
@@ -210,7 +202,7 @@ class User {
 mapper.createMap(User, UserVm);
 ```
 
-AutoMapper will attempt to get the data type of the property through reflection. In most cases, it will work without any problem, but for array property, it will only result an  `Array` type instead of `Job[]` above. It's currently an [open issue](https://github.com/microsoft/TypeScript/issues/7169) of TypeScript.
+AutoMapper will attempt to get the data type of the property through reflection. In most cases, it will work without any problem, but for array property, it will only result an `Array` type instead of `Job[]` above. It's currently an [open issue](https://github.com/microsoft/TypeScript/issues/7169) of TypeScript.
 
 Or you can also use `mapWith()` to let AutoMapper know its type.
 
@@ -226,14 +218,8 @@ class User {
   jobs!: Job[];
 }
 
-mapper
-  .createMap(User, UserVm)
-  .forMember(
-    (d) => d.jobs,
-    mapWith(
-      () => JobVm,
-      (s) => s.profile,
-      () => Job
-    )
-  );
+mapper.createMap(User, UserVm).forMember(
+  (d) => d.jobs,
+  mapWith(JobVm, Job, (s) => s.profile)
+);
 ```

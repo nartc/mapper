@@ -61,7 +61,6 @@ function makeAccount() {
   account.role = AccountRole.Bar;
   account.posts = ['post'];
   account.topics = ['topic'];
-  account.password = 'Libero quis dolor pharetra lacus platea nibh';
   account.username = 'joe';
   return account;
 }

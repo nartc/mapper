@@ -13,9 +13,6 @@ export class AccountEntity {
   username: string;
 
   @AutoMap()
-  password?: string;
-
-  @AutoMap()
   email: string;
 
   @AutoMap()

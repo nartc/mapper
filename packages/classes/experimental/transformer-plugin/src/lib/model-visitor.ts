@@ -130,7 +130,7 @@ export class ModelVisitor {
 
     return context.factory.updateSourceFile(
       _sourceFile,
-      [...(ModelVisitor.importsMap.values() as unknown as Statement[])].concat(
+      ([...ModelVisitor.importsMap.values()] as Statement[]).concat(
         (_sourceFile.statements || ([] as Statement[])).filter(
           (statement) => statement.kind !== SyntaxKind.ImportDeclaration
         )
@@ -219,7 +219,9 @@ export class ModelVisitor {
     );
   }
 
-  private static getClassMetadata(classNode: ClassDeclaration): unknown {
+  private static getClassMetadata(
+    classNode: ClassDeclaration
+  ): Record<string, unknown> {
     if (!classNode.name) {
       return;
     }
@@ -339,7 +341,7 @@ export class ModelVisitor {
   }
 
   private static tryGetTypeReferenceFromNodeType(
-    node: ts.PropertyDeclaration | ts.GetAccessorDeclaration
+    node: PropertyDeclaration | GetAccessorDeclaration
   ): string | undefined {
     return ((node.type as TypeReferenceNode).typeName as Identifier)
       ?.escapedText as string;
@@ -358,7 +360,7 @@ export class ModelVisitor {
         [],
         undefined,
         undefined,
-        factory.createIdentifier(typeReference as string)
+        factory.createIdentifier(typeReference)
       )
     );
   }

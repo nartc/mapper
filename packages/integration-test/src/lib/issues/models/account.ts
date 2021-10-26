@@ -1,5 +1,10 @@
 import { AutoMap } from '@automapper/classes';
 
+export enum AccountRole {
+  Foo = 'foo',
+  Bar = 'bar',
+}
+
 export class AccountEntity {
   @AutoMap()
   id: string;
@@ -14,7 +19,7 @@ export class AccountEntity {
   email: string;
 
   @AutoMap()
-  role: string;
+  role: AccountRole;
 
   @AutoMap()
   topics: string[];
@@ -27,7 +32,6 @@ export class AccountEntity {
   }
 }
 
-
 export class AccountDTO {
   @AutoMap()
   id: string;
@@ -39,5 +43,5 @@ export class AccountDTO {
   email: string;
 
   @AutoMap()
-  role: string;
+  role: AccountRole;
 }

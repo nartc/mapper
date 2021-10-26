@@ -1,14 +1,14 @@
 import { setupClasses } from '../setup.spec';
 import { accountProfile } from './profiles/account.profile';
 import { mapTo, switchMap, take, timer } from 'rxjs';
-import { AccountDTO, AccountEntity } from './models/account';
+import { AccountDTO, AccountEntity, AccountRole } from './models/account';
 
 describe('Issue 358', () => {
   const [mapper] = setupClasses('issue-358');
 
   afterEach(() => {
     mapper.dispose();
-  })
+  });
 
   it('should mapArrayAsync', (done) => {
     mapper.addProfile(accountProfile);
@@ -29,20 +29,22 @@ describe('Issue 358', () => {
   it('should mapAsync', (done) => {
     mapper.addProfile(accountProfile);
 
-    getAccount().pipe(
-      switchMap(account => {
-        return mapper.mapAsync(account, AccountDTO, AccountEntity);
-      }),
-       take(1)
-    ).subscribe(dto => {
-      expect(dto).toBeTruthy();
-      done();
-    })
+    getAccount()
+      .pipe(
+        switchMap((account) => {
+          return mapper.mapAsync(account, AccountDTO, AccountEntity);
+        }),
+        take(1)
+      )
+      .subscribe((dto) => {
+        expect(dto).toBeTruthy();
+        done();
+      });
   });
 });
 
 function getAccounts() {
-  const account = makeAccount()
+  const account = makeAccount();
   return timer(500).pipe(mapTo([account]));
 }
 
@@ -56,10 +58,10 @@ function makeAccount() {
 
   account.id = '123';
   account.email = 'mail';
-  account.role = 'role';
+  account.role = AccountRole.Bar;
   account.posts = ['post'];
   account.topics = ['topic'];
-  account.password = 'password';
+  account.password = 'Libero quis dolor pharetra lacus platea nibh';
   account.username = 'joe';
   return account;
 }

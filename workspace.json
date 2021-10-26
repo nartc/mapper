@@ -40,7 +40,8 @@
             "cwd": "dist/packages/classes"
           }
         }
-      }
+      },
+      "tags": ["scope:classes", "type:plugin"]
     },
     "classes-experimental-transformer-plugin": {
       "root": "packages/classes/experimental/transformer-plugin",
@@ -77,7 +78,8 @@
             "buildableProjectDepsInPackageJsonType": "peerDependencies"
           }
         }
-      }
+      },
+      "tags": ["scope:classes", "type:transformer-plugin"]
     },
     "classes-mapped-types": {
       "root": "packages/classes/mapped-types",
@@ -110,7 +112,8 @@
             "buildableProjectDepsInPackageJsonType": "peerDependencies"
           }
         }
-      }
+      },
+      "tags": ["scope:classes", "type:utility"]
     },
     "core": {
       "root": "packages/core",
@@ -164,7 +167,8 @@
             ]
           }
         }
-      }
+      },
+      "tags": ["scope:core", "type:library"]
     },
     "integration-test": {
       "root": "packages/integration-test",
@@ -186,7 +190,8 @@
           },
           "outputs": ["coverage/packages/integration-test"]
         }
-      }
+      },
+      "tags": ["type:test"]
     },
     "nestjs": {
       "root": "packages/nestjs",
@@ -226,7 +231,8 @@
             "cwd": "dist/packages/nestjs"
           }
         }
-      }
+      },
+      "tags": ["type:integration"]
     },
     "nestjs-integration-test": {
       "root": "packages/nestjs-integration-test",
@@ -271,7 +277,8 @@
             "passWithNoTests": true
           }
         }
-      }
+      },
+      "tags": ["type:test"]
     },
     "pojos": {
       "root": "packages/pojos",
@@ -311,7 +318,8 @@
             "cwd": "dist/packages/pojos"
           }
         }
-      }
+      },
+      "tags": ["type:plugin"]
     },
     "sequelize": {
       "root": "packages/sequelize",
@@ -351,7 +359,8 @@
             "cwd": "dist/packages/sequelize"
           }
         }
-      }
+      },
+      "tags": ["type:plugin"]
     },
     "types": {
       "root": "packages/types",
@@ -384,11 +393,8 @@
             "cwd": "dist/packages/types"
           }
         }
-      }
+      },
+      "tags": ["type:type-defs"]
     }
-  },
-  "cli": {
-    "defaultCollection": "@nrwl/nest"
-  },
-  "defaultProject": "nestjs-integration-test"
+  }
 }

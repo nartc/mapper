@@ -22,38 +22,6 @@
       }
     }
   },
-  "projects": {
-    "classes": {
-      "tags": ["scope:classes", "type:plugin"]
-    },
-    "classes-experimental-transformer-plugin": {
-      "tags": ["scope:classes", "type:transformer-plugin"]
-    },
-    "classes-mapped-types": {
-      "tags": ["scope:classes", "type:utility"]
-    },
-    "core": {
-      "tags": ["scope:core", "type:library"]
-    },
-    "integration-test": {
-      "tags": ["type:test"]
-    },
-    "nestjs": {
-      "tags": ["type:integration"]
-    },
-    "nestjs-integration-test": {
-      "tags": ["type:test"]
-    },
-    "pojos": {
-      "tags": ["type:plugin"]
-    },
-    "sequelize": {
-      "tags": ["type:plugin"]
-    },
-    "types": {
-      "tags": ["type:type-defs"]
-    }
-  },
   "workspaceLayout": {
     "appsDir": "packages",
     "libsDir": "packages"
@@ -65,5 +33,9 @@
         "projects": "dependencies"
       }
     ]
-  }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/nest"
+  },
+  "defaultProject": "nestjs-integration-test"
 }

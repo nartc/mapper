@@ -159,6 +159,10 @@ export type MapInitializeReturn<
   TSelectorReturn = SelectorReturn<TDestination>
 > = [TransformationType.MapInitialize, Selector<TSource, TSelectorReturn>];
 
+export type PrimitiveConstructorReturnType<
+  TType extends PrimitiveConstructorWithDate
+> = TType extends DateConstructor ? InstanceType<TType> : ReturnType<TType>;
+
 export interface Mapper {
   name: string;
 
@@ -171,8 +175,14 @@ export interface Mapper {
     source: TSourceType,
     destination: TDestinationType,
     converter:
-      | ValueSelector<ReturnType<TSourceType>, ReturnType<TDestinationType>>
-      | Converter<ReturnType<TSourceType>, ReturnType<TDestinationType>>
+      | Selector<
+          PrimitiveConstructorReturnType<TSourceType>,
+          PrimitiveConstructorReturnType<TDestinationType>
+        >
+      | Converter<
+          PrimitiveConstructorReturnType<TSourceType>,
+          PrimitiveConstructorReturnType<TDestinationType>
+        >
   ): Mapper;
 
   createMap<

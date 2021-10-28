@@ -1,3 +1,20 @@
+### [6.3.1](https://github.com/nartc/mapper/compare/6.3.0...6.3.1) (2021-10-28)
+
+
+### Bug Fixes
+
+* **types:** adjust type of Primitive type converter ([f30b9c4](https://github.com/nartc/mapper/commit/f30b9c4e9c5672a18f308287373c96f4d98bcc8b))
+
+
+### Refactor
+
+* **classes:** clean up model visitor ([1126755](https://github.com/nartc/mapper/commit/11267550a2d77c5ae178461deffc706c4dcbe88b))
+
+
+### Documentations
+
+* update docs ([e59ce14](https://github.com/nartc/mapper/commit/e59ce14f01034c4e1aeed4d8f9c42bf8a8acb638))
+
 ## [6.3.0](https://github.com/nartc/mapper/compare/6.2.1...6.3.0) (2021-10-26)
 
 

@@ -71,5 +71,10 @@ const destination = mapper.map(source, Destination, Source);
 
 - Custom Type Converters are currently available **only** to `mapInitialize` aka same property names with different types. For the above example, AutoMapper does nothing when it encounters a `String` and a `Number` if `forMember` is used.
 - Custom Type Converters only works with Primitive types at the moment aka `String`, `Number`, `Boolean`, and `Date`.
-- Due to a Reflection limitation, if you use TypeScript lookup types on either source or destination class fields, the type converter won't work unless you explicity write the target type in `@AutoMap()`. For instance, this will work:  
-`@AutoMap({ typeFn: () => String }) value: IFoo['str']` in which `interface IFoo { str: string }`
+- Due to a Reflection limitation, if you use [TypeScript _lookup types_ (or _indexed access types_)](https://www.typescriptlang.org/docs/handbook/2/indexed-access-types.html) on either source or destination class fields, the type converter won't work unless you explicity write the target type in `@AutoMap()`. For instance, this will work:  
+```ts
+// ...
+@AutoMap({ typeFn: () => String })
+value: IFoo['str']`
+```
+in which `interface IFoo { str: string }`

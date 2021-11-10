@@ -1,7 +1,7 @@
 import { classes } from '@automapper/classes';
+import type { CreateMapperOptions, Mapper } from '@automapper/core';
 import { createMapper } from '@automapper/core';
 import { pojos } from '@automapper/pojos';
-import type { CreateMapperOptions, Mapper } from '@automapper/types';
 
 export function setup(
   name: string,

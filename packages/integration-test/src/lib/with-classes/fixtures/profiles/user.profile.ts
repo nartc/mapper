@@ -1,5 +1,5 @@
+import type { MappingProfile, Resolver } from '@automapper/core';
 import { mapFrom } from '@automapper/core';
-import type { MappingProfile, Resolver } from '@automapper/types';
 import { User, UserVm } from '../models/user';
 import { PascalUser, PascalUserVm } from '../models/user-pascal';
 import { SnakeUser, SnakeUserVm } from '../models/user-snake';
@@ -55,11 +55,11 @@ export const userProfile: MappingProfile = (mapper) => {
     .createMap(UserVm, User)
     .forMember(
       (d) => d.firstName,
-      mapFrom((s) => s.first),
+      mapFrom((s) => s.first)
     )
     .forMember(
       (d) => d.lastName,
-      mapFrom((s) => s.last),
+      mapFrom((s) => s.last)
     );
 };
 

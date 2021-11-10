@@ -1,7 +1,7 @@
 import { classes } from '@automapper/classes';
+import type { Mapper } from '@automapper/core';
 import { CamelCaseNamingConvention, createMapper } from '@automapper/core';
 import { getMapperToken } from '@automapper/nestjs';
-import type { Mapper } from '@automapper/types';
 import { Test } from '@nestjs/testing';
 import { getUser } from '../models/get-user';
 import { User, UserVm } from '../models/user';

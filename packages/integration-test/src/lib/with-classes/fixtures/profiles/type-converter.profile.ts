@@ -1,4 +1,4 @@
-import type { MappingProfile } from '@automapper/types';
+import type { MappingProfile } from '@automapper/core';
 import {
   TypeConverterCamelSource,
   TypeConverterDestination,

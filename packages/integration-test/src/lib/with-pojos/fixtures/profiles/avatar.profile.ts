@@ -1,3 +1,4 @@
+import type { MappingProfile } from '@automapper/core';
 import {
   condition,
   ignore,
@@ -5,7 +6,6 @@ import {
   nullSubstitution,
   preCondition,
 } from '@automapper/core';
-import type { MappingProfile } from '@automapper/types';
 import type {
   PascalAvatar,
   PascalAvatarVm,

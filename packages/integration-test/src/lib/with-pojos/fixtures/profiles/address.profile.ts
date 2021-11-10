@@ -1,5 +1,5 @@
+import type { MappingProfile } from '@automapper/core';
 import { mapFrom } from '@automapper/core';
-import type { MappingProfile } from '@automapper/types';
 import type {
   PascalAddress,
   PascalAddressVm,

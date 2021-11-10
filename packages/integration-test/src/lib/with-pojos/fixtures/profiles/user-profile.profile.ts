@@ -1,5 +1,5 @@
+import type { MappingProfile } from '@automapper/core';
 import { convertUsing, mapWith } from '@automapper/core';
-import type { MappingProfile } from '@automapper/types';
 import { dateToStringConverter } from '../converters/date-to-string.converter';
 import type {
   PascalUserProfile,

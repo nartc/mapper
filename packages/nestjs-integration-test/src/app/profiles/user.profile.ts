@@ -1,6 +1,6 @@
+import type { Mapper, MappingProfile } from '@automapper/core';
 import { mapFrom } from '@automapper/core';
 import { AutomapperProfile, InjectMapper } from '@automapper/nestjs';
-import type { Mapper, MappingProfile } from '@automapper/types';
 import { Injectable } from '@nestjs/common';
 import { User, UserVm } from '../models/user';
 

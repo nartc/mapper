@@ -1,5 +1,5 @@
+import type { MapAction, Mapper, MappingProfile } from '@automapper/core';
 import { mapFrom } from '@automapper/core';
-import type { MapAction, Mapper, MappingProfile } from '@automapper/types';
 import { SimpleUser, SimpleUserVm } from '../models/simple-user';
 
 export const selfUserProfile: MappingProfile = (mapper) => {

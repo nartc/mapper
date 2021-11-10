@@ -1,4 +1,4 @@
-import { MappingProfile } from '@automapper/types';
+import { MappingProfile } from '@automapper/core';
 import { setupClasses } from '../setup.spec';
 import {
   SimpleBar,

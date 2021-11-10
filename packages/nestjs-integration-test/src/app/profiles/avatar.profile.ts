@@ -1,3 +1,4 @@
+import type { Mapper, MappingProfile } from '@automapper/core';
 import {
   condition,
   ignore,
@@ -6,7 +7,6 @@ import {
   preCondition,
 } from '@automapper/core';
 import { AutomapperProfile, InjectMapper } from '@automapper/nestjs';
-import type { Mapper, MappingProfile } from '@automapper/types';
 import { Injectable } from '@nestjs/common';
 import { Avatar, AvatarVm } from '../models/avatar';
 

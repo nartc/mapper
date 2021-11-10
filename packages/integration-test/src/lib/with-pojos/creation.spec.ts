@@ -1,4 +1,4 @@
-import { MappingProfile } from '@automapper/types';
+import type { MappingProfile } from '@automapper/core';
 import { setupPojos } from '../setup.spec';
 import type {
   SimpleBar,

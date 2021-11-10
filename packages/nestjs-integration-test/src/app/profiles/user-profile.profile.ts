@@ -1,6 +1,6 @@
+import type { Converter, Mapper, MappingProfile } from '@automapper/core';
 import { convertUsing, mapWith } from '@automapper/core';
 import { AutomapperProfile, InjectMapper } from '@automapper/nestjs';
-import type { Converter, Mapper, MappingProfile } from '@automapper/types';
 import { Injectable } from '@nestjs/common';
 import { Avatar, AvatarVm } from '../models/avatar';
 import { UserProfile, UserProfileVm } from '../models/user-profile';

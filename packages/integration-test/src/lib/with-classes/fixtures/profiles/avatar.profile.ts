@@ -1,3 +1,4 @@
+import type { MappingProfile } from '@automapper/core';
 import {
   condition,
   ignore,
@@ -5,7 +6,6 @@ import {
   nullSubstitution,
   preCondition,
 } from '@automapper/core';
-import type { MappingProfile } from '@automapper/types';
 import { Avatar, AvatarVm } from '../models/avatar';
 import { PascalAvatar, PascalAvatarVm } from '../models/avatar-pascal';
 import { SnakeAvatar, SnakeAvatarVm } from '../models/avatar-snake';
@@ -28,9 +28,7 @@ export const avatarProfile: MappingProfile = (mapper) => {
     .forMember((d) => d.willBeIgnored, ignore())
     .forMember((d) => d.shouldBeSubstituted, nullSubstitution('sub'));
 
-  mapper
-    .createMap(AvatarVm, Avatar)
-    .forMember((d) => d.shouldIgnore, ignore());
+  mapper.createMap(AvatarVm, Avatar).forMember((d) => d.shouldIgnore, ignore());
 
   mapper
     .createMap(Avatar, PascalAvatarVm)

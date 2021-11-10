@@ -1,6 +1,6 @@
 import { classes } from '@automapper/classes';
+import type { ErrorHandler } from '@automapper/core';
 import { createMapper } from '@automapper/core';
-import { ErrorHandler } from '@automapper/types';
 import {
   SimpleBar,
   SimpleBarVm,

@@ -1,5 +1,5 @@
+import type { Resolver } from '@automapper/core';
 import { mapWithArguments } from '@automapper/core';
-import type { Resolver } from '@automapper/types';
 import { setupClasses } from '../setup.spec';
 import {
   SimpleBar,

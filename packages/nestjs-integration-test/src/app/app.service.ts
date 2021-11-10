@@ -1,5 +1,5 @@
 import { InjectMapper } from '@automapper/nestjs';
-import type { Mapper } from '@automapper/types';
+import type { Mapper } from '@automapper/core';
 import { Injectable } from '@nestjs/common';
 import { Bar, Foo, FooVm } from './models/foo';
 import { getUser } from './models/get-user';

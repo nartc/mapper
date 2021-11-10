@@ -1,5 +1,5 @@
+import type { MappingProfile } from '@automapper/core';
 import { convertUsing, mapFrom, mapWith } from '@automapper/core';
-import type { MappingProfile } from '@automapper/types';
 import { dateToStringConverter } from '../converters/date-to-string.converter';
 import { Avatar, AvatarVm } from '../models/avatar';
 import { PascalAvatar, PascalAvatarVm } from '../models/avatar-pascal';

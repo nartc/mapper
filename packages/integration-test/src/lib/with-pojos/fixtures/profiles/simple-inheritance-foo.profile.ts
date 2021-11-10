@@ -1,5 +1,4 @@
-import { mapFrom } from '@automapper/core';
-import { MappingProfile } from '@automapper/types';
+import { mapFrom, MappingProfile } from '@automapper/core';
 import type {
   Foo,
   FooFoo,

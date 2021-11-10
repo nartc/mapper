@@ -1,5 +1,5 @@
+import type { MappingProfile } from '@automapper/core';
 import { mapFrom } from '@automapper/core';
-import type { MappingProfile } from '@automapper/types';
 import { Address, AddressVm } from '../models/address';
 import { PascalAddress, PascalAddressVm } from '../models/address-pascal';
 import { SnakeAddress, SnakeAddressVm } from '../models/address-snake';

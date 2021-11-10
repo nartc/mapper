@@ -30,7 +30,11 @@ export function instantiate<TModel extends Dictionary<TModel>>(
 
     nestedMetadataMap.push([key, metaResult]);
 
-    if (isPrimitiveConstructor(metaResult) || metaResult === null) {
+    if (
+      isPrimitiveConstructor(metaResult) ||
+      isFileConstructor(metaResult) ||
+      metaResult === null
+    ) {
       const value = isDefined(valueAtKey) ? valueAtKey : undefined;
       setMutate(obj as Record<string, unknown>, key, value);
       continue;
@@ -40,12 +44,6 @@ export function instantiate<TModel extends Dictionary<TModel>>(
       const value = isDefined(valueAtKey)
         ? new Date(valueAtKey as number)
         : undefined;
-      setMutate(obj as Record<string, unknown>, key, value);
-      continue;
-    }
-
-    if (isFileConstructor(metaResult)) {
-      const value = isDefined(valueAtKey) ? valueAtKey : undefined;
       setMutate(obj as Record<string, unknown>, key, value);
       continue;
     }

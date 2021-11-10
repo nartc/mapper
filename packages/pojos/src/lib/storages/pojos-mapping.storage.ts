@@ -1,4 +1,4 @@
-import type { Mapping, MappingStorage } from '@automapper/types';
+import type { Mapping, MappingStorage } from '@automapper/core';
 
 /**
  * Internal PojosMappingStorage

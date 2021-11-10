@@ -1,4 +1,4 @@
-import { Dictionary } from '@automapper/types';
+import type { Dictionary } from '@automapper/core';
 import { pojosSymbolStorage } from './storages';
 
 /**

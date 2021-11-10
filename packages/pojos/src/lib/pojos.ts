@@ -1,6 +1,5 @@
-import { createInitialMapping } from '@automapper/core';
-import type { MapPluginInitializer } from '@automapper/types';
-import { MappingClassId } from '@automapper/types';
+import type { MapPluginInitializer } from '@automapper/core';
+import { createInitialMapping, MappingClassId } from '@automapper/core';
 import {
   PojosMappingStorage,
   PojosMetadataStorage,

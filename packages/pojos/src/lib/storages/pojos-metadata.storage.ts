@@ -1,5 +1,5 @@
+import type { Metadata, MetadataStorage } from '@automapper/core';
 import { isSamePath } from '@automapper/core';
-import type { Metadata, MetadataStorage } from '@automapper/types';
 
 /**
  * Internal PojosMetadataStorage

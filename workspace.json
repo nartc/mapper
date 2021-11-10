@@ -158,7 +158,6 @@
           "builder": "@nrwl/workspace:run-commands",
           "options": {
             "commands": [
-              "npx nx run types:publish",
               "npx nx run core:publish",
               "npx nx run classes:publish",
               "npx nx run pojos:publish",
@@ -361,40 +360,6 @@
         }
       },
       "tags": ["type:plugin"]
-    },
-    "types": {
-      "root": "packages/types",
-      "sourceRoot": "packages/types/src",
-      "projectType": "library",
-      "schematics": {},
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["packages/types/**/*.ts"]
-          }
-        },
-        "build": {
-          "builder": "@nrwl/node:package",
-          "options": {
-            "outputPath": "dist/packages/types",
-            "tsConfig": "packages/types/tsconfig.lib.json",
-            "packageJson": "packages/types/package.json",
-            "main": "packages/types/src/index.ts",
-            "assets": ["packages/types/*.md"],
-            "buildableProjectDepsInPackageJsonType": "peerDependencies"
-          },
-          "outputs": ["{options.outputPath}"]
-        },
-        "publish": {
-          "builder": "@nrwl/workspace:run-commands",
-          "options": {
-            "command": "npm publish",
-            "cwd": "dist/packages/types"
-          }
-        }
-      },
-      "tags": ["type:type-defs"]
     }
   }
 }

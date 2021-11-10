@@ -29,8 +29,7 @@
       ],
       "@automapper/nestjs": ["packages/nestjs/src/index.ts"],
       "@automapper/pojos": ["packages/pojos/src/index.ts"],
-      "@automapper/sequelize": ["packages/sequelize/src/index.ts"],
-      "@automapper/types": ["packages/types/src/index.ts"]
+      "@automapper/sequelize": ["packages/sequelize/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

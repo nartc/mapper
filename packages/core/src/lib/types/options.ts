@@ -1,0 +1,51 @@
+import type {
+  ErrorHandler,
+  MapAction,
+  Mapping,
+  NamingConvention,
+} from './core';
+import type { MapPluginInitializer } from './plugin';
+import type { Dictionary } from './utils';
+
+export interface MapOptions<
+  TSource extends Dictionary<TSource> = any,
+  TDestination extends Dictionary<TDestination> = any,
+  TExtraArguments extends Record<string, any> = Record<string, any>
+> {
+  beforeMap?: MapAction<TSource, TDestination>;
+  afterMap?: MapAction<TSource, TDestination>;
+  extraArguments?: TExtraArguments;
+}
+
+export interface MapArrayOptions<
+  TSource extends Dictionary<TSource> = any,
+  TDestination extends Dictionary<TDestination> = any,
+  TExtraArguments extends Record<string, any> = Record<string, any>
+> extends MapOptions<TSource[], TDestination[], TExtraArguments> {
+  runPreMap?: boolean;
+}
+
+export interface CreateMapOptions<
+  TSource extends Dictionary<TSource> = any,
+  TDestination extends Dictionary<TDestination> = any
+> {
+  namingConventions?:
+    | NamingConvention
+    | {
+        source: NamingConvention;
+        destination: NamingConvention;
+      };
+  extends?: (Mapping | undefined)[];
+}
+
+export interface CreateMapperOptions<TKey = unknown> {
+  name: string;
+  pluginInitializer: MapPluginInitializer<TKey>;
+  namingConventions?:
+    | NamingConvention
+    | {
+        source: NamingConvention;
+        destination: NamingConvention;
+      };
+  errorHandler?: ErrorHandler;
+}

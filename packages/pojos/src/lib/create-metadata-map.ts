@@ -21,6 +21,7 @@ export function createMetadataMap<TModel extends Dictionary<TModel> = any>(
       | DateConstructor
       | NumberConstructor
       | BooleanConstructor
+      | typeof File.prototype.constructor
       | string
       | null;
   }
@@ -34,6 +35,7 @@ export function createMetadataMap<TModel extends Dictionary<TModel> = any>(
       | DateConstructor
       | NumberConstructor
       | BooleanConstructor
+      | typeof File.prototype.constructor
       | string
       | null
       | false;
@@ -49,6 +51,7 @@ export function createMetadataMap<TModel extends Dictionary<TModel> = any>(
           | DateConstructor
           | NumberConstructor
           | BooleanConstructor
+          | typeof File.prototype.constructor
           | string
           | null;
       },
@@ -58,6 +61,7 @@ export function createMetadataMap<TModel extends Dictionary<TModel> = any>(
       | DateConstructor
       | NumberConstructor
       | BooleanConstructor
+      | typeof File.prototype.constructor
       | string
       | null
       | false;

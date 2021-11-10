@@ -4,6 +4,7 @@ import {
   isDateConstructor,
   isDefined,
   isEmpty,
+  isFileConstructor,
   isPrimitiveConstructor,
   setMutate,
 } from '@automapper/core';
@@ -34,10 +35,17 @@ export function instantiate<TModel extends Dictionary<TModel>>(
       setMutate(obj as Record<string, unknown>, key, value);
       continue;
     }
+
     if (isDateConstructor(metaResult)) {
       const value = isDefined(valueAtKey)
         ? new Date(valueAtKey as number)
         : undefined;
+      setMutate(obj as Record<string, unknown>, key, value);
+      continue;
+    }
+
+    if (isFileConstructor(metaResult)) {
+      const value = isDefined(valueAtKey) ? valueAtKey : undefined;
       setMutate(obj as Record<string, unknown>, key, value);
       continue;
     }

@@ -1,4 +1,4 @@
-import type { MapOptions, Mapper } from '@automapper/types';
+import type { MapOptions, Mapper } from '@automapper/core';
 import type { ArgumentMetadata, PipeTransform } from '@nestjs/common';
 import { mixin, Optional } from '@nestjs/common';
 import { InjectMapper } from '../di';

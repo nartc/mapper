@@ -1,4 +1,4 @@
-import { Mapper, MappingProfile } from '@automapper/types';
+import { Mapper, MappingProfile } from '@automapper/core';
 
 export abstract class AutomapperProfile {
   protected mapper: Mapper;

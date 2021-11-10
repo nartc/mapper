@@ -2,7 +2,7 @@ import type {
   CreateMapperOptions,
   ErrorHandler,
   NamingConvention,
-} from '@automapper/types';
+} from '@automapper/core';
 
 /**
  * Options for AutomapperModule.forRoot()

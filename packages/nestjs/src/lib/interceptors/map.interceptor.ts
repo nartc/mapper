@@ -1,4 +1,4 @@
-import type { MapOptions, Mapper } from '@automapper/types';
+import type { MapOptions, Mapper } from '@automapper/core';
 import type {
   CallHandler,
   ExecutionContext,

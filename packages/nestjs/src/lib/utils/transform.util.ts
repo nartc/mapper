@@ -1,5 +1,5 @@
+import type { MapOptions, Mapper } from '@automapper/core';
 import { isEmpty } from '@automapper/core';
-import type { MapOptions, Mapper } from '@automapper/types';
 
 export function shouldSkipTransform(
   mapper: Mapper | undefined,

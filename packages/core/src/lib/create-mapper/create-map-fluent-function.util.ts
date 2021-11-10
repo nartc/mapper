@@ -10,7 +10,7 @@ import { createMapForMember } from './create-map-for-member.util';
 import { createMapForSelf } from './create-map-for-self.util';
 
 /**
- * Method to create FluentFunction for chaining forMember, beforeMap, and afterMap
+ * Method to create FluentFunction for chaining forMember, forSelf, beforeMap, and afterMap
  *
  * @param {Mapping} mapping - Mapping object of source <> destination
  */

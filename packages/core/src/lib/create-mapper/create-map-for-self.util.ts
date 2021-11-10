@@ -9,6 +9,12 @@ import {
 } from '../types';
 import { get } from '../utils';
 
+/**
+ *
+ * @param {Mapping} mapping - Mapping between source <> destination
+ * @param {TSource} source - the Source model to map to self
+ * @param {Selector<TSource>} selector - the selector to use to get the property that contains the source
+ */
 export function createMapForSelf<TSource, TDestination>(
   mapping: Mapping<TSource, TDestination>,
   source: unknown,

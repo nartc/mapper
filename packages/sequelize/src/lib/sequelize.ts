@@ -1,6 +1,6 @@
 import type { Constructible } from '@automapper/classes';
 import { classes } from '@automapper/classes';
-import type { Dictionary, MapPluginInitializer } from '@automapper/types';
+import type { Dictionary, MapPluginInitializer } from '@automapper/core';
 import type { Model } from 'sequelize';
 import type { SequelizeInitializerOptions } from './types';
 

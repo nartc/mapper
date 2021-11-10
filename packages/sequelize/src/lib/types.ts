@@ -1,4 +1,4 @@
-import type { Dictionary } from '@automapper/types';
+import type { Dictionary } from '@automapper/core';
 import type { Model } from 'sequelize';
 
 export interface SequelizeInitializerOptions {

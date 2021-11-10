@@ -1,5 +1,5 @@
-import type { Mapping } from '@automapper/types';
-import { MappingClassId } from '@automapper/types';
+import type { Mapping } from '@automapper/core';
+import { MappingClassId } from '@automapper/core';
 import type { ClassInstanceStorage, ClassMetadataStorage } from '../storages';
 import type { Constructible } from '../types';
 import { instantiate } from './instantiate.util';

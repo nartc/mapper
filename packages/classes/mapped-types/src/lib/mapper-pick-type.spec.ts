@@ -1,6 +1,6 @@
 import { AutoMap, classes } from '@automapper/classes';
+import type { Mapper } from '@automapper/core';
 import { createMapper, mapFrom } from '@automapper/core';
-import type { Mapper } from '@automapper/types';
 import { MapperPickType } from './mapper-pick-type';
 
 describe(MapperPickType.name, () => {

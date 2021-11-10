@@ -1,6 +1,6 @@
 import { AutoMap, classes } from '@automapper/classes';
+import type { Mapper } from '@automapper/core';
 import { createMapper } from '@automapper/core';
-import type { Mapper } from '@automapper/types';
 import { MapperIntersectionType } from './mapper-intersection-type';
 
 describe(MapperIntersectionType.name, () => {

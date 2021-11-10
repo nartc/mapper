@@ -1,3 +1,4 @@
+import type { PrimitiveWithDate } from '@automapper/core';
 import { isDefined } from '@automapper/core';
 import {
   AUTOMAP_PROPERTIES_METADATA_KEY,
@@ -5,7 +6,6 @@ import {
 } from '../constants';
 import type { ClassInstanceStorage, ClassMetadataStorage } from '../storages';
 import type { Constructible } from '../types';
-import type { PrimitiveWithDate } from '@automapper/types';
 
 export function exploreMetadata(
   metadataStorage: ClassMetadataStorage,

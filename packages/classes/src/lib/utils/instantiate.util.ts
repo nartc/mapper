@@ -1,3 +1,4 @@
+import type { Dictionary } from '@automapper/core';
 import {
   get,
   isDateConstructor,
@@ -6,7 +7,6 @@ import {
   isPrimitiveConstructor,
   setMutate,
 } from '@automapper/core';
-import type { Dictionary } from '@automapper/types';
 import type { ClassInstanceStorage, ClassMetadataStorage } from '../storages';
 import type { Constructible } from '../types';
 

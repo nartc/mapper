@@ -1,9 +1,5 @@
-import type {
-  Dictionary,
-  FromValueReturn,
-  SelectorReturn,
-} from '@automapper/types';
-import { TransformationType } from '@automapper/types';
+import type { Dictionary, FromValueReturn, SelectorReturn } from '../types';
+import { TransformationType } from '../types';
 
 export function fromValue<
   TDestination extends Dictionary<TDestination> = any,

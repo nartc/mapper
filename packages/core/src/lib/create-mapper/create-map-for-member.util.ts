@@ -6,13 +6,13 @@ import type {
   PreConditionReturn,
   Selector,
   SelectorReturn,
-} from '@automapper/types';
+} from '../types';
 import {
   MapFnClassId,
   MappingClassId,
   MappingPropertiesClassId,
   TransformationType,
-} from '@automapper/types';
+} from '../types';
 import { isSamePath } from '../utils';
 import { getMemberPath } from './get-member-path.util';
 

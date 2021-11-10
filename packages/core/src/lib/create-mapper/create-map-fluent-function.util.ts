@@ -4,8 +4,8 @@ import type {
   Mapping,
   MemberMapReturn,
   PreConditionReturn,
-} from '@automapper/types';
-import { MappingClassId } from '@automapper/types';
+} from '../types';
+import { MappingClassId } from '../types';
 import { createMapForMember } from './create-map-for-member.util';
 import { createMapForSelf } from './create-map-for-self.util';
 

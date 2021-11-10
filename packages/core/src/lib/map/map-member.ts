@@ -9,8 +9,8 @@ import type {
   MapWithArgumentsReturn,
   MapWithReturn,
   MemberMapReturn,
-} from '@automapper/types';
-import { MapFnClassId, TransformationType } from '@automapper/types';
+} from '../types';
+import { MapFnClassId, TransformationType } from '../types';
 
 /**
  * Instruction on how to map a particular member on the destination

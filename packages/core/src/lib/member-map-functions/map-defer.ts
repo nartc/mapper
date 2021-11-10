@@ -1,9 +1,5 @@
-import type {
-  DeferFunction,
-  Dictionary,
-  MapDeferReturn,
-} from '@automapper/types';
-import { SelectorReturn, TransformationType } from '@automapper/types';
+import type { DeferFunction, Dictionary, MapDeferReturn } from '../types';
+import { SelectorReturn, TransformationType } from '../types';
 
 export function mapDefer<
   TSource extends Dictionary<TSource> = any,

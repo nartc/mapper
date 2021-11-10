@@ -1,4 +1,4 @@
-import type { NamingConvention } from '@automapper/types';
+import type { NamingConvention } from '../types';
 import { isDefined } from '../utils';
 
 export function getSourcePropertyPath(

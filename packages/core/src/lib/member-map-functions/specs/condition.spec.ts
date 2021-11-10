@@ -1,4 +1,4 @@
-import { MapFnClassId, TransformationType } from '@automapper/types';
+import { MapFnClassId, TransformationType } from '../../types';
 import { condition } from '../condition';
 
 describe('ConditionFunction', () => {

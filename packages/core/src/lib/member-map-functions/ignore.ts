@@ -1,5 +1,5 @@
-import type { IgnoreReturn } from '@automapper/types';
-import { TransformationType } from '@automapper/types';
+import type { IgnoreReturn } from '../types';
+import { TransformationType } from '../types';
 
 export function ignore(): IgnoreReturn {
   return [TransformationType.Ignore];

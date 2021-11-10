@@ -4,8 +4,8 @@ import type {
   Dictionary,
   Selector,
   SelectorReturn,
-} from '@automapper/types';
-import { TransformationType } from '@automapper/types';
+} from '../types';
+import { TransformationType } from '../types';
 
 export function convertUsing<
   TSource extends Dictionary<TSource> = any,

@@ -6,8 +6,8 @@ import type {
   MapOptions,
   Mapper,
   Mapping,
-} from '@automapper/types';
-import { MapFnClassId, TransformationType } from '@automapper/types';
+} from '../types';
+import { MapFnClassId, TransformationType } from '../types';
 import { get, isEmpty, mappingNullCheck, set, setMutate } from '../utils';
 import { mapMember } from './map-member';
 import { assertUnmappedProperties } from './assert-unmapped-properties';

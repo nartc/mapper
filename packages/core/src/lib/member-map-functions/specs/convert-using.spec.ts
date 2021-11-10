@@ -1,5 +1,5 @@
-import type { Converter } from '@automapper/types';
-import { MapFnClassId, TransformationType } from '@automapper/types';
+import type { Converter } from '../../types';
+import { MapFnClassId, TransformationType } from '../../types';
 import { convertUsing } from '../convert-using';
 
 describe('ConvertUsingFunction', () => {

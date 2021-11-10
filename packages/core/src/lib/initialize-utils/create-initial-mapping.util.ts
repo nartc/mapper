@@ -1,5 +1,5 @@
-import type { CreateMapOptions, Mapping } from '@automapper/types';
-import { MappingClassId } from '@automapper/types';
+import type { CreateMapOptions, Mapping } from '../types';
+import { MappingClassId } from '../types';
 import { isDefined } from '../utils';
 import { extendMappings } from './extend-mappings.util';
 import { getFlatteningSourcePaths } from './get-flattening-source-paths.util';

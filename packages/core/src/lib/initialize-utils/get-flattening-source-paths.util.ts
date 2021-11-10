@@ -1,4 +1,4 @@
-import type { NamingConvention } from '@automapper/types';
+import type { NamingConvention } from '@automapper/core';
 
 export function getFlatteningSourcePaths(
   src: Record<string, unknown>,

@@ -1,4 +1,4 @@
-import type { Dictionary, Selector } from '@automapper/types';
+import type { Dictionary, Selector } from '../types';
 
 const PROXY_TARGET = (): undefined => undefined;
 const PROXY_OBJECT = createProxy(PROXY_TARGET);

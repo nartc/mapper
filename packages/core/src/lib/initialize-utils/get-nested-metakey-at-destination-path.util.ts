@@ -1,4 +1,4 @@
-import type { NamingConvention } from '@automapper/types';
+import type { NamingConvention } from '../types';
 import { isDefined, isEmpty, isSamePath } from '../utils';
 
 export function getNestedMetaKeyAtDestinationPath(

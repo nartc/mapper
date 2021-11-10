@@ -1,9 +1,5 @@
-import type {
-  Dictionary,
-  MapWithReturn,
-  SelectorReturn,
-} from '@automapper/types';
-import { TransformationType, Unpacked, ValueSelector } from '@automapper/types';
+import type { Dictionary, MapWithReturn, SelectorReturn } from '../types';
+import { TransformationType, Unpacked, ValueSelector } from '../types';
 
 type Constructor<TModel> = new (...args: unknown[]) => TModel;
 

@@ -3,8 +3,8 @@ import type {
   ConditionReturn,
   Dictionary,
   SelectorReturn,
-} from '@automapper/types';
-import { TransformationType } from '@automapper/types';
+} from '../types';
+import { TransformationType } from '../types';
 import { get } from '../utils';
 
 export function condition<

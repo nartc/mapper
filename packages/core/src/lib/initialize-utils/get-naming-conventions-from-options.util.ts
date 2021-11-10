@@ -1,4 +1,4 @@
-import type { NamingConvention } from '@automapper/types';
+import type { NamingConvention } from '../types';
 
 /**
  * Convert namingConventions params to [convention, convention] format

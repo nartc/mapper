@@ -1,4 +1,4 @@
-import type { Mapping, Selector } from '@automapper/types';
+import type { Mapping, Selector } from '../types';
 import {
   MapFnClassId,
   MappingClassId,
@@ -6,7 +6,7 @@ import {
   MappingPropertyClassId,
   MappingTransformationClassId,
   TransformationType,
-} from '@automapper/types';
+} from '../types';
 import { get } from '../utils';
 
 export function createMapForSelf<TSource, TDestination>(

@@ -8,8 +8,8 @@ import type {
   Mapping,
   PrimitiveConstructorWithDate,
   ValueSelector,
-} from '@automapper/types';
-import { MappingClassId } from '@automapper/types';
+} from '../types';
+import { MappingClassId } from '../types';
 import { mapArray, mapMutate, mapReturn } from '../map';
 import { createMapFluentFunction } from './create-map-fluent-function.util';
 import { mappingNullCheck } from '../utils';

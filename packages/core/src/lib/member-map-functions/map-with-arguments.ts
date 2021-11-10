@@ -3,8 +3,8 @@ import type {
   MapWithArgumentsReturn,
   Resolver,
   SelectorReturn,
-} from '@automapper/types';
-import { TransformationType } from '@automapper/types';
+} from '../types';
+import { TransformationType } from '../types';
 import { isResolver } from '../utils';
 
 export function mapWithArguments<

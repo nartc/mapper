@@ -1,4 +1,4 @@
-import type { Dictionary, ErrorHandler } from '@automapper/types';
+import type { Dictionary, ErrorHandler } from '../types';
 
 /**
  * Depends on implementation of plugin.initializeMapping

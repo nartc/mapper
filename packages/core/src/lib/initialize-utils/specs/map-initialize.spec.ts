@@ -1,4 +1,4 @@
-import { MapFnClassId, TransformationType } from '@automapper/types';
+import { MapFnClassId, TransformationType } from '../../types';
 import { mapInitialize } from '../map-initialize';
 
 describe('MapInitializeFunction', () => {

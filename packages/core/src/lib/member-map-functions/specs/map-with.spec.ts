@@ -1,5 +1,5 @@
-import type { Mapper } from '@automapper/types';
-import { MapFnClassId, TransformationType } from '@automapper/types';
+import type { Mapper } from '../../types';
+import { MapFnClassId, TransformationType } from '../../types';
 import { mapWith } from '../map-with';
 
 describe('MapWithFunction', () => {

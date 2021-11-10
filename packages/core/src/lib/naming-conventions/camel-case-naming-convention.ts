@@ -1,4 +1,4 @@
-import { NamingConvention } from '@automapper/types';
+import { NamingConvention } from '../types';
 
 /**
  * CamelCaseNamingConvention

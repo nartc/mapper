@@ -4,8 +4,8 @@ import type {
   Resolver,
   SelectorReturn,
   ValueSelector,
-} from '@automapper/types';
-import { TransformationType } from '@automapper/types';
+} from '../types';
+import { TransformationType } from '../types';
 import { isResolver } from '../utils';
 
 export function mapFrom<

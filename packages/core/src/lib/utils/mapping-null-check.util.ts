@@ -1,4 +1,4 @@
-import type { ErrorHandler, Mapping } from '@automapper/types';
+import type { ErrorHandler, Mapping } from '../types';
 
 export function mappingNullCheck(
   mapping: Mapping | undefined,

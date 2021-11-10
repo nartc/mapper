@@ -3,7 +3,7 @@ import type {
   Dictionary,
   PreConditionReturn,
   SelectorReturn,
-} from '@automapper/types';
+} from '../types';
 
 export function preCondition<
   TSource extends Dictionary<TSource> = any,

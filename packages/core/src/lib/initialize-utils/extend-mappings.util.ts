@@ -1,5 +1,5 @@
-import type { Mapping } from '@automapper/types';
-import { MappingClassId, MappingPropertiesClassId } from '@automapper/types';
+import type { Mapping } from '../types';
+import { MappingClassId, MappingPropertiesClassId } from '../types';
 import { isSamePath } from '../utils';
 
 export function extendMappings(bases: Mapping[], mapping: Mapping) {

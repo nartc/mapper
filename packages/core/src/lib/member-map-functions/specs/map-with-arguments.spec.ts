@@ -1,4 +1,4 @@
-import { MapFnClassId, TransformationType } from '@automapper/types';
+import { MapFnClassId, TransformationType } from '../../types';
 import { mapWithArguments } from '../map-with-arguments';
 
 describe('MapWithArgumentsFunction', () => {

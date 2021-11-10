@@ -3,13 +3,13 @@ import type {
   Mapping,
   PrimitiveConstructorWithDate,
   ValueSelector,
-} from '@automapper/types';
+} from '../types';
 import {
   MapFnClassId,
   MappingPropertiesClassId,
   MappingPropertyClassId,
   MappingTransformationClassId,
-} from '@automapper/types';
+} from '../types';
 
 /**
  *

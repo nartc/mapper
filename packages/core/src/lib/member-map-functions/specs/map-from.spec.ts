@@ -1,5 +1,5 @@
-import type { Resolver } from '@automapper/types';
-import { MapFnClassId, TransformationType } from '@automapper/types';
+import type { Resolver } from '../../types';
+import { MapFnClassId, TransformationType } from '../../types';
 import { mapFrom } from '../map-from';
 
 describe('MapFromFunction', () => {

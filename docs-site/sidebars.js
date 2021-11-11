@@ -88,6 +88,10 @@ module.exports = {
         },
         {
           type: 'doc',
+          id: 'mapping-configuration/for-self',
+        },
+        {
+          type: 'doc',
           id: 'mapping-configuration/pre-condition',
         },
         {

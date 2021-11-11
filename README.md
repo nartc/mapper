@@ -1,7 +1,9 @@
 # AutoMapper TypeScript
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![Unit Test Actions](https://github.com/nartc/mapper/workflows/Unit%20Test/badge.svg)](https://github.com/nartc/mapper/actions?query=workflow%3A%22Unit+Test%22)
@@ -25,7 +27,6 @@ This is a monorepo of `@automapper/core` and official packages.
 | **pojos**        | [`@automapper/pojos`](https://npmjs.com/package/@automapper/pojos)         | ![npm (scoped)](https://img.shields.io/npm/v/@automapper/pojos)     | [![README](https://img.shields.io/badge/README--green.svg)](/packages/pojos/README.md) ![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/@automapper/pojos) ![NPM](https://img.shields.io/npm/l/@automapper/pojos)             |
 | **sequelize**    | [`@automapper/sequelize`](https://npmjs.com/package/@automapper/sequelize) | ![npm (scoped)](https://img.shields.io/npm/v/@automapper/sequelize) | [![README](https://img.shields.io/badge/README--green.svg)](/packages/sequelize/README.md) ![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/@automapper/sequelize) ![NPM](https://img.shields.io/npm/l/@automapper/sequelize) |
 | **nestjs**       | [`@automapper/nestjs`](https://npmjs.com/package/@automapper/nestjs)       | ![npm (scoped)](https://img.shields.io/npm/v/@automapper/nestjs)    | [![README](https://img.shields.io/badge/README--green.svg)](/packages/nestjs/README.md) ![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/@automapper/nestjs) ![NPM](https://img.shields.io/npm/l/@automapper/nestjs)          |
-| **types**        | [`@automapper/types`](https://npmjs.com/package/@automapper/types)         | ![npm (scoped)](https://img.shields.io/npm/v/@automapper/types)     | [![README](https://img.shields.io/badge/README--green.svg)](/packages/types/README.md) ![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/@automapper/types) ![NPM](https://img.shields.io/npm/l/@automapper/types)             |
 
 ### Experimental
 

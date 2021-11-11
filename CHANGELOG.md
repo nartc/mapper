@@ -1,115 +1,128 @@
-### [6.3.1](https://github.com/nartc/mapper/compare/6.3.0...6.3.1) (2021-10-28)
+## [7.0.0](https://github.com/nartc/mapper/compare/6.3.1...7.0.0) (2021-11-11)
 
+### ⚠ BREAKING CHANGES
 
-### Bug Fixes
+- **types:** @automapper/types is removed
 
-* **types:** adjust type of Primitive type converter ([f30b9c4](https://github.com/nartc/mapper/commit/f30b9c4e9c5672a18f308287373c96f4d98bcc8b))
+`@automapper/types` has been removed and the types have been moved to `@automapper/core`. This is to reduce the amount of libraries that the consumers have to install. The types themselves are untouched, you can probably fix this with a simple Find and Replace.
 
+### Features
 
-### Refactor
-
-* **classes:** clean up model visitor ([1126755](https://github.com/nartc/mapper/commit/11267550a2d77c5ae178461deffc706c4dcbe88b))
-
+- **classes:** use core types ([985def8](https://github.com/nartc/mapper/commit/985def898b31499a007ededc41a00c2653218ecf))
+- **core:** add isFileConstructor util ([54d2b65](https://github.com/nartc/mapper/commit/54d2b6564ee9caf2d4012122f736881378e43f5e))
+- **core:** move types into core ([62ffdc6](https://github.com/nartc/mapper/commit/62ffdc68ee7724a076348f5896187eae28aba891))
+- **core:** use local types ([558782d](https://github.com/nartc/mapper/commit/558782d6b14206c8c5d07f4eedcdddb12fbd6402))
+- **nestjs:** use core types ([a21f5a3](https://github.com/nartc/mapper/commit/a21f5a3ece1cd89ba0fe04ec83752e110f434289))
+- **pojos:** support File as a metadata constructor ([0eafe05](https://github.com/nartc/mapper/commit/0eafe059f236b748b00fa30845c697d41dec15d5))
+- **pojos:** use core types ([d601da2](https://github.com/nartc/mapper/commit/d601da205946f20fb880dbb5766cfc38158ca266))
+- **sequelize:** use core types ([35c28a8](https://github.com/nartc/mapper/commit/35c28a87d73675f550cd9ae13d2ab72d56755cff))
+- **test:** use core types ([f562ca0](https://github.com/nartc/mapper/commit/f562ca01c9acda2994a2be2ea11fbece62c2785c))
+- **types:** moving types to core to retire @automapper/types ([ccfcf94](https://github.com/nartc/mapper/commit/ccfcf94ef7d8b864f51567db7e9d11b19ddcdc01))
 
 ### Documentations
 
-* update docs ([e59ce14](https://github.com/nartc/mapper/commit/e59ce14f01034c4e1aeed4d8f9c42bf8a8acb638))
+- add lookup types limitation on custom type converter ([#370](https://github.com/nartc/mapper/issues/370)) ([9ab6023](https://github.com/nartc/mapper/commit/9ab60239f2147034b1b7357f3ea1a75acb067435))
+- **core:** add documentations for forSelf ([e896a22](https://github.com/nartc/mapper/commit/e896a22483a89616b54773bd44f624f27788b109))
+
+### Refactor
+
+- **pojos:** clean up if check ([0470fb3](https://github.com/nartc/mapper/commit/0470fb3339432619dd698b01373d4e32e2220a41))
+
+### [6.3.1](https://github.com/nartc/mapper/compare/6.3.0...6.3.1) (2021-10-28)
+
+### Bug Fixes
+
+- **types:** adjust type of Primitive type converter ([f30b9c4](https://github.com/nartc/mapper/commit/f30b9c4e9c5672a18f308287373c96f4d98bcc8b))
+
+### Refactor
+
+- **classes:** clean up model visitor ([1126755](https://github.com/nartc/mapper/commit/11267550a2d77c5ae178461deffc706c4dcbe88b))
+
+### Documentations
+
+- update docs ([e59ce14](https://github.com/nartc/mapper/commit/e59ce14f01034c4e1aeed4d8f9c42bf8a8acb638))
 
 ## [6.3.0](https://github.com/nartc/mapper/compare/6.2.1...6.3.0) (2021-10-26)
 
-
 ### Features
 
-* **classes:** add shim file for browsers ([#354](https://github.com/nartc/mapper/issues/354)) ([4feff72](https://github.com/nartc/mapper/commit/4feff72fd01f5ef4c1f48fccbb938fc2faaa3236)), closes [#353](https://github.com/nartc/mapper/issues/353)
-
+- **classes:** add shim file for browsers ([#354](https://github.com/nartc/mapper/issues/354)) ([4feff72](https://github.com/nartc/mapper/commit/4feff72fd01f5ef4c1f48fccbb938fc2faaa3236)), closes [#353](https://github.com/nartc/mapper/issues/353)
 
 ### Bug Fixes
 
-* **classes:** widen Constructible type ([a394e5c](https://github.com/nartc/mapper/commit/a394e5c63eee15d8743a1043f6944c4fd7e429c4)), closes [#365](https://github.com/nartc/mapper/issues/365)
+- **classes:** widen Constructible type ([a394e5c](https://github.com/nartc/mapper/commit/a394e5c63eee15d8743a1043f6944c4fd7e429c4)), closes [#365](https://github.com/nartc/mapper/issues/365)
 
 ### [6.2.1](https://github.com/nartc/mapper/compare/6.2.0...6.2.1) (2021-09-21)
 
-
 ### Bug Fixes
 
-* **core:** ensure applyTypeConverter to work correctly ([0f1b689](https://github.com/nartc/mapper/commit/0f1b6894efbbb61dd9e95366dae31bbaa9700ede))
+- **core:** ensure applyTypeConverter to work correctly ([0f1b689](https://github.com/nartc/mapper/commit/0f1b6894efbbb61dd9e95366dae31bbaa9700ede))
 
 ## [6.2.0](https://github.com/nartc/mapper/compare/6.1.4...6.2.0) (2021-09-21)
 
-
 ### Features
 
-* **classes:** store source and destination on mapping; use .name instead of toString() ([6b0530c](https://github.com/nartc/mapper/commit/6b0530cb03e4ee407524ea1599165c7f045dfd94))
-* **core:** start storing Source and Destination keys on Mapping ([73d19a3](https://github.com/nartc/mapper/commit/73d19a3474c916581c1ccdc9e451e306606752f9))
-* **core:** support strong type extraArguments ([0cd5119](https://github.com/nartc/mapper/commit/0cd51191ea529b4214a45d31b1582084684b4f16))
-* **pojos:** store source and destination on mapping ([2fd60bc](https://github.com/nartc/mapper/commit/2fd60bc36426b492175a33ffc680512269cd833c))
-
+- **classes:** store source and destination on mapping; use .name instead of toString() ([6b0530c](https://github.com/nartc/mapper/commit/6b0530cb03e4ee407524ea1599165c7f045dfd94))
+- **core:** start storing Source and Destination keys on Mapping ([73d19a3](https://github.com/nartc/mapper/commit/73d19a3474c916581c1ccdc9e451e306606752f9))
+- **core:** support strong type extraArguments ([0cd5119](https://github.com/nartc/mapper/commit/0cd51191ea529b4214a45d31b1582084684b4f16))
+- **pojos:** store source and destination on mapping ([2fd60bc](https://github.com/nartc/mapper/commit/2fd60bc36426b492175a33ffc680512269cd833c))
 
 ### Bug Fixes
 
-* **types:** replace unknown record type in mapWithArguments by any ([#347](https://github.com/nartc/mapper/issues/347)) ([8160498](https://github.com/nartc/mapper/commit/816049834b5938e82cceb5933a3092a9c09e307b)), closes [#346](https://github.com/nartc/mapper/issues/346)
-
+- **types:** replace unknown record type in mapWithArguments by any ([#347](https://github.com/nartc/mapper/issues/347)) ([8160498](https://github.com/nartc/mapper/commit/816049834b5938e82cceb5933a3092a9c09e307b)), closes [#346](https://github.com/nartc/mapper/issues/346)
 
 ### Documentations
 
-* remove 'odd-property name' limitation ([99e0efd](https://github.com/nartc/mapper/commit/99e0efd5a636c9530c0529deeef9761237d8addf))
+- remove 'odd-property name' limitation ([99e0efd](https://github.com/nartc/mapper/commit/99e0efd5a636c9530c0529deeef9761237d8addf))
 
 ### [6.1.4](https://github.com/nartc/mapper/compare/6.1.3...6.1.4) (2021-09-10)
 
-
 ### Bug Fixes
 
-* **transformer-plugin:** try get typeReference and null check for property assignment ([d447783](https://github.com/nartc/mapper/commit/d447783e846e6a1e2e2b7783b66db1902c078313))
+- **transformer-plugin:** try get typeReference and null check for property assignment ([d447783](https://github.com/nartc/mapper/commit/d447783e846e6a1e2e2b7783b66db1902c078313))
 
 ### [6.1.3](https://github.com/nartc/mapper/compare/6.1.2...6.1.3) (2021-08-30)
 
-
 ### Bug Fixes
 
-* **core:** ensure properties that aren't on destination won't be mapped from forSelf ([390b8bb](https://github.com/nartc/mapper/commit/390b8bb4cd4a7c4cb2170434f1c75a762ce75774))
+- **core:** ensure properties that aren't on destination won't be mapped from forSelf ([390b8bb](https://github.com/nartc/mapper/commit/390b8bb4cd4a7c4cb2170434f1c75a762ce75774))
 
 ### [6.1.2](https://github.com/nartc/mapper/compare/6.1.1...6.1.2) (2021-08-30)
 
-
 ### Bug Fixes
 
-* **nestjs:** make sure to support Nest7 as well ([8235720](https://github.com/nartc/mapper/commit/8235720c93d264154d3c22d7a40a1a034e441025))
+- **nestjs:** make sure to support Nest7 as well ([8235720](https://github.com/nartc/mapper/commit/8235720c93d264154d3c22d7a40a1a034e441025))
 
 ### [6.1.1](https://github.com/nartc/mapper/compare/6.1.0...6.1.1) (2021-08-27)
 
-
 ### Bug Fixes
 
-* **core:** ensure forMember (custom) will always override forSelf ([ef7471a](https://github.com/nartc/mapper/commit/ef7471ac7a5edbd8728b12b21b3df8e370b50b8f))
+- **core:** ensure forMember (custom) will always override forSelf ([ef7471a](https://github.com/nartc/mapper/commit/ef7471ac7a5edbd8728b12b21b3df8e370b50b8f))
 
 ## [6.1.0](https://github.com/nartc/mapper/compare/6.0.2...6.1.0) (2021-08-26)
 
-
 ### Features
 
-* **core:** add forSelf ([140a37c](https://github.com/nartc/mapper/commit/140a37c7228aacfbaced12bf8c147e5ea048446b))
+- **core:** add forSelf ([140a37c](https://github.com/nartc/mapper/commit/140a37c7228aacfbaced12bf8c147e5ea048446b))
 
 ### [6.0.2](https://github.com/nartc/mapper/compare/6.0.1...6.0.2) (2021-08-22)
 
-
 ### Bug Fixes
 
-* **core:** add prototype properties (getters, setters) to destinationPath ([15ad713](https://github.com/nartc/mapper/commit/15ad713fd0acf86ad19124178ce0f18b19bdb1a1)), closes [#334](https://github.com/nartc/mapper/issues/334)
+- **core:** add prototype properties (getters, setters) to destinationPath ([15ad713](https://github.com/nartc/mapper/commit/15ad713fd0acf86ad19124178ce0f18b19bdb1a1)), closes [#334](https://github.com/nartc/mapper/issues/334)
 
 ### [6.0.1](https://github.com/nartc/mapper/compare/6.0.0...6.0.1) (2021-08-16)
 
-
 ### Documentations
 
-* add [@jasonmerino](https://github.com/jasonmerino) as a contributor ([809e447](https://github.com/nartc/mapper/commit/809e4476f0c07c9c13ddcd21389fbb06ac17f581))
-
+- add [@jasonmerino](https://github.com/jasonmerino) as a contributor ([809e447](https://github.com/nartc/mapper/commit/809e4476f0c07c9c13ddcd21389fbb06ac17f581))
 
 ### Refactor
 
-* **classes:** clean up typings ([45edfda](https://github.com/nartc/mapper/commit/45edfdadd133fd9f0cb52b7bae2e0f8623884fdd))
-* **core:** clean up core libs ([ddb11e5](https://github.com/nartc/mapper/commit/ddb11e5e9cf742281d794201dbcae1008fbd896d))
-* **core:** remove some any types ([cdc2f9a](https://github.com/nartc/mapper/commit/cdc2f9a9ebecf37c26788b834ccf319bf4db5a7a))
-* **pojos:** clean up typings ([f43705a](https://github.com/nartc/mapper/commit/f43705a39b7862b2ad9163bd39699aeb4dcd20db))
+- **classes:** clean up typings ([45edfda](https://github.com/nartc/mapper/commit/45edfdadd133fd9f0cb52b7bae2e0f8623884fdd))
+- **core:** clean up core libs ([ddb11e5](https://github.com/nartc/mapper/commit/ddb11e5e9cf742281d794201dbcae1008fbd896d))
+- **core:** remove some any types ([cdc2f9a](https://github.com/nartc/mapper/commit/cdc2f9a9ebecf37c26788b834ccf319bf4db5a7a))
+- **pojos:** clean up typings ([f43705a](https://github.com/nartc/mapper/commit/f43705a39b7862b2ad9163bd39699aeb4dcd20db))
 
 ## [6.0.0](https://github.com/nartc/mapper/compare/5.0.1...6.0.0) (2021-08-02)
 

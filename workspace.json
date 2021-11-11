@@ -10,7 +10,9 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["packages/classes/**/*.ts"]
+            "lintFilePatterns": [
+              "packages/classes/**/*.ts"
+            ]
           }
         },
         "test": {
@@ -19,7 +21,9 @@
             "jestConfig": "packages/classes/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": ["coverage/packages/classes"]
+          "outputs": [
+            "coverage/packages/classes"
+          ]
         },
         "build": {
           "builder": "@nrwl/node:package",
@@ -28,10 +32,14 @@
             "tsConfig": "packages/classes/tsconfig.lib.json",
             "packageJson": "packages/classes/package.json",
             "main": "packages/classes/src/index.ts",
-            "assets": ["packages/classes/*.md"],
+            "assets": [
+              "packages/classes/*.md"
+            ],
             "buildableProjectDepsInPackageJsonType": "peerDependencies"
           },
-          "outputs": ["{options.outputPath}"]
+          "outputs": [
+            "{options.outputPath}"
+          ]
         },
         "publish": {
           "builder": "@nrwl/workspace:run-commands",
@@ -41,7 +49,10 @@
           }
         }
       },
-      "tags": ["scope:classes", "type:plugin"]
+      "tags": [
+        "scope:classes",
+        "type:plugin"
+      ]
     },
     "classes-experimental-transformer-plugin": {
       "root": "packages/classes/experimental/transformer-plugin",
@@ -68,18 +79,25 @@
         },
         "build": {
           "builder": "@nrwl/node:package",
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "outputPath": "dist/packages/classes/experimental/transformer-plugin",
             "tsConfig": "packages/classes/experimental/transformer-plugin/tsconfig.lib.json",
             "packageJson": "packages/classes/experimental/transformer-plugin/package.json",
             "main": "packages/classes/experimental/transformer-plugin/src/index.ts",
-            "assets": ["packages/classes/experimental/transformer-plugin/*.md"],
+            "assets": [
+              "packages/classes/experimental/transformer-plugin/*.md"
+            ],
             "buildableProjectDepsInPackageJsonType": "peerDependencies"
           }
         }
       },
-      "tags": ["scope:classes", "type:transformer-plugin"]
+      "tags": [
+        "scope:classes",
+        "type:transformer-plugin"
+      ]
     },
     "classes-mapped-types": {
       "root": "packages/classes/mapped-types",
@@ -89,12 +107,16 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["packages/classes/mapped-types/**/*.ts"]
+            "lintFilePatterns": [
+              "packages/classes/mapped-types/**/*.ts"
+            ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/packages/classes/mapped-types"],
+          "outputs": [
+            "coverage/packages/classes/mapped-types"
+          ],
           "options": {
             "jestConfig": "packages/classes/mapped-types/jest.config.js",
             "passWithNoTests": true
@@ -102,18 +124,25 @@
         },
         "build": {
           "builder": "@nrwl/node:package",
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "outputPath": "dist/packages/classes/mapped-types",
             "tsConfig": "packages/classes/mapped-types/tsconfig.lib.json",
             "packageJson": "packages/classes/mapped-types/package.json",
             "main": "packages/classes/mapped-types/src/index.ts",
-            "assets": ["packages/classes/mapped-types/*.md"],
+            "assets": [
+              "packages/classes/mapped-types/*.md"
+            ],
             "buildableProjectDepsInPackageJsonType": "peerDependencies"
           }
         }
       },
-      "tags": ["scope:classes", "type:utility"]
+      "tags": [
+        "scope:classes",
+        "type:utility"
+      ]
     },
     "core": {
       "root": "packages/core",
@@ -124,7 +153,9 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["packages/core/**/*.ts"]
+            "lintFilePatterns": [
+              "packages/core/**/*.ts"
+            ]
           }
         },
         "test": {
@@ -133,7 +164,9 @@
             "jestConfig": "packages/core/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": ["coverage/packages/core"]
+          "outputs": [
+            "coverage/packages/core"
+          ]
         },
         "build": {
           "builder": "@nrwl/node:package",
@@ -142,10 +175,14 @@
             "tsConfig": "packages/core/tsconfig.lib.json",
             "packageJson": "packages/core/package.json",
             "main": "packages/core/src/index.ts",
-            "assets": ["packages/core/*.md"],
+            "assets": [
+              "packages/core/*.md"
+            ],
             "buildableProjectDepsInPackageJsonType": "peerDependencies"
           },
-          "outputs": ["{options.outputPath}"]
+          "outputs": [
+            "{options.outputPath}"
+          ]
         },
         "publish": {
           "builder": "@nrwl/workspace:run-commands",
@@ -153,21 +190,12 @@
             "command": "npm publish",
             "cwd": "dist/packages/core"
           }
-        },
-        "publish-all": {
-          "builder": "@nrwl/workspace:run-commands",
-          "options": {
-            "commands": [
-              "npx nx run core:publish",
-              "npx nx run classes:publish",
-              "npx nx run pojos:publish",
-              "npx nx run nestjs:publish",
-              "npx nx run sequelize:publish"
-            ]
-          }
         }
       },
-      "tags": ["scope:core", "type:library"]
+      "tags": [
+        "scope:core",
+        "type:library"
+      ]
     },
     "integration-test": {
       "root": "packages/integration-test",
@@ -178,7 +206,9 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["packages/integration-test/**/*.ts"]
+            "lintFilePatterns": [
+              "packages/integration-test/**/*.ts"
+            ]
           }
         },
         "test": {
@@ -187,10 +217,14 @@
             "jestConfig": "packages/integration-test/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": ["coverage/packages/integration-test"]
+          "outputs": [
+            "coverage/packages/integration-test"
+          ]
         }
       },
-      "tags": ["type:test"]
+      "tags": [
+        "type:test"
+      ]
     },
     "nestjs": {
       "root": "packages/nestjs",
@@ -200,12 +234,16 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["packages/nestjs/**/*.ts"]
+            "lintFilePatterns": [
+              "packages/nestjs/**/*.ts"
+            ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/packages/nestjs"],
+          "outputs": [
+            "coverage/packages/nestjs"
+          ],
           "options": {
             "jestConfig": "packages/nestjs/jest.config.js",
             "passWithNoTests": true
@@ -213,13 +251,17 @@
         },
         "build": {
           "builder": "@nrwl/node:package",
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "outputPath": "dist/packages/nestjs",
             "tsConfig": "packages/nestjs/tsconfig.lib.json",
             "packageJson": "packages/nestjs/package.json",
             "main": "packages/nestjs/src/index.ts",
-            "assets": ["packages/nestjs/*.md"],
+            "assets": [
+              "packages/nestjs/*.md"
+            ],
             "buildableProjectDepsInPackageJsonType": "peerDependencies"
           }
         },
@@ -231,7 +273,9 @@
           }
         }
       },
-      "tags": ["type:integration"]
+      "tags": [
+        "type:integration"
+      ]
     },
     "nestjs-integration-test": {
       "root": "packages/nestjs-integration-test",
@@ -241,12 +285,16 @@
       "architect": {
         "build-obsolete": {
           "builder": "@nrwl/node:build",
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "outputPath": "dist/packages/nestjs-integration-test",
             "main": "packages/nestjs-integration-test/src/main.ts",
             "tsConfig": "packages/nestjs-integration-test/tsconfig.app.json",
-            "assets": ["packages/nestjs-integration-test/src/assets"]
+            "assets": [
+              "packages/nestjs-integration-test/src/assets"
+            ]
           },
           "configurations": {
             "production": {
@@ -270,14 +318,18 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/packages/nestjs-integration-test"],
+          "outputs": [
+            "coverage/packages/nestjs-integration-test"
+          ],
           "options": {
             "jestConfig": "packages/nestjs-integration-test/jest.config.js",
             "passWithNoTests": true
           }
         }
       },
-      "tags": ["type:test"]
+      "tags": [
+        "type:test"
+      ]
     },
     "pojos": {
       "root": "packages/pojos",
@@ -287,12 +339,16 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["packages/pojos/**/*.ts"]
+            "lintFilePatterns": [
+              "packages/pojos/**/*.ts"
+            ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/packages/pojos"],
+          "outputs": [
+            "coverage/packages/pojos"
+          ],
           "options": {
             "jestConfig": "packages/pojos/jest.config.js",
             "passWithNoTests": true
@@ -300,13 +356,17 @@
         },
         "build": {
           "builder": "@nrwl/node:package",
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "outputPath": "dist/packages/pojos",
             "tsConfig": "packages/pojos/tsconfig.lib.json",
             "packageJson": "packages/pojos/package.json",
             "main": "packages/pojos/src/index.ts",
-            "assets": ["packages/pojos/*.md"],
+            "assets": [
+              "packages/pojos/*.md"
+            ],
             "buildableProjectDepsInPackageJsonType": "peerDependencies"
           }
         },
@@ -318,7 +378,9 @@
           }
         }
       },
-      "tags": ["type:plugin"]
+      "tags": [
+        "type:plugin"
+      ]
     },
     "sequelize": {
       "root": "packages/sequelize",
@@ -328,12 +390,16 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["packages/sequelize/**/*.ts"]
+            "lintFilePatterns": [
+              "packages/sequelize/**/*.ts"
+            ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/packages/sequelize"],
+          "outputs": [
+            "coverage/packages/sequelize"
+          ],
           "options": {
             "jestConfig": "packages/sequelize/jest.config.js",
             "passWithNoTests": true
@@ -341,13 +407,17 @@
         },
         "build": {
           "builder": "@nrwl/node:package",
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "outputPath": "dist/packages/sequelize",
             "tsConfig": "packages/sequelize/tsconfig.lib.json",
             "packageJson": "packages/sequelize/package.json",
             "main": "packages/sequelize/src/index.ts",
-            "assets": ["packages/sequelize/*.md"],
+            "assets": [
+              "packages/sequelize/*.md"
+            ],
             "buildableProjectDepsInPackageJsonType": "peerDependencies"
           }
         },
@@ -359,7 +429,9 @@
           }
         }
       },
-      "tags": ["type:plugin"]
+      "tags": [
+        "type:plugin"
+      ]
     }
   }
 }

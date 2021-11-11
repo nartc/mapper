@@ -13,12 +13,8 @@
             "section": "Bug Fixes"
           },
           {
-            "type": "perf",
-            "section": "Performances"
-          },
-          {
-            "type": "refactor",
-            "section": "Refactor"
+            "type": "cleanup",
+            "section": "Cleanup"
           },
           {
             "type": "docs",
@@ -29,16 +25,23 @@
       "infile": "CHANGELOG.md"
     },
     "@release-it/bumper": {
-      "out": ["packages/**/package*.json"]
+      "out": [
+        "packages/**/package*.json"
+      ]
     }
+  },
+  "git": {
+    "commitMessage": "chore: release ${version}"
   },
   "npm": {
     "publish": false
   },
-  "git": {
-    "commitMessage": "Prepare release ${version}"
-  },
   "github": {
-    "releaseNotes": true
+    "release": true,
+    "releaseName": "Release ${version}"
+  },
+  "hooks": {
+    "before:bump": "yarn test:all",
+    "after:bump": "yarn build:all"
   }
 }

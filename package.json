@@ -7,14 +7,13 @@
     "affected:lint": "nx affected:lint --base=main",
     "format:write": "nx format:write --base=main",
     "commit": "cz",
-    "workspace-generator": "nx workspace-generator",
-    "release": "release-it",
+    "release": "dotenv release-it --",
     "contributors:init": "all-contributors init",
     "contributors:add": "all-contributors add",
     "build:all": "nx run-many --all --target=build",
     "test:all": "nx run-many --all --target=test --parallel",
     "lint:all": "nx run-many --all --target=lint",
-    "publish:all": "nx run core:publish-all"
+    "publish:all": "nx run-many --target=publish --all --parallel"
   },
   "sideEffects": false,
   "engines": {

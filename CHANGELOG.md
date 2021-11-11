@@ -1,3 +1,10 @@
+### [7.0.1](https://github.com/nartc/mapper/compare/7.0.0...7.0.1) (2021-11-11)
+
+
+### Documentations
+
+* remove types from readme ([31ab69f](https://github.com/nartc/mapper/commit/31ab69fbc427fcc156c812f98af01467a55b9eea))
+
 ## [7.0.0](https://github.com/nartc/mapper/compare/6.3.1...7.0.0) (2021-11-11)
 
 ### ⚠ BREAKING CHANGES

@@ -1,4 +1,4 @@
-import type { PrimitiveWithDate } from '@automapper/core';
+import type { PrimitiveExtended } from '@automapper/core';
 import { isDefined } from '@automapper/core';
 import {
   AUTOMAP_PROPERTIES_METADATA_KEY,
@@ -42,7 +42,7 @@ export function exploreMetadata(
 export function getMetadataList(model: Constructible): [
   string,
   {
-    typeFn: () => Constructible | PrimitiveWithDate;
+    typeFn: () => Constructible | PrimitiveExtended;
     depth?: number;
     isGetterOnly?: boolean;
   }

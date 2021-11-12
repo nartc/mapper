@@ -44,8 +44,7 @@ export interface Resolver<
 Value Resolver is to help with complex logic where you need to determine what to return for the member on **Destination** without having to pollute your `Profile`. You can have `Resolver` in separate files.
 
 ```ts
-import { mapFrom } from '@automapper/core';
-import type { Resolver } from '@automapper/types';
+import { mapFrom, Resolver } from '@automapper/core';
 
 export const taxResolver: Resolver<Item, ItemDto, number> = {
   resolve(source) {

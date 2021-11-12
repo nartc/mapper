@@ -38,7 +38,7 @@ The purpose is to _separate the concern_ more. In terms of Folder Structure, we 
 In `@automapper/*`, `Profile` is a `MappingProfile` function that has the `Mapper` as the argument and returns nothing (aka `void`). With this in mind, we will start with our `bioProfile`
 
 ```ts
-import type { MappingProfile } from '@automapper/types';
+import type { MappingProfile } from '@automapper/core';
 
 export const bioProfile: MappingProfile = (mapper) => {
   mapper

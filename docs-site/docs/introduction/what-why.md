@@ -38,7 +38,6 @@ And that is the birth for `@automapper/*`
 - `@automapper/core`
 - `@automapper/classes`
 - `@automapper/pojos`
-- `@automapper/types`
 - `@automapper/nestjs`
 
 #### `@automapper/core`
@@ -52,10 +51,6 @@ Core is that main package that deals with configuring transformation information
 #### `@automapper/pojos`
 
 `pojos` is a plugin that provides the storing mechanism for AutoMapper to store metadata of Interfaces/Types to work with POJOs
-
-#### `@automapper/types`
-
-This package provides type definitions for all other packages to use.
 
 #### `@automapper/nestjs`
 

@@ -98,11 +98,9 @@ Start by installing the dependencies
 
 ```bash
 npm i @automapper/{core,classes}
-npm i -D @automapper/types
 
 # or with yarn
 yarn add @automapper/{core,classes}
-yarn add -D @automapper/types
 ```
 
 ## Enable decorators metadata

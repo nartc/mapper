@@ -22,7 +22,7 @@ export interface Converter<
 For example, we might have a `dateToStringConverter`:
 
 ```ts
-import type { Converter } from '@automapper/types';
+import type { Converter } from '@automapper/core';
 
 export const dateToStringConverter: Converter<Date, string> = {
   convert(source) {

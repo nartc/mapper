@@ -22,10 +22,8 @@ In the near future, `@nartc/automapper` will be archived (v7 would still be avai
 
 ```bash
 npm i @automapper/{core,classes}
-npm i -D @automapper/types
 # or with yarn
 yarn add @automapper/{core,classes}
-yarn add -D @automapper/types
 ```
 
 ### Create a `Mapper` with `@automapper/classes`
@@ -93,7 +91,7 @@ export class UserProfile extends ProfileBase {
 }
 
 // after
-import type { MappingProfile } from '@automapper/types';
+import type { MappingProfile } from '@automapper/core';
 
 export const userProfile: MappingProfile = mapper => {
   mapper.createMap(...)
@@ -115,7 +113,7 @@ export class DateStringConverter implements Converter<Date, string> {
 }
 
 // after
-import type { Converter } from '@automapper/types';
+import type { Converter } from '@automapper/core';
 
 export const dateStringConverter: Converter<Date, string> = {
   convert(source) {
@@ -139,7 +137,7 @@ export class TaxResolver implements Resolver<Item, ItemDto, number> {
 }
 
 // after
-import type { Resolver } from '@automapper/types';
+import type { Resolver } from '@automapper/core';
 
 export const taxResolver: Resolver<Item, ItemDto, number> = {
   resolve(source) {
@@ -239,10 +237,8 @@ This might not be the case for `@nartc/automapper` but the `@AutoMap()` decorato
 
 ```bash
 npm i @automapper/{core,classes,nestjs}
-npm i -D @automapper/types
 # or with yarn
 yarn add @automapper/{core,classes,nestjs}
-yarn add -D @automapper/types
 ```
 
 ### Initialization
@@ -299,7 +295,7 @@ import 'path/to/profile'
 // after
 import { Injectable } from '@nestjs/common';
 import { AutomapperProfile, InjectMapper } from '@automapper/nestjs';
-import type { Mapper } from '@automapper/types';
+import type { Mapper } from '@automapper/core';
 
 @Injectable()
 export class UserProfile extends AutomapperProfile {

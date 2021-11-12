@@ -16,14 +16,12 @@ yarn add @automapper/nestjs
 
 #### `peerDependencies`
 
-`@automapper/nestjs` depends on `@automapper/core` and `@automapper/types`.
+`@automapper/nestjs` depends on `@automapper/core`.
 
 ```bash
 npm i @automapper/core
-npm i -D @automapper/types
 # or with yarn
 yarn add @automapper/core
-yarn add -D @automapper/types
 ```
 
 #### Plugin
@@ -129,7 +127,7 @@ export class Service {
 
 ```ts
 import { AutomapperProfile } from '@automapper/nestjs';
-import type { Mapper } from '@automapper/types';
+import type { Mapper } from '@automapper/core';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

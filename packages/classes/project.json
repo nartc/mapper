@@ -1,0 +1,42 @@
+{
+  "root": "packages/classes",
+  "sourceRoot": "packages/classes/src",
+  "projectType": "library",
+  "generators": {},
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["packages/classes/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "options": {
+        "jestConfig": "packages/classes/jest.config.js",
+        "passWithNoTests": true
+      },
+      "outputs": ["coverage/packages/classes"]
+    },
+    "build": {
+      "executor": "@nrwl/node:package",
+      "options": {
+        "outputPath": "dist/packages/classes",
+        "tsConfig": "packages/classes/tsconfig.lib.json",
+        "packageJson": "packages/classes/package.json",
+        "main": "packages/classes/src/index.ts",
+        "assets": ["packages/classes/*.md"],
+        "buildableProjectDepsInPackageJsonType": "peerDependencies"
+      },
+      "outputs": ["{options.outputPath}"]
+    },
+    "publish": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "command": "npm publish",
+        "cwd": "dist/packages/classes"
+      }
+    }
+  },
+  "tags": ["scope:classes", "type:plugin"]
+}

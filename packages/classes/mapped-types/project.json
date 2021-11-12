@@ -1,0 +1,34 @@
+{
+  "root": "packages/classes/mapped-types",
+  "sourceRoot": "packages/classes/mapped-types/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["packages/classes/mapped-types/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/classes/mapped-types"],
+      "options": {
+        "jestConfig": "packages/classes/mapped-types/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/classes/mapped-types",
+        "tsConfig": "packages/classes/mapped-types/tsconfig.lib.json",
+        "packageJson": "packages/classes/mapped-types/package.json",
+        "main": "packages/classes/mapped-types/src/index.ts",
+        "assets": ["packages/classes/mapped-types/*.md"],
+        "buildableProjectDepsInPackageJsonType": "peerDependencies"
+      }
+    }
+  },
+  "tags": ["scope:classes", "type:utility"]
+}

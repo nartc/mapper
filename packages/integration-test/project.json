@@ -1,0 +1,23 @@
+{
+  "root": "packages/integration-test",
+  "sourceRoot": "packages/integration-test/src",
+  "projectType": "library",
+  "generators": {},
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["packages/integration-test/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "options": {
+        "jestConfig": "packages/integration-test/jest.config.js",
+        "passWithNoTests": true
+      },
+      "outputs": ["coverage/packages/integration-test"]
+    }
+  },
+  "tags": ["type:test"]
+}

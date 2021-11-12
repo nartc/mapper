@@ -1,0 +1,36 @@
+{
+  "root": "packages/classes/experimental/transformer-plugin",
+  "sourceRoot": "packages/classes/experimental/transformer-plugin/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "packages/classes/experimental/transformer-plugin/**/*.ts"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/classes/experimental/transformer-plugin"],
+      "options": {
+        "jestConfig": "packages/classes/experimental/transformer-plugin/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/classes/experimental/transformer-plugin",
+        "tsConfig": "packages/classes/experimental/transformer-plugin/tsconfig.lib.json",
+        "packageJson": "packages/classes/experimental/transformer-plugin/package.json",
+        "main": "packages/classes/experimental/transformer-plugin/src/index.ts",
+        "assets": ["packages/classes/experimental/transformer-plugin/*.md"],
+        "buildableProjectDepsInPackageJsonType": "peerDependencies"
+      }
+    }
+  },
+  "tags": ["scope:classes", "type:transformer-plugin"]
+}

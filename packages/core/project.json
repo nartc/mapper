@@ -1,0 +1,42 @@
+{
+  "root": "packages/core",
+  "sourceRoot": "packages/core/src",
+  "projectType": "library",
+  "generators": {},
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["packages/core/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "options": {
+        "jestConfig": "packages/core/jest.config.js",
+        "passWithNoTests": true
+      },
+      "outputs": ["coverage/packages/core"]
+    },
+    "build": {
+      "executor": "@nrwl/node:package",
+      "options": {
+        "outputPath": "dist/packages/core",
+        "tsConfig": "packages/core/tsconfig.lib.json",
+        "packageJson": "packages/core/package.json",
+        "main": "packages/core/src/index.ts",
+        "assets": ["packages/core/*.md"],
+        "buildableProjectDepsInPackageJsonType": "peerDependencies"
+      },
+      "outputs": ["{options.outputPath}"]
+    },
+    "publish": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "command": "npm publish",
+        "cwd": "dist/packages/core"
+      }
+    }
+  },
+  "tags": ["scope:core", "type:library"]
+}

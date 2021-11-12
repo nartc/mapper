@@ -224,11 +224,13 @@ Original error: ${originalError}`;
       )(sourceObj);
 
       // if null/undefined
-      // if isDate
+      // if isDate, isFile
       // if metadata is null, treat as-is
       if (
         mapInitializedValue == null ||
         mapInitializedValue instanceof Date ||
+        Object.prototype.toString.call(mapInitializedValue).slice(8, -1) ===
+          'File' ||
         isMetadataNull
       ) {
         setMember(() => mapInitializedValue);

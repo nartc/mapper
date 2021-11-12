@@ -1,3 +1,6 @@
 export function isFileConstructor(value: unknown): boolean {
-  return value === File;
+  const constructorName = value['prototype']
+    ? value['prototype'].constructor.name
+    : value['name'];
+  return constructorName === 'File';
 }

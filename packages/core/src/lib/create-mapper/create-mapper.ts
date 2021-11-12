@@ -6,7 +6,7 @@ import type {
   MapOptions,
   Mapper,
   Mapping,
-  PrimitiveConstructorWithDate,
+  PrimitiveConstructorExtended,
   ValueSelector,
 } from '../types';
 import { MappingClassId } from '../types';
@@ -34,8 +34,8 @@ export function createMapper<TKey = unknown>({
 
   // type converters
   const typeConverters = new WeakMap<
-    PrimitiveConstructorWithDate,
-    WeakMap<PrimitiveConstructorWithDate, ValueSelector | Converter>
+    PrimitiveConstructorExtended,
+    WeakMap<PrimitiveConstructorExtended, ValueSelector | Converter>
   >();
 
   return {
@@ -50,7 +50,7 @@ export function createMapper<TKey = unknown>({
 
       typeConverters.set(
         source,
-        new WeakMap<PrimitiveConstructorWithDate, ValueSelector | Converter>([
+        new WeakMap<PrimitiveConstructorExtended, ValueSelector | Converter>([
           [destination, converter],
         ])
       );

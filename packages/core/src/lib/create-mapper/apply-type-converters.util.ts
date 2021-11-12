@@ -1,7 +1,7 @@
 import type {
   Converter,
   Mapping,
-  PrimitiveConstructorWithDate,
+  PrimitiveConstructorExtended,
   ValueSelector,
 } from '../types';
 import {
@@ -21,8 +21,8 @@ import {
 export function applyTypeConverters(
   mapping: Mapping,
   typeConverters: WeakMap<
-    PrimitiveConstructorWithDate,
-    WeakMap<PrimitiveConstructorWithDate, ValueSelector | Converter>
+    PrimitiveConstructorExtended,
+    WeakMap<PrimitiveConstructorExtended, ValueSelector | Converter>
   >
 ): void {
   const [, , initializedProps] = mapping;
@@ -40,8 +40,8 @@ export function applyTypeConverters(
     const [destinationType, sourceType] =
       initializeProp[MappingPropertiesClassId.nestedMappingPair];
     const typeConverter = typeConverters
-      .get(sourceType as PrimitiveConstructorWithDate)
-      ?.get(destinationType as PrimitiveConstructorWithDate);
+      .get(sourceType as PrimitiveConstructorExtended)
+      ?.get(destinationType as PrimitiveConstructorExtended);
     if (typeConverter) {
       const originalMapInitializeFn =
         initializeProp[MappingPropertiesClassId.property][

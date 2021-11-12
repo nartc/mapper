@@ -9,16 +9,17 @@ export type Unpacked<T> = T extends (infer U)[]
   : T;
 export type Dictionary<T> = { [key in keyof T]?: unknown };
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 export type Primitive = String | Number | Boolean;
 
-export type PrimitiveWithDate = Primitive | Date;
+export type PrimitiveExtended = Primitive | Date;
 
 export type PrimitiveConstructor =
   | StringConstructor
   | NumberConstructor
   | BooleanConstructor;
 
-export type PrimitiveConstructorWithDate =
+export type PrimitiveConstructorExtended =
   | PrimitiveConstructor
   | DateConstructor;
 

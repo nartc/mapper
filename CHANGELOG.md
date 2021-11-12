@@ -1,3 +1,18 @@
+### [7.0.2](https://github.com/nartc/mapper/compare/7.0.1...7.0.2) (2021-11-12)
+
+
+### Bug Fixes
+
+* **classes:** rename PrimitiveWithDate to PrimitiveExtended ([34d8a52](https://github.com/nartc/mapper/commit/34d8a52fcb0e66444b4ff3e7c79837aefc27c1a8))
+* **core:** change how File is handled in map ([57df4ad](https://github.com/nartc/mapper/commit/57df4adb6f5902e8500003e0f877654890f8538f))
+* **core:** rename PrimitiveWithDate to PrimitiveExtended ([4c299ff](https://github.com/nartc/mapper/commit/4c299ff60b2d9af1676f9b406e889f65017855f3))
+
+
+### Documentations
+
+* add ForSelf doc to sidebars ([9f0f478](https://github.com/nartc/mapper/commit/9f0f4787793f6de83db80f2609981cf4569ffa3e))
+* remove all reference to automapper/types ([9e44e17](https://github.com/nartc/mapper/commit/9e44e17d56cfa52a49f5a30061e48aacf808b9e0))
+
 ### [7.0.1](https://github.com/nartc/mapper/compare/7.0.0...7.0.1) (2021-11-11)
 
 

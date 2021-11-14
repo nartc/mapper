@@ -8,40 +8,13 @@ export function createAutomapperProviders(
   forRootOptions: AutomapperModuleOptions,
   logger: Logger
 ): Provider[] {
-  const {
-    options,
-    globalErrorHandler,
-    globalNamingConventions,
-    singular = false,
-  } = forRootOptions;
+  const { options, globalErrorHandler, globalNamingConventions } =
+    forRootOptions;
 
-  if (singular) {
-    if (options.length > 1) {
-      const error =
-        'singular cannot be set to true when you have more than one plugin';
-      logger.error(error);
-      throw new Error(error);
-    }
+  const singular = Array.isArray(options);
+  const mapperOptions = Array.isArray(options) ? options : [options];
 
-    const [{ name, namingConventions, errorHandler, pluginInitializer }] =
-      options;
-    const mapper = createMapper({
-      name,
-      pluginInitializer,
-      errorHandler: errorHandler ||
-        globalErrorHandler || { handle: logger.error.bind(logger) },
-      namingConventions: namingConventions || globalNamingConventions,
-    });
-
-    return [
-      {
-        provide: getMapperToken(),
-        useValue: mapper,
-      },
-    ];
-  }
-
-  return options.map(
+  return mapperOptions.map(
     ({ name, errorHandler, namingConventions, pluginInitializer }) => {
       const mapper = createMapper({
         name,
@@ -51,7 +24,7 @@ export function createAutomapperProviders(
         namingConventions: namingConventions || globalNamingConventions,
       });
       return {
-        provide: getMapperToken(mapper.name),
+        provide: singular ? getMapperToken() : getMapperToken(mapper.name),
         useValue: mapper,
       };
     }

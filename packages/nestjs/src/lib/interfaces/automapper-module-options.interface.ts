@@ -11,7 +11,7 @@ export interface AutomapperModuleOptions {
   /**
    * An array of CreateMapperOptions to create multiple mappers
    */
-  options: CreateMapperOptions[];
+  options: CreateMapperOptions | CreateMapperOptions[];
   /**
    * Global ErrorHandler to pass to all mappers
    */
@@ -27,6 +27,7 @@ export interface AutomapperModuleOptions {
       };
   /**
    * Set to true if you want to use the default Mapper token for when only one mapper is setup with forRoot
+   * @deprecated
    * @default false
    */
   singular?: boolean;

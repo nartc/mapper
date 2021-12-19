@@ -1,3 +1,10 @@
+### [7.0.3](https://github.com/nartc/mapper/compare/7.0.2...7.0.3) (2021-12-19)
+
+
+### Bug Fixes
+
+* **core:** improve error message for logging ([c9db5c4](https://github.com/nartc/mapper/commit/c9db5c4445b5973da2c6ed7e6d1e6e1bdc28b058))
+
 ### [7.0.2](https://github.com/nartc/mapper/compare/7.0.1...7.0.2) (2021-11-12)
 
 

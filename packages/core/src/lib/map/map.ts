@@ -192,7 +192,11 @@ function map<
         return setMemberFn(destinationMemberPath, destination)(val);
       } catch (originalError) {
         const errorMessage = `
-Error at "${destinationMemberPath}" on ${JSON.stringify(destination)}
+Error at "${destinationMemberPath}" on ${
+          typeof destination === 'string'
+            ? destination
+            : destination['prototype']?.constructor?.name
+        } (${JSON.stringify(destination)})
 ---------------------------------------------------------------------
 Original error: ${originalError}`;
         errorHandler.handle(errorMessage);

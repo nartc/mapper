@@ -1,28 +1,28 @@
 {
   "migrations": [
     {
-      "version": "13.0.0-beta.1",
-      "description": "Add default base to nx.json if its not currently set",
-      "factory": "./src/migrations/update-13-0-0/set-default-base-if-not-set",
+      "version": "13.2.0",
+      "description": "Set --parallel=1 for existing repos to preserve the existing behavior",
       "cli": "nx",
+      "implementation": "./src/migrations/update-13-2-0/set-parallel-default",
       "package": "@nrwl/workspace",
-      "name": "set-default-base-if-not-set"
+      "name": "set-parallel-default"
     },
     {
-      "version": "13.0.0-beta.4",
-      "description": "Move global settings into nx.json, and project specific settings into workspace.json",
+      "version": "13.3.0-beta.0",
+      "description": "@nrwl/workspace:tsc is now @nrwl/js:tsc",
       "cli": "nx",
-      "implementation": "./src/migrations/update-13-0-0/config-locations/config-locations",
+      "implementation": "./src/migrations/update-13-3-0/update-tsc-executor-location",
       "package": "@nrwl/workspace",
-      "name": "13-0-0-config-locations"
+      "name": "13-3-0-tsc-location"
     },
     {
       "cli": "nx",
-      "version": "13.0.0-beta.1",
-      "description": "Remove packages installed by Nx 12's `@nrwl/node:webpack5` generator.",
-      "factory": "./src/migrations/update-13-0-0/remove-webpack-5-packages-13-0-0",
-      "package": "@nrwl/node",
-      "name": "remove-webpack-5-packages"
+      "version": "13.2.0-beta.0",
+      "description": "Update Nest.js libraries",
+      "factory": "./src/migrations/update-13-2-0/update-to-nest-8",
+      "package": "@nrwl/nest",
+      "name": "update-to-nest-8"
     }
   ]
 }

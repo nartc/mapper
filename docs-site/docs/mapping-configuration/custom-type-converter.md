@@ -30,7 +30,7 @@ export class Destination {
 }
 ```
 
-If we were to try and map `Source -> Destination` as-is, we would end up with mismatch values and types on the `Destination`. Eg: `Source.value1` will be mapped to `Destination.value1` even though the types of each `value1` are different. `Destination.value1` will end up with `string` value even though it is declared as `number`. This is because AutoMapper does not know anything and will not try to make any assumptions about these value types.
+If we were to try and map `Source -> Destination` as-is, we would end up with mismatch values and types on the `Destination`. Eg: `Source.value1` will be mapped to `Destination.value1` even though the types of each `value1` are different. `Destination.value1` will end up with `string` value even though it is declared as `number`. This is because AutoMapper will not try to make any assumptions on **HOW** these types should be mapped to each other.
 
 To solve this issue, you must supply **Custom Type Converters** to a specific `Mapper`:
 
@@ -70,11 +70,12 @@ const destination = mapper.map(source, Destination, Source);
 ## Limitations
 
 - Custom Type Converters are currently available **only** to `mapInitialize` aka same property names with different types. For the above example, AutoMapper does nothing when it encounters a `String` and a `Number` if `forMember` is used.
-- Custom Type Converters only works with Primitive types at the moment aka `String`, `Number`, `Boolean`, and `Date`.
-- Due to a Reflection limitation, if you use [TypeScript _lookup types_ (or _indexed access types_)](https://www.typescriptlang.org/docs/handbook/2/indexed-access-types.html) on either source or destination class fields, the type converter won't work unless you explicity write the target type in `@AutoMap()`. For instance, this will work:  
+- Due to a Reflection limitation, if you use [TypeScript _lookup types_ (or _indexed access types_)](https://www.typescriptlang.org/docs/handbook/2/indexed-access-types.html) on either source or destination class fields, the type converter won't work unless you explicity write the target type in `@AutoMap()`. For instance, this will work:
+
 ```ts
 // ...
 @AutoMap({ typeFn: () => String })
 value: IFoo['str']`
 ```
+
 in which `interface IFoo { str: string }`

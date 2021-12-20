@@ -1,3 +1,16 @@
+## [7.1.0](https://github.com/nartc/mapper/compare/7.0.3...7.1.0) (2021-12-20)
+
+
+### Features
+
+* **core:** adjust typings to support more custom type converter ([6ef280f](https://github.com/nartc/mapper/commit/6ef280f9c74841fba68d9d157eb4918e5b55fc8d))
+
+
+### Documentations
+
+* remove limitation to Custom Type Converter ([a28d320](https://github.com/nartc/mapper/commit/a28d320960731093eb0062a5c21f03d648f0be7e))
+* update docusaurus ([3b439b4](https://github.com/nartc/mapper/commit/3b439b4763efdbbf7900865175da91306a42c4d3))
+
 ### [7.0.3](https://github.com/nartc/mapper/compare/7.0.2...7.0.3) (2021-12-19)
 
 

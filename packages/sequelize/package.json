@@ -1,6 +1,6 @@
 {
   "name": "@automapper/sequelize",
-  "version": "7.0.3",
+  "version": "7.1.0",
   "peerDependencies": {
     "reflect-metadata": "~0.1.13",
     "sequelize": "^6.0.0"

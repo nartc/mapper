@@ -20,9 +20,9 @@ import {
  */
 export function applyTypeConverters(
   mapping: Mapping,
-  typeConverters: WeakMap<
+  typeConverters: Map<
     PrimitiveConstructorExtended,
-    WeakMap<PrimitiveConstructorExtended, ValueSelector | Converter>
+    Map<PrimitiveConstructorExtended, ValueSelector | Converter>
   >
 ): void {
   const [, , initializedProps] = mapping;

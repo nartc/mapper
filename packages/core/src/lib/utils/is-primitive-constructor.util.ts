@@ -4,7 +4,14 @@
  * @param {Function} value
  */
 export function isPrimitiveConstructor(value: unknown): boolean {
+  const proto = Object.getPrototypeOf(value);
   return (
-    value === String || value === Number || value === Boolean || value === Array
+    proto === String ||
+    proto === Number ||
+    proto === Boolean ||
+    value === String ||
+    value === Number ||
+    value === Boolean ||
+    value === Array
   );
 }

@@ -4,5 +4,5 @@
  * @param {Function} value
  */
 export function isDateConstructor(value: unknown): boolean {
-  return value === Date;
+  return Object.getPrototypeOf(value) === Date || value === Date;
 }

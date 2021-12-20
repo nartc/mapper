@@ -21,7 +21,8 @@ export type PrimitiveConstructor =
 
 export type PrimitiveConstructorExtended =
   | PrimitiveConstructor
-  | DateConstructor;
+  | DateConstructor
+  | (new (...args: any[]) => any);
 
 export interface Selector<
   TObject extends Dictionary<TObject> = any,

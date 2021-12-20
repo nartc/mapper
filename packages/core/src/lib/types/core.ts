@@ -2,6 +2,7 @@ import { TransformationType } from './enums';
 import type { CreateMapOptions, MapArrayOptions, MapOptions } from './options';
 import type {
   Dictionary,
+  PrimitiveConstructor,
   PrimitiveConstructorExtended,
   PrimitiveExtended,
   Selector,
@@ -161,7 +162,9 @@ export type MapInitializeReturn<
 
 export type PrimitiveConstructorReturnType<
   TType extends PrimitiveConstructorExtended
-> = TType extends DateConstructor ? InstanceType<TType> : ReturnType<TType>;
+> = TType extends DateConstructor | Exclude<TType, PrimitiveConstructor>
+  ? InstanceType<TType>
+  : ReturnType<Extract<TType, PrimitiveConstructor>>;
 
 export interface Mapper {
   name: string;

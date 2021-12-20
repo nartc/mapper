@@ -33,9 +33,9 @@ export function createMapper<TKey = unknown>({
   const plugin = pluginInitializer(errorHandler);
 
   // type converters
-  const typeConverters = new WeakMap<
+  const typeConverters = new Map<
     PrimitiveConstructorExtended,
-    WeakMap<PrimitiveConstructorExtended, ValueSelector | Converter>
+    Map<PrimitiveConstructorExtended, ValueSelector | Converter>
   >();
 
   return {
@@ -50,7 +50,7 @@ export function createMapper<TKey = unknown>({
 
       typeConverters.set(
         source,
-        new WeakMap<PrimitiveConstructorExtended, ValueSelector | Converter>([
+        new Map<PrimitiveConstructorExtended, ValueSelector | Converter>([
           [destination, converter],
         ])
       );

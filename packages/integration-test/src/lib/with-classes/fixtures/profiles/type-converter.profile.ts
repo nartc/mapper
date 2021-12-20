@@ -1,5 +1,7 @@
 import type { MappingProfile } from '@automapper/core';
 import {
+  DateString,
+  TimestampString,
   TypeConverterCamelSource,
   TypeConverterDestination,
   TypeConverterPascalDestination,
@@ -12,6 +14,8 @@ export const typeConverterProfile: MappingProfile = (mapper) => {
     .addTypeConverter(String, Number, (str) => parseInt(str))
     .addTypeConverter(String, Date, (str) => new Date(str))
     .addTypeConverter(String, Boolean, (str) => Boolean(str))
+    .addTypeConverter(DateString, String, (ds) => ds.toDateString())
+    .addTypeConverter(TimestampString, String, (ts) => ts.toISOString())
     .createMap(TypeConverterSource, TypeConverterDestination);
 };
 

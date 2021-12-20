@@ -5,6 +5,8 @@ import {
   typeConverterSnakeProfile,
 } from './fixtures/profiles/type-converter.profile';
 import {
+  DateString,
+  TimestampString,
   TypeConverterCamelSource,
   TypeConverterDestination,
   TypeConverterPascalDestination,
@@ -24,10 +26,15 @@ describe('Map - TypeConverter', () => {
     it('should map correctly', () => {
       mapper.addProfile(typeConverterProfile);
 
+      const date = new DateString('10/14/1991');
+      const ts = new TimestampString('10/14/1991');
+
       const source = new TypeConverterSource();
       source.value1 = '123';
       source.value2 = '10/14/1991';
       source.value3 = 'truthy';
+      source.value4 = date;
+      source.value5 = ts;
 
       const destination = mapper.map(
         source,
@@ -37,6 +44,8 @@ describe('Map - TypeConverter', () => {
       expect(destination.value1).toEqual(123);
       expect(destination.value2).toEqual(new Date(source.value2));
       expect(destination.value3).toEqual(true);
+      expect(destination.value4).toEqual(date.toDateString());
+      expect(destination.value5).toEqual(date.toISOString());
     });
   });
 

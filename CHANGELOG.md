@@ -1,3 +1,10 @@
+### [7.1.1](https://github.com/nartc/mapper/compare/7.1.0...7.1.1) (2021-12-23)
+
+
+### Bug Fixes
+
+* **core:** fallback to primitive if constructor/function is undefined ([ac5030f](https://github.com/nartc/mapper/commit/ac5030f7811a1c03f5c5c19669d2b3e64fa9cc64))
+
 ## [7.1.0](https://github.com/nartc/mapper/compare/7.0.3...7.1.0) (2021-12-20)
 
 

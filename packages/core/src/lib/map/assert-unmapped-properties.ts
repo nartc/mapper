@@ -12,15 +12,25 @@ export function assertUnmappedProperties<
   destinationKey: unknown,
   errorHandler: ErrorHandler
 ) {
-  const unmappedKeys = Object.keys(destination).filter((destinationKey) => {
-    const isAlreadyConfigured = configuredKeys.some(
-      (configuredKey) => configuredKey === destinationKey
-    );
-    const isWritable =
-      Object.getOwnPropertyDescriptor(destination, destinationKey).writable ===
-      true;
-    return !isAlreadyConfigured && isWritable;
-  });
+  const unmappedKeys = Object.entries(destination).reduce(
+    (result, [destinationKey, destinationValue]) => {
+      const isAlreadyConfigured = configuredKeys.some(
+        (configuredKey) => configuredKey === destinationKey
+      );
+      const isWritable =
+        Object.getOwnPropertyDescriptor(destination, destinationKey)
+          .writable === true;
+      if (
+        !isAlreadyConfigured &&
+        isWritable &&
+        destinationValue === undefined
+      ) {
+        result.push(destinationKey);
+      }
+      return result;
+    },
+    []
+  );
 
   if (unmappedKeys.length) {
     const parentInfo = `${sourceKey['name'] ?? sourceKey} -> ${

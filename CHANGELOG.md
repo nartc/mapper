@@ -1,3 +1,20 @@
+## [7.2.0](https://github.com/nartc/mapper/compare/7.1.1...7.2.0) (2022-01-06)
+
+
+### Features
+
+* **classes:** add logic to handle [@auto](https://github.com/auto)MapIgnore JSDoc comment ([2de6893](https://github.com/nartc/mapper/commit/2de689352ad272a6a61a121e06c1cd3f18bbb2b4)), closes [#395](https://github.com/nartc/mapper/issues/395)
+
+
+### Bug Fixes
+
+* **core:** adjust how unmapped properties assertion work ([3f2bb0e](https://github.com/nartc/mapper/commit/3f2bb0e73b10e331ac3a3a183984a9042c89327f)), closes [#394](https://github.com/nartc/mapper/issues/394)
+
+
+### Documentations
+
+* display last updated date and author ([#390](https://github.com/nartc/mapper/issues/390)) ([0e0956b](https://github.com/nartc/mapper/commit/0e0956bbd998c495d9ff9b8afa03b666ea7f8b1c))
+
 ### [7.1.1](https://github.com/nartc/mapper/compare/7.1.0...7.1.1) (2021-12-23)
 
 

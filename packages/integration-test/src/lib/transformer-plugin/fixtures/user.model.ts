@@ -40,6 +40,10 @@ export class User {
   maybePrimitives?: string[];
   nullablePrimitives: string[] | null;
   maybeType?: Address;
+  /**
+   * @autoMapIgnore
+   */
+  ignoreMe: string;
 }
 `;
 
@@ -85,6 +89,10 @@ export class User {
   maybePrimitives?: string[];
   nullablePrimitives!: string[] | null;
   maybeType?: Address;
+  /**
+   * @autoMapIgnore
+   */
+  ignoreMe: string;
 }
 `;
 
@@ -140,6 +148,10 @@ class User {
     maybePrimitives;
     nullablePrimitives;
     maybeType;
+    /**
+     * @autoMapIgnore
+     */
+    ignoreMe;
     static __AUTOMAPPER_METADATA_FACTORY__() {
         return [["firstName", { typeFn: () => String }], ["lastName", { typeFn: () => String }], ["profile", { typeFn: () => Profile, depth: 0 }], ["addresses", { typeFn: () => Address, depth: 0 }], ["otherAddresses", { typeFn: () => Address, depth: 0 }], ["flag", { typeFn: () => Boolean }], ["foo", { typeFn: () => null, depth: 0 }], ["nullable", { typeFn: () => String }], ["primitives", { typeFn: () => String }], ["nullableType", { typeFn: () => Address, depth: 0 }], ["maybePrimitives", { typeFn: () => String }], ["nullablePrimitives", { typeFn: () => String }], ["maybeType", { typeFn: () => Address, depth: 0 }]];
     }
@@ -196,6 +208,10 @@ export class User {
     maybePrimitives;
     nullablePrimitives;
     maybeType;
+    /**
+     * @autoMapIgnore
+     */
+    ignoreMe;
     static __AUTOMAPPER_METADATA_FACTORY__() {
         return [["firstName", { typeFn: () => String }], ["lastName", { typeFn: () => String }], ["profile", { typeFn: () => Profile, depth: 0 }], ["addresses", { typeFn: () => Address, depth: 0 }], ["otherAddresses", { typeFn: () => Address, depth: 0 }], ["flag", { typeFn: () => Boolean }], ["foo", { typeFn: () => null, depth: 0 }], ["nullable", { typeFn: () => String }], ["primitives", { typeFn: () => String }], ["nullableType", { typeFn: () => Address, depth: 0 }], ["maybePrimitives", { typeFn: () => String }], ["nullablePrimitives", { typeFn: () => String }], ["maybeType", { typeFn: () => Address, depth: 0 }]];
     }

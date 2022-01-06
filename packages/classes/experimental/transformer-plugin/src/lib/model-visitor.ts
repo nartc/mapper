@@ -1,10 +1,17 @@
 import { AUTOMAPPER_METADATA_FACTORY_KEY } from '@automapper/classes';
-import type {
+import {
   ArrowFunction,
   ClassDeclaration,
   GetAccessorDeclaration,
+  getAllJSDocTags,
   Identifier,
   ImportDeclaration,
+  isClassDeclaration,
+  isGetAccessorDeclaration,
+  isImportDeclaration,
+  isPropertyDeclaration,
+  JSDocTag,
+  ModuleKind,
   NodeArray,
   NodeFactory,
   ObjectLiteralExpression,
@@ -14,21 +21,14 @@ import type {
   SourceFile,
   Statement,
   StringLiteral,
+  SyntaxKind,
   TransformationContext,
   Type,
   TypeChecker,
   TypeReferenceNode,
-  Visitor,
-} from 'typescript/lib/tsserverlibrary';
-import {
-  isClassDeclaration,
-  isGetAccessorDeclaration,
-  isImportDeclaration,
-  isPropertyDeclaration,
-  ModuleKind,
-  SyntaxKind,
   visitEachChild,
   visitNode,
+  Visitor,
 } from 'typescript/lib/tsserverlibrary';
 import {
   hasPropertyKey,
@@ -104,6 +104,17 @@ export class ModelVisitor {
 
           if (isPropertyStaticOrPrivate) {
             return node;
+          }
+
+          if (node['jsDoc']) {
+            const ignoreTag = getAllJSDocTags(
+              node['jsDoc'],
+              (tag): tag is JSDocTag =>
+                tag.tagName.escapedText === 'autoMapIgnore'
+            );
+            if (ignoreTag) {
+              return node;
+            }
           }
 
           ModelVisitor.inspectNode(

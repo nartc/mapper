@@ -123,6 +123,22 @@ Currently, `@automapper/classes/experimental/transformer-plugin` will handle mos
 
 As mentioned above, this is utilizing an experimental feature of TypeScript. Hence, you need to modify the build step of your project to use `@automapper/classes/experimental/transformer-plugin`
 
+### Ignore a property
+
+The plugin will automatically construct the metadata for all properties that aren't decorated with `@AutoMap`. However, there are also cases where you neither want `@AutoMap` nor having the plugin processing a property (eg: you want to take the control 100% with manual configuration). To ignore a property completely, you can use a JSDoc tag `@autoMapIgnore` on a property
+
+```ts
+class User {
+  firstName: string;
+  lastName: string;
+  profile: Profile;
+  /**
+   * @autoMapIgnore
+   */
+  ignoreMe: string;
+}
+```
+
 ### Options
 
 ```ts

@@ -20,6 +20,22 @@ export function assertVm<
   expect(vm.last).toEqual(user.lastName);
   expect(vm.full).toEqual(user.firstName + ' ' + user.lastName);
 
+  if (user.logins.length) {
+    const lastModelLogin = user.logins[user.logins.length - 1];
+
+    expect(Array.isArray(vm.logins)).toBe(true);
+    expect(vm.logins).toHaveLength(user.logins.length);
+
+    for (let i = 0; i < user.logins.length; i++)
+      expect(vm.logins[i].getDate()).toEqual(user.logins[i].getDate());
+
+    expect(vm.lastLogin.toDateString()).toEqual(lastModelLogin.toDateString());
+  } else {
+    expect(Array.isArray(vm.logins)).toBe(true);
+    expect(vm.logins).toHaveLength(0);
+    expect(vm.lastLogin).toBeFalsy();
+  }
+
   expect(vm.profile.birthday).toEqual(user.profile.birthday.toDateString());
   expect(vm.profile.bio).toEqual(user.profile.bio);
 

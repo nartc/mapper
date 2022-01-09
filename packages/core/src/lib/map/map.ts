@@ -245,7 +245,7 @@ Original error: ${originalError}`;
       if (Array.isArray(mapInitializedValue)) {
         const [first] = mapInitializedValue;
         // if first item is a primitive
-        if (typeof first !== 'object') {
+        if (typeof first !== 'object' || first instanceof Date) {
           setMember(() => mapInitializedValue.slice());
           continue;
         }

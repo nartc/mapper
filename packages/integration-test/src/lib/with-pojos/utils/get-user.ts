@@ -59,6 +59,11 @@ export function getUser(
     lastName: 'Tran',
     job: userJob,
     profile: userProfile,
+    logins: [
+      new Date('01/10/2021'),
+      new Date('05/11/2021'),
+      new Date('12/12/2021'),
+    ],
     ...(partials.user ?? {}),
   } as User;
 }

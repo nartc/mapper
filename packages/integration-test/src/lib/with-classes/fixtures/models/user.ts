@@ -11,6 +11,8 @@ export class User {
   profile!: UserProfile;
   @AutoMap({ typeFn: () => Job })
   job!: Job;
+  @AutoMap()
+  logins: Date[];
 }
 
 export class UserVm {
@@ -26,4 +28,8 @@ export class UserVm {
   jobTitle!: string;
   @AutoMap()
   jobAnnualSalary!: number;
+  @AutoMap()
+  logins: Date[];
+  @AutoMap()
+  lastLogin?: Date;
 }

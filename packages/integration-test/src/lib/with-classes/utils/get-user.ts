@@ -45,6 +45,11 @@ export function getUser(
   const user = new User();
   user.firstName = 'Chau';
   user.lastName = 'Tran';
+  user.logins = [
+    new Date('01/10/2021'),
+    new Date('05/11/2021'),
+    new Date('12/12/2021'),
+  ];
 
   const userJob = new Job();
   userJob.title = 'Developer';

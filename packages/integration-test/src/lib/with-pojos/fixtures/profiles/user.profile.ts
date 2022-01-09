@@ -31,6 +31,10 @@ export const userProfile: MappingProfile = (mapper) => {
     .forMember(
       (d) => d.full,
       mapFrom((s) => s.firstName + ' ' + s.lastName)
+    )
+    .forMember(
+      (d) => d.lastLogin,
+      mapFrom((s) => (s.logins?.length ? s.logins[s.logins.length - 1] : null))
     );
 
   mapper

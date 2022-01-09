@@ -69,7 +69,9 @@ export function instantiate<TModel extends Dictionary<TModel>>(
     // if is Date, assign a new Date value if valueAtKey is defined, otherwise, undefined
     if (isDateConstructor(metaResult)) {
       const value = isDefined(valueAtKey)
-        ? new Date(valueAtKey as number)
+        ? Array.isArray(valueAtKey)
+          ? [...valueAtKey]
+          : new Date(valueAtKey as number)
         : undefined;
       setMutate(instance as Record<string, unknown>, key, value);
       continue;

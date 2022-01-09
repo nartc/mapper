@@ -7,6 +7,7 @@ export interface User {
   lastName: string;
   profile: UserProfile;
   job: Job;
+  logins: Date[];
 }
 
 export interface UserVm {
@@ -16,6 +17,8 @@ export interface UserVm {
   profile: UserProfileVm;
   jobTitle: string;
   jobAnnualSalary: number;
+  logins: Date[];
+  lastLogin?: Date;
 }
 
 export function createUserMetadata() {
@@ -24,6 +27,7 @@ export function createUserMetadata() {
     lastName: String,
     profile: 'UserProfile',
     job: 'Job',
+    logins: Date,
   });
   createMetadataMap('UserVm', {
     first: String,
@@ -32,5 +36,7 @@ export function createUserMetadata() {
     profile: 'UserProfileVm',
     jobTitle: String,
     jobAnnualSalary: Number,
+    logins: Date,
+    lastLogin: Date,
   });
 }

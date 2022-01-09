@@ -67,7 +67,7 @@ export function instantiate<TModel extends Dictionary<TModel>>(
     }
 
     // if is Date, assign a new Date value if valueAtKey is defined, otherwise, undefined
-    if (isDateConstructor(metaResult)) {
+    if (isDateConstructor(metaResult) && !Array.isArray(valueAtKey)) {
       const value = isDefined(valueAtKey)
         ? new Date(valueAtKey as number)
         : undefined;

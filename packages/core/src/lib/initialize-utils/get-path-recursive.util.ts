@@ -48,9 +48,13 @@ export function getPathRecursive(
   for (let i = 0, len = keys.length; i < len; i++) {
     const key = keys[i];
     const path: string[] = [...prefix, key];
+    const child = node[key];
+
+    if (typeof child === 'function') {
+      continue;
+    }
     result.push(path);
 
-    const child = node[key];
     if (typeof child === 'object') {
       const queue = Array.isArray(child) ? child : [child];
 

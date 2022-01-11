@@ -64,6 +64,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "roblopz",
+      "name": "roblopz",
+      "avatar_url": "https://avatars.githubusercontent.com/u/48892593?v=4",
+      "profile": "https://github.com/roblopz",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7

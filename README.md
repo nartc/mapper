@@ -1,9 +1,7 @@
 # AutoMapper TypeScript
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-
-[![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors-)
-
+[![All Contributors](https://img.shields.io/badge/all_contributors-7-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![Unit Test Actions](https://github.com/nartc/mapper/workflows/Unit%20Test/badge.svg)](https://github.com/nartc/mapper/actions?query=workflow%3A%22Unit+Test%22)
@@ -71,6 +69,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/robsonhermes"><img src="https://avatars.githubusercontent.com/u/26451017?v=4?s=75" width="75px;" alt=""/><br /><sub><b>Robson Hermes</b></sub></a><br /><a href="https://github.com/nartc/mapper/commits?author=robsonhermes" title="Documentation">📖</a></td>
     <td align="center"><a href="https://github.com/huybn5776"><img src="https://avatars.githubusercontent.com/u/6702287?v=4?s=75" width="75px;" alt=""/><br /><sub><b>Huybn</b></sub></a><br /><a href="https://github.com/nartc/mapper/commits?author=huybn5776" title="Code">💻</a></td>
     <td align="center"><a href="http://jasonmerino.me/"><img src="https://avatars.githubusercontent.com/u/1660279?v=4?s=75" width="75px;" alt=""/><br /><sub><b>Jason Merino</b></sub></a><br /><a href="https://github.com/nartc/mapper/commits?author=jasonmerino" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/roblopz"><img src="https://avatars.githubusercontent.com/u/48892593?v=4?s=75" width="75px;" alt=""/><br /><sub><b>roblopz</b></sub></a><br /><a href="https://github.com/nartc/mapper/commits?author=roblopz" title="Code">💻</a></td>
   </tr>
 </table>
 

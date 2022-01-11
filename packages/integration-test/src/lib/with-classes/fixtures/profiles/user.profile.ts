@@ -14,6 +14,18 @@ const fullNameResolver: Resolver<
   },
 };
 
+const lastLoginResolver: Resolver<
+  User,
+  UserVm | PascalUserVm | SnakeUserVm,
+  Date
+> = {
+  resolve(source: User): Date {
+    return source.logins?.length
+      ? source.logins[source.logins.length - 1]
+      : null;
+  },
+};
+
 export const userProfile: MappingProfile = (mapper) => {
   mapper
     .createMap(User, UserVm)
@@ -25,7 +37,8 @@ export const userProfile: MappingProfile = (mapper) => {
       (d) => d.last,
       mapFrom((s) => s.lastName)
     )
-    .forMember((d) => d.full, mapFrom(fullNameResolver));
+    .forMember((d) => d.full, mapFrom(fullNameResolver))
+    .forMember((d) => d.lastLogin, mapFrom(lastLoginResolver));
 
   mapper
     .createMap(User, PascalUserVm)

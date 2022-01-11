@@ -180,11 +180,11 @@ export interface Mapper {
     converter:
       | Selector<
           PrimitiveConstructorReturnType<TSourceType>,
-          PrimitiveConstructorReturnType<TDestinationType>
+          PrimitiveConstructorReturnType<TDestinationType> | undefined
         >
       | Converter<
           PrimitiveConstructorReturnType<TSourceType>,
-          PrimitiveConstructorReturnType<TDestinationType>
+          PrimitiveConstructorReturnType<TDestinationType> | undefined
         >
   ): Mapper;
 

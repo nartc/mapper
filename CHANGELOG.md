@@ -1,3 +1,17 @@
+### [7.2.1](https://github.com/nartc/mapper/compare/7.2.0...7.2.1) (2022-01-11)
+
+
+### Bug Fixes
+
+* **classes, core:** add ability to map Date[] types ([#399](https://github.com/nartc/mapper/issues/399)) ([cb27b1a](https://github.com/nartc/mapper/commit/cb27b1aa8d45efe0f93e13dd9ad82617a4b10aac)), closes [#397](https://github.com/nartc/mapper/issues/397) [#397](https://github.com/nartc/mapper/issues/397)
+* **core:** relax addTypeConverter return to include undefined ([20c250c](https://github.com/nartc/mapper/commit/20c250cbe744be9c3c36c03a4e2f0bd5e832545a))
+* **core:** skip key that is a method in getPathRecursive ([5a56529](https://github.com/nartc/mapper/commit/5a56529b60bfa7898625f176a578cc0992e4072f)), closes [#396](https://github.com/nartc/mapper/issues/396)
+
+
+### Documentations
+
+* add [@roblopz](https://github.com/roblopz) as a contributor ([a45bc0a](https://github.com/nartc/mapper/commit/a45bc0a3cf5a2137f1c9040645c8edecb644f9c8))
+
 ## [7.2.0](https://github.com/nartc/mapper/compare/7.1.1...7.2.0) (2022-01-06)
 
 

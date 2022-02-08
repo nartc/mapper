@@ -38,7 +38,7 @@ export function createMapper<TKey = unknown>({
     Map<PrimitiveConstructorExtended, ValueSelector | Converter>
   >();
 
-  return {
+   return {
     name,
     plugin,
     addTypeConverter(source, destination, converter) {

@@ -18,15 +18,13 @@
       }
     },
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/classes/mapped-types",
         "tsConfig": "packages/classes/mapped-types/tsconfig.lib.json",
-        "packageJson": "packages/classes/mapped-types/package.json",
         "main": "packages/classes/mapped-types/src/index.ts",
-        "assets": ["packages/classes/mapped-types/*.md"],
-        "buildableProjectDepsInPackageJsonType": "peerDependencies"
+        "assets": ["packages/classes/mapped-types/*.md"]
       }
     }
   },

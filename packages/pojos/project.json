@@ -18,15 +18,13 @@
       }
     },
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/pojos",
         "tsConfig": "packages/pojos/tsconfig.lib.json",
-        "packageJson": "packages/pojos/package.json",
         "main": "packages/pojos/src/index.ts",
-        "assets": ["packages/pojos/*.md"],
-        "buildableProjectDepsInPackageJsonType": "peerDependencies"
+        "assets": ["packages/pojos/*.md"]
       }
     },
     "publish": {

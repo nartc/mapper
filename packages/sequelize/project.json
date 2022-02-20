@@ -18,15 +18,13 @@
       }
     },
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/sequelize",
         "tsConfig": "packages/sequelize/tsconfig.lib.json",
-        "packageJson": "packages/sequelize/package.json",
         "main": "packages/sequelize/src/index.ts",
-        "assets": ["packages/sequelize/*.md"],
-        "buildableProjectDepsInPackageJsonType": "peerDependencies"
+        "assets": ["packages/sequelize/*.md"]
       }
     },
     "publish": {

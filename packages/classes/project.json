@@ -19,14 +19,12 @@
       "outputs": ["coverage/packages/classes"]
     },
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "options": {
         "outputPath": "dist/packages/classes",
         "tsConfig": "packages/classes/tsconfig.lib.json",
-        "packageJson": "packages/classes/package.json",
         "main": "packages/classes/src/index.ts",
-        "assets": ["packages/classes/*.md"],
-        "buildableProjectDepsInPackageJsonType": "peerDependencies"
+        "assets": ["packages/classes/*.md"]
       },
       "outputs": ["{options.outputPath}"]
     },

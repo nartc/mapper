@@ -50,6 +50,7 @@
     "@nrwl/jest": "13.8.1",
     "@nrwl/nest": "13.8.1",
     "@nrwl/node": "13.8.1",
+    "@nrwl/nx-cloud": "^13.1.4",
     "@nrwl/tao": "13.8.1",
     "@nrwl/workspace": "13.8.1",
     "@release-it/bumper": "3.0.1",

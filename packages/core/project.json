@@ -7,7 +7,9 @@
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "options": {
-        "lintFilePatterns": ["packages/core/**/*.ts"]
+        "lintFilePatterns": [
+          "packages/core/**/*.ts"
+        ]
       }
     },
     "test": {
@@ -16,17 +18,23 @@
         "jestConfig": "packages/core/jest.config.js",
         "passWithNoTests": true
       },
-      "outputs": ["coverage/packages/core"]
+      "outputs": [
+        "coverage/packages/core"
+      ]
     },
     "build": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nrwl/js:swc",
       "options": {
         "outputPath": "dist/packages/core",
         "tsConfig": "packages/core/tsconfig.lib.json",
         "main": "packages/core/src/index.ts",
-        "assets": ["packages/core/*.md"]
+        "assets": [
+          "packages/core/*.md"
+        ]
       },
-      "outputs": ["{options.outputPath}"]
+      "outputs": [
+        "{options.outputPath}"
+      ]
     },
     "publish": {
       "executor": "@nrwl/workspace:run-commands",
@@ -36,5 +44,8 @@
       }
     }
   },
-  "tags": ["scope:core", "type:library"]
+  "tags": [
+    "scope:core",
+    "type:library"
+  ]
 }

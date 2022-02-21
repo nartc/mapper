@@ -6,27 +6,38 @@
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "options": {
-        "lintFilePatterns": ["packages/classes/mapped-types/**/*.ts"]
+        "lintFilePatterns": [
+          "packages/classes/mapped-types/**/*.ts"
+        ]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/classes/mapped-types"],
+      "outputs": [
+        "coverage/packages/classes/mapped-types"
+      ],
       "options": {
         "jestConfig": "packages/classes/mapped-types/jest.config.js",
         "passWithNoTests": true
       }
     },
     "build": {
-      "executor": "@nrwl/js:tsc",
-      "outputs": ["{options.outputPath}"],
+      "executor": "@nrwl/js:swc",
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/packages/classes/mapped-types",
         "tsConfig": "packages/classes/mapped-types/tsconfig.lib.json",
         "main": "packages/classes/mapped-types/src/index.ts",
-        "assets": ["packages/classes/mapped-types/*.md"]
+        "assets": [
+          "packages/classes/mapped-types/*.md"
+        ]
       }
     }
   },
-  "tags": ["scope:classes", "type:utility"]
+  "tags": [
+    "scope:classes",
+    "type:utility"
+  ]
 }

@@ -6,25 +6,33 @@
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "options": {
-        "lintFilePatterns": ["packages/nestjs/**/*.ts"]
+        "lintFilePatterns": [
+          "packages/nestjs/**/*.ts"
+        ]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/nestjs"],
+      "outputs": [
+        "coverage/packages/nestjs"
+      ],
       "options": {
         "jestConfig": "packages/nestjs/jest.config.js",
         "passWithNoTests": true
       }
     },
     "build": {
-      "executor": "@nrwl/js:tsc",
-      "outputs": ["{options.outputPath}"],
+      "executor": "@nrwl/js:swc",
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/packages/nestjs",
         "tsConfig": "packages/nestjs/tsconfig.lib.json",
         "main": "packages/nestjs/src/index.ts",
-        "assets": ["packages/nestjs/*.md"]
+        "assets": [
+          "packages/nestjs/*.md"
+        ]
       }
     },
     "publish": {
@@ -35,5 +43,7 @@
       }
     }
   },
-  "tags": ["type:integration"]
+  "tags": [
+    "type:integration"
+  ]
 }

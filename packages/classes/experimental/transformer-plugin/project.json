@@ -13,22 +13,31 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/classes/experimental/transformer-plugin"],
+      "outputs": [
+        "coverage/packages/classes/experimental/transformer-plugin"
+      ],
       "options": {
         "jestConfig": "packages/classes/experimental/transformer-plugin/jest.config.js",
         "passWithNoTests": true
       }
     },
     "build": {
-      "executor": "@nrwl/js:tsc",
-      "outputs": ["{options.outputPath}"],
+      "executor": "@nrwl/js:swc",
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/packages/classes/experimental/transformer-plugin",
         "tsConfig": "packages/classes/experimental/transformer-plugin/tsconfig.lib.json",
         "main": "packages/classes/experimental/transformer-plugin/src/index.ts",
-        "assets": ["packages/classes/experimental/transformer-plugin/*.md"]
+        "assets": [
+          "packages/classes/experimental/transformer-plugin/*.md"
+        ]
       }
     }
   },
-  "tags": ["scope:classes", "type:transformer-plugin"]
+  "tags": [
+    "scope:classes",
+    "type:transformer-plugin"
+  ]
 }

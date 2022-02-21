@@ -6,25 +6,33 @@
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "options": {
-        "lintFilePatterns": ["packages/sequelize/**/*.ts"]
+        "lintFilePatterns": [
+          "packages/sequelize/**/*.ts"
+        ]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/sequelize"],
+      "outputs": [
+        "coverage/packages/sequelize"
+      ],
       "options": {
         "jestConfig": "packages/sequelize/jest.config.js",
         "passWithNoTests": true
       }
     },
     "build": {
-      "executor": "@nrwl/js:tsc",
-      "outputs": ["{options.outputPath}"],
+      "executor": "@nrwl/js:swc",
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/packages/sequelize",
         "tsConfig": "packages/sequelize/tsconfig.lib.json",
         "main": "packages/sequelize/src/index.ts",
-        "assets": ["packages/sequelize/*.md"]
+        "assets": [
+          "packages/sequelize/*.md"
+        ]
       }
     },
     "publish": {
@@ -35,5 +43,7 @@
       }
     }
   },
-  "tags": ["type:plugin"]
+  "tags": [
+    "type:plugin"
+  ]
 }

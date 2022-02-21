@@ -7,7 +7,9 @@
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "options": {
-        "lintFilePatterns": ["packages/classes/**/*.ts"]
+        "lintFilePatterns": [
+          "packages/classes/**/*.ts"
+        ]
       }
     },
     "test": {
@@ -16,17 +18,23 @@
         "jestConfig": "packages/classes/jest.config.js",
         "passWithNoTests": true
       },
-      "outputs": ["coverage/packages/classes"]
+      "outputs": [
+        "coverage/packages/classes"
+      ]
     },
     "build": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nrwl/js:swc",
       "options": {
         "outputPath": "dist/packages/classes",
         "tsConfig": "packages/classes/tsconfig.lib.json",
         "main": "packages/classes/src/index.ts",
-        "assets": ["packages/classes/*.md"]
+        "assets": [
+          "packages/classes/*.md"
+        ]
       },
-      "outputs": ["{options.outputPath}"]
+      "outputs": [
+        "{options.outputPath}"
+      ]
     },
     "publish": {
       "executor": "@nrwl/workspace:run-commands",
@@ -36,5 +44,8 @@
       }
     }
   },
-  "tags": ["scope:classes", "type:plugin"]
+  "tags": [
+    "scope:classes",
+    "type:plugin"
+  ]
 }

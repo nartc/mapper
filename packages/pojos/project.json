@@ -6,25 +6,33 @@
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "options": {
-        "lintFilePatterns": ["packages/pojos/**/*.ts"]
+        "lintFilePatterns": [
+          "packages/pojos/**/*.ts"
+        ]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/pojos"],
+      "outputs": [
+        "coverage/packages/pojos"
+      ],
       "options": {
         "jestConfig": "packages/pojos/jest.config.js",
         "passWithNoTests": true
       }
     },
     "build": {
-      "executor": "@nrwl/js:tsc",
-      "outputs": ["{options.outputPath}"],
+      "executor": "@nrwl/js:swc",
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/packages/pojos",
         "tsConfig": "packages/pojos/tsconfig.lib.json",
         "main": "packages/pojos/src/index.ts",
-        "assets": ["packages/pojos/*.md"]
+        "assets": [
+          "packages/pojos/*.md"
+        ]
       }
     },
     "publish": {
@@ -35,5 +43,7 @@
       }
     }
   },
-  "tags": ["type:plugin"]
+  "tags": [
+    "type:plugin"
+  ]
 }

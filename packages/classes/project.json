@@ -23,7 +23,7 @@
       ]
     },
     "build": {
-      "executor": "@nrwl/js:swc",
+      "executor": "@nrwl/js:tsc",
       "options": {
         "outputPath": "dist/packages/classes",
         "tsConfig": "packages/classes/tsconfig.lib.json",

@@ -22,7 +22,7 @@
       }
     },
     "build": {
-      "executor": "@nrwl/js:swc",
+      "executor": "@nrwl/js:tsc",
       "outputs": [
         "{options.outputPath}"
       ],

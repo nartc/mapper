@@ -2,7 +2,14 @@ import { AnyEntity } from '@mikro-orm/core';
 import { isCollection } from './is-collection.util';
 import { isEntity } from './is-entity.util';
 
-const excluded = ['__gettersDefined'];
+const excluded = [
+  '__gettersDefined',
+  '__entity',
+  '__meta',
+  '__platform',
+  '__helper',
+  '__factory',
+];
 
 export function serializeEntity(item: AnyEntity) {
   const result = {} as Record<string | symbol, unknown>;

@@ -13,6 +13,7 @@ import {
   setMutate,
 } from '@automapper/core';
 import { MikroInitializerOptions } from '../types';
+import { isCollection } from './is-collection.util';
 import { isEntity } from './is-entity.util';
 
 /**
@@ -93,13 +94,21 @@ export function instantiate<TModel extends Dictionary<TModel>>(
     // if the value at key is an array
     if (Array.isArray(valueAtKey)) {
       if (depth === 0) {
-        setMutate(instance as Record<string, unknown>, key, []);
+        setMutate(
+          instance as Record<string, unknown>,
+          key,
+          isCollection(valueAtKey) ? valueAtKey.getSnapshot() : valueAtKey
+        );
         continue;
       }
 
       if (depth === count) {
         instanceStorage.resetCount(model, key);
-        setMutate(instance as Record<string, unknown>, key, []);
+        setMutate(
+          instance as Record<string, unknown>,
+          key,
+          isCollection(valueAtKey) ? valueAtKey.getSnapshot() : valueAtKey
+        );
         continue;
       }
 
@@ -127,7 +136,7 @@ export function instantiate<TModel extends Dictionary<TModel>>(
         setMutate(
           instance as Record<string, unknown>,
           key,
-          new (metaResult as Constructible)()
+          isEntity(valueAtKey) ? serializeEntity(valueAtKey) : valueAtKey
         );
         continue;
       }
@@ -137,7 +146,7 @@ export function instantiate<TModel extends Dictionary<TModel>>(
         setMutate(
           instance as Record<string, unknown>,
           key,
-          new (metaResult as Constructible)()
+          isEntity(valueAtKey) ? serializeEntity(valueAtKey) : valueAtKey
         );
         continue;
       }

@@ -1,3 +1,10 @@
+### [7.3.5](https://github.com/nartc/mapper/compare/7.3.4...7.3.5) (2022-02-25)
+
+
+### Bug Fixes
+
+* **mikro:** assign id before serialize entity ([068d25b](https://github.com/nartc/mapper/commit/068d25bee078a97a4ce6daa96ebb6167c61b688c))
+
 ### [7.3.4](https://github.com/nartc/mapper/compare/7.3.3...7.3.4) (2022-02-25)
 
 

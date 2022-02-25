@@ -38,8 +38,11 @@
     "mapper",
     "nx"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "tslib": "^2.0.0"
+  },
   "devDependencies": {
+    "@mikro-orm/core": "5.0.4",
     "@nestjs/common": "8.3.1",
     "@nestjs/core": "8.3.1",
     "@nestjs/platform-express": "8.3.1",

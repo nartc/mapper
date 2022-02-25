@@ -1,9 +1,9 @@
 {
-  "name": "@automapper/sequelize",
+  "name": "@automapper/mikro",
   "version": "7.2.1",
   "peerDependencies": {
     "reflect-metadata": "~0.1.13",
-    "sequelize": "^6.0.0"
+    "@mikro-orm/core": "~5.0.4"
   },
   "sideEffects": false,
   "engines": {
@@ -14,19 +14,20 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/nartc/mapper/tree/main/packages/sequelize"
+    "url": "https://github.com/nartc/mapper/tree/main/packages/mikro"
   },
   "author": {
     "name": "Chau Tran",
     "email": "nartc7789@gmail.com",
     "url": "https://nartc.me"
   },
-  "description": "AutoMapper TypeScript Classes plugin",
+  "description": "AutoMapper TypeScript Mikro plugin",
   "keywords": [
     "typescript",
     "automapper",
     "mapper",
-    "nx"
+    "nx",
+    "mikro"
   ],
   "license": "MIT"
 }

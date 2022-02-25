@@ -6,6 +6,7 @@
     "classes-mapped-types": "packages/classes/mapped-types",
     "core": "packages/core",
     "integration-test": "packages/integration-test",
+    "mikro": "packages/mikro",
     "nestjs": "packages/nestjs",
     "nestjs-integration-test": "packages/nestjs-integration-test",
     "pojos": "packages/pojos",

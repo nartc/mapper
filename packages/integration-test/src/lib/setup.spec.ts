@@ -1,6 +1,7 @@
 import { classes } from '@automapper/classes';
 import type { CreateMapperOptions, Mapper } from '@automapper/core';
 import { createMapper } from '@automapper/core';
+import { mikro } from '@automapper/mikro';
 import { pojos } from '@automapper/pojos';
 
 export function setup(
@@ -36,4 +37,11 @@ export function setupPojos(
   namingConventions?: CreateMapperOptions['namingConventions']
 ): [Mapper, jest.Mock] {
   return setup(name, pojos, namingConventions);
+}
+
+export function setupMikro(
+  name: string,
+  namingConventions?: CreateMapperOptions['namingConventions']
+): [Mapper, jest.Mock] {
+  return setup(name, mikro, namingConventions);
 }

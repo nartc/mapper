@@ -12,20 +12,22 @@ import {
   isPrimitiveConstructor,
   setMutate,
 } from '@automapper/core';
+import { MikroInitializerOptions } from '../types';
 import { isEntity } from './is-entity.util';
-import { serializeEntity } from './serialize-entity.util';
 
 /**
  * Recursively instantiate a model with its metadata
  *
  * @param {ClassInstanceStorage} instanceStorage
  * @param {ClassMetadataStorage} metadataStorage
+ * @param serializeEntity
  * @param {Constructible} model
  * @param {TModel} defaultValue
  */
 export function instantiate<TModel extends Dictionary<TModel>>(
   instanceStorage: ClassInstanceStorage,
   metadataStorage: ClassMetadataStorage,
+  serializeEntity: MikroInitializerOptions['serializeEntity'],
   model: Constructible<TModel>,
   defaultValue?: TModel
 ): [TModel, unknown[]?] {
@@ -91,6 +93,7 @@ export function instantiate<TModel extends Dictionary<TModel>>(
         const [instantiateResultItem] = instantiate(
           instanceStorage,
           metadataStorage,
+          serializeEntity,
           metaResult as Constructible,
           val
         );
@@ -106,6 +109,7 @@ export function instantiate<TModel extends Dictionary<TModel>>(
       const [definedInstantiateResult] = instantiate(
         instanceStorage,
         metadataStorage,
+        serializeEntity,
         metaResult as Constructible,
         valueAtKey as Dictionary<unknown>
       );
@@ -155,6 +159,7 @@ export function instantiate<TModel extends Dictionary<TModel>>(
     const [instantiateResult] = instantiate(
       instanceStorage,
       metadataStorage,
+      serializeEntity,
       metaResult as Constructible
     );
     setMutate(instance as Record<string, unknown>, key, instantiateResult);

@@ -43,5 +43,5 @@ export function setupMikro(
   name: string,
   namingConventions?: CreateMapperOptions['namingConventions']
 ): [Mapper, jest.Mock] {
-  return setup(name, mikro, namingConventions);
+  return setup(name, mikro(), namingConventions);
 }

@@ -86,37 +86,74 @@ export function instantiate<TModel extends Dictionary<TModel>>(
       continue;
     }
 
+    // get depth and count of the current key on the current model
+    // Eg: Foo {bar: Bar}, model here is Foo and key is bar
+    const [depth, count = 0] = instanceStorage.getDepthAndCount(model, key);
+
     // if the value at key is an array
     if (Array.isArray(valueAtKey)) {
+      if (depth === 0) {
+        setMutate(instance as Record<string, unknown>, key, []);
+        continue;
+      }
+
+      if (depth === count) {
+        instanceStorage.resetCount(model, key);
+        setMutate(instance as Record<string, unknown>, key, []);
+        continue;
+      }
+
       // loop through each value and recursively call instantiate with each value
-      const value = valueAtKey.map((val) => {
-        const [instantiateResultItem] = instantiate(
-          instanceStorage,
-          metadataStorage,
-          serializeEntity,
-          metaResult as Constructible,
-          val
-        );
-        return instantiateResultItem;
-      });
-      setMutate(instance as Record<string, unknown>, key, value);
+      instanceStorage.setCount(model, key, count + 1);
+      setMutate(
+        instance as Record<string, unknown>,
+        key,
+        valueAtKey.map((val) => {
+          return instantiate(
+            instanceStorage,
+            metadataStorage,
+            serializeEntity,
+            metaResult as Constructible,
+            val
+          )[0];
+        })
+      );
       continue;
     }
 
     // if value is not null/undefined
     if (isDefined(valueAtKey)) {
+      if (depth === 0) {
+        setMutate(
+          instance as Record<string, unknown>,
+          key,
+          new (metaResult as Constructible)()
+        );
+        continue;
+      }
+
+      if (depth === count) {
+        instanceStorage.resetCount(model, key);
+        setMutate(
+          instance as Record<string, unknown>,
+          key,
+          new (metaResult as Constructible)()
+        );
+        continue;
+      }
+
       // instantiate with value at key
-      const [definedInstantiateResult] = instantiate(
-        instanceStorage,
-        metadataStorage,
-        serializeEntity,
-        metaResult as Constructible,
-        valueAtKey as Dictionary<unknown>
-      );
+      instanceStorage.setCount(model, key, count + 1);
       setMutate(
         instance as Record<string, unknown>,
         key,
-        definedInstantiateResult
+        instantiate(
+          instanceStorage,
+          metadataStorage,
+          serializeEntity,
+          metaResult as Constructible,
+          valueAtKey as Dictionary<unknown>
+        )[0]
       );
       continue;
     }
@@ -127,10 +164,6 @@ export function instantiate<TModel extends Dictionary<TModel>>(
       setMutate(instance as Record<string, unknown>, key, valueAtKey);
       continue;
     }
-
-    // get depth and count of the current key on the current model
-    // Eg: Foo {bar: Bar}, model here is Foo and key is bar
-    const [depth, count = 0] = instanceStorage.getDepthAndCount(model, key);
 
     // if no depth, just instantiate with new keyword without recursive
     if (depth === 0) {
@@ -155,14 +188,17 @@ export function instantiate<TModel extends Dictionary<TModel>>(
     }
 
     // increment the count and recursively call instantiate
-    instanceStorage.setCount(model, key, isDefined(count) ? count + 1 : 1);
-    const [instantiateResult] = instantiate(
-      instanceStorage,
-      metadataStorage,
-      serializeEntity,
-      metaResult as Constructible
+    instanceStorage.setCount(model, key, count + 1);
+    setMutate(
+      instance as Record<string, unknown>,
+      key,
+      instantiate(
+        instanceStorage,
+        metadataStorage,
+        serializeEntity,
+        metaResult as Constructible
+      )[0]
     );
-    setMutate(instance as Record<string, unknown>, key, instantiateResult);
   }
 
   // after all, resetAllCount on the current model

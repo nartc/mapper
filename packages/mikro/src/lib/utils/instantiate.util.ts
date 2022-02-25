@@ -14,6 +14,7 @@ import {
 } from '@automapper/core';
 import { isCollection } from './is-collection.util';
 import { isEntity } from './is-entity.util';
+import { serializeEntity } from './serialize-entity.util';
 
 /**
  * Recursively instantiate a model with its metadata
@@ -45,7 +46,7 @@ export function instantiate<TModel extends Dictionary<TModel>>(
   let isMikro = false;
   if (isEntity(instance)) {
     try {
-      instance = instance.toPOJO() as TModel;
+      instance = serializeEntity(instance) as TModel;
       isMikro = true;
     } catch (e) {
       instance = instance as TModel;

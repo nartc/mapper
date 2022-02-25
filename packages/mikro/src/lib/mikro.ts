@@ -10,8 +10,7 @@ import {
 } from '@automapper/classes';
 import type { Dictionary, MapPluginInitializer } from '@automapper/core';
 import { createInitialMapping, MappingClassId } from '@automapper/core';
-import { AnyEntity } from '@mikro-orm/core';
-import { instantiate, isCollection, isEntity } from './utils';
+import { instantiate, isEntity, serializeEntity } from './utils';
 
 /**
  *
@@ -132,7 +131,7 @@ export const mikro: MapPluginInitializer<Constructible> = (errorHandler) => {
     ) {
       return sourceArr.map((item) => {
         if (isEntity(item)) {
-          return mapEntity(item);
+          return serializeEntity(item);
         }
         return item;
       }) as TSource[];
@@ -144,19 +143,3 @@ export const mikro: MapPluginInitializer<Constructible> = (errorHandler) => {
     },
   };
 };
-
-function mapEntity(item: AnyEntity) {
-  const result = {} as Record<string | symbol, unknown>;
-  for (const key of Reflect.ownKeys(item)) {
-    const value = item[key as string];
-    if (isCollection(value)) {
-      result[key] = value.getSnapshot();
-    } else if (isEntity(value)) {
-      result[key] = mapEntity(value);
-    } else {
-      result[key] = value;
-    }
-  }
-
-  return result;
-}

@@ -1,3 +1,10 @@
+### [7.3.2](https://github.com/nartc/mapper/compare/7.3.1...7.3.2) (2022-02-25)
+
+
+### Bug Fixes
+
+* **mikro:** serialize entity in instantiate as well ([635fba2](https://github.com/nartc/mapper/commit/635fba2d73a2c2351aecb974e93e64d544cb92bf))
+
 ### [7.3.1](https://github.com/nartc/mapper/compare/7.3.0...7.3.1) (2022-02-25)
 
 

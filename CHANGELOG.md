@@ -1,3 +1,10 @@
+### [7.3.1](https://github.com/nartc/mapper/compare/7.3.0...7.3.1) (2022-02-25)
+
+
+### Bug Fixes
+
+* **mikro:** serialize entity properly ([4a18543](https://github.com/nartc/mapper/commit/4a185430b2dfa03d31e10fd5acc29394d4fb5c22))
+
 ## [7.3.0](https://github.com/nartc/mapper/compare/7.2.1...7.3.0) (2022-02-25)
 
 

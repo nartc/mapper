@@ -12,7 +12,6 @@ import {
   isPrimitiveConstructor,
   setMutate,
 } from '@automapper/core';
-import { isCollection } from './is-collection.util';
 import { isEntity } from './is-entity.util';
 import { serializeEntity } from './serialize-entity.util';
 
@@ -34,23 +33,15 @@ export function instantiate<TModel extends Dictionary<TModel>>(
   const metadata = metadataStorage.getMetadata(model);
 
   // instantiate a model with/without defaultValue
-  let instance = defaultValue
-    ? Object.assign(new model(), defaultValue)
-    : new model();
+  const instance = defaultValue
+    ? isEntity(defaultValue)
+      ? serializeEntity(defaultValue)
+      : defaultValue
+    : {};
 
   // if metadata is empty, return the instance early
   if (isEmpty(metadata) || !metadata) {
-    return [instance];
-  }
-
-  let isMikro = false;
-  if (isEntity(instance)) {
-    try {
-      instance = serializeEntity(instance) as TModel;
-      isMikro = true;
-    } catch (e) {
-      instance = instance as TModel;
-    }
+    return [new model()];
   }
 
   // initialize a nestedConstructible with empty []
@@ -68,8 +59,8 @@ export function instantiate<TModel extends Dictionary<TModel>>(
     // get the value at the current key
     let valueAtKey = get(instance as Record<string, unknown>, key);
 
-    if (isCollection(valueAtKey)) {
-      valueAtKey = valueAtKey.getSnapshot();
+    if (defaultValue !== undefined && valueAtKey === undefined) {
+      valueAtKey = get(defaultValue, key);
     }
 
     // call the meta fn to get the metaResult of the current key
@@ -176,8 +167,5 @@ export function instantiate<TModel extends Dictionary<TModel>>(
   // after all, resetAllCount on the current model
   instanceStorage.resetAllCount(model);
   // return instance and the nestedConstructible array
-  return [
-    isMikro ? Object.assign(new model(), instance) : instance,
-    nestedConstructible,
-  ];
+  return [Object.assign(new model(), instance), nestedConstructible];
 }

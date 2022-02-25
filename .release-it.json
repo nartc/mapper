@@ -41,7 +41,7 @@
     "releaseName": "Release ${version}"
   },
   "hooks": {
-    "before:bump": "yarn test:all",
-    "after:bump": "yarn build:all"
+    "before:bump": "npm run test:all",
+    "after:bump": "npm run build:all"
   }
 }

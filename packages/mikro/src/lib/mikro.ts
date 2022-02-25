@@ -10,8 +10,8 @@ import {
 } from '@automapper/classes';
 import type { Dictionary, MapPluginInitializer } from '@automapper/core';
 import { createInitialMapping, MappingClassId } from '@automapper/core';
-import 'reflect-metadata';
-import { instantiate, isEntity } from './utils';
+import { AnyEntity } from '@mikro-orm/core';
+import { instantiate, isCollection, isEntity } from './utils';
 
 /**
  *
@@ -131,9 +131,11 @@ export const mikro: MapPluginInitializer<Constructible> = (errorHandler) => {
       sourceArr: TSource[]
     ) {
       return sourceArr.map((item) => {
-        if (isEntity(item)) return item.toPOJO();
+        if (isEntity(item)) {
+          return mapEntity(item);
+        }
         return item;
-      });
+      }) as TSource[];
     },
     dispose() {
       metadataStorage.dispose();
@@ -142,3 +144,19 @@ export const mikro: MapPluginInitializer<Constructible> = (errorHandler) => {
     },
   };
 };
+
+function mapEntity(item: AnyEntity) {
+  const result = {} as Record<string | symbol, unknown>;
+  for (const key of Reflect.ownKeys(item)) {
+    const value = item[key as string];
+    if (isCollection(value)) {
+      result[key] = value.getSnapshot();
+    } else if (isEntity(value)) {
+      result[key] = mapEntity(value);
+    } else {
+      result[key] = value;
+    }
+  }
+
+  return result;
+}

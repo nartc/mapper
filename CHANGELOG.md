@@ -1,3 +1,10 @@
+### [7.3.6](https://github.com/nartc/mapper/compare/7.3.5...7.3.6) (2022-02-25)
+
+
+### Bug Fixes
+
+* **mikro:** allow entity serializer to be customizable ([f4f7d29](https://github.com/nartc/mapper/commit/f4f7d29c266544bbb8504f2ffd010b6de71dfeab))
+
 ### [7.3.5](https://github.com/nartc/mapper/compare/7.3.4...7.3.5) (2022-02-25)
 
 

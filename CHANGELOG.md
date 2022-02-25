@@ -1,3 +1,10 @@
+### [7.3.4](https://github.com/nartc/mapper/compare/7.3.3...7.3.4) (2022-02-25)
+
+
+### Bug Fixes
+
+* **mikro:** adjust instantiate logic ([bcf004e](https://github.com/nartc/mapper/commit/bcf004e32d98324fa73cb0c320098a38bea58523))
+
 ### [7.3.3](https://github.com/nartc/mapper/compare/7.3.2...7.3.3) (2022-02-25)
 
 

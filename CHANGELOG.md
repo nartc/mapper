@@ -1,3 +1,15 @@
+## [7.3.0](https://github.com/nartc/mapper/compare/7.2.1...7.3.0) (2022-02-25)
+
+
+### Features
+
+* **mikro:** add mikro plugin ([6f52813](https://github.com/nartc/mapper/commit/6f5281310e9d914808ed9f570ccfdaf3dbedef72))
+
+
+### Bug Fixes
+
+* **repo:** use js:swc for all packages ([03e4577](https://github.com/nartc/mapper/commit/03e457783247662c2eb8be735776877bb6fc2e1c))
+
 ### [7.2.1](https://github.com/nartc/mapper/compare/7.2.0...7.2.1) (2022-01-11)
 
 

@@ -57,11 +57,7 @@ export function instantiate<TModel extends Dictionary<TModel>>(
     }
 
     // get the value at the current key
-    let valueAtKey = get(instance as Record<string, unknown>, key);
-
-    if (defaultValue !== undefined && valueAtKey === undefined) {
-      valueAtKey = get(defaultValue, key);
-    }
+    const valueAtKey = get(instance as Record<string, unknown>, key);
 
     // call the meta fn to get the metaResult of the current key
     const metaResult = meta();

@@ -8,6 +8,7 @@ export function serializeEntity(item: AnyEntity) {
     if (typeof key === 'symbol') {
       continue;
     }
+
     const value = item[key as string];
     if (isCollection(value)) {
       result[key] = value.getSnapshot();
@@ -16,6 +17,10 @@ export function serializeEntity(item: AnyEntity) {
     } else {
       result[key] = value;
     }
+  }
+
+  if (result['id'] == null && item['id'] != null) {
+    result['id'] = item['id'];
   }
 
   return result;

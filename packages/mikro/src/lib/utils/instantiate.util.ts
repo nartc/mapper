@@ -13,8 +13,8 @@ import {
   setMutate,
 } from '@automapper/core';
 import { MikroInitializerOptions } from '../types';
+import { getEntity } from './get-entity.util';
 import { isCollection } from './is-collection.util';
-import { isEntity } from './is-entity.util';
 
 /**
  * Recursively instantiate a model with its metadata
@@ -36,11 +36,7 @@ export function instantiate<TModel extends Dictionary<TModel>>(
   const metadata = metadataStorage.getMetadata(model);
 
   // instantiate a model with/without defaultValue
-  const instance = defaultValue
-    ? isEntity(defaultValue)
-      ? serializeEntity(defaultValue)
-      : defaultValue
-    : {};
+  const instance = defaultValue ? getEntity(defaultValue) : {};
 
   // if metadata is empty, return the instance early
   if (isEmpty(metadata) || !metadata) {
@@ -136,7 +132,7 @@ export function instantiate<TModel extends Dictionary<TModel>>(
         setMutate(
           instance as Record<string, unknown>,
           key,
-          isEntity(valueAtKey) ? serializeEntity(valueAtKey) : valueAtKey
+          getEntity(valueAtKey)
         );
         continue;
       }
@@ -146,7 +142,7 @@ export function instantiate<TModel extends Dictionary<TModel>>(
         setMutate(
           instance as Record<string, unknown>,
           key,
-          isEntity(valueAtKey) ? serializeEntity(valueAtKey) : valueAtKey
+          getEntity(valueAtKey)
         );
         continue;
       }
@@ -213,5 +209,10 @@ export function instantiate<TModel extends Dictionary<TModel>>(
   // after all, resetAllCount on the current model
   instanceStorage.resetAllCount(model);
   // return instance and the nestedConstructible array
-  return [Object.assign(new model(), instance), nestedConstructible];
+  return [
+    (isDefined(defaultValue)
+      ? instance
+      : Object.assign(new model(), instance)) as TModel,
+    nestedConstructible,
+  ];
 }

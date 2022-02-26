@@ -1,3 +1,10 @@
+### [7.3.10](https://github.com/nartc/mapper/compare/7.3.9...7.3.10) (2022-02-26)
+
+
+### Bug Fixes
+
+* **mikro:** serialize reference (attempt 2) ([47da73e](https://github.com/nartc/mapper/commit/47da73eb5ce76920670aea71fcb71cc1bc3857fb))
+
 ### [7.3.9](https://github.com/nartc/mapper/compare/7.3.8...7.3.9) (2022-02-26)
 
 

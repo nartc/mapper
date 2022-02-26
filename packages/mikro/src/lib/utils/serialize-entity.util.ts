@@ -1,6 +1,7 @@
 import { AnyEntity } from '@mikro-orm/core';
 import { isCollection } from './is-collection.util';
 import { isEntity } from './is-entity.util';
+import { isReference } from './is-reference.util';
 
 const excluded = [
   '__gettersDefined',
@@ -23,6 +24,8 @@ export function serializeEntity(item: AnyEntity) {
       result[key] = value.getSnapshot() || [];
     } else if (isEntity(value)) {
       result[key] = serializeEntity(value);
+    } else if (isReference(value)) {
+      result[key] = serializeEntity(value.getEntity());
     } else {
       result[key] = value;
     }

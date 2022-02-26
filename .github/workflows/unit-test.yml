@@ -39,5 +39,5 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: yarn
-      - run: yarn test:all
+      - run: npm ci
+      - run: npm run test:all

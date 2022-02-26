@@ -1,6 +1,6 @@
 {
   "name": "automapper",
-  "version": "7.3.8",
+  "version": "7.3.9",
   "license": "MIT",
   "scripts": {
     "nx": "nx",

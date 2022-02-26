@@ -12,9 +12,9 @@ import {
   isPrimitiveConstructor,
   setMutate,
 } from '@automapper/core';
-import { MikroInitializerOptions } from '../types';
+import { Utils } from '@mikro-orm/core';
+import type { MikroInitializerOptions } from '../types';
 import { getEntity } from './get-entity.util';
-import { isCollection } from './is-collection.util';
 
 /**
  * Recursively instantiate a model with its metadata
@@ -93,7 +93,7 @@ export function instantiate<TModel extends Dictionary<TModel>>(
         setMutate(
           instance as Record<string, unknown>,
           key,
-          isCollection(valueAtKey) ? valueAtKey.getSnapshot() : valueAtKey
+          Utils.isCollection(valueAtKey) ? valueAtKey.getSnapshot() : valueAtKey
         );
         continue;
       }
@@ -103,7 +103,7 @@ export function instantiate<TModel extends Dictionary<TModel>>(
         setMutate(
           instance as Record<string, unknown>,
           key,
-          isCollection(valueAtKey) ? valueAtKey.getSnapshot() : valueAtKey
+          Utils.isCollection(valueAtKey) ? valueAtKey.getSnapshot() : valueAtKey
         );
         continue;
       }

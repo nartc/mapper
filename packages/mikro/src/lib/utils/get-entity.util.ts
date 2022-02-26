@@ -1,13 +1,12 @@
-import { isEntity } from './is-entity.util';
-import { isReference } from './is-reference.util';
+import { Reference, Utils } from '@mikro-orm/core';
 import { serializeEntity } from './serialize-entity.util';
 
 export function getEntity<TValue = any>(value: TValue): TValue {
-  if (isEntity(value)) {
+  if (Utils.isEntity(value)) {
     return serializeEntity(value) as TValue;
   }
 
-  if (isReference(value)) {
+  if (Reference.isReference(value)) {
     return serializeEntity(value.getEntity()) as TValue;
   }
 

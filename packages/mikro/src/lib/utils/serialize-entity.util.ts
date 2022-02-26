@@ -1,6 +1,5 @@
-import { AnyEntity } from '@mikro-orm/core';
-import { isCollection } from './is-collection.util';
-import { isEntity } from './is-entity.util';
+import type { AnyEntity } from '@mikro-orm/core';
+import { Utils } from '@mikro-orm/core';
 
 const excluded = [
   '__gettersDefined',
@@ -19,9 +18,9 @@ export function serializeEntity(item: AnyEntity) {
     }
 
     const value = item[key as string];
-    if (isCollection(value)) {
+    if (Utils.isCollection(value)) {
       result[key] = value.getSnapshot() || [];
-    } else if (isEntity(value)) {
+    } else if (Utils.isEntity(value)) {
       result[key] = serializeEntity(value);
     } else {
       result[key] = value;

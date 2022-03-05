@@ -18,9 +18,16 @@ export function serializeEntity(item: AnyEntity) {
 
     const value = item[key as string];
     if (Utils.isCollection(value)) {
-      result[key] =
+      result[key] = (
         (value.isInitialized(true) ? value.getItems() : value.getSnapshot()) ||
-        [];
+        []
+      ).map((collectionItem) => {
+        if (Utils.isEntity(collectionItem))
+          return serializeEntity(collectionItem);
+        if (Reference.isReference(collectionItem))
+          return collectionItem.toJSON();
+        return collectionItem;
+      });
     } else if (Utils.isEntity(value)) {
       result[key] = serializeEntity(value);
     } else if (Reference.isReference(value)) {

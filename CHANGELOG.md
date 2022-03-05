@@ -1,3 +1,10 @@
+### [7.3.11](https://github.com/nartc/mapper/compare/7.3.10...7.3.11) (2022-03-05)
+
+
+### Bug Fixes
+
+* **mikro:** ensure preMapArray run instantiate correctly ([7b2ef67](https://github.com/nartc/mapper/commit/7b2ef671bf5b3c3ee5cc1e38ce6d8252db4bec02))
+
 ### [7.3.10](https://github.com/nartc/mapper/compare/7.3.9...7.3.10) (2022-02-26)
 
 

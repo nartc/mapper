@@ -1,3 +1,10 @@
+### [7.3.13](https://github.com/nartc/mapper/compare/7.3.12...7.3.13) (2022-03-05)
+
+
+### Bug Fixes
+
+* **mikro:** recursively unwrap collections ([a445b3b](https://github.com/nartc/mapper/commit/a445b3b1d9ca788b0fe8226d6c296958f0263758))
+
 ### [7.3.12](https://github.com/nartc/mapper/compare/7.3.11...7.3.12) (2022-03-05)
 
 

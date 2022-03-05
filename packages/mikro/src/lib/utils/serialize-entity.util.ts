@@ -20,7 +20,7 @@ export function serializeEntity(item: AnyEntity) {
 
     const value = item[key as string];
     if (isCollection(value)) {
-      result[key] = value.getSnapshot() || [];
+      result[key] = (value.isInitialized(true) ? value.getItems() : value.getSnapshot()) || [];
     } else if (isEntity(value)) {
       result[key] = serializeEntity(value);
     } else {

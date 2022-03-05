@@ -144,12 +144,12 @@ export const mikro: (
         return [sourceInstance, destinationInstance];
       },
       preMapArray<TSource extends Dictionary<TSource>>(
-        _: Constructible<TSource>,
+        source: Constructible<TSource>,
         sourceArr: TSource[]
       ) {
         return sourceArr.map((item) => {
           if (isEntity(item)) {
-            return serializeEntity(item);
+            return this.instantiate(source, item)[0];
           }
           return item;
         }) as TSource[];

@@ -1,3 +1,10 @@
+### [7.3.12](https://github.com/nartc/mapper/compare/7.3.11...7.3.12) (2022-03-05)
+
+
+### Bug Fixes
+
+* **mikro:** run toJSON on reference ([a5e2a67](https://github.com/nartc/mapper/commit/a5e2a67b41faae886db9189e586fc291c85fb2dc))
+
 ### [7.3.11](https://github.com/nartc/mapper/compare/7.3.10...7.3.11) (2022-03-05)
 
 

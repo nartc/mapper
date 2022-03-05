@@ -10,10 +10,10 @@ import {
 } from '@automapper/classes';
 import type { Dictionary, MapPluginInitializer } from '@automapper/core';
 import { createInitialMapping, MappingClassId } from '@automapper/core';
+import { Utils } from '@mikro-orm/core';
 import { MikroInitializerOptions } from './types';
 import {
   instantiate,
-  isEntity,
   serializeEntity as defaultSerializeEntity,
 } from './utils';
 
@@ -148,7 +148,7 @@ export const mikro: (
         sourceArr: TSource[]
       ) {
         return sourceArr.map((item) => {
-          if (isEntity(item)) {
+          if (Utils.isEntity(item)) {
             return this.instantiate(source, item)[0];
           }
           return item;

@@ -1,13 +1,12 @@
-import { Reference, Utils } from '@mikro-orm/core';
-import { serializeEntity } from './serialize-entity.util';
+import { AnyEntity, Reference, Utils, wrap } from '@mikro-orm/core';
 
 export function getEntity<TValue = any>(value: TValue): TValue {
   if (Utils.isEntity(value)) {
-    return serializeEntity(value) as TValue;
+    return wrap(value as AnyEntity).toJSON() as TValue;
   }
 
   if (Reference.isReference(value)) {
-    return serializeEntity(value.getEntity()) as TValue;
+    return wrap(value.getEntity()).toJSON() as TValue;
   }
 
   return value;

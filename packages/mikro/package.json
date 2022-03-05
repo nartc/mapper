@@ -1,6 +1,6 @@
 {
   "name": "@automapper/mikro",
-  "version": "7.3.13",
+  "version": "7.3.14",
   "peerDependencies": {
     "reflect-metadata": "~0.1.13",
     "@mikro-orm/core": "~5.0.4"

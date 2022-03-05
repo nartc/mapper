@@ -1,3 +1,10 @@
+### [7.3.14](https://github.com/nartc/mapper/compare/7.3.13...7.3.14) (2022-03-05)
+
+
+### Bug Fixes
+
+* **mikro:** use getEntity as unwrap value instead of recursion ([292759c](https://github.com/nartc/mapper/commit/292759c24aff0a23796d4d2457ba65058d5a10a8))
+
 ### [7.3.13](https://github.com/nartc/mapper/compare/7.3.12...7.3.13) (2022-03-05)
 
 

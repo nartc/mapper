@@ -1,0 +1,32 @@
+{
+    "root": "packages/integration-test",
+    "sourceRoot": "packages/integration-test/src",
+    "targets": {
+        "build": {
+            "executor": "@nrwl/js:swc",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/packages/integration-test",
+                "main": "packages/integration-test/src/index.ts",
+                "tsConfig": "packages/integration-test/tsconfig.lib.json",
+                "assets": ["packages/integration-test/*.md"]
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["packages/integration-test/**/*.ts"]
+            }
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/packages/integration-test"],
+            "options": {
+                "jestConfig": "packages/integration-test/jest.config.js",
+                "passWithNoTests": true
+            }
+        }
+    },
+    "tags": []
+}

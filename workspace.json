@@ -1,6 +1,8 @@
 {
     "version": 2,
     "projects": {
-        "core": "packages/core"
+        "classes": "packages/classes",
+        "core": "packages/core",
+        "integration-test": "packages/integration-test"
     }
 }

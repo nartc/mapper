@@ -1,0 +1,20 @@
+{
+  "migrations": [
+    {
+      "cli": "nx",
+      "version": "13.8.5-beta.1",
+      "description": "Renames @nrwl/js:node to @nrwl/node:node",
+      "factory": "./src/migrations/update-13-8-5/update-node-executor",
+      "package": "@nrwl/js",
+      "name": "update-node-executor"
+    },
+    {
+      "cli": "nx",
+      "version": "13.8.5-beta.1",
+      "description": "Adjust .swcrc to .lib.swcrc",
+      "factory": "./src/migrations/update-13-8-5/update-swcrc",
+      "package": "@nrwl/js",
+      "name": "update-swcrc"
+    }
+  ]
+}

@@ -1,14 +1,7 @@
-import type { Dictionary } from '@automapper/core';
-import {
-  get,
-  isDateConstructor,
-  isDefined,
-  isEmpty,
-  isPrimitiveConstructor,
-  setMutate,
-} from '@automapper/core';
-import type { ClassInstanceStorage, ClassMetadataStorage } from '../storages';
-import type { Constructible } from '../types';
+import type {Dictionary} from '@automapper/core';
+import {get, isDateConstructor, isDefined, isEmpty, isPrimitiveConstructor, setMutate,} from '@automapper/core';
+import type {ClassInstanceStorage, ClassMetadataStorage} from '../storages';
+import type {Constructible} from '../types';
 
 /**
  * Recursively instantiate a model with its metadata

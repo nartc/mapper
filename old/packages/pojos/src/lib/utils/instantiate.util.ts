@@ -1,4 +1,4 @@
-import type { Dictionary } from '@automapper/core';
+import type {Dictionary} from '@automapper/core';
 import {
   get,
   isDateConstructor,
@@ -8,7 +8,7 @@ import {
   isPrimitiveConstructor,
   setMutate,
 } from '@automapper/core';
-import { PojosMetadataStorage } from '../storages';
+import {PojosMetadataStorage} from '../storages';
 
 export function instantiate<TModel extends Dictionary<TModel>>(
   metadataStorage: PojosMetadataStorage,

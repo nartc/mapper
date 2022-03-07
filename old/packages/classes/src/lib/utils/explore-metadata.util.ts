@@ -1,11 +1,8 @@
-import type { PrimitiveExtended } from '@automapper/core';
-import { isDefined } from '@automapper/core';
-import {
-  AUTOMAP_PROPERTIES_METADATA_KEY,
-  AUTOMAPPER_METADATA_FACTORY_KEY,
-} from '../constants';
-import type { ClassInstanceStorage, ClassMetadataStorage } from '../storages';
-import type { Constructible } from '../types';
+import type {PrimitiveExtended} from '@automapper/core';
+import {isDefined} from '@automapper/core';
+import {AUTOMAP_PROPERTIES_METADATA_KEY, AUTOMAPPER_METADATA_FACTORY_KEY,} from '../constants';
+import type {ClassInstanceStorage, ClassMetadataStorage} from '../storages';
+import type {Constructible} from '../types';
 
 export function exploreMetadata(
   metadataStorage: ClassMetadataStorage,

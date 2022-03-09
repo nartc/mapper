@@ -9,8 +9,8 @@ import type {
 import { TransformationType } from './types';
 
 export function mapFrom<
-    TSource extends Dictionary<TSource> = any,
-    TDestination extends Dictionary<TDestination> = any,
+    TSource extends Dictionary<TSource>,
+    TDestination extends Dictionary<TDestination>,
     TSelectorReturn = SelectorReturn<TDestination>
 >(
     from:
@@ -18,8 +18,8 @@ export function mapFrom<
         | Resolver<TSource, TDestination, TSelectorReturn>
 ): MapFromReturn<TSource, TDestination, TSelectorReturn> {
     if (isResolver(from)) {
-        return [TransformationType.MapFrom, from.resolve.bind(from), null];
+        return [TransformationType.MapFrom, from.resolve.bind(from)];
     }
 
-    return [TransformationType.MapFrom, from, from];
+    return [TransformationType.MapFrom, from];
 }

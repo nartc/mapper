@@ -227,7 +227,7 @@ export interface Mapper {
 
     [ERROR_HANDLER]: ErrorHandler;
     [MAPPINGS]: Map<MetadataIdentifier, Map<MetadataIdentifier, Mapping>>;
-    [STRATEGY]: any;
+    [STRATEGY]: MappingStrategy<MetadataIdentifier>;
     [NAMING_CONVENTIONS]:
         | NamingConvention
         | { source: NamingConvention; destination: NamingConvention };
@@ -251,7 +251,6 @@ export const enum TransformationType {
 export const enum MapFnClassId {
     type,
     fn,
-    misc,
 }
 
 export type MemberMapReturn<
@@ -289,8 +288,7 @@ export type MapFromReturn<
     TSelectorReturn = SelectorReturn<TDestination>
 > = [
     TransformationType.MapFrom,
-    (source: TSource, destination?: TDestination) => TSelectorReturn,
-    ValueSelector<TSource, TDestination, TSelectorReturn> | null
+    (source: TSource, destination?: TDestination) => TSelectorReturn
 ];
 
 export type MapWithReturn<
@@ -299,8 +297,7 @@ export type MapWithReturn<
     TSelectorReturn = SelectorReturn<TDestination>
 > = [
     TransformationType.MapWith,
-    (sourceObj: TSource, mapper: Mapper) => TSelectorReturn | undefined | null,
-    ValueSelector<TSource>
+    (sourceObj: TSource, mapper: Mapper) => TSelectorReturn | undefined | null
 ];
 
 export interface ConditionPredicate<TSource extends Dictionary<TSource>> {
@@ -459,15 +456,14 @@ export type ArrayKeyedMap = PathMap | DataMap;
 export type MappingConfiguration<
     TSource extends Dictionary<TSource>,
     TDestination extends Dictionary<TDestination>
-> = ((mapping: any) => void) | void;
+> = ((mapping: Mapping<TSource, TDestination>) => void) | void;
 
-export type MappingConfigurationFn<
-    TSource extends Dictionary<TSource>,
-    TDestination extends Dictionary<TDestination>
-> = (mapper: Mapper) => MappingConfiguration<TSource, TDestination>;
-
-export type ApplyMetadataFn = (model: MetadataIdentifier) => any;
-export type ApplyMetadata = (strategy: any) => ApplyMetadataFn;
+export type ApplyMetadataFn = <TModel extends Dictionary<TModel>>(
+    model: MetadataIdentifier<TModel>
+) => TModel;
+export type ApplyMetadata = (
+    strategy: MappingStrategy<MetadataIdentifier>
+) => ApplyMetadataFn;
 
 export type DestinationConstructor<
     TSource extends Dictionary<TSource> = any,
@@ -478,3 +474,23 @@ export type DestinationConstructor<
 ) => TDestination;
 
 export type MappingProfile = (mapper: Mapper) => void;
+
+export type MappingStrategyInitializer<TIdentifier extends MetadataIdentifier> =
+    (
+        applyMetadata?: ApplyMetadataFn,
+        destinationConstructor?: DestinationConstructor
+    ) => MappingStrategy<TIdentifier>;
+
+export interface MappingStrategy<TIdentifier extends MetadataIdentifier> {
+    get applyMetadata(): ApplyMetadataFn;
+    destinationConstructor: DestinationConstructor;
+    mapper: Mapper;
+    createMapping<
+        TSource extends Dictionary<TSource>,
+        TDestination extends Dictionary<TDestination>
+    >(
+        source: TIdentifier,
+        destination: TIdentifier,
+        mappingConfigurations: MappingConfiguration<TSource, TDestination>[]
+    ): Mapping<TSource, TDestination>;
+}

@@ -10,7 +10,7 @@ export const addressProfile: MappingProfile = (mapper) => {
         AddressDto,
         forMember(
             (d) => d.formattedAddress,
-            mapFrom((s) => `${s.street} ${s.city} ${s.state}`)
+            mapFrom((s) => s.state)
         )
     );
 };

@@ -1,6 +1,5 @@
 import { mapReturn } from './map';
 import { getMapping } from './mappings';
-import { getStrategy } from './strategy';
 import {
     ERROR_HANDLER,
     MAPPINGS,
@@ -142,9 +141,7 @@ export function createMapper({
             }
 
             if (p === 'dispose') {
-                return getStrategy(receiver).dispose.bind(
-                    getStrategy(receiver)
-                );
+                return () => {};
             }
 
             if (p === 'map') {

@@ -6,7 +6,7 @@ import type {
 } from './types';
 
 /**
- * Depends on implementation of plugin.initializeMapping
+ * Depends on implementation of strategy.createMapping
  */
 export function assertUnmappedProperties<
     TDestination extends Dictionary<TDestination>

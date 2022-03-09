@@ -4,14 +4,14 @@ import type {
     Converter,
     Dictionary,
     Mapper,
-    MappingConfigurationFn,
+    MappingConfiguration,
     MetadataIdentifier,
     PrimitiveConstructor,
     PrimitiveConstructorExtended,
     PrimitiveConstructorReturnType,
     Selector,
 } from './types';
-import { Mapping, MappingClassId } from './types';
+import { MappingClassId } from './types';
 
 export function getTypeConverters(mapper: Mapper) {
     return mapper[TYPE_CONVERTERS];
@@ -36,35 +36,31 @@ export function typeConverter<
               | PrimitiveConstructorReturnType<TDestinationConstructor>
               | undefined
           >
-): MappingConfigurationFn<TSource, TDestination> {
-    return () => {
-        return (mapping: Mapping<TSource, TDestination>) => {
-            const selector = toSelector(converterOrValueSelector);
-            const typeConverters =
-                mapping[MappingClassId.typeConverters] ||
-                new Map<
-                    MetadataIdentifier | PrimitiveConstructor | DateConstructor,
-                    Map<
-                        | MetadataIdentifier
-                        | PrimitiveConstructor
-                        | DateConstructor,
-                        Selector
-                    >
-                >();
-
-            const sourceTypeConverters = typeConverters.get(source);
-            if (sourceTypeConverters) {
-                sourceTypeConverters.set(destination, selector);
-                return;
-            }
-
-            typeConverters.set(
-                source,
-                new Map<
+): MappingConfiguration<TSource, TDestination> {
+    return (mapping) => {
+        const selector = toSelector(converterOrValueSelector);
+        const typeConverters =
+            mapping[MappingClassId.typeConverters] ||
+            new Map<
+                MetadataIdentifier | PrimitiveConstructor | DateConstructor,
+                Map<
                     MetadataIdentifier | PrimitiveConstructor | DateConstructor,
                     Selector
-                >([[destination, selector]])
-            );
-        };
+                >
+            >();
+
+        const sourceTypeConverters = typeConverters.get(source);
+        if (sourceTypeConverters) {
+            sourceTypeConverters.set(destination, selector);
+            return;
+        }
+
+        typeConverters.set(
+            source,
+            new Map<
+                MetadataIdentifier | PrimitiveConstructor | DateConstructor,
+                Selector
+            >([[destination, selector]])
+        );
     };
 }

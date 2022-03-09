@@ -19,6 +19,7 @@ export * from './lib/ignore';
 export * from './lib/null-substitution';
 export * from './lib/pre-condition';
 export * from './lib/condition';
+export * from './lib/before-map';
 export * from './lib/camel-case-naming-convention';
 export * from './lib/pascal-case-naming-convention';
 export * from './lib/snake-case-naming-convention';

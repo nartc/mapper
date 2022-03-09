@@ -1,4 +1,4 @@
-import type { Dictionary, MapCallback, MappingConfigurationFn } from './types';
+import type { Dictionary, MapCallback, MappingConfiguration } from './types';
 import { MappingCallbacksClassId, MappingClassId } from './types';
 
 export function beforeMap<
@@ -6,15 +6,12 @@ export function beforeMap<
     TDestination extends Dictionary<TDestination>
 >(
     cb: MapCallback<TSource, TDestination>
-): MappingConfigurationFn<TSource, TDestination> {
-    return () => {
-        return (mapping) => {
-            if (mapping[MappingClassId.callbacks] == null) {
-                mapping[MappingClassId.callbacks] = [];
-            }
-            mapping[MappingClassId.callbacks][
-                MappingCallbacksClassId.beforeMap
-            ] = cb;
-        };
+): MappingConfiguration<TSource, TDestination> {
+    return (mapping) => {
+        if (mapping[MappingClassId.callbacks] == null) {
+            mapping[MappingClassId.callbacks] = [];
+        }
+        mapping[MappingClassId.callbacks]![MappingCallbacksClassId.beforeMap] =
+            cb;
     };
 }

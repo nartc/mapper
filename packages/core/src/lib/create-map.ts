@@ -6,7 +6,6 @@ import type {
     Mapper,
     Mapping,
     MappingConfiguration,
-    MappingConfigurationFn,
     MetadataIdentifier,
     ModelIdentifier,
 } from './types';
@@ -18,8 +17,8 @@ export function createMap<
     mapper: Mapper,
     source: ModelIdentifier<TSource>,
     destination: ModelIdentifier<TDestination>,
-    ...mappingConfigFns: MappingConfigurationFn<TSource, TDestination>[]
-) {
+    ...mappingConfigFns: MappingConfiguration<TSource, TDestination>[]
+): Mapping<TSource, TDestination> {
     // turn string into symbol for identifier
     const sourceIdentifier: MetadataIdentifier<TSource> =
         typeof source === 'string' ? Symbol.for(source) : source;
@@ -27,39 +26,36 @@ export function createMap<
         typeof destination === 'string' ? Symbol.for(destination) : destination;
 
     const mappings = getMappings(mapper);
+    let mapping = mappings.get(sourceIdentifier)?.get(destinationIdentifier);
 
-    if (mappings.get(sourceIdentifier)?.get(destinationIdentifier)) {
+    if (mapping) {
         getErrorHandler(mapper).handle(
             `Mapping for source ${String(source)} and destination ${String(
                 destination
             )} already exists`
         );
-        return;
+
+        return mapping as Mapping<TSource, TDestination>;
     }
 
     // get the strategy from Mapper
     const strategy = getStrategy(mapper);
-    const mappingConfigs: MappingConfiguration<TSource, TDestination>[] = [];
-
-    for (const mappingConfigFn of mappingConfigFns) {
-        mappingConfigs.push(mappingConfigFn(mapper));
-    }
 
     // after all the mapping configurations are consolidated,
     // initialize the mapping
-    const mapping = strategy.createMapping(
+    mapping = strategy.createMapping(
         sourceIdentifier,
         destinationIdentifier,
-        mappingConfigs
+        mappingConfigFns || []
     );
+
     // store the mapping
     if (!mappings.has(sourceIdentifier)) {
         mappings.set(
             sourceIdentifier,
-            new Map<MetadataIdentifier, Mapping<TSource, TDestination>>().set(
-                destinationIdentifier,
-                mapping
-            )
+            new Map<MetadataIdentifier, Mapping<TSource, TDestination>>([
+                [destinationIdentifier, mapping],
+            ])
         );
     } else {
         mappings.get(sourceIdentifier)!.set(destinationIdentifier, mapping);

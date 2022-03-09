@@ -25,7 +25,6 @@ describe('map', () => {
         addProfile(mapper, userProfile);
 
         const user = getUser();
-
         const dto = mapper.map(user, User, UserDto);
         expect(dto).toBeTruthy();
     });

@@ -1,4 +1,4 @@
-import type { MappingConfigurationFn } from './types';
+import type { MappingConfiguration } from './types';
 import {
     Dictionary,
     MapCallback,
@@ -11,15 +11,12 @@ export function afterMap<
     TDestination extends Dictionary<TDestination>
 >(
     cb: MapCallback<TSource, TDestination>
-): MappingConfigurationFn<TSource, TDestination> {
-    return () => {
-        return (mapping) => {
-            if (mapping[MappingClassId.callbacks] == null) {
-                mapping[MappingClassId.callbacks] = [];
-            }
-            mapping[MappingClassId.callbacks][
-                MappingCallbacksClassId.afterMap
-            ] = cb;
-        };
+): MappingConfiguration<TSource, TDestination> {
+    return (mapping) => {
+        if (mapping[MappingClassId.callbacks] == null) {
+            mapping[MappingClassId.callbacks] = [];
+        }
+        mapping[MappingClassId.callbacks]![MappingCallbacksClassId.afterMap] =
+            cb;
     };
 }

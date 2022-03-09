@@ -6,6 +6,7 @@ import type {
     Dictionary,
     Mapper,
     MappingConfiguration,
+    MappingStrategy,
 } from '@automapper/core';
 import {
     createInitialMapping,
@@ -25,7 +26,9 @@ import 'reflect-metadata';
 import { getStandaloneConstructors } from './automap-standalone';
 import { getMetadataList } from './get-metadata-list';
 
-function defaultApplyMetadata(strategy: any): ApplyMetadataFn {
+function defaultApplyMetadata(
+    strategy: MappingStrategy<Constructor>
+): ApplyMetadataFn {
     const mapper = strategy.mapper;
     const metadataMap = getMetadataMap(mapper);
     const recursiveCountMap = getRecursiveCount(mapper);
@@ -80,7 +83,6 @@ function defaultApplyMetadata(strategy: any): ApplyMetadataFn {
 
             // get depth and count of the current key on the current model
             // Eg: Foo {bar: Bar}, model here is Foo and key is bar
-            // const [depth, count = 0] = instanceStorage.getDepthAndCount(model, key);
             const depth = getRecursiveValue(recursiveDepthMap, model, key);
             const count = getRecursiveValue(recursiveCountMap, model, key) || 0;
 
@@ -143,7 +145,7 @@ export function classes(
         }
 
         return {
-            get applyMetadata() {
+            get applyMetadata(): ApplyMetadataFn {
                 return applyMetadata(this);
             },
             destinationConstructor,

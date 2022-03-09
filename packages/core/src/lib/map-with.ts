@@ -42,6 +42,5 @@ export function mapWith<
                 withSource as unknown as string
             ) as unknown as TSelectorReturn;
         },
-        withSourceValue,
     ];
 }

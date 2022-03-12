@@ -7,6 +7,7 @@ import type {
     Mapper,
     MappingConfiguration,
     MappingStrategy,
+    MappingStrategyInitializer,
 } from '@automapper/core';
 import {
     createInitialMapping,
@@ -123,7 +124,7 @@ export function classes(
         _,
         destinationIdentifier
     ) => new (destinationIdentifier as Constructor)()
-) {
+): MappingStrategyInitializer<Constructor> {
     return (mapper: Mapper) => {
         function extractMetadata(model: Constructor) {
             const metadataMap = getMetadataMap(mapper);

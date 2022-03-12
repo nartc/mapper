@@ -7,7 +7,6 @@ import {
     RECURSIVE_COUNT,
     RECURSIVE_DEPTH,
     STRATEGY,
-    TYPE_CONVERTERS,
 } from './symbols';
 
 export type Unpacked<T> = T extends (infer U)[]
@@ -218,14 +217,6 @@ export interface Mapper {
 
     dispose(): void;
 
-    [TYPE_CONVERTERS]: Map<
-        MetadataIdentifier | PrimitiveConstructor | DateConstructor,
-        Map<
-            MetadataIdentifier | PrimitiveConstructor | DateConstructor,
-            Selector
-        >
-    >;
-
     [ERROR_HANDLER]: ErrorHandler;
     [MAPPINGS]: Map<MetadataIdentifier, Map<MetadataIdentifier, Mapping>>;
     [STRATEGY]: MappingStrategy<MetadataIdentifier>;
@@ -390,6 +381,16 @@ export const enum MappingCallbacksClassId {
     afterMap,
 }
 
+export const enum NestedMappingPairClassId {
+    destination,
+    source,
+}
+
+export type NestedMappingPair = [
+    MetadataIdentifier | Primitive | Date,
+    MetadataIdentifier | Primitive | Date
+];
+
 export const enum MappingClassId {
     identifiers,
     properties,
@@ -417,8 +418,8 @@ export type Mapping<
                 SelectorReturn<TDestination>
             >,
             nestedMappingPair?: [
-                MetadataIdentifier | Primitive | Date,
-                MetadataIdentifier | Primitive | Date
+                destination: MetadataIdentifier | Primitive | Date,
+                source: MetadataIdentifier | Primitive | Date
             ]
         ]
     >,
@@ -475,16 +476,12 @@ export type DestinationConstructor<
 
 export type MappingProfile = (mapper: Mapper) => void;
 
-export type MappingStrategyInitializer<TIdentifier extends MetadataIdentifier> =
-    (
-        applyMetadata?: ApplyMetadataFn,
-        destinationConstructor?: DestinationConstructor
-    ) => MappingStrategy<TIdentifier>;
-
 export interface MappingStrategy<TIdentifier extends MetadataIdentifier> {
     get applyMetadata(): ApplyMetadataFn;
+
     destinationConstructor: DestinationConstructor;
     mapper: Mapper;
+
     createMapping<
         TSource extends Dictionary<TSource>,
         TDestination extends Dictionary<TDestination>
@@ -494,3 +491,6 @@ export interface MappingStrategy<TIdentifier extends MetadataIdentifier> {
         mappingConfigurations: MappingConfiguration<TSource, TDestination>[]
     ): Mapping<TSource, TDestination>;
 }
+
+export type MappingStrategyInitializer<TIdentifier extends MetadataIdentifier> =
+    (mapper: Mapper) => MappingStrategy<TIdentifier>;

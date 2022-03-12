@@ -18,8 +18,8 @@ import {
     MappingTransformationClassId,
     MetadataClassId,
     MetadataIdentifier,
-    Primitive,
-    PrimitiveConstructor,
+    NestedMappingPair,
+    NestedMappingPairClassId,
     Selector,
 } from './types';
 
@@ -96,14 +96,12 @@ export function createInitialMapping<
          * with naming conventions: fooBar -> [foo, bar]
          * without naming conventions: fooBar -> fooBar
          */
-        let sourcePath = namingConventions
-            ? getSourcePath(destinationPath, namingConventions)
-            : destinationPath;
+        let sourcePath = destinationPath;
 
         if (namingConventions) {
             sourcePath = getFlatteningSourcePaths(
                 sourceObject,
-                sourcePath,
+                getSourcePath(destinationPath, namingConventions),
                 namingConventions
             );
         }
@@ -120,12 +118,7 @@ export function createInitialMapping<
             )
         );
 
-        let nestedMappingPair:
-            | [
-                  MetadataIdentifier | Primitive | Date,
-                  MetadataIdentifier | Primitive | Date
-              ]
-            | undefined = undefined;
+        let nestedMappingPair: NestedMappingPair | undefined = undefined;
 
         if (!metadataAtSource && !metadataAtDestination) continue;
 
@@ -152,25 +145,22 @@ export function createInitialMapping<
             if (mappingTypeConverters) {
                 const [sourceConverters, arraySourceConverters] =
                     mappingTypeConverters.get(
-                        nestedMappingPair[1] as
-                            | MetadataIdentifier
-                            | PrimitiveConstructor
-                            | DateConstructor
+                        nestedMappingPair[
+                            NestedMappingPairClassId.source
+                        ] as MetadataIdentifier
                     ) || [];
 
                 const [destinationConverter, arrayDestinationConverter] =
                     (isSourceArray
                         ? arraySourceConverters?.get(
-                              nestedMappingPair[0] as
-                                  | MetadataIdentifier
-                                  | PrimitiveConstructor
-                                  | DateConstructor
+                              nestedMappingPair[
+                                  NestedMappingPairClassId.destination
+                              ] as MetadataIdentifier
                           )
                         : sourceConverters?.get(
-                              nestedMappingPair[0] as
-                                  | MetadataIdentifier
-                                  | PrimitiveConstructor
-                                  | DateConstructor
+                              nestedMappingPair[
+                                  NestedMappingPairClassId.destination
+                              ] as MetadataIdentifier
                           )) || [];
 
                 typeConverter = isDestinationArray
@@ -192,12 +182,7 @@ export function createInitialMapping<
         mappingProperties.push([
             destinationPath,
             [destinationPath, transformation],
-            metadataAtSource && metadataAtDestination
-                ? [
-                      metadataAtDestination[MetadataClassId.metaFn](),
-                      metadataAtSource[MetadataClassId.metaFn](),
-                  ]
-                : undefined,
+            nestedMappingPair,
         ]);
     }
 

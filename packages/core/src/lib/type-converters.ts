@@ -1,9 +1,7 @@
-import { TYPE_CONVERTERS } from './symbols';
 import { toSelector } from './to-selector';
 import type {
     Converter,
     Dictionary,
-    Mapper,
     MappingConfiguration,
     MetadataIdentifier,
     PrimitiveConstructor,
@@ -13,113 +11,58 @@ import type {
 } from './types';
 import { MappingClassId } from './types';
 
-export function getTypeConverters(mapper: Mapper) {
-    return mapper[TYPE_CONVERTERS];
-}
+type ConstructorReturnType<
+    TConstructor extends
+        | PrimitiveConstructorExtended
+        | PrimitiveConstructorExtended[]
+> = TConstructor extends PrimitiveConstructorExtended[]
+    ? Array<PrimitiveConstructorReturnType<TConstructor[0]>>
+    : TConstructor extends PrimitiveConstructorExtended
+    ? PrimitiveConstructorReturnType<TConstructor>
+    : never;
+
+type ConverterOrValueSelector<
+    TSourceConstructor extends
+        | PrimitiveConstructorExtended
+        | PrimitiveConstructorExtended[],
+    TDestinationConstructor extends
+        | PrimitiveConstructorExtended
+        | PrimitiveConstructorExtended[]
+> =
+    | Selector<
+          ConstructorReturnType<TSourceConstructor>,
+          ConstructorReturnType<TDestinationConstructor> | undefined
+      >
+    | Converter<
+          ConstructorReturnType<TSourceConstructor>,
+          ConstructorReturnType<TDestinationConstructor> | undefined
+      >;
 
 export function typeConverter<
     TSource extends Dictionary<TSource>,
     TDestination extends Dictionary<TDestination>,
-    TSourceConstructor extends PrimitiveConstructorExtended,
-    TDestinationConstructor extends PrimitiveConstructorExtended
+    TSourceConstructor extends
+        | PrimitiveConstructorExtended
+        | [PrimitiveConstructorExtended],
+    TDestinationConstructor extends
+        | PrimitiveConstructorExtended
+        | [PrimitiveConstructorExtended]
 >(
     source: TSourceConstructor,
     destination: TDestinationConstructor,
-    converterOrValueSelector:
-        | Selector<
-              PrimitiveConstructorReturnType<TSourceConstructor>,
-              | PrimitiveConstructorReturnType<TDestinationConstructor>
-              | undefined
-          >
-        | Converter<
-              PrimitiveConstructorReturnType<TSourceConstructor>,
-              | PrimitiveConstructorReturnType<TDestinationConstructor>
-              | undefined
-          >
-): MappingConfiguration<TSource, TDestination>;
-export function typeConverter<
-    TSource extends Dictionary<TSource>,
-    TDestination extends Dictionary<TDestination>,
-    TSourceConstructor extends [PrimitiveConstructorExtended],
-    TDestinationConstructor extends [PrimitiveConstructorExtended]
->(
-    source: TSourceConstructor,
-    destination: TDestinationConstructor,
-    converterOrValueSelector:
-        | Selector<
-              Array<PrimitiveConstructorReturnType<TSourceConstructor[0]>>,
-              | Array<
-                    PrimitiveConstructorReturnType<TDestinationConstructor[0]>
-                >
-              | undefined
-          >
-        | Converter<
-              Array<PrimitiveConstructorReturnType<TSourceConstructor[0]>>,
-              | Array<
-                    PrimitiveConstructorReturnType<TDestinationConstructor[0]>
-                >
-              | undefined
-          >
-): MappingConfiguration<TSource, TDestination>;
-export function typeConverter<
-    TSource extends Dictionary<TSource>,
-    TDestination extends Dictionary<TDestination>,
-    TSourceConstructor extends [PrimitiveConstructorExtended],
-    TDestinationConstructor extends PrimitiveConstructorExtended
->(
-    source: TSourceConstructor,
-    destination: TDestinationConstructor,
-    converterOrValueSelector:
-        | Selector<
-              Array<PrimitiveConstructorReturnType<TSourceConstructor[0]>>,
-              | PrimitiveConstructorReturnType<TDestinationConstructor>
-              | undefined
-          >
-        | Converter<
-              Array<PrimitiveConstructorReturnType<TSourceConstructor[0]>>,
-              | PrimitiveConstructorReturnType<TDestinationConstructor>
-              | undefined
-          >
-): MappingConfiguration<TSource, TDestination>;
-export function typeConverter<
-    TSource extends Dictionary<TSource>,
-    TDestination extends Dictionary<TDestination>,
-    TSourceConstructor extends PrimitiveConstructorExtended,
-    TDestinationConstructor extends [PrimitiveConstructorExtended]
->(
-    source: TSourceConstructor,
-    destination: TDestinationConstructor,
-    converterOrValueSelector:
-        | Selector<
-              PrimitiveConstructorReturnType<TSourceConstructor>,
-              | Array<
-                    PrimitiveConstructorReturnType<TDestinationConstructor[0]>
-                >
-              | undefined
-          >
-        | Converter<
-              PrimitiveConstructorReturnType<TSourceConstructor>,
-              | Array<
-                    PrimitiveConstructorReturnType<TDestinationConstructor[0]>
-                >
-              | undefined
-          >
-): MappingConfiguration<TSource, TDestination>;
-export function typeConverter<
-    TSource extends Dictionary<TSource>,
-    TDestination extends Dictionary<TDestination>
->(
-    source: PrimitiveConstructorExtended | [PrimitiveConstructorExtended],
-    destination: PrimitiveConstructorExtended | [PrimitiveConstructorExtended],
-    converterOrValueSelector: Selector | Converter
+    converterOrValueSelector: ConverterOrValueSelector<
+        TSourceConstructor,
+        TDestinationConstructor
+    >
 ): MappingConfiguration<TSource, TDestination> {
     return (mapping) => {
         const isSourceArray = Array.isArray(source);
         const isDestinationArray = Array.isArray(destination);
-        const sourceIdentifier = isSourceArray ? source[0] : source;
-        const destinationIdentifier = isDestinationArray
-            ? destination[0]
-            : destination;
+        const sourceIdentifier: PrimitiveConstructorExtended = isSourceArray
+            ? source[0]
+            : source;
+        const destinationIdentifier: PrimitiveConstructorExtended =
+            isDestinationArray ? destination[0] : destination;
 
         const selector = toSelector(converterOrValueSelector);
         const typeConverters =

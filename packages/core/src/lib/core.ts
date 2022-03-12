@@ -9,7 +9,6 @@ import {
     RECURSIVE_COUNT,
     RECURSIVE_DEPTH,
     STRATEGY,
-    TYPE_CONVERTERS,
 } from './symbols';
 import type {
     ArrayKeyedMap,
@@ -17,16 +16,16 @@ import type {
     Mapper,
     Mapping,
     MappingConfiguration,
+    MappingStrategy,
+    MappingStrategyInitializer,
     Metadata,
     MetadataIdentifier,
     NamingConvention,
-    PrimitiveConstructor,
-    Selector,
 } from './types';
 import { Dictionary, MapOptions, ModelIdentifier } from './types';
 
 export interface CreateMapperOptions {
-    strategyInitializer: any;
+    strategyInitializer: MappingStrategyInitializer<MetadataIdentifier>;
     errorHandler?: ErrorHandler;
     namingConventions?:
         | NamingConvention
@@ -41,16 +40,7 @@ export function createMapper({
     errorHandler,
     namingConventions,
 }: CreateMapperOptions): Mapper {
-    let strategy: any;
-
-    // type converters
-    let typeConverters: Map<
-        MetadataIdentifier | PrimitiveConstructor | DateConstructor,
-        Map<
-            MetadataIdentifier | PrimitiveConstructor | DateConstructor,
-            Selector
-        >
-    >;
+    let strategy: MappingStrategy<MetadataIdentifier>;
 
     // this mapper is responsible for all mappings
     let mappings: Map<MetadataIdentifier, Map<MetadataIdentifier, Mapping>>;
@@ -77,43 +67,21 @@ export function createMapper({
 
             if (p === PROFILE_CONFIGURATION_CONTEXT) {
                 if (!profileConfigurationContext) {
-                    profileConfigurationContext =
-                        new Set<MappingConfiguration>();
+                    profileConfigurationContext = new Set();
                 }
                 return profileConfigurationContext;
             }
 
-            if (p === TYPE_CONVERTERS) {
-                // initialize as soon as there's someone asking for it
-                if (!typeConverters) {
-                    typeConverters = new Map<
-                        | MetadataIdentifier
-                        | PrimitiveConstructor
-                        | DateConstructor,
-                        Map<
-                            | MetadataIdentifier
-                            | PrimitiveConstructor
-                            | DateConstructor,
-                            Selector
-                        >
-                    >();
-                }
-                return typeConverters;
-            }
-
             if (p === MAPPINGS) {
                 if (!mappings) {
-                    mappings = new Map<
-                        MetadataIdentifier,
-                        Map<MetadataIdentifier, Mapping>
-                    >();
+                    mappings = new Map();
                 }
                 return mappings;
             }
 
             if (p === METADATA_MAP) {
                 if (!metadata) {
-                    metadata = new Map<MetadataIdentifier, Array<Metadata>>();
+                    metadata = new Map();
                 }
                 return metadata;
             }
@@ -133,27 +101,20 @@ export function createMapper({
 
             if (p === RECURSIVE_DEPTH) {
                 if (!recursiveDepth) {
-                    recursiveDepth = new Map<
-                        MetadataIdentifier,
-                        ArrayKeyedMap
-                    >();
+                    recursiveDepth = new Map();
                 }
                 return recursiveDepth;
             }
 
             if (p === RECURSIVE_COUNT) {
                 if (!recursiveCount) {
-                    recursiveCount = new Map<
-                        MetadataIdentifier,
-                        ArrayKeyedMap
-                    >();
+                    recursiveCount = new Map();
                 }
                 return recursiveCount;
             }
 
             if (p === 'dispose') {
                 return () => {
-                    typeConverters?.clear();
                     mappings?.clear();
                     metadata?.clear();
                     recursiveDepth?.clear();

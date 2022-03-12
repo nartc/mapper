@@ -14,7 +14,7 @@ describe('Map - Type Converter', () => {
         namingConventions: new CamelCaseNamingConvention(),
     });
 
-    it('should converter simple type', () => {
+    it('should convert simple type', () => {
         addProfile(mapper, typeConverterProfile);
 
         const source = new TypeConverter();

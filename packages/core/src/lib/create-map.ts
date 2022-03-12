@@ -56,9 +56,7 @@ export function createMap<
     if (!mappings.has(sourceIdentifier)) {
         mappings.set(
             sourceIdentifier,
-            new Map<MetadataIdentifier, Mapping<TSource, TDestination>>([
-                [destinationIdentifier, mapping],
-            ])
+            new Map([[destinationIdentifier, mapping]])
         );
     } else {
         mappings.get(sourceIdentifier)!.set(destinationIdentifier, mapping);

@@ -1,5 +1,4 @@
 export const STRATEGY = Symbol('__strategy__');
-export const TYPE_CONVERTERS = Symbol('__type_converters__');
 export const MAPPINGS = Symbol('__mappings__');
 export const METADATA_MAP = Symbol('__metadata_map__');
 export const ERROR_HANDLER = Symbol('__error_handler__');

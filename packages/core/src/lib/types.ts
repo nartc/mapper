@@ -3,6 +3,7 @@ import {
     MAPPINGS,
     METADATA_MAP,
     NAMING_CONVENTIONS,
+    PROFILE_CONFIGURATION_CONTEXT,
     RECURSIVE_COUNT,
     RECURSIVE_DEPTH,
     STRATEGY,
@@ -234,6 +235,7 @@ export interface Mapper {
     [METADATA_MAP]: Map<MetadataIdentifier, Array<Metadata>>;
     [RECURSIVE_DEPTH]: Map<MetadataIdentifier, ArrayKeyedMap>;
     [RECURSIVE_COUNT]: Map<MetadataIdentifier, ArrayKeyedMap>;
+    [PROFILE_CONFIGURATION_CONTEXT]: Set<MappingConfiguration>;
 }
 
 export const enum TransformationType {
@@ -268,17 +270,12 @@ export type MemberMapReturn<
     | IgnoreReturn<TSource, TDestination, TSelectorReturn>
     | MapWithArgumentsReturn<TSource, TDestination, TSelectorReturn>;
 
-export const enum PreConditionReturnClassId {
-    preConditionPredicate,
-    preConditionDefaultValue,
-}
-
 export type PreConditionReturn<
     TSource extends Dictionary<TSource>,
     TDestination extends Dictionary<TDestination>,
     TSelectorReturn = SelectorReturn<TDestination>
 > = [
-    preConditionPredicate: (source: TSource) => boolean,
+    preConditionPredicate: ConditionPredicate<TSource>,
     defaultValue?: TSelectorReturn
 ];
 
@@ -286,10 +283,7 @@ export type MapFromReturn<
     TSource extends Dictionary<TSource>,
     TDestination extends Dictionary<TDestination>,
     TSelectorReturn = SelectorReturn<TDestination>
-> = [
-    TransformationType.MapFrom,
-    (source: TSource, destination?: TDestination) => TSelectorReturn
-];
+> = [TransformationType.MapFrom, Selector<TSource, TSelectorReturn>];
 
 export type MapWithReturn<
     TSource extends Dictionary<TSource>,
@@ -432,10 +426,16 @@ export type Mapping<
     destinationConstructor: DestinationConstructor<TSource, TDestination>,
     typeConverters?: Map<
         MetadataIdentifier | PrimitiveConstructor | DateConstructor,
-        Map<
-            MetadataIdentifier | PrimitiveConstructor | DateConstructor,
-            Selector
-        >
+        [
+            Map<
+                MetadataIdentifier | PrimitiveConstructor | DateConstructor,
+                [Selector?, Selector?]
+            >?,
+            Map<
+                MetadataIdentifier | PrimitiveConstructor | DateConstructor,
+                [Selector?, Selector?]
+            >?
+        ]
     >,
     callbacks?: [
         beforeMap?: MapCallback<TSource, TDestination>,
@@ -454,8 +454,8 @@ export type PathMap = Map<string, PathMap | DataMap>;
 export type ArrayKeyedMap = PathMap | DataMap;
 
 export type MappingConfiguration<
-    TSource extends Dictionary<TSource>,
-    TDestination extends Dictionary<TDestination>
+    TSource extends Dictionary<TSource> = any,
+    TDestination extends Dictionary<TDestination> = any
 > = ((mapping: Mapping<TSource, TDestination>) => void) | void;
 
 export type ApplyMetadataFn = <TModel extends Dictionary<TModel>>(

@@ -1,5 +1,10 @@
 import type { Converter, MappingProfile } from '@automapper/core';
-import { convertUsing, createMap, forMember } from '@automapper/core';
+import {
+    convertUsing,
+    createMap,
+    forMember,
+    typeConverter,
+} from '@automapper/core';
 import { BioDto } from '../dtos/bio.dto';
 import { Bio } from '../models/bio';
 
@@ -14,6 +19,14 @@ export const bioProfile: MappingProfile = (mapper) => {
         mapper,
         Bio,
         BioDto,
+        typeConverter(Date, String, (date) => date.toDateString()),
+        typeConverter([Date], [String], (manyDates) =>
+            manyDates.map((each) => each.toDateString())
+        ),
+        typeConverter([Date], String, (manyDates) =>
+            manyDates.map((each) => each.toDateString()).join('')
+        ),
+        typeConverter(Date, [String], (date) => [date.toDateString()]),
         forMember((d) => d.birthday, convertUsing(dateToStringConverter))
     );
 };

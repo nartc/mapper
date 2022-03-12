@@ -31,7 +31,7 @@ export function mapMember<
         case TransformationType.MapFrom:
             value = (
                 mapFn as MapFromReturn<TSource, TDestination>[MapFnClassId.fn]
-            )(sourceObject, destinationObject);
+            )(sourceObject);
             break;
         case TransformationType.FromValue:
             value = (

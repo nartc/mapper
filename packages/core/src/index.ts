@@ -12,6 +12,7 @@ export * from './lib/create-initial-mapping';
 export * from './lib/create-map';
 export * from './lib/add-profile';
 export * from './lib/for-member';
+export * from './lib/type-converters';
 export * from './lib/construct-using';
 export * from './lib/map-from';
 export * from './lib/convert-using';

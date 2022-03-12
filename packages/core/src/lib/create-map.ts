@@ -1,3 +1,4 @@
+import { getProfileConfigurationContext } from './add-profile';
 import { getErrorHandler } from './error-handler';
 import { getMappings } from './mappings';
 import { getStrategy } from './strategy';
@@ -46,7 +47,9 @@ export function createMap<
     mapping = strategy.createMapping(
         sourceIdentifier,
         destinationIdentifier,
-        mappingConfigFns || []
+        (mappingConfigFns || []).concat(
+            ...getProfileConfigurationContext(mapper).values()
+        )
     );
 
     // store the mapping

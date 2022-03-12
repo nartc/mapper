@@ -5,6 +5,7 @@ import {
     MAPPINGS,
     METADATA_MAP,
     NAMING_CONVENTIONS,
+    PROFILE_CONFIGURATION_CONTEXT,
     RECURSIVE_COUNT,
     RECURSIVE_DEPTH,
     STRATEGY,
@@ -15,6 +16,7 @@ import type {
     ErrorHandler,
     Mapper,
     Mapping,
+    MappingConfiguration,
     Metadata,
     MetadataIdentifier,
     NamingConvention,
@@ -60,7 +62,8 @@ export function createMapper({
     let recursiveDepth: Map<MetadataIdentifier, ArrayKeyedMap>;
     let recursiveCount: Map<MetadataIdentifier, ArrayKeyedMap>;
 
-    // initialize the mapper
+    // this mapper is tracking some context about the MappingProfile
+    let profileConfigurationContext: Set<MappingConfiguration>;
 
     // return the Proxy
     return new Proxy<Mapper>({} as Mapper, {
@@ -70,6 +73,14 @@ export function createMapper({
                     strategy = strategyInitializer(receiver);
                 }
                 return strategy;
+            }
+
+            if (p === PROFILE_CONFIGURATION_CONTEXT) {
+                if (!profileConfigurationContext) {
+                    profileConfigurationContext =
+                        new Set<MappingConfiguration>();
+                }
+                return profileConfigurationContext;
             }
 
             if (p === TYPE_CONVERTERS) {
@@ -141,7 +152,14 @@ export function createMapper({
             }
 
             if (p === 'dispose') {
-                return () => {};
+                return () => {
+                    typeConverters?.clear();
+                    mappings?.clear();
+                    metadata?.clear();
+                    recursiveDepth?.clear();
+                    recursiveCount?.clear();
+                    profileConfigurationContext?.clear();
+                };
             }
 
             if (p === 'map') {
@@ -168,7 +186,28 @@ export function createMapper({
             }
 
             if (p === 'mapAsync') {
-                return () => {};
+                return <
+                    TSource extends Dictionary<TSource>,
+                    TDestination extends Dictionary<TDestination>
+                >(
+                    sourceObject: TSource,
+                    sourceIdentifier: ModelIdentifier<TSource>,
+                    destinationIdentifier: ModelIdentifier<TDestination>,
+                    options?: MapOptions<TSource, TDestination>
+                ): Promise<TDestination> => {
+                    return Promise.resolve().then(() =>
+                        Reflect.get(
+                            target,
+                            (p as string).replace('Async', ''),
+                            receiver
+                        )(
+                            sourceObject,
+                            sourceIdentifier,
+                            destinationIdentifier,
+                            options
+                        )
+                    );
+                };
             }
 
             if (p === 'mapArray') {

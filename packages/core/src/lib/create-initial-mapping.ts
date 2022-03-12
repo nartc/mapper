@@ -4,26 +4,23 @@ import { isPrimitiveArrayEqual } from './is-primitive-array-equal';
 import { mapInitialize } from './map-initialize';
 import { getMetadataMap } from './metadata';
 import { getNamingConventions } from './naming-conventions';
-import { getTypeConverters } from './type-converters';
-import type {
+import {
     ApplyMetadataFn,
     DestinationConstructor,
     Dictionary,
+    MapFnClassId,
     Mapper,
     Mapping,
+    MappingClassId,
     MappingConfiguration,
+    MappingPropertiesClassId,
     MappingTransformation,
+    MappingTransformationClassId,
+    MetadataClassId,
     MetadataIdentifier,
     Primitive,
     PrimitiveConstructor,
     Selector,
-} from './types';
-import {
-    MapFnClassId,
-    MappingClassId,
-    MappingPropertiesClassId,
-    MappingTransformationClassId,
-    MetadataClassId,
 } from './types';
 
 export function createInitialMapping<
@@ -145,39 +142,40 @@ export function createInitialMapping<
 
         if (nestedMappingPair) {
             let typeConverter: Selector | undefined;
+
+            const isSourceArray = metadataAtSource![MetadataClassId.isArray];
+            const isDestinationArray =
+                metadataAtDestination![MetadataClassId.isArray];
             const mappingTypeConverters =
                 mapping[MappingClassId.typeConverters];
-            if (mappingTypeConverters) {
-                typeConverter = mappingTypeConverters
-                    .get(
-                        nestedMappingPair[1] as
-                            | MetadataIdentifier
-                            | PrimitiveConstructor
-                            | DateConstructor
-                    )
-                    ?.get(
-                        nestedMappingPair[0] as
-                            | MetadataIdentifier
-                            | PrimitiveConstructor
-                            | DateConstructor
-                    );
-            }
 
-            if (!typeConverter) {
-                const mapperTypeConverters = getTypeConverters(mapper);
-                typeConverter = mapperTypeConverters
-                    .get(
+            if (mappingTypeConverters) {
+                const [sourceConverters, arraySourceConverters] =
+                    mappingTypeConverters.get(
                         nestedMappingPair[1] as
                             | MetadataIdentifier
                             | PrimitiveConstructor
                             | DateConstructor
-                    )
-                    ?.get(
-                        nestedMappingPair[0] as
-                            | MetadataIdentifier
-                            | PrimitiveConstructor
-                            | DateConstructor
-                    );
+                    ) || [];
+
+                const [destinationConverter, arrayDestinationConverter] =
+                    (isSourceArray
+                        ? arraySourceConverters?.get(
+                              nestedMappingPair[0] as
+                                  | MetadataIdentifier
+                                  | PrimitiveConstructor
+                                  | DateConstructor
+                          )
+                        : sourceConverters?.get(
+                              nestedMappingPair[0] as
+                                  | MetadataIdentifier
+                                  | PrimitiveConstructor
+                                  | DateConstructor
+                          )) || [];
+
+                typeConverter = isDestinationArray
+                    ? arrayDestinationConverter
+                    : destinationConverter;
             }
 
             if (typeConverter) {

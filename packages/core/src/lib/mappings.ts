@@ -1,6 +1,11 @@
 import { getErrorHandler } from './error-handler';
 import { MAPPINGS } from './symbols';
-import type { Mapper, MetadataIdentifier, ModelIdentifier } from './types';
+import type {
+    Mapper,
+    Mapping,
+    MetadataIdentifier,
+    ModelIdentifier,
+} from './types';
 
 export function getMappings(mapper: Mapper) {
     return mapper[MAPPINGS];
@@ -10,7 +15,7 @@ export function getMapping(
     mapper: Mapper,
     source: ModelIdentifier,
     destination: ModelIdentifier
-) {
+): Mapping {
     // turn string into symbol for identifier
     const sourceIdentifier: MetadataIdentifier =
         typeof source === 'string' ? Symbol.for(source) : source;

@@ -4,9 +4,8 @@ import { isPrimitiveArrayEqual } from './is-primitive-array-equal';
 import { mapInitialize } from './map-initialize';
 import { getMetadataMap } from './metadata';
 import { getNamingConventions } from './naming-conventions';
+import { getStrategy } from './strategy';
 import {
-    ApplyMetadataFn,
-    DestinationConstructor,
     Dictionary,
     MapFnClassId,
     Mapper,
@@ -30,10 +29,13 @@ export function createInitialMapping<
     mapper: Mapper,
     source: MetadataIdentifier<TSource>,
     destination: MetadataIdentifier<TDestination>,
-    applyMetadataFn: ApplyMetadataFn,
-    destinationConstructor: DestinationConstructor<TSource, TDestination>,
     configurations: MappingConfiguration<TSource, TDestination>[] = []
 ): Mapping {
+    const strategy = getStrategy(mapper);
+    const applyMetadataFn = strategy.applyMetadata.bind(strategy);
+    const destinationConstructor =
+        strategy.destinationConstructor.bind(strategy);
+
     const mapping: Mapping<TSource, TDestination> = [
         [source, destination],
         [],

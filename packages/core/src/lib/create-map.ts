@@ -1,4 +1,5 @@
 import { getProfileConfigurationContext } from './add-profile';
+import { createInitialMapping } from './create-initial-mapping';
 import { getErrorHandler } from './error-handler';
 import { getMappings } from './mappings';
 import { getStrategy } from './strategy';
@@ -44,7 +45,9 @@ export function createMap<
 
     // after all the mapping configurations are consolidated,
     // initialize the mapping
-    mapping = strategy.createMapping(
+    strategy.exploreMetadata(sourceIdentifier, destinationIdentifier);
+    mapping = createInitialMapping(
+        mapper,
         sourceIdentifier,
         destinationIdentifier,
         (mappingConfigFns || []).concat(

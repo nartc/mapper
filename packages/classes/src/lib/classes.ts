@@ -3,14 +3,11 @@ import type {
     ApplyMetadataFn,
     Constructor,
     DestinationConstructor,
-    Dictionary,
     Mapper,
-    MappingConfiguration,
     MappingStrategy,
     MappingStrategyInitializer,
 } from '@automapper/core';
 import {
-    createInitialMapping,
     exploreMetadata,
     getMetadataMap,
     getRecursiveCount,
@@ -151,28 +148,9 @@ export function classes(
             },
             destinationConstructor,
             mapper,
-            createMapping<
-                TSource extends Dictionary<TSource>,
-                TDestination extends Dictionary<TDestination>
-            >(
-                source: Constructor<TSource>,
-                destination: Constructor<TDestination>,
-                configurations: MappingConfiguration<
-                    TSource,
-                    TDestination
-                >[] = []
-            ) {
+            exploreMetadata(source, destination) {
                 extractMetadata(source);
                 extractMetadata(destination);
-
-                return createInitialMapping(
-                    mapper,
-                    source,
-                    destination,
-                    this.applyMetadata.bind(this),
-                    this.destinationConstructor.bind(this),
-                    configurations
-                );
             },
         };
     };

@@ -481,15 +481,7 @@ export interface MappingStrategy<TIdentifier extends MetadataIdentifier> {
 
     destinationConstructor: DestinationConstructor;
     mapper: Mapper;
-
-    createMapping<
-        TSource extends Dictionary<TSource>,
-        TDestination extends Dictionary<TDestination>
-    >(
-        source: TIdentifier,
-        destination: TIdentifier,
-        mappingConfigurations: MappingConfiguration<TSource, TDestination>[]
-    ): Mapping<TSource, TDestination>;
+    exploreMetadata(source: TIdentifier, destination: TIdentifier): void;
 }
 
 export type MappingStrategyInitializer<TIdentifier extends MetadataIdentifier> =

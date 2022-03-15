@@ -102,11 +102,12 @@ export type MapCallback<
 
 export interface MapOptions<
     TSource extends Dictionary<TSource>,
-    TDestination extends Dictionary<TDestination>
+    TDestination extends Dictionary<TDestination>,
+    TExtraArgs extends Record<string, any> = Record<string, any>
 > {
     beforeMap?: MapCallback<TSource, TDestination>;
     afterMap?: MapCallback<TSource, TDestination>;
-    extraArgs?: <TExtraArgs extends Record<string, any> = Record<string, any>>(
+    extraArgs?: (
         mapping: Mapping<TSource, TDestination>,
         destinationObject: TDestination
     ) => TExtraArgs;

@@ -1,15 +1,14 @@
 import { classes } from '@automapper/classes';
 import {
-    addProfile,
     CamelCaseNamingConvention,
+    createMap,
     createMapper,
+    forMember,
+    forSelf,
+    fromValue,
 } from '@automapper/core';
-import { CartItemDto } from '../dtos/cart-item.dto';
-import { CartItem, Item } from '../models/cart-item';
-import {
-    cartItemProfile,
-    cartItemWithMappingProfile,
-} from '../profiles/cart-item.profile';
+import { CartItemDto } from './dtos/cart-item.dto';
+import { CartItem, Item } from './models/cart-item';
 
 describe('Map - ForSelf', () => {
     const mapper = createMapper({
@@ -30,7 +29,12 @@ describe('Map - ForSelf', () => {
     });
 
     it('should map with SourceIdentifier', () => {
-        addProfile(mapper, cartItemProfile);
+        createMap(
+            mapper,
+            CartItem,
+            CartItemDto,
+            forSelf(Item, (src) => src.item)
+        );
 
         const dto = mapper.map(cartItem, CartItem, CartItemDto);
         expect(dto.name).toEqual(item.name);
@@ -40,10 +44,48 @@ describe('Map - ForSelf', () => {
     });
 
     it('should map with existing mapping forSelf', () => {
-        addProfile(mapper, cartItemWithMappingProfile);
+        const mapping = createMap(mapper, Item, CartItemDto);
+        createMap(
+            mapper,
+            CartItem,
+            CartItemDto,
+            forSelf(mapping, (src) => src.item)
+        );
 
         const dto = mapper.map(cartItem, CartItem, CartItemDto);
         expect(dto.name).toEqual(item.name);
+        expect(dto.price).toEqual(item.price);
+        expect(dto.quantity).toEqual(cartItem.quantity);
+        expect(dto.total).toEqual(cartItem.quantity * item.price);
+    });
+
+    it('should respect mapping property by forMember', () => {
+        createMap(
+            mapper,
+            CartItem,
+            CartItemDto,
+            forSelf(Item, (src) => src.item),
+            forMember((d) => d.name, fromValue('override name'))
+        );
+
+        const dto = mapper.map(cartItem, CartItem, CartItemDto);
+        expect(dto.name).toEqual('override name');
+        expect(dto.price).toEqual(item.price);
+        expect(dto.quantity).toEqual(cartItem.quantity);
+        expect(dto.total).toEqual(cartItem.quantity * item.price);
+    });
+
+    it('should respect mapping property by forMember BEFORE forSelf', () => {
+        createMap(
+            mapper,
+            CartItem,
+            CartItemDto,
+            forMember((d) => d.name, fromValue('override name')),
+            forSelf(Item, (src) => src.item)
+        );
+
+        const dto = mapper.map(cartItem, CartItem, CartItemDto);
+        expect(dto.name).toEqual('override name');
         expect(dto.price).toEqual(item.price);
         expect(dto.quantity).toEqual(cartItem.quantity);
         expect(dto.total).toEqual(cartItem.quantity * item.price);

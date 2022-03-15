@@ -158,22 +158,22 @@ Original error: ${originalError}`;
             continue;
         }
 
-        // check if metadata as destinationMemberPath is null
-        const destinationMetadata = metadataMap.get(destinationIdentifier);
-        const hasNullMetadata =
-            destinationMetadata &&
-            destinationMetadata.find((metadata) =>
-                isPrimitiveArrayEqual(
-                    metadata[MetadataClassId.propertyKeys],
-                    destinationMemberPath
-                )
-            ) === null;
-
         // Start with all the mapInitialize
         if (
             transformationMapFn[MapFnClassId.type] ===
             TransformationType.MapInitialize
         ) {
+            // check if metadata as destinationMemberPath is null
+            const destinationMetadata = metadataMap.get(destinationIdentifier);
+            const hasNullMetadata =
+                destinationMetadata &&
+                destinationMetadata.find((metadata) =>
+                    isPrimitiveArrayEqual(
+                        metadata[MetadataClassId.propertyKeys],
+                        destinationMemberPath
+                    )
+                ) === null;
+
             const mapInitializedValue = (
                 transformationMapFn[MapFnClassId.fn] as MapInitializeReturn<
                     TSource,

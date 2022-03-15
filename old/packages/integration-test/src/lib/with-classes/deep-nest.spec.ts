@@ -1,8 +1,5 @@
-import {
-  CamelCaseNamingConvention,
-  SnakeCaseNamingConvention,
-} from '@automapper/core';
-import { setupClasses } from '../setup.spec';
+import {CamelCaseNamingConvention, SnakeCaseNamingConvention,} from '@automapper/core';
+import {setupClasses} from '../setup.spec';
 import {
   Foo,
   FooBar,
@@ -15,7 +12,6 @@ import {
   FooFoo,
   FooFooDto,
   FooFooFoo,
-  FooFooFooDto,
 } from './fixtures/models/deep-nest';
 
 describe('Deep Nest models', () => {

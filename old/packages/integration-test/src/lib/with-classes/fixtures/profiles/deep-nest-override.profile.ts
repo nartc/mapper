@@ -1,5 +1,5 @@
-import type { MappingProfile } from '@automapper/core';
-import { fromValue } from '@automapper/core';
+import type {MappingProfile} from '@automapper/core';
+import {fromValue} from '@automapper/core';
 import {
   Foo,
   FooBar,

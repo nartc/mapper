@@ -1,6 +1,10 @@
 import { createMap, MappingProfile, typeConverter } from '@automapper/core';
 import { TypeConverterDto } from '../dtos/type-converter.dto';
-import { TypeConverter } from '../models/type-converter';
+import {
+    DateString,
+    TimestampString,
+    TypeConverter,
+} from '../models/type-converter';
 
 export const typeConverterProfile: MappingProfile = (mapper) => {
     createMap(
@@ -12,6 +16,10 @@ export const typeConverterProfile: MappingProfile = (mapper) => {
         typeConverter(String, Date, (str) => new Date(str)),
         typeConverter([String], [Number], (manyStrs) =>
             manyStrs.map((str) => parseInt(str))
+        ),
+        typeConverter(DateString, String, (dateStr) => dateStr.toDateString()),
+        typeConverter(TimestampString, String, (timestampStr) =>
+            timestampStr.toISOString()
         )
     );
 };

@@ -181,7 +181,7 @@ export function createInitialMapping<
             }
         }
 
-        mappingProperties.push([
+        mappingProperties.unshift([
             destinationPath,
             [destinationPath, transformation],
             nestedMappingPair,

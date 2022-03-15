@@ -30,6 +30,12 @@ describe('Map', () => {
 
         const user = getUser();
         const dto = mapper.map(user, User, UserDto);
-        expect(dto).toBeTruthy();
+        expect(dto.first).toEqual(user.firstName);
+        expect(dto.last).toEqual(user.lastName);
+        expect(dto.full).toEqual(user.firstName + ' ' + user.lastName);
+        expect(dto.jobTitle).toEqual(user.job.title);
+        expect(dto.jobAnnualSalary).toEqual(user.job.annualSalary);
+        expect(dto.logins).toEqual(user.logins);
+        expect(dto.lastLogin).toEqual(user.logins[user.logins.length - 1]);
     });
 });

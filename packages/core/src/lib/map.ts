@@ -78,6 +78,7 @@ export function map<
     // destructure mapping
     const [
         [sourceIdentifier, destinationIdentifier],
+        ,
         propsToMap,
         mapper,
         destinationConstructor,

@@ -14,6 +14,10 @@ describe('Map - Type Converter', () => {
         namingConventions: new CamelCaseNamingConvention(),
     });
 
+    afterEach(() => {
+        mapper.dispose();
+    });
+
     it('should convert simple type', () => {
         addProfile(mapper, typeConverterProfile);
 

@@ -346,8 +346,8 @@ export const enum MappingTransformationClassId {
 }
 
 export type MappingTransformation<
-    TSource extends Dictionary<TSource>,
-    TDestination extends Dictionary<TDestination>,
+    TSource extends Dictionary<TSource> = any,
+    TDestination extends Dictionary<TDestination> = any,
     TSelectorReturn = SelectorReturn<TDestination>
 > = [
     memberMapFn: MemberMapReturn<TSource, TDestination, TSelectorReturn>,
@@ -393,6 +393,7 @@ export type NestedMappingPair = [
 
 export const enum MappingClassId {
     identifiers,
+    identiferMetadata,
     properties,
     mapper,
     destinationConstructor,
@@ -409,6 +410,7 @@ export type Mapping<
         source: MetadataIdentifier<TSource>,
         destination: MetadataIdentifier<TDestination>
     ],
+    identifierMetadata: [source: TSource, destination: TDestination],
     properties: Array<
         [
             path: string[],
@@ -481,7 +483,7 @@ export interface MappingStrategy<TIdentifier extends MetadataIdentifier> {
 
     destinationConstructor: DestinationConstructor;
     mapper: Mapper;
-    exploreMetadata(source: TIdentifier, destination: TIdentifier): void;
+    exploreMetadata(...identifiers: TIdentifier[]): void;
 }
 
 export type MappingStrategyInitializer<TIdentifier extends MetadataIdentifier> =

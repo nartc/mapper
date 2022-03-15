@@ -1,6 +1,6 @@
 import type { NamingConvention } from './types';
 
-export function getSourcePath(
+export function getPath(
     path: string[],
     [sourceNamingConvention, destinationNamingConvention]: Readonly<
         [NamingConvention, NamingConvention]
@@ -18,7 +18,7 @@ export function getSourcePath(
         : keyParts.map((p) => sourceNamingConvention.transformPropertyName(p));
 }
 
-export function getFlatteningSourcePaths(
+export function getFlatteningPaths(
     src: Record<string, unknown>,
     srcPath: string[],
     namingConventions: [NamingConvention, NamingConvention]

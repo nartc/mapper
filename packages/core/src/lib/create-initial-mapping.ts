@@ -1,5 +1,5 @@
+import { getFlatteningPaths, getPath } from './get-path';
 import { getPathRecursive } from './get-path-recursive';
-import { getFlatteningSourcePaths, getSourcePath } from './get-source-path';
 import { isPrimitiveArrayEqual } from './is-primitive-array-equal';
 import { mapInitialize } from './map-initialize';
 import { getMetadataMap } from './metadata';
@@ -36,27 +36,27 @@ export function createInitialMapping<
     const destinationConstructor =
         strategy.destinationConstructor.bind(strategy);
 
+    const destinationObject = applyMetadataFn(destination);
+    const sourceObject = applyMetadataFn(source);
+
     const mapping: Mapping<TSource, TDestination> = [
         [source, destination],
+        [sourceObject, destinationObject],
         [],
         mapper,
         destinationConstructor,
     ];
 
+    // try to inherit naming conventions from mapper
+    mapping[MappingClassId.namingConventions] = getNamingConventions(mapper);
+
+    // run configuration fn on mapping
     for (let i = 0, length = configurations.length; i < length; i++) {
         const configuration = configurations[i];
         if (typeof configuration === 'function') {
             configuration(mapping);
         }
     }
-    if (mapping[MappingClassId.namingConventions] == null) {
-        // try to inherit naming conventions from mapper
-        mapping[MappingClassId.namingConventions] =
-            getNamingConventions(mapper);
-    }
-
-    const destinationObject = applyMetadataFn(destination);
-    const sourceObject = applyMetadataFn(source);
 
     const destinationPaths = getPathRecursive(destinationObject);
 
@@ -101,9 +101,9 @@ export function createInitialMapping<
         let sourcePath = destinationPath;
 
         if (namingConventions) {
-            sourcePath = getFlatteningSourcePaths(
+            sourcePath = getFlatteningPaths(
                 sourceObject,
-                getSourcePath(destinationPath, namingConventions),
+                getPath(destinationPath, namingConventions),
                 namingConventions
             );
         }

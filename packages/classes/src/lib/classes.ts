@@ -148,9 +148,10 @@ export function classes(
             },
             destinationConstructor,
             mapper,
-            exploreMetadata(source, destination) {
-                extractMetadata(source);
-                extractMetadata(destination);
+            exploreMetadata(...identifiers) {
+                for (let i = 0, length = identifiers.length; i < length; i++) {
+                    extractMetadata(identifiers[i]);
+                }
             },
         };
     };

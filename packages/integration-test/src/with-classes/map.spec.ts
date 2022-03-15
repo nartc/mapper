@@ -12,10 +12,14 @@ import { bioProfile } from '../profiles/bio.profile';
 import { userProfile } from '../profiles/user.profile';
 import { getUser } from '../utils/get-user';
 
-describe('map', () => {
+describe('Map', () => {
     const mapper = createMapper({
         strategyInitializer: classes(),
         namingConventions: new CamelCaseNamingConvention(),
+    });
+
+    afterEach(() => {
+        mapper.dispose();
     });
 
     it('should map user to userDto', () => {

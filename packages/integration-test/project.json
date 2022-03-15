@@ -3,7 +3,7 @@
     "sourceRoot": "packages/integration-test/src",
     "targets": {
         "build": {
-            "executor": "@nrwl/js:swc",
+            "executor": "@nrwl/js:tsc",
             "outputs": ["{options.outputPath}"],
             "options": {
                 "outputPath": "dist/packages/integration-test",

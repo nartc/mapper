@@ -157,11 +157,7 @@ export function createMapper({
                     options?: MapOptions<TSource, TDestination>
                 ): Promise<TDestination> => {
                     return Promise.resolve().then(() =>
-                        Reflect.get(
-                            target,
-                            (p as string).replace('Async', ''),
-                            receiver
-                        )(
+                        receiver['map'](
                             sourceObject,
                             sourceIdentifier,
                             destinationIdentifier,
@@ -172,11 +168,78 @@ export function createMapper({
             }
 
             if (p === 'mapArray') {
-                return () => {};
+                return <
+                    TSource extends Dictionary<TSource>,
+                    TDestination extends Dictionary<TDestination>
+                >(
+                    sourceArray: TSource[],
+                    sourceIdentifier: ModelIdentifier<TSource>,
+                    destinationIdentifier: ModelIdentifier<TDestination>,
+                    options?: MapOptions<TSource[], TDestination[]>
+                ): TDestination[] => {
+                    if (!sourceArray.length) return [];
+
+                    const mapping = getMapping(
+                        receiver,
+                        sourceIdentifier,
+                        destinationIdentifier
+                    );
+
+                    const { beforeMap, afterMap, extraArgs } = options || {};
+
+                    if (beforeMap) {
+                        beforeMap(sourceArray, []);
+                    }
+
+                    const destinationArray: TDestination[] = [];
+
+                    for (
+                        let i = 0, length = sourceArray.length;
+                        i < length;
+                        i++
+                    ) {
+                        destinationArray.push(
+                            mapReturn(
+                                mapping,
+                                sourceArray[i],
+                                {
+                                    extraArgs: extraArgs as MapOptions<
+                                        TSource,
+                                        TDestination
+                                    >['extraArgs'],
+                                },
+                                true
+                            )
+                        );
+                    }
+
+                    if (afterMap) {
+                        afterMap(sourceArray, destinationArray);
+                    }
+
+                    return destinationArray;
+                };
             }
 
             if (p === 'mapArrayAsync') {
-                return () => {};
+                return <
+                    TSource extends Dictionary<TSource>,
+                    TDestination extends Dictionary<TDestination>
+                >(
+                    sourceArray: TSource[],
+                    sourceIdentifier: ModelIdentifier<TSource>,
+                    destinationIdentifier: ModelIdentifier<TDestination>,
+                    options?: MapOptions<TSource[], TDestination[]>
+                ) => {
+                    return Promise.resolve().then(() => {
+                        return receiver['mapArray'](
+                            sourceArray,
+                            sourceIdentifier,
+                            destinationIdentifier,
+                            options
+                        );
+                    });
+                };
             }
 
             if (p === 'mutate') {

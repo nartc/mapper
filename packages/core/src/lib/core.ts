@@ -1,5 +1,4 @@
-import { mapMutate, mapReturn } from './map';
-import { getMapping } from './mappings';
+import { mapMutate, mapReturn } from './mappings/map';
 import {
     ERROR_HANDLER,
     MAPPINGS,
@@ -23,6 +22,7 @@ import type {
     NamingConvention,
 } from './types';
 import { Dictionary, MapOptions, ModelIdentifier } from './types';
+import { getMapping } from './utils/get-mapping';
 
 export interface CreateMapperOptions {
     strategyInitializer: MappingStrategyInitializer<MetadataIdentifier>;

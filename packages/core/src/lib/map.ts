@@ -1,11 +1,12 @@
 import { assertUnmappedProperties } from './assert-unmapped-properties';
 import { getErrorHandler } from './error-handler';
+import { get } from './get';
 import { isEmpty } from './is-empty';
 import { isPrimitiveArrayEqual } from './is-primitive-array-equal';
 import { mapMember } from './map-member';
 import { getMapping } from './mappings';
 import { getMetadataMap } from './metadata';
-import { set } from './set';
+import { set, setMutate } from './set';
 import {
     Constructor,
     Dictionary,
@@ -43,6 +44,39 @@ export function mapReturn<
         sourceObject,
         options,
         setMemberFn: setMemberReturnFn,
+        isMapArray,
+    });
+}
+
+function setMemberMutateFn(destinationObj: Record<string, unknown>) {
+    return (destinationMember: string[]) => (value: unknown) => {
+        if (value !== undefined) {
+            setMutate(destinationObj, destinationMember, value);
+        }
+    };
+}
+
+function getMemberMutateFn(destinationObj: Record<string, unknown>) {
+    return (memberPath: string[] | undefined) =>
+        get(destinationObj, memberPath) as Record<string, unknown>;
+}
+
+export function mapMutate<
+    TSource extends Dictionary<TSource>,
+    TDestination extends Dictionary<TDestination>
+>(
+    mapping: Mapping<TSource, TDestination>,
+    sourceObject: TSource,
+    destinationObj: TDestination,
+    options: MapOptions<TSource, TDestination>,
+    isMapArray = false
+): void {
+    map({
+        sourceObject,
+        mapping,
+        setMemberFn: setMemberMutateFn(destinationObj),
+        getMemberFn: getMemberMutateFn(destinationObj),
+        options,
         isMapArray,
     });
 }
@@ -236,6 +270,16 @@ Original error: ${originalError}`;
 
                 // nested mutate
                 if (getMemberFn) {
+                    const memberValue = getMemberFn(destinationMemberPath);
+                    if (memberValue !== undefined) {
+                        map({
+                            sourceObject: mapInitializedValue as TSource,
+                            mapping: nestedMapping,
+                            options: { extraArgs },
+                            setMemberFn: setMemberMutateFn(memberValue),
+                            getMemberFn: getMemberMutateFn(memberValue),
+                        });
+                    }
                     continue;
                 }
 

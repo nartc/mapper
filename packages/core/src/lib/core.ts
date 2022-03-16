@@ -1,4 +1,4 @@
-import { mapReturn } from './map';
+import { mapMutate, mapReturn } from './map';
 import { getMapping } from './mappings';
 import {
     ERROR_HANDLER,
@@ -243,18 +243,126 @@ export function createMapper({
             }
 
             if (p === 'mutate') {
-                return () => {};
+                return <
+                    TSource extends Dictionary<TSource>,
+                    TDestination extends Dictionary<TDestination>
+                >(
+                    sourceObject: TSource,
+                    destinationObject: TDestination,
+                    sourceIdentifier: ModelIdentifier<TSource>,
+                    destinationIdentifier: ModelIdentifier<TDestination>,
+                    options?: MapOptions<TSource, TDestination>
+                ) => {
+                    if (sourceObject == null) return;
+
+                    const mapping = getMapping(
+                        receiver,
+                        sourceIdentifier,
+                        destinationIdentifier
+                    );
+
+                    mapMutate(
+                        mapping,
+                        sourceObject,
+                        destinationObject,
+                        options || {}
+                    );
+                };
             }
             if (p === 'mutateAsync') {
-                return () => {};
+                return <
+                    TSource extends Dictionary<TSource>,
+                    TDestination extends Dictionary<TDestination>
+                >(
+                    sourceObject: TSource,
+                    destinationObject: TDestination,
+                    sourceIdentifier: ModelIdentifier<TSource>,
+                    destinationIdentifier: ModelIdentifier<TDestination>,
+                    options?: MapOptions<TSource, TDestination>
+                ) => {
+                    return Promise.resolve().then(() =>
+                        receiver['mutate'](
+                            sourceObject,
+                            destinationObject,
+                            sourceIdentifier,
+                            destinationIdentifier,
+                            options
+                        )
+                    );
+                };
             }
 
             if (p === 'mutateArray') {
-                return () => {};
+                return <
+                    TSource extends Dictionary<TSource>,
+                    TDestination extends Dictionary<TDestination>
+                >(
+                    sourceArray: TSource[],
+                    destinationArray: TDestination[],
+                    sourceIdentifier: ModelIdentifier<TSource>,
+                    destinationIdentifier: ModelIdentifier<TDestination>,
+                    options?: MapOptions<TSource[], TDestination[]>
+                ) => {
+                    if (!sourceArray.length) return;
+
+                    const mapping = getMapping(
+                        receiver,
+                        sourceIdentifier,
+                        destinationIdentifier
+                    );
+
+                    const { beforeMap, afterMap, extraArgs } = options || {};
+
+                    if (beforeMap) {
+                        beforeMap(sourceArray, destinationArray);
+                    }
+
+                    for (
+                        let i = 0, length = sourceArray.length;
+                        i < length;
+                        i++
+                    ) {
+                        mapMutate(
+                            mapping,
+                            sourceArray[i],
+                            destinationArray[i] || {},
+                            {
+                                extraArgs: extraArgs as MapOptions<
+                                    TSource,
+                                    TDestination
+                                >['extraArgs'],
+                            },
+                            true
+                        );
+                    }
+
+                    if (afterMap) {
+                        afterMap(sourceArray, destinationArray);
+                    }
+                };
             }
 
             if (p === 'mutateArrayAsync') {
-                return () => {};
+                return <
+                    TSource extends Dictionary<TSource>,
+                    TDestination extends Dictionary<TDestination>
+                >(
+                    sourceArray: TSource[],
+                    destinationArray: TDestination[],
+                    sourceIdentifier: ModelIdentifier<TSource>,
+                    destinationIdentifier: ModelIdentifier<TDestination>,
+                    options?: MapOptions<TSource[], TDestination[]>
+                ) => {
+                    return Promise.resolve().then(() =>
+                        receiver['mutateArray'](
+                            sourceArray,
+                            destinationArray,
+                            sourceIdentifier,
+                            destinationIdentifier,
+                            options
+                        )
+                    );
+                };
             }
 
             return Reflect.get(target, p, receiver);

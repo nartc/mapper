@@ -34,7 +34,7 @@ export function forSelf<
         : undefined;
 
     return (mapping) => {
-        if (selfMapping == undefined) {
+        if (selfMapping == null) {
             const [, destinationIdentifier] =
                 mapping[MappingClassId.identifiers];
             const mapper = mapping[MappingClassId.mapper];

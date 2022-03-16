@@ -21,7 +21,7 @@ import {
     setRecursiveValue,
 } from '@automapper/core';
 import 'reflect-metadata';
-import { getStandaloneConstructors } from './automap-standalone';
+import { getStandaloneConstructors } from './decorators/automap-standalone';
 import { getMetadataList } from './get-metadata-list';
 
 function defaultApplyMetadata(

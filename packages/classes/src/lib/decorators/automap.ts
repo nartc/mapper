@@ -1,6 +1,6 @@
 import { Constructor } from '@automapper/core';
 import 'reflect-metadata';
-import { AUTOMAP_PROPERTIES_METADATA_KEY } from './keys';
+import { AUTOMAP_PROPERTIES_METADATA_KEY } from '../keys';
 
 export interface AutoMapOptions {
     /**

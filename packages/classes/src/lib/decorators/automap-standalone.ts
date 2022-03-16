@@ -1,6 +1,6 @@
 import type { Constructor } from '@automapper/core';
 import 'reflect-metadata';
-import { AUTOMAP_STANDALONE_METADATA_KEY } from './keys';
+import { AUTOMAP_STANDALONE_METADATA_KEY } from '../keys';
 
 export function AutoMapStandalone(
     ...constructors: Constructor[]

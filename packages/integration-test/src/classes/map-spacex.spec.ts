@@ -30,6 +30,14 @@ describe('Map - SpaceX example', () => {
         const dto = mapper.map(rocket, Rocket, RocketDto);
         assertRocketDto(rocket, dto);
     });
+
+    it('should map plain object rocket to rocket dto properly', () => {
+        addProfile(mapper, rocketProfile);
+
+        const rocket = getRocket();
+        const dto = mapper.map(Object.assign({}, rocket), Rocket, RocketDto);
+        assertRocketDto(rocket, dto);
+    });
 });
 
 function assertRocketDto(rocket: Rocket, dto: RocketDto) {

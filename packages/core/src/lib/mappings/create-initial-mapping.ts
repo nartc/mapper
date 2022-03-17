@@ -52,10 +52,7 @@ export function createInitialMapping<
 
     // run configuration fn on mapping
     for (let i = 0, length = configurations.length; i < length; i++) {
-        const configuration = configurations[i];
-        if (typeof configuration === 'function') {
-            configuration(mapping);
-        }
+        configurations[i](mapping);
     }
 
     const destinationPaths = getPathRecursive(destinationObject);

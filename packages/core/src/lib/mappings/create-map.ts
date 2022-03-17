@@ -1,4 +1,9 @@
-import { getErrorHandler, getMappings, getStrategy } from '../symbols';
+import {
+    getErrorHandler,
+    getMappings,
+    getProfileConfigurationContext,
+    getStrategy,
+} from '../symbols';
 import type {
     Dictionary,
     Mapper,
@@ -8,7 +13,6 @@ import type {
     ModelIdentifier,
 } from '../types';
 import { storeMetadata } from '../utils/store-metadata';
-import { getProfileConfigurationContext } from './add-profile';
 import { createInitialMapping } from './create-initial-mapping';
 
 export function createMap<
@@ -18,7 +22,10 @@ export function createMap<
     mapper: Mapper,
     source: ModelIdentifier<TSource>,
     destination: ModelIdentifier<TDestination>,
-    ...mappingConfigFns: MappingConfiguration<TSource, TDestination>[]
+    ...mappingConfigFns: (
+        | MappingConfiguration<TSource, TDestination>
+        | undefined
+    )[]
 ): Mapping<TSource, TDestination> {
     // turn string into symbol for identifier
     const sourceIdentifier: MetadataIdentifier<TSource> =
@@ -57,9 +64,11 @@ export function createMap<
         mapper,
         sourceIdentifier,
         destinationIdentifier,
-        (mappingConfigFns || []).concat(
-            ...getProfileConfigurationContext(mapper).values()
-        )
+        (mappingConfigFns || [])
+            .concat(...getProfileConfigurationContext(mapper).values())
+            .filter(
+                (configFn) => configFn != undefined
+            ) as MappingConfiguration[]
     );
 
     // store the mapping

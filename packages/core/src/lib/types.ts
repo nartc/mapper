@@ -460,7 +460,7 @@ export type ArrayKeyedMap = PathMap | DataMap;
 export type MappingConfiguration<
     TSource extends Dictionary<TSource> = any,
     TDestination extends Dictionary<TDestination> = any
-> = ((mapping: Mapping<TSource, TDestination>) => void) | void;
+> = (mapping: Mapping<TSource, TDestination>) => void;
 
 export type ApplyMetadataFn = <TModel extends Dictionary<TModel>>(
     model: MetadataIdentifier<TModel>

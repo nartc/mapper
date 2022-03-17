@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`forMember should update mapping properties with member map fn 1`] = `
+Array [
+  Array [
+    Array [
+      "foo",
+    ],
+    Array [
+      Array [
+        "foo",
+      ],
+      Array [
+        Array [
+          3,
+          [Function],
+        ],
+        undefined,
+      ],
+    ],
+  ],
+]
+`;

@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`extend should extend another mapping 1`] = `
+Array [
+  Array [
+    Array [
+      "foo",
+    ],
+    Array [
+      Array [
+        "foo",
+      ],
+      Array [
+        Array [
+          6,
+          [Function],
+        ],
+      ],
+    ],
+    Array [
+      [Function],
+      [Function],
+    ],
+  ],
+]
+`;
+
+exports[`extend should skip existing mapping properties on extended mapping 1`] = `
+Array [
+  Array [
+    Array [
+      "foo",
+    ],
+    Array [
+      Array [
+        "foo",
+      ],
+      Array [
+        Array [
+          6,
+          [Function],
+        ],
+      ],
+    ],
+    Array [
+      [Function],
+      [Function],
+    ],
+  ],
+  Array [
+    Array [
+      "bar",
+    ],
+    Array [
+      Array [
+        "bar",
+      ],
+      Array [
+        Array [
+          6,
+          [Function],
+        ],
+      ],
+    ],
+    Array [
+      [Function],
+      [Function],
+    ],
+  ],
+]
+`;

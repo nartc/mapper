@@ -52,7 +52,11 @@ export function extend<
         const propsToExtend = mappingToExtend[MappingClassId.properties];
 
         for (let i = 0, length = propsToExtend.length; i < length; i++) {
-            const [propToExtendKey, propToExtendMappingProp] = propsToExtend[i];
+            const [
+                propToExtendKey,
+                propToExtendMappingProp,
+                propToExtendNestedMapping,
+            ] = propsToExtend[i];
             const existProp = mapping[MappingClassId.properties].find(
                 ([pKey]) => isSamePath(pKey, propToExtendKey)
             );
@@ -63,6 +67,7 @@ export function extend<
                     TSource,
                     TDestination
                 >,
+                propToExtendNestedMapping,
             ]);
         }
     };

@@ -59,3 +59,7 @@ export function getRecursiveCount(
 export function getStrategy(mapper: Mapper) {
     return mapper[STRATEGY];
 }
+
+export function getProfileConfigurationContext(mapper: Mapper) {
+    return mapper[PROFILE_CONFIGURATION_CONTEXT];
+}

@@ -83,7 +83,7 @@ export class ModelVisitor {
                 // after traverse finishes, we add the metadata factory method to the class
                 // because all nodes' metadata should have been saved
                 if (isClassDeclaration(node)) {
-                    // visit each property in the class
+                    // visit each property/methods/nodes/comments in the class
                     node = visitEachChild(node, nodeVisitor, ctx);
                     return ModelVisitor.addMetadataFactory(
                         node as ClassDeclaration,

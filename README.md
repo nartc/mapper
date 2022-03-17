@@ -1,90 +1,70 @@
-# Automapper
+# AutoMapper TypeScript
 
-This project was generated using [Nx](https://nx.dev).
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 
-<p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
+[![All Contributors](https://img.shields.io/badge/all_contributors-7-orange.svg?style=flat-square)](#contributors-)
 
-🔎 **Smart, Fast and Extensible Build System**
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-## Adding capabilities to your workspace
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=nartc_mapper&metric=ncloc)](https://sonarcloud.io/dashboard?id=nartc_mapper)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=nartc_mapper&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=nartc_mapper)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=nartc_mapper&metric=alert_status)](https://sonarcloud.io/dashboard?id=nartc_mapper)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=nartc_mapper&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=nartc_mapper)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=nartc_mapper&metric=security_rating)](https://sonarcloud.io/dashboard?id=nartc_mapper)
 
-Nx supports many plugins which add capabilities for developing different types of applications and different tools.
+This is a monorepo of `@automapper/core` and official packages.
 
-These capabilities include generating applications, libraries, etc as well as the devtools to test, and build projects as well.
+## Packages
 
-Below are our core plugins:
+| Project                | Package                                                                                   | Version                                                             | Links                                                                                                                                                                                                                                               |
+| ---------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **core**               | [`@automapper/core`](https://npmjs.com/package/@automapper/core)                          | ![npm (scoped)](https://img.shields.io/npm/v/@automapper/core)      | [![README](https://img.shields.io/badge/README--green.svg)](/packages/core/README.md) ![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/@automapper/core) ![NPM](https://img.shields.io/npm/l/@automapper/core)                |
+| **classes**            | [`@automapper/classes`](https://npmjs.com/package/@automapper/classes)                    | ![npm (scoped)](https://img.shields.io/npm/v/@automapper/classes)   | [![README](https://img.shields.io/badge/README--green.svg)](/packages/classes/README.md) ![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/@automapper/classes) ![NPM](https://img.shields.io/npm/l/@automapper/classes)       |
+| **mapped-types**       | [`@automapper/classes/mapped-types`](https://npmjs.com/package/@automapper/classes)       | -                                                                   | [![README](https://img.shields.io/badge/README--green.svg)](/packages/classes/mapped-types/README.md)                                                                                                                                               |
+| **transformer-plugin** | [`@automapper/classes/transformer-plugin`](https://npmjs.com/package/@automapper/classes) | -                                                                   | [![README](https://img.shields.io/badge/README--green.svg)](/packages/classes/transformer-plugin/README.md)                                                                                                                                         |
+| **pojos**              | [`@automapper/pojos`](https://npmjs.com/package/@automapper/pojos)                        | ![npm (scoped)](https://img.shields.io/npm/v/@automapper/pojos)     | [![README](https://img.shields.io/badge/README--green.svg)](/packages/pojos/README.md) ![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/@automapper/pojos) ![NPM](https://img.shields.io/npm/l/@automapper/pojos)             |
+| **mikro**              | [`@automapper/pojos`](https://npmjs.com/package/@automapper/mikro)                        | ![npm (scoped)](https://img.shields.io/npm/v/@automapper/mikro)     | [![README](https://img.shields.io/badge/README--green.svg)](/packages/mikro/README.md) ![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/@automapper/mikro) ![NPM](https://img.shields.io/npm/l/@automapper/mikro)             |
+| **sequelize**          | [`@automapper/sequelize`](https://npmjs.com/package/@automapper/sequelize)                | ![npm (scoped)](https://img.shields.io/npm/v/@automapper/sequelize) | [![README](https://img.shields.io/badge/README--green.svg)](/packages/sequelize/README.md) ![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/@automapper/sequelize) ![NPM](https://img.shields.io/npm/l/@automapper/sequelize) |
+| **nestjs**             | [`@automapper/nestjs`](https://npmjs.com/package/@automapper/nestjs)                      | ![npm (scoped)](https://img.shields.io/npm/v/@automapper/nestjs)    | [![README](https://img.shields.io/badge/README--green.svg)](/packages/nestjs/README.md) ![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/@automapper/nestjs) ![NPM](https://img.shields.io/npm/l/@automapper/nestjs)          |
 
-- [React](https://reactjs.org)
-  - `npm install --save-dev @nrwl/react`
-- Web (no framework frontends)
-  - `npm install --save-dev @nrwl/web`
-- [Angular](https://angular.io)
-  - `npm install --save-dev @nrwl/angular`
-- [Nest](https://nestjs.com)
-  - `npm install --save-dev @nrwl/nest`
-- [Express](https://expressjs.com)
-  - `npm install --save-dev @nrwl/express`
-- [Node](https://nodejs.org)
-  - `npm install --save-dev @nrwl/node`
+### Others
 
-There are also many [community plugins](https://nx.dev/community) you could add.
+| Project                     | Description                                        | Links                                                                                             |
+| --------------------------- | -------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| **integration-test**        | Integration tests of Core and the official plugins | [![README](https://img.shields.io/badge/README--green.svg)](/packages/integration-test/README.md) |
+| **nestjs-integration-test** | Integration tests for NestJS                       | -                                                                                                 |
 
-## Generate an application
+## Documentations
 
-Run `nx g @nrwl/react:app my-app` to generate an application.
+See [Documentations](https://automapperts.netlify.app)
 
-> You can use any of the plugins above to generate applications as well.
+## Miscellaneous
 
-When using Nx, you can create multiple applications and libraries in the same workspace.
+`@automapper/*` is a later iteration of the legacy `@nartc/automapper`. `@nartc/automapper` is archived and is placed in this repo under [legacy branch](https://github.com/nartc/mapper/tree/legacy)
 
-## Generate a library
+## Contributors ✨
 
-Run `nx g @nrwl/react:lib my-lib` to generate a library.
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
-> You can also use any of the plugins above to generate libraries as well.
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://nartc.me/"><img src="https://avatars1.githubusercontent.com/u/25516557?v=4?s=75" width="75px;" alt=""/><br /><sub><b>Chau Tran</b></sub></a><br /><a href="https://github.com/nartc/mapper/commits?author=nartc" title="Code">💻</a> <a href="#ideas-nartc" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="https://github.com/micalevisk"><img src="https://avatars.githubusercontent.com/u/13461315?v=4?s=75" width="75px;" alt=""/><br /><sub><b>Micael Levi L. Cavalcante</b></sub></a><br /><a href="https://github.com/nartc/mapper/commits?author=micalevisk" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/AliYusuf95"><img src="https://avatars.githubusercontent.com/u/17704100?v=4?s=75" width="75px;" alt=""/><br /><sub><b>Ali Yusuf</b></sub></a><br /><a href="https://github.com/nartc/mapper/commits?author=AliYusuf95" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/robsonhermes"><img src="https://avatars.githubusercontent.com/u/26451017?v=4?s=75" width="75px;" alt=""/><br /><sub><b>Robson Hermes</b></sub></a><br /><a href="https://github.com/nartc/mapper/commits?author=robsonhermes" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/huybn5776"><img src="https://avatars.githubusercontent.com/u/6702287?v=4?s=75" width="75px;" alt=""/><br /><sub><b>Huybn</b></sub></a><br /><a href="https://github.com/nartc/mapper/commits?author=huybn5776" title="Code">💻</a></td>
+    <td align="center"><a href="http://jasonmerino.me/"><img src="https://avatars.githubusercontent.com/u/1660279?v=4?s=75" width="75px;" alt=""/><br /><sub><b>Jason Merino</b></sub></a><br /><a href="https://github.com/nartc/mapper/commits?author=jasonmerino" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/roblopz"><img src="https://avatars.githubusercontent.com/u/48892593?v=4?s=75" width="75px;" alt=""/><br /><sub><b>roblopz</b></sub></a><br /><a href="https://github.com/nartc/mapper/commits?author=roblopz" title="Code">💻</a></td>
+  </tr>
+</table>
 
-Libraries are shareable across libraries and applications. They can be imported from `@automapper/mylib`.
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
 
-## Development server
+<!-- ALL-CONTRIBUTORS-LIST:END -->
 
-Run `nx serve my-app` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `nx g @nrwl/react:component my-component --project=my-app` to generate a new component.
-
-## Build
-
-Run `nx build my-app` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `nx test my-app` to execute the unit tests via [Jest](https://jestjs.io).
-
-Run `nx affected:test` to execute the unit tests affected by a change.
-
-## Running end-to-end tests
-
-Run `nx e2e my-app` to execute the end-to-end tests via [Cypress](https://www.cypress.io).
-
-Run `nx affected:e2e` to execute the end-to-end tests affected by a change.
-
-## Understand your workspace
-
-Run `nx graph` to see a diagram of the dependencies of your projects.
-
-## Further help
-
-Visit the [Nx Documentation](https://nx.dev) to learn more.
-
-## ☁ Nx Cloud
-
-### Distributed Computation Caching & Distributed Task Execution
-
-<p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-cloud-card.png"></p>
-
-Nx Cloud pairs with Nx in order to enable you to build and test code more rapidly, by up to 10 times. Even teams that are new to Nx can connect to Nx Cloud and start saving time instantly.
-
-Teams using Nx gain the advantage of building full-stack applications with their preferred framework alongside Nx’s advanced code generation and project dependency graph, plus a unified experience for both frontend and backend developers.
-
-Visit [Nx Cloud](https://nx.app/) to learn more.
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification.
+Contributions of any kind welcome! Please check out our [contributing guide](CONTRIBUTING.md)

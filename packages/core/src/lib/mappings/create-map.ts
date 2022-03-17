@@ -1,9 +1,4 @@
-import {
-    getErrorHandler,
-    getMappings,
-    getMetadataMap,
-    getStrategy,
-} from '../symbols';
+import { getErrorHandler, getMappings, getStrategy } from '../symbols';
 import type {
     Dictionary,
     Mapper,
@@ -44,9 +39,6 @@ export function createMap<
         return mapping as Mapping<TSource, TDestination>;
     }
 
-    // get the metadata map on the mapper
-    const metadataMap = getMetadataMap(mapper);
-
     // get the strategy from Mapper to retrieve the metadata
     const strategy = getStrategy(mapper);
 
@@ -56,9 +48,7 @@ export function createMap<
     );
 
     strategyMetadataMap.forEach((metadataList, identifier) => {
-        if (!metadataMap.has(identifier)) {
-            storeMetadata(mapper, identifier, metadataList);
-        }
+        storeMetadata(mapper, identifier, metadataList);
     });
 
     // after all the mapping configurations are consolidated,

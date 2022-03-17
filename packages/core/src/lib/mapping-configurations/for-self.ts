@@ -18,6 +18,7 @@ import {
 } from '../types';
 import { get } from '../utils/get';
 import { isPrimitiveArrayEqual } from '../utils/is-primitive-array-equal';
+import { storeMetadata } from '../utils/store-metadata';
 
 export function forSelf<
     TSource extends Dictionary<TSource>,
@@ -44,7 +45,13 @@ export function forSelf<
                 typeof sourceOrMapping === 'string'
                     ? Symbol.for(sourceOrMapping)
                     : (sourceOrMapping as MetadataIdentifier<TSource>);
-            strategy.retrieveMetadata(sourceIdentifier);
+            const strategyMetadataMap =
+                strategy.retrieveMetadata(sourceIdentifier);
+
+            strategyMetadataMap.forEach((metadataList, identifier) => {
+                storeMetadata(mapper, identifier, metadataList);
+            });
+
             selfMapping = createInitialMapping(
                 mapper,
                 sourceIdentifier,

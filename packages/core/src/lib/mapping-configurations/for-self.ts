@@ -44,7 +44,7 @@ export function forSelf<
                 typeof sourceOrMapping === 'string'
                     ? Symbol.for(sourceOrMapping)
                     : (sourceOrMapping as MetadataIdentifier<TSource>);
-            strategy.exploreMetadata(sourceIdentifier);
+            strategy.retrieveMetadata(sourceIdentifier);
             selfMapping = createInitialMapping(
                 mapper,
                 sourceIdentifier,

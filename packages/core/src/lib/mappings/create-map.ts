@@ -1,4 +1,9 @@
-import { getErrorHandler, getMappings, getStrategy } from '../symbols';
+import {
+    getErrorHandler,
+    getMappings,
+    getMetadataMap,
+    getStrategy,
+} from '../symbols';
 import type {
     Dictionary,
     Mapper,
@@ -7,6 +12,7 @@ import type {
     MetadataIdentifier,
     ModelIdentifier,
 } from '../types';
+import { storeMetadata } from '../utils/store-metadata';
 import { getProfileConfigurationContext } from './add-profile';
 import { createInitialMapping } from './create-initial-mapping';
 
@@ -38,12 +44,25 @@ export function createMap<
         return mapping as Mapping<TSource, TDestination>;
     }
 
-    // get the strategy from Mapper
+    // get the metadata map on the mapper
+    const metadataMap = getMetadataMap(mapper);
+
+    // get the strategy from Mapper to retrieve the metadata
     const strategy = getStrategy(mapper);
+
+    const strategyMetadataMap = strategy.retrieveMetadata(
+        sourceIdentifier,
+        destinationIdentifier
+    );
+
+    strategyMetadataMap.forEach((metadataList, identifier) => {
+        if (!metadataMap.has(identifier)) {
+            storeMetadata(mapper, identifier, metadataList);
+        }
+    });
 
     // after all the mapping configurations are consolidated,
     // initialize the mapping
-    strategy.exploreMetadata(sourceIdentifier, destinationIdentifier);
     mapping = createInitialMapping(
         mapper,
         sourceIdentifier,

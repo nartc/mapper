@@ -6,12 +6,8 @@ export * from './lib/utils/recursion';
 export * from './lib/utils/is-empty';
 export * from './lib/utils/is-primitive-constructor';
 export * from './lib/utils/is-date-constructor';
-export * from './lib/utils/is-defined';
-export * from './lib/utils/get';
 export * from './lib/utils/set';
-export * from './lib/utils/explore-metadata';
 
-export * from './lib/mappings/create-initial-mapping';
 export * from './lib/mappings/create-map';
 export * from './lib/mappings/add-profile';
 

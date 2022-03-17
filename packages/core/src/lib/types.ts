@@ -465,6 +465,7 @@ export type MappingConfiguration<
 export type ApplyMetadataFn = <TModel extends Dictionary<TModel>>(
     model: MetadataIdentifier<TModel>
 ) => TModel;
+
 export type ApplyMetadata = (
     strategy: MappingStrategy<MetadataIdentifier>
 ) => ApplyMetadataFn;
@@ -479,12 +480,25 @@ export type DestinationConstructor<
 
 export type MappingProfile = (mapper: Mapper) => void;
 
-export interface MappingStrategy<TIdentifier extends MetadataIdentifier> {
-    get applyMetadata(): ApplyMetadataFn;
+export type MetadataList = Array<
+    [
+        property: string,
+        metadata: {
+            type: () => MetadataIdentifier;
+            isArray: boolean;
+            depth: number;
+            isGetterOnly?: boolean;
+        }
+    ]
+>;
 
+export interface MappingStrategy<TIdentifier extends MetadataIdentifier> {
     destinationConstructor: DestinationConstructor;
     mapper: Mapper;
-    exploreMetadata(...identifiers: TIdentifier[]): void;
+    get applyMetadata(): ApplyMetadataFn;
+    retrieveMetadata(
+        ...identifiers: TIdentifier[]
+    ): Map<TIdentifier, MetadataList>;
 }
 
 export type MappingStrategyInitializer<TIdentifier extends MetadataIdentifier> =

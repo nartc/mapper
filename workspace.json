@@ -2,6 +2,8 @@
     "version": 2,
     "projects": {
         "classes": "packages/classes",
+        "classes-mapped-types": "packages/classes/mapped-types",
+        "classes-transformer-plugin": "packages/classes/transformer-plugin",
         "core": "packages/core",
         "integration-test": "packages/integration-test"
     }

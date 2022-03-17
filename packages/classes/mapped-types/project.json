@@ -1,0 +1,32 @@
+{
+    "root": "packages/classes/mapped-types",
+    "sourceRoot": "packages/classes/mapped-types/src",
+    "targets": {
+        "build": {
+            "executor": "@nrwl/js:tsc",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/packages/classes/mapped-types",
+                "main": "packages/classes/mapped-types/src/index.ts",
+                "tsConfig": "packages/classes/mapped-types/tsconfig.lib.json",
+                "assets": ["packages/classes/mapped-types/*.md"]
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["packages/classes/mapped-types/**/*.ts"]
+            }
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/packages/classes/mapped-types"],
+            "options": {
+                "jestConfig": "packages/classes/mapped-types/jest.config.js",
+                "passWithNoTests": true
+            }
+        }
+    },
+    "tags": ["classes"]
+}

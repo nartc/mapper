@@ -6,9 +6,9 @@ import type {
     Mapper,
     MappingStrategy,
     MappingStrategyInitializer,
+    MetadataIdentifier,
 } from '@automapper/core';
 import {
-    exploreMetadata,
     getMetadataMap,
     getRecursiveCount,
     getRecursiveDepth,
@@ -21,11 +21,11 @@ import {
     setRecursiveValue,
 } from '@automapper/core';
 import 'reflect-metadata';
-import { getStandaloneConstructors } from './decorators/automap-standalone';
+import { getStandaloneConstructors } from './decorators';
 import { getMetadataList } from './get-metadata-list';
 
 function defaultApplyMetadata(
-    strategy: MappingStrategy<Constructor>
+    strategy: MappingStrategy<MetadataIdentifier>
 ): ApplyMetadataFn {
     const mapper = strategy.mapper;
     const metadataMap = getMetadataMap(mapper);
@@ -122,37 +122,36 @@ export function classes(
         destinationIdentifier
     ) => new (destinationIdentifier as Constructor)()
 ): MappingStrategyInitializer<Constructor> {
-    return (mapper: Mapper) => {
-        function extractMetadata(model: Constructor) {
-            const metadataMap = getMetadataMap(mapper);
+    return (mapper: Mapper) => ({
+        destinationConstructor,
+        mapper,
+        get applyMetadata(): ApplyMetadataFn {
+            return applyMetadata(this);
+        },
+        retrieveMetadata(...identifiers) {
+            const metadataMap = new Map();
+            for (let i = 0, length = identifiers.length; i < length; i++) {
+                const identifier = identifiers[i];
+                metadataMap.set(identifier, getMetadataList(identifier));
 
-            if (!metadataMap.has(model)) {
-                exploreMetadata(mapper, model, getMetadataList(model));
-            }
-
-            const standaloneConstructors = getStandaloneConstructors(model);
-            for (const standaloneConstructor of standaloneConstructors) {
-                if (!metadataMap.has(standaloneConstructor)) {
-                    exploreMetadata(
-                        mapper,
-                        standaloneConstructor,
-                        getMetadataList(standaloneConstructor)
+                const standaloneConstructors =
+                    getStandaloneConstructors(identifier);
+                for (
+                    let j = 0,
+                        standaloneConstructorsLength =
+                            standaloneConstructors.length;
+                    j < standaloneConstructorsLength;
+                    j++
+                ) {
+                    const standaloneIdentifier = standaloneConstructors[j];
+                    metadataMap.set(
+                        standaloneIdentifier,
+                        getMetadataList(standaloneIdentifier)
                     );
                 }
             }
-        }
 
-        return {
-            get applyMetadata(): ApplyMetadataFn {
-                return applyMetadata(this);
-            },
-            destinationConstructor,
-            mapper,
-            exploreMetadata(...identifiers) {
-                for (let i = 0, length = identifiers.length; i < length; i++) {
-                    extractMetadata(identifiers[i]);
-                }
-            },
-        };
-    };
+            return metadataMap;
+        },
+    });
 }

@@ -1,0 +1,34 @@
+{
+    "root": "packages/classes/transformer-plugin",
+    "sourceRoot": "packages/classes/transformer-plugin/src",
+    "targets": {
+        "build": {
+            "executor": "@nrwl/js:tsc",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/packages/classes/transformer-plugin",
+                "main": "packages/classes/transformer-plugin/src/index.ts",
+                "tsConfig": "packages/classes/transformer-plugin/tsconfig.lib.json",
+                "assets": ["packages/classes/transformer-plugin/*.md"]
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": [
+                    "packages/classes/transformer-plugin/**/*.ts"
+                ]
+            }
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/packages/classes/transformer-plugin"],
+            "options": {
+                "jestConfig": "packages/classes/transformer-plugin/jest.config.js",
+                "passWithNoTests": true
+            }
+        }
+    },
+    "tags": ["classes"]
+}

@@ -16,6 +16,12 @@
         "baseUrl": ".",
         "paths": {
             "@automapper/classes": ["packages/classes/src/index.ts"],
+            "@automapper/classes/mapped-types": [
+                "packages/classes/mapped-types/src/index.ts"
+            ],
+            "@automapper/classes/transformer-plugin": [
+                "packages/classes/transformer-plugin/src/index.ts"
+            ],
             "@automapper/core": ["packages/core/src/index.ts"],
             "@automapper/integration-test": [
                 "packages/integration-test/src/index.ts"

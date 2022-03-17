@@ -1,20 +1,12 @@
 import { getMetadataMap, getRecursiveDepth } from '../symbols';
-import type { Constructor, Mapper, MetadataIdentifier } from '../types';
+import type { Mapper, MetadataIdentifier, MetadataList } from '../types';
 import { isDefined } from './is-defined';
 import { setRecursiveValue } from './recursion';
 
-export function exploreMetadata(
+export function storeMetadata(
     mapper: Mapper,
     model: MetadataIdentifier,
-    metadataList: [
-        property: string,
-        metadata: {
-            type: () => Constructor;
-            isArray: boolean;
-            depth: number;
-            isGetterOnly?: boolean;
-        }
-    ][]
+    metadataList: MetadataList
 ) {
     if (!isDefined(metadataList)) return;
     const metadataMap = getMetadataMap(mapper);

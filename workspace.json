@@ -6,6 +6,7 @@
         "classes-transformer-plugin": "packages/classes/transformer-plugin",
         "core": "packages/core",
         "documentations": "packages/documentations",
-        "integration-test": "packages/integration-test"
+        "integration-test": "packages/integration-test",
+        "pojos": "packages/pojos"
     }
 }

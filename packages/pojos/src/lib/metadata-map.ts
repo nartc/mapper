@@ -88,6 +88,7 @@ export class PojosMetadataMap {
         if (
             typeof pojoMetadata === 'string' ||
             typeof pojoMetadata === 'symbol' ||
+            typeof pojoMetadata === 'function' ||
             Array.isArray(pojoMetadata)
         ) {
             return {

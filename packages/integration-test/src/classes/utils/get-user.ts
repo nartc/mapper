@@ -81,6 +81,11 @@ export function getPascalUser(
     const user = new PascalUser();
     user.FirstName = 'Chau';
     user.LastName = 'Tran';
+    user.Logins = [
+        new Date('01/10/2021'),
+        new Date('05/11/2021'),
+        new Date('12/12/2021'),
+    ];
 
     const userJob = new PascalJob();
     userJob.Title = 'Developer';
@@ -122,6 +127,11 @@ export function getSnakeUser(
     const user = new SnakeUser();
     user.first_name = 'Chau';
     user.last_name = 'Tran';
+    user.logins = [
+        new Date('01/10/2021'),
+        new Date('05/11/2021'),
+        new Date('12/12/2021'),
+    ];
 
     const userJob = new SnakeJob();
     userJob.title = 'Developer';

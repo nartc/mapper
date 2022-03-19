@@ -1,5 +1,25 @@
 {
     "name": "@automapper/classes/transformer-plugin",
-    "version": "0.0.1",
-    "type": "commonjs"
+    "version": "7.3.10",
+    "sideEffects": false,
+    "publishConfig": {
+        "access": "public"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/nartc/mapper/tree/main/packages/classes/transformer-plugin"
+    },
+    "author": {
+        "name": "Chau Tran",
+        "email": "nartc7789@gmail.com",
+        "url": "https://nartc.me"
+    },
+    "description": "AutoMapper TypeScript Transformer Plugin for Classes strategy",
+    "keywords": [
+        "typescript",
+        "automapper",
+        "mapper",
+        "nx"
+    ],
+    "license": "MIT"
 }

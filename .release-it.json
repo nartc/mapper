@@ -1,0 +1,48 @@
+{
+    "plugins": {
+        "@release-it/conventional-changelog": {
+            "preset": {
+                "name": "conventionalcommits",
+                "types": [
+                    {
+                        "type": "feat",
+                        "section": "Features"
+                    },
+                    {
+                        "type": "fix",
+                        "section": "Bug Fixes"
+                    },
+                    {
+                        "type": "cleanup",
+                        "section": "Cleanup"
+                    },
+                    {
+                        "type": "docs",
+                        "section": "Documentations"
+                    }
+                ]
+            },
+            "infile": "CHANGELOG.md"
+        },
+        "@release-it/bumper": {
+            "out": ["packages/**/package*.json"]
+        }
+    },
+    "git": {
+        "commitMessage": "chore: release ${version}"
+    },
+    "npm": {
+        "publish": false
+    },
+    "github": {
+        "release": true,
+        "releaseName": "Release ${version}"
+    },
+    "hooks": {
+        "after:bump": [
+            "git checkout -- package.json",
+            "git checkout -- package-lock.json",
+            "npm run build"
+        ]
+    }
+}

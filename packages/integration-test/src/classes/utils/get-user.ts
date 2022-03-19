@@ -1,8 +1,46 @@
+import { AddressDto } from '../dtos/address.dto';
+import { AvatarDto } from '../dtos/avatar.dto';
+import { BioDto } from '../dtos/bio.dto';
+import { UserDto } from '../dtos/user.dto';
 import { Address, PascalAddress, SnakeAddress } from '../models/address';
 import { Avatar, PascalAvatar, SnakeAvatar } from '../models/avatar';
 import { Bio, PascalBio, SnakeBio } from '../models/bio';
 import { Job, PascalJob, SnakeJob } from '../models/job';
 import { PascalUser, SnakeUser, User } from '../models/user';
+
+export function getUserDto(): UserDto {
+    const addressDto = new AddressDto();
+    addressDto.formattedAddress = '123 Acme Dr Sim Show Me';
+
+    const otherAddressDto = new AddressDto();
+    otherAddressDto.formattedAddress = '456 Rubik Dr Some October';
+
+    const avatarDto = new AvatarDto();
+    avatarDto.url = 'default url';
+    avatarDto.forCondition = true;
+
+    const bioDto = new BioDto();
+    bioDto.text = 'Introvert-ish';
+    bioDto.birthday = 'Mon Oct 14 1991';
+    bioDto.avatar = avatarDto;
+    bioDto.addresses = [addressDto, otherAddressDto];
+
+    const userDto = new UserDto();
+    userDto.first = 'Chau';
+    userDto.last = 'Tran';
+    userDto.full = 'Chau Tran';
+    userDto.jobTitle = 'Developer';
+    userDto.jobAnnualSalary = 99999;
+    userDto.bio = bioDto;
+    userDto.logins = [
+        new Date('01/10/2021'),
+        new Date('05/11/2021'),
+        new Date('12/12/2021'),
+    ];
+    userDto.lastLogin = new Date('12/12/2021');
+
+    return userDto;
+}
 
 export function getUser(
     partials: {

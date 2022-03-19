@@ -5,7 +5,9 @@ import { Bio, PascalBio, SnakeBio } from '../models/bio';
 
 const dateToStringConverter: Converter<Bio, string> = {
     convert(source: Bio): string {
-        return source.birthday.toDateString();
+        if (source.birthday instanceof Date)
+            return source.birthday.toDateString();
+        return new Date(source.birthday).toDateString();
     },
 };
 

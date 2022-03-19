@@ -1,5 +1,10 @@
-import type { Dictionary, MapWithReturn, SelectorReturn } from '../types';
-import { TransformationType, Unpacked, ValueSelector } from '../types';
+import type {
+    Dictionary,
+    MapWithReturn,
+    ModelIdentifier,
+    SelectorReturn,
+} from '../types';
+import { TransformationType, ValueSelector } from '../types';
 
 type Constructor<TModel> = new (...args: unknown[]) => TModel;
 
@@ -7,12 +12,8 @@ export function mapWith<
     TSource extends Dictionary<TSource>,
     TDestination extends Dictionary<TDestination>,
     TSelectorReturn = SelectorReturn<TDestination>,
-    TWithDestination extends Constructor<Unpacked<TSelectorReturn>> | string =
-        | Constructor<Unpacked<TSelectorReturn>>
-        | string,
-    TWithSource extends Constructor<unknown> | string =
-        | Constructor<unknown>
-        | string,
+    TWithDestination extends ModelIdentifier = ModelIdentifier,
+    TWithSource extends ModelIdentifier = ModelIdentifier,
     TWithSourceValue extends ValueSelector = TWithSource extends Constructor<
         infer InferredWithSource
     >
@@ -31,15 +32,15 @@ export function mapWith<
             if (Array.isArray(sourceValue)) {
                 return mapper.mapArray(
                     sourceValue,
-                    withDestination as string,
-                    withSource as unknown as string
+                    withSource,
+                    withDestination
                 ) as unknown as TSelectorReturn;
             }
 
             return mapper.map(
-                sourceValue as Dictionary<unknown>,
-                withDestination as string,
-                withSource as unknown as string
+                sourceValue,
+                withSource,
+                withDestination
             ) as unknown as TSelectorReturn;
         },
     ];

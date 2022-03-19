@@ -27,6 +27,13 @@
                 "jestConfig": "packages/classes/jest.config.js",
                 "passWithNoTests": true
             }
+        },
+        "publish": {
+            "executor": "@nrwl/workspace:run-commands",
+            "options": {
+                "command": "npm publish --tag beta",
+                "cwd": "dist/packages/classes"
+            }
         }
     },
     "tags": ["classes"]

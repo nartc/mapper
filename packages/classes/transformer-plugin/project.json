@@ -2,14 +2,18 @@
     "root": "packages/classes/transformer-plugin",
     "sourceRoot": "packages/classes/transformer-plugin/src",
     "targets": {
-        "build": {
-            "executor": "@nrwl/js:tsc",
+        "package": {
+            "executor": "@nrwl/web:rollup",
             "outputs": ["{options.outputPath}"],
             "options": {
+                "project": "packages/classes/transformer-plugin/package.json",
                 "outputPath": "dist/packages/classes/transformer-plugin",
-                "main": "packages/classes/transformer-plugin/src/index.ts",
+                "entryFile": "packages/classes/transformer-plugin/src/index.ts",
                 "tsConfig": "packages/classes/transformer-plugin/tsconfig.lib.json",
-                "assets": ["packages/classes/transformer-plugin/*.md"]
+                "assets": ["packages/classes/transformer-plugin/src/README.md"],
+                "compiler": "babel",
+                "external": ["typescript", "tslib", "@automapper/classes"],
+                "format": ["cjs", "esm"]
             }
         },
         "lint": {

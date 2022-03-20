@@ -3,14 +3,18 @@
     "sourceRoot": "packages/classes/src",
     "projectType": "library",
     "targets": {
-        "build": {
-            "executor": "@nrwl/js:tsc",
+        "package": {
+            "executor": "@nrwl/web:rollup",
             "outputs": ["{options.outputPath}"],
             "options": {
+                "project": "packages/classes/package.json",
                 "outputPath": "dist/packages/classes",
-                "main": "packages/classes/src/index.ts",
+                "entryFile": "packages/classes/src/index.ts",
                 "tsConfig": "packages/classes/tsconfig.lib.json",
-                "assets": ["packages/classes/*.md"]
+                "assets": ["packages/classes/src/README.md"],
+                "compiler": "babel",
+                "external": ["typescript", "tslib", "@automapper/core"],
+                "format": ["cjs", "esm"]
             }
         },
         "lint": {

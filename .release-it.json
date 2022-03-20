@@ -44,10 +44,6 @@
         "releaseName": "Release ${version}"
     },
     "hooks": {
-        "after:bump": [
-            "git checkout -- package.json",
-            "git checkout -- package-lock.json",
-            "npm run build"
-        ]
+        "after:bump": ["npm run package"]
     }
 }

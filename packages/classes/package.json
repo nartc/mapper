@@ -27,5 +27,8 @@
         "mapper",
         "nx"
     ],
-    "license": "MIT"
+    "license": "MIT",
+    "files": [
+        "**/*"
+    ]
 }

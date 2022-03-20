@@ -2,14 +2,18 @@
     "root": "packages/pojos",
     "sourceRoot": "packages/pojos/src",
     "targets": {
-        "build": {
-            "executor": "@nrwl/js:tsc",
+        "package": {
+            "executor": "@nrwl/web:rollup",
             "outputs": ["{options.outputPath}"],
             "options": {
+                "project": "packages/pojos/package.json",
                 "outputPath": "dist/packages/pojos",
-                "main": "packages/pojos/src/index.ts",
+                "entryFile": "packages/pojos/src/index.ts",
                 "tsConfig": "packages/pojos/tsconfig.lib.json",
-                "assets": ["packages/pojos/*.md"]
+                "assets": ["packages/pojos/src/README.md"],
+                "compiler": "babel",
+                "external": ["typescript", "tslib", "@automapper/core"],
+                "format": ["cjs", "esm"]
             }
         },
         "lint": {

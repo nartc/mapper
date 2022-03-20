@@ -2,15 +2,24 @@
     "root": "packages/nestjs",
     "sourceRoot": "packages/nestjs/src",
     "targets": {
-        "build": {
-            "executor": "@nrwl/js:tsc",
+        "package": {
+            "executor": "@nrwl/web:rollup",
             "outputs": ["{options.outputPath}"],
             "options": {
+                "project": "packages/nestjs/package.json",
                 "outputPath": "dist/packages/nestjs",
+                "entryFile": "packages/nestjs/src/index.ts",
                 "tsConfig": "packages/nestjs/tsconfig.lib.json",
-                "packageJson": "packages/nestjs/package.json",
-                "main": "packages/nestjs/src/index.ts",
-                "assets": ["packages/nestjs/*.md"]
+                "assets": ["packages/nestjs/src/README.md"],
+                "compiler": "babel",
+                "external": [
+                    "typescript",
+                    "tslib",
+                    "@automapper/core",
+                    "@nestjs/common",
+                    "rxjs"
+                ],
+                "format": ["cjs", "esm"]
             }
         },
         "lint": {

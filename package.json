@@ -1,6 +1,6 @@
 {
     "name": "automapper",
-    "version": "7.3.10",
+    "version": "8.0.0-beta.0",
     "license": "MIT",
     "scripts": {
         "commit": "git-cz",
@@ -9,6 +9,7 @@
         "release": "dotenv release-it --",
         "release:beta": "dotenv release-it --major --preRelease=beta",
         "build": "nx run-many --target=build --projects=core,classes,classes-mapped-types,classes-transformer-plugin,pojos,nestjs",
+        "package": "nx run-many --target=package --projects=core,classes,classes-mapped-types,classes-transformer-plugin,pojos,nestjs --parallel=false",
         "test": "nx run-many --all --target=test --parallel",
         "publish": "nx run-many --target=publish --all --parallel"
     },

@@ -14,8 +14,7 @@
                 "assets": ["packages/core/src/README.md"],
                 "compiler": "babel",
                 "external": ["typescript", "tslib"],
-                "format": ["cjs", "esm", "umd"],
-                "umdName": "automapper.core"
+                "format": ["cjs", "esm"]
             }
         },
         "lint": {

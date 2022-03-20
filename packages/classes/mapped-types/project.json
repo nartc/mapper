@@ -2,14 +2,23 @@
     "root": "packages/classes/mapped-types",
     "sourceRoot": "packages/classes/mapped-types/src",
     "targets": {
-        "build": {
-            "executor": "@nrwl/js:tsc",
+        "package": {
+            "executor": "@nrwl/web:rollup",
             "outputs": ["{options.outputPath}"],
             "options": {
+                "project": "packages/classes/mapped-types/package.json",
                 "outputPath": "dist/packages/classes/mapped-types",
-                "main": "packages/classes/mapped-types/src/index.ts",
+                "entryFile": "packages/classes/mapped-types/src/index.ts",
                 "tsConfig": "packages/classes/mapped-types/tsconfig.lib.json",
-                "assets": ["packages/classes/mapped-types/*.md"]
+                "assets": ["packages/classes/mapped-types/src/README.md"],
+                "compiler": "babel",
+                "external": [
+                    "typescript",
+                    "tslib",
+                    "@automapper/core",
+                    "@automapper/classes"
+                ],
+                "format": ["cjs", "esm"]
             }
         },
         "lint": {

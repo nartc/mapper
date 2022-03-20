@@ -4,6 +4,10 @@
     "peerDependencies": {
         "reflect-metadata": "~0.1.13"
     },
+    "exports": {
+        "import": "./index.esm.js",
+        "require": "./index.cjs.js"
+    },
     "sideEffects": false,
     "engines": {
         "node": ">=12.0.0"

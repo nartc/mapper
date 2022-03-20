@@ -1,6 +1,10 @@
 {
     "name": "@automapper/core",
     "version": "8.0.0-beta.1",
+    "exports": {
+        "import": "./index.esm.js",
+        "require": "./index.cjs.js"
+    },
     "sideEffects": false,
     "engines": {
         "node": ">=12.0.0"

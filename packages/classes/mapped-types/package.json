@@ -1,6 +1,10 @@
 {
     "name": "@automapper/classes/mapped-types",
     "version": "8.0.0-beta.1",
+    "exports": {
+        "import": "./index.esm.js",
+        "require": "./index.cjs.js"
+    },
     "sideEffects": false,
     "publishConfig": {
         "access": "public"

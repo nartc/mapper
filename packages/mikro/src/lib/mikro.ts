@@ -13,8 +13,12 @@ export function mikro({
         new (destinationIdentifier as Constructor)(),
     applyMetadata,
     postMap,
-    preMap = <TSource extends Dictionary<TSource>>(source: TSource) =>
-        serializeEntity(source) as TSource,
+    preMap,
 }: MappingStrategyInitializerOptions = defaultSerializerOptions): MappingStrategyInitializer<Constructor> {
+    if (preMap === defaultSerializerOptions.preMap) {
+        preMap = <TSource extends Dictionary<TSource>>(source: TSource) =>
+            serializeEntity(source) as TSource;
+    }
+
     return classes({ destinationConstructor, applyMetadata, preMap, postMap });
 }

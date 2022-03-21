@@ -2,7 +2,7 @@
     "extends": "@nrwl/workspace/presets/core.json",
     "npmScope": "automapper",
     "affected": {
-        "defaultBase": "main"
+        "defaultBase": "rewrite"
     },
     "cli": {
         "defaultCollection": "@nrwl/workspace"

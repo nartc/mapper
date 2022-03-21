@@ -142,7 +142,26 @@ export function createMapper({
                         destinationIdentifier
                     );
 
-                    return mapReturn(mapping, sourceObject, options || {});
+                    if (strategy.preMap) {
+                        sourceObject = strategy.preMap(
+                            Object.freeze(sourceObject)
+                        ) as TSource;
+                    }
+
+                    const destination = mapReturn(
+                        mapping,
+                        sourceObject,
+                        options || {}
+                    );
+
+                    if (strategy.postMap) {
+                        return strategy.postMap(
+                            Object.freeze(sourceObject),
+                            Object.freeze(destination)
+                        );
+                    }
+
+                    return destination;
                 };
             }
 
@@ -198,19 +217,35 @@ export function createMapper({
                         i < length;
                         i++
                     ) {
-                        destinationArray.push(
-                            mapReturn(
-                                mapping,
-                                sourceArray[i],
-                                {
-                                    extraArgs: extraArgs as MapOptions<
-                                        TSource,
-                                        TDestination
-                                    >['extraArgs'],
-                                },
-                                true
-                            )
+                        let sourceObject = sourceArray[i];
+                        if (strategy.preMap) {
+                            sourceObject = strategy.preMap(
+                                Object.freeze(sourceObject)
+                            ) as TSource;
+                        }
+
+                        const destination = mapReturn(
+                            mapping,
+                            sourceObject,
+                            {
+                                extraArgs: extraArgs as MapOptions<
+                                    TSource,
+                                    TDestination
+                                >['extraArgs'],
+                            },
+                            true
                         );
+
+                        if (strategy.postMap) {
+                            destinationArray.push(
+                                strategy.postMap(
+                                    Object.freeze(sourceObject),
+                                    Object.freeze(destination)
+                                ) as TDestination
+                            );
+                        } else {
+                            destinationArray.push(destination);
+                        }
                     }
 
                     if (afterMap) {
@@ -261,12 +296,25 @@ export function createMapper({
                         destinationIdentifier
                     );
 
+                    if (strategy.preMap) {
+                        sourceObject = strategy.preMap(
+                            Object.freeze(sourceObject)
+                        ) as TSource;
+                    }
+
                     mapMutate(
                         mapping,
                         sourceObject,
                         destinationObject,
                         options || {}
                     );
+
+                    if (strategy.postMap) {
+                        strategy.postMap(
+                            Object.freeze(sourceObject),
+                            destinationObject
+                        );
+                    }
                 };
             }
             if (p === 'mutateAsync') {
@@ -322,9 +370,17 @@ export function createMapper({
                         i < length;
                         i++
                     ) {
+                        let sourceObject = sourceArray[i];
+
+                        if (strategy.preMap) {
+                            sourceObject = strategy.preMap(
+                                Object.freeze(sourceObject)
+                            ) as TSource;
+                        }
+
                         mapMutate(
                             mapping,
-                            sourceArray[i],
+                            sourceObject,
                             destinationArray[i] || {},
                             {
                                 extraArgs: extraArgs as MapOptions<
@@ -334,6 +390,13 @@ export function createMapper({
                             },
                             true
                         );
+
+                        if (strategy.postMap) {
+                            strategy.postMap(
+                                Object.freeze(sourceObject),
+                                destinationArray[i]
+                            );
+                        }
                     }
 
                     if (afterMap) {

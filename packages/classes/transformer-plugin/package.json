@@ -1,6 +1,6 @@
 {
     "name": "@automapper/classes/transformer-plugin",
-    "version": "8.0.0-beta.2",
+    "version": "8.0.0-beta.3",
     "exports": {
         "import": "./index.esm.js",
         "require": "./index.cjs.js"

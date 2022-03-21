@@ -1,23 +1,22 @@
 import type {
-    ApplyMetadata,
     ApplyMetadataFn,
     Constructor,
-    DestinationConstructor,
     Mapper,
     MappingStrategyInitializer,
+    MappingStrategyInitializerOptions,
 } from '@automapper/core';
 import { defaultApplyMetadata } from '@automapper/core';
 import 'reflect-metadata';
 import { getStandaloneConstructors } from './decorators';
 import { getMetadataList } from './get-metadata-list';
 
-export function classes(
-    destinationConstructor: DestinationConstructor = (
-        _,
-        destinationIdentifier
-    ) => new (destinationIdentifier as Constructor)(),
-    applyMetadata: ApplyMetadata = defaultApplyMetadata
-): MappingStrategyInitializer<Constructor> {
+export function classes({
+    destinationConstructor = (_, destinationIdentifier) =>
+        new (destinationIdentifier as Constructor)(),
+    applyMetadata = defaultApplyMetadata,
+    postMap,
+    preMap,
+}: MappingStrategyInitializerOptions = {}): MappingStrategyInitializer<Constructor> {
     return (mapper: Mapper) => ({
         destinationConstructor,
         mapper,
@@ -48,6 +47,18 @@ export function classes(
             }
 
             return metadataMap;
+        },
+        preMap: (...args) => {
+            if (preMap) {
+                return preMap(...args);
+            }
+            return;
+        },
+        postMap: (...args) => {
+            if (postMap) {
+                return postMap(...args);
+            }
+            return;
         },
     });
 }

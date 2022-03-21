@@ -5,6 +5,10 @@
         "import": "./index.esm.js",
         "require": "./index.cjs.js"
     },
+    "peerDependencies": {
+        "@mikro-orm/core": "^5.0.0",
+        "reflect-metadata": "~0.1.13"
+    },
     "sideEffects": false,
     "engines": {
         "node": ">=14.0.0"

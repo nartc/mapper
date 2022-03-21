@@ -19,7 +19,12 @@
                 "tsConfig": "packages/mikro/tsconfig.lib.json",
                 "assets": ["packages/mikro/src/README.md"],
                 "compiler": "babel",
-                "external": ["typescript", "tslib", "@automapper/core"],
+                "external": [
+                    "typescript",
+                    "tslib",
+                    "@automapper/core",
+                    "@automapper/classes"
+                ],
                 "format": ["cjs", "esm"]
             }
         },
@@ -36,6 +41,13 @@
             "options": {
                 "jestConfig": "packages/mikro/jest.config.js",
                 "passWithNoTests": true
+            }
+        },
+        "publish": {
+            "executor": "@nrwl/workspace:run-commands",
+            "options": {
+                "command": "npm publish --tag beta",
+                "cwd": "dist/packages/mikro"
             }
         }
     },

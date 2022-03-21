@@ -9,8 +9,8 @@
         "release": "dotenv release-it --",
         "release:beta": "dotenv release-it --major --preRelease=beta",
         "build": "nx run-many --target=build --projects=core,classes,classes-mapped-types,classes-transformer-plugin,pojos,nestjs",
-        "package": "nx run-many --target=package --projects=core,classes,classes-mapped-types,classes-transformer-plugin,pojos,nestjs --parallel=false",
         "test": "nx run-many --all --target=test --parallel",
+        "package": "nx package-all core",
         "publish": "nx run-many --target=publish --all --parallel"
     },
     "private": true,
@@ -18,6 +18,7 @@
         "tslib": "~2.3.1"
     },
     "devDependencies": {
+        "@mikro-orm/core": "5.1.1",
         "@nestjs/common": "~8.4.1",
         "@nestjs/core": "~8.4.1",
         "@nestjs/platform-express": "~8.4.1",

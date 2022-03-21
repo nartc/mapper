@@ -1,17 +1,18 @@
 import type {
-    ApplyMetadata,
     ApplyMetadataFn,
-    DestinationConstructor,
     MappingStrategyInitializer,
+    MappingStrategyInitializerOptions,
     MetadataList,
 } from '@automapper/core';
 import { defaultApplyMetadata } from '@automapper/core';
 import { PojosMetadataMap } from './metadata-map';
 
-export function pojos(
-    destinationConstructor: DestinationConstructor = () => ({}),
-    applyMetadata: ApplyMetadata = defaultApplyMetadata
-): MappingStrategyInitializer<symbol> {
+export function pojos({
+    destinationConstructor = () => ({}),
+    applyMetadata = defaultApplyMetadata,
+    postMap,
+    preMap,
+}: MappingStrategyInitializerOptions = {}): MappingStrategyInitializer<symbol> {
     return (mapper) => ({
         destinationConstructor,
         mapper,
@@ -30,6 +31,18 @@ export function pojos(
             }
 
             return metadataMap;
+        },
+        preMap: (...args) => {
+            if (preMap) {
+                return preMap(...args);
+            }
+            return;
+        },
+        postMap: (...args) => {
+            if (postMap) {
+                return postMap(...args);
+            }
+            return;
         },
     });
 }

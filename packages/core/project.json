@@ -24,6 +24,21 @@
                 "format": ["cjs", "esm"]
             }
         },
+        "package-all": {
+            "executor": "@nrwl/workspace:run-commands",
+            "options": {
+                "commands": [
+                    "nx package core",
+                    "nx package classes",
+                    "nx package classes-mapped-types",
+                    "nx package classes-transformer-plugin",
+                    "nx package pojos",
+                    "nx package nestjs",
+                    "nx package mikro"
+                ],
+                "parallel": false
+            }
+        },
         "lint": {
             "executor": "@nrwl/linter:eslint",
             "outputs": ["{options.outputFile}"],

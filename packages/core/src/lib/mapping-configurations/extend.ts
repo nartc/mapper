@@ -12,7 +12,7 @@ import { isSamePath } from '../utils/is-same-path';
 export function extend<
     TSource extends Dictionary<TSource>,
     TDestination extends Dictionary<TDestination>,
-    TExtendSource extends Dictionary<TSource>,
+    TExtendSource extends Dictionary<TExtendSource>,
     TExtendDestination extends Dictionary<TExtendDestination>
 >(
     mapping: Mapping<TExtendSource, TExtendDestination>
@@ -20,7 +20,7 @@ export function extend<
 export function extend<
     TSource extends Dictionary<TSource>,
     TDestination extends Dictionary<TDestination>,
-    TExtendSource extends Dictionary<TSource>,
+    TExtendSource extends Dictionary<TExtendSource>,
     TExtendDestination extends Dictionary<TExtendDestination>
 >(
     source: ModelIdentifier<TExtendSource>,
@@ -29,7 +29,7 @@ export function extend<
 export function extend<
     TSource extends Dictionary<TSource>,
     TDestination extends Dictionary<TDestination>,
-    TExtendSource extends Dictionary<TSource>,
+    TExtendSource extends Dictionary<TExtendSource>,
     TExtendDestination extends Dictionary<TExtendDestination>
 >(
     sourceOrMapping:

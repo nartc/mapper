@@ -34,7 +34,8 @@
                     "nx package classes-transformer-plugin",
                     "nx package pojos",
                     "nx package nestjs",
-                    "nx package mikro"
+                    "nx package mikro",
+                    "nx package sequelize"
                 ],
                 "parallel": false
             }

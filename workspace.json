@@ -9,6 +9,7 @@
         "integration-test": "packages/integration-test",
         "mikro": "packages/mikro",
         "nestjs": "packages/nestjs",
-        "pojos": "packages/pojos"
+        "pojos": "packages/pojos",
+        "sequelize": "packages/sequelize"
     }
 }

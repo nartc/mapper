@@ -1,0 +1,48 @@
+{
+    "root": "packages/sequelize",
+    "sourceRoot": "packages/sequelize/src",
+    "targets": {
+        "package": {
+            "executor": "@nrwl/workspace:run-commands",
+            "options": {
+                "commands": ["nx package-lib sequelize"],
+                "parallel": false
+            }
+        },
+        "package-lib": {
+            "executor": "@nrwl/web:rollup",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "project": "packages/sequelize/package.json",
+                "outputPath": "dist/packages/sequelize",
+                "entryFile": "packages/sequelize/src/index.ts",
+                "tsConfig": "packages/sequelize/tsconfig.lib.json",
+                "assets": ["packages/sequelize/src/README.md"],
+                "compiler": "babel",
+                "external": [
+                    "typescript",
+                    "tslib",
+                    "@automapper/core",
+                    "@automapper/classes"
+                ],
+                "format": ["cjs", "esm"]
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["packages/sequelize/**/*.ts"]
+            }
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/packages/sequelize"],
+            "options": {
+                "jestConfig": "packages/sequelize/jest.config.js",
+                "passWithNoTests": true
+            }
+        }
+    },
+    "tags": ["sequelize"]
+}

@@ -10,9 +10,9 @@ const excluded = [
     '__factory',
 ];
 
-export function serializeEntity(item: AnyEntity) {
+export function serializeEntity(item: AnyEntity, fromCollection = false) {
     if (!Utils.isEntity(item)) return item;
-    if (Reference.isReference(item)) return wrap(item.getEntity()).toPOJO();
+    if (fromCollection) return wrap(item).toPOJO();
 
     const result = {} as Record<string | symbol, unknown>;
     for (const key of Reflect.ownKeys(item)) {
@@ -22,9 +22,13 @@ export function serializeEntity(item: AnyEntity) {
 
         const value = item[key as string];
         if (Utils.isCollection(value)) {
-            result[key] = value.getSnapshot() || [];
+            result[key] = (value.getSnapshot() || []).map((snapshot) => {
+                return serializeEntity(snapshot as AnyEntity, true);
+            });
         } else {
-            result[key] = serializeEntity(value);
+            result[key] = serializeEntity(
+                Reference.isReference(value) ? value.getEntity() : value
+            );
         }
     }
 

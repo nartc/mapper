@@ -4,6 +4,7 @@ import {
     CamelCaseNamingConvention,
     createMapper,
 } from '@automapper/core';
+import { vi } from 'vitest';
 import { SimpleUserDto } from './dtos/simple-user.dto';
 import { SimpleUser } from './models/simple-user';
 import { simpleUserProfileFactory } from './profiles/simple-user.profile';
@@ -19,8 +20,8 @@ describe('Map - Map Callback', () => {
     });
 
     it('should map with mapping callbacks', () => {
-        const beforeMap = jest.fn();
-        const afterMap = jest.fn();
+        const beforeMap = vi.fn();
+        const afterMap = vi.fn();
 
         addProfile(mapper, simpleUserProfileFactory({ beforeMap, afterMap }));
 
@@ -37,8 +38,8 @@ describe('Map - Map Callback', () => {
     });
 
     it('should map with map callbacks', () => {
-        const beforeMap = jest.fn();
-        const afterMap = jest.fn();
+        const beforeMap = vi.fn();
+        const afterMap = vi.fn();
 
         addProfile(mapper, simpleUserProfileFactory());
 
@@ -59,10 +60,10 @@ describe('Map - Map Callback', () => {
     });
 
     it('should run with map callbacks if both map/mapping callbacks are provided', () => {
-        const beforeMap = jest.fn();
-        const afterMap = jest.fn();
-        const mappingBeforeMap = jest.fn();
-        const mappingAfterMap = jest.fn();
+        const beforeMap = vi.fn();
+        const afterMap = vi.fn();
+        const mappingBeforeMap = vi.fn();
+        const mappingAfterMap = vi.fn();
 
         addProfile(
             mapper,
@@ -92,8 +93,8 @@ describe('Map - Map Callback', () => {
     });
 
     it('should skip mapping callbacks with mapArray', () => {
-        const beforeMap = jest.fn();
-        const afterMap = jest.fn();
+        const beforeMap = vi.fn();
+        const afterMap = vi.fn();
 
         addProfile(mapper, simpleUserProfileFactory({ beforeMap, afterMap }));
 
@@ -112,8 +113,8 @@ describe('Map - Map Callback', () => {
     });
 
     it('should run map callbacks with mapArray', () => {
-        const beforeMap = jest.fn();
-        const afterMap = jest.fn();
+        const beforeMap = vi.fn();
+        const afterMap = vi.fn();
 
         addProfile(mapper, simpleUserProfileFactory());
 

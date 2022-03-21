@@ -1,7 +1,7 @@
 import { classes } from '@automapper/classes';
 import { CamelCaseNamingConvention } from '@automapper/core';
 import { AutomapperModule } from '@automapper/nestjs';
-import { INestApplication } from '@nestjs/common';
+import type { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import * as request from 'supertest';
 import { BarDto } from '../foo/foo';
@@ -9,7 +9,7 @@ import { FooModule } from '../foo/foo.module';
 import { FooExtendDto } from './foo-extend';
 import { FooExtendModule } from './foo-extend.module';
 
-describe('AppController', () => {
+describe('FooExtendController', () => {
     let app: INestApplication;
 
     beforeAll(async () => {

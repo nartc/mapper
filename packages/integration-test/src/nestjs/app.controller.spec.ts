@@ -1,6 +1,7 @@
-import { INestApplication } from '@nestjs/common';
+import type { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import * as request from 'supertest';
+import { vi } from 'vitest';
 import { getUser, getUserDto } from '../classes/utils/get-user';
 import { AppController } from './app.controller';
 import { AppModule } from './app.module';
@@ -10,9 +11,9 @@ describe(AppController.name, () => {
     let app: INestApplication;
 
     const mockedAppService = {
-        getData: jest.fn(),
-        getUserDto: jest.fn(),
-        getRawUser: jest.fn(),
+        getData: vi.fn(),
+        getUserDto: vi.fn(),
+        getRawUser: vi.fn(),
     };
 
     beforeAll(async () => {

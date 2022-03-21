@@ -4,6 +4,13 @@
     "projectType": "library",
     "targets": {
         "package": {
+            "executor": "@nrwl/workspace:run-commands",
+            "options": {
+                "commands": ["nx package-lib core"],
+                "parallel": false
+            }
+        },
+        "package-lib": {
             "executor": "@nrwl/web:rollup",
             "outputs": ["{options.outputPath}"],
             "options": {

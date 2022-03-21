@@ -4,6 +4,16 @@
     "projectType": "library",
     "targets": {
         "package": {
+            "executor": "@nrwl/workspace:run-commands",
+            "options": {
+                "commands": [
+                    "nx package-lib classes",
+                    "tsc packages/classes/shim/index.ts --outDir dist/packages/classes/shim/"
+                ],
+                "parallel": false
+            }
+        },
+        "package-lib": {
             "executor": "@nrwl/web:rollup",
             "outputs": ["{options.outputPath}"],
             "options": {

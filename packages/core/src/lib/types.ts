@@ -499,10 +499,8 @@ export interface MappingStrategy<TIdentifier extends MetadataIdentifier> {
     retrieveMetadata(
         ...identifiers: TIdentifier[]
     ): Map<TIdentifier, MetadataList>;
-    preMap?<TSource extends Dictionary<TSource>>(
-        source: TSource
-    ): TSource | undefined;
-    postMap?<
+    preMap<TSource extends Dictionary<TSource>>(source: TSource): TSource;
+    postMap<
         TSource extends Dictionary<TSource>,
         TDestination extends Dictionary<TDestination>
     >(
@@ -515,8 +513,8 @@ export type MappingStrategyInitializer<TIdentifier extends MetadataIdentifier> =
     (mapper: Mapper) => MappingStrategy<TIdentifier>;
 
 export interface MappingStrategyInitializerOptions {
-    destinationConstructor?: DestinationConstructor;
     applyMetadata?: ApplyMetadata;
+    destinationConstructor?: DestinationConstructor;
     preMap?<TSource extends Dictionary<TSource>>(source: TSource): TSource;
     postMap?<
         TSource extends Dictionary<TSource>,

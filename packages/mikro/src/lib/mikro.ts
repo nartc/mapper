@@ -5,16 +5,16 @@ import type {
     MappingStrategyInitializer,
     MappingStrategyInitializerOptions,
 } from '@automapper/core';
-import { defaultApplyMetadata } from '@automapper/core';
+import { defaultSerializerOptions } from '@automapper/core';
 import { serializeEntity } from './serialize-entity';
 
 export function mikro({
     destinationConstructor = (_, destinationIdentifier) =>
         new (destinationIdentifier as Constructor)(),
-    applyMetadata = defaultApplyMetadata,
+    applyMetadata,
     postMap,
     preMap = <TSource extends Dictionary<TSource>>(source: TSource) =>
         serializeEntity(source) as TSource,
-}: MappingStrategyInitializerOptions = {}): MappingStrategyInitializer<Constructor> {
+}: MappingStrategyInitializerOptions = defaultSerializerOptions): MappingStrategyInitializer<Constructor> {
     return classes({ destinationConstructor, applyMetadata, preMap, postMap });
 }

@@ -1,5 +1,6 @@
 export * from './lib/core';
 export * from './lib/types';
+export * from './lib/default-serializer-options';
 
 export * from './lib/utils/recursion';
 export * from './lib/utils/is-empty';
@@ -9,7 +10,6 @@ export * from './lib/utils/set';
 
 export * from './lib/mappings/create-map';
 export * from './lib/mappings/add-profile';
-export * from './lib/mappings/apply-metadata';
 
 export * from './lib/mapping-configurations/for-member';
 export * from './lib/mapping-configurations/for-self';

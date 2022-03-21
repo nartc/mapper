@@ -1,5 +1,5 @@
 import type { AnyEntity } from '@mikro-orm/core';
-import { Utils } from '@mikro-orm/core';
+import { Reference, Utils, wrap } from '@mikro-orm/core';
 
 const excluded = [
     '__gettersDefined',
@@ -12,6 +12,7 @@ const excluded = [
 
 export function serializeEntity(item: AnyEntity) {
     if (!Utils.isEntity(item)) return item;
+    if (Reference.isReference(item)) return wrap(item.getEntity()).toPOJO();
 
     const result = {} as Record<string | symbol, unknown>;
     for (const key of Reflect.ownKeys(item)) {

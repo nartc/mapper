@@ -29,7 +29,8 @@
                 "packages/classes/**/package.json",
                 "packages/core/**/package.json",
                 "packages/nestjs/**/package.json",
-                "packages/pojos/**/package.json"
+                "packages/pojos/**/package.json",
+                "packages/mikro/**/package.json"
             ]
         }
     },

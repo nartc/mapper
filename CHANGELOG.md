@@ -1,6 +1,6 @@
 
 
-## [8.0.0-beta.6](https://github.com/nartc/mapper/compare/8.0.0-beta.5...8.0.0-beta.6) (2022-03-21)## [8.0.0-beta.5](https://github.com/nartc/mapper/compare/8.0.0-beta.4...8.0.0-beta.5) (2022-03-21)## [8.0.0-beta.4](https://github.com/nartc/mapper/compare/8.0.0-beta.3...8.0.0-beta.4) (2022-03-21)## [8.0.0-beta.3](https://github.com/nartc/mapper/compare/8.0.0-beta.2...8.0.0-beta.3) (2022-03-21)## [8.0.0-beta.2](https://github.com/nartc/mapper/compare/8.0.0-beta.1...8.0.0-beta.2) (2022-03-20)## [8.0.0-beta.1](https://github.com/nartc/mapper/compare/8.0.0-beta.0...8.0.0-beta.1) (2022-03-20)## [8.0.0-beta.0](https://github.com/nartc/mapper/compare/7.3.10...8.0.0-beta.0) (2022-03-19)
+## [8.0.0-beta.7](https://github.com/nartc/mapper/compare/8.0.0-beta.6...8.0.0-beta.7) (2022-03-21)## [8.0.0-beta.6](https://github.com/nartc/mapper/compare/8.0.0-beta.5...8.0.0-beta.6) (2022-03-21)## [8.0.0-beta.5](https://github.com/nartc/mapper/compare/8.0.0-beta.4...8.0.0-beta.5) (2022-03-21)## [8.0.0-beta.4](https://github.com/nartc/mapper/compare/8.0.0-beta.3...8.0.0-beta.4) (2022-03-21)## [8.0.0-beta.3](https://github.com/nartc/mapper/compare/8.0.0-beta.2...8.0.0-beta.3) (2022-03-21)## [8.0.0-beta.2](https://github.com/nartc/mapper/compare/8.0.0-beta.1...8.0.0-beta.2) (2022-03-20)## [8.0.0-beta.1](https://github.com/nartc/mapper/compare/8.0.0-beta.0...8.0.0-beta.1) (2022-03-20)## [8.0.0-beta.0](https://github.com/nartc/mapper/compare/7.3.10...8.0.0-beta.0) (2022-03-19)
 
 
 ### Features

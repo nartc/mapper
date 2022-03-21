@@ -26,6 +26,7 @@
             "@automapper/integration-test": [
                 "packages/integration-test/src/index.ts"
             ],
+            "@automapper/mikro": ["packages/mikro/src/index.ts"],
             "@automapper/nestjs": ["packages/nestjs/src/index.ts"],
             "@automapper/pojos": ["packages/pojos/src/index.ts"]
         }

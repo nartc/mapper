@@ -1,0 +1,43 @@
+{
+    "root": "packages/mikro",
+    "sourceRoot": "packages/mikro/src",
+    "targets": {
+        "package": {
+            "executor": "@nrwl/workspace:run-commands",
+            "options": {
+                "commands": ["nx package-lib mikro"],
+                "parallel": false
+            }
+        },
+        "package-lib": {
+            "executor": "@nrwl/web:rollup",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "project": "packages/mikro/package.json",
+                "outputPath": "dist/packages/mikro",
+                "entryFile": "packages/mikro/src/index.ts",
+                "tsConfig": "packages/mikro/tsconfig.lib.json",
+                "assets": ["packages/mikro/src/README.md"],
+                "compiler": "babel",
+                "external": ["typescript", "tslib", "@automapper/core"],
+                "format": ["cjs", "esm"]
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["packages/mikro/**/*.ts"]
+            }
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/packages/mikro"],
+            "options": {
+                "jestConfig": "packages/mikro/jest.config.js",
+                "passWithNoTests": true
+            }
+        }
+    },
+    "tags": ["mikro"]
+}

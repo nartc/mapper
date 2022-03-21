@@ -25,5 +25,6 @@
         "mapper",
         "nx"
     ],
-    "license": "MIT"
+    "license": "MIT",
+    "main": "./index.cjs.js"
 }

@@ -31,5 +31,6 @@
     "license": "MIT",
     "files": [
         "**/*"
-    ]
+    ],
+    "main": "./index.cjs.js"
 }

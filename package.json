@@ -7,7 +7,7 @@
         "contributors:init": "all-contributors init",
         "contributors:add": "all-contributors add",
         "release": "dotenv release-it --",
-        "release:beta": "dotenv release-it --major --preRelease=beta",
+        "release:beta": "dotenv release-it -- major --preRelease=beta",
         "build": "nx run-many --target=build --projects=core,classes,classes-mapped-types,classes-transformer-plugin,pojos,nestjs",
         "test": "nx run-many --all --target=test --parallel",
         "package": "nx package-all core",

@@ -8,21 +8,9 @@ import {
 } from '../dtos/bio.dto';
 import { Bio, createBioMetadata, PascalBio, SnakeBio } from '../models/bio';
 
-const dateToStringConverter: Converter<Bio, string> = {
-    convert(source: Bio): string {
-        return source.birthday.toDateString();
-    },
-};
-
-const pascalDateToStringConverter: Converter<PascalBio, string> = {
-    convert(source: PascalBio): string {
-        return source.Birthday.toDateString();
-    },
-};
-
-const snakeDateToStringConverter: Converter<SnakeBio, string> = {
-    convert(source: SnakeBio): string {
-        return source.birthday.toDateString();
+const dateToStringConverter: Converter<Date, string> = {
+    convert(source: Date): string {
+        return source.toDateString();
     },
 };
 
@@ -34,21 +22,30 @@ export function bioProfile(mapper: Mapper) {
         mapper,
         'Bio',
         'BioDto',
-        forMember((d) => d.birthday, convertUsing(dateToStringConverter))
+        forMember(
+            (d) => d.birthday,
+            convertUsing(dateToStringConverter, (s) => s.birthday)
+        )
     );
 
     createMap<Bio, PascalBioDto>(
         mapper,
         'Bio',
         'PascalBioDto',
-        forMember((d) => d.Birthday, convertUsing(dateToStringConverter))
+        forMember(
+            (d) => d.Birthday,
+            convertUsing(dateToStringConverter, (s) => s.birthday)
+        )
     );
 
     createMap<Bio, SnakeBioDto>(
         mapper,
         'Bio',
         'SnakeBioDto',
-        forMember((d) => d.birthday, convertUsing(dateToStringConverter))
+        forMember(
+            (d) => d.birthday,
+            convertUsing(dateToStringConverter, (s) => s.birthday)
+        )
     );
 }
 
@@ -60,21 +57,30 @@ export function pascalBioProfile(mapper: Mapper) {
         mapper,
         'PascalBio',
         'BioDto',
-        forMember((d) => d.birthday, convertUsing(pascalDateToStringConverter))
+        forMember(
+            (d) => d.birthday,
+            convertUsing(dateToStringConverter, (s) => s.Birthday)
+        )
     );
 
     createMap<PascalBio, PascalBioDto>(
         mapper,
         'PascalBio',
         'PascalBioDto',
-        forMember((d) => d.Birthday, convertUsing(pascalDateToStringConverter))
+        forMember(
+            (d) => d.Birthday,
+            convertUsing(dateToStringConverter, (s) => s.Birthday)
+        )
     );
 
     createMap<PascalBio, SnakeBioDto>(
         mapper,
         'PascalBio',
         'SnakeBioDto',
-        forMember((d) => d.birthday, convertUsing(pascalDateToStringConverter))
+        forMember(
+            (d) => d.birthday,
+            convertUsing(dateToStringConverter, (s) => s.Birthday)
+        )
     );
 }
 
@@ -86,20 +92,29 @@ export function snakeBioProfile(mapper: Mapper) {
         mapper,
         'SnakeBio',
         'BioDto',
-        forMember((d) => d.birthday, convertUsing(snakeDateToStringConverter))
+        forMember(
+            (d) => d.birthday,
+            convertUsing(dateToStringConverter, (s) => s.birthday)
+        )
     );
 
     createMap<SnakeBio, PascalBioDto>(
         mapper,
         'SnakeBio',
         'PascalBioDto',
-        forMember((d) => d.Birthday, convertUsing(snakeDateToStringConverter))
+        forMember(
+            (d) => d.Birthday,
+            convertUsing(dateToStringConverter, (s) => s.birthday)
+        )
     );
 
     createMap<SnakeBio, SnakeBioDto>(
         mapper,
         'SnakeBio',
         'SnakeBioDto',
-        forMember((d) => d.birthday, convertUsing(snakeDateToStringConverter))
+        forMember(
+            (d) => d.birthday,
+            convertUsing(dateToStringConverter, (s) => s.birthday)
+        )
     );
 }

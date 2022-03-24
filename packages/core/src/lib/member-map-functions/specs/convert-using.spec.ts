@@ -3,9 +3,9 @@ import { MapFnClassId, TransformationType } from '../../types';
 import { convertUsing } from '../convert-using';
 
 describe(convertUsing.name, () => {
-    const birthdayToStringConverter: Converter<{ birthday: Date }, string> = {
-        convert(src: { birthday: Date }): string {
-            return src.birthday.toDateString();
+    const birthdayToStringConverter: Converter<Date, string> = {
+        convert(src: Date): string {
+            return src.toDateString();
         },
     };
 
@@ -14,7 +14,10 @@ describe(convertUsing.name, () => {
     };
 
     it('should return correctly', () => {
-        const convertUsingFn = convertUsing(birthdayToStringConverter);
+        const convertUsingFn = convertUsing<typeof source, {}>(
+            birthdayToStringConverter,
+            (s) => s.birthday
+        );
         expect(convertUsingFn).toBeTruthy();
         expect(convertUsingFn[MapFnClassId.type]).toEqual(
             TransformationType.ConvertUsing
@@ -23,7 +26,10 @@ describe(convertUsing.name, () => {
     });
 
     it('should map correctly', () => {
-        const convertUsingFn = convertUsing(birthdayToStringConverter);
+        const convertUsingFn = convertUsing<typeof source, {}>(
+            birthdayToStringConverter,
+            (s) => s.birthday
+        );
         const result = convertUsingFn[MapFnClassId.fn](source);
         expect(result).toEqual(source.birthday.toDateString());
     });

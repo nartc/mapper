@@ -1,8 +1,7 @@
-import { AutoMap, AutoMapStandalone } from '@automapper/classes';
+import { AutoMap } from '@automapper/classes';
 import { Bio, PascalBio, SnakeBio } from './bio';
 import { Job, PascalJob, SnakeJob } from './job';
 
-@AutoMapStandalone(Job)
 export class User {
     @AutoMap()
     firstName!: string;
@@ -16,7 +15,6 @@ export class User {
     logins: Date[] = [];
 }
 
-@AutoMapStandalone(PascalJob)
 export class PascalUser {
     @AutoMap()
     FirstName!: string;
@@ -30,7 +28,6 @@ export class PascalUser {
     Logins: Date[] = [];
 }
 
-@AutoMapStandalone(SnakeJob)
 export class SnakeUser {
     @AutoMap()
     first_name!: string;

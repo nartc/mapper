@@ -12,20 +12,28 @@ export function assertUnmappedProperties<
     TDestination extends Dictionary<TDestination>
 >(
     destinationObject: TDestination,
+    destinationMetadata: TDestination,
     configuredKeys: string[],
     sourceIdentifier: MetadataIdentifier,
     destinationIdentifier: MetadataIdentifier,
     errorHandler: ErrorHandler
 ) {
-    const unmappedKeys = Object.entries(destinationObject).reduce(
-        (result, [key, value]) => {
+    const unmappedKeys = Object.keys(destinationMetadata).reduce(
+        (result, key) => {
+            const isOnDestination = key in destinationObject;
             const isAlreadyConfigured = configuredKeys.some(
                 (configuredKey) => configuredKey === key
             );
             const isWritable =
-                Object.getOwnPropertyDescriptor(destinationObject, key)
+                Object.getOwnPropertyDescriptor(destinationMetadata, key)
                     ?.writable === true;
-            if (!isAlreadyConfigured && isWritable && value === undefined) {
+            if (
+                !isAlreadyConfigured &&
+                !isOnDestination &&
+                isWritable &&
+                destinationObject[key as keyof typeof destinationObject] ===
+                    undefined
+            ) {
                 result.push(key);
             }
             return result;

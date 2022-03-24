@@ -4,6 +4,7 @@ import type {
     MetadataIdentifier,
     NamingConvention,
 } from './types';
+import { normalizeNamingConventions } from './utils/normalize-naming-conventions';
 
 export const STRATEGY = Symbol('__strategy__');
 export const MAPPINGS = Symbol('__mappings__');
@@ -38,10 +39,7 @@ export function getNamingConventions(
     | undefined {
     const namingConventions = mapper[NAMING_CONVENTIONS];
     if (!namingConventions) return undefined;
-    if ('source' in namingConventions && 'destination' in namingConventions) {
-        return [namingConventions.source, namingConventions.destination];
-    }
-    return [namingConventions, namingConventions];
+    return normalizeNamingConventions(namingConventions);
 }
 
 export function getRecursiveDepth(

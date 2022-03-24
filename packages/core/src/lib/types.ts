@@ -65,6 +65,13 @@ export interface NamingConvention {
     transformPropertyName: (sourcePropNameParts: string[]) => string;
 }
 
+export type NamingConventionInput =
+    | NamingConvention
+    | {
+          source: NamingConvention;
+          destination: NamingConvention;
+      };
+
 export type Selector<
     TObject extends Dictionary<TObject> = any,
     TReturnType = unknown
@@ -107,6 +114,7 @@ export interface MapOptions<
 > {
     beforeMap?: MapCallback<TSource, TDestination>;
     afterMap?: MapCallback<TSource, TDestination>;
+    destinationConstructor?: DestinationConstructor<TSource, TDestination>;
     extraArgs?: (
         mapping: Mapping<TSource, TDestination>,
         destinationObject: TDestination
@@ -221,9 +229,7 @@ export interface Mapper {
     [ERROR_HANDLER]: ErrorHandler;
     [MAPPINGS]: Map<MetadataIdentifier, Map<MetadataIdentifier, Mapping>>;
     [STRATEGY]: MappingStrategy<MetadataIdentifier>;
-    [NAMING_CONVENTIONS]:
-        | NamingConvention
-        | { source: NamingConvention; destination: NamingConvention };
+    [NAMING_CONVENTIONS]: NamingConventionInput;
     [METADATA_MAP]: Map<MetadataIdentifier, Array<Metadata>>;
     [RECURSIVE_DEPTH]: Map<MetadataIdentifier, ArrayKeyedMap>;
     [RECURSIVE_COUNT]: Map<MetadataIdentifier, ArrayKeyedMap>;

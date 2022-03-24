@@ -18,6 +18,7 @@ export * from './lib/mapping-configurations/construct-using';
 export * from './lib/mapping-configurations/before-map';
 export * from './lib/mapping-configurations/after-map';
 export * from './lib/mapping-configurations/extend';
+export * from './lib/mapping-configurations/naming-conventions';
 
 export * from './lib/member-map-functions/map-from';
 export * from './lib/member-map-functions/map-with';

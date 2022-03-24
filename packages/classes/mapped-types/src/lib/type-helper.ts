@@ -11,12 +11,12 @@ export function inheritAutoMapMetadata(
     isPropertyInherited: (key: string) => boolean = () => true
 ) {
     try {
-        const parentClassMetadataList = getMetadataList(parentClass);
+        const [parentClassMetadataList] = getMetadataList(parentClass);
         if (!parentClassMetadataList.length) {
             return;
         }
 
-        const existingMetadataList = getMetadataList(
+        const [existingMetadataList] = getMetadataList(
             targetClass as Constructor
         );
         Reflect.defineMetadata(

@@ -109,7 +109,7 @@ export function map<
     // destructure mapping
     const [
         [sourceIdentifier, destinationIdentifier],
-        ,
+        [, destinationWithMetadata],
         propsToMap,
         mapper,
         destinationConstructor,
@@ -117,23 +117,25 @@ export function map<
         [mappingBeforeCallback, mappingAfterCallback] = [],
     ] = mapping;
 
+    // deconstruct MapOptions
+    const {
+        beforeMap: mapBeforeCallback,
+        afterMap: mapAfterCallback,
+        destinationConstructor:
+            mapDestinationConstructor = destinationConstructor,
+        extraArgs,
+    } = options ?? {};
+
     const errorHandler = getErrorHandler(mapper);
     const metadataMap = getMetadataMap(mapper);
 
-    const destination: TDestination = destinationConstructor(
+    const destination: TDestination = mapDestinationConstructor(
         sourceObject,
         destinationIdentifier
     );
 
     // initialize an array of keys that have already been configured
     const configuredKeys: string[] = [];
-
-    // deconstruct MapOptions
-    const {
-        beforeMap: mapBeforeCallback,
-        afterMap: mapAfterCallback,
-        extraArgs,
-    } = options ?? {};
 
     if (!isMapArray) {
         const beforeMap = mapBeforeCallback ?? mappingBeforeCallback;
@@ -157,7 +159,7 @@ export function map<
                     ] = [],
                 ],
             ],
-            [destinationMemberIdenfitier, sourceMemberIdentifier] = [],
+            [destinationMemberIdentifier, sourceMemberIdentifier] = [],
         ] = propsToMap[i];
 
         // Setup a shortcut function to set destinationMemberPath on destination with value as argument
@@ -231,7 +233,12 @@ Original error: ${originalError}`;
             if (Array.isArray(mapInitializedValue)) {
                 const [first] = mapInitializedValue;
                 // if first item is a primitive
-                if (typeof first !== 'object' || first instanceof Date) {
+                if (
+                    typeof first !== 'object' ||
+                    first instanceof Date ||
+                    Object.prototype.toString.call(first).slice(8, -1) ===
+                        'File'
+                ) {
                     setMember(() => mapInitializedValue.slice());
                     continue;
                 }
@@ -248,7 +255,7 @@ Original error: ${originalError}`;
                             getMapping(
                                 mapper,
                                 sourceMemberIdentifier as MetadataIdentifier,
-                                destinationMemberIdenfitier as MetadataIdentifier
+                                destinationMemberIdentifier as MetadataIdentifier
                             ),
                             each,
                             { extraArgs }
@@ -262,7 +269,7 @@ Original error: ${originalError}`;
                 const nestedMapping = getMapping(
                     mapper,
                     sourceMemberIdentifier as MetadataIdentifier,
-                    destinationMemberIdenfitier as MetadataIdentifier
+                    destinationMemberIdentifier as MetadataIdentifier
                 );
 
                 // nested mutate
@@ -280,7 +287,6 @@ Original error: ${originalError}`;
                     continue;
                 }
 
-                // for nested model, we do not care about mutate or return. we will always need to return
                 setMember(() =>
                     map({
                         mapping: nestedMapping,
@@ -319,6 +325,7 @@ Original error: ${originalError}`;
     // Check unmapped properties
     assertUnmappedProperties(
         destination,
+        destinationWithMetadata,
         configuredKeys,
         sourceIdentifier,
         destinationIdentifier,

@@ -9,9 +9,3 @@
 export function AutoMap(): PropertyDecorator {
     return () => {};
 }
-
-export function AutoMapStandalone(): ClassDecorator {
-    return () => {};
-}
-
-export function getStandaloneConstructors() {}

@@ -1,4 +1,4 @@
-import * as Actual from '../src/lib/decorators';
+import * as Actual from '../src/lib/automap';
 import * as Shim from './index';
 
 describe('Classes - Shim', () => {

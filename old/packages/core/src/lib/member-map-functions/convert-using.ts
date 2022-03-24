@@ -1,11 +1,5 @@
-import type {
-  Converter,
-  ConvertUsingReturn,
-  Dictionary,
-  Selector,
-  SelectorReturn,
-} from '../types';
-import { TransformationType } from '../types';
+import type {Converter, ConvertUsingReturn, Dictionary, Selector, SelectorReturn,} from '../types';
+import {TransformationType} from '../types';
 
 export function convertUsing<
   TSource extends Dictionary<TSource> = any,

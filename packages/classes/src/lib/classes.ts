@@ -1,13 +1,12 @@
-import {
+import type {
     ApplyMetadataFn,
     Constructor,
-    defaultSerializerOptions,
     Mapper,
     MappingStrategyInitializer,
     MappingStrategyInitializerOptions,
 } from '@automapper/core';
+import { defaultSerializerOptions } from '@automapper/core';
 import 'reflect-metadata';
-import { getStandaloneConstructors } from './decorators';
 import { getMetadataList } from './get-metadata-list';
 
 export function classes({
@@ -27,21 +26,21 @@ export function classes({
             const metadataMap = new Map();
             for (let i = 0, length = identifiers.length; i < length; i++) {
                 const identifier = identifiers[i];
-                metadataMap.set(identifier, getMetadataList(identifier));
+                const [metadataList, nestedConstructors] =
+                    getMetadataList(identifier);
+                metadataMap.set(identifier, metadataList);
 
-                const standaloneConstructors =
-                    getStandaloneConstructors(identifier);
-                for (
-                    let j = 0,
-                        standaloneConstructorsLength =
-                            standaloneConstructors.length;
-                    j < standaloneConstructorsLength;
-                    j++
-                ) {
-                    const standaloneIdentifier = standaloneConstructors[j];
-                    metadataMap.set(
-                        standaloneIdentifier,
-                        getMetadataList(standaloneIdentifier)
+                if (nestedConstructors.length) {
+                    const nestedConstructorsMetadataMap = this.retrieveMetadata(
+                        ...nestedConstructors
+                    );
+                    nestedConstructorsMetadataMap.forEach(
+                        (nestedConstructorMetadataList, nestedConstructor) => {
+                            metadataMap.set(
+                                nestedConstructor,
+                                nestedConstructorMetadataList
+                            );
+                        }
                     );
                 }
             }

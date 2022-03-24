@@ -1,4 +1,5 @@
 import type { Constructor } from '@automapper/core';
+import { isDateConstructor, isPrimitiveConstructor } from '@automapper/core';
 import 'reflect-metadata';
 import {
     AUTOMAP_PROPERTIES_METADATA_KEY,
@@ -17,14 +18,17 @@ type MetadataList = Array<
 >;
 
 export function getMetadataList(model: Constructor): [
-    string,
-    {
-        type: () => Constructor;
-        isArray: boolean;
-        depth: number;
-        isGetterOnly?: boolean;
-    }
-][] {
+    metadataList: [
+        string,
+        {
+            type: () => Constructor;
+            isArray: boolean;
+            depth: number;
+            isGetterOnly?: boolean;
+        }
+    ][],
+    nestedConstructor: Constructor[]
+] {
     let metadataList: MetadataList = (
         model.constructor?.prototype
             ? Reflect.getMetadata(
@@ -40,17 +44,39 @@ export function getMetadataList(model: Constructor): [
             metadataFactoryFn() || ([] as MetadataList)
         );
     }
-    return metadataList.map(([propertyKey, { type, depth, isGetterOnly }]) => {
-        const meta = type();
-        const isArray = Array.isArray(meta);
-        return [
-            propertyKey,
-            {
-                type: isArray ? () => meta[0] : () => meta,
-                depth,
-                isGetterOnly,
-                isArray,
-            },
-        ];
-    });
+    return metadataList.reduce(
+        (result, [propertyKey, { type, depth, isGetterOnly }]) => {
+            // can be [type] or type
+            const meta = type();
+            const isArray = Array.isArray(meta);
+
+            const trueMeta = isArray ? meta[0] : meta;
+
+            if (
+                !isDateConstructor(trueMeta) &&
+                !isPrimitiveConstructor(trueMeta)
+            ) {
+                result[1].push(trueMeta);
+            }
+
+            result[0].push([
+                propertyKey,
+                { type: () => trueMeta, depth, isGetterOnly, isArray },
+            ]);
+
+            return result;
+        },
+        [[], []] as [
+            metadataList: [
+                string,
+                {
+                    type: () => Constructor;
+                    isArray: boolean;
+                    depth: number;
+                    isGetterOnly?: boolean;
+                }
+            ][],
+            nestedConstructor: Constructor[]
+        ]
+    );
 }

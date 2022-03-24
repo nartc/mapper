@@ -25,12 +25,7 @@ about [Strategies](#Strategies))
 export interface CreateMapperOptions {
     strategyInitializer: MappingStrategyInitializer<MetadataIdentifier>;
     errorHandler?: ErrorHandler;
-    namingConventions?:
-        | NamingConvention
-        | {
-              source: NamingConvention;
-              destination: NamingConvention;
-          };
+    namingConventions?: NamingConventionInput;
 }
 ```
 

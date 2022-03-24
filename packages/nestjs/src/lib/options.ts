@@ -1,7 +1,7 @@
 import type {
     CreateMapperOptions,
     ErrorHandler,
-    NamingConvention,
+    NamingConventionInput,
 } from '@automapper/core';
 import type { ModuleMetadata, Type } from '@nestjs/common';
 
@@ -11,12 +11,7 @@ export type AutomapperOptions =
 
 export interface AutomapperGlobalOptions {
     globalErrorHandler?: ErrorHandler;
-    globalNamingConventions?:
-        | NamingConvention
-        | {
-              source: NamingConvention;
-              destination: NamingConvention;
-          };
+    globalNamingConventions?: NamingConventionInput;
 }
 
 export interface AutomapperOptionsFactory {

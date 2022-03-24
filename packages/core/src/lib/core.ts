@@ -19,7 +19,7 @@ import type {
     MappingStrategyInitializer,
     Metadata,
     MetadataIdentifier,
-    NamingConvention,
+    NamingConventionInput,
 } from './types';
 import { Dictionary, MapOptions, ModelIdentifier } from './types';
 import { getMapping } from './utils/get-mapping';
@@ -27,12 +27,7 @@ import { getMapping } from './utils/get-mapping';
 export interface CreateMapperOptions {
     strategyInitializer: MappingStrategyInitializer<MetadataIdentifier>;
     errorHandler?: ErrorHandler;
-    namingConventions?:
-        | NamingConvention
-        | {
-              source: NamingConvention;
-              destination: NamingConvention;
-          };
+    namingConventions?: NamingConventionInput;
 }
 
 export function createMapper({

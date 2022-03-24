@@ -245,7 +245,9 @@ export const enum TransformationType {
     ConvertUsing,
     MapInitialize,
     NullSubstitution,
+    UndefinedSubstitution,
     MapWithArguments,
+    MapDefer,
 }
 
 export const enum MapFnClassId {
@@ -253,7 +255,7 @@ export const enum MapFnClassId {
     fn,
 }
 
-export type MemberMapReturn<
+export type MemberMapReturnNoDefer<
     TSource extends Dictionary<TSource>,
     TDestination extends Dictionary<TDestination>,
     TSelectorReturn = SelectorReturn<TDestination>
@@ -265,8 +267,17 @@ export type MemberMapReturn<
     | FromValueReturn<TSource, TDestination, TSelectorReturn>
     | ConvertUsingReturn<TSource, TDestination>
     | NullSubstitutionReturn<TSource, TDestination, TSelectorReturn>
+    | UndefinedSubstitutionReturn<TSource, TDestination, TSelectorReturn>
     | IgnoreReturn<TSource, TDestination, TSelectorReturn>
     | MapWithArgumentsReturn<TSource, TDestination, TSelectorReturn>;
+
+export type MemberMapReturn<
+    TSource extends Dictionary<TSource>,
+    TDestination extends Dictionary<TDestination>,
+    TSelectorReturn = SelectorReturn<TDestination>
+> =
+    | MemberMapReturnNoDefer<TSource, TDestination, TSelectorReturn>
+    | MapDeferReturn<TSource, TDestination, TSelectorReturn>;
 
 export type PreConditionReturn<
     TSource extends Dictionary<TSource>,
@@ -275,6 +286,25 @@ export type PreConditionReturn<
 > = [
     preConditionPredicate: ConditionPredicate<TSource>,
     defaultValue?: TSelectorReturn
+];
+
+export interface DeferFunction<
+    TSource extends Dictionary<TSource>,
+    TDestination extends Dictionary<TDestination>,
+    TSelectorReturn = SelectorReturn<TDestination>
+> {
+    (source: TSource):
+        | MemberMapReturnNoDefer<TSource, TDestination, TSelectorReturn>
+        | MapWithReturn<TSource, TDestination, TSelectorReturn>;
+}
+
+export type MapDeferReturn<
+    TSource extends Dictionary<TSource>,
+    TDestination extends Dictionary<TDestination>,
+    TSelectorReturn = SelectorReturn<TDestination>
+> = [
+    TransformationType.MapDefer,
+    DeferFunction<TSource, TDestination, TSelectorReturn>
 ];
 
 export type MapFromReturn<
@@ -323,6 +353,15 @@ export type NullSubstitutionReturn<
     TSelectorReturn = SelectorReturn<TDestination>
 > = [
     TransformationType.NullSubstitution,
+    (source: TSource, sourceMemberPath: string[]) => TSelectorReturn
+];
+
+export type UndefinedSubstitutionReturn<
+    TSource extends Dictionary<TSource>,
+    TDestination extends Dictionary<TDestination>,
+    TSelectorReturn = SelectorReturn<TDestination>
+> = [
+    TransformationType.UndefinedSubstitution,
     (source: TSource, sourceMemberPath: string[]) => TSelectorReturn
 ];
 

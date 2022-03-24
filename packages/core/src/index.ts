@@ -29,6 +29,8 @@ export * from './lib/member-map-functions/pre-condition';
 export * from './lib/member-map-functions/condition';
 export * from './lib/member-map-functions/from-value';
 export * from './lib/member-map-functions/map-with-arguments';
+export * from './lib/member-map-functions/map-defer';
+export * from './lib/member-map-functions/undefined-substitution';
 
 export * from './lib/naming-conventions/camel-case-naming-convention';
 export * from './lib/naming-conventions/pascal-case-naming-convention';

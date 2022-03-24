@@ -3,6 +3,7 @@ import type {
     ConvertUsingReturn,
     Dictionary,
     FromValueReturn,
+    MapDeferReturn,
     MapFromReturn,
     Mapper,
     MapWithArgumentsReturn,
@@ -53,6 +54,7 @@ export function mapMember<
             break;
         case TransformationType.Condition:
         case TransformationType.NullSubstitution:
+        case TransformationType.UndefinedSubstitution:
             value = (
                 mapFn as ConditionReturn<TSource, TDestination>[MapFnClassId.fn]
             )(sourceObject, destinationMemberPath);
@@ -64,6 +66,21 @@ export function mapMember<
                     TDestination
                 >[MapFnClassId.fn]
             )(sourceObject, extraArgs || {});
+            break;
+        case TransformationType.MapDefer:
+            value = mapMember(
+                (
+                    mapFn as MapDeferReturn<
+                        TSource,
+                        TDestination
+                    >[MapFnClassId.fn]
+                )(sourceObject) as MemberMapReturn<TSource, TDestination>,
+                sourceObject,
+                destinationObject,
+                destinationMemberPath,
+                extraArgs,
+                mapper
+            );
             break;
     }
     return value;

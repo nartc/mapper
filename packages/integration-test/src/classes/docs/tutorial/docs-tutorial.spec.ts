@@ -1,5 +1,13 @@
 import { classes } from '@automapper/classes';
-import { createMap, createMapper } from '@automapper/core';
+import {
+    CamelCaseNamingConvention,
+    createMap,
+    createMapper,
+    forMember,
+    mapFrom,
+    namingConventions,
+    typeConverter,
+} from '@automapper/core';
 import { Bio, Job, User } from './user';
 import { BioDto, UserDto } from './user.dto';
 
@@ -7,8 +15,22 @@ describe('Docs - Tutorial', () => {
     const mapper = createMapper({ strategyInitializer: classes() });
 
     beforeEach(() => {
-        createMap(mapper, Bio, BioDto);
-        createMap(mapper, User, UserDto);
+        createMap(
+            mapper,
+            Bio,
+            BioDto,
+            typeConverter(Date, String, (date) => date.toDateString()),
+            namingConventions(new CamelCaseNamingConvention())
+        );
+        createMap(
+            mapper,
+            User,
+            UserDto,
+            forMember(
+                (d) => d.fullName,
+                mapFrom((s) => s.firstName + ' ' + s.lastName)
+            )
+        );
     });
 
     afterEach(() => {

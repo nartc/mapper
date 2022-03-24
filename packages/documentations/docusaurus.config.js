@@ -67,11 +67,11 @@ const config = {
                 style: 'dark',
                 links: [
                     {
-                        title: 'Docs',
+                        title: 'Documentations',
                         items: [
                             {
                                 label: 'Tutorial',
-                                to: '/docs/intro',
+                                to: '/docs/tutorial/preface',
                             },
                         ],
                     },

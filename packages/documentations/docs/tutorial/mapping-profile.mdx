@@ -1,0 +1,113 @@
+---
+id: mapping-profile
+title: Group Mapping Logic with Profile
+sidebar_label: Group Mapping Logic with Profile
+sidebar_position: 5
+---
+
+In the previous section, you've created your first Mappings for `Bio <-> BioDto` and `User <-> UserDto`
+
+```ts
+createMap(
+    mapper,
+    Bio,
+    BioDto,
+    typeConverter(Date, String, (date) => date.toDateString()),
+    namingConventions(new CamelCaseNamingConvention())
+);
+
+createMap(
+    mapper,
+    User,
+    UserDto,
+    forMember(
+        (destination) => destination.fullName,
+        mapFrom((source) => source.firstName + ' ' + source.lastName)
+    )
+);
+```
+
+This approach works completely fine but when the application starts growing with more entities, these configurations will also start growing. `Profile` is a way to group Mappings of related entities into a `MappingProfile`, so you can focus on a specific domain when working with a certain set of entities.
+
+## Your first `MappingProfile`
+
+`MappingProfile` is a function that will be called with the `Mapper` and returns `void`.
+
+```ts
+const bioProfile: MappingProfile = (mapper) => {
+    createMap(
+        mapper,
+        Bio,
+        BioDto,
+        typeConverter(Date, String, (date) => date.toDateString()),
+        namingConventions(new CamelCaseNamingConvention())
+    );
+};
+```
+
+When you have more models/DTOs related to `Bio`, you can group them all under `bioProfile`. Repeat the process with `User <-> UserDto`.
+
+To use `MappingProfile`, call `addProfile()` with your `Mapper` object and the `MappingProfile`
+
+```ts
+addProfile(mapper, bioProfile);
+addProfile(mapper, userProfile);
+```
+
+:::tip
+
+Order of the `MappingProfile` matters. `bioProfile` goes first because `userProfile` depends on `Mapping<Bio, BioDto>`
+
+:::
+
+## Share `MappingConfiguration`
+
+One benefit of using `MappingProfile` is that you can share some common `MappingConfiguration` for **all** `createMap()` inside of a specific `MappingProfile`.
+
+Let's assume you have the following Mappings
+
+```ts
+const bioProfile: MappingProfile = (mapper) => {
+    const camelCaseNamingConvention = new CamelCaseNamingConvention();
+    createMap(
+        mapper,
+        Bio,
+        BioDto,
+        namingConventions(camelCaseNamingConvention),
+        extend(Base, BaseDto)
+    );
+
+    createMap(
+        mapper,
+        Bio,
+        BioInformationDto,
+        namingConventions(camelCaseNamingConvention),
+        extend(Base, BaseDto)
+    );
+
+    createMap(
+        mapper,
+        Bio,
+        MinimalBioDto,
+        namingConventions(camelCaseNamingConvention),
+        extend(Base, BaseDto)
+    );
+};
+```
+
+Instead of repeating the same `MappingConfiguration` on each `createMap()` like above, you can pass the `MappingConfiguration` in `addProfile()` instead
+
+```ts
+const bioProfile: MappingProfile = (mapper) => {
+    createMap(mapper, Bio, BioDto);
+    createMap(mapper, Bio, BioInformationDto);
+    createMap(mapper, Bio, MinimalBioDto);
+};
+
+addProfile(
+    mapper,
+    bioProfile,
+    namingConventions(new CamelCaseNamingConvention()),
+    extend(Base, BaseDto)
+);
+```

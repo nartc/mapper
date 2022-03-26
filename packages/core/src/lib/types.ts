@@ -439,7 +439,7 @@ export type NestedMappingPair = [
 
 export const enum MappingClassId {
     identifiers,
-    identiferMetadata,
+    identifierMetadata,
     properties,
     mapper,
     destinationConstructor,

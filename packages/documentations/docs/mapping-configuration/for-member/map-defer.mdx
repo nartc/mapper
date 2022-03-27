@@ -1,0 +1,32 @@
+---
+id: map-defer
+title: MapDefer
+sidebar_label: MapDefer
+sidebar_position: 11
+---
+
+`mapDefer()` is a _special_ type of `MemberMapFunction` that can be used to _defer_ another `MemberMapFunction` based on some logic in `forMember()`
+
+Call `mapDefer()` and pass in the `DeferFunction` which will be called with the `sourceObject`. We can then use this `sourceObject` and return another `MemberMapFunction`
+
+```ts
+createMap(
+    mapper,
+    User,
+    UserDto,
+    forMember(
+        (destination) => destination.profile,
+        mapDefer((source) => {
+            if (source.profile.type === 'A')
+                return mapWith(
+                    ProfileDto,
+                    ProfileA,
+                    (source) => source.profile
+                );
+            return mapWith(ProfileDto, Profile, (source) => source.profile);
+        })
+    )
+);
+```
+
+`mapDefer()` sets the `TransformationType` to `TransformationType.MapDefer`

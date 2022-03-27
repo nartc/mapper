@@ -1,0 +1,31 @@
+---
+id: mutation
+title: Mutation
+sidebar_label: Mutation
+sidebar_position: 5
+---
+
+AutoMapper provides a way to map _mutably_ using the `mutate()` API (and its variants)
+
+```ts
+mapper.map();
+mapper.mapAsync();
+mapper.mapArray();
+mapper.mapArrayAsync();
+
+mapper.mutate();
+mapper.mutateAsync();
+mapper.mutateArray();
+mapper.mutateArrayAsync();
+```
+
+The `mutate()` API returns `void` as we would pass in the `destinationObject` to mutate
+
+```ts
+// map()
+const dto = mapper.map(user, User, UserDto);
+
+// mutate()
+let dto = {};
+mapper.mutate(user, dto, User, UserDto);
+```

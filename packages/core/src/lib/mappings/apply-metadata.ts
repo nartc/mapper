@@ -41,12 +41,16 @@ export function defaultApplyMetadata(
             const key = metadata[i][MetadataClassId.propertyKeys];
             const metaFn = metadata[i][MetadataClassId.metaFn];
             const isArray = metadata[i][MetadataClassId.isArray];
-            const isGetterOnly = metadata[i][MetadataClassId.isGetterOnly];
 
+            /**
+             * in V8, AutoMapper does not instantiate a new model on applying metadata anymore.
+             * Hence, isGetterOnly seems to be obsolete.
+             */
+            // const isGetterOnly = metadata[i][MetadataClassId.isGetterOnly];
             // skip getter only completely
-            if (isGetterOnly) {
-                continue;
-            }
+            // if (isGetterOnly) {
+            //     continue;
+            // }
 
             // call the meta fn to get the metaResult of the current key
             const metaResult = metaFn();

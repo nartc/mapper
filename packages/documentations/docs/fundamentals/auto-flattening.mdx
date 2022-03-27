@@ -1,0 +1,123 @@
+---
+id: auto-flattening
+title: Auto Flattening
+sidebar_label: Auto Flattening
+sidebar_position: 4
+---
+
+One of the common usages of object-object mapping is to take a complex object model and flatten it to a simpler model. If we set up the models following the convention, AutoMapper can help with flattening automatically. To enable Auto Flattening, we need to set the [NamingConvention](./naming-convention) for our models.
+
+Let's assume we have the following complex models:
+
+```ts
+class Product {
+    @AutoMap()
+    price!: number;
+    @AutoMap()
+    name!: string;
+
+    constructor(price: number, name: string) {
+        this.price = price;
+        this.name = name;
+    }
+}
+
+class Customer {
+    @AutoMap()
+    name!: string;
+
+    constructor(name: string) {
+        this.name = name;
+    }
+}
+
+class OrderItem {
+    @AutoMap(() => Product)
+    product!: Product;
+    @AutoMap()
+    quantity!: number;
+
+    constructor(product: Product, quantity: number) {
+        this.product = product;
+        this.quantity = quantity;
+    }
+
+    get total() {
+        return this.product.price * this.quantity;
+    }
+}
+
+class Order {
+    @AutoMap(() => [OrderItem])
+    items: OrderItem[] = [];
+    @AutoMap(() => Customer)
+    customer!: Customer;
+
+    constructor(customer: Customer) {
+        this.customer = customer;
+    }
+
+    @AutoMap() // 👇 need to specify the type for getter
+    get total(): number {
+        return this.items.reduce((sum, item) => sum + item.total, 0);
+    }
+
+    addItem(product: Product, quantity: number) {
+        this.items.push(new OrderItem(product, quantity));
+    }
+}
+```
+
+Now, we want to map the complex `Order` model to a simpler `OrderDto` that contains only the data needed for a certain scenario:
+
+```ts
+class OrderDto {
+    @AutoMap()
+    customerName!: string;
+    @AutoMap()
+    total!: number;
+}
+```
+
+Assuming we have Auto Flattening enabled by applying a `NamingConvention`, AutoMapper will attempt to match the properties on `OrderDto` against `Order` and its child models (`Product` and `Customer`) when we call `createMap(mapper, Order, OrderDto)`
+
+```ts
+// complex model
+const product = new Product(5, 'Fried Chicken');
+const customer = new Customer('Chau Tran');
+const order = new Order(customer);
+order.addItem(product, 10);
+/**
+ * Order {
+ *     customer: Customer {
+ *         name: 'Chau Tran'
+ *     },
+ *     items: [
+ *         OrderItem {
+ *             product: Product {
+ *                 price: 5,
+ *                 name: 'Fried Chicken
+ *             },
+ *             quantity: 10
+ *         }
+ *     ]
+ * }
+ */
+
+// configure AutoMapper with NamingConvention
+const mapper = createMapper({
+    strategyInitializer: classes(),
+    // 👇 apply the CamelCaseNamingConvention
+    namingConventions: new CamelCaseNamingConvention(),
+});
+
+createMap(mapper, Order, OrderDto);
+
+const dto = mapper.map(order, Order, OrderDto);
+/**
+ * OrderDto {
+ *     customerName: 'Chau Tran',
+ *     total: 50
+ * }
+ */
+```

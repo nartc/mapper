@@ -147,7 +147,9 @@ export function createMapper({
 
                     return strategy.postMap(
                         Object.freeze(sourceObject),
-                        Object.freeze(destination)
+                        // seal destination so that consumers cannot add properties to it
+                        // or change the property descriptors. but they can still modify it
+                        Object.seal(destination)
                     );
                 };
             }
@@ -162,14 +164,15 @@ export function createMapper({
                     destinationIdentifier: ModelIdentifier<TDestination>,
                     options?: MapOptions<TSource, TDestination>
                 ): Promise<TDestination> => {
-                    return Promise.resolve().then(() =>
-                        receiver['map'](
-                            sourceObject,
-                            sourceIdentifier,
-                            destinationIdentifier,
-                            options
-                        )
+                    const result = receiver['map'](
+                        sourceObject,
+                        sourceIdentifier,
+                        destinationIdentifier,
+                        options
                     );
+                    return new Promise((res) => {
+                        setTimeout(res, 0, result);
+                    });
                 };
             }
 
@@ -224,7 +227,9 @@ export function createMapper({
                         destinationArray.push(
                             strategy.postMap(
                                 Object.freeze(sourceObject),
-                                Object.freeze(destination)
+                                // seal destination so that consumers cannot add properties to it
+                                // or change the property descriptors. but they can still modify it
+                                Object.seal(destination)
                             ) as TDestination
                         );
                     }
@@ -247,13 +252,14 @@ export function createMapper({
                     destinationIdentifier: ModelIdentifier<TDestination>,
                     options?: MapOptions<TSource[], TDestination[]>
                 ) => {
-                    return Promise.resolve().then(() => {
-                        return receiver['mapArray'](
-                            sourceArray,
-                            sourceIdentifier,
-                            destinationIdentifier,
-                            options
-                        );
+                    const result = receiver['mapArray'](
+                        sourceArray,
+                        sourceIdentifier,
+                        destinationIdentifier,
+                        options
+                    );
+                    return new Promise((res) => {
+                        setTimeout(res, 0, result);
                     });
                 };
             }
@@ -303,15 +309,17 @@ export function createMapper({
                     destinationIdentifier: ModelIdentifier<TDestination>,
                     options?: MapOptions<TSource, TDestination>
                 ) => {
-                    return Promise.resolve().then(() =>
+                    return new Promise((res) => {
                         receiver['mutate'](
                             sourceObject,
                             destinationObject,
                             sourceIdentifier,
                             destinationIdentifier,
                             options
-                        )
-                    );
+                        );
+
+                        setTimeout(res);
+                    });
                 };
             }
 
@@ -387,15 +395,17 @@ export function createMapper({
                     destinationIdentifier: ModelIdentifier<TDestination>,
                     options?: MapOptions<TSource[], TDestination[]>
                 ) => {
-                    return Promise.resolve().then(() =>
+                    return new Promise((res) => {
                         receiver['mutateArray'](
                             sourceArray,
                             destinationArray,
                             sourceIdentifier,
                             destinationIdentifier,
                             options
-                        )
-                    );
+                        );
+
+                        setTimeout(res);
+                    });
                 };
             }
 

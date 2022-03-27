@@ -1,0 +1,40 @@
+---
+id: map-with
+title: MapWith
+sidebar_label: MapWith
+sidebar_position: 6
+---
+
+In some cases where AutoMapper fails to auto-map nested models, call `mapWith()` to take over this operation for the configured property.
+
+`mapWith()` accepts 3 arguments:
+
+-   `withDestination`: the `NestedDestination` model to map to
+-   `withSource`: the `NestedSource` model to map from
+-   `withSourceValue`: the `ValueSelector` to select a property from the parent `sourceObject` whose value is the `NestedSource`
+
+```ts
+createMap(
+    mapper,
+    User,
+    UserDto,
+    forMember(
+        (destination) => destination.profile,
+        mapWith(ProfileDto, Profile, (source) => source.profile)
+    )
+);
+```
+
+:::tip
+
+In the case where the property on `Destination` has a different name than `Source` (e.g: `Source.originalProfile` vs `Destination.otherProfile`), we can use `mapWith()` as well. Although it is possible and valid, we should avoid this case because it is against the _Convention_
+
+:::
+
+:::info
+
+`mapWith()` calls the normal map operation for `NestedSource` and `NestedDestination`. In other words, it is the same as we call `mapper.map(nestedSourceObject, NestedSource, NestedDestination) ourselves.
+
+:::
+
+`mapWith()` sets the `TransformationType` to `TransformationType.MapWith`

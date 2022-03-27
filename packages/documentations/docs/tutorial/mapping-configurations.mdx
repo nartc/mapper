@@ -69,7 +69,7 @@ createMap(
 
 These two properties are a bit different from `fullName` and `birthday`. If you notice, you will see that `jobTitle` and `jobSalary` are **flatten** properties of `job.title` and `job.salary`.
 
-AutoMapper supports [TODO: Auto Flattening docs](.) out of the box with the concept of [TODO: Naming Conventions docs](.). With that in mind, let's provide a `NamingConvention` for `Mapping<Bio, BioDto>` by using yet another `MappingConfiguration` function: `namingConventions()`
+AutoMapper supports [Auto Flattening](../fundamentals/auto-flattening) out of the box with the concept of [Naming Conventions](../fundamentals/naming-convention). With that in mind, let's provide a `NamingConvention` for `Mapping<Bio, BioDto>` by using yet another `MappingConfiguration` function: `namingConventions()`
 
 ```ts
 createMap(
@@ -103,7 +103,7 @@ UserDto {
 
 -   Without AutoMapper, mapping logic is repetitive and hard to scale. DTOs and Entities are coupling.
 -   With AutoMapper, matching properties are mapped _automatically_ (`firstName`, `lastName`, `username`, `bio`, and `bio.avatarUrl`)
--   [TODO: Auto Flattening](.) with [TODO: Naming Conventions](.)
+-   [Auto Flattening](../fundamentals/auto-flattening) with [Naming Conventions](../fundamentals/naming-convention)
 -   [TODO: Type Converter](.) allows for using the same conversion for the same pair of types.
 
 <Tabs>

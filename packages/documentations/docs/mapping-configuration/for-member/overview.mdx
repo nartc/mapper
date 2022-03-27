@@ -1,0 +1,27 @@
+---
+id: overview
+title: Overview
+sidebar_label: Overview
+sidebar_position: 1
+---
+
+Call `forMember()` and pass in a `Selector` along with a `MemberMapFunction` to customize the [MappingTransformation](../../fundamentals/mapping#mappingtransformation) of a particular property on the `Destination`
+
+<figure>
+    <img
+        src={require('../../../static/for-member.gif').default}
+        alt="ForMember gif to showcase developer experience"
+    />
+    <figcaption align="center">
+        <em>
+            <code>forMember()</code> is strongly-typed, providing good developer
+            experience with autocomplete
+        </em>
+    </figcaption>
+</figure>
+
+:::caution
+
+To iterate once again, if the Mapping has a lot of `forMember()`, it is time to re-evaluate the models.
+
+:::

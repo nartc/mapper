@@ -25,3 +25,22 @@ Call `forMember()` and pass in a `Selector` along with a `MemberMapFunction` to 
 To iterate once again, if the Mapping has a lot of `forMember()`, it is time to re-evaluate the models.
 
 :::
+
+## PreCondition
+
+Call `preCondition()` before a `MemberMapFunction` will tell AutoMapper to do a pre-check against some condition before executing the `MemberMapFunction`.
+
+`preCondition()` takes a `predicateFn` that will be called with the `sourceObject` and an optional `defaultValue` that will be assigned to the configured property if `preCondtion()` check yields falsy
+
+```ts
+createMap(
+    mapper,
+    User,
+    UserDto,
+    forMember(
+        (destination) => destination.fullName,
+        preCondition((source) => source.age > 10, 'default full name'),
+        mapFrom(fullNameResolver)
+    )
+);
+```

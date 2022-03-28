@@ -1,6 +1,6 @@
 {
     "name": "@automapper/pojos",
-    "version": "8.0.0-beta.16",
+    "version": "8.0.0-beta.17",
     "sideEffects": false,
     "exports": {
         "import": "./index.esm.js",

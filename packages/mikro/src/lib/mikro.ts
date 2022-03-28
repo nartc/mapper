@@ -4,21 +4,28 @@ import type {
     Dictionary,
     MappingStrategyInitializer,
     MappingStrategyInitializerOptions,
+    MetadataIdentifier,
 } from '@automapper/core';
 import { defaultSerializerOptions } from '@automapper/core';
 import { serializeEntity } from './serialize-entity';
 
-export function mikro({
-    destinationConstructor = (_, destinationIdentifier) =>
-        new (destinationIdentifier as Constructor)(),
-    applyMetadata,
-    postMap,
-    preMap,
-}: MappingStrategyInitializerOptions = defaultSerializerOptions): MappingStrategyInitializer<Constructor> {
-    if (preMap === defaultSerializerOptions.preMap) {
-        preMap = <TSource extends Dictionary<TSource>>(source: TSource) =>
-            serializeEntity(source) as TSource;
+export function mikro(
+    options: MappingStrategyInitializerOptions = {}
+): MappingStrategyInitializer<Constructor> {
+    const mergedOptions = {
+        ...defaultSerializerOptions,
+        destinationConstructor: (
+            _: Dictionary<object>,
+            destinationIdentifier: MetadataIdentifier
+        ) => new (destinationIdentifier as Constructor)(),
+        ...options,
+    };
+
+    if (mergedOptions.preMap === defaultSerializerOptions.preMap) {
+        mergedOptions.preMap = <TSource extends Dictionary<TSource>>(
+            source: TSource
+        ) => serializeEntity(source) as TSource;
     }
 
-    return classes({ destinationConstructor, applyMetadata, preMap, postMap });
+    return classes(mergedOptions);
 }

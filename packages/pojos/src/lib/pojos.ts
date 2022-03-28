@@ -7,12 +7,16 @@ import {
 } from '@automapper/core';
 import { PojosMetadataMap } from './metadata-map';
 
-export function pojos({
-    destinationConstructor = () => ({}),
-    applyMetadata,
-    postMap,
-    preMap,
-}: MappingStrategyInitializerOptions = defaultSerializerOptions): MappingStrategyInitializer<symbol> {
+export function pojos(
+    options: MappingStrategyInitializerOptions = {}
+): MappingStrategyInitializer<symbol> {
+    const {
+        destinationConstructor = () => ({}),
+        applyMetadata,
+        postMap,
+        preMap,
+    } = { ...defaultSerializerOptions, ...options };
+
     return (mapper) => ({
         destinationConstructor,
         mapper,

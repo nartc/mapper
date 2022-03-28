@@ -78,6 +78,22 @@ const sidebars = {
                 'mapping-configuration/type-converters',
             ],
         },
+        {
+            type: 'category',
+            label: 'Strategies',
+            items: [
+                'strategies/classes',
+                'strategies/pojos',
+                'strategies/mikro',
+                'strategies/sequelize',
+            ],
+        },
+        {
+            type: 'category',
+            label: 'Miscellaneous',
+            items: ['misc/transformer-plugin', 'misc/mapped-types'],
+        },
+        'nestjs',
     ],
 
     // But you can create a sidebar manually

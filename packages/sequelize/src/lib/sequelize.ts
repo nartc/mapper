@@ -4,23 +4,32 @@ import type {
     Dictionary,
     MappingStrategyInitializer,
     MappingStrategyInitializerOptions,
+    MetadataIdentifier,
 } from '@automapper/core';
 import { defaultSerializerOptions } from '@automapper/core';
 import type { Model } from 'sequelize';
 
-export function sequelize({
-    destinationConstructor = (_, destinationIdentifier) => {
-        if ('sequelize' in (destinationIdentifier as Constructor)) {
-            return (destinationIdentifier as any).build();
-        }
-        return new (destinationIdentifier as Constructor)();
-    },
-    applyMetadata,
-    postMap,
-    preMap,
-}: MappingStrategyInitializerOptions = defaultSerializerOptions): MappingStrategyInitializer<Constructor> {
-    if (preMap === defaultSerializerOptions.preMap) {
-        preMap = <TSource extends Dictionary<TSource>>(source: TSource) => {
+export function sequelize(
+    options: MappingStrategyInitializerOptions = defaultSerializerOptions
+): MappingStrategyInitializer<Constructor> {
+    const mergedOptions = {
+        ...defaultSerializerOptions,
+        destinationConstructor: (
+            _: Dictionary<object>,
+            destinationIdentifier: MetadataIdentifier
+        ) => {
+            if ('sequelize' in (destinationIdentifier as Constructor)) {
+                return (destinationIdentifier as any).build();
+            }
+            return new (destinationIdentifier as Constructor)();
+        },
+        ...options,
+    };
+
+    if (mergedOptions.preMap === defaultSerializerOptions.preMap) {
+        mergedOptions.preMap = <TSource extends Dictionary<TSource>>(
+            source: TSource
+        ) => {
             if ((source as unknown as Model).get) {
                 return (source as unknown as Model).get();
             }
@@ -28,5 +37,5 @@ export function sequelize({
         };
     }
 
-    return classes({ destinationConstructor, applyMetadata, postMap, preMap });
+    return classes(mergedOptions);
 }

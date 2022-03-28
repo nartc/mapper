@@ -1,21 +1,29 @@
 import type {
     ApplyMetadataFn,
     Constructor,
+    Dictionary,
     Mapper,
     MappingStrategyInitializer,
     MappingStrategyInitializerOptions,
+    MetadataIdentifier,
 } from '@automapper/core';
 import { defaultSerializerOptions } from '@automapper/core';
 import 'reflect-metadata';
 import { getMetadataList } from './get-metadata-list';
 
-export function classes({
-    destinationConstructor = (_, destinationIdentifier) =>
-        new (destinationIdentifier as Constructor)(),
-    applyMetadata,
-    postMap,
-    preMap,
-}: MappingStrategyInitializerOptions = defaultSerializerOptions): MappingStrategyInitializer<Constructor> {
+export function classes(
+    options: MappingStrategyInitializerOptions = {}
+): MappingStrategyInitializer<Constructor> {
+    const {
+        destinationConstructor = (
+            _: Dictionary<object>,
+            destinationIdentifier: MetadataIdentifier
+        ) => new (destinationIdentifier as Constructor)(),
+        applyMetadata,
+        postMap,
+        preMap,
+    } = { ...defaultSerializerOptions, ...options };
+
     return (mapper: Mapper) => ({
         destinationConstructor,
         mapper,

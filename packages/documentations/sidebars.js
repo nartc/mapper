@@ -91,7 +91,11 @@ const sidebars = {
         {
             type: 'category',
             label: 'Miscellaneous',
-            items: ['misc/transformer-plugin', 'misc/mapped-types'],
+            items: [
+                'misc/transformer-plugin',
+                'misc/mapped-types',
+                'misc/fake-async',
+            ],
         },
         'nestjs',
     ],

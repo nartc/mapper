@@ -38,7 +38,86 @@ const config = {
             }),
         ],
     ],
-
+    plugins: [
+        [
+            'docusaurus-plugin-typedoc',
+            {
+                id: 'api-core',
+                entryPoints: ['../core/src/index.ts'],
+                tsconfig: '../core/tsconfig.lib.json',
+                sidebar: {
+                    fullNames: true,
+                    readmeLabel: 'README',
+                },
+                out: './api/core',
+            },
+        ],
+        [
+            'docusaurus-plugin-typedoc',
+            {
+                id: 'api-classes',
+                entryPoints: ['../classes/src/index.ts'],
+                tsconfig: '../classes/tsconfig.lib.json',
+                sidebar: {
+                    fullNames: true,
+                    readmeLabel: 'README',
+                },
+                out: './api/classes',
+            },
+        ],
+        [
+            'docusaurus-plugin-typedoc',
+            {
+                id: 'api-pojos',
+                entryPoints: ['../pojos/src/index.ts'],
+                tsconfig: '../pojos/tsconfig.lib.json',
+                sidebar: {
+                    fullNames: true,
+                    readmeLabel: 'README',
+                },
+                out: './api/pojos',
+            },
+        ],
+        [
+            'docusaurus-plugin-typedoc',
+            {
+                id: 'api-mikro',
+                entryPoints: ['../mikro/src/index.ts'],
+                tsconfig: '../mikro/tsconfig.lib.json',
+                sidebar: {
+                    fullNames: true,
+                    readmeLabel: 'README',
+                },
+                out: './api/mikro',
+            },
+        ],
+        [
+            'docusaurus-plugin-typedoc',
+            {
+                id: 'api-sequelize',
+                entryPoints: ['../sequelize/src/index.ts'],
+                tsconfig: '../sequelize/tsconfig.lib.json',
+                sidebar: {
+                    fullNames: true,
+                    readmeLabel: 'README',
+                },
+                out: './api/sequelize',
+            },
+        ],
+        [
+            'docusaurus-plugin-typedoc',
+            {
+                id: 'api-nestjs',
+                entryPoints: ['../nestjs/src/index.ts'],
+                tsconfig: '../nestjs/tsconfig.lib.json',
+                sidebar: {
+                    fullNames: true,
+                    readmeLabel: 'README',
+                },
+                out: './api/nestjs',
+            },
+        ],
+    ],
     themeConfig:
         /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
         ({
@@ -54,6 +133,12 @@ const config = {
                         docId: 'getting-started/overview',
                         position: 'left',
                         label: 'Documentations',
+                    },
+                    {
+                        type: 'doc',
+                        docId: 'api/core/index',
+                        label: 'API',
+                        position: 'left',
                     },
                     { to: '/blog', label: 'Blog', position: 'left' },
                     {

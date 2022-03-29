@@ -1,3 +1,12 @@
+---
+id: "index"
+title: "@automapper/classes"
+slug: "/api/classes/"
+sidebar_label: "README"
+sidebar_position: 0
+custom_edit_url: null
+---
+
 # @automapper/classes
 
 This is the official strategy from `@automapper` to work with TS/ES6 Class

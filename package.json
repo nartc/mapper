@@ -24,6 +24,7 @@
         "@nestjs/platform-express": "~8.4.1",
         "@nestjs/schematics": "~8.0.8",
         "@nestjs/testing": "~8.4.1",
+        "@nrwl/devkit": "13.10.0-beta.6",
         "@nrwl/eslint-plugin-nx": "13.10.0-beta.6",
         "@nrwl/jest": "13.10.0-beta.6",
         "@nrwl/js": "13.10.0-beta.6",

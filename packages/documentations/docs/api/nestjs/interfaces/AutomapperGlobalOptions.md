@@ -14,7 +14,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[packages/nestjs/src/lib/options.ts:13](https://github.com/nartc/mapper/blob/ed14722/packages/nestjs/src/lib/options.ts#L13)
+[packages/nestjs/src/lib/options.ts:13](https://github.com/nartc/mapper/blob/e4b240d/packages/nestjs/src/lib/options.ts#L13)
 
 ___
 
@@ -24,4 +24,4 @@ ___
 
 #### Defined in
 
-[packages/nestjs/src/lib/options.ts:14](https://github.com/nartc/mapper/blob/ed14722/packages/nestjs/src/lib/options.ts#L14)
+[packages/nestjs/src/lib/options.ts:14](https://github.com/nartc/mapper/blob/e4b240d/packages/nestjs/src/lib/options.ts#L14)

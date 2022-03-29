@@ -20,7 +20,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[lib/types.ts:541](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L541)
+[lib/types.ts:541](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L541)
 
 ___
 
@@ -30,7 +30,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:542](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L542)
+[lib/types.ts:542](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L542)
 
 ## Accessors
 
@@ -44,7 +44,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:543](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L543)
+[lib/types.ts:543](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L543)
 
 ## Methods
 
@@ -72,7 +72,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:548](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L548)
+[lib/types.ts:548](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L548)
 
 ___
 
@@ -98,7 +98,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:547](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L547)
+[lib/types.ts:547](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L547)
 
 ___
 
@@ -118,4 +118,4 @@ ___
 
 #### Defined in
 
-[lib/types.ts:544](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L544)
+[lib/types.ts:544](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L544)

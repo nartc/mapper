@@ -57,7 +57,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[lib/types.ts:24](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L24)
+[lib/types.ts:24](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L24)
 
 ___
 
@@ -81,7 +81,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:514](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L514)
+[lib/types.ts:514](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L514)
 
 ___
 
@@ -111,7 +111,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:510](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L510)
+[lib/types.ts:510](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L510)
 
 ___
 
@@ -121,7 +121,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:503](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L503)
+[lib/types.ts:503](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L503)
 
 ___
 
@@ -139,7 +139,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:329](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L329)
+[lib/types.ts:329](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L329)
 
 ___
 
@@ -155,7 +155,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:25](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L25)
+[lib/types.ts:25](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L25)
 
 ___
 
@@ -173,7 +173,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:344](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L344)
+[lib/types.ts:344](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L344)
 
 ___
 
@@ -183,7 +183,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:499](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L499)
+[lib/types.ts:499](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L499)
 
 ___
 
@@ -215,7 +215,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:518](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L518)
+[lib/types.ts:518](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L518)
 
 ___
 
@@ -231,7 +231,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:22](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L22)
+[lib/types.ts:22](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L22)
 
 ___
 
@@ -249,7 +249,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:338](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L338)
+[lib/types.ts:338](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L338)
 
 ___
 
@@ -267,7 +267,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:368](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L368)
+[lib/types.ts:368](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L368)
 
 ___
 
@@ -299,7 +299,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:105](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L105)
+[lib/types.ts:105](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L105)
 
 ___
 
@@ -317,7 +317,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:301](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L301)
+[lib/types.ts:301](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L301)
 
 ___
 
@@ -335,7 +335,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:310](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L310)
+[lib/types.ts:310](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L310)
 
 ___
 
@@ -353,7 +353,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:383](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L383)
+[lib/types.ts:383](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L383)
 
 ___
 
@@ -371,7 +371,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:374](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L374)
+[lib/types.ts:374](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L374)
 
 ___
 
@@ -389,7 +389,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:316](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L316)
+[lib/types.ts:316](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L316)
 
 ___
 
@@ -406,7 +406,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:451](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L451)
+[lib/types.ts:451](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L451)
 
 ___
 
@@ -437,7 +437,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:505](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L505)
+[lib/types.ts:505](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L505)
 
 ___
 
@@ -461,7 +461,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:526](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L526)
+[lib/types.ts:526](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L526)
 
 ___
 
@@ -479,7 +479,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:407](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L407)
+[lib/types.ts:407](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L407)
 
 ___
 
@@ -509,7 +509,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:557](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L557)
+[lib/types.ts:557](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L557)
 
 ___
 
@@ -527,7 +527,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:394](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L394)
+[lib/types.ts:394](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L394)
 
 ___
 
@@ -545,7 +545,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:274](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L274)
+[lib/types.ts:274](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L274)
 
 ___
 
@@ -563,7 +563,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:258](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L258)
+[lib/types.ts:258](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L258)
 
 ___
 
@@ -573,7 +573,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:135](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L135)
+[lib/types.ts:135](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L135)
 
 ___
 
@@ -589,7 +589,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:126](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L126)
+[lib/types.ts:126](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L126)
 
 ___
 
@@ -599,7 +599,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:528](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L528)
+[lib/types.ts:528](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L528)
 
 ___
 
@@ -615,7 +615,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:124](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L124)
+[lib/types.ts:124](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L124)
 
 ___
 
@@ -625,7 +625,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:68](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L68)
+[lib/types.ts:68](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L68)
 
 ___
 
@@ -635,7 +635,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:435](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L435)
+[lib/types.ts:435](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L435)
 
 ___
 
@@ -653,7 +653,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:350](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L350)
+[lib/types.ts:350](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L350)
 
 ___
 
@@ -663,7 +663,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:501](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L501)
+[lib/types.ts:501](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L501)
 
 ___
 
@@ -681,7 +681,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:282](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L282)
+[lib/types.ts:282](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L282)
 
 ___
 
@@ -691,7 +691,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:28](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L28)
+[lib/types.ts:28](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L28)
 
 ___
 
@@ -701,7 +701,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:31](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L31)
+[lib/types.ts:31](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L31)
 
 ___
 
@@ -711,7 +711,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:36](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L36)
+[lib/types.ts:36](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L36)
 
 ___
 
@@ -727,7 +727,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:41](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L41)
+[lib/types.ts:41](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L41)
 
 ___
 
@@ -737,7 +737,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:29](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L29)
+[lib/types.ts:29](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L29)
 
 ___
 
@@ -768,7 +768,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:75](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L75)
+[lib/types.ts:75](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L75)
 
 ___
 
@@ -784,7 +784,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:80](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L80)
+[lib/types.ts:80](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L80)
 
 ___
 
@@ -802,7 +802,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:359](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L359)
+[lib/types.ts:359](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L359)
 
 ___
 
@@ -818,7 +818,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:12](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L12)
+[lib/types.ts:12](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L12)
 
 ___
 
@@ -850,7 +850,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:84](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/types.ts#L84)
+[lib/types.ts:84](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L84)
 
 ## Variables
 
@@ -860,7 +860,7 @@ ___
 
 #### Defined in
 
-[lib/default-serializer-options.ts:4](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/default-serializer-options.ts#L4)
+[lib/default-serializer-options.ts:4](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/default-serializer-options.ts#L4)
 
 ## Functions
 
@@ -882,7 +882,7 @@ ___
 
 #### Defined in
 
-[lib/mappings/add-profile.ts:4](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/mappings/add-profile.ts#L4)
+[lib/mappings/add-profile.ts:4](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/mappings/add-profile.ts#L4)
 
 ___
 
@@ -909,7 +909,7 @@ ___
 
 #### Defined in
 
-[lib/mapping-configurations/after-map.ts:4](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/mapping-configurations/after-map.ts#L4)
+[lib/mapping-configurations/after-map.ts:4](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/mapping-configurations/after-map.ts#L4)
 
 ___
 
@@ -936,7 +936,7 @@ ___
 
 #### Defined in
 
-[lib/mapping-configurations/before-map.ts:4](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/mapping-configurations/before-map.ts#L4)
+[lib/mapping-configurations/before-map.ts:4](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/mapping-configurations/before-map.ts#L4)
 
 ___
 
@@ -965,7 +965,7 @@ ___
 
 #### Defined in
 
-[lib/member-map-functions/condition.ts:10](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/member-map-functions/condition.ts#L10)
+[lib/member-map-functions/condition.ts:10](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/member-map-functions/condition.ts#L10)
 
 ___
 
@@ -992,7 +992,7 @@ ___
 
 #### Defined in
 
-[lib/mapping-configurations/construct-using.ts:9](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/mapping-configurations/construct-using.ts#L9)
+[lib/mapping-configurations/construct-using.ts:9](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/mapping-configurations/construct-using.ts#L9)
 
 ___
 
@@ -1022,7 +1022,7 @@ ___
 
 #### Defined in
 
-[lib/member-map-functions/convert-using.ts:10](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/member-map-functions/convert-using.ts#L10)
+[lib/member-map-functions/convert-using.ts:10](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/member-map-functions/convert-using.ts#L10)
 
 ___
 
@@ -1052,15 +1052,13 @@ ___
 
 #### Defined in
 
-[lib/mappings/create-map.ts:18](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/mappings/create-map.ts#L18)
+[lib/mappings/create-map.ts:18](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/mappings/create-map.ts#L18)
 
 ___
 
 ### createMapper
 
 ▸ **createMapper**(`__namedParameters`): [`Mapper`](interfaces/Mapper.md)
-
-A fun function
 
 #### Parameters
 
@@ -1074,7 +1072,7 @@ A fun function
 
 #### Defined in
 
-[lib/core.ts:40](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/core.ts#L40)
+[lib/core.ts:33](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/core.ts#L33)
 
 ___
 
@@ -1103,7 +1101,7 @@ ___
 
 #### Defined in
 
-[lib/mapping-configurations/extend.ts:12](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/mapping-configurations/extend.ts#L12)
+[lib/mapping-configurations/extend.ts:12](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/mapping-configurations/extend.ts#L12)
 
 ▸ **extend**<`TSource`, `TDestination`, `TExtendSource`, `TExtendDestination`\>(`source`, `destination`): [`MappingConfiguration`](modules.md#mappingconfiguration)<`TSource`, `TDestination`\>
 
@@ -1129,7 +1127,7 @@ ___
 
 #### Defined in
 
-[lib/mapping-configurations/extend.ts:20](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/mapping-configurations/extend.ts#L20)
+[lib/mapping-configurations/extend.ts:20](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/mapping-configurations/extend.ts#L20)
 
 ___
 
@@ -1158,7 +1156,7 @@ ___
 
 #### Defined in
 
-[lib/mapping-configurations/for-member.ts:13](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/mapping-configurations/for-member.ts#L13)
+[lib/mapping-configurations/for-member.ts:13](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/mapping-configurations/for-member.ts#L13)
 
 ___
 
@@ -1187,7 +1185,7 @@ ___
 
 #### Defined in
 
-[lib/mapping-configurations/for-self.ts:23](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/mapping-configurations/for-self.ts#L23)
+[lib/mapping-configurations/for-self.ts:23](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/mapping-configurations/for-self.ts#L23)
 
 ___
 
@@ -1215,7 +1213,7 @@ ___
 
 #### Defined in
 
-[lib/member-map-functions/from-value.ts:4](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/member-map-functions/from-value.ts#L4)
+[lib/member-map-functions/from-value.ts:4](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/member-map-functions/from-value.ts#L4)
 
 ___
 
@@ -1237,7 +1235,7 @@ ___
 
 #### Defined in
 
-[lib/utils/recursion.ts:10](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/utils/recursion.ts#L10)
+[lib/utils/recursion.ts:10](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/utils/recursion.ts#L10)
 
 ___
 
@@ -1259,7 +1257,7 @@ ___
 
 #### Defined in
 
-[lib/member-map-functions/ignore.ts:4](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/member-map-functions/ignore.ts#L4)
+[lib/member-map-functions/ignore.ts:4](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/member-map-functions/ignore.ts#L4)
 
 ___
 
@@ -1281,7 +1279,7 @@ Check if value is a Date constructor
 
 #### Defined in
 
-[lib/utils/is-date-constructor.ts:6](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/utils/is-date-constructor.ts#L6)
+[lib/utils/is-date-constructor.ts:6](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/utils/is-date-constructor.ts#L6)
 
 ___
 
@@ -1301,7 +1299,7 @@ ___
 
 #### Defined in
 
-[lib/utils/is-empty.ts:1](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/utils/is-empty.ts#L1)
+[lib/utils/is-empty.ts:1](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/utils/is-empty.ts#L1)
 
 ___
 
@@ -1323,7 +1321,7 @@ Check if value is a String/Number/Boolean/Array constructor
 
 #### Defined in
 
-[lib/utils/is-primitive-constructor.ts:6](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/utils/is-primitive-constructor.ts#L6)
+[lib/utils/is-primitive-constructor.ts:6](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/utils/is-primitive-constructor.ts#L6)
 
 ___
 
@@ -1351,7 +1349,7 @@ ___
 
 #### Defined in
 
-[lib/member-map-functions/map-defer.ts:4](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/member-map-functions/map-defer.ts#L4)
+[lib/member-map-functions/map-defer.ts:4](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/member-map-functions/map-defer.ts#L4)
 
 ___
 
@@ -1379,7 +1377,7 @@ ___
 
 #### Defined in
 
-[lib/member-map-functions/map-from.ts:11](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/member-map-functions/map-from.ts#L11)
+[lib/member-map-functions/map-from.ts:11](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/member-map-functions/map-from.ts#L11)
 
 ___
 
@@ -1412,7 +1410,7 @@ ___
 
 #### Defined in
 
-[lib/member-map-functions/map-with.ts:11](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/member-map-functions/map-with.ts#L11)
+[lib/member-map-functions/map-with.ts:11](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/member-map-functions/map-with.ts#L11)
 
 ___
 
@@ -1440,7 +1438,7 @@ ___
 
 #### Defined in
 
-[lib/member-map-functions/map-with-arguments.ts:10](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/member-map-functions/map-with-arguments.ts#L10)
+[lib/member-map-functions/map-with-arguments.ts:10](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/member-map-functions/map-with-arguments.ts#L10)
 
 ___
 
@@ -1467,7 +1465,7 @@ ___
 
 #### Defined in
 
-[lib/mapping-configurations/naming-conventions.ts:10](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/mapping-configurations/naming-conventions.ts#L10)
+[lib/mapping-configurations/naming-conventions.ts:10](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/mapping-configurations/naming-conventions.ts#L10)
 
 ___
 
@@ -1495,7 +1493,7 @@ ___
 
 #### Defined in
 
-[lib/member-map-functions/null-substitution.ts:9](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/member-map-functions/null-substitution.ts#L9)
+[lib/member-map-functions/null-substitution.ts:9](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/member-map-functions/null-substitution.ts#L9)
 
 ___
 
@@ -1524,7 +1522,7 @@ ___
 
 #### Defined in
 
-[lib/member-map-functions/pre-condition.ts:8](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/member-map-functions/pre-condition.ts#L8)
+[lib/member-map-functions/pre-condition.ts:8](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/member-map-functions/pre-condition.ts#L8)
 
 ___
 
@@ -1552,7 +1550,7 @@ ___
 
 #### Defined in
 
-[lib/utils/set.ts:1](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/utils/set.ts#L1)
+[lib/utils/set.ts:1](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/utils/set.ts#L1)
 
 ___
 
@@ -1580,7 +1578,7 @@ ___
 
 #### Defined in
 
-[lib/utils/set.ts:28](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/utils/set.ts#L28)
+[lib/utils/set.ts:28](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/utils/set.ts#L28)
 
 ___
 
@@ -1603,7 +1601,7 @@ ___
 
 #### Defined in
 
-[lib/utils/recursion.ts:19](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/utils/recursion.ts#L19)
+[lib/utils/recursion.ts:19](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/utils/recursion.ts#L19)
 
 ___
 
@@ -1634,7 +1632,7 @@ ___
 
 #### Defined in
 
-[lib/mapping-configurations/type-converters.ts:41](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/mapping-configurations/type-converters.ts#L41)
+[lib/mapping-configurations/type-converters.ts:41](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/mapping-configurations/type-converters.ts#L41)
 
 ___
 
@@ -1662,4 +1660,4 @@ ___
 
 #### Defined in
 
-[lib/member-map-functions/undefined-substitution.ts:9](https://github.com/nartc/mapper/blob/ed14722/packages/core/src/lib/member-map-functions/undefined-substitution.ts#L9)
+[lib/member-map-functions/undefined-substitution.ts:9](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/member-map-functions/undefined-substitution.ts#L9)

@@ -24,4 +24,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[lib/mikro.ts:12](https://github.com/nartc/mapper/blob/ed14722/packages/mikro/src/lib/mikro.ts#L12)
+[lib/mikro.ts:12](https://github.com/nartc/mapper/blob/e4b240d/packages/mikro/src/lib/mikro.ts#L12)

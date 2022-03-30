@@ -1,6 +1,5 @@
 export * from './lib/core';
 export * from './lib/types';
-export * from './lib/symbols';
 export * from './lib/default-serializer-options';
 
 export * from './lib/utils/recursion';

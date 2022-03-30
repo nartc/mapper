@@ -5,8 +5,11 @@
         "reflect-metadata": "~0.1.13"
     },
     "exports": {
-        "import": "./index.esm.js",
-        "require": "./index.cjs.js"
+        ".": {
+            "import": "./index.esm.js",
+            "require": "./index.cjs.js",
+            "types": "./index.d.ts"
+        }
     },
     "sideEffects": false,
     "engines": {

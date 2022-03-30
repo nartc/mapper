@@ -6,8 +6,11 @@
         "@nestjs/core": "^7.0.0 || ^8.0.0"
     },
     "exports": {
-        "import": "./index.esm.js",
-        "require": "./index.cjs.js"
+        ".": {
+            "import": "./index.esm.js",
+            "require": "./index.cjs.js",
+            "types": "./index.d.ts"
+        }
     },
     "sideEffects": false,
     "engines": {

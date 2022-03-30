@@ -3,8 +3,11 @@
     "version": "8.0.0",
     "sideEffects": false,
     "exports": {
-        "import": "./index.esm.js",
-        "require": "./index.cjs.js"
+        ".": {
+            "import": "./index.esm.js",
+            "require": "./index.cjs.js",
+            "types": "./index.d.ts"
+        }
     },
     "engines": {
         "node": ">=14.0.0"

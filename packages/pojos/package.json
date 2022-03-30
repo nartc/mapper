@@ -1,6 +1,6 @@
 {
     "name": "@automapper/pojos",
-    "version": "8.0.1-beta.1",
+    "version": "8.0.1",
     "sideEffects": false,
     "exports": {
         ".": {

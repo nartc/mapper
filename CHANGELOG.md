@@ -1,6 +1,12 @@
 
 
-### [8.0.1-beta.1](https://github.com/nartc/mapper/compare/8.0.1-beta.0...8.0.1-beta.1) (2022-03-30)
+### [8.0.1](https://github.com/nartc/mapper/compare/8.0.1-beta.1...8.0.1) (2022-03-30)
+
+
+### Bug Fixes
+
+* **classes:** add a metadataTracker to track identifier whose metadata has already been extracted ([7cd1ae2](https://github.com/nartc/mapper/commit/7cd1ae2a8ef6e6ef01181b8faf0788f0d2a2d049))
+* **core:** revert export symbols as no need ([bb5d32f](https://github.com/nartc/mapper/commit/bb5d32f0a36f896579e39981ff90e335cff6a182))### [8.0.1-beta.1](https://github.com/nartc/mapper/compare/8.0.1-beta.0...8.0.1-beta.1) (2022-03-30)
 
 
 ### Bug Fixes

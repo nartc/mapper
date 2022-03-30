@@ -1,6 +1,12 @@
 
 
-### [8.0.1-beta.0](https://github.com/nartc/mapper/compare/8.0.0...8.0.1-beta.0) (2022-03-30)
+### [8.0.1-beta.1](https://github.com/nartc/mapper/compare/8.0.1-beta.0...8.0.1-beta.1) (2022-03-30)
+
+
+### Bug Fixes
+
+* **classes:** fix infinity loop with circular dependency models ([3360992](https://github.com/nartc/mapper/commit/3360992b4c240fca673d3741c2ce5aba8ffcb9d9))
+* **core:** export symbols ([a87acb5](https://github.com/nartc/mapper/commit/a87acb5454bd7b78393bfe6e73e174b309efac2d))### [8.0.1-beta.0](https://github.com/nartc/mapper/compare/8.0.0...8.0.1-beta.0) (2022-03-30)
 
 
 ### Bug Fixes

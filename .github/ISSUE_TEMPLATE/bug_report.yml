@@ -1,0 +1,106 @@
+name: "🐞 Bug Report"
+description: "Create a report to help us improve."
+labels: ["bug"]
+body:
+
+  - type: checkboxes
+    attributes:
+      label: "Is there an existing issue for this?"
+      description: "Please search to see if an issue already exists for the bug you encountered. You can search for them [here](https://github.com/nartc/mapper/issues)."
+      options:
+      - label: "I have searched the existing issues"
+        required: true
+
+  - type: textarea
+    validations:
+      required: true
+    attributes:
+      label: "Describe the issue"
+      description: "A clear and concise description of what the bug is."
+
+  - type: textarea
+    validations:
+      required: false
+    attributes:
+      label: "Models/DTOs/VMs"
+      description: "What are the models in question? **(if any)**"
+
+  - type: textarea
+    validations:
+      required: false
+    attributes:
+      label: "Mapping configuration"
+      description: "What is the mapping configuration between the models? **(if any)**"
+
+  - type: textarea
+    validations:
+      required: false
+    attributes:
+      label: "Steps to reproduce"
+      description: "How the issue manifests?"
+      placeholder: |
+        1. `npm i`
+        2. `npm start:dev`
+        3. See error
+
+  - type: textarea
+    validations:
+      required: true
+    attributes:
+      label: "Expected behavior"
+      description: "A clear and concise description of what you expected to happen."
+
+  - type: textarea
+    validations:
+      required: false
+    attributes:
+      label: "Screenshots"
+      description: "If applicable, attach screenshots/screencasts here to help explain the problem you are facing."
+
+  - type: input
+    validations:
+      required: false
+    attributes:
+      label: "Minimum reproduction code"
+      description: "An URL to some project that reproduces this issue."
+
+  - type: checkboxes
+    validations:
+      required: true
+    attributes:
+      label: "Package"
+      description: "Which package do **you think** your issue is related to?"
+      options:
+        - label: "I don't know."
+        - label: "<code>@automapper/core</code>"
+        - label: "<code>@automapper/classes</code>"
+        - label: "<code>@automapper/nestjs</code>"
+        - label: "<code>@automapper/pojos</code>"
+        - label: "<code>@automapper/mikro</code>"
+        - label: "<code>@automapper/sequelize</code>"
+        - label: "Other (see below)"
+
+  - type: input
+    validations:
+      required: false
+    attributes:
+      label: "Other package and its version"
+      description: "If your issue is related to some package that is not listed above, write its name & version below"
+
+  - type: input
+    validations:
+      required: true
+    attributes:
+      label: "AutoMapper version"
+      description: "Which version of `@automapper/*` (the ones you've selected above) are you using?"
+      value: "8.0.0"
+
+  - type: textarea
+    validations:
+      required: false
+    attributes:
+      label: "Additional context"
+      description: "Add any other context about the problem."
+      placeholder: |
+        Linux
+        Node v14

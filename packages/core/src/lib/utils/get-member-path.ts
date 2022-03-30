@@ -47,7 +47,7 @@ function createProxy<T extends Dictionary<T>>(
     path: string[] = []
 ): T {
     const realTraps: ProxyHandler<T> = {
-        get(target: T, p: string): typeof PROXY_TARGET {
+        get(_: T, p: string): typeof PROXY_TARGET {
             const childPath = path.slice();
             childPath.push(p);
             return createProxy(PROXY_TARGET, childPath);

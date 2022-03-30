@@ -79,8 +79,8 @@ export function typeConverter<
 
         if (sourceTypeConverters || arraySourceTypeConverters) {
             sourceConverters = isSourceArray
-                ? arraySourceTypeConverters!
-                : sourceTypeConverters!;
+                ? arraySourceTypeConverters
+                : sourceTypeConverters;
             const [destinationConverter, arrayDestinationConverter] =
                 sourceConverters.get(destinationIdentifier) || [];
             sourceConverters.set(

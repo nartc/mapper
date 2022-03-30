@@ -21,7 +21,7 @@ export function pojos(
         destinationConstructor,
         mapper,
         get applyMetadata(): ApplyMetadataFn {
-            return applyMetadata!(this);
+            return applyMetadata(this);
         },
         retrieveMetadata(...identifiers): Map<symbol, MetadataList> {
             const metadataMap = new Map();
@@ -36,7 +36,7 @@ export function pojos(
 
             return metadataMap;
         },
-        preMap: preMap!,
-        postMap: postMap!,
+        preMap,
+        postMap,
     });
 }

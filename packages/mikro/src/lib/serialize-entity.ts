@@ -20,7 +20,7 @@ export function serializeEntity(item: AnyEntity, fromCollection = false) {
             continue;
         }
 
-        const value = item[key as string];
+        const value = item[key];
         if (Utils.isCollection(value)) {
             result[key] = (value.getSnapshot() || []).map((snapshot) => {
                 return serializeEntity(snapshot as AnyEntity, true);

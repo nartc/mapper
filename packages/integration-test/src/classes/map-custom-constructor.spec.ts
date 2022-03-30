@@ -26,9 +26,9 @@ describe('Map - Custom Constructor', () => {
             // This is the same as mapFrom(s => s.firstName + s.lastName)
             // but this it to prove the point of using constructUsing
             constructUsing((source) => {
-                const dto = new SimpleUserDto();
-                dto.fullName = source.firstName + ' ' + source.lastName;
-                return dto;
+                const userDto = new SimpleUserDto();
+                userDto.fullName = source.firstName + ' ' + source.lastName;
+                return userDto;
             })
         );
 

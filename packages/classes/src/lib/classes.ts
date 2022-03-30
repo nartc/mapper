@@ -28,7 +28,7 @@ export function classes(
         destinationConstructor,
         mapper,
         get applyMetadata(): ApplyMetadataFn {
-            return applyMetadata!(this);
+            return applyMetadata(this);
         },
         retrieveMetadata(...identifiers) {
             const metadataMap = new Map();
@@ -55,7 +55,7 @@ export function classes(
 
             return metadataMap;
         },
-        preMap: preMap!,
-        postMap: postMap!,
+        preMap,
+        postMap,
     });
 }

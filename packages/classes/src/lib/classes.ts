@@ -1,13 +1,14 @@
-import type {
+import {
     ApplyMetadataFn,
     Constructor,
+    defaultSerializerOptions,
     Dictionary,
+    getMetadataMap,
     Mapper,
     MappingStrategyInitializer,
     MappingStrategyInitializerOptions,
     MetadataIdentifier,
 } from '@automapper/core';
-import { defaultSerializerOptions } from '@automapper/core';
 import 'reflect-metadata';
 import { getMetadataList } from './get-metadata-list';
 
@@ -38,10 +39,17 @@ export function classes(
                     getMetadataList(identifier);
                 metadataMap.set(identifier, metadataList);
 
-                if (nestedConstructors.length) {
-                    const nestedConstructorsMetadataMap = this.retrieveMetadata(
-                        ...nestedConstructors
-                    );
+                for (
+                    let j = 0, nestedLength = nestedConstructors.length;
+                    j < nestedLength;
+                    j++
+                ) {
+                    const nestedConstructor = nestedConstructors[j];
+                    if (getMetadataMap(mapper).has(nestedConstructor)) {
+                        continue;
+                    }
+                    const nestedConstructorsMetadataMap =
+                        this.retrieveMetadata(nestedConstructor);
                     nestedConstructorsMetadataMap.forEach(
                         (nestedConstructorMetadataList, nestedConstructor) => {
                             metadataMap.set(

@@ -1,3 +1,31 @@
+### [7.3.14](https://github.com/nartc/mapper/compare/7.3.13...7.3.14) (2022-03-05)
+
+
+### Bug Fixes
+
+* **mikro:** use getEntity as unwrap value instead of recursion ([292759c](https://github.com/nartc/mapper/commit/292759c24aff0a23796d4d2457ba65058d5a10a8))
+
+### [7.3.13](https://github.com/nartc/mapper/compare/7.3.12...7.3.13) (2022-03-05)
+
+
+### Bug Fixes
+
+* **mikro:** recursively unwrap collections ([a445b3b](https://github.com/nartc/mapper/commit/a445b3b1d9ca788b0fe8226d6c296958f0263758))
+
+### [7.3.12](https://github.com/nartc/mapper/compare/7.3.11...7.3.12) (2022-03-05)
+
+
+### Bug Fixes
+
+* **mikro:** run toJSON on reference ([a5e2a67](https://github.com/nartc/mapper/commit/a5e2a67b41faae886db9189e586fc291c85fb2dc))
+
+### [7.3.11](https://github.com/nartc/mapper/compare/7.3.10...7.3.11) (2022-03-05)
+
+
+### Bug Fixes
+
+* **mikro:** ensure preMapArray run instantiate correctly ([7b2ef67](https://github.com/nartc/mapper/commit/7b2ef671bf5b3c3ee5cc1e38ce6d8252db4bec02))
+
 ### [7.3.10](https://github.com/nartc/mapper/compare/7.3.9...7.3.10) (2022-02-26)
 
 

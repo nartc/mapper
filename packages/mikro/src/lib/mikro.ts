@@ -11,11 +11,8 @@ import {
 import type { Dictionary, MapPluginInitializer } from '@automapper/core';
 import { createInitialMapping, MappingClassId } from '@automapper/core';
 import { Utils } from '@mikro-orm/core';
-import type { MikroInitializerOptions } from './types';
-import {
-  instantiate,
-  serializeEntity as defaultSerializeEntity,
-} from './utils';
+import { MikroInitializerOptions } from './types';
+import { getEntity, instantiate } from './utils';
 
 /**
  *
@@ -26,7 +23,7 @@ import {
 export const mikro: (
   options?: MikroInitializerOptions
 ) => MapPluginInitializer<Constructible> = (
-  { serializeEntity } = { serializeEntity: defaultSerializeEntity }
+  { unwrap } = { unwrap: getEntity }
 ) => {
   return (errorHandler) => {
     // Initialize all the storages
@@ -39,7 +36,7 @@ export const mikro: (
         return instantiate(
           instanceStorage,
           metadataStorage,
-          serializeEntity,
+          unwrap,
           model,
           obj
         );
@@ -144,12 +141,12 @@ export const mikro: (
         return [sourceInstance, destinationInstance];
       },
       preMapArray<TSource extends Dictionary<TSource>>(
-        _: Constructible<TSource>,
+        source: Constructible<TSource>,
         sourceArr: TSource[]
       ) {
         return sourceArr.map((item) => {
           if (Utils.isEntity(item)) {
-            return serializeEntity(item);
+            return this.instantiate(source, item)[0];
           }
           return item;
         }) as TSource[];

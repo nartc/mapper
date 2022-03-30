@@ -13,22 +13,21 @@ import {
   setMutate,
 } from '@automapper/core';
 import { Utils } from '@mikro-orm/core';
-import type { MikroInitializerOptions } from '../types';
-import { getEntity } from './get-entity.util';
+import { MikroInitializerOptions } from '../types';
 
 /**
  * Recursively instantiate a model with its metadata
  *
  * @param {ClassInstanceStorage} instanceStorage
  * @param {ClassMetadataStorage} metadataStorage
- * @param serializeEntity
+ * @param unwrap
  * @param {Constructible} model
  * @param {TModel} defaultValue
  */
 export function instantiate<TModel extends Dictionary<TModel>>(
   instanceStorage: ClassInstanceStorage,
   metadataStorage: ClassMetadataStorage,
-  serializeEntity: MikroInitializerOptions['serializeEntity'],
+  unwrap: MikroInitializerOptions['unwrap'],
   model: Constructible<TModel>,
   defaultValue?: TModel
 ): [TModel, unknown[]?] {
@@ -36,7 +35,7 @@ export function instantiate<TModel extends Dictionary<TModel>>(
   const metadata = metadataStorage.getMetadata(model);
 
   // instantiate a model with/without defaultValue
-  const instance = defaultValue ? getEntity(defaultValue) : {};
+  const instance = defaultValue ? unwrap(defaultValue) : {};
 
   // if metadata is empty, return the instance early
   if (isEmpty(metadata) || !metadata) {
@@ -117,7 +116,7 @@ export function instantiate<TModel extends Dictionary<TModel>>(
           return instantiate(
             instanceStorage,
             metadataStorage,
-            serializeEntity,
+            unwrap,
             metaResult as Constructible,
             val
           )[0];
@@ -129,21 +128,13 @@ export function instantiate<TModel extends Dictionary<TModel>>(
     // if value is not null/undefined
     if (isDefined(valueAtKey)) {
       if (depth === 0) {
-        setMutate(
-          instance as Record<string, unknown>,
-          key,
-          getEntity(valueAtKey)
-        );
+        setMutate(instance as Record<string, unknown>, key, unwrap(valueAtKey));
         continue;
       }
 
       if (depth === count) {
         instanceStorage.resetCount(model, key);
-        setMutate(
-          instance as Record<string, unknown>,
-          key,
-          getEntity(valueAtKey)
-        );
+        setMutate(instance as Record<string, unknown>, key, unwrap(valueAtKey));
         continue;
       }
 
@@ -155,7 +146,7 @@ export function instantiate<TModel extends Dictionary<TModel>>(
         instantiate(
           instanceStorage,
           metadataStorage,
-          serializeEntity,
+          unwrap,
           metaResult as Constructible,
           valueAtKey as Dictionary<unknown>
         )[0]
@@ -200,7 +191,7 @@ export function instantiate<TModel extends Dictionary<TModel>>(
       instantiate(
         instanceStorage,
         metadataStorage,
-        serializeEntity,
+        unwrap,
         metaResult as Constructible
       )[0]
     );

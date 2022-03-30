@@ -3,7 +3,6 @@ import {
     Constructor,
     defaultSerializerOptions,
     Dictionary,
-    getMetadataMap,
     Mapper,
     MappingStrategyInitializer,
     MappingStrategyInitializerOptions,
@@ -25,6 +24,8 @@ export function classes(
         preMap,
     } = { ...defaultSerializerOptions, ...options };
 
+    const metadataTracker = new Set();
+
     return (mapper: Mapper) => ({
         destinationConstructor,
         mapper,
@@ -35,21 +36,20 @@ export function classes(
             const metadataMap = new Map();
             for (let i = 0, length = identifiers.length; i < length; i++) {
                 const identifier = identifiers[i];
+
+                if (metadataTracker.has(identifier)) {
+                    continue;
+                }
+
                 const [metadataList, nestedConstructors] =
                     getMetadataList(identifier);
                 metadataMap.set(identifier, metadataList);
+                metadataTracker.add(identifier);
 
-                for (
-                    let j = 0, nestedLength = nestedConstructors.length;
-                    j < nestedLength;
-                    j++
-                ) {
-                    const nestedConstructor = nestedConstructors[j];
-                    if (getMetadataMap(mapper).has(nestedConstructor)) {
-                        continue;
-                    }
-                    const nestedConstructorsMetadataMap =
-                        this.retrieveMetadata(nestedConstructor);
+                if (nestedConstructors.length) {
+                    const nestedConstructorsMetadataMap = this.retrieveMetadata(
+                        ...nestedConstructors
+                    );
                     nestedConstructorsMetadataMap.forEach(
                         (nestedConstructorMetadataList, nestedConstructor) => {
                             metadataMap.set(

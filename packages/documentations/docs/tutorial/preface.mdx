@@ -1,0 +1,103 @@
+---
+id: preface
+title: Preface
+sidebar_label: Preface
+sidebar_position: 1
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Welcome to AutoMapper TypeScript! This basic tutorial will show you the problem that AutoMapper tries to solve and how to use AutoMapper to solve it.
+
+Let's assume that you are building a method to return some `User` information. The application has the following models:
+
+-   `User`: the data of a user from the database
+-   `UserDto`: the shape of the user data that you want to return from the method
+
+<Tabs>
+<TabItem value="user" label="user.entity.ts" default>
+
+```ts
+export class User {
+    firstName: string;
+    lastName: string;
+    username: string;
+    password: string;
+    bio: Bio;
+}
+
+export class Bio {
+    job: Job;
+    birthday: Date;
+    avatarUrl: string;
+}
+
+export class Job {
+    title: string;
+    salary: number;
+}
+```
+
+</TabItem>
+<TabItem value="userdto" label="user.dto.ts">
+
+```ts
+export class UserDto {
+    firstName: string;
+    lastName: string;
+    fullName: string;
+    username: string;
+    bio: BioDto;
+
+    static fromUser(user: User) {
+        const dto = new UserDto();
+        dto.firstName = user.firstName;
+        dto.lastName = user.lastName;
+        dto.fullName = user.firstName + ' ' + user.lastName;
+        dto.username = user.username;
+        dto.bio = BioDto.fromBio(user.bio);
+
+        return dto;
+    }
+}
+
+export class BioDto {
+    jobTitle: string;
+    jobSalary: number;
+    birthday: string;
+    avatarUrl: string;
+
+    static fromBio(bio: Bio) {
+        const dto = new BioDto();
+        dto.jobTitle = bio.job.title;
+        dto.jobSalary = bio.job.salary;
+        dto.birthday = bio.birthday.toDateString();
+        dto.avatarUrl = bio.avatarUrl;
+
+        return dto;
+    }
+}
+```
+
+</TabItem>
+<TabItem value="userservice" label="user.service.ts">
+
+```ts
+export class UserService {
+    getUserByUsername(username: string): UserDto {
+        const user = fetchUserByUsernameFromDb(username);
+        return UserDto.fromUser(user);
+    }
+}
+```
+
+</TabItem>
+</Tabs>
+
+The issues with the above approach are:
+
+-   Entity and DTO are coupled. `UserDto` knows about `User`.
+-   Mapping logic is repetitive and grows as your models grow.
+
+Let's see how AutoMapper can help. If you just want to see the final code, skip to [Summary](./mapping-configurations#summary)

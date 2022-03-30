@@ -2,8 +2,11 @@ import type { Dictionary, FromValueReturn, SelectorReturn } from '../types';
 import { TransformationType } from '../types';
 
 export function fromValue<
-  TDestination extends Dictionary<TDestination> = any,
-  TSelectorReturn = SelectorReturn<TDestination>
->(rawValue: TSelectorReturn): FromValueReturn<TDestination, TSelectorReturn> {
-  return [TransformationType.FromValue, () => rawValue];
+    TSource extends Dictionary<TSource>,
+    TDestination extends Dictionary<TDestination>,
+    TSelectorReturn = SelectorReturn<TDestination>
+>(
+    rawValue: TSelectorReturn
+): FromValueReturn<TSource, TDestination, TSelectorReturn> {
+    return [TransformationType.FromValue, () => rawValue];
 }

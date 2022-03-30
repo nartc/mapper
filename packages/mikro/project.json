@@ -1,43 +1,55 @@
 {
-  "root": "packages/mikro",
-  "sourceRoot": "packages/mikro/src",
-  "projectType": "library",
-  "targets": {
-    "build": {
-      "executor": "@nrwl/js:tsc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/packages/mikro",
-        "main": "packages/mikro/src/index.ts",
-        "tsConfig": "packages/mikro/tsconfig.lib.json",
-        "assets": ["packages/mikro/*.md"]
-      }
+    "root": "packages/mikro",
+    "sourceRoot": "packages/mikro/src",
+    "targets": {
+        "package": {
+            "executor": "@nrwl/workspace:run-commands",
+            "options": {
+                "commands": ["nx package-lib mikro"],
+                "parallel": false
+            }
+        },
+        "package-lib": {
+            "executor": "@nrwl/web:rollup",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "project": "packages/mikro/package.json",
+                "outputPath": "dist/packages/mikro",
+                "entryFile": "packages/mikro/src/index.ts",
+                "tsConfig": "packages/mikro/tsconfig.lib.json",
+                "assets": ["packages/mikro/src/README.md"],
+                "compiler": "babel",
+                "external": [
+                    "typescript",
+                    "tslib",
+                    "@automapper/core",
+                    "@automapper/classes"
+                ],
+                "format": ["cjs", "esm"]
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["packages/mikro/**/*.ts"]
+            }
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/packages/mikro"],
+            "options": {
+                "jestConfig": "packages/mikro/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "publish": {
+            "executor": "@nrwl/workspace:run-commands",
+            "options": {
+                "command": "npm publish",
+                "cwd": "dist/packages/mikro"
+            }
+        }
     },
-    "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["packages/mikro/**/*.ts"]
-      }
-    },
-    "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/mikro"],
-      "options": {
-        "jestConfig": "packages/mikro/jest.config.js",
-        "passWithNoTests": true
-      }
-    },
-    "publish": {
-      "executor": "@nrwl/workspace:run-commands",
-      "options": {
-        "command": "npm publish",
-        "cwd": "dist/packages/mikro"
-      }
-    }
-  },
-  "tags": [
-    "scope:mikro",
-    "type:plugin"
-  ]
+    "tags": ["mikro"]
 }

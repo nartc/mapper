@@ -1,15 +1,15 @@
 {
-  "version": 2,
-  "projects": {
-    "classes": "packages/classes",
-    "classes-experimental-transformer-plugin": "packages/classes/experimental/transformer-plugin",
-    "classes-mapped-types": "packages/classes/mapped-types",
-    "core": "packages/core",
-    "integration-test": "packages/integration-test",
-    "mikro": "packages/mikro",
-    "nestjs": "packages/nestjs",
-    "nestjs-integration-test": "packages/nestjs-integration-test",
-    "pojos": "packages/pojos",
-    "sequelize": "packages/sequelize"
-  }
+    "version": 2,
+    "projects": {
+        "classes": "packages/classes",
+        "classes-mapped-types": "packages/classes/mapped-types",
+        "classes-transformer-plugin": "packages/classes/transformer-plugin",
+        "core": "packages/core",
+        "documentations": "packages/documentations",
+        "integration-test": "packages/integration-test",
+        "mikro": "packages/mikro",
+        "nestjs": "packages/nestjs",
+        "pojos": "packages/pojos",
+        "sequelize": "packages/sequelize"
+    }
 }

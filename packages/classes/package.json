@@ -1,31 +1,39 @@
 {
-  "name": "@automapper/classes",
-  "version": "7.3.14",
-  "peerDependencies": {
-    "reflect-metadata": "~0.1.13"
-  },
-  "sideEffects": false,
-  "engines": {
-    "node": ">=12.0.0"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/nartc/mapper/tree/main/packages/classes"
-  },
-  "author": {
-    "name": "Chau Tran",
-    "email": "nartc7789@gmail.com",
-    "url": "https://nartc.me"
-  },
-  "description": "AutoMapper TypeScript Classes plugin",
-  "keywords": [
-    "typescript",
-    "automapper",
-    "mapper",
-    "nx"
-  ],
-  "license": "MIT"
+    "name": "@automapper/classes",
+    "version": "8.0.0-beta.18",
+    "peerDependencies": {
+        "reflect-metadata": "~0.1.13"
+    },
+    "exports": {
+        "import": "./index.esm.js",
+        "require": "./index.cjs.js"
+    },
+    "sideEffects": false,
+    "engines": {
+        "node": ">=14.0.0"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/nartc/mapper/tree/main/packages/classes"
+    },
+    "author": {
+        "name": "Chau Tran",
+        "email": "nartc7789@gmail.com",
+        "url": "https://nartc.me"
+    },
+    "description": "AutoMapper TypeScript Classes strategy",
+    "keywords": [
+        "typescript",
+        "automapper",
+        "mapper",
+        "nx"
+    ],
+    "license": "MIT",
+    "files": [
+        "**/*"
+    ],
+    "main": "./index.cjs.js"
 }

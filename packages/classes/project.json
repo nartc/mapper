@@ -1,51 +1,54 @@
 {
-  "root": "packages/classes",
-  "sourceRoot": "packages/classes/src",
-  "projectType": "library",
-  "generators": {},
-  "targets": {
-    "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "options": {
-        "lintFilePatterns": [
-          "packages/classes/**/*.ts"
-        ]
-      }
+    "root": "packages/classes",
+    "sourceRoot": "packages/classes/src",
+    "projectType": "library",
+    "targets": {
+        "package": {
+            "executor": "@nrwl/workspace:run-commands",
+            "options": {
+                "commands": [
+                    "nx package-lib classes",
+                    "tsc packages/classes/shim/index.ts --outDir dist/packages/classes/shim/"
+                ],
+                "parallel": false
+            }
+        },
+        "package-lib": {
+            "executor": "@nrwl/web:rollup",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "project": "packages/classes/package.json",
+                "outputPath": "dist/packages/classes",
+                "entryFile": "packages/classes/src/index.ts",
+                "tsConfig": "packages/classes/tsconfig.lib.json",
+                "assets": ["packages/classes/src/README.md"],
+                "compiler": "babel",
+                "external": ["typescript", "tslib", "@automapper/core"],
+                "format": ["cjs", "esm"]
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["packages/classes/**/*.ts"]
+            }
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/packages/classes"],
+            "options": {
+                "jestConfig": "packages/classes/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "publish": {
+            "executor": "@nrwl/workspace:run-commands",
+            "options": {
+                "command": "npm publish",
+                "cwd": "dist/packages/classes"
+            }
+        }
     },
-    "test": {
-      "executor": "@nrwl/jest:jest",
-      "options": {
-        "jestConfig": "packages/classes/jest.config.js",
-        "passWithNoTests": true
-      },
-      "outputs": [
-        "coverage/packages/classes"
-      ]
-    },
-    "build": {
-      "executor": "@nrwl/js:tsc",
-      "options": {
-        "outputPath": "dist/packages/classes",
-        "tsConfig": "packages/classes/tsconfig.lib.json",
-        "main": "packages/classes/src/index.ts",
-        "assets": [
-          "packages/classes/*.md"
-        ]
-      },
-      "outputs": [
-        "{options.outputPath}"
-      ]
-    },
-    "publish": {
-      "executor": "@nrwl/workspace:run-commands",
-      "options": {
-        "command": "npm publish",
-        "cwd": "dist/packages/classes"
-      }
-    }
-  },
-  "tags": [
-    "scope:classes",
-    "type:plugin"
-  ]
+    "tags": ["classes"]
 }

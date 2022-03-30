@@ -1,70 +1,42 @@
-import type { MapPluginInitializer } from '@automapper/core';
-import { createInitialMapping, MappingClassId } from '@automapper/core';
 import {
-  PojosMappingStorage,
-  PojosMetadataStorage,
-  pojosSymbolStorage,
-} from './storages';
-import { exploreMetadata, instantiate } from './utils';
+    ApplyMetadataFn,
+    defaultSerializerOptions,
+    MappingStrategyInitializer,
+    MappingStrategyInitializerOptions,
+    MetadataList,
+} from '@automapper/core';
+import { PojosMetadataMap } from './metadata-map';
 
-export const pojos: MapPluginInitializer<string> = (errorHandler) => {
-  const metadataStorage = new PojosMetadataStorage();
-  const mappingStorage = new PojosMappingStorage();
+export function pojos(
+    options: MappingStrategyInitializerOptions = {}
+): MappingStrategyInitializer<symbol> {
+    const {
+        destinationConstructor = () => ({}),
+        applyMetadata,
+        postMap,
+        preMap,
+    } = { ...defaultSerializerOptions, ...options };
 
-  return {
-    instantiate(model, obj?) {
-      return instantiate(metadataStorage, model, obj);
-    },
-    initializeMapping(source, destination, options?) {
-      if (mappingStorage.has(source, destination)) {
-        errorHandler.handle(
-          `Mapping for source ${source} and destination ${destination} already exists`
-        );
-        return;
-      }
-
-      exploreMetadata(metadataStorage, source, destination);
-
-      const [destinationObj, destinationNestedMetadataMap] =
-        this.instantiate(destination);
-
-      const [sourceObj, sourceNestedMetadataMap] = this.instantiate(source);
-
-      return createInitialMapping(
-        sourceObj,
-        destinationObj,
-        sourceNestedMetadataMap as unknown[],
-        destinationNestedMetadataMap as unknown[],
-        (mapping) => {
-          mapping[MappingClassId.keys] = [source, destination];
-          mappingStorage.set(source, destination, mapping);
+    return (mapper) => ({
+        destinationConstructor,
+        mapper,
+        get applyMetadata(): ApplyMetadataFn {
+            return applyMetadata!(this);
         },
-        options,
-        {
-          isMetadataNullAtKey: (key) =>
-            metadataStorage.getMetadataForKey(destination, key) === null,
-        }
-      );
-    },
-    getMapping(source, destination) {
-      const mapping = mappingStorage.get(source, destination);
-      if (!mapping) {
-        errorHandler.handle(
-          `Mapping not found for source ${source} and destination ${destination}`
-        );
-        return;
-      }
+        retrieveMetadata(...identifiers): Map<symbol, MetadataList> {
+            const metadataMap = new Map();
 
-      const [sourceObj] = this.instantiate(source);
-      const [destinationObj] = this.instantiate(destination);
+            for (let i = 0, length = identifiers.length; i < length; i++) {
+                const identifier = identifiers[i];
+                metadataMap.set(
+                    identifier,
+                    PojosMetadataMap.retrieve(identifier)
+                );
+            }
 
-      mapping[MappingClassId.mappings] = [sourceObj, destinationObj];
-      return mapping;
-    },
-    dispose() {
-      metadataStorage.dispose();
-      mappingStorage.dispose();
-      pojosSymbolStorage.dispose();
-    },
-  };
-};
+            return metadataMap;
+        },
+        preMap: preMap!,
+        postMap: postMap!,
+    });
+}

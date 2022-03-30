@@ -1,0 +1,53 @@
+---
+id: map-with-arguments
+title: MapWithArguments
+sidebar_label: MapWithArguments
+sidebar_position: 10
+---
+
+Call `mapWithArguments()` to map the configured property with extra arguments at the time the map operation occurs (aka `mapper.map()`)
+
+All `map()` and `mutate()` variants accept an optional `MapOptions` that we can use to pass in `extraArgs` which `mapWithArguments` will have access to.
+
+## Value Selector
+
+`mapWithArguments()` accepts a `ValueSelector` that AutoMapper will use to get the value from the `sourceObject` and the `extraArguments` upon mapping the configured property
+
+```ts
+createMap(
+    mapper,
+    User,
+    UserDto,
+    forMember(
+        (destination) => destination.fullName,
+        mapWithArguments((source, { someArgument }) => {
+            return getFullName(source, someArgument);
+        })
+    )
+);
+
+mapper.map(user, User, UserDto, { extraArgs: () => ({ someArgument: 'foo' }) });
+```
+
+## Value Resolver
+
+We can also pass in a `Resolver<TSource, TExtraArguments, TReturnValue>` to `mapWithArguments`
+
+```ts
+export const taxResolver: Resolver<Item, { percentage: number }, number> = {
+    resolve(source, { percentage }) {
+        return source.price * percentage;
+    },
+};
+
+createMap(
+    mapper,
+    Item,
+    ItemDto,
+    forMember((destination) => destination.tax, mapWithArguments(taxResolver))
+);
+
+mapper.map(item, Item, ItemDto, { extraArgs: () => ({ percentage: 0.5 }) });
+```
+
+`mapWithArguments()` sets the `TransformationType` to `TransformationType.MapWithArguments`

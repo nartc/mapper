@@ -1,30 +1,23 @@
 import type {
-  Converter,
-  ConvertUsingReturn,
-  Dictionary,
-  Selector,
-  SelectorReturn,
+    Converter,
+    ConvertUsingReturn,
+    Dictionary,
+    Selector,
+    SelectorReturn,
 } from '../types';
 import { TransformationType } from '../types';
 
 export function convertUsing<
-  TSource extends Dictionary<TSource> = any,
-  TDestination extends Dictionary<TDestination> = any,
-  TSelectorReturn = SelectorReturn<TDestination>,
-  TConvertSource = TSource
+    TSource extends Dictionary<TSource>,
+    TDestination extends Dictionary<TDestination>,
+    TSelectorReturn = SelectorReturn<TDestination>,
+    TConvertSourceReturn = SelectorReturn<TSource>
 >(
-  converter: Converter<TConvertSource, TSelectorReturn>,
-  value?: Selector<TSource, TConvertSource>
-): ConvertUsingReturn<TSource, TConvertSource> {
-  return [
-    TransformationType.ConvertUsing,
-    (source) => {
-      let valueToConvert = source as unknown as TConvertSource;
-
-      if (value) {
-        valueToConvert = value(source);
-      }
-      return converter.convert(valueToConvert) as unknown as TConvertSource;
-    },
-  ];
+    converter: Converter<TConvertSourceReturn, TSelectorReturn>,
+    selector: Selector<TSource, TConvertSourceReturn>
+): ConvertUsingReturn<TSource, TDestination, TSelectorReturn> {
+    return [
+        TransformationType.ConvertUsing,
+        (source) => converter.convert(selector(source)),
+    ];
 }

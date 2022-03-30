@@ -1,0 +1,171 @@
+---
+id: create-mapper
+title: Create a Mapper
+sidebar_label: Create a Mapper
+sidebar_position: 2
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+## Installation
+
+First step is to install `@automapper/*` via `npm` or `yarn`
+
+```shell
+npm i @automapper/core @automapper/classes reflect-metadata
+```
+
+```shell
+yarn add @automapper/core @automapper/classes reflect-metadata
+```
+
+:::info
+
+-   We are using `@automapper/classes` for this tutorial. Check [Installation](../getting-started/installation) for more details.
+-   The rest of the tutorial will apply to `@automapper/classes` only. If you're using `@automapper/pojos`, please check [POJOs Strategy](../strategies/pojos)
+
+:::
+
+Next, let's adjust the `tsconfig` of your project. Make sure that you have the following options:
+
+```json
+{
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "skipLibCheck": true
+}
+```
+
+:::note
+
+`skipLibCheck` is required if your TypeScript version is below 4.0
+
+:::
+
+## Create your first Mapper
+
+Now that you have everything installed and configured, let's start creating the Mapper.
+
+```ts title="/src/mappings/mapper.ts"
+import { createMapper } from '@automapper/core';
+import { classes } from '@automapper/classes';
+
+// Create and export the mapper
+export const mapper = createMapper({
+    strategyInitializer: classes(),
+});
+```
+
+:::tip
+
+A typical project should only have a singleton `Mapper` with a certain `MappingStrategy`.
+
+:::
+
+:::info
+
+`createMapper()` accepts a `CreateMapperOptions` which allows to customize the `Mapper`. Read more at [createMapper() API](../api/core/modules#createmapper)
+
+:::
+
+## Metadata Discovery
+
+For AutoMapper to do the _Auto_ part, you need to tell AutoMapper about your models. In other words, let AutoMapper know what your models have, what properties, what types those properties have.
+
+With `@automapper/classes`, you will use `@AutoMap()` decorator to do so. Let's bring back the models
+
+<Tabs>
+<TabItem value="user" label="user.entity.ts" default>
+
+```ts
+export class User {
+    @AutoMap()
+    firstName: string;
+
+    @AutoMap()
+    lastName: string;
+
+    @AutoMap()
+    username: string;
+
+    password: string; // <- we purposely left this one out because we don't want to map "password"
+
+    @AutoMap(() => Bio)
+    bio: Bio;
+}
+
+export class Bio {
+    @AutoMap(() => Job)
+    job: Job;
+
+    @AutoMap()
+    birthday: Date;
+
+    @AutoMap()
+    avatarUrl: string;
+}
+
+export class Job {
+    @AutoMap()
+    title: string;
+
+    @AutoMap()
+    salary: number;
+}
+```
+
+</TabItem>
+<TabItem value="userdto" label="user.dto.ts">
+
+```ts
+export class UserDto {
+    @AutoMap()
+    firstName: string;
+
+    @AutoMap()
+    lastName: string;
+
+    @AutoMap()
+    fullName: string;
+
+    @AutoMap()
+    username: string;
+
+    @AutoMap(() => BioDto)
+    bio: BioDto;
+}
+
+export class BioDto {
+    @AutoMap()
+    jobTitle: string;
+
+    @AutoMap()
+    jobSalary: number;
+
+    @AutoMap()
+    birthday: string;
+
+    @AutoMap()
+    avatarUrl: string;
+}
+```
+
+</TabItem>
+</Tabs>
+
+In addition to attaching `@AutoMap()` on most properties of both `User` and `UserDto`, we also remove all the existing mapping logics in `UserDto`. The result is `UserDto` no longer needs to be aware of `User`.
+
+`@AutoMap()` can help AutoMapper to track the property and its type. For nested model like `Bio`, we help `@AutoMap()` by providing a function that returns the type (e.g.: `() => Bio`)
+
+:::info
+
+Read more about [@AutoMap()](../strategies/classes#automap)
+
+:::
+
+:::tip
+
+If you want to remove the verbosity with `@AutoMap()`, check out [Transformer Plugin](../misc/transformer-plugin)
+
+:::

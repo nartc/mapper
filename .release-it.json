@@ -1,47 +1,51 @@
 {
-  "plugins": {
-    "@release-it/conventional-changelog": {
-      "preset": {
-        "name": "conventionalcommits",
-        "types": [
-          {
-            "type": "feat",
-            "section": "Features"
-          },
-          {
-            "type": "fix",
-            "section": "Bug Fixes"
-          },
-          {
-            "type": "cleanup",
-            "section": "Cleanup"
-          },
-          {
-            "type": "docs",
-            "section": "Documentations"
-          }
-        ]
-      },
-      "infile": "CHANGELOG.md"
+    "plugins": {
+        "@release-it/conventional-changelog": {
+            "preset": {
+                "name": "conventionalcommits",
+                "types": [
+                    {
+                        "type": "feat",
+                        "section": "Features"
+                    },
+                    {
+                        "type": "fix",
+                        "section": "Bug Fixes"
+                    },
+                    {
+                        "type": "cleanup",
+                        "section": "Cleanup"
+                    },
+                    {
+                        "type": "docs",
+                        "section": "Documentations"
+                    }
+                ]
+            },
+            "infile": "CHANGELOG.md"
+        },
+        "@release-it/bumper": {
+            "out": [
+                "packages/classes/**/package.json",
+                "packages/core/**/package.json",
+                "packages/nestjs/**/package.json",
+                "packages/pojos/**/package.json",
+                "packages/mikro/**/package.json",
+                "packages/sequelize/**/package.json"
+            ]
+        }
     },
-    "@release-it/bumper": {
-      "out": [
-        "packages/**/package*.json"
-      ]
+    "git": {
+        "commitMessage": "chore: release ${version}"
+    },
+    "npm": {
+        "publish": false
+    },
+    "github": {
+        "release": true,
+        "releaseName": "Release ${version}"
+    },
+    "hooks": {
+        "after:bump": ["npm run package"]
     }
-  },
-  "git": {
-    "commitMessage": "chore: release ${version}"
-  },
-  "npm": {
-    "publish": false
-  },
-  "github": {
-    "release": true,
-    "releaseName": "Release ${version}"
-  },
-  "hooks": {
-    "before:bump": "npm run test:all",
-    "after:bump": "npm run build:all"
-  }
 }

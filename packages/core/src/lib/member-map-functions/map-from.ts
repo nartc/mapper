@@ -1,25 +1,25 @@
 import type {
-  Dictionary,
-  MapFromReturn,
-  Resolver,
-  SelectorReturn,
-  ValueSelector,
+    Dictionary,
+    MapFromReturn,
+    Resolver,
+    SelectorReturn,
+    ValueSelector,
 } from '../types';
 import { TransformationType } from '../types';
-import { isResolver } from '../utils';
+import { isResolver } from '../utils/is-resolver';
 
 export function mapFrom<
-  TSource extends Dictionary<TSource> = any,
-  TDestination extends Dictionary<TDestination> = any,
-  TSelectorReturn = SelectorReturn<TDestination>
+    TSource extends Dictionary<TSource>,
+    TDestination extends Dictionary<TDestination>,
+    TSelectorReturn = SelectorReturn<TDestination>
 >(
-  from:
-    | ValueSelector<TSource, TDestination, TSelectorReturn>
-    | Resolver<TSource, TDestination, TSelectorReturn>
+    from:
+        | ValueSelector<TSource, TDestination, TSelectorReturn>
+        | Resolver<TSource, TDestination, TSelectorReturn>
 ): MapFromReturn<TSource, TDestination, TSelectorReturn> {
-  if (isResolver(from)) {
-    return [TransformationType.MapFrom, from.resolve.bind(from), null];
-  }
+    if (isResolver(from)) {
+        return [TransformationType.MapFrom, from.resolve.bind(from)];
+    }
 
-  return [TransformationType.MapFrom, from, from];
+    return [TransformationType.MapFrom, from];
 }

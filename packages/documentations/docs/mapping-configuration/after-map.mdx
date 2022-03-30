@@ -1,0 +1,74 @@
+---
+id: after-map
+title: AfterMap
+sidebar_label: AfterMap
+sidebar_position: 2
+---
+
+As the name suggests, `afterMap()` sets up a `MapCallback` to be called **after** the map operation.
+
+## Configure on `Mapping`
+
+Pass `afterMap()` in `createMap()` to sets up the `MapCallback`
+
+```ts
+createMap(
+    mapper,
+    User,
+    UserDto,
+    afterMap((source, destination) => {})
+);
+```
+
+## Configure on `map()`
+
+Pass `afterMap` in `MapOptions` when calling `map()` to sets up the `MapCallback`
+
+```ts
+mapper.map(user, User, UserDto, {
+    afterMap: (source, destination) => {},
+});
+```
+
+:::info
+
+-   `afterMap()` on `map()` has precedence over `Mapping`
+-   For `mapArray` (and its variants), `afterMap()` on `Mapping` is **ignored** because it would be bad for performance if we run `afterMap` for each and every item of the array. `afterMap()` on `mapArray()` will be invoked with `(sourceArray, destinationArray)` instead
+
+:::
+
+## Async Mapping
+
+One of the common use-cases of `afterMap` is to execute some asynchronous operation. Let's assume our `Destination` have some property whose value can only be computed from an asynchronous operation, we can leverage `mapAsync()` and `afterMap()` for it.
+
+```ts
+createMap(
+    mapper,
+    User,
+    UserDto,
+    //                  👇 We are fetching the "fullName" manually
+    //                  👇          👇 so we need to ignore it
+    forMember((d) => d.fullName, ignore()),
+    afterMap(async (source, destination) => {
+        const fullName = await fetchFullName(source);
+        Object.assign(destination, { fullName });
+    })
+);
+
+//                          👇 mapAsync is needed if we use the above "trick" with afterMap
+const dto = await mapper.mapAsync(user, User, UserDto);
+```
+
+:::caution
+
+Simple asynchronous operations should be fine with this approach. However due to [Fake Async](../misc/fake-async), we should **NOT** use AutoMapper for a particular pair of models if those models require some heavy and complex asynchronous operations.
+
+:::
+
+## What about `postMap`?
+
+When create the `Mapper`, we can customize the `postMap` function on the `MappingStrategy`. The differences between `postMap` and `afterMap` are:
+
+-   `postMap` runs after every **map** operation
+-   There is only one `postMap` per `Mapper`
+-   `postMap` runs **AFTER** `afterMap`

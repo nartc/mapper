@@ -1,37 +1,36 @@
 {
-  "compileOnSave": false,
-  "compilerOptions": {
-    "rootDir": ".",
-    "sourceMap": true,
-    "declaration": false,
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "importHelpers": true,
-    "target": "es2015",
-    "module": "esnext",
-    "typeRoots": ["node_modules/@types"],
-    "lib": ["es2017", "dom"],
-    "skipLibCheck": true,
-    "skipDefaultLibCheck": true,
-    "baseUrl": ".",
-    "paths": {
-      "@automapper/classes": ["packages/classes/src/index.ts"],
-      "@automapper/classes/experimental/transformer-plugin": [
-        "packages/classes/experimental/transformer-plugin/src/index.ts"
-      ],
-      "@automapper/classes/mapped-types": [
-        "packages/classes/mapped-types/src/index.ts"
-      ],
-      "@automapper/core": ["packages/core/src/index.ts"],
-      "@automapper/integration-test": [
-        "packages/integration-test/src/index.ts"
-      ],
-      "@automapper/mikro": ["packages/mikro/src/index.ts"],
-      "@automapper/nestjs": ["packages/nestjs/src/index.ts"],
-      "@automapper/pojos": ["packages/pojos/src/index.ts"],
-      "@automapper/sequelize": ["packages/sequelize/src/index.ts"]
-    }
-  },
-  "exclude": ["node_modules", "tmp"]
+    "compileOnSave": false,
+    "compilerOptions": {
+        "rootDir": ".",
+        "sourceMap": true,
+        "declaration": false,
+        "moduleResolution": "node",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "importHelpers": true,
+        "target": "es2015",
+        "module": "esnext",
+        "lib": ["es2017", "dom"],
+        "skipLibCheck": true,
+        "skipDefaultLibCheck": true,
+        "baseUrl": ".",
+        "paths": {
+            "@automapper/classes": ["packages/classes/src/index.ts"],
+            "@automapper/classes/mapped-types": [
+                "packages/classes/mapped-types/src/index.ts"
+            ],
+            "@automapper/classes/transformer-plugin": [
+                "packages/classes/transformer-plugin/src/index.ts"
+            ],
+            "@automapper/core": ["packages/core/src/index.ts"],
+            "@automapper/integration-test": [
+                "packages/integration-test/src/index.ts"
+            ],
+            "@automapper/mikro": ["packages/mikro/src/index.ts"],
+            "@automapper/nestjs": ["packages/nestjs/src/index.ts"],
+            "@automapper/pojos": ["packages/pojos/src/index.ts"],
+            "@automapper/sequelize": ["packages/sequelize/src/index.ts"]
+        }
+    },
+    "exclude": ["node_modules", "tmp"]
 }

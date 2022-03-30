@@ -1,17 +1,17 @@
 import type {
-  ConditionPredicate,
-  Dictionary,
-  PreConditionReturn,
-  SelectorReturn,
+    ConditionPredicate,
+    Dictionary,
+    PreConditionReturn,
+    SelectorReturn,
 } from '../types';
 
 export function preCondition<
-  TSource extends Dictionary<TSource> = any,
-  TDestination extends Dictionary<TDestination> = any,
-  TSelectorReturn = SelectorReturn<TDestination>
+    TSource extends Dictionary<TSource>,
+    TDestination extends Dictionary<TDestination>,
+    TSelectorReturn = SelectorReturn<TDestination>
 >(
-  predicate: ConditionPredicate<TSource>,
-  defaultValue?: TSelectorReturn
+    predicate: ConditionPredicate<TSource>,
+    defaultValue?: TSelectorReturn
 ): PreConditionReturn<TSource, TDestination, TSelectorReturn> {
-  return [predicate, defaultValue];
+    return [predicate, defaultValue];
 }

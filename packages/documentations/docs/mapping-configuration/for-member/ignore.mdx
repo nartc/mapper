@@ -1,0 +1,19 @@
+---
+id: ignore
+title: Ignore
+sidebar_label: Ignore
+sidebar_position: 2
+---
+
+Call `ignore()` on a property to skip the map operation for the property while still mark the property as _configured_. This ultimately prevents the ignored property from being checked by `assertUnmappedProperties()` and makes the property `undefined`
+
+```ts
+createMap(
+    mapper,
+    User,
+    UserDto,
+    forMember((d) => d.fullName, ignore())
+);
+```
+
+`ignore()` sets the `TransformationType` to `TransformationType.Ignore`

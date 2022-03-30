@@ -1,0 +1,206 @@
+---
+id: pojos
+title: automapper/pojos
+sidebar_label: automapper/pojos
+sidebar_position: 2
+---
+
+## Overview
+
+`@automapper/pojos` is an official strategy that works with TS Interface-based projects.
+
+## Installation
+
+```shell
+npm i @automapper/core @automapper/pojos
+```
+
+```shell
+yarn add @automapper/core @automapper/pojos
+```
+
+## Usage
+
+Different from `@automapper/classes`, `@automapper/pojos` exports a singleton `PojosMetadataMap` so we can provide the metadata for `pojos`.
+
+```ts
+interface User {
+    firstName: string;
+    lastName: string;
+}
+
+interface UserDto {
+    firstName: string;
+    lastName: string;
+    fullName: string;
+}
+
+export function createUserMetadata() {
+    PojosMetadataMap.create<User>('User', {
+        firstName: String,
+        lastName: String,
+    });
+
+    PojosMetadataMap.create<UserDto>('UserDto', {
+        firstName: String,
+        lastName: String,
+        fullName: String,
+    });
+}
+
+createUserMetadata();
+
+const mapper = createMapper({ strategyInitializer: pojos() });
+
+createMap<User, UserDto>(
+    mapper,
+    'User', // this needs to match what we passed in PojosMetadataMap.create()
+    'UserDto', // this needs to match what we passed in PojosMetadataMap.create()
+    forMember(
+        (destination) => destination.fullName,
+        mapFrom((source) => source.firstName + ' ' + source.lastName)
+    )
+);
+
+const dto = mapper.map<User, UserDto>(
+    { firstName: 'Chau', lastName: 'Tran' },
+    'User', // this needs to match what we passed in PojosMetadataMap.create()
+    'UserDto' // this needs to match what we passed in PojosMetadataMap.create()
+); // { firstName: 'Chau', lastName: 'Tran', fullName: 'Chau Tran'
+```
+
+:::caution
+
+`PojosMetadataMap.create()` needs to be called before we attempt to call `createMap()`
+
+:::
+
+## Metadata
+
+As seen above, `PojosMetadataMap` is a way that `@automapper/pojos` use to keep track of the Interface's metadata.
+
+### `PojosMetadataMap.create()`
+
+`PojosMetadataMap.create()` accepts a `string` or a `symbol` as the identifier and a metadata object.
+
+```ts
+PojosMetadataMap.create<User>('User', {
+    firstName: String,
+    lastName: String,
+});
+```
+
+:::tip
+
+Supply the type parameter `PojosMetadataMap.create<User>()` will provide intellisense for the fields in the metadata object
+
+:::
+
+#### Nested model
+
+Nested model's metadata needs to be created before the parent model.
+
+```ts
+interface Bio {
+    birthday: Date;
+}
+
+interface User {
+    firstName: string;
+    lastName: string;
+    bio: Bio;
+}
+
+PojosMetadataMap.create<Bio>('Bio', {
+    birthday: Date,
+});
+
+PojosMetadataMap.create<User>('User', {
+    firstName: String,
+    lastName: String,
+    bio: 'Bio', // <-- use what we passed in PojosMetadataMap.create() for Bio
+});
+```
+
+#### Enum
+
+Same as `@automapper/classes`, we still need to explicitly supply the Enum type
+
+```ts
+enum Role {
+    Admin = 'admin',
+    User = 'user',
+}
+
+interface User {
+    role: Role;
+}
+
+PojosMetadataMap.create<User>('User', {
+    role: String,
+});
+```
+
+#### Array type
+
+Same as `@automapper/classes`, we still need to explicitly supply the Array type
+
+```ts
+interface Address {
+    street: string;
+}
+
+interface Bio {
+    birthday: Date;
+    addresses: Address[];
+}
+
+interface User {
+    firstName: string;
+    lastName: string;
+    bio: Bio;
+    logins: Date[];
+}
+
+PojosMetadataMap.create<Address>('Address', {
+    street: String,
+});
+
+PojosMetadataMap.create<Bio>('Bio', {
+    birthday: Date,
+    addresses: ['Address'], // <-- array of the identifier
+});
+
+PojosMetadataMap.create<User>('User', {
+    firstName: String,
+    lastName: String,
+    bio: 'Bio',
+    logins: [Date], // <-- array of the Date constructor
+});
+```
+
+#### Circular Dependency
+
+Same as `@automapper/classes`, we can also have circular dependency with Interfaces.
+
+```ts
+PojosMetadataMap.create<Bio>('Bio', {
+    birthday: Date,
+    addresses: ['Address'],
+});
+
+PojosMetadataMap.create<User>('User', {
+    firstName: String,
+    lastName: String,
+    bio: {
+        // pass in an object instead
+        type: () => 'Bio',
+        depth: 2, // default to 1
+    },
+    logins: [Date],
+});
+```
+
+### `PojosMetadataMap.reset()`
+
+To clear all the metadata, we can call `PojosMetadataMap.reset()`. This is useful in testing environment where we want to start fresh for each test suite.

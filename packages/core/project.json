@@ -1,51 +1,67 @@
 {
-  "root": "packages/core",
-  "sourceRoot": "packages/core/src",
-  "projectType": "library",
-  "generators": {},
-  "targets": {
-    "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "options": {
-        "lintFilePatterns": [
-          "packages/core/**/*.ts"
-        ]
-      }
+    "root": "packages/core",
+    "sourceRoot": "packages/core/src",
+    "projectType": "library",
+    "targets": {
+        "package": {
+            "executor": "@nrwl/workspace:run-commands",
+            "options": {
+                "commands": ["nx package-lib core"],
+                "parallel": false
+            }
+        },
+        "package-lib": {
+            "executor": "@nrwl/web:rollup",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "project": "packages/core/package.json",
+                "outputPath": "dist/packages/core",
+                "entryFile": "packages/core/src/index.ts",
+                "tsConfig": "packages/core/tsconfig.lib.json",
+                "assets": ["packages/core/src/README.md"],
+                "compiler": "babel",
+                "external": ["typescript", "tslib"],
+                "format": ["cjs", "esm"]
+            }
+        },
+        "package-all": {
+            "executor": "@nrwl/workspace:run-commands",
+            "options": {
+                "commands": [
+                    "nx package core",
+                    "nx package classes",
+                    "nx package classes-mapped-types",
+                    "nx package classes-transformer-plugin",
+                    "nx package pojos",
+                    "nx package nestjs",
+                    "nx package mikro",
+                    "nx package sequelize"
+                ],
+                "parallel": false
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["packages/core/**/*.ts"]
+            }
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/packages/core"],
+            "options": {
+                "jestConfig": "packages/core/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "publish": {
+            "executor": "@nrwl/workspace:run-commands",
+            "options": {
+                "command": "npm publish",
+                "cwd": "dist/packages/core"
+            }
+        }
     },
-    "test": {
-      "executor": "@nrwl/jest:jest",
-      "options": {
-        "jestConfig": "packages/core/jest.config.js",
-        "passWithNoTests": true
-      },
-      "outputs": [
-        "coverage/packages/core"
-      ]
-    },
-    "build": {
-      "executor": "@nrwl/js:tsc",
-      "options": {
-        "outputPath": "dist/packages/core",
-        "tsConfig": "packages/core/tsconfig.lib.json",
-        "main": "packages/core/src/index.ts",
-        "assets": [
-          "packages/core/*.md"
-        ]
-      },
-      "outputs": [
-        "{options.outputPath}"
-      ]
-    },
-    "publish": {
-      "executor": "@nrwl/workspace:run-commands",
-      "options": {
-        "command": "npm publish",
-        "cwd": "dist/packages/core"
-      }
-    }
-  },
-  "tags": [
-    "scope:core",
-    "type:library"
-  ]
+    "tags": ["core"]
 }

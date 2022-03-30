@@ -76,8 +76,8 @@ body:
         - label: "<code>@automapper/classes</code>"
         - label: "<code>@automapper/nestjs</code>"
         - label: "<code>@automapper/pojos</code>"
+        - label: "<code>@automapper/mikro</code>"
         - label: "<code>@automapper/sequelize</code>"
-        - label: "<code>@automapper/types</code>"
         - label: "Other (see below)"
 
   - type: input
@@ -93,7 +93,7 @@ body:
     attributes:
       label: "AutoMapper version"
       description: "Which version of `@automapper/*` (the ones you've selected above) are you using?"
-      value: "6.2.1"
+      value: "8.0.0"
 
   - type: textarea
     validations:

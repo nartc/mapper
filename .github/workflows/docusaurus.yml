@@ -11,10 +11,14 @@ jobs:
         with:
           persist-credentials: false
           fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
       - name: Create local changes and commit
         run: |
-          cd docs-site
-          yarn
+          cd packages/documentations
+          npm install
+          npm run build
           cd build
           git init
           git add .
@@ -25,6 +29,6 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: new-docs
+          branch: v8-docs
           force: true
-          directory: docs-site/build
+          directory: packages/documentations/build

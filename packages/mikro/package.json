@@ -1,33 +1,41 @@
 {
-  "name": "@automapper/mikro",
-  "version": "7.3.14",
-  "peerDependencies": {
-    "reflect-metadata": "~0.1.13",
-    "@mikro-orm/core": "~5.0.4"
-  },
-  "sideEffects": false,
-  "engines": {
-    "node": ">=12.0.0"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/nartc/mapper/tree/main/packages/mikro"
-  },
-  "author": {
-    "name": "Chau Tran",
-    "email": "nartc7789@gmail.com",
-    "url": "https://nartc.me"
-  },
-  "description": "AutoMapper TypeScript Mikro plugin",
-  "keywords": [
-    "typescript",
-    "automapper",
-    "mapper",
-    "nx",
-    "mikro"
-  ],
-  "license": "MIT"
+    "name": "@automapper/mikro",
+    "version": "8.0.0-beta.18",
+    "exports": {
+        "import": "./index.esm.js",
+        "require": "./index.cjs.js"
+    },
+    "peerDependencies": {
+        "@mikro-orm/core": "^5.0.0",
+        "reflect-metadata": "~0.1.13"
+    },
+    "sideEffects": false,
+    "engines": {
+        "node": ">=14.0.0"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/nartc/mapper/tree/main/packages/mikro"
+    },
+    "author": {
+        "name": "Chau Tran",
+        "email": "nartc7789@gmail.com",
+        "url": "https://nartc.me"
+    },
+    "description": "AutoMapper TypeScript MikroORM strategy",
+    "keywords": [
+        "typescript",
+        "automapper",
+        "mapper",
+        "nx",
+        "mikroorm"
+    ],
+    "license": "MIT",
+    "files": [
+        "**/*"
+    ],
+    "main": "./index.cjs.js"
 }

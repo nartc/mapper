@@ -1,43 +1,48 @@
 {
-  "root": "packages/classes/mapped-types",
-  "sourceRoot": "packages/classes/mapped-types/src",
-  "projectType": "library",
-  "targets": {
-    "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "options": {
-        "lintFilePatterns": [
-          "packages/classes/mapped-types/**/*.ts"
-        ]
-      }
+    "root": "packages/classes/mapped-types",
+    "sourceRoot": "packages/classes/mapped-types/src",
+    "targets": {
+        "package": {
+            "executor": "@nrwl/workspace:run-commands",
+            "options": {
+                "commands": ["nx package-lib classes-mapped-types"],
+                "parallel": false
+            }
+        },
+        "package-lib": {
+            "executor": "@nrwl/web:rollup",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "project": "packages/classes/mapped-types/package.json",
+                "outputPath": "dist/packages/classes/mapped-types",
+                "entryFile": "packages/classes/mapped-types/src/index.ts",
+                "tsConfig": "packages/classes/mapped-types/tsconfig.lib.json",
+                "assets": ["packages/classes/mapped-types/src/README.md"],
+                "compiler": "babel",
+                "external": [
+                    "typescript",
+                    "tslib",
+                    "@automapper/core",
+                    "@automapper/classes"
+                ],
+                "format": ["cjs", "esm"]
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["packages/classes/mapped-types/**/*.ts"]
+            }
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/packages/classes/mapped-types"],
+            "options": {
+                "jestConfig": "packages/classes/mapped-types/jest.config.js",
+                "passWithNoTests": true
+            }
+        }
     },
-    "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "coverage/packages/classes/mapped-types"
-      ],
-      "options": {
-        "jestConfig": "packages/classes/mapped-types/jest.config.js",
-        "passWithNoTests": true
-      }
-    },
-    "build": {
-      "executor": "@nrwl/js:tsc",
-      "outputs": [
-        "{options.outputPath}"
-      ],
-      "options": {
-        "outputPath": "dist/packages/classes/mapped-types",
-        "tsConfig": "packages/classes/mapped-types/tsconfig.lib.json",
-        "main": "packages/classes/mapped-types/src/index.ts",
-        "assets": [
-          "packages/classes/mapped-types/*.md"
-        ]
-      }
-    }
-  },
-  "tags": [
-    "scope:classes",
-    "type:utility"
-  ]
+    "tags": ["classes"]
 }

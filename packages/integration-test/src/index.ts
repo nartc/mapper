@@ -1,1 +1,1 @@
-export default {};
+export default void 0;

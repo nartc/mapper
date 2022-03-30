@@ -1,49 +1,56 @@
 {
-  "root": "packages/nestjs",
-  "sourceRoot": "packages/nestjs/src",
-  "projectType": "library",
-  "targets": {
-    "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "options": {
-        "lintFilePatterns": [
-          "packages/nestjs/**/*.ts"
-        ]
-      }
+    "root": "packages/nestjs",
+    "sourceRoot": "packages/nestjs/src",
+    "targets": {
+        "package": {
+            "executor": "@nrwl/workspace:run-commands",
+            "options": {
+                "commands": ["nx package-lib nestjs"],
+                "parallel": false
+            }
+        },
+        "package-lib": {
+            "executor": "@nrwl/web:rollup",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "project": "packages/nestjs/package.json",
+                "outputPath": "dist/packages/nestjs",
+                "entryFile": "packages/nestjs/src/index.ts",
+                "tsConfig": "packages/nestjs/tsconfig.lib.json",
+                "assets": ["packages/nestjs/src/README.md"],
+                "compiler": "babel",
+                "external": [
+                    "typescript",
+                    "tslib",
+                    "@automapper/core",
+                    "@nestjs/common",
+                    "rxjs"
+                ],
+                "format": ["cjs", "esm"]
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["packages/nestjs/**/*.ts"]
+            }
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/packages/nestjs"],
+            "options": {
+                "jestConfig": "packages/nestjs/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "publish": {
+            "executor": "@nrwl/workspace:run-commands",
+            "options": {
+                "command": "npm publish",
+                "cwd": "dist/packages/nestjs"
+            }
+        }
     },
-    "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "coverage/packages/nestjs"
-      ],
-      "options": {
-        "jestConfig": "packages/nestjs/jest.config.js",
-        "passWithNoTests": true
-      }
-    },
-    "build": {
-      "executor": "@nrwl/js:tsc",
-      "outputs": [
-        "{options.outputPath}"
-      ],
-      "options": {
-        "outputPath": "dist/packages/nestjs",
-        "tsConfig": "packages/nestjs/tsconfig.lib.json",
-        "main": "packages/nestjs/src/index.ts",
-        "assets": [
-          "packages/nestjs/*.md"
-        ]
-      }
-    },
-    "publish": {
-      "executor": "@nrwl/workspace:run-commands",
-      "options": {
-        "command": "npm publish",
-        "cwd": "dist/packages/nestjs"
-      }
-    }
-  },
-  "tags": [
-    "type:integration"
-  ]
+    "tags": ["nestjs"]
 }

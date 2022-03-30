@@ -2,14 +2,16 @@ import { MapFnClassId, TransformationType } from '../../types';
 import { ignore } from '../ignore';
 import { mapDefer } from '../map-defer';
 
-describe('MapDeferFunction', () => {
-  it('should return correctly', () => {
-    const defer = () => ignore();
+describe(mapDefer.name, () => {
+    it('should return correctly', () => {
+        const defer = () => ignore();
 
-    const mapDeferFn = mapDefer(defer);
+        const mapDeferFn = mapDefer(defer);
 
-    expect(mapDeferFn).toBeTruthy();
-    expect(mapDeferFn[MapFnClassId.type]).toEqual(TransformationType.MapDefer);
-    expect(mapDeferFn[MapFnClassId.fn]).toBe(defer);
-  });
+        expect(mapDeferFn).toBeTruthy();
+        expect(mapDeferFn[MapFnClassId.type]).toEqual(
+            TransformationType.MapDefer
+        );
+        expect(mapDeferFn[MapFnClassId.fn]).toBe(defer);
+    });
 });

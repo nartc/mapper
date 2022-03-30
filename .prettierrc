@@ -1,3 +1,11 @@
 {
-  "singleQuote": true
+  "singleQuote": true,
+  "tabWidth": 4,
+  "printWidth": 80,
+  "overrides": [
+    {
+      "files": [".prettierrc", ".swcrc"],
+      "options": { "parser": "json" }
+    }
+  ]
 }

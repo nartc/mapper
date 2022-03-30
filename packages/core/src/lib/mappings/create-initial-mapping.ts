@@ -1,0 +1,189 @@
+import { mapInitialize } from '../member-map-functions/map-initialize';
+import { getMetadataMap, getNamingConventions, getStrategy } from '../symbols';
+import type {
+    Dictionary,
+    Mapper,
+    Mapping,
+    MappingConfiguration,
+    MappingTransformation,
+    MetadataIdentifier,
+    NestedMappingPair,
+    Selector,
+} from '../types';
+import {
+    MapFnClassId,
+    MappingClassId,
+    MappingPropertiesClassId,
+    MappingTransformationClassId,
+    MetadataClassId,
+    NestedMappingPairClassId,
+} from '../types';
+import { getFlatteningPaths, getPath } from '../utils/get-path';
+import { getPathRecursive } from '../utils/get-path-recursive';
+import { isPrimitiveArrayEqual } from '../utils/is-primitive-array-equal';
+
+export function createInitialMapping<
+    TSource extends Dictionary<TSource>,
+    TDestination extends Dictionary<TDestination>
+>(
+    mapper: Mapper,
+    source: MetadataIdentifier<TSource>,
+    destination: MetadataIdentifier<TDestination>,
+    configurations: MappingConfiguration<TSource, TDestination>[] = []
+): Mapping {
+    const strategy = getStrategy(mapper);
+    const applyMetadataFn = strategy.applyMetadata.bind(strategy);
+    const destinationConstructor =
+        strategy.destinationConstructor.bind(strategy);
+
+    const destinationObject = applyMetadataFn(destination);
+    const sourceObject = applyMetadataFn(source);
+
+    const mapping: Mapping<TSource, TDestination> = [
+        [source, destination],
+        [sourceObject, destinationObject],
+        [],
+        mapper,
+        destinationConstructor,
+    ];
+
+    // try to inherit naming conventions from mapper
+    mapping[MappingClassId.namingConventions] = getNamingConventions(mapper);
+
+    // run configuration fn on mapping
+    for (let i = 0, length = configurations.length; i < length; i++) {
+        configurations[i](mapping);
+    }
+
+    const destinationPaths = getPathRecursive(destinationObject);
+
+    const mappingProperties = mapping[MappingClassId.properties];
+    const hasCustomMappingProperties = mappingProperties.length > 0;
+
+    const namingConventions = mapping[MappingClassId.namingConventions];
+
+    const metadataMap = getMetadataMap(mapper);
+    const destinationMetadata = metadataMap.get(destination) || [];
+    const sourceMetadata = metadataMap.get(source) || [];
+
+    for (let i = 0, length = destinationPaths.length; i < length; i++) {
+        const destinationPath = destinationPaths[i];
+
+        // is a forMember (custom mapping configuration) already exists
+        // for this destination path, skip it
+        if (
+            hasCustomMappingProperties &&
+            mappingProperties.some((property) =>
+                isPrimitiveArrayEqual(
+                    property[MappingPropertiesClassId.path],
+                    destinationPath
+                )
+            )
+        ) {
+            continue;
+        }
+
+        const metadataAtDestination = destinationMetadata.find((metadata) =>
+            isPrimitiveArrayEqual(
+                metadata[MetadataClassId.propertyKeys],
+                destinationPath
+            )
+        );
+
+        // try getting the sourcePath that is associated with this destinationPath
+        /**
+         * with naming conventions: fooBar -> [foo, bar]
+         * without naming conventions: fooBar -> fooBar
+         */
+        let sourcePath = destinationPath;
+
+        if (namingConventions) {
+            sourcePath = getFlatteningPaths(
+                sourceObject,
+                getPath(destinationPath, namingConventions),
+                namingConventions
+            );
+        }
+
+        // sourcePath is not in sourceObject. No AutoMap available
+        if (!(sourcePath[0] in sourceObject)) {
+            continue;
+        }
+
+        const metadataAtSource = sourceMetadata.find((metadata) =>
+            isPrimitiveArrayEqual(
+                metadata[MetadataClassId.propertyKeys],
+                sourcePath
+            )
+        );
+
+        let nestedMappingPair: NestedMappingPair | undefined = undefined;
+
+        if (!metadataAtSource && !metadataAtDestination) continue;
+
+        if (metadataAtSource && metadataAtDestination) {
+            nestedMappingPair = [
+                metadataAtDestination[MetadataClassId.metaFn](),
+                metadataAtSource[MetadataClassId.metaFn](),
+            ];
+        }
+
+        const transformation: MappingTransformation<TSource, TDestination> = [
+            mapInitialize(sourcePath),
+        ];
+
+        if (nestedMappingPair) {
+            let typeConverter: Selector | undefined;
+
+            const isSourceArray = metadataAtSource![MetadataClassId.isArray];
+            const isDestinationArray =
+                metadataAtDestination![MetadataClassId.isArray];
+            const mappingTypeConverters =
+                mapping[MappingClassId.typeConverters];
+
+            if (mappingTypeConverters) {
+                const [sourceConverters, arraySourceConverters] =
+                    mappingTypeConverters.get(
+                        nestedMappingPair[
+                            NestedMappingPairClassId.source
+                        ] as MetadataIdentifier
+                    ) || [];
+
+                const [destinationConverter, arrayDestinationConverter] =
+                    (isSourceArray
+                        ? arraySourceConverters?.get(
+                              nestedMappingPair[
+                                  NestedMappingPairClassId.destination
+                              ] as MetadataIdentifier
+                          )
+                        : sourceConverters?.get(
+                              nestedMappingPair[
+                                  NestedMappingPairClassId.destination
+                              ] as MetadataIdentifier
+                          )) || [];
+
+                typeConverter = isDestinationArray
+                    ? arrayDestinationConverter
+                    : destinationConverter;
+            }
+
+            if (typeConverter) {
+                const originalMapInitializeFn = transformation[
+                    MappingTransformationClassId.memberMapFn
+                ][MapFnClassId.fn] as Selector;
+                transformation[MappingTransformationClassId.memberMapFn][
+                    MapFnClassId.fn
+                ] = (srcObj: TSource) =>
+                    typeConverter!(originalMapInitializeFn(srcObj));
+            }
+        }
+
+        mappingProperties.unshift([
+            destinationPath,
+            [destinationPath, transformation],
+            nestedMappingPair,
+        ]);
+    }
+
+    return mapping;
+}

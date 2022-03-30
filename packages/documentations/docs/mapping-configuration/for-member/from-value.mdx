@@ -1,0 +1,19 @@
+---
+id: from-value
+title: FromValue
+sidebar_label: FromValue
+sidebar_position: 5
+---
+
+Call `fromValue()` and pass in a raw value to map to the configured property. If we pass in an object, the object will be mapped as-is without any consideration for nested Mapping.
+
+```ts
+createMap(
+    mapper,
+    User,
+    UserDto,
+    forMember((destination) => destination.fullName, fromValue('John Doe'))
+);
+```
+
+`fromValue()` sets the `TransformationType` to `TransformationType.FromValue`

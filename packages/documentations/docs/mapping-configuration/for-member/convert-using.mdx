@@ -1,0 +1,43 @@
+---
+id: convert-using
+title: ConvertUsing
+sidebar_label: ConvertUsing
+sidebar_position: 7
+---
+
+Call `convertUsing()` and pass in a `Converter` to map the configured property with the `Converter#convert` method.
+
+```ts
+export interface Converter<TheSource, TheResult> {
+    convert(source: TheSource): TheResult;
+}
+```
+
+`Converter` can be used to extract common logic where we want to map one data type to another. `Converter` can be reused across different Mappings in the application. For example, we might have a `dateToStringConverter`
+
+```ts
+export const dateToStringConverter: Converter<Date, string> = {
+    convert(source) {
+        // maybe handle validation, additional parsing, or format here
+        return source.toDateString();
+    },
+};
+
+createMap(
+    mapper,
+    User,
+    UserDto,
+    forMember(
+        (destination) => destination.birthday,
+        convertUsing(dateToStringConverter, (source) => source.birthday)
+    )
+);
+```
+
+:::tip
+
+If we have simple logic, we can use [Type Converter](../type-converters) to also map from one data type to another on the Mapping level instead of `convertUsing` on the property level.
+
+:::
+
+`convertUsing()` sets the `TransformationType` to `TransformationType.ConvertUsing`

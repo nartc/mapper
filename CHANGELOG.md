@@ -7,7 +7,7 @@ It is finally here 🎉. Highlights:
 -   Functional approach with tree-shake in mind
 -   Custom Constructor
 
-Check out the [Migration Guide](https://automapperts.netlify.app/docs/fundamentals/migrate-to-automapper-v8)
+Check out the [Migration Guide](https://automapperts.netlify.app/docs/getting-started/migrate-to-automapper-v8)
 
 ### [7.3.14](https://github.com/nartc/mapper/compare/8.0.0-beta.18...8.0.0) (2022-03-05)
 

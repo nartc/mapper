@@ -1,4 +1,11 @@
-## [8.0.0](https://github.com/nartc/mapper/compare/8.0.0-beta.18...8.0.0) (2022-03-30)
+
+
+### [8.0.1-beta.0](https://github.com/nartc/mapper/compare/8.0.0...8.0.1-beta.0) (2022-03-30)
+
+
+### Bug Fixes
+
+* **repo:** adjust exports field in package json across packages ([f462395](https://github.com/nartc/mapper/commit/f462395f1d0fab7f58288e85def9b25c2c7d7698))## [8.0.0](https://github.com/nartc/mapper/compare/8.0.0-beta.18...8.0.0) (2022-03-30)
 
 It is finally here 🎉. Highlights:
 

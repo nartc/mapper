@@ -1,6 +1,6 @@
 {
     "name": "@automapper/mikro",
-    "version": "8.0.0",
+    "version": "8.0.1-beta.0",
     "exports": {
         ".": {
             "import": "./index.esm.js",

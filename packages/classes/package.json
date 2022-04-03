@@ -1,6 +1,7 @@
 {
     "name": "@automapper/classes",
     "version": "8.0.1",
+    "type": "module",
     "peerDependencies": {
         "reflect-metadata": "~0.1.13"
     },
@@ -39,6 +40,5 @@
     "files": [
         "**/*"
     ],
-    "main": "./index.cjs",
-    "type": "module"
+    "main": "./index.cjs"
 }

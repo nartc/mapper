@@ -1,6 +1,7 @@
 {
     "name": "@automapper/mikro",
     "version": "8.0.1",
+    "type": "module",
     "exports": {
         ".": {
             "import": "./index.esm.js",
@@ -41,6 +42,5 @@
     "files": [
         "**/*"
     ],
-    "main": "./index.cjs",
-    "type": "module"
+    "main": "./index.cjs"
 }

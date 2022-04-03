@@ -1,6 +1,7 @@
 {
     "name": "@automapper/classes/transformer-plugin",
     "version": "8.0.1",
+    "type": "module",
     "exports": {
         ".": {
             "import": "./index.esm.js",
@@ -30,6 +31,5 @@
         "nx"
     ],
     "license": "MIT",
-    "main": "./index.cjs",
-    "type": "module"
+    "main": "./index.cjs"
 }

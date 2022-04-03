@@ -1,6 +1,7 @@
 {
     "name": "@automapper/nestjs",
     "version": "8.0.1",
+    "type": "module",
     "peerDependencies": {
         "@nestjs/common": "^7.0.0 || ^8.0.0",
         "@nestjs/core": "^7.0.0 || ^8.0.0"
@@ -40,6 +41,5 @@
     "files": [
         "**/*"
     ],
-    "main": "./index.cjs",
-    "type": "module"
+    "main": "./index.cjs"
 }

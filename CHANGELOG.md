@@ -1,6 +1,11 @@
 
 
-### [8.0.1](https://github.com/nartc/mapper/compare/8.0.1-beta.1...8.0.1) (2022-03-30)
+## [8.1.0-beta.0](https://github.com/nartc/mapper/compare/8.0.1...8.1.0-beta.0) (2022-04-03)
+
+
+### Features
+
+* **repo:** change to use ESM while still supporting cjs ([7866e00](https://github.com/nartc/mapper/commit/7866e00237fa48a516e776193edc2c1d1fe08cc0))### [8.0.1](https://github.com/nartc/mapper/compare/8.0.1-beta.1...8.0.1) (2022-03-30)
 
 
 ### Bug Fixes

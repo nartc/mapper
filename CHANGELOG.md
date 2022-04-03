@@ -1,6 +1,6 @@
 
 
-## [8.1.0-beta.0](https://github.com/nartc/mapper/compare/8.0.1...8.1.0-beta.0) (2022-04-03)
+## [8.1.0](https://github.com/nartc/mapper/compare/8.1.0-beta.0...8.1.0) (2022-04-03)## [8.1.0-beta.0](https://github.com/nartc/mapper/compare/8.0.1...8.1.0-beta.0) (2022-04-03)
 
 
 ### Features

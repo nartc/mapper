@@ -8,8 +8,9 @@
     "exports": {
         ".": {
             "import": "./index.esm.js",
-            "require": "./index.cjs.js",
-            "types": "./index.d.ts"
+            "require": "./index.cjs",
+            "types": "./index.d.ts",
+            "typings": "./index.d.ts"
         }
     },
     "sideEffects": false,
@@ -39,5 +40,6 @@
     "files": [
         "**/*"
     ],
-    "main": "./index.cjs.js"
+    "main": "./index.cjs",
+    "type": "module"
 }

@@ -1,0 +1,392 @@
+diff --git a/node_modules/@nrwl/web/src/executors/rollup/rollup.impl.js b/node_modules/@nrwl/web/src/executors/rollup/rollup.impl.js
+index 9dd7552..9117643 100644
+--- a/node_modules/@nrwl/web/src/executors/rollup/rollup.impl.js
++++ b/node_modules/@nrwl/web/src/executors/rollup/rollup.impl.js
+@@ -28,202 +28,204 @@ const copy = require('rollup-plugin-copy');
+ const postcss = require('rollup-plugin-postcss');
+ const fileExtensions = ['.js', '.jsx', '.ts', '.tsx'];
+ function rollupExecutor(rawOptions, context) {
+-    var _a;
+-    return tslib_1.__asyncGenerator(this, arguments, function* rollupExecutor_1() {
+-        const project = context.workspace.projects[context.projectName];
+-        const projectGraph = (0, devkit_2.readCachedProjectGraph)();
+-        const sourceRoot = project.sourceRoot;
+-        const { target, dependencies } = (0, buildable_libs_utils_1.calculateProjectDependencies)(projectGraph, context.root, context.projectName, context.targetName, context.configurationName, true);
+-        const options = (0, normalize_1.normalizeWebRollupOptions)(rawOptions, context.root, sourceRoot);
+-        const packageJson = (0, devkit_1.readJsonFile)(options.project);
+-        const npmDeps = ((_a = projectGraph.dependencies[context.projectName]) !== null && _a !== void 0 ? _a : [])
+-            .filter((d) => d.target.startsWith('npm:'))
+-            .map((d) => d.target.substr(4));
+-        const rollupOptions = createRollupOptions(options, dependencies, context, packageJson, sourceRoot, npmDeps);
+-        if (options.compiler === 'swc') {
+-            try {
+-                yield tslib_1.__await((0, validate_types_1.validateTypes)({
+-                    workspaceRoot: context.root,
+-                    projectRoot: options.projectRoot,
+-                    tsconfig: options.tsConfig,
+-                }));
+-            }
+-            catch (_b) {
+-                return yield tslib_1.__await({ success: false });
+-            }
+-        }
+-        if (options.watch) {
+-            const watcher = rollup.watch(rollupOptions);
+-            return yield tslib_1.__await(yield tslib_1.__await(yield* tslib_1.__asyncDelegator(tslib_1.__asyncValues((0, rxjs_for_await_1.eachValueFrom)(new rxjs_1.Observable((obs) => {
+-                watcher.on('event', (data) => {
+-                    if (data.code === 'START') {
+-                        devkit_1.logger.info(`Bundling ${context.projectName}...`);
+-                    }
+-                    else if (data.code === 'END') {
+-                        updatePackageJson(options, context, target, dependencies, packageJson);
+-                        devkit_1.logger.info('Bundle complete. Watching for file changes...');
+-                        obs.next({ success: true });
+-                    }
+-                    else if (data.code === 'ERROR') {
+-                        devkit_1.logger.error(`Error during bundle: ${data.error.message}`);
+-                        obs.next({ success: false });
+-                    }
+-                });
+-                // Teardown logic. Close watcher when unsubscribed.
+-                return () => watcher.close();
+-            }))))));
+-        }
+-        else {
++  var _a;
++  return tslib_1.__asyncGenerator(this, arguments, function* rollupExecutor_1() {
++    const project = context.workspace.projects[context.projectName];
++    const projectGraph = (0, devkit_2.readCachedProjectGraph)();
++    const sourceRoot = project.sourceRoot;
++    const { target, dependencies } = (0, buildable_libs_utils_1.calculateProjectDependencies)(projectGraph, context.root, context.projectName, context.targetName, context.configurationName, true);
++    const options = (0, normalize_1.normalizeWebRollupOptions)(rawOptions, context.root, sourceRoot);
++    const packageJson = (0, devkit_1.readJsonFile)(options.project);
++    const npmDeps = ((_a = projectGraph.dependencies[context.projectName]) !== null && _a !== void 0 ? _a : [])
++      .filter((d) => d.target.startsWith('npm:'))
++      .map((d) => d.target.substr(4));
++    const rollupOptions = createRollupOptions(options, dependencies, context, packageJson, sourceRoot, npmDeps);
++    if (options.compiler === 'swc') {
++      try {
++        yield tslib_1.__await((0, validate_types_1.validateTypes)({
++          workspaceRoot: context.root,
++          projectRoot: options.projectRoot,
++          tsconfig: options.tsConfig,
++        }));
++      }
++      catch (_b) {
++        return yield tslib_1.__await({ success: false });
++      }
++    }
++    if (options.watch) {
++      const watcher = rollup.watch(rollupOptions);
++      return yield tslib_1.__await(yield tslib_1.__await(yield* tslib_1.__asyncDelegator(tslib_1.__asyncValues((0, rxjs_for_await_1.eachValueFrom)(new rxjs_1.Observable((obs) => {
++        watcher.on('event', (data) => {
++          if (data.code === 'START') {
+             devkit_1.logger.info(`Bundling ${context.projectName}...`);
+-            // Delete output path before bundling
+-            if (options.deleteOutputPath) {
+-                (0, fs_1.deleteOutputDir)(context.root, options.outputPath);
++          }
++          else if (data.code === 'END') {
++            updatePackageJson(options, context, target, dependencies, packageJson);
++            devkit_1.logger.info('Bundle complete. Watching for file changes...');
++            obs.next({ success: true });
++          }
++          else if (data.code === 'ERROR') {
++            devkit_1.logger.error(`Error during bundle: ${data.error.message}`);
++            obs.next({ success: false });
++          }
++        });
++        // Teardown logic. Close watcher when unsubscribed.
++        return () => watcher.close();
++      }))))));
++    }
++    else {
++      devkit_1.logger.info(`Bundling ${context.projectName}...`);
++      // Delete output path before bundling
++      if (options.deleteOutputPath) {
++        (0, fs_1.deleteOutputDir)(context.root, options.outputPath);
++      }
++      const start = process.hrtime.bigint();
++      return yield tslib_1.__await((0, rxjs_1.from)(rollupOptions)
++        .pipe((0, operators_1.concatMap)((opts) => (0, run_rollup_1.runRollup)(opts).pipe((0, operators_1.catchError)((e) => {
++          devkit_1.logger.error(`Error during bundle: ${e}`);
++          return (0, rxjs_1.of)({ success: false });
++        }))), (0, operators_1.scan)((acc, result) => {
++          if (!acc.success)
++            return acc;
++          return result;
++        }, { success: true }), (0, operators_1.last)(), (0, operators_1.tap)({
++          next: (result) => {
++            if (result.success) {
++              const end = process.hrtime.bigint();
++              const duration = `${(Number(end - start) / 1000000000).toFixed(2)}s`;
++              updatePackageJson(options, context, target, dependencies, packageJson);
++              devkit_1.logger.info(`⚡ Done in ${duration}`);
++            }
++            else {
++              devkit_1.logger.error(`Bundle failed: ${context.projectName}`);
+             }
+-            const start = process.hrtime.bigint();
+-            return yield tslib_1.__await((0, rxjs_1.from)(rollupOptions)
+-                .pipe((0, operators_1.concatMap)((opts) => (0, run_rollup_1.runRollup)(opts).pipe((0, operators_1.catchError)((e) => {
+-                devkit_1.logger.error(`Error during bundle: ${e}`);
+-                return (0, rxjs_1.of)({ success: false });
+-            }))), (0, operators_1.scan)((acc, result) => {
+-                if (!acc.success)
+-                    return acc;
+-                return result;
+-            }, { success: true }), (0, operators_1.last)(), (0, operators_1.tap)({
+-                next: (result) => {
+-                    if (result.success) {
+-                        const end = process.hrtime.bigint();
+-                        const duration = `${(Number(end - start) / 1000000000).toFixed(2)}s`;
+-                        updatePackageJson(options, context, target, dependencies, packageJson);
+-                        devkit_1.logger.info(`⚡ Done in ${duration}`);
+-                    }
+-                    else {
+-                        devkit_1.logger.error(`Bundle failed: ${context.projectName}`);
+-                    }
+-                },
+-            }))
+-                .toPromise());
+-        }
+-    });
++          },
++        }))
++        .toPromise());
++    }
++  });
+ }
+ exports.default = rollupExecutor;
+ // -----------------------------------------------------------------------------
+ function createRollupOptions(options, dependencies, context, packageJson, sourceRoot, npmDeps) {
+-    const useBabel = options.compiler === 'babel';
+-    const useSwc = options.compiler === 'swc';
+-    return options.format.map((format, idx) => {
+-        const plugins = [
+-            copy({
+-                targets: convertCopyAssetsToRollupOptions(options.outputPath, options.assets),
+-            }),
+-            image(),
+-            useBabel &&
+-                require('rollup-plugin-typescript2')({
+-                    check: true,
+-                    tsconfig: options.tsConfig,
+-                    tsconfigOverride: {
+-                        compilerOptions: createCompilerOptions(options, dependencies),
+-                    },
+-                }),
+-            useSwc && (0, swc_plugin_1.swc)(),
+-            peerDepsExternal({
+-                packageJsonPath: options.project,
+-            }),
+-            postcss({
+-                inject: true,
+-                extract: options.extractCss,
+-                autoModules: true,
+-                plugins: [autoprefixer],
+-            }),
+-            (0, plugin_node_resolve_1.default)({
+-                preferBuiltins: true,
+-                extensions: fileExtensions,
+-            }),
+-            useBabel &&
+-                (0, plugin_babel_1.getBabelInputPlugin)({
+-                    // Let's `@nrwl/web/babel` preset know that we are packaging.
+-                    caller: {
+-                        // @ts-ignore
+-                        // Ignoring type checks for caller since we have custom attributes
+-                        isNxPackage: true,
+-                        // Always target esnext and let rollup handle cjs/umd
+-                        supportsStaticESM: true,
+-                        isModern: true,
+-                    },
+-                    cwd: (0, path_1.join)(context.root, sourceRoot),
+-                    rootMode: 'upward',
+-                    babelrc: true,
+-                    extensions: fileExtensions,
+-                    babelHelpers: 'bundled',
+-                    skipPreflightCheck: true,
+-                    exclude: /node_modules/,
+-                    plugins: [
+-                        format === 'esm'
+-                            ? undefined
+-                            : require.resolve('babel-plugin-transform-async-to-promises'),
+-                    ].filter(Boolean),
+-                }),
+-            commonjs(),
+-            (0, analyze_plugin_1.analyze)(),
+-            json(),
+-        ];
+-        const globals = options.globals
+-            ? options.globals.reduce((acc, item) => {
+-                acc[item.moduleId] = item.global;
+-                return acc;
+-            }, { 'react/jsx-runtime': 'jsxRuntime' })
+-            : { 'react/jsx-runtime': 'jsxRuntime' };
+-        const externalPackages = dependencies
+-            .map((d) => d.name)
+-            .concat(options.external || [])
+-            .concat(Object.keys(packageJson.dependencies || {}));
+-        const rollupConfig = {
+-            input: options.entryFile,
+-            output: {
+-                globals,
+-                format,
+-                dir: `${options.outputPath}`,
+-                name: options.umdName || (0, devkit_1.names)(context.projectName).className,
+-                entryFileNames: `[name].${format}.js`,
+-                chunkFileNames: `[name].${format}.js`,
+-                // umd doesn't support code-split bundles
+-                inlineDynamicImports: format === 'umd',
+-            },
+-            external: (id) => externalPackages.some((name) => id === name || id.startsWith(`${name}/`)) || npmDeps.some((name) => id === name || id.startsWith(`${name}/`)),
+-            plugins,
+-        };
+-        return options.rollupConfig.reduce((currentConfig, plugin) => {
+-            return require(plugin)(currentConfig, options);
+-        }, rollupConfig);
+-    });
++  const useBabel = options.compiler === 'babel';
++  const useSwc = options.compiler === 'swc';
++  return options.format.map((format, idx) => {
++    const plugins = [
++      copy({
++        targets: convertCopyAssetsToRollupOptions(options.outputPath, options.assets),
++      }),
++      image(),
++      useBabel &&
++      require('rollup-plugin-typescript2')({
++        check: true,
++        tsconfig: options.tsConfig,
++        tsconfigOverride: {
++          compilerOptions: createCompilerOptions(options, dependencies),
++        },
++      }),
++      useSwc && (0, swc_plugin_1.swc)(),
++      peerDepsExternal({
++        packageJsonPath: options.project,
++      }),
++      postcss({
++        inject: true,
++        extract: options.extractCss,
++        autoModules: true,
++        plugins: [autoprefixer],
++      }),
++      (0, plugin_node_resolve_1.default)({
++        preferBuiltins: true,
++        extensions: fileExtensions,
++      }),
++      useBabel &&
++      (0, plugin_babel_1.getBabelInputPlugin)({
++        // Let's `@nrwl/web/babel` preset know that we are packaging.
++        caller: {
++          // @ts-ignore
++          // Ignoring type checks for caller since we have custom attributes
++          isNxPackage: true,
++          // Always target esnext and let rollup handle cjs/umd
++          supportsStaticESM: true,
++          isModern: true,
++        },
++        cwd: (0, path_1.join)(context.root, sourceRoot),
++        rootMode: 'upward',
++        babelrc: true,
++        extensions: fileExtensions,
++        babelHelpers: 'bundled',
++        skipPreflightCheck: true,
++        exclude: /node_modules/,
++        plugins: [
++          format === 'esm'
++            ? undefined
++            : require.resolve('babel-plugin-transform-async-to-promises'),
++        ].filter(Boolean),
++      }),
++      commonjs(),
++      (0, analyze_plugin_1.analyze)(),
++      json(),
++    ];
++    const globals = options.globals
++      ? options.globals.reduce((acc, item) => {
++        acc[item.moduleId] = item.global;
++        return acc;
++      }, { 'react/jsx-runtime': 'jsxRuntime' })
++      : { 'react/jsx-runtime': 'jsxRuntime' };
++    const externalPackages = dependencies
++      .map((d) => d.name)
++      .concat(options.external || [])
++      .concat(Object.keys(packageJson.dependencies || {}));
++    const rollupConfig = {
++      input: options.entryFile,
++      output: {
++        globals,
++        format,
++        dir: `${options.outputPath}`,
++        name: options.umdName || (0, devkit_1.names)(context.projectName).className,
++        entryFileNames: format === 'cjs' ? `[name].cjs` : `[name].${format}.js`,
++        chunkFileNames: format === 'cjs' ? `[name].cjs` : `[name].${format}.js`,
++        // umd doesn't support code-split bundles
++        inlineDynamicImports: format === 'umd',
++      },
++      external: (id) => externalPackages.some((name) => id === name || id.startsWith(`${name}/`)) || npmDeps.some((name) => id === name || id.startsWith(`${name}/`)),
++      plugins,
++    };
++    return options.rollupConfig.reduce((currentConfig, plugin) => {
++      return require(plugin)(currentConfig, options);
++    }, rollupConfig);
++  });
+ }
+ exports.createRollupOptions = createRollupOptions;
+ function createCompilerOptions(options, dependencies) {
+-    const compilerOptionPaths = (0, buildable_libs_utils_1.computeCompilerOptionsPaths)(options.tsConfig, dependencies);
+-    return {
+-        rootDir: options.entryRoot,
+-        allowJs: false,
+-        declaration: true,
+-        paths: compilerOptionPaths,
+-    };
++  const compilerOptionPaths = (0, buildable_libs_utils_1.computeCompilerOptionsPaths)(options.tsConfig, dependencies);
++  return {
++    rootDir: options.entryRoot,
++    allowJs: false,
++    declaration: true,
++    paths: compilerOptionPaths,
++  };
+ }
+ function updatePackageJson(options, context, target, dependencies, packageJson) {
+-    const entryFileTmpl = `./index.<%= extension %>.js`;
+-    const typingsFile = (0, path_1.relative)(options.entryRoot, options.entryFile).replace(/\.[jt]sx?$/, '.d.ts');
++  const entryFileTmpl = `./index.<%= extension %>.js`;
++  const typingsFile = (0, path_1.relative)(options.entryRoot, options.entryFile).replace(/\.[jt]sx?$/, '.d.ts');
++  if (!packageJson.main) {
+     packageJson.main = entryFileTmpl.replace('<%= extension %>', 'umd');
+-    packageJson.module = entryFileTmpl.replace('<%= extension %>', 'esm');
+-    packageJson.typings = `./${typingsFile}`;
+-    (0, devkit_1.writeJsonFile)(`${options.outputPath}/package.json`, packageJson);
+-    if (dependencies.length > 0 &&
+-        options.updateBuildableProjectDepsInPackageJson) {
+-        (0, buildable_libs_utils_1.updateBuildableProjectPackageJsonDependencies)(context.root, context.projectName, context.targetName, context.configurationName, target, dependencies, options.buildableProjectDepsInPackageJsonType);
+-    }
++  }
++  packageJson.module = entryFileTmpl.replace('<%= extension %>', 'esm');
++  packageJson.typings = `./${typingsFile}`;
++  (0, devkit_1.writeJsonFile)(`${options.outputPath}/package.json`, packageJson);
++  if (dependencies.length > 0 &&
++    options.updateBuildableProjectDepsInPackageJson) {
++    (0, buildable_libs_utils_1.updateBuildableProjectPackageJsonDependencies)(context.root, context.projectName, context.targetName, context.configurationName, target, dependencies, options.buildableProjectDepsInPackageJsonType);
++  }
+ }
+ function convertCopyAssetsToRollupOptions(outputPath, assets) {
+-    return assets
+-        ? assets.map((a) => ({
+-            src: (0, path_1.join)(a.input, a.glob).replace(/\\/g, '/'),
+-            dest: (0, path_1.join)(outputPath, a.output).replace(/\\/g, '/'),
+-        }))
+-        : undefined;
++  return assets
++    ? assets.map((a) => ({
++      src: (0, path_1.join)(a.input, a.glob).replace(/\\/g, '/'),
++      dest: (0, path_1.join)(outputPath, a.output).replace(/\\/g, '/'),
++    }))
++    : undefined;
+ }
+ //# sourceMappingURL=rollup.impl.js.map

@@ -1,6 +1,11 @@
 
 
-### [8.2.1](https://github.com/nartc/mapper/compare/8.2.0...8.2.1) (2022-04-07)
+### [8.2.2](https://github.com/nartc/mapper/compare/8.2.1...8.2.2) (2022-04-07)
+
+
+### Bug Fixes
+
+* **mikro:** adjust serializeEntity to return the object with id for uninitialized reference ([62f5c0f](https://github.com/nartc/mapper/commit/62f5c0f36d0275b406f61e8dc10bd0319905bc1a))### [8.2.1](https://github.com/nartc/mapper/compare/8.2.0...8.2.1) (2022-04-07)
 
 
 ### Bug Fixes

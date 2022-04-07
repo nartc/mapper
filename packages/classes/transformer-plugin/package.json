@@ -1,6 +1,6 @@
 {
     "name": "@automapper/classes/transformer-plugin",
-    "version": "8.2.2",
+    "version": "8.2.3",
     "type": "module",
     "exports": {
         ".": {

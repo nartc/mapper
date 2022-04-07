@@ -1,6 +1,12 @@
 
 
-### [8.2.2](https://github.com/nartc/mapper/compare/8.2.1...8.2.2) (2022-04-07)
+### [8.2.3](https://github.com/nartc/mapper/compare/8.2.2...8.2.3) (2022-04-07)
+
+
+### Bug Fixes
+
+* **classes:** use class constructor's name instead of constructor function ([#452](https://github.com/nartc/mapper/issues/452)) ([8b413f9](https://github.com/nartc/mapper/commit/8b413f9cbc2d989df91c31d5d294fa34ed46b91e))
+* **core:** remove constraint on postMap (remove seal on destination) ([2c38340](https://github.com/nartc/mapper/commit/2c383408247345d080674b13bf5a61532e1c193c)), closes [#450](https://github.com/nartc/mapper/issues/450)### [8.2.2](https://github.com/nartc/mapper/compare/8.2.1...8.2.2) (2022-04-07)
 
 
 ### Bug Fixes

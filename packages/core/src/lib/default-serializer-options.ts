@@ -3,7 +3,10 @@ import type { Dictionary, MappingStrategyInitializerOptions } from './types';
 
 export const defaultSerializerOptions = {
     applyMetadata: defaultApplyMetadata,
-    preMap<TSource extends Dictionary<TSource>>(source: TSource): TSource {
+    preMap<
+        TSource extends Dictionary<TSource>,
+        TDestination extends Dictionary<TDestination>
+    >(source: TSource): TSource {
         return source;
     },
     postMap<

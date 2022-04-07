@@ -1,4 +1,4 @@
-import {
+import type {
     ERROR_HANDLER,
     MAPPINGS,
     METADATA_MAP,
@@ -544,13 +544,20 @@ export interface MappingStrategy<TIdentifier extends MetadataIdentifier> {
     retrieveMetadata(
         ...identifiers: TIdentifier[]
     ): Map<TIdentifier, MetadataList>;
-    preMap<TSource extends Dictionary<TSource>>(source: TSource): TSource;
+    preMap<
+        TSource extends Dictionary<TSource>,
+        TDestination extends Dictionary<TDestination>
+    >(
+        source: TSource,
+        mapping: Mapping<TSource, TDestination>
+    ): TSource;
     postMap<
         TSource extends Dictionary<TSource>,
         TDestination extends Dictionary<TDestination>
     >(
         source: TSource,
-        destination: TDestination
+        destination: TDestination,
+        mapping: Mapping<TSource, TDestination>
     ): TDestination | undefined;
 }
 
@@ -560,12 +567,19 @@ export type MappingStrategyInitializer<TIdentifier extends MetadataIdentifier> =
 export interface MappingStrategyInitializerOptions {
     applyMetadata?: ApplyMetadata;
     destinationConstructor?: DestinationConstructor;
-    preMap?<TSource extends Dictionary<TSource>>(source: TSource): TSource;
+    preMap?<
+        TSource extends Dictionary<TSource>,
+        TDestination extends Dictionary<TDestination>
+    >(
+        source: TSource,
+        mapping: Mapping<TSource, TDestination>
+    ): TSource;
     postMap?<
         TSource extends Dictionary<TSource>,
         TDestination extends Dictionary<TDestination>
     >(
         source: TSource,
-        destination: TDestination
+        destination: TDestination,
+        mapping: Mapping<TSource, TDestination>
     ): TDestination;
 }

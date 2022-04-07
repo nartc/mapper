@@ -137,7 +137,10 @@ export function createMapper({
                         destinationIdentifier
                     );
 
-                    sourceObject = strategy.preMap(Object.freeze(sourceObject));
+                    sourceObject = strategy.preMap(
+                        Object.freeze(sourceObject),
+                        mapping
+                    );
 
                     const destination = mapReturn(
                         mapping,
@@ -149,7 +152,8 @@ export function createMapper({
                         Object.freeze(sourceObject),
                         // seal destination so that consumers cannot add properties to it
                         // or change the property descriptors. but they can still modify it
-                        Object.seal(destination)
+                        Object.seal(destination),
+                        mapping
                     );
                 };
             }
@@ -209,7 +213,8 @@ export function createMapper({
                     ) {
                         let sourceObject = sourceArray[i];
                         sourceObject = strategy.preMap(
-                            Object.freeze(sourceObject)
+                            Object.freeze(sourceObject),
+                            mapping
                         );
 
                         const destination = mapReturn(
@@ -229,7 +234,8 @@ export function createMapper({
                                 Object.freeze(sourceObject),
                                 // seal destination so that consumers cannot add properties to it
                                 // or change the property descriptors. but they can still modify it
-                                Object.seal(destination)
+                                Object.seal(destination),
+                                mapping
                             ) as TDestination
                         );
                     }
@@ -283,7 +289,10 @@ export function createMapper({
                         destinationIdentifier
                     );
 
-                    sourceObject = strategy.preMap(Object.freeze(sourceObject));
+                    sourceObject = strategy.preMap(
+                        Object.freeze(sourceObject),
+                        mapping
+                    );
 
                     mapMutate(
                         mapping,
@@ -294,7 +303,8 @@ export function createMapper({
 
                     strategy.postMap(
                         Object.freeze(sourceObject),
-                        destinationObject
+                        destinationObject,
+                        mapping
                     );
                 };
             }
@@ -356,7 +366,8 @@ export function createMapper({
                         let sourceObject = sourceArray[i];
 
                         sourceObject = strategy.preMap(
-                            Object.freeze(sourceObject)
+                            Object.freeze(sourceObject),
+                            mapping
                         );
 
                         mapMutate(
@@ -374,7 +385,8 @@ export function createMapper({
 
                         strategy.postMap(
                             Object.freeze(sourceObject),
-                            destinationArray[i]
+                            destinationArray[i],
+                            mapping
                         );
                     }
 

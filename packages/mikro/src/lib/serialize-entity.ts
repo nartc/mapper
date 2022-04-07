@@ -26,34 +26,37 @@ export function serializeEntity(
         }
 
         const value = item[key];
+        const keyMetadata = itemMetadata[key] as Record<string, unknown>;
+
         if (Utils.isCollection(value)) {
             result[key] = (value.getSnapshot() || []).map((snapshot) => {
                 return serializeEntity(
                     snapshot as AnyEntity,
-                    itemMetadata[key] as Record<string, unknown>,
+                    keyMetadata,
                     true
                 );
             });
-        } else {
-            if (Reference.isReference(value)) {
-                if (
-                    typeof itemMetadata[key] === 'object' &&
-                    !isEmpty(itemMetadata[key])
-                ) {
-                    result[key] = serializeEntity(
-                        value.getEntity(),
-                        itemMetadata[key] as Record<string, unknown>
-                    );
-                }
+            continue;
+        }
+
+        if (Reference.isReference(value)) {
+            if (!value.isInitialized()) {
+                result[key] = serializeEntity(
+                    wrap(value).toPOJO(),
+                    keyMetadata
+                );
+                continue;
             }
 
             result[key] = serializeEntity(
-                Reference.isReference(value) ? value.getEntity() : value,
-                itemMetadata[key] as Record<string, unknown>,
-                typeof itemMetadata[key] === 'object' &&
-                    isEmpty(itemMetadata[key])
+                value.getEntity(),
+                keyMetadata,
+                typeof keyMetadata === 'object' && isEmpty(keyMetadata)
             );
+            continue;
         }
+
+        result[key] = serializeEntity(value, keyMetadata);
     }
 
     if (result['id'] == null && item['id'] != null) {

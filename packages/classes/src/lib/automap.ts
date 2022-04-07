@@ -52,8 +52,8 @@ export function AutoMap(
         // if typeFn is still null/undefined, fail fast;
         if (options.type == null) {
             console.warn(`
-Cannot determine type metadata of "${String(propertyKey)}" on ${
-                target.constructor
+Cannot determine type metadata of "${String(propertyKey)}" on class ${
+                target.constructor.name
             }.
 "${String(propertyKey)}" metadata has been skipped.
 Manually provide the "type" metadata to prevent unexpected behavior.

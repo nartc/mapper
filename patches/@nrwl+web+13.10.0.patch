@@ -1,0 +1,26 @@
+diff --git a/node_modules/@nrwl/web/src/executors/rollup/rollup.impl.js b/node_modules/@nrwl/web/src/executors/rollup/rollup.impl.js
+index baca3a6..7ac6cfa 100644
+--- a/node_modules/@nrwl/web/src/executors/rollup/rollup.impl.js
++++ b/node_modules/@nrwl/web/src/executors/rollup/rollup.impl.js
+@@ -183,8 +183,8 @@ function createRollupOptions(options, dependencies, context, packageJson, source
+                 format,
+                 dir: `${options.outputPath}`,
+                 name: options.umdName || (0, devkit_1.names)(context.projectName).className,
+-                entryFileNames: `[name].${format}.js`,
+-                chunkFileNames: `[name].${format}.js`,
++                entryFileNames: format === 'cjs' ? `[name].cjs` : `[name].${format}.js`,
++                chunkFileNames: format === 'cjs' ? `[name].cjs` : `[name].${format}.js`,
+                 // umd doesn't support code-split bundles
+                 inlineDynamicImports: format === 'umd',
+             },
+@@ -209,7 +209,9 @@ function createCompilerOptions(options, dependencies) {
+ function updatePackageJson(options, context, target, dependencies, packageJson) {
+     const entryFileTmpl = `./index.<%= extension %>.js`;
+     const typingsFile = (0, path_1.relative)(options.entryRoot, options.entryFile).replace(/\.[jt]sx?$/, '.d.ts');
+-    packageJson.main = entryFileTmpl.replace('<%= extension %>', 'umd');
++    if (!packageJson.main) {
++      packageJson.main = entryFileTmpl.replace('<%= extension %>', 'umd');
++    }
+     packageJson.module = entryFileTmpl.replace('<%= extension %>', 'esm');
+     packageJson.typings = `./${typingsFile}`;
+     (0, devkit_1.writeJsonFile)(`${options.outputPath}/package.json`, packageJson);

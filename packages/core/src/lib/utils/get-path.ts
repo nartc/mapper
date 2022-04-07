@@ -36,10 +36,7 @@ export function getFlatteningPaths(
     );
     let trueFirstPartOfSource = first;
     let stopIndex = 0;
-    let found = Object.prototype.hasOwnProperty.call(
-        src,
-        trueFirstPartOfSource
-    );
+    let found = hasProperty(src, trueFirstPartOfSource);
 
     if (!found) {
         for (let i = 0, len = paths.length; i < len; i++) {
@@ -48,9 +45,7 @@ export function getFlatteningPaths(
                     trueFirstPartOfSource,
                     paths[i],
                 ]);
-            if (
-                Object.prototype.hasOwnProperty.call(src, trueFirstPartOfSource)
-            ) {
+            if (hasProperty(src, trueFirstPartOfSource)) {
                 stopIndex = i + 1;
                 found = true;
                 break;
@@ -62,10 +57,46 @@ export function getFlatteningPaths(
         return srcPath;
     }
 
+    const restPaths = splitSourcePaths.slice(
+        stopIndex + 1,
+        splitSourcePaths.length + 1
+    );
+    const transformedRestPaths =
+        sourceNamingConvention.transformPropertyName(restPaths);
+
+    if (
+        restPaths.length > 1 &&
+        !hasProperty(
+            src[trueFirstPartOfSource] as Record<string, unknown>,
+            transformedRestPaths
+        ) &&
+        hasProperty(
+            src[trueFirstPartOfSource] as Record<string, unknown>,
+            sourceNamingConvention.transformPropertyName([restPaths[0]])
+        )
+    ) {
+        // still has more flattening to do: eg: bookAuthorName -> ['Author', 'Name']
+        // transformedRestPaths (authorName) does not exist on source
+        // first of rest paths (author) does exist on source
+
+        return [
+            trueFirstPartOfSource,
+            ...getFlatteningPaths(
+                src[trueFirstPartOfSource] as Record<string, unknown>,
+                getPath([transformedRestPaths], namingConventions),
+                namingConventions
+            ),
+        ];
+    }
+
     return [
         trueFirstPartOfSource,
         sourceNamingConvention.transformPropertyName(
             splitSourcePaths.slice(stopIndex + 1, splitSourcePaths.length + 1)
         ),
     ];
+}
+
+function hasProperty(obj: Record<string, unknown>, property: string): boolean {
+    return Object.prototype.hasOwnProperty.call(obj, property);
 }

@@ -1,6 +1,11 @@
 
 
-## [8.2.0](https://github.com/nartc/mapper/compare/8.1.0...8.2.0) (2022-04-07)
+### [8.2.1](https://github.com/nartc/mapper/compare/8.2.0...8.2.1) (2022-04-07)
+
+
+### Bug Fixes
+
+* **core:** adjust getFlatteningPaths to flatten more as needed ([b8734ec](https://github.com/nartc/mapper/commit/b8734ecb609ad41c3c117b88cab8dc818d82e62a))## [8.2.0](https://github.com/nartc/mapper/compare/8.1.0...8.2.0) (2022-04-07)
 
 
 ### Features

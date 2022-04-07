@@ -1,6 +1,16 @@
 
 
-## [8.1.0](https://github.com/nartc/mapper/compare/8.1.0-beta.0...8.1.0) (2022-04-03)## [8.1.0-beta.0](https://github.com/nartc/mapper/compare/8.0.1...8.1.0-beta.0) (2022-04-03)
+## [8.2.0](https://github.com/nartc/mapper/compare/8.1.0...8.2.0) (2022-04-07)
+
+
+### Features
+
+* **core:** allow preMap and postMap to also be called with the Mapping ([1e0fa62](https://github.com/nartc/mapper/commit/1e0fa62b67400609a79290a860c84ffd9c74c0ee))
+
+
+### Bug Fixes
+
+* **mikro:** ensure serializeEntity follows the metadata object to accommodate depth of serialization ([54cd373](https://github.com/nartc/mapper/commit/54cd37319c28b9494055559480f9a49891aef873))## [8.1.0](https://github.com/nartc/mapper/compare/8.1.0-beta.0...8.1.0) (2022-04-03)## [8.1.0-beta.0](https://github.com/nartc/mapper/compare/8.0.1...8.1.0-beta.0) (2022-04-03)
 
 
 ### Features

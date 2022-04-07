@@ -152,7 +152,8 @@ export function createMapper({
                         Object.freeze(sourceObject),
                         // seal destination so that consumers cannot add properties to it
                         // or change the property descriptors. but they can still modify it
-                        Object.seal(destination),
+                        // the ideal behavior is seal but the consumers might need to add/modify the object after map finishes
+                        destination,
                         mapping
                     );
                 };
@@ -234,7 +235,8 @@ export function createMapper({
                                 Object.freeze(sourceObject),
                                 // seal destination so that consumers cannot add properties to it
                                 // or change the property descriptors. but they can still modify it
-                                Object.seal(destination),
+                                // the ideal behavior is seal but the consumers might need to add/modify the object after map finishes
+                                destination,
                                 mapping
                             ) as TDestination
                         );

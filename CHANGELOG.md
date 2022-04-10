@@ -1,6 +1,11 @@
 
 
-### [8.2.3](https://github.com/nartc/mapper/compare/8.2.2...8.2.3) (2022-04-07)
+### [8.2.4](https://github.com/nartc/mapper/compare/8.2.3...8.2.4) (2022-04-10)
+
+
+### Bug Fixes
+
+* **core:** add custom node inspect to log meaningful message for Mapper (empty object as Proxy) ([de9725a](https://github.com/nartc/mapper/commit/de9725ae07b9288349863e097dcbee30446298e1))### [8.2.3](https://github.com/nartc/mapper/compare/8.2.2...8.2.3) (2022-04-07)
 
 
 ### Bug Fixes

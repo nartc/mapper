@@ -6,16 +6,18 @@ import type {
 } from './types';
 import { normalizeNamingConventions } from './utils/normalize-naming-conventions';
 
-export const STRATEGY = Symbol('__strategy__');
-export const MAPPINGS = Symbol('__mappings__');
-export const METADATA_MAP = Symbol('__metadata_map__');
-export const ERROR_HANDLER = Symbol('__error_handler__');
-export const NAMING_CONVENTIONS = Symbol('__naming_conventions__');
-export const RECURSIVE_DEPTH = Symbol('__recursive_depth__');
-export const RECURSIVE_COUNT = Symbol('__recursive_count__');
-export const PROFILE_CONFIGURATION_CONTEXT = Symbol(
+export const STRATEGY = Symbol.for('__strategy__');
+export const MAPPINGS = Symbol.for('__mappings__');
+export const METADATA_MAP = Symbol.for('__metadata_map__');
+export const ERROR_HANDLER = Symbol.for('__error_handler__');
+export const NAMING_CONVENTIONS = Symbol.for('__naming_conventions__');
+export const RECURSIVE_DEPTH = Symbol.for('__recursive_depth__');
+export const RECURSIVE_COUNT = Symbol.for('__recursive_count__');
+export const PROFILE_CONFIGURATION_CONTEXT = Symbol.for(
     '__profile_configuration_context__'
 );
+export const CUSTOM_NODE_INSPECT = Symbol.for('nodejs.util.inspect.custom');
+
 
 export function getErrorHandler(mapper: Mapper) {
     return mapper[ERROR_HANDLER];

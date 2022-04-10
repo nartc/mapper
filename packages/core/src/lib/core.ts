@@ -1,5 +1,6 @@
 import { mapMutate, mapReturn } from './mappings/map';
 import {
+  CUSTOM_NODE_INSPECT,
     ERROR_HANDLER,
     MAPPINGS,
     METADATA_MAP,
@@ -51,7 +52,18 @@ export function createMapper({
     let profileConfigurationContext: Set<MappingConfiguration>;
 
     // return the Proxy
-    return new Proxy<Mapper>({} as Mapper, {
+    return new Proxy<Mapper>({
+      [CUSTOM_NODE_INSPECT]() {
+        return `
+Mapper {} is an empty Object as a Proxy. The following methods are available to use with a Mapper:
+- Mapper#map(Array)(Async), Mapper#mutate(Array)(Async)
+- createMap()
+- addProfile()
+- getMapping()
+- getMappings()
+        `
+      }
+    } as unknown as Mapper, {
         get(target, p: string | symbol, receiver: any): any {
             if (p === STRATEGY) {
                 if (!strategy) {

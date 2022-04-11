@@ -42,7 +42,7 @@ export function createMapper({
     let mappings: Map<MetadataIdentifier, Map<MetadataIdentifier, Mapping>>;
 
     // this mapper is responsible for all metadata
-    let metadata: Map<MetadataIdentifier, Array<Metadata>>;
+    let metadataMap: Map<MetadataIdentifier, Array<Metadata>>;
 
     // this mapper is responsible for recursive depths and counts
     let recursiveDepth: Map<MetadataIdentifier, ArrayKeyedMap>;
@@ -87,10 +87,10 @@ Mapper {} is an empty Object as a Proxy. The following methods are available to 
             }
 
             if (p === METADATA_MAP) {
-                if (!metadata) {
-                    metadata = new Map();
+                if (!metadataMap) {
+                    metadataMap = new Map();
                 }
-                return metadata;
+                return metadataMap;
             }
 
             if (p === ERROR_HANDLER) {
@@ -123,7 +123,8 @@ Mapper {} is an empty Object as a Proxy. The following methods are available to 
             if (p === 'dispose') {
                 return () => {
                     mappings?.clear();
-                    metadata?.clear();
+                    // TODO: why can metadata not be clear?
+                    // metadata?.clear();
                     recursiveDepth?.clear();
                     recursiveCount?.clear();
                     profileConfigurationContext?.clear();

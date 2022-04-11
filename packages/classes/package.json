@@ -11,6 +11,18 @@
             "require": "./index.cjs",
             "types": "./index.d.ts",
             "typings": "./index.d.ts"
+        },
+        "./transformer-plugin": {
+            "import": "./transformer-plugin/index.esm.js",
+            "require": "./transformer-plugin/index.cjs",
+            "types": "./transformer-plugin/index.d.ts",
+            "typings": "./transformer-plugin/index.d.ts"
+        },
+        "./mapped-types": {
+            "import": "./mapped-types/index.esm.js",
+            "require": "./mapped-types/index.cjs",
+            "types": "./mapped-types/index.d.ts",
+            "typings": "./mapped-types/index.d.ts"
         }
     },
     "sideEffects": false,

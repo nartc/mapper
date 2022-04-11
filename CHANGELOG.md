@@ -1,6 +1,11 @@
 
 
-## [8.3.0](https://github.com/nartc/mapper/compare/8.2.4...8.3.0) (2022-04-11)
+### [8.3.1](https://github.com/nartc/mapper/compare/8.3.0...8.3.1) (2022-04-11)
+
+
+### Bug Fixes
+
+* **classes:** adjust packageJson exports to include secondary entry points ([a82c0c3](https://github.com/nartc/mapper/commit/a82c0c3e916e8c1f2db8fbbb9e45852dea389aba))## [8.3.0](https://github.com/nartc/mapper/compare/8.2.4...8.3.0) (2022-04-11)
 
 
 ### Features

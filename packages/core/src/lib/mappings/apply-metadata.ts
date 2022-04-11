@@ -27,7 +27,9 @@ export function defaultApplyMetadata(
 
     function applyMetadata(
         model: MetadataIdentifier,
-        as: MetadataObjectMapClassId
+        as: MetadataObjectMapClassId,
+        root = true,
+        selfReference = false
     ) {
         // get the metadata of the model
         const metadata = metadataMap.get(model);
@@ -94,7 +96,9 @@ export function defaultApplyMetadata(
             // if depth equals count, meaning instantiate has run enough loop.
             // reset the count then assign with new keyword
             if (depth === count) {
-                setRecursiveValue(recursiveCountMap, model, key, 0);
+                if (root || !selfReference) {
+                    setRecursiveValue(recursiveCountMap, model, key, 0);
+                }
                 setMutate(instance as Record<string, unknown>, key, {});
                 continue;
             }
@@ -106,12 +110,19 @@ export function defaultApplyMetadata(
             );
             const childMetadata =
                 childMetadataObjectMap?.[as] ||
-                applyMetadata(metaResult as MetadataIdentifier, as);
+                applyMetadata(
+                    metaResult as MetadataIdentifier,
+                    as,
+                    false,
+                    metaResult === model
+                );
             setMutate(instance as Record<string, unknown>, key, childMetadata);
         }
 
         // after all, resetAllCount on the current model
-        recursiveCountMap.get(model)?.clear();
+        if (root || !selfReference) {
+            recursiveCountMap.get(model)?.clear();
+        }
         return instance;
     }
 

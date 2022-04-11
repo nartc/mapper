@@ -34,7 +34,7 @@
             "executor": "@nrwl/jest:jest",
             "outputs": ["coverage/packages/pojos"],
             "options": {
-                "jestConfig": "packages/pojos/jest.config.js",
+                "jestConfig": "packages/pojos/jest.config.cjs",
                 "passWithNoTests": true
             }
         },

@@ -39,7 +39,7 @@
             "executor": "@nrwl/jest:jest",
             "outputs": ["coverage/packages/sequelize"],
             "options": {
-                "jestConfig": "packages/sequelize/jest.config.js",
+                "jestConfig": "packages/sequelize/jest.config.cjs",
                 "passWithNoTests": true
             }
         },

@@ -39,7 +39,7 @@
             "executor": "@nrwl/jest:jest",
             "outputs": ["coverage/packages/mikro"],
             "options": {
-                "jestConfig": "packages/mikro/jest.config.js",
+                "jestConfig": "packages/mikro/jest.config.cjs",
                 "passWithNoTests": true
             }
         },

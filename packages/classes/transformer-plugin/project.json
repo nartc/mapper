@@ -36,7 +36,7 @@
             "executor": "@nrwl/jest:jest",
             "outputs": ["coverage/packages/classes/transformer-plugin"],
             "options": {
-                "jestConfig": "packages/classes/transformer-plugin/jest.config.js",
+                "jestConfig": "packages/classes/transformer-plugin/jest.config.cjs",
                 "passWithNoTests": true
             }
         }

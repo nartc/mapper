@@ -51,7 +51,7 @@
             "executor": "@nrwl/jest:jest",
             "outputs": ["coverage/packages/core"],
             "options": {
-                "jestConfig": "packages/core/jest.config.js",
+                "jestConfig": "packages/core/jest.config.cjs",
                 "passWithNoTests": true
             }
         },

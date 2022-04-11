@@ -39,7 +39,7 @@
             "executor": "@nrwl/jest:jest",
             "outputs": ["coverage/packages/classes/mapped-types"],
             "options": {
-                "jestConfig": "packages/classes/mapped-types/jest.config.js",
+                "jestConfig": "packages/classes/mapped-types/jest.config.cjs",
                 "passWithNoTests": true
             }
         }

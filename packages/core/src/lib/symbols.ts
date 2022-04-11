@@ -9,6 +9,7 @@ import { normalizeNamingConventions } from './utils/normalize-naming-conventions
 export const STRATEGY = Symbol.for('__strategy__');
 export const MAPPINGS = Symbol.for('__mappings__');
 export const METADATA_MAP = Symbol.for('__metadata_map__');
+export const METADATA_OBJECT_MAP = Symbol.for('__metadata_object_map__');
 export const ERROR_HANDLER = Symbol.for('__error_handler__');
 export const NAMING_CONVENTIONS = Symbol.for('__naming_conventions__');
 export const RECURSIVE_DEPTH = Symbol.for('__recursive_depth__');
@@ -17,7 +18,6 @@ export const PROFILE_CONFIGURATION_CONTEXT = Symbol.for(
     '__profile_configuration_context__'
 );
 export const CUSTOM_NODE_INSPECT = Symbol.for('nodejs.util.inspect.custom');
-
 
 export function getErrorHandler(mapper: Mapper) {
     return mapper[ERROR_HANDLER];
@@ -29,6 +29,10 @@ export function getMappings(mapper: Mapper) {
 
 export function getMetadataMap(mapper: Mapper) {
     return mapper[METADATA_MAP];
+}
+
+export function getMetadataObjectMap(mapper: Mapper) {
+    return mapper[METADATA_OBJECT_MAP];
 }
 
 export function getNamingConventions(

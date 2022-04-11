@@ -2,6 +2,7 @@ import type {
     ERROR_HANDLER,
     MAPPINGS,
     METADATA_MAP,
+    METADATA_OBJECT_MAP,
     NAMING_CONVENTIONS,
     PROFILE_CONFIGURATION_CONTEXT,
     RECURSIVE_COUNT,
@@ -125,6 +126,11 @@ export type ModelIdentifier<T = any> = string | symbol | Constructor<T>;
 
 export type MetadataIdentifier<T = any> = Exclude<ModelIdentifier<T>, string>;
 
+export const enum MetadataObjectMapClassId {
+    asSource,
+    asDestination,
+}
+
 export const enum MetadataClassId {
     propertyKeys,
     metaFn,
@@ -231,6 +237,13 @@ export interface Mapper {
     [STRATEGY]: MappingStrategy<MetadataIdentifier>;
     [NAMING_CONVENTIONS]: NamingConventionInput;
     [METADATA_MAP]: Map<MetadataIdentifier, Array<Metadata>>;
+    [METADATA_OBJECT_MAP]: Map<
+        MetadataIdentifier,
+        [
+            asSource?: Record<string, unknown>,
+            asDestination?: Record<string, unknown>
+        ]
+    >;
     [RECURSIVE_DEPTH]: Map<MetadataIdentifier, ArrayKeyedMap>;
     [RECURSIVE_COUNT]: Map<MetadataIdentifier, ArrayKeyedMap>;
     [PROFILE_CONFIGURATION_CONTEXT]: Set<MappingConfiguration>;
@@ -508,7 +521,8 @@ export type MappingConfiguration<
 > = (mapping: Mapping<TSource, TDestination>) => void;
 
 export type ApplyMetadataFn = <TModel extends Dictionary<TModel>>(
-    model: MetadataIdentifier<TModel>
+    model: MetadataIdentifier<TModel>,
+    as: MetadataObjectMapClassId
 ) => TModel;
 
 export type ApplyMetadata = (

@@ -1,5 +1,10 @@
 import { mapInitialize } from '../member-map-functions/map-initialize';
-import { getMetadataMap, getNamingConventions, getStrategy } from '../symbols';
+import {
+    getMetadataMap,
+    getMetadataObjectMap,
+    getNamingConventions,
+    getStrategy,
+} from '../symbols';
 import type {
     Dictionary,
     Mapper,
@@ -16,6 +21,7 @@ import {
     MappingPropertiesClassId,
     MappingTransformationClassId,
     MetadataClassId,
+    MetadataObjectMapClassId,
     NestedMappingPairClassId,
 } from '../types';
 import { getFlatteningPaths, getPath } from '../utils/get-path';
@@ -36,12 +42,37 @@ export function createInitialMapping<
     const destinationConstructor =
         strategy.destinationConstructor.bind(strategy);
 
-    const destinationObject = applyMetadataFn(destination);
-    const sourceObject = applyMetadataFn(source);
+    const metadataObjectMap = getMetadataObjectMap(mapper);
+    const sourceMetadataObjectMap = metadataObjectMap.get(source);
+    const destinationMetadataObjectMap = metadataObjectMap.get(destination);
+
+    const destinationObject =
+        destinationMetadataObjectMap?.[
+            MetadataObjectMapClassId.asDestination
+        ] ||
+        applyMetadataFn(destination, MetadataObjectMapClassId.asDestination);
+
+    if (destinationMetadataObjectMap) {
+        destinationMetadataObjectMap[MetadataObjectMapClassId.asDestination] =
+            destinationObject;
+    } else {
+        metadataObjectMap.set(destination, [undefined, destinationObject]);
+    }
+
+    const sourceObject =
+        sourceMetadataObjectMap?.[MetadataObjectMapClassId.asSource] ||
+        applyMetadataFn(source, MetadataObjectMapClassId.asSource);
+
+    if (sourceMetadataObjectMap) {
+        sourceMetadataObjectMap[MetadataObjectMapClassId.asSource] =
+            sourceObject;
+    } else {
+        metadataObjectMap.set(source, [sourceObject]);
+    }
 
     const mapping: Mapping<TSource, TDestination> = [
         [source, destination],
-        [sourceObject, destinationObject],
+        [sourceObject as TSource, destinationObject as TDestination],
         [],
         mapper,
         destinationConstructor,

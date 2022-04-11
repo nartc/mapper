@@ -1,5 +1,6 @@
 import {
     getMetadataMap,
+    getMetadataObjectMap,
     getRecursiveCount,
     getRecursiveDepth,
 } from '../symbols';
@@ -8,7 +9,7 @@ import type {
     MappingStrategy,
     MetadataIdentifier,
 } from '../types';
-import { MetadataClassId } from '../types';
+import { MetadataClassId, MetadataObjectMapClassId } from '../types';
 import { isDateConstructor } from '../utils/is-date-constructor';
 import { isEmpty } from '../utils/is-empty';
 import { isPrimitiveConstructor } from '../utils/is-primitive-constructor';
@@ -20,10 +21,14 @@ export function defaultApplyMetadata(
 ): ApplyMetadataFn {
     const mapper = strategy.mapper;
     const metadataMap = getMetadataMap(mapper);
+    const metadataObjectMap = getMetadataObjectMap(mapper);
     const recursiveCountMap = getRecursiveCount(mapper);
     const recursiveDepthMap = getRecursiveDepth(mapper);
 
-    function applyMetadata(model: MetadataIdentifier) {
+    function applyMetadata(
+        model: MetadataIdentifier,
+        as: MetadataObjectMapClassId
+    ) {
         // get the metadata of the model
         const metadata = metadataMap.get(model);
 
@@ -46,11 +51,12 @@ export function defaultApplyMetadata(
              * in V8, AutoMapper does not instantiate a new model on applying metadata anymore.
              * Hence, isGetterOnly seems to be obsolete.
              */
-            // const isGetterOnly = metadata[i][MetadataClassId.isGetterOnly];
-            // skip getter only completely
-            // if (isGetterOnly) {
-            //     continue;
-            // }
+            const isGetterOnly = metadata[i][MetadataClassId.isGetterOnly];
+            // skip getter if is applying metadata to a destination (because we will be setting data
+            // on the destination. Getter only cannot be set
+            if (isGetterOnly && as === MetadataObjectMapClassId.asDestination) {
+                continue;
+            }
 
             // call the meta fn to get the metaResult of the current key
             const metaResult = metaFn();
@@ -95,11 +101,13 @@ export function defaultApplyMetadata(
 
             // increment the count and recursively call instantiate
             setRecursiveValue(recursiveCountMap, model, key, count + 1);
-            setMutate(
-                instance as Record<string, unknown>,
-                key,
-                applyMetadata(metaResult as MetadataIdentifier)
+            const childMetadataObjectMap = metadataObjectMap.get(
+                metaResult as MetadataIdentifier
             );
+            const childMetadata =
+                childMetadataObjectMap?.[as] ||
+                applyMetadata(metaResult as MetadataIdentifier, as);
+            setMutate(instance as Record<string, unknown>, key, childMetadata);
         }
 
         // after all, resetAllCount on the current model

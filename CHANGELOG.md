@@ -1,6 +1,16 @@
 
 
-### [8.2.4](https://github.com/nartc/mapper/compare/8.2.3...8.2.4) (2022-04-10)
+## [8.3.0](https://github.com/nartc/mapper/compare/8.2.4...8.3.0) (2022-04-11)
+
+
+### Features
+
+* **core:** applyMetadata now needs to know whether it's applying to a model as Source or as Destination ([70d267a](https://github.com/nartc/mapper/commit/70d267a32c48da25a2abf0d25badf23e4e6a24a5))
+
+
+### Bug Fixes
+
+* **core:** not clearing metadataMap on dispose ([f2ae39c](https://github.com/nartc/mapper/commit/f2ae39c7d3bc4c66e155675880d56c0fc5629cc1))### [8.2.4](https://github.com/nartc/mapper/compare/8.2.3...8.2.4) (2022-04-10)
 
 
 ### Bug Fixes

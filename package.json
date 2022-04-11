@@ -1,6 +1,6 @@
 {
   "name": "automapper",
-  "version": "8.2.4",
+  "version": "8.3.0",
   "license": "MIT",
   "scripts": {
     "commit": "git-cz",

@@ -1,11 +1,20 @@
 
 
+### [8.3.2](https://github.com/nartc/mapper/compare/8.3.1...8.3.2) (2022-04-11)
+
+
+### Bug Fixes
+
+* **core:** update applyMetadata to ensure selfReference properties are handled ([109b5f0](https://github.com/nartc/mapper/commit/109b5f0dd9514fe6ade9f61b722db7be018ed921))
+
 ### [8.3.1](https://github.com/nartc/mapper/compare/8.3.0...8.3.1) (2022-04-11)
 
 
 ### Bug Fixes
 
-* **classes:** adjust packageJson exports to include secondary entry points ([a82c0c3](https://github.com/nartc/mapper/commit/a82c0c3e916e8c1f2db8fbbb9e45852dea389aba))## [8.3.0](https://github.com/nartc/mapper/compare/8.2.4...8.3.0) (2022-04-11)
+* **classes:** adjust packageJson exports to include secondary entry points ([a82c0c3](https://github.com/nartc/mapper/commit/a82c0c3e916e8c1f2db8fbbb9e45852dea389aba))
+
+## [8.3.0](https://github.com/nartc/mapper/compare/8.2.4...8.3.0) (2022-04-11)
 
 
 ### Features
@@ -15,28 +24,38 @@
 
 ### Bug Fixes
 
-* **core:** not clearing metadataMap on dispose ([f2ae39c](https://github.com/nartc/mapper/commit/f2ae39c7d3bc4c66e155675880d56c0fc5629cc1))### [8.2.4](https://github.com/nartc/mapper/compare/8.2.3...8.2.4) (2022-04-10)
+* **core:** not clearing metadataMap on dispose ([f2ae39c](https://github.com/nartc/mapper/commit/f2ae39c7d3bc4c66e155675880d56c0fc5629cc1))
+
+### [8.2.4](https://github.com/nartc/mapper/compare/8.2.3...8.2.4) (2022-04-10)
 
 
 ### Bug Fixes
 
-* **core:** add custom node inspect to log meaningful message for Mapper (empty object as Proxy) ([de9725a](https://github.com/nartc/mapper/commit/de9725ae07b9288349863e097dcbee30446298e1))### [8.2.3](https://github.com/nartc/mapper/compare/8.2.2...8.2.3) (2022-04-07)
+* **core:** add custom node inspect to log meaningful message for Mapper (empty object as Proxy) ([de9725a](https://github.com/nartc/mapper/commit/de9725ae07b9288349863e097dcbee30446298e1))
+
+### [8.2.3](https://github.com/nartc/mapper/compare/8.2.2...8.2.3) (2022-04-07)
 
 
 ### Bug Fixes
 
 * **classes:** use class constructor's name instead of constructor function ([#452](https://github.com/nartc/mapper/issues/452)) ([8b413f9](https://github.com/nartc/mapper/commit/8b413f9cbc2d989df91c31d5d294fa34ed46b91e))
-* **core:** remove constraint on postMap (remove seal on destination) ([2c38340](https://github.com/nartc/mapper/commit/2c383408247345d080674b13bf5a61532e1c193c)), closes [#450](https://github.com/nartc/mapper/issues/450)### [8.2.2](https://github.com/nartc/mapper/compare/8.2.1...8.2.2) (2022-04-07)
+* **core:** remove constraint on postMap (remove seal on destination) ([2c38340](https://github.com/nartc/mapper/commit/2c383408247345d080674b13bf5a61532e1c193c)), closes [#450](https://github.com/nartc/mapper/issues/450)
+
+### [8.2.2](https://github.com/nartc/mapper/compare/8.2.1...8.2.2) (2022-04-07)
 
 
 ### Bug Fixes
 
-* **mikro:** adjust serializeEntity to return the object with id for uninitialized reference ([62f5c0f](https://github.com/nartc/mapper/commit/62f5c0f36d0275b406f61e8dc10bd0319905bc1a))### [8.2.1](https://github.com/nartc/mapper/compare/8.2.0...8.2.1) (2022-04-07)
+* **mikro:** adjust serializeEntity to return the object with id for uninitialized reference ([62f5c0f](https://github.com/nartc/mapper/commit/62f5c0f36d0275b406f61e8dc10bd0319905bc1a))
+
+### [8.2.1](https://github.com/nartc/mapper/compare/8.2.0...8.2.1) (2022-04-07)
 
 
 ### Bug Fixes
 
-* **core:** adjust getFlatteningPaths to flatten more as needed ([b8734ec](https://github.com/nartc/mapper/commit/b8734ecb609ad41c3c117b88cab8dc818d82e62a))## [8.2.0](https://github.com/nartc/mapper/compare/8.1.0...8.2.0) (2022-04-07)
+* **core:** adjust getFlatteningPaths to flatten more as needed ([b8734ec](https://github.com/nartc/mapper/commit/b8734ecb609ad41c3c117b88cab8dc818d82e62a))
+
+## [8.2.0](https://github.com/nartc/mapper/compare/8.1.0...8.2.0) (2022-04-07)
 
 
 ### Features
@@ -46,29 +65,39 @@
 
 ### Bug Fixes
 
-* **mikro:** ensure serializeEntity follows the metadata object to accommodate depth of serialization ([54cd373](https://github.com/nartc/mapper/commit/54cd37319c28b9494055559480f9a49891aef873))## [8.1.0](https://github.com/nartc/mapper/compare/8.1.0-beta.0...8.1.0) (2022-04-03)## [8.1.0-beta.0](https://github.com/nartc/mapper/compare/8.0.1...8.1.0-beta.0) (2022-04-03)
+* **mikro:** ensure serializeEntity follows the metadata object to accommodate depth of serialization ([54cd373](https://github.com/nartc/mapper/commit/54cd37319c28b9494055559480f9a49891aef873))
+
+## [8.1.0](https://github.com/nartc/mapper/compare/8.1.0-beta.0...8.1.0) (2022-04-03)## [8.1.0-beta.0](https://github.com/nartc/mapper/compare/8.0.1...8.1.0-beta.0) (2022-04-03)
 
 
 ### Features
 
-* **repo:** change to use ESM while still supporting cjs ([7866e00](https://github.com/nartc/mapper/commit/7866e00237fa48a516e776193edc2c1d1fe08cc0))### [8.0.1](https://github.com/nartc/mapper/compare/8.0.1-beta.1...8.0.1) (2022-03-30)
+* **repo:** change to use ESM while still supporting cjs ([7866e00](https://github.com/nartc/mapper/commit/7866e00237fa48a516e776193edc2c1d1fe08cc0))
+
+### [8.0.1](https://github.com/nartc/mapper/compare/8.0.1-beta.1...8.0.1) (2022-03-30)
 
 
 ### Bug Fixes
 
 * **classes:** add a metadataTracker to track identifier whose metadata has already been extracted ([7cd1ae2](https://github.com/nartc/mapper/commit/7cd1ae2a8ef6e6ef01181b8faf0788f0d2a2d049))
-* **core:** revert export symbols as no need ([bb5d32f](https://github.com/nartc/mapper/commit/bb5d32f0a36f896579e39981ff90e335cff6a182))### [8.0.1-beta.1](https://github.com/nartc/mapper/compare/8.0.1-beta.0...8.0.1-beta.1) (2022-03-30)
+* **core:** revert export symbols as no need ([bb5d32f](https://github.com/nartc/mapper/commit/bb5d32f0a36f896579e39981ff90e335cff6a182))
+
+### [8.0.1-beta.1](https://github.com/nartc/mapper/compare/8.0.1-beta.0...8.0.1-beta.1) (2022-03-30)
 
 
 ### Bug Fixes
 
 * **classes:** fix infinity loop with circular dependency models ([3360992](https://github.com/nartc/mapper/commit/3360992b4c240fca673d3741c2ce5aba8ffcb9d9))
-* **core:** export symbols ([a87acb5](https://github.com/nartc/mapper/commit/a87acb5454bd7b78393bfe6e73e174b309efac2d))### [8.0.1-beta.0](https://github.com/nartc/mapper/compare/8.0.0...8.0.1-beta.0) (2022-03-30)
+* **core:** export symbols ([a87acb5](https://github.com/nartc/mapper/commit/a87acb5454bd7b78393bfe6e73e174b309efac2d))
+
+### [8.0.1-beta.0](https://github.com/nartc/mapper/compare/8.0.0...8.0.1-beta.0) (2022-03-30)
 
 
 ### Bug Fixes
 
-* **repo:** adjust exports field in package json across packages ([f462395](https://github.com/nartc/mapper/commit/f462395f1d0fab7f58288e85def9b25c2c7d7698))## [8.0.0](https://github.com/nartc/mapper/compare/8.0.0-beta.18...8.0.0) (2022-03-30)
+* **repo:** adjust exports field in package json across packages ([f462395](https://github.com/nartc/mapper/commit/f462395f1d0fab7f58288e85def9b25c2c7d7698))
+
+## [8.0.0](https://github.com/nartc/mapper/compare/8.0.0-beta.18...8.0.0) (2022-03-30)
 
 It is finally here 🎉. Highlights:
 

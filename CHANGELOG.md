@@ -1,6 +1,12 @@
 
 
-### [8.3.2](https://github.com/nartc/mapper/compare/8.3.1...8.3.2) (2022-04-11)
+### [8.3.3](https://github.com/nartc/mapper/compare/8.3.2...8.3.3) (2022-04-13)
+
+
+### Bug Fixes
+
+* **core:** condition and substitutions should respect automap nature of a property ([1ab671d](https://github.com/nartc/mapper/commit/1ab671d11fb60a47f5296a660bbbae1707338599)), closes [#461](https://github.com/nartc/mapper/issues/461)
+* **core:** map as-is for same identifiers ([270cb53](https://github.com/nartc/mapper/commit/270cb53282befdaeac757fe65a40add458effd44)), closes [#460](https://github.com/nartc/mapper/issues/460)### [8.3.2](https://github.com/nartc/mapper/compare/8.3.1...8.3.2) (2022-04-11)
 
 
 ### Bug Fixes

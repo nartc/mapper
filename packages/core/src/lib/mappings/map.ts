@@ -11,8 +11,10 @@ import { MapFnClassId, MetadataClassId, TransformationType } from '../types';
 import { assertUnmappedProperties } from '../utils/assert-unmapped-properties';
 import { get } from '../utils/get';
 import { getMapping } from '../utils/get-mapping';
+import { isDateConstructor } from '../utils/is-date-constructor';
 import { isEmpty } from '../utils/is-empty';
 import { isPrimitiveArrayEqual } from '../utils/is-primitive-array-equal';
+import { isPrimitiveConstructor } from '../utils/is-primitive-constructor';
 import { set, setMutate } from '../utils/set';
 import { mapMember } from './map-member';
 
@@ -162,6 +164,13 @@ export function map<
             [destinationMemberIdentifier, sourceMemberIdentifier] = [],
         ] = propsToMap[i];
 
+        const hasSameIdentifier =
+            !isPrimitiveConstructor(destinationMemberIdentifier) &&
+            !isDateConstructor(destinationMemberIdentifier) &&
+            !isPrimitiveConstructor(sourceMemberIdentifier) &&
+            !isDateConstructor(sourceMemberIdentifier) &&
+            sourceMemberIdentifier === destinationMemberIdentifier;
+
         // Setup a shortcut function to set destinationMemberPath on destination with value as argument
         const setMember = (valFn: () => unknown) => {
             try {
@@ -217,13 +226,14 @@ Original error: ${originalError}`;
             // if null/undefined
             // if isDate, isFile
             // if metadata is null, treat as-is
+            // if has same identifier that are not primitives or Date
             if (
                 mapInitializedValue == null ||
                 mapInitializedValue instanceof Date ||
                 Object.prototype.toString
                     .call(mapInitializedValue)
                     .slice(8, -1) === 'File' ||
-                hasNullMetadata
+                hasNullMetadata || hasSameIdentifier
             ) {
                 setMember(() => mapInitializedValue);
                 continue;

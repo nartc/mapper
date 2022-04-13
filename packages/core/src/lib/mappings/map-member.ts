@@ -9,6 +9,8 @@ import type {
     MapWithArgumentsReturn,
     MapWithReturn,
     MemberMapReturn,
+    MetadataIdentifier,
+    Primitive,
 } from '../types';
 import { MapFnClassId, TransformationType } from '../types';
 
@@ -21,7 +23,9 @@ export function mapMember<
     destinationObject: TDestination,
     destinationMemberPath: string[],
     extraArgs: Record<string, any> | undefined,
-    mapper: Mapper
+    mapper: Mapper,
+    sourceMemberIdentifier?: MetadataIdentifier | Primitive | Date,
+    destinationMemberIdentifier?: MetadataIdentifier | Primitive | Date
 ) {
     let value: unknown;
     const transformationType: TransformationType =
@@ -58,6 +62,26 @@ export function mapMember<
             value = (
                 mapFn as ConditionReturn<TSource, TDestination>[MapFnClassId.fn]
             )(sourceObject, destinationMemberPath);
+
+            if (
+                typeof value === 'object' &&
+                !(value instanceof Date) &&
+                sourceMemberIdentifier &&
+                destinationMemberIdentifier
+            ) {
+                value = Array.isArray(value)
+                    ? mapper.mapArray(
+                          value,
+                          sourceMemberIdentifier as MetadataIdentifier,
+                          destinationMemberIdentifier as MetadataIdentifier
+                      )
+                    : mapper.map(
+                          value,
+                          sourceMemberIdentifier as MetadataIdentifier,
+                          destinationMemberIdentifier as MetadataIdentifier
+                      );
+            }
+
             break;
         case TransformationType.MapWithArguments:
             value = (
@@ -79,7 +103,9 @@ export function mapMember<
                 destinationObject,
                 destinationMemberPath,
                 extraArgs,
-                mapper
+                mapper,
+                sourceMemberIdentifier,
+                destinationMemberIdentifier
             );
             break;
     }

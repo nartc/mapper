@@ -233,7 +233,8 @@ Original error: ${originalError}`;
                 Object.prototype.toString
                     .call(mapInitializedValue)
                     .slice(8, -1) === 'File' ||
-                hasNullMetadata || hasSameIdentifier
+                hasNullMetadata ||
+                hasSameIdentifier
             ) {
                 setMember(() => mapInitializedValue);
                 continue;
@@ -320,7 +321,9 @@ Original error: ${originalError}`;
                 destination,
                 destinationMemberPath,
                 extraArgs?.(mapping, destination),
-                mapper
+                mapper,
+                sourceMemberIdentifier,
+                destinationMemberIdentifier
             )
         );
     }

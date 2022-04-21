@@ -1,9 +1,5 @@
 import { classes } from '@automapper/classes';
-import {
-    addProfile,
-    CamelCaseNamingConvention,
-    createMapper,
-} from '@automapper/core';
+import { addProfile, CamelCaseNamingConvention, createMapper } from '@automapper/core';
 import { UserDto } from './dtos/user.dto';
 import { User } from './models/user';
 import { addressProfile } from './profiles/address.profile';
@@ -11,8 +7,6 @@ import { avatarProfile } from './profiles/avatar.profile';
 import { bioProfile } from './profiles/bio.profile';
 import { userProfile } from './profiles/user.profile';
 import { getUser } from './utils/get-user';
-import { Address } from './models/address';
-import { AddressDto } from './dtos/address.dto';
 
 describe('Map Classes', () => {
     const mapper = createMapper({

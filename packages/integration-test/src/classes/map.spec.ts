@@ -11,6 +11,8 @@ import { avatarProfile } from './profiles/avatar.profile';
 import { bioProfile } from './profiles/bio.profile';
 import { userProfile } from './profiles/user.profile';
 import { getUser } from './utils/get-user';
+import { Address } from './models/address';
+import { AddressDto } from './dtos/address.dto';
 
 describe('Map Classes', () => {
     const mapper = createMapper({
@@ -40,6 +42,66 @@ describe('Map Classes', () => {
     it('should throw error if mapped without the mapping', () => {
         const user = getUser();
         expect(() => mapper.map(user, User, UserDto)).toThrow();
+    });
+
+    it('should not freeze source', () => {
+      addProfile(mapper, addressProfile);
+      addProfile(mapper, avatarProfile);
+      addProfile(mapper, bioProfile);
+      addProfile(mapper, userProfile);
+
+      const user = getUser();
+      mapper.map(user, User, UserDto);
+
+      expect(Object.isFrozen(user.bio.avatar)).toBe(false);
+      user.bio.addresses.forEach((a) => expect(Object.isFrozen(a)).toBe(false));
+      expect(Object.isFrozen(user.job)).toBe(false);
+      expect(Object.isFrozen(user.bio)).toBe(false);
+      expect(Object.isFrozen(user)).toBe(false);
+    });
+
+    it('should not freeze source array items', () => {
+        addProfile(mapper, addressProfile);
+        addProfile(mapper, avatarProfile);
+        addProfile(mapper, bioProfile);
+        addProfile(mapper, userProfile);
+
+        const user = getUser();
+        mapper.mapArray([user], User, UserDto);
+
+        expect(Object.isFrozen(user.bio.avatar)).toBe(false);
+        user.bio.addresses.forEach((a) => expect(Object.isFrozen(a)).toBe(false));
+        expect(Object.isFrozen(user.job)).toBe(false);
+        expect(Object.isFrozen(user.bio)).toBe(false);
+        expect(Object.isFrozen(user)).toBe(false);
+    });
+
+    it('should not freeze destination', () => {
+        addProfile(mapper, addressProfile);
+        addProfile(mapper, avatarProfile);
+        addProfile(mapper, bioProfile);
+        addProfile(mapper, userProfile);
+
+        const user = getUser();
+        const dto = mapper.map(user, User, UserDto);
+
+        expect(Object.isFrozen(dto.bio.avatar)).toBe(false);
+        dto.bio.addresses.forEach((a) => expect(Object.isFrozen(a)).toBe(false));
+        expect(Object.isFrozen(dto)).toBe(false);
+    });
+
+    it('should not freeze destination array', () => {
+        addProfile(mapper, addressProfile);
+        addProfile(mapper, avatarProfile);
+        addProfile(mapper, bioProfile);
+        addProfile(mapper, userProfile);
+
+        const user = getUser();
+        const dtos = mapper.mapArray([user], User, UserDto);
+
+        expect(Object.isFrozen(dtos[0].bio.avatar)).toBe(false);
+        dtos[0].bio.addresses.forEach((a) => expect(Object.isFrozen(a)).toBe(false));
+        expect(Object.isFrozen(dtos[0])).toBe(false);
     });
 
     it('should map user to userDto', () => {

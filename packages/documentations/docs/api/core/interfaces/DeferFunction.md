@@ -32,4 +32,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[lib/types.ts:296](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L296)
+[lib/types.ts:309](https://github.com/nartc/mapper/blob/26cdf55/packages/core/src/lib/types.ts#L309)

@@ -14,7 +14,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[lib/types.ts:561](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L561)
+[lib/types.ts:582](https://github.com/nartc/mapper/blob/26cdf55/packages/core/src/lib/types.ts#L582)
 
 ___
 
@@ -24,13 +24,13 @@ ___
 
 #### Defined in
 
-[lib/types.ts:562](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L562)
+[lib/types.ts:583](https://github.com/nartc/mapper/blob/26cdf55/packages/core/src/lib/types.ts#L583)
 
 ## Methods
 
 ### postMap
 
-▸ `Optional` **postMap**<`TSource`, `TDestination`\>(`source`, `destination`): `TDestination`
+▸ `Optional` **postMap**<`TSource`, `TDestination`\>(`source`, `destination`, `mapping`): `TDestination`
 
 #### Type parameters
 
@@ -45,6 +45,7 @@ ___
 | :------ | :------ |
 | `source` | `TSource` |
 | `destination` | `TDestination` |
+| `mapping` | [`Mapping`](../modules.md#mapping)<`TSource`, `TDestination`\> |
 
 #### Returns
 
@@ -52,25 +53,27 @@ ___
 
 #### Defined in
 
-[lib/types.ts:564](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L564)
+[lib/types.ts:591](https://github.com/nartc/mapper/blob/26cdf55/packages/core/src/lib/types.ts#L591)
 
 ___
 
 ### preMap
 
-▸ `Optional` **preMap**<`TSource`\>(`source`): `TSource`
+▸ `Optional` **preMap**<`TSource`, `TDestination`\>(`source`, `mapping`): `TSource`
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `TSource` | extends [`Dictionary`](../modules.md#dictionary)<`TSource`\> |
+| `TDestination` | extends [`Dictionary`](../modules.md#dictionary)<`TDestination`\> |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `source` | `TSource` |
+| `mapping` | [`Mapping`](../modules.md#mapping)<`TSource`, `TDestination`\> |
 
 #### Returns
 
@@ -78,4 +81,4 @@ ___
 
 #### Defined in
 
-[lib/types.ts:563](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L563)
+[lib/types.ts:584](https://github.com/nartc/mapper/blob/26cdf55/packages/core/src/lib/types.ts#L584)

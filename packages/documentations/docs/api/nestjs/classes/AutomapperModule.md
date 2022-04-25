@@ -31,7 +31,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[packages/nestjs/src/lib/automapper-nestjs.module.ts:155](https://github.com/nartc/mapper/blob/e4b240d/packages/nestjs/src/lib/automapper-nestjs.module.ts#L155)
+[packages/nestjs/src/lib/automapper-nestjs.module.ts:155](https://github.com/nartc/mapper/blob/26cdf55/packages/nestjs/src/lib/automapper-nestjs.module.ts#L155)
 
 ___
 
@@ -52,7 +52,7 @@ ___
 
 #### Defined in
 
-[packages/nestjs/src/lib/automapper-nestjs.module.ts:120](https://github.com/nartc/mapper/blob/e4b240d/packages/nestjs/src/lib/automapper-nestjs.module.ts#L120)
+[packages/nestjs/src/lib/automapper-nestjs.module.ts:120](https://github.com/nartc/mapper/blob/26cdf55/packages/nestjs/src/lib/automapper-nestjs.module.ts#L120)
 
 ___
 
@@ -73,7 +73,7 @@ ___
 
 #### Defined in
 
-[packages/nestjs/src/lib/automapper-nestjs.module.ts:101](https://github.com/nartc/mapper/blob/e4b240d/packages/nestjs/src/lib/automapper-nestjs.module.ts#L101)
+[packages/nestjs/src/lib/automapper-nestjs.module.ts:101](https://github.com/nartc/mapper/blob/26cdf55/packages/nestjs/src/lib/automapper-nestjs.module.ts#L101)
 
 ___
 
@@ -94,7 +94,7 @@ ___
 
 #### Defined in
 
-[packages/nestjs/src/lib/automapper-nestjs.module.ts:70](https://github.com/nartc/mapper/blob/e4b240d/packages/nestjs/src/lib/automapper-nestjs.module.ts#L70)
+[packages/nestjs/src/lib/automapper-nestjs.module.ts:70](https://github.com/nartc/mapper/blob/26cdf55/packages/nestjs/src/lib/automapper-nestjs.module.ts#L70)
 
 ___
 
@@ -114,7 +114,7 @@ ___
 
 #### Defined in
 
-[packages/nestjs/src/lib/automapper-nestjs.module.ts:15](https://github.com/nartc/mapper/blob/e4b240d/packages/nestjs/src/lib/automapper-nestjs.module.ts#L15)
+[packages/nestjs/src/lib/automapper-nestjs.module.ts:15](https://github.com/nartc/mapper/blob/26cdf55/packages/nestjs/src/lib/automapper-nestjs.module.ts#L15)
 
 ▸ `Static` **forRoot**(`mapperOptions`, `globalOptions?`): `DynamicModule`
 
@@ -131,7 +131,7 @@ ___
 
 #### Defined in
 
-[packages/nestjs/src/lib/automapper-nestjs.module.ts:16](https://github.com/nartc/mapper/blob/e4b240d/packages/nestjs/src/lib/automapper-nestjs.module.ts#L16)
+[packages/nestjs/src/lib/automapper-nestjs.module.ts:16](https://github.com/nartc/mapper/blob/26cdf55/packages/nestjs/src/lib/automapper-nestjs.module.ts#L16)
 
 ___
 
@@ -151,7 +151,7 @@ ___
 
 #### Defined in
 
-[packages/nestjs/src/lib/automapper-nestjs.module.ts:38](https://github.com/nartc/mapper/blob/e4b240d/packages/nestjs/src/lib/automapper-nestjs.module.ts#L38)
+[packages/nestjs/src/lib/automapper-nestjs.module.ts:38](https://github.com/nartc/mapper/blob/26cdf55/packages/nestjs/src/lib/automapper-nestjs.module.ts#L38)
 
 ▸ `Static` **forRootAsync**(`asyncMapperOptions`, `globalOptions?`): `DynamicModule`
 
@@ -168,4 +168,4 @@ ___
 
 #### Defined in
 
-[packages/nestjs/src/lib/automapper-nestjs.module.ts:41](https://github.com/nartc/mapper/blob/e4b240d/packages/nestjs/src/lib/automapper-nestjs.module.ts#L41)
+[packages/nestjs/src/lib/automapper-nestjs.module.ts:41](https://github.com/nartc/mapper/blob/26cdf55/packages/nestjs/src/lib/automapper-nestjs.module.ts#L41)

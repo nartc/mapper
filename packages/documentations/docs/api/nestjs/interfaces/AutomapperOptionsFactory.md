@@ -18,4 +18,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[packages/nestjs/src/lib/options.ts:18](https://github.com/nartc/mapper/blob/e4b240d/packages/nestjs/src/lib/options.ts#L18)
+[packages/nestjs/src/lib/options.ts:18](https://github.com/nartc/mapper/blob/26cdf55/packages/nestjs/src/lib/options.ts#L18)

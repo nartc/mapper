@@ -31,4 +31,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[lib/types.ts:102](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L102)
+[lib/types.ts:103](https://github.com/nartc/mapper/blob/26cdf55/packages/core/src/lib/types.ts#L103)

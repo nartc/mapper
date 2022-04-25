@@ -14,7 +14,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[lib/types.ts:447](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L447)
+[lib/types.ts:460](https://github.com/nartc/mapper/blob/26cdf55/packages/core/src/lib/types.ts#L460)
 
 ___
 
@@ -24,7 +24,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:445](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L445)
+[lib/types.ts:458](https://github.com/nartc/mapper/blob/26cdf55/packages/core/src/lib/types.ts#L458)
 
 ___
 
@@ -34,7 +34,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:442](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L442)
+[lib/types.ts:455](https://github.com/nartc/mapper/blob/26cdf55/packages/core/src/lib/types.ts#L455)
 
 ___
 
@@ -44,7 +44,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:441](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L441)
+[lib/types.ts:454](https://github.com/nartc/mapper/blob/26cdf55/packages/core/src/lib/types.ts#L454)
 
 ___
 
@@ -54,7 +54,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:444](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L444)
+[lib/types.ts:457](https://github.com/nartc/mapper/blob/26cdf55/packages/core/src/lib/types.ts#L457)
 
 ___
 
@@ -64,7 +64,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:448](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L448)
+[lib/types.ts:461](https://github.com/nartc/mapper/blob/26cdf55/packages/core/src/lib/types.ts#L461)
 
 ___
 
@@ -74,7 +74,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:443](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L443)
+[lib/types.ts:456](https://github.com/nartc/mapper/blob/26cdf55/packages/core/src/lib/types.ts#L456)
 
 ___
 
@@ -84,4 +84,4 @@ ___
 
 #### Defined in
 
-[lib/types.ts:446](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L446)
+[lib/types.ts:459](https://github.com/nartc/mapper/blob/26cdf55/packages/core/src/lib/types.ts#L459)

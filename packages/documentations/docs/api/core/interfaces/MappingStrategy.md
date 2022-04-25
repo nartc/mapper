@@ -20,7 +20,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[lib/types.ts:541](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L541)
+[lib/types.ts:555](https://github.com/nartc/mapper/blob/26cdf55/packages/core/src/lib/types.ts#L555)
 
 ___
 
@@ -30,7 +30,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:542](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L542)
+[lib/types.ts:556](https://github.com/nartc/mapper/blob/26cdf55/packages/core/src/lib/types.ts#L556)
 
 ## Accessors
 
@@ -44,13 +44,13 @@ ___
 
 #### Defined in
 
-[lib/types.ts:543](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L543)
+[lib/types.ts:557](https://github.com/nartc/mapper/blob/26cdf55/packages/core/src/lib/types.ts#L557)
 
 ## Methods
 
 ### postMap
 
-▸ **postMap**<`TSource`, `TDestination`\>(`source`, `destination`): `undefined` \| `TDestination`
+▸ **postMap**<`TSource`, `TDestination`\>(`source`, `destination`, `mapping`): `undefined` \| `TDestination`
 
 #### Type parameters
 
@@ -65,6 +65,7 @@ ___
 | :------ | :------ |
 | `source` | `TSource` |
 | `destination` | `TDestination` |
+| `mapping` | [`Mapping`](../modules.md#mapping)<`TSource`, `TDestination`\> |
 
 #### Returns
 
@@ -72,25 +73,27 @@ ___
 
 #### Defined in
 
-[lib/types.ts:548](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L548)
+[lib/types.ts:568](https://github.com/nartc/mapper/blob/26cdf55/packages/core/src/lib/types.ts#L568)
 
 ___
 
 ### preMap
 
-▸ **preMap**<`TSource`\>(`source`): `TSource`
+▸ **preMap**<`TSource`, `TDestination`\>(`source`, `mapping`): `TSource`
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `TSource` | extends [`Dictionary`](../modules.md#dictionary)<`TSource`\> |
+| `TDestination` | extends [`Dictionary`](../modules.md#dictionary)<`TDestination`\> |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `source` | `TSource` |
+| `mapping` | [`Mapping`](../modules.md#mapping)<`TSource`, `TDestination`\> |
 
 #### Returns
 
@@ -98,7 +101,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:547](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L547)
+[lib/types.ts:561](https://github.com/nartc/mapper/blob/26cdf55/packages/core/src/lib/types.ts#L561)
 
 ___
 
@@ -118,4 +121,4 @@ ___
 
 #### Defined in
 
-[lib/types.ts:544](https://github.com/nartc/mapper/blob/e4b240d/packages/core/src/lib/types.ts#L544)
+[lib/types.ts:558](https://github.com/nartc/mapper/blob/26cdf55/packages/core/src/lib/types.ts#L558)

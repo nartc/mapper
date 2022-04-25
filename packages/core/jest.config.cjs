@@ -1,6 +1,6 @@
 module.exports = {
     displayName: 'core',
-    preset: '../../jest.preset.js',
+    preset: '../../jest.preset.ts',
     transform: {
         '^.+\\.[tj]s$': 'ts-jest',
     },

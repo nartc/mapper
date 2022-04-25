@@ -23,7 +23,7 @@
             "executor": "@nrwl/jest:jest",
             "outputs": ["coverage/packages/integration-test"],
             "options": {
-                "jestConfig": "packages/integration-test/jest.config.js",
+                "jestConfig": "packages/integration-test/jest.config.ts",
                 "passWithNoTests": true
             }
         }

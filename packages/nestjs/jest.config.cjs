@@ -1,6 +1,6 @@
 module.exports = {
     displayName: 'nestjs',
-    preset: '../../jest.preset.js',
+    preset: '../../jest.preset.ts',
     globals: {
         'ts-jest': {
             tsconfig: '<rootDir>/tsconfig.spec.json',

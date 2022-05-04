@@ -11,9 +11,29 @@ jobs:
               with:
                   persist-credentials: false
                   fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
+
+            - name: Cache node modules
+              uses: actions/cache@v2
+              id: cached-deps
+              env:
+                  cache-name: cache-node-modules
+              with:
+                  # npm cache files are stored in `~/.npm` on Linux/macOS
+                  path: '**/node_modules'
+                  key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
+                  restore-keys: |
+                      ${{ runner.os }}-build-${{ env.cache-name }}-
+                      ${{ runner.os }}-build-
+                      ${{ runner.os }}-
+
             - uses: actions/setup-node@v2
               with:
                   node-version: '14'
+
+            - name: Install dependencies
+              if: ${{ steps.cached-deps.outputs.cache-hit != 'true' }}
+              run: npm install
+
             - name: Create local changes and commit
               run: |
                   cd packages/documentations
@@ -26,6 +46,7 @@ jobs:
                   git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
                   git config --local user.name "github-actions[bot]"
                   git commit -m "docs: build docs" -a
+
             - name: Push changes
               uses: ad-m/github-push-action@master
               with:

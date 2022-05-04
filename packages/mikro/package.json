@@ -1,6 +1,6 @@
 {
     "name": "@automapper/mikro",
-    "version": "8.3.3",
+    "version": "0.0.0",
     "type": "module",
     "exports": {
         ".": {

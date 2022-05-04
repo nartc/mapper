@@ -1,6 +1,6 @@
 {
     "name": "@automapper/classes",
-    "version": "8.3.3",
+    "version": "0.0.0",
     "type": "module",
     "peerDependencies": {
         "reflect-metadata": "~0.1.13"

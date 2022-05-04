@@ -1,5 +1,18 @@
 
 
+### [8.3.4](https://github.com/nartc/mapper/compare/8.3.3...8.3.4) (2022-05-04)
+
+
+### Bug Fixes
+
+* **core:** treat property that is typed-converted as-is because they cannot go through normal mapping pipeline ([819485f](https://github.com/nartc/mapper/commit/819485f5029755a0952b23ff3c2eb6af38fdc4cb))
+
+
+### Documentations
+
+* add warning about type converters ([2ce47f1](https://github.com/nartc/mapper/commit/2ce47f1082a3c98346d32ad82535340091484743))
+* update docs ([f645777](https://github.com/nartc/mapper/commit/f645777e6076117b661adfc962167a64aec93035))
+
 ### [8.3.3](https://github.com/nartc/mapper/compare/8.3.2...8.3.3) (2022-04-13)
 
 

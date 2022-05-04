@@ -70,6 +70,12 @@ const destination = mapper.map(source, Destination, Source);
  */
 ```
 
+:::caution
+
+Properties (on the Destination) that are subject to Type Converters will be treated as-is in the mapping pipeline. In other words, they will be mapped like a primitive and will **NOT** go through any automatic nested mapping even if the properties' types are **Object** types.
+
+:::
+
 ## Type of Type Converters
 
 There are 4 types of Type Converters:

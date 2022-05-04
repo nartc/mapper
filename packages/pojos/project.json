@@ -5,7 +5,7 @@
         "package": {
             "executor": "@nrwl/workspace:run-commands",
             "options": {
-                "commands": ["nx package-lib pojos"],
+                "commands": ["NX_CLOUD=true nx package-lib pojos"],
                 "parallel": false
             }
         },

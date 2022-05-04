@@ -5,7 +5,7 @@
         "package": {
             "executor": "@nrwl/workspace:run-commands",
             "options": {
-                "commands": ["nx package-lib classes-transformer-plugin"],
+                "commands": ["NX_CLOUD=true nx package-lib classes-transformer-plugin"],
                 "parallel": false
             }
         },

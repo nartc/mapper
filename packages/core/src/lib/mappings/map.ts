@@ -222,11 +222,14 @@ Original error: ${originalError}`;
                     TDestination
                 >[MapFnClassId.fn]
             )(sourceObject);
+            const isTypedConverted =
+                transformationMapFn[MapFnClassId.isConverted];
 
             // if null/undefined
             // if isDate, isFile
             // if metadata is null, treat as-is
             // if has same identifier that are not primitives or Date
+            // if the initialized value was converted with typeConverter
             if (
                 mapInitializedValue == null ||
                 mapInitializedValue instanceof Date ||
@@ -234,7 +237,8 @@ Original error: ${originalError}`;
                     .call(mapInitializedValue)
                     .slice(8, -1) === 'File' ||
                 hasNullMetadata ||
-                hasSameIdentifier
+                hasSameIdentifier ||
+                isTypedConverted
             ) {
                 setMember(() => mapInitializedValue);
                 continue;

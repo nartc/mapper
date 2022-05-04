@@ -266,6 +266,7 @@ export const enum TransformationType {
 export const enum MapFnClassId {
     type,
     fn,
+    isConverted,
 }
 
 export type MemberMapReturnNoDefer<
@@ -397,7 +398,11 @@ export type MapInitializeReturn<
     TSource extends Dictionary<TSource>,
     TDestination extends Dictionary<TDestination>,
     TSelectorReturn = SelectorReturn<TDestination>
-> = [TransformationType.MapInitialize, Selector<TSource, TSelectorReturn>];
+> = [
+    TransformationType.MapInitialize,
+    Selector<TSource, TSelectorReturn>,
+    boolean?
+];
 
 export const enum MappingTransformationClassId {
     memberMapFn,

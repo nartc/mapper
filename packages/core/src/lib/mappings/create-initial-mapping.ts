@@ -206,6 +206,10 @@ export function createInitialMapping<
                     MapFnClassId.fn
                 ] = (srcObj: TSource) =>
                     typeConverter!(originalMapInitializeFn(srcObj));
+
+                transformation[MappingTransformationClassId.memberMapFn][
+                    MapFnClassId.isConverted
+                ] = true;
             }
         }
 

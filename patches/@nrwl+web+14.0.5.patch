@@ -1,5 +1,5 @@
 diff --git a/node_modules/@nrwl/web/src/executors/rollup/rollup.impl.js b/node_modules/@nrwl/web/src/executors/rollup/rollup.impl.js
-index baca3a6..7ac6cfa 100644
+index 13e47ec..fa2c38d 100644
 --- a/node_modules/@nrwl/web/src/executors/rollup/rollup.impl.js
 +++ b/node_modules/@nrwl/web/src/executors/rollup/rollup.impl.js
 @@ -183,8 +183,8 @@ function createRollupOptions(options, dependencies, context, packageJson, source
@@ -13,14 +13,20 @@ index baca3a6..7ac6cfa 100644
                  // umd doesn't support code-split bundles
                  inlineDynamicImports: format === 'umd',
              },
-@@ -209,7 +209,9 @@ function createCompilerOptions(options, dependencies) {
+@@ -209,11 +209,13 @@ function createCompilerOptions(options, dependencies) {
  function updatePackageJson(options, context, target, dependencies, packageJson) {
      const entryFileTmpl = `./index.<%= extension %>.js`;
      const typingsFile = (0, path_1.relative)(options.entryRoot, options.entryFile).replace(/\.[jt]sx?$/, '.d.ts');
--    packageJson.main = entryFileTmpl.replace('<%= extension %>', 'umd');
+-    if (options.format.includes('umd')) {
 +    if (!packageJson.main) {
-+      packageJson.main = entryFileTmpl.replace('<%= extension %>', 'umd');
-+    }
++      if (options.format.includes('umd')) {
+         packageJson.main = entryFileTmpl.replace('<%= extension %>', 'umd');
+-    }
+-    else if (options.format.includes('cjs')) {
++      }
++      else if (options.format.includes('cjs')) {
+         packageJson.main = entryFileTmpl.replace('<%= extension %>', 'cjs');
++      }
+     }
      packageJson.module = entryFileTmpl.replace('<%= extension %>', 'esm');
      packageJson.typings = `./${typingsFile}`;
-     (0, devkit_1.writeJsonFile)(`${options.outputPath}/package.json`, packageJson);

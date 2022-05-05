@@ -132,7 +132,7 @@ const config = {
                         type: 'doc',
                         docId: 'getting-started/overview',
                         position: 'left',
-                        label: 'Documentations',
+                        label: 'Documentation',
                     },
                     {
                         type: 'doc',
@@ -152,7 +152,7 @@ const config = {
                 style: 'dark',
                 links: [
                     {
-                        title: 'Documentations',
+                        title: 'Documentation',
                         items: [
                             {
                                 label: 'Tutorial',

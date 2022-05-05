@@ -1,5 +1,12 @@
 
 
+### [8.3.5](https://github.com/nartc/mapper/compare/8.3.4...8.3.5) (2022-05-05)
+
+
+### Documentations
+
+* adjust typo ([04ebb42](https://github.com/nartc/mapper/commit/04ebb4219a41beb98e7001aa17150f175710cc25))
+
 ### [8.3.4](https://github.com/nartc/mapper/compare/8.3.3...8.3.4) (2022-05-04)
 
 

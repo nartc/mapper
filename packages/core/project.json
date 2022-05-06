@@ -21,7 +21,8 @@
                 "assets": ["packages/core/src/README.md"],
                 "compiler": "babel",
                 "external": ["typescript", "tslib"],
-                "format": ["cjs", "esm"]
+                "format": ["cjs", "esm"],
+                "updateBuildableProjectDepsInPackageJson": false
             }
         },
         "package-all": {

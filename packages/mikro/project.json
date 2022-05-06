@@ -25,7 +25,8 @@
                     "@automapper/core",
                     "@automapper/classes"
                 ],
-                "format": ["cjs", "esm"]
+                "format": ["cjs", "esm"],
+                "updateBuildableProjectDepsInPackageJson": false
             }
         },
         "lint": {

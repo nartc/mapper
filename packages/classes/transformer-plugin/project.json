@@ -20,7 +20,8 @@
                 "assets": ["packages/classes/transformer-plugin/src/README.md"],
                 "compiler": "babel",
                 "external": ["typescript", "tslib", "@automapper/classes"],
-                "format": ["cjs", "esm"]
+                "format": ["cjs", "esm"],
+                "updateBuildableProjectDepsInPackageJson": false
             }
         },
         "lint": {

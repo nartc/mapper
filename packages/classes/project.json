@@ -24,7 +24,8 @@
                 "assets": ["packages/classes/src/README.md"],
                 "compiler": "babel",
                 "external": ["typescript", "tslib", "@automapper/core"],
-                "format": ["cjs", "esm"]
+                "format": ["cjs", "esm"],
+                "updateBuildableProjectDepsInPackageJson": false
             }
         },
         "lint": {

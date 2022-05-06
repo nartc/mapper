@@ -1,5 +1,13 @@
 
 
+### [8.3.6](https://github.com/nartc/mapper/compare/8.3.5...8.3.6) (2022-05-06)
+
+
+### Bug Fixes
+
+* **core:** fix freezing of source object after mapping ([#468](https://github.com/nartc/mapper/issues/468)) ([a95563d](https://github.com/nartc/mapper/commit/a95563d4aafac39c536bffb3963dfc014a1fc1c7)), closes [#467](https://github.com/nartc/mapper/issues/467) [#467](https://github.com/nartc/mapper/issues/467)
+* **repo:** remove peerDeps ([f6ef2a0](https://github.com/nartc/mapper/commit/f6ef2a00af7fd9539883e7e614ddec50f2db8f65))
+
 ### [8.3.5](https://github.com/nartc/mapper/compare/8.3.4...8.3.5) (2022-05-05)
 
 

@@ -170,7 +170,7 @@ Mapper {} is an empty Object as a Proxy. The following methods are available to 
                         );
 
                         sourceObject = strategy.preMap(
-                            Object.freeze(sourceObject),
+                            sourceObject,
                             mapping
                         );
 
@@ -181,7 +181,7 @@ Mapper {} is an empty Object as a Proxy. The following methods are available to 
                         );
 
                         return strategy.postMap(
-                            Object.freeze(sourceObject),
+                            sourceObject,
                             // seal destination so that consumers cannot add properties to it
                             // or change the property descriptors. but they can still modify it
                             // the ideal behavior is seal but the consumers might need to add/modify the object after map finishes
@@ -247,7 +247,7 @@ Mapper {} is an empty Object as a Proxy. The following methods are available to 
                         ) {
                             let sourceObject = sourceArray[i];
                             sourceObject = strategy.preMap(
-                                Object.freeze(sourceObject),
+                                sourceObject,
                                 mapping
                             );
 
@@ -265,7 +265,7 @@ Mapper {} is an empty Object as a Proxy. The following methods are available to 
 
                             destinationArray.push(
                                 strategy.postMap(
-                                    Object.freeze(sourceObject),
+                                    sourceObject,
                                     // seal destination so that consumers cannot add properties to it
                                     // or change the property descriptors. but they can still modify it
                                     // the ideal behavior is seal but the consumers might need to add/modify the object after map finishes
@@ -325,7 +325,7 @@ Mapper {} is an empty Object as a Proxy. The following methods are available to 
                         );
 
                         sourceObject = strategy.preMap(
-                            Object.freeze(sourceObject),
+                            sourceObject,
                             mapping
                         );
 
@@ -337,7 +337,7 @@ Mapper {} is an empty Object as a Proxy. The following methods are available to 
                         );
 
                         strategy.postMap(
-                            Object.freeze(sourceObject),
+                            sourceObject,
                             destinationObject,
                             mapping
                         );
@@ -402,7 +402,7 @@ Mapper {} is an empty Object as a Proxy. The following methods are available to 
                             let sourceObject = sourceArray[i];
 
                             sourceObject = strategy.preMap(
-                                Object.freeze(sourceObject),
+                                sourceObject,
                                 mapping
                             );
 
@@ -420,7 +420,7 @@ Mapper {} is an empty Object as a Proxy. The following methods are available to 
                             );
 
                             strategy.postMap(
-                                Object.freeze(sourceObject),
+                                sourceObject,
                                 destinationArray[i],
                                 mapping
                             );

@@ -22,6 +22,64 @@ describe('Map - Mutation', () => {
         mapper.dispose();
     });
 
+    it('should not freeze source', () => {
+        addProfile(mapper, addressProfile);
+        addProfile(mapper, avatarProfile);
+        addProfile(mapper, bioProfile);
+        addProfile(mapper, userProfile);
+
+        const user = getUser();
+        const dto = new UserDto();
+        mapper.mutate(user, dto, User, UserDto);
+
+        expect(Object.isFrozen(user.bio.avatar)).toBe(false);
+        user.bio.addresses.forEach((a) => expect(Object.isFrozen(a)).toBe(false));
+        expect(Object.isFrozen(user.job)).toBe(false);
+        expect(Object.isFrozen(user.bio)).toBe(false);
+        expect(Object.isFrozen(user)).toBe(false);
+    });
+
+    it('should not freeze source array items', () => {
+        addProfile(mapper, addressProfile);
+        addProfile(mapper, avatarProfile);
+        addProfile(mapper, bioProfile);
+        addProfile(mapper, userProfile);
+
+        const user = getUser();
+        const dtos: UserDto[] = [];
+        mapper.mutateArray([user], dtos, User, UserDto);
+
+        expect(Object.isFrozen(user.bio.avatar)).toBe(false);
+        user.bio.addresses.forEach((a) => expect(Object.isFrozen(a)).toBe(false));
+        expect(Object.isFrozen(user.job)).toBe(false);
+        expect(Object.isFrozen(user.bio)).toBe(false);
+        expect(Object.isFrozen(user)).toBe(false);
+    });
+
+    it('should not freeze destination', () => {
+        addProfile(mapper, addressProfile);
+        addProfile(mapper, avatarProfile);
+        addProfile(mapper, bioProfile);
+        addProfile(mapper, userProfile);
+
+        const user = getUser();
+        const dto = new UserDto();
+        mapper.mutate(user, dto, User, UserDto);
+        expect(Object.isFrozen(dto)).toBe(false);
+    });
+
+    it('should not freeze destination array', () => {
+        addProfile(mapper, addressProfile);
+        addProfile(mapper, avatarProfile);
+        addProfile(mapper, bioProfile);
+        addProfile(mapper, userProfile);
+
+        const user = getUser();
+        const dtos: UserDto[] = [new UserDto()];
+        mapper.mutateArray([user], dtos, User, UserDto);
+        expect(Object.isFrozen(dtos[0])).toBe(false);
+    });
+
     it('should mutate properly', () => {
         addProfile(mapper, addressProfile);
         addProfile(mapper, avatarProfile);
@@ -67,7 +125,7 @@ describe('Map - Mutation', () => {
         addProfile(mapper, userProfile);
 
         const user = getUser();
-        const dtos: UserDto[] = [];
+        const dtos: UserDto[] = [new UserDto()];
         mapper.mutateArray([user], dtos, User, UserDto);
         dtos.forEach((dto) => {
             expect(dto.first).toEqual(user.firstName);

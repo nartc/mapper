@@ -25,7 +25,6 @@ import type {
 } from './types';
 import { Dictionary, MapOptions, ModelIdentifier } from './types';
 import { getMapping } from './utils/get-mapping';
-import { createFrozenCopy } from './utils/create-frozen-copy';
 
 export interface CreateMapperOptions {
     strategyInitializer: MappingStrategyInitializer<MetadataIdentifier>;
@@ -171,7 +170,7 @@ Mapper {} is an empty Object as a Proxy. The following methods are available to 
                         );
 
                         sourceObject = strategy.preMap(
-                            createFrozenCopy(sourceObject),
+                            sourceObject,
                             mapping
                         );
 
@@ -248,7 +247,7 @@ Mapper {} is an empty Object as a Proxy. The following methods are available to 
                         ) {
                             let sourceObject = sourceArray[i];
                             sourceObject = strategy.preMap(
-                                createFrozenCopy(sourceObject),
+                                sourceObject,
                                 mapping
                             );
 
@@ -326,7 +325,7 @@ Mapper {} is an empty Object as a Proxy. The following methods are available to 
                         );
 
                         sourceObject = strategy.preMap(
-                            createFrozenCopy(sourceObject),
+                            sourceObject,
                             mapping
                         );
 
@@ -403,7 +402,7 @@ Mapper {} is an empty Object as a Proxy. The following methods are available to 
                             let sourceObject = sourceArray[i];
 
                             sourceObject = strategy.preMap(
-                                createFrozenCopy(sourceObject),
+                                sourceObject,
                                 mapping
                             );
 

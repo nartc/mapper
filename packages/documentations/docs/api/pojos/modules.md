@@ -18,7 +18,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[lib/metadata-map.ts:8](https://github.com/nartc/mapper/blob/26cdf55/packages/pojos/src/lib/metadata-map.ts#L8)
+[lib/metadata-map.ts:8](https://github.com/nartc/mapper/blob/446d40fc/packages/pojos/src/lib/metadata-map.ts#L8)
 
 ## Functions
 
@@ -38,4 +38,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[lib/pojos.ts:10](https://github.com/nartc/mapper/blob/26cdf55/packages/pojos/src/lib/pojos.ts#L10)
+[lib/pojos.ts:10](https://github.com/nartc/mapper/blob/446d40fc/packages/pojos/src/lib/pojos.ts#L10)

@@ -14,7 +14,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[lib/types.ts:255](https://github.com/nartc/mapper/blob/26cdf55/packages/core/src/lib/types.ts#L255)
+[lib/types.ts:255](https://github.com/nartc/mapper/blob/446d40fc/packages/core/src/lib/types.ts#L255)
 
 ___
 
@@ -24,7 +24,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:258](https://github.com/nartc/mapper/blob/26cdf55/packages/core/src/lib/types.ts#L258)
+[lib/types.ts:258](https://github.com/nartc/mapper/blob/446d40fc/packages/core/src/lib/types.ts#L258)
 
 ___
 
@@ -34,7 +34,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:256](https://github.com/nartc/mapper/blob/26cdf55/packages/core/src/lib/types.ts#L256)
+[lib/types.ts:256](https://github.com/nartc/mapper/blob/446d40fc/packages/core/src/lib/types.ts#L256)
 
 ___
 
@@ -44,7 +44,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:253](https://github.com/nartc/mapper/blob/26cdf55/packages/core/src/lib/types.ts#L253)
+[lib/types.ts:253](https://github.com/nartc/mapper/blob/446d40fc/packages/core/src/lib/types.ts#L253)
 
 ___
 
@@ -54,7 +54,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:263](https://github.com/nartc/mapper/blob/26cdf55/packages/core/src/lib/types.ts#L263)
+[lib/types.ts:263](https://github.com/nartc/mapper/blob/446d40fc/packages/core/src/lib/types.ts#L263)
 
 ___
 
@@ -64,7 +64,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:254](https://github.com/nartc/mapper/blob/26cdf55/packages/core/src/lib/types.ts#L254)
+[lib/types.ts:254](https://github.com/nartc/mapper/blob/446d40fc/packages/core/src/lib/types.ts#L254)
 
 ___
 
@@ -74,7 +74,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:259](https://github.com/nartc/mapper/blob/26cdf55/packages/core/src/lib/types.ts#L259)
+[lib/types.ts:259](https://github.com/nartc/mapper/blob/446d40fc/packages/core/src/lib/types.ts#L259)
 
 ___
 
@@ -84,7 +84,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:257](https://github.com/nartc/mapper/blob/26cdf55/packages/core/src/lib/types.ts#L257)
+[lib/types.ts:257](https://github.com/nartc/mapper/blob/446d40fc/packages/core/src/lib/types.ts#L257)
 
 ___
 
@@ -94,7 +94,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:262](https://github.com/nartc/mapper/blob/26cdf55/packages/core/src/lib/types.ts#L262)
+[lib/types.ts:262](https://github.com/nartc/mapper/blob/446d40fc/packages/core/src/lib/types.ts#L262)
 
 ___
 
@@ -104,7 +104,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:260](https://github.com/nartc/mapper/blob/26cdf55/packages/core/src/lib/types.ts#L260)
+[lib/types.ts:260](https://github.com/nartc/mapper/blob/446d40fc/packages/core/src/lib/types.ts#L260)
 
 ___
 
@@ -114,4 +114,4 @@ ___
 
 #### Defined in
 
-[lib/types.ts:261](https://github.com/nartc/mapper/blob/26cdf55/packages/core/src/lib/types.ts#L261)
+[lib/types.ts:261](https://github.com/nartc/mapper/blob/446d40fc/packages/core/src/lib/types.ts#L261)

@@ -1,11 +1,12 @@
 {
-    "root": "packages/classes/mapped-types",
     "sourceRoot": "packages/classes/mapped-types/src",
     "targets": {
         "package": {
             "executor": "@nrwl/workspace:run-commands",
             "options": {
-                "commands": ["NX_CLOUD=true nx package-lib classes-mapped-types"],
+                "commands": [
+                    "NX_CLOUD=true nx package-lib classes-mapped-types"
+                ],
                 "parallel": false
             }
         },

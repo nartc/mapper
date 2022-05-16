@@ -1,5 +1,4 @@
 {
-    "root": "packages/sequelize",
     "sourceRoot": "packages/sequelize/src",
     "targets": {
         "package": {

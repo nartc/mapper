@@ -1,5 +1,4 @@
 {
-    "root": "packages/documentations",
     "sourceRoot": "packages/documentations/src",
     "projectType": "library",
     "tags": ["documentations"]

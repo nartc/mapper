@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     displayName: 'integration-test',
 
     transform: {
@@ -7,5 +7,5 @@ module.exports = {
     setupFiles: ['./jest-setup.ts'],
     moduleFileExtensions: ['ts', 'js', 'html'],
     coverageDirectory: '../../coverage/packages/integration-test',
-    preset: '../../jest.preset.ts',
+    preset: '../../jest.preset.js',
 };

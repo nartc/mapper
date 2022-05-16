@@ -1,5 +1,4 @@
 {
-    "root": "packages/pojos",
     "sourceRoot": "packages/pojos/src",
     "targets": {
         "package": {

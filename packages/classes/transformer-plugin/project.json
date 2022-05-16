@@ -1,11 +1,12 @@
 {
-    "root": "packages/classes/transformer-plugin",
     "sourceRoot": "packages/classes/transformer-plugin/src",
     "targets": {
         "package": {
             "executor": "@nrwl/workspace:run-commands",
             "options": {
-                "commands": ["NX_CLOUD=true nx package-lib classes-transformer-plugin"],
+                "commands": [
+                    "NX_CLOUD=true nx package-lib classes-transformer-plugin"
+                ],
                 "parallel": false
             }
         },

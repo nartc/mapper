@@ -1,5 +1,4 @@
 {
-    "root": "packages/mikro",
     "sourceRoot": "packages/mikro/src",
     "targets": {
         "package": {

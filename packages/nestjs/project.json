@@ -1,5 +1,4 @@
 {
-    "root": "packages/nestjs",
     "sourceRoot": "packages/nestjs/src",
     "targets": {
         "package": {

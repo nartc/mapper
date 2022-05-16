@@ -1,5 +1,4 @@
 {
-    "root": "packages/integration-test",
     "sourceRoot": "packages/integration-test/src",
     "targets": {
         "build": {

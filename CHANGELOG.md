@@ -1,5 +1,14 @@
 
 
+### [8.3.7-beta.0](https://github.com/nartc/mapper/compare/8.3.6...8.3.7-beta.0) (2022-05-27)
+
+
+### Documentations
+
+* add docsearch ([768c632](https://github.com/nartc/mapper/commit/768c6323a613ecf5716d58954096ab75287e217c))
+* adjust algolia search again ([031db42](https://github.com/nartc/mapper/commit/031db42ddc647506d5b568edc6e658f15b5ced65))
+* adjust doc search settings ([00d25ce](https://github.com/nartc/mapper/commit/00d25ce1e541b4c86443456ce0d0bf0c4298827f))
+
 ### [8.3.6](https://github.com/nartc/mapper/compare/8.3.5...8.3.6) (2022-05-06)
 
 

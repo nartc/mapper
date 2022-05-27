@@ -1,6 +1,6 @@
 {
   "name": "automapper",
-  "version": "8.3.3",
+  "version": "0.0.0",
   "license": "MIT",
   "scripts": {
     "commit": "git-cz",
@@ -10,8 +10,7 @@
     "release:beta": "dotenv release-it -- major --preRelease=beta",
     "test": "nx run-many --all --target=test --parallel",
     "package": "nx package-all core",
-    "publish": "nx run-many --target=publish --all --parallel",
-    "**postinstall**": "patch-package"
+    "publish": "nx run-many --target=publish --all --parallel"
   },
   "private": true,
   "dependencies": {
@@ -50,7 +49,6 @@
     "ethers": "5.6.8",
     "jest": "27.5.1",
     "nx": "14.1.9",
-    "patch-package": "6.4.7",
     "prettier": "~2.6.2",
     "reflect-metadata": "~0.1.13",
     "release-it": "15.0.0",
@@ -69,4 +67,3 @@
     }
   }
 }
-

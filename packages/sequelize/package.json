@@ -2,14 +2,6 @@
     "name": "@automapper/sequelize",
     "version": "0.0.0",
     "type": "module",
-    "exports": {
-        ".": {
-            "import": "./index.esm.js",
-            "require": "./index.cjs",
-            "types": "./index.d.ts",
-            "typings": "./index.d.ts"
-        }
-    },
     "peerDependencies": {
         "sequelize": "^6.0.0",
         "reflect-metadata": "~0.1.13"
@@ -41,6 +33,5 @@
     "license": "MIT",
     "files": [
         "**/*"
-    ],
-    "main": "./index.cjs"
+    ]
 }

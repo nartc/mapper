@@ -2,14 +2,6 @@
     "name": "@automapper/core",
     "version": "0.0.0",
     "type": "module",
-    "exports": {
-        ".": {
-            "import": "./index.esm.js",
-            "require": "./index.cjs",
-            "types": "./index.d.ts",
-            "typings": "./index.d.ts"
-        }
-    },
     "sideEffects": false,
     "engines": {
         "node": ">=14.0.0"
@@ -36,6 +28,5 @@
     "license": "MIT",
     "files": [
         "**/*"
-    ],
-    "main": "./index.cjs"
+    ]
 }

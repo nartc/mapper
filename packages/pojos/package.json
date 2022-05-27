@@ -3,14 +3,6 @@
     "version": "0.0.0",
     "type": "module",
     "sideEffects": false,
-    "exports": {
-        ".": {
-            "import": "./index.esm.js",
-            "require": "./index.cjs",
-            "types": "./index.d.ts",
-            "typings": "./index.d.ts"
-        }
-    },
     "engines": {
         "node": ">=14.0.0"
     },
@@ -36,6 +28,5 @@
     "license": "MIT",
     "files": [
         "**/*"
-    ],
-    "main": "./index.cjs"
+    ]
 }

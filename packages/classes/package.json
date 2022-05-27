@@ -6,23 +6,15 @@
         "reflect-metadata": "~0.1.13"
     },
     "exports": {
-        ".": {
-            "import": "./index.esm.js",
-            "require": "./index.cjs",
-            "types": "./index.d.ts",
-            "typings": "./index.d.ts"
-        },
         "./transformer-plugin": {
-            "import": "./transformer-plugin/index.esm.js",
-            "require": "./transformer-plugin/index.cjs",
             "types": "./transformer-plugin/index.d.ts",
-            "typings": "./transformer-plugin/index.d.ts"
+            "import": "./transformer-plugin/index.js",
+            "require": "./transformer-plugin/index.cjs"
         },
         "./mapped-types": {
-            "import": "./mapped-types/index.esm.js",
-            "require": "./mapped-types/index.cjs",
             "types": "./mapped-types/index.d.ts",
-            "typings": "./mapped-types/index.d.ts"
+            "import": "./mapped-types/index.js",
+            "require": "./mapped-types/index.cjs"
         }
     },
     "sideEffects": false,
@@ -51,6 +43,5 @@
     "license": "MIT",
     "files": [
         "**/*"
-    ],
-    "main": "./index.cjs"
+    ]
 }

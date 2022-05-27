@@ -6,14 +6,6 @@
         "@nestjs/common": "^7.0.0 || ^8.0.0",
         "@nestjs/core": "^7.0.0 || ^8.0.0"
     },
-    "exports": {
-        ".": {
-            "import": "./index.esm.js",
-            "require": "./index.cjs",
-            "types": "./index.d.ts",
-            "typings": "./index.d.ts"
-        }
-    },
     "sideEffects": false,
     "engines": {
         "node": ">=14.0.0"
@@ -40,6 +32,5 @@
     "license": "MIT",
     "files": [
         "**/*"
-    ],
-    "main": "./index.cjs"
+    ]
 }

@@ -2,14 +2,6 @@
     "name": "@automapper/classes/mapped-types",
     "version": "0.0.0",
     "type": "module",
-    "exports": {
-        ".": {
-            "import": "./index.esm.js",
-            "require": "./index.cjs",
-            "types": "./index.d.ts",
-            "typings": "./index.d.ts"
-        }
-    },
     "sideEffects": false,
     "publishConfig": {
         "access": "public"
@@ -30,6 +22,5 @@
         "mapper",
         "nx"
     ],
-    "license": "MIT",
-    "main": "./index.cjs"
+    "license": "MIT"
 }

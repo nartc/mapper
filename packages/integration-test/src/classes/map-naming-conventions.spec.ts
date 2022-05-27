@@ -205,29 +205,29 @@ describe('Map - Naming Conventions', () => {
         });
     });
 
-    describe('No flattening', () => {
-        const mapper = createMapper({
-            strategyInitializer: classes(),
-            namingConventions: {
-                source: new CamelCaseNamingConvention(),
-                destination: new PascalCaseNamingConvention(),
-            },
-            flattening: false,
-        });
-
-        afterEach(() => {
-            mapper.dispose();
-        });
-
-        it('should map with naming conventions without flattening', () => {
-            addProfile(mapper, addressProfile);
-            addProfile(mapper, avatarProfile);
-            addProfile(mapper, bioProfile);
-            addProfile(mapper, userProfile);
-
-            const user = getUser();
-            const dto = mapper.map(user, User, PascalUserDto);
-            console.log(dto);
-        });
-    });
+    // describe('No flattening', () => {
+    //     const mapper = createMapper({
+    //         strategyInitializer: classes(),
+    //         namingConventions: {
+    //             source: new CamelCaseNamingConvention(),
+    //             destination: new PascalCaseNamingConvention(),
+    //         },
+    //         flattening: false,
+    //     });
+    //
+    //     afterEach(() => {
+    //         mapper.dispose();
+    //     });
+    //
+    //     it('should map with naming conventions without flattening', () => {
+    //         addProfile(mapper, addressProfile);
+    //         addProfile(mapper, avatarProfile);
+    //         addProfile(mapper, bioProfile);
+    //         addProfile(mapper, userProfile);
+    //
+    //         const user = getUser();
+    //         const dto = mapper.map(user, User, PascalUserDto);
+    //         console.log(dto);
+    //     });
+    // });
 });

@@ -11,7 +11,7 @@
     "test": "nx run-many --all --target=test --parallel",
     "package": "nx package-all core",
     "publish": "nx run-many --target=publish --all --parallel",
-    "postinstall": "patch-package"
+    "**postinstall**": "patch-package"
   },
   "private": true,
   "dependencies": {

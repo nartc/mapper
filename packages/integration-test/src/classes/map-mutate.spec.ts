@@ -33,7 +33,9 @@ describe('Map - Mutation', () => {
         mapper.mutate(user, dto, User, UserDto);
 
         expect(Object.isFrozen(user.bio.avatar)).toBe(false);
-        user.bio.addresses.forEach((a) => expect(Object.isFrozen(a)).toBe(false));
+        user.bio.addresses.forEach((a) =>
+            expect(Object.isFrozen(a)).toBe(false)
+        );
         expect(Object.isFrozen(user.job)).toBe(false);
         expect(Object.isFrozen(user.bio)).toBe(false);
         expect(Object.isFrozen(user)).toBe(false);
@@ -50,7 +52,9 @@ describe('Map - Mutation', () => {
         mapper.mutateArray([user], dtos, User, UserDto);
 
         expect(Object.isFrozen(user.bio.avatar)).toBe(false);
-        user.bio.addresses.forEach((a) => expect(Object.isFrozen(a)).toBe(false));
+        user.bio.addresses.forEach((a) =>
+            expect(Object.isFrozen(a)).toBe(false)
+        );
         expect(Object.isFrozen(user.job)).toBe(false);
         expect(Object.isFrozen(user.bio)).toBe(false);
         expect(Object.isFrozen(user)).toBe(false);

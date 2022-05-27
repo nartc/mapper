@@ -16,7 +16,7 @@ Depth for nested models. Default to 1
 
 #### Defined in
 
-[lib/automap.ts:13](https://github.com/nartc/mapper/blob/446d40fc/packages/classes/src/lib/automap.ts#L13)
+[lib/automap.ts:13](https://github.com/nartc/mapper/blob/a29e3690/packages/classes/src/lib/automap.ts#L13)
 
 ___
 
@@ -28,7 +28,7 @@ Is this property getter-only?
 
 #### Defined in
 
-[lib/automap.ts:17](https://github.com/nartc/mapper/blob/446d40fc/packages/classes/src/lib/automap.ts#L17)
+[lib/automap.ts:17](https://github.com/nartc/mapper/blob/a29e3690/packages/classes/src/lib/automap.ts#L17)
 
 ## Methods
 
@@ -44,4 +44,4 @@ Type Function
 
 #### Defined in
 
-[lib/automap.ts:9](https://github.com/nartc/mapper/blob/446d40fc/packages/classes/src/lib/automap.ts#L9)
+[lib/automap.ts:9](https://github.com/nartc/mapper/blob/a29e3690/packages/classes/src/lib/automap.ts#L9)

@@ -121,6 +121,11 @@ const config = {
     themeConfig:
         /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
         ({
+            docs: {
+                sidebar: {
+                    hideable: true,
+                },
+            },
             navbar: {
                 title: 'AutoMapper TypeScript',
                 logo: {
@@ -194,7 +199,6 @@ const config = {
                 theme: lightCodeTheme,
                 darkTheme: darkCodeTheme,
             },
-            hideableSidebar: true,
             algolia: {
                 appId: 'X3519DOIGT',
                 apiKey: '1e924199f121846bb38de348a2cfe5e3',

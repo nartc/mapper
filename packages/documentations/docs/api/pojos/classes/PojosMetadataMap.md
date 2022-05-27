@@ -20,7 +20,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[lib/metadata-map.ts:13](https://github.com/nartc/mapper/blob/446d40fc/packages/pojos/src/lib/metadata-map.ts#L13)
+[lib/metadata-map.ts:13](https://github.com/nartc/mapper/blob/a29e3690/packages/pojos/src/lib/metadata-map.ts#L13)
 
 ## Methods
 
@@ -47,7 +47,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[lib/metadata-map.ts:28](https://github.com/nartc/mapper/blob/446d40fc/packages/pojos/src/lib/metadata-map.ts#L28)
+[lib/metadata-map.ts:28](https://github.com/nartc/mapper/blob/a29e3690/packages/pojos/src/lib/metadata-map.ts#L28)
 
 ___
 
@@ -72,7 +72,7 @@ ___
 
 #### Defined in
 
-[lib/metadata-map.ts:84](https://github.com/nartc/mapper/blob/446d40fc/packages/pojos/src/lib/metadata-map.ts#L84)
+[lib/metadata-map.ts:84](https://github.com/nartc/mapper/blob/a29e3690/packages/pojos/src/lib/metadata-map.ts#L84)
 
 ___
 
@@ -86,7 +86,7 @@ ___
 
 #### Defined in
 
-[lib/metadata-map.ts:24](https://github.com/nartc/mapper/blob/446d40fc/packages/pojos/src/lib/metadata-map.ts#L24)
+[lib/metadata-map.ts:24](https://github.com/nartc/mapper/blob/a29e3690/packages/pojos/src/lib/metadata-map.ts#L24)
 
 ___
 
@@ -106,7 +106,7 @@ ___
 
 #### Defined in
 
-[lib/metadata-map.ts:58](https://github.com/nartc/mapper/blob/446d40fc/packages/pojos/src/lib/metadata-map.ts#L58)
+[lib/metadata-map.ts:58](https://github.com/nartc/mapper/blob/a29e3690/packages/pojos/src/lib/metadata-map.ts#L58)
 
 ___
 
@@ -126,4 +126,4 @@ ___
 
 #### Defined in
 
-[lib/metadata-map.ts:116](https://github.com/nartc/mapper/blob/446d40fc/packages/pojos/src/lib/metadata-map.ts#L116)
+[lib/metadata-map.ts:116](https://github.com/nartc/mapper/blob/a29e3690/packages/pojos/src/lib/metadata-map.ts#L116)

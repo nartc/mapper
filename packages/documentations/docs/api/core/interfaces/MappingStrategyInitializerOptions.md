@@ -14,7 +14,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[lib/types.ts:587](https://github.com/nartc/mapper/blob/446d40fc/packages/core/src/lib/types.ts#L587)
+[lib/types.ts:587](https://github.com/nartc/mapper/blob/a29e3690/packages/core/src/lib/types.ts#L587)
 
 ___
 
@@ -24,7 +24,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:588](https://github.com/nartc/mapper/blob/446d40fc/packages/core/src/lib/types.ts#L588)
+[lib/types.ts:588](https://github.com/nartc/mapper/blob/a29e3690/packages/core/src/lib/types.ts#L588)
 
 ## Methods
 
@@ -53,7 +53,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:596](https://github.com/nartc/mapper/blob/446d40fc/packages/core/src/lib/types.ts#L596)
+[lib/types.ts:596](https://github.com/nartc/mapper/blob/a29e3690/packages/core/src/lib/types.ts#L596)
 
 ___
 
@@ -81,4 +81,4 @@ ___
 
 #### Defined in
 
-[lib/types.ts:589](https://github.com/nartc/mapper/blob/446d40fc/packages/core/src/lib/types.ts#L589)
+[lib/types.ts:589](https://github.com/nartc/mapper/blob/a29e3690/packages/core/src/lib/types.ts#L589)

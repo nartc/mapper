@@ -12,34 +12,28 @@ jobs:
                   persist-credentials: false
                   fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
 
-            - name: Cache node modules
-              uses: actions/cache@v2
-              id: cached-deps
-              env:
-                  cache-name: cache-node-modules
+            - uses: pnpm/action-setup@v2.1.0
               with:
-                  # npm cache files are stored in `~/.npm` on Linux/macOS
-                  path: '**/node_modules'
-                  key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
-                  restore-keys: |
-                      ${{ runner.os }}-build-${{ env.cache-name }}-
-                      ${{ runner.os }}-build-
-                      ${{ runner.os }}-
+                  version: latest
+                  run_install: false
 
             - uses: actions/setup-node@v2
               with:
                   node-version: '14'
+                  cache: 'pnpm'
 
             - name: Install dependencies
-              if: ${{ steps.cached-deps.outputs.cache-hit != 'true' }}
-              run: npm install
+              run: |
+                  pnpm install
+                  pnpm --filter "./packages/documentations" install
+
+            - name: Create local build artifacts
+              run: |
+                  echo 'Building documentations...'
+                  pnpm exec nx build documentations
 
             - name: Create local changes and commit
               run: |
-                  cd packages/documentations
-                  npm install
-                  cd ../../
-                  npx nx build documentations
                   cd packages/documentations/build
                   git init
                   git add .

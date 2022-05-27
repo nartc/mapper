@@ -18,7 +18,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[lib/keys.ts:1](https://github.com/nartc/mapper/blob/446d40fc/packages/classes/src/lib/keys.ts#L1)
+[lib/keys.ts:1](https://github.com/nartc/mapper/blob/a29e3690/packages/classes/src/lib/keys.ts#L1)
 
 ___
 
@@ -28,7 +28,7 @@ ___
 
 #### Defined in
 
-[lib/keys.ts:3](https://github.com/nartc/mapper/blob/446d40fc/packages/classes/src/lib/keys.ts#L3)
+[lib/keys.ts:3](https://github.com/nartc/mapper/blob/a29e3690/packages/classes/src/lib/keys.ts#L3)
 
 ___
 
@@ -38,7 +38,7 @@ ___
 
 #### Defined in
 
-[lib/keys.ts:4](https://github.com/nartc/mapper/blob/446d40fc/packages/classes/src/lib/keys.ts#L4)
+[lib/keys.ts:4](https://github.com/nartc/mapper/blob/a29e3690/packages/classes/src/lib/keys.ts#L4)
 
 ## Functions
 
@@ -52,7 +52,7 @@ ___
 
 #### Defined in
 
-[lib/automap.ts:20](https://github.com/nartc/mapper/blob/446d40fc/packages/classes/src/lib/automap.ts#L20)
+[lib/automap.ts:20](https://github.com/nartc/mapper/blob/a29e3690/packages/classes/src/lib/automap.ts#L20)
 
 ▸ **AutoMap**(`typeFn`): `PropertyDecorator`
 
@@ -68,7 +68,7 @@ ___
 
 #### Defined in
 
-[lib/automap.ts:21](https://github.com/nartc/mapper/blob/446d40fc/packages/classes/src/lib/automap.ts#L21)
+[lib/automap.ts:21](https://github.com/nartc/mapper/blob/a29e3690/packages/classes/src/lib/automap.ts#L21)
 
 ▸ **AutoMap**(`options`): `PropertyDecorator`
 
@@ -84,7 +84,7 @@ ___
 
 #### Defined in
 
-[lib/automap.ts:24](https://github.com/nartc/mapper/blob/446d40fc/packages/classes/src/lib/automap.ts#L24)
+[lib/automap.ts:24](https://github.com/nartc/mapper/blob/a29e3690/packages/classes/src/lib/automap.ts#L24)
 
 ___
 
@@ -104,7 +104,7 @@ ___
 
 #### Defined in
 
-[lib/classes.ts:14](https://github.com/nartc/mapper/blob/446d40fc/packages/classes/src/lib/classes.ts#L14)
+[lib/classes.ts:14](https://github.com/nartc/mapper/blob/a29e3690/packages/classes/src/lib/classes.ts#L14)
 
 ___
 
@@ -124,4 +124,4 @@ ___
 
 #### Defined in
 
-[lib/get-metadata-list.ts:20](https://github.com/nartc/mapper/blob/446d40fc/packages/classes/src/lib/get-metadata-list.ts#L20)
+[lib/get-metadata-list.ts:20](https://github.com/nartc/mapper/blob/a29e3690/packages/classes/src/lib/get-metadata-list.ts#L20)

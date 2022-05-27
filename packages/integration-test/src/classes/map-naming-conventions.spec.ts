@@ -73,7 +73,7 @@ describe('Map - Naming Conventions', () => {
             mapper.dispose();
         });
 
-        it('should map from pascal to camel', () => {
+        it('should map from camel to pascal', () => {
             addProfile(mapper, addressProfile);
             addProfile(mapper, avatarProfile);
             addProfile(mapper, bioProfile);
@@ -131,7 +131,7 @@ describe('Map - Naming Conventions', () => {
             mapper.dispose();
         });
 
-        it('should map from snake to camel', () => {
+        it('should map from camel to snake', () => {
             addProfile(mapper, addressProfile);
             addProfile(mapper, avatarProfile);
             addProfile(mapper, bioProfile);
@@ -202,6 +202,32 @@ describe('Map - Naming Conventions', () => {
             expect(dto.full).toEqual(user.FirstName + ' ' + user.LastName);
             expect(dto.job_title).toEqual(user.Job.Title);
             expect(dto.job_annual_salary).toEqual(user.Job.AnnualSalary);
+        });
+    });
+
+    describe('No flattening', () => {
+        const mapper = createMapper({
+            strategyInitializer: classes(),
+            namingConventions: {
+                source: new CamelCaseNamingConvention(),
+                destination: new PascalCaseNamingConvention(),
+            },
+            flattening: false,
+        });
+
+        afterEach(() => {
+            mapper.dispose();
+        });
+
+        it('should map with naming conventions without flattening', () => {
+            addProfile(mapper, addressProfile);
+            addProfile(mapper, avatarProfile);
+            addProfile(mapper, bioProfile);
+            addProfile(mapper, userProfile);
+
+            const user = getUser();
+            const dto = mapper.map(user, User, PascalUserDto);
+            console.log(dto);
         });
     });
 });

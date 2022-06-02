@@ -1,7 +1,7 @@
 # AutoMapper TypeScript
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-7-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-8-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=nartc_mapper&metric=ncloc)](https://sonarcloud.io/dashboard?id=nartc_mapper)
@@ -56,6 +56,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/huybn5776"><img src="https://avatars.githubusercontent.com/u/6702287?v=4?s=75" width="75px;" alt=""/><br /><sub><b>Huybn</b></sub></a><br /><a href="https://github.com/nartc/mapper/commits?author=huybn5776" title="Code">💻</a></td>
     <td align="center"><a href="http://jasonmerino.me/"><img src="https://avatars.githubusercontent.com/u/1660279?v=4?s=75" width="75px;" alt=""/><br /><sub><b>Jason Merino</b></sub></a><br /><a href="https://github.com/nartc/mapper/commits?author=jasonmerino" title="Documentation">📖</a></td>
     <td align="center"><a href="https://github.com/roblopz"><img src="https://avatars.githubusercontent.com/u/48892593?v=4?s=75" width="75px;" alt=""/><br /><sub><b>roblopz</b></sub></a><br /><a href="https://github.com/nartc/mapper/commits?author=roblopz" title="Code">💻</a> <a href="https://github.com/nartc/mapper/issues?q=author%3Aroblopz" title="Bug reports">🐛</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/LennartH"><img src="https://avatars.githubusercontent.com/u/902689?v=4?s=75" width="75px;" alt=""/><br /><sub><b>Lennart Hensler</b></sub></a><br /><a href="https://github.com/nartc/mapper/commits?author=LennartH" title="Code">💻</a></td>
   </tr>
 </table>
 

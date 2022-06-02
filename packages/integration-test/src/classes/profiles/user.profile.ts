@@ -66,19 +66,6 @@ export function userProfile(mapper: Mapper) {
         forMember((d) => d.lastLogin, mapFrom(lastLoginResolver))
     );
 
-    /**
-     * forMember(
-            (d) => d.first,
-            mapFrom((s) => s.firstName)
-        ),
-        forMember(
-            (d) => d.last,
-            mapFrom((s) => s.lastName)
-        ),
-        forMember((d) => d.full, mapFrom(fullNameResolver)),
-        forMember((d) => d.lastLogin, mapFrom(lastLoginResolver))
-     */
-
     createMap(
         mapper,
         User,

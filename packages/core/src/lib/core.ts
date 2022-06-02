@@ -32,6 +32,17 @@ export interface CreateMapperOptions {
     namingConventions?: NamingConventionInput;
 }
 
+/**
+ * Creates and returns a Mapper {} as a Proxy. The following methods are available to use with a Mapper:
+ *  ```
+ *  - Mapper#map(Array)(Async), Mapper#mutate(Array)(Async)
+ *  - createMap()
+ *  - addProfile()
+ *  - getMapping()
+ *  - getMappings()
+ *  ```
+ * @param {CreateMapperOptions} options
+ */
 export function createMapper({
     strategyInitializer,
     errorHandler,
@@ -169,10 +180,7 @@ Mapper {} is an empty Object as a Proxy. The following methods are available to 
                             destinationIdentifier
                         );
 
-                        sourceObject = strategy.preMap(
-                            sourceObject,
-                            mapping
-                        );
+                        sourceObject = strategy.preMap(sourceObject, mapping);
 
                         const destination = mapReturn(
                             mapping,
@@ -324,10 +332,7 @@ Mapper {} is an empty Object as a Proxy. The following methods are available to 
                             destinationIdentifier
                         );
 
-                        sourceObject = strategy.preMap(
-                            sourceObject,
-                            mapping
-                        );
+                        sourceObject = strategy.preMap(sourceObject, mapping);
 
                         mapMutate(
                             mapping,

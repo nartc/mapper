@@ -1,5 +1,18 @@
 
 
+### [8.3.7](https://github.com/nartc/mapper/compare/8.3.7-beta.0...8.3.7) (2022-06-02)
+
+
+### Bug Fixes
+
+* **core:** use readonly access modifier in MappingStrategy interface instead of get. ([#478](https://github.com/nartc/mapper/issues/478)) ([bc6b2f1](https://github.com/nartc/mapper/commit/bc6b2f132d973d0e8d8b598e2dd8d7c000a58b01))
+
+
+### Documentations
+
+* bump node version for docusaurus workflow ([fcb93a5](https://github.com/nartc/mapper/commit/fcb93a5e462fcbb07cb6789761f8df0949701950))
+* update docusaurus ([8ad45f8](https://github.com/nartc/mapper/commit/8ad45f826a772763d034e11f725fe28c3359372c))
+
 ### [8.3.7-beta.0](https://github.com/nartc/mapper/compare/8.3.6...8.3.7-beta.0) (2022-05-27)
 
 

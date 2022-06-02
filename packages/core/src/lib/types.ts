@@ -559,7 +559,7 @@ export type MetadataList = Array<
 export interface MappingStrategy<TIdentifier extends MetadataIdentifier> {
     destinationConstructor: DestinationConstructor;
     mapper: Mapper;
-    get applyMetadata(): ApplyMetadataFn;
+    readonly applyMetadata: ApplyMetadataFn;
     retrieveMetadata(
         ...identifiers: TIdentifier[]
     ): Map<TIdentifier, MetadataList>;

@@ -1,0 +1,26 @@
+name: CI
+
+on:
+    push:
+        branches:
+            - main
+    pull_request:
+
+jobs:
+    main:
+        name: Nx Cloud - Main Job
+        uses: nrwl/ci/.github/workflows/nx-cloud-main.yml@v0.4
+        with:
+            parallel-commands: |
+                pnpm exec nx-cloud record -- pnpm exec nx workspace-lint
+                pnpm exec nx-cloud record -- pnpm exec nx format:check
+            parallel-commands-on-agents: |
+                pnpm exec nx affected --target=lint --parallel=2
+                pnpm exec nx affected --target=test --parallel=1 --ci --code-coverage
+                pnpm exec nx affected --target=build --parallel=2
+
+    agents:
+        name: Nx Cloud - Agents
+        uses: nrwl/ci/.github/workflows/nx-cloud-agents.yml@v0.4
+        with:
+            number-of-agents: 3

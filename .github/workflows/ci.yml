@@ -11,8 +11,6 @@ jobs:
         name: Nx Cloud - Main Job
         uses: nrwl/ci/.github/workflows/nx-cloud-main.yml@v0.4
         with:
-            parallel-commands: |
-                pnpm exec nx-cloud record -- pnpm exec nx format:check
             parallel-commands-on-agents: |
                 pnpm exec nx affected --target=test --parallel=1 --ci --code-coverage
                 pnpm exec nx affected --target=build --parallel=2

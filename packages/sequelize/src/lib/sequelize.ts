@@ -6,14 +6,14 @@ import type {
     MappingStrategyInitializerOptions,
     MetadataIdentifier,
 } from '@automapper/core';
-import { defaultSerializerOptions } from '@automapper/core';
+import { defaultStrategyInitializerOptions } from '@automapper/core';
 import type { Model } from 'sequelize';
 
 export function sequelize(
-    options: MappingStrategyInitializerOptions = defaultSerializerOptions
+    options: MappingStrategyInitializerOptions = defaultStrategyInitializerOptions
 ): MappingStrategyInitializer<Constructor> {
     const mergedOptions = {
-        ...defaultSerializerOptions,
+        ...defaultStrategyInitializerOptions,
         destinationConstructor: (
             _: Dictionary<object>,
             destinationIdentifier: MetadataIdentifier
@@ -26,7 +26,7 @@ export function sequelize(
         ...options,
     };
 
-    if (mergedOptions.preMap === defaultSerializerOptions.preMap) {
+    if (mergedOptions.preMap === defaultStrategyInitializerOptions.preMap) {
         mergedOptions.preMap = <TSource extends Dictionary<TSource>>(
             source: TSource
         ) => {

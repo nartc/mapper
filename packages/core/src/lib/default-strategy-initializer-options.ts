@@ -1,7 +1,7 @@
 import { defaultApplyMetadata } from './mappings/apply-metadata';
 import type { MappingStrategyInitializerOptions } from './types';
 
-export const defaultSerializerOptions = {
+export const defaultStrategyInitializerOptions = {
     applyMetadata: defaultApplyMetadata,
     preMap(source) {
         return source;

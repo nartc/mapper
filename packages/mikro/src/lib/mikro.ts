@@ -7,14 +7,17 @@ import type {
     MappingStrategyInitializerOptions,
     MetadataIdentifier,
 } from '@automapper/core';
-import { defaultSerializerOptions, MappingClassId } from '@automapper/core';
+import {
+    defaultStrategyInitializerOptions,
+    MappingClassId,
+} from '@automapper/core';
 import { serializeEntity } from './serialize-entity';
 
 export function mikro(
     options: MappingStrategyInitializerOptions = {}
 ): MappingStrategyInitializer<Constructor> {
     const mergedOptions = {
-        ...defaultSerializerOptions,
+        ...defaultStrategyInitializerOptions,
         destinationConstructor: (
             _: Dictionary<object>,
             destinationIdentifier: MetadataIdentifier
@@ -22,7 +25,7 @@ export function mikro(
         ...options,
     };
 
-    if (mergedOptions.preMap === defaultSerializerOptions.preMap) {
+    if (mergedOptions.preMap === defaultStrategyInitializerOptions.preMap) {
         mergedOptions.preMap = <
             TSource extends Dictionary<TSource>,
             TDestination extends Dictionary<TDestination>

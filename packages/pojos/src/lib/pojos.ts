@@ -1,6 +1,6 @@
 import {
     ApplyMetadataFn,
-    defaultSerializerOptions,
+    defaultStrategyInitializerOptions,
     MappingStrategyInitializer,
     MappingStrategyInitializerOptions,
     MetadataList,
@@ -15,7 +15,7 @@ export function pojos(
         applyMetadata,
         postMap,
         preMap,
-    } = { ...defaultSerializerOptions, ...options };
+    } = { ...defaultStrategyInitializerOptions, ...options };
 
     return (mapper) => ({
         destinationConstructor,

@@ -16,7 +16,7 @@ custom_edit_url: null
 
 | Name | Type | Default value |
 | :------ | :------ | :------ |
-| `options` | `MappingStrategyInitializerOptions` | `defaultSerializerOptions` |
+| `options` | `MappingStrategyInitializerOptions` | `defaultStrategyInitializerOptions` |
 
 #### Returns
 

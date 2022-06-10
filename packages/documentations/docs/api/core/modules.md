@@ -856,9 +856,9 @@ ___
 
 ## Variables
 
-### defaultSerializerOptions
+### defaultStrategyInitializerOptions
 
-• `Const` **defaultSerializerOptions**: `Required`<`Omit`<[`MappingStrategyInitializerOptions`](interfaces/MappingStrategyInitializerOptions.md), ``"destinationConstructor"``\>\>
+• `Const` **defaultStrategyInitializerOptions**: `Required`<`Omit`<[`MappingStrategyInitializerOptions`](interfaces/MappingStrategyInitializerOptions.md), ``"destinationConstructor"``\>\>
 
 #### Defined in
 

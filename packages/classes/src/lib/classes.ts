@@ -1,7 +1,7 @@
 import {
     ApplyMetadataFn,
     Constructor,
-    defaultSerializerOptions,
+    defaultStrategyInitializerOptions,
     Dictionary,
     Mapper,
     MappingStrategyInitializer,
@@ -22,7 +22,7 @@ export function classes(
         applyMetadata,
         postMap,
         preMap,
-    } = { ...defaultSerializerOptions, ...options };
+    } = { ...defaultStrategyInitializerOptions, ...options };
 
     const metadataTracker = new Set();
 

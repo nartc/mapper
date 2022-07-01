@@ -155,6 +155,11 @@ export interface Mapper {
         destinationIdentifier: ModelIdentifier<TDestination>,
         options?: MapOptions<TSource, TDestination>
     ): TDestination;
+    map<TSource extends Dictionary<TSource>>(
+        sourceObject: TSource,
+        identifier: ModelIdentifier<TSource>,
+        options?: MapOptions<TSource, TSource>
+    ): TSource;
 
     mapAsync<
         TSource extends Dictionary<TSource>,
@@ -165,6 +170,11 @@ export interface Mapper {
         destinationIdentifier: ModelIdentifier<TDestination>,
         options?: MapOptions<TSource, TDestination>
     ): Promise<TDestination>;
+    mapAsync<TSource extends Dictionary<TSource>>(
+        sourceObject: TSource,
+        identifier: ModelIdentifier<TSource>,
+        options?: MapOptions<TSource, TSource>
+    ): Promise<TSource>;
 
     mapArray<
         TSource extends Dictionary<TSource>,
@@ -175,6 +185,11 @@ export interface Mapper {
         destinationIdentifier: ModelIdentifier<TDestination>,
         options?: MapOptions<TSource[], TDestination[]>
     ): TDestination[];
+    mapArray<TSource extends Dictionary<TSource>>(
+        sourceArray: TSource[],
+        identifier: ModelIdentifier<TSource>,
+        options?: MapOptions<TSource[], TSource[]>
+    ): TSource[];
 
     mapArrayAsync<
         TSource extends Dictionary<TSource>,
@@ -185,6 +200,11 @@ export interface Mapper {
         destinationIdentifier: ModelIdentifier<TDestination>,
         options?: MapOptions<TSource[], TDestination[]>
     ): Promise<TDestination[]>;
+    mapArrayAsync<TSource extends Dictionary<TSource>>(
+        sourceArray: TSource[],
+        identifier: ModelIdentifier<TSource>,
+        options?: MapOptions<TSource[], TSource[]>
+    ): Promise<TSource[]>;
 
     mutate<
         TSource extends Dictionary<TSource>,
@@ -195,6 +215,12 @@ export interface Mapper {
         sourceIdentifier: ModelIdentifier<TSource>,
         destinationIdentifier: ModelIdentifier<TDestination>,
         options?: MapOptions<TSource, TDestination>
+    ): void;
+    mutate<TSource extends Dictionary<TSource>>(
+        sourceObject: TSource,
+        destinationObject: TSource,
+        identifier: ModelIdentifier<TSource>,
+        options?: MapOptions<TSource, TSource>
     ): void;
 
     mutateAsync<
@@ -207,6 +233,12 @@ export interface Mapper {
         destinationIdentifier: ModelIdentifier<TDestination>,
         options?: MapOptions<TSource, TDestination>
     ): Promise<void>;
+    mutateAsync<TSource extends Dictionary<TSource>>(
+        sourceObject: TSource,
+        destinationObject: TSource,
+        identifier: ModelIdentifier<TSource>,
+        options?: MapOptions<TSource, TSource>
+    ): Promise<void>;
 
     mutateArray<
         TSource extends Dictionary<TSource>,
@@ -218,6 +250,12 @@ export interface Mapper {
         destinationIdentifier: ModelIdentifier<TDestination>,
         options?: MapOptions<TSource[], TDestination[]>
     ): void;
+    mutateArray<TSource extends Dictionary<TSource>>(
+        sourceArray: TSource[],
+        destinationArray: TSource[],
+        identifier: ModelIdentifier<TSource>,
+        options?: MapOptions<TSource[], TSource[]>
+    ): void;
 
     mutateArrayAsync<
         TSource extends Dictionary<TSource>,
@@ -228,6 +266,12 @@ export interface Mapper {
         sourceIdentifier: ModelIdentifier<TSource>,
         destinationIdentifier: ModelIdentifier<TDestination>,
         options?: MapOptions<TSource[], TDestination[]>
+    ): Promise<void>;
+    mutateArrayAsync<TSource extends Dictionary<TSource>>(
+        sourceArray: TSource[],
+        destinationArray: TSource[],
+        identifier: ModelIdentifier<TSource>,
+        options?: MapOptions<TSource[], TSource[]>
     ): Promise<void>;
 
     dispose(): void;

@@ -15,6 +15,11 @@ import type {
 import { storeMetadata } from '../utils/store-metadata';
 import { createInitialMapping } from './create-initial-mapping';
 
+export function createMap<TSource extends Dictionary<TSource>>(
+    mapper: Mapper,
+    source: ModelIdentifier<TSource>,
+    ...mappingConfigFns: (MappingConfiguration<TSource, TSource> | undefined)[]
+): Mapping<TSource, TSource>;
 export function createMap<
     TSource extends Dictionary<TSource>,
     TDestination extends Dictionary<TDestination>
@@ -26,12 +31,42 @@ export function createMap<
         | MappingConfiguration<TSource, TDestination>
         | undefined
     )[]
+): Mapping<TSource, TDestination>;
+export function createMap<
+    TSource extends Dictionary<TSource>,
+    TDestination extends Dictionary<TDestination>
+>(
+    mapper: Mapper,
+    source: ModelIdentifier<TSource>,
+    ...mappingConfigFnsOrIdentifier: (
+        | ModelIdentifier<TDestination>
+        | MappingConfiguration<TSource, TDestination>
+        | undefined
+    )[]
 ): Mapping<TSource, TDestination> {
     // turn string into symbol for identifier
     const sourceIdentifier: MetadataIdentifier<TSource> =
         typeof source === 'string' ? Symbol.for(source) : source;
-    const destinationIdentifier: MetadataIdentifier<TDestination> =
-        typeof destination === 'string' ? Symbol.for(destination) : destination;
+
+    let destinationIdentifier: MetadataIdentifier<TDestination> =
+        sourceIdentifier as MetadataIdentifier<TDestination>;
+
+    const [destination, ...mappingConfigFns] =
+        mappingConfigFnsOrIdentifier || [];
+
+    if (destination) {
+        if (typeof destination === 'string') {
+            destinationIdentifier = Symbol.for(destination);
+        } else if (
+            typeof destination === 'function' &&
+            destination.prototype !== undefined
+        ) {
+            destinationIdentifier =
+                destination as unknown as MetadataIdentifier<TDestination>;
+        } else {
+            (mappingConfigFns || []).push(destination);
+        }
+    }
 
     const mappings = getMappings(mapper);
     let mapping = mappings.get(sourceIdentifier)?.get(destinationIdentifier);

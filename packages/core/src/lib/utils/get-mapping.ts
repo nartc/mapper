@@ -9,7 +9,8 @@ import type {
 export function getMapping(
     mapper: Mapper,
     source: ModelIdentifier,
-    destination: ModelIdentifier
+    destination: ModelIdentifier,
+    allowNull = false
 ): Mapping {
     // turn string into symbol for identifier
     const sourceIdentifier: MetadataIdentifier =
@@ -21,7 +22,7 @@ export function getMapping(
         .get(sourceIdentifier)
         ?.get(destinationIdentifier);
 
-    if (mapping == null) {
+    if (mapping == null && !allowNull) {
         const errorHandler = getErrorHandler(mapper);
         const errorMessage = `Mapping is not found for ${String(
             source
@@ -30,5 +31,5 @@ export function getMapping(
         throw new Error(errorMessage);
     }
 
-    return mapping;
+    return mapping as Mapping;
 }

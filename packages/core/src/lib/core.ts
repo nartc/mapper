@@ -70,6 +70,54 @@ export function createMapper({
     // this mapper is tracking some context about the MappingProfile
     let profileConfigurationContext: Set<MappingConfiguration>;
 
+    function getOptions<
+        TSource extends Dictionary<TSource>,
+        TDestination extends Dictionary<TDestination>
+    >(
+        sourceIdentifier: ModelIdentifier<TSource>,
+        destinationIdentifierOrOptions?:
+            | ModelIdentifier<TDestination>
+            | MapOptions<TSource, TDestination>
+            | MapOptions<TSource[], TDestination[]>,
+        options?:
+            | MapOptions<TSource, TDestination>
+            | MapOptions<TSource[], TDestination[]>
+    ): {
+        destinationIdentifier: ModelIdentifier<TDestination>;
+        mapOptions?:
+            | MapOptions<TSource, TDestination>
+            | MapOptions<TSource[], TDestination[]>;
+    } {
+        if (destinationIdentifierOrOptions && options) {
+            return {
+                destinationIdentifier:
+                    destinationIdentifierOrOptions as ModelIdentifier<TDestination>,
+                mapOptions: options,
+            };
+        }
+
+        let destinationIdentifier: ModelIdentifier<TDestination> =
+            sourceIdentifier as ModelIdentifier<TDestination>;
+
+        if (destinationIdentifierOrOptions && !options) {
+            const typeofDestinationOrOptions =
+                typeof destinationIdentifierOrOptions;
+            if (
+                typeofDestinationOrOptions === 'string' ||
+                typeofDestinationOrOptions === 'function'
+            ) {
+                destinationIdentifier =
+                    destinationIdentifierOrOptions as ModelIdentifier<TDestination>;
+            } else {
+                options = destinationIdentifierOrOptions as MapOptions<
+                    TSource,
+                    TDestination
+                >;
+            }
+        }
+        return { destinationIdentifier, mapOptions: options };
+    }
+
     // return the Proxy
     return new Proxy<Mapper>(
         {
@@ -168,11 +216,20 @@ Mapper {} is an empty Object as a Proxy. The following methods are available to 
                     >(
                         sourceObject: TSource,
                         sourceIdentifier: ModelIdentifier<TSource>,
-                        destinationIdentifier: ModelIdentifier<TDestination>,
+                        destinationIdentifierOrOptions?:
+                            | ModelIdentifier<TDestination>
+                            | MapOptions<TSource, TDestination>,
                         options?: MapOptions<TSource, TDestination>
                     ): TDestination => {
                         if (sourceObject == null)
                             return sourceObject as TDestination;
+
+                        const { destinationIdentifier, mapOptions } =
+                            getOptions(
+                                sourceIdentifier,
+                                destinationIdentifierOrOptions,
+                                options
+                            );
 
                         const mapping = getMapping(
                             receiver,
@@ -185,7 +242,7 @@ Mapper {} is an empty Object as a Proxy. The following methods are available to 
                         const destination = mapReturn(
                             mapping,
                             sourceObject,
-                            options || {}
+                            mapOptions || {}
                         );
 
                         return strategy.postMap(
@@ -206,13 +263,15 @@ Mapper {} is an empty Object as a Proxy. The following methods are available to 
                     >(
                         sourceObject: TSource,
                         sourceIdentifier: ModelIdentifier<TSource>,
-                        destinationIdentifier: ModelIdentifier<TDestination>,
+                        destinationIdentifierOrOptions?:
+                            | ModelIdentifier<TDestination>
+                            | MapOptions<TSource, TDestination>,
                         options?: MapOptions<TSource, TDestination>
                     ): Promise<TDestination> => {
                         const result = receiver['map'](
                             sourceObject,
                             sourceIdentifier,
-                            destinationIdentifier,
+                            destinationIdentifierOrOptions,
                             options
                         );
                         return new Promise((res) => {
@@ -228,10 +287,19 @@ Mapper {} is an empty Object as a Proxy. The following methods are available to 
                     >(
                         sourceArray: TSource[],
                         sourceIdentifier: ModelIdentifier<TSource>,
-                        destinationIdentifier: ModelIdentifier<TDestination>,
+                        destinationIdentifierOrOptions?:
+                            | ModelIdentifier<TDestination>
+                            | MapOptions<TSource[], TDestination[]>,
                         options?: MapOptions<TSource[], TDestination[]>
                     ): TDestination[] => {
                         if (!sourceArray.length) return [];
+
+                        const { destinationIdentifier, mapOptions } =
+                            getOptions(
+                                sourceIdentifier,
+                                destinationIdentifierOrOptions,
+                                options
+                            );
 
                         const mapping = getMapping(
                             receiver,
@@ -240,7 +308,10 @@ Mapper {} is an empty Object as a Proxy. The following methods are available to 
                         );
 
                         const { beforeMap, afterMap, extraArgs } =
-                            options || {};
+                            (mapOptions || {}) as MapOptions<
+                                TSource[],
+                                TDestination[]
+                            >;
 
                         if (beforeMap) {
                             beforeMap(sourceArray, []);
@@ -298,13 +369,15 @@ Mapper {} is an empty Object as a Proxy. The following methods are available to 
                     >(
                         sourceArray: TSource[],
                         sourceIdentifier: ModelIdentifier<TSource>,
-                        destinationIdentifier: ModelIdentifier<TDestination>,
+                        destinationIdentifierOrOptions?:
+                            | ModelIdentifier<TDestination>
+                            | MapOptions<TSource[], TDestination[]>,
                         options?: MapOptions<TSource[], TDestination[]>
                     ) => {
                         const result = receiver['mapArray'](
                             sourceArray,
                             sourceIdentifier,
-                            destinationIdentifier,
+                            destinationIdentifierOrOptions,
                             options
                         );
                         return new Promise((res) => {
@@ -321,10 +394,19 @@ Mapper {} is an empty Object as a Proxy. The following methods are available to 
                         sourceObject: TSource,
                         destinationObject: TDestination,
                         sourceIdentifier: ModelIdentifier<TSource>,
-                        destinationIdentifier: ModelIdentifier<TDestination>,
+                        destinationIdentifierOrOptions?:
+                            | ModelIdentifier<TDestination>
+                            | MapOptions<TSource, TDestination>,
                         options?: MapOptions<TSource, TDestination>
                     ) => {
                         if (sourceObject == null) return;
+
+                        const { destinationIdentifier, mapOptions } =
+                            getOptions(
+                                sourceIdentifier,
+                                destinationIdentifierOrOptions,
+                                options
+                            );
 
                         const mapping = getMapping(
                             receiver,
@@ -338,7 +420,7 @@ Mapper {} is an empty Object as a Proxy. The following methods are available to 
                             mapping,
                             sourceObject,
                             destinationObject,
-                            options || {}
+                            mapOptions || {}
                         );
 
                         strategy.postMap(
@@ -356,7 +438,9 @@ Mapper {} is an empty Object as a Proxy. The following methods are available to 
                         sourceObject: TSource,
                         destinationObject: TDestination,
                         sourceIdentifier: ModelIdentifier<TSource>,
-                        destinationIdentifier: ModelIdentifier<TDestination>,
+                        destinationIdentifierOrOptions?:
+                            | ModelIdentifier<TDestination>
+                            | MapOptions<TSource, TDestination>,
                         options?: MapOptions<TSource, TDestination>
                     ) => {
                         return new Promise((res) => {
@@ -364,7 +448,7 @@ Mapper {} is an empty Object as a Proxy. The following methods are available to 
                                 sourceObject,
                                 destinationObject,
                                 sourceIdentifier,
-                                destinationIdentifier,
+                                destinationIdentifierOrOptions,
                                 options
                             );
 
@@ -381,10 +465,19 @@ Mapper {} is an empty Object as a Proxy. The following methods are available to 
                         sourceArray: TSource[],
                         destinationArray: TDestination[],
                         sourceIdentifier: ModelIdentifier<TSource>,
-                        destinationIdentifier: ModelIdentifier<TDestination>,
+                        destinationIdentifierOrOptions?:
+                            | ModelIdentifier<TDestination>
+                            | MapOptions<TSource[], TDestination[]>,
                         options?: MapOptions<TSource[], TDestination[]>
                     ) => {
                         if (!sourceArray.length) return;
+
+                        const { destinationIdentifier, mapOptions } =
+                            getOptions(
+                                sourceIdentifier,
+                                destinationIdentifierOrOptions,
+                                options
+                            );
 
                         const mapping = getMapping(
                             receiver,
@@ -393,7 +486,10 @@ Mapper {} is an empty Object as a Proxy. The following methods are available to 
                         );
 
                         const { beforeMap, afterMap, extraArgs } =
-                            options || {};
+                            (mapOptions || {}) as MapOptions<
+                                TSource[],
+                                TDestination[]
+                            >;
 
                         if (beforeMap) {
                             beforeMap(sourceArray, destinationArray);
@@ -445,7 +541,9 @@ Mapper {} is an empty Object as a Proxy. The following methods are available to 
                         sourceArray: TSource[],
                         destinationArray: TDestination[],
                         sourceIdentifier: ModelIdentifier<TSource>,
-                        destinationIdentifier: ModelIdentifier<TDestination>,
+                        destinationIdentifierOrOptions?:
+                            | ModelIdentifier<TDestination>
+                            | MapOptions<TSource[], TDestination[]>,
                         options?: MapOptions<TSource[], TDestination[]>
                     ) => {
                         return new Promise((res) => {
@@ -453,7 +551,7 @@ Mapper {} is an empty Object as a Proxy. The following methods are available to 
                                 sourceArray,
                                 destinationArray,
                                 sourceIdentifier,
-                                destinationIdentifier,
+                                destinationIdentifierOrOptions,
                                 options
                             );
 

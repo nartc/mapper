@@ -1,5 +1,28 @@
 
 
+## [8.4.0](https://github.com/nartc/mapper/compare/8.3.7...8.4.0) (2022-07-01)
+
+
+### Features
+
+* **core:** allow shorthand syntax for same identifiers w/ createMap and map ([f06bf24](https://github.com/nartc/mapper/commit/f06bf24a5e0ab014a7ecf6d96e919e010d9fe3a4))
+
+
+### Bug Fixes
+
+* adjust all peer deps ([88650ad](https://github.com/nartc/mapper/commit/88650ad9589b61147dc92441898d4efc97305a7f))
+* **core:** add check to only run nest map on applicable identifiers in map member ([262f86b](https://github.com/nartc/mapper/commit/262f86b81371829de38f6d09e6c3a9f9a56c0440)), closes [#480](https://github.com/nartc/mapper/issues/480)
+* **core:** allow same identifier to be mapped with custom mapping if such mapping is created ([73e1224](https://github.com/nartc/mapper/commit/73e122420c0ca7ecc0850958b13d81e8886b8922)), closes [#479](https://github.com/nartc/mapper/issues/479)
+* **core:** cleanup default serializer options ([653cbb7](https://github.com/nartc/mapper/commit/653cbb7d6aa828a53b7297215d60abce72d2c17e))
+* **core:** rename default serializer to strategy initializer ([2a1b4b4](https://github.com/nartc/mapper/commit/2a1b4b42e3c63c74794901ca1158eed0cc564fc8))
+
+
+### Documentations
+
+* add @LennartH as a contributor ([2f7c948](https://github.com/nartc/mapper/commit/2f7c948fec21315bd064e7c25cca5df1b86264db))
+* add documentation on self mapping ([3a3b84d](https://github.com/nartc/mapper/commit/3a3b84d2fb07a4845cb052da957ccec661ac9cbc))
+* update [@roblopz](https://github.com/roblopz) as a contributor ([cd23868](https://github.com/nartc/mapper/commit/cd2386815c326e5feffde08ba216f0f82cbbc0dc))
+
 ### [8.3.7](https://github.com/nartc/mapper/compare/8.3.7-beta.0...8.3.7) (2022-06-02)
 
 

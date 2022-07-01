@@ -6,6 +6,10 @@
     "publishConfig": {
         "access": "public"
     },
+    "peerDependencies": {
+        "@automapper/core": "latest",
+        "@automapper/classes": "latest"
+    },
     "repository": {
         "type": "git",
         "url": "https://github.com/nartc/mapper/tree/main/packages/classes/mapped-types"

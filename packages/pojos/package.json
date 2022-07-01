@@ -9,6 +9,9 @@
     "publishConfig": {
         "access": "public"
     },
+    "peerDependencies": {
+        "@automapper/core": "latest"
+    },
     "repository": {
         "type": "git",
         "url": "https://github.com/nartc/mapper/tree/main/packages/pojos"

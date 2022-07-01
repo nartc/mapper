@@ -3,6 +3,7 @@
     "version": "0.0.0",
     "type": "module",
     "peerDependencies": {
+        "@automapper/classes": "latest",
         "sequelize": "^6.0.0",
         "reflect-metadata": "~0.1.13"
     },

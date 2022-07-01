@@ -7,6 +7,11 @@
         "reflect-metadata": "~0.1.13"
     },
     "exports": {
+        ".": {
+            "types": "./index.d.ts",
+            "import": "./index.js",
+            "require": "./index.cjs"
+        },
         "./transformer-plugin": {
             "types": "./transformer-plugin/index.d.ts",
             "import": "./transformer-plugin/index.js",

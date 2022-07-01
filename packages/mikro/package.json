@@ -2,6 +2,13 @@
     "name": "@automapper/mikro",
     "version": "0.0.0",
     "type": "module",
+    "exports": {
+        ".": {
+            "types": "./index.d.ts",
+            "import": "./index.js",
+            "require": "./index.cjs"
+        }
+    },
     "peerDependencies": {
         "@automapper/classes": "latest",
         "@mikro-orm/core": "^5.0.0",

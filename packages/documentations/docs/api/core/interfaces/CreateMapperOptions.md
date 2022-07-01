@@ -14,7 +14,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[lib/core.ts:31](https://github.com/nartc/mapper/blob/f06bf24a/packages/core/src/lib/core.ts#L31)
+[lib/core.ts:31](https://github.com/nartc/mapper/blob/3ff1b7bf/packages/core/src/lib/core.ts#L31)
 
 ___
 
@@ -24,7 +24,7 @@ ___
 
 #### Defined in
 
-[lib/core.ts:32](https://github.com/nartc/mapper/blob/f06bf24a/packages/core/src/lib/core.ts#L32)
+[lib/core.ts:32](https://github.com/nartc/mapper/blob/3ff1b7bf/packages/core/src/lib/core.ts#L32)
 
 ___
 
@@ -34,4 +34,4 @@ ___
 
 #### Defined in
 
-[lib/core.ts:30](https://github.com/nartc/mapper/blob/f06bf24a/packages/core/src/lib/core.ts#L30)
+[lib/core.ts:30](https://github.com/nartc/mapper/blob/3ff1b7bf/packages/core/src/lib/core.ts#L30)

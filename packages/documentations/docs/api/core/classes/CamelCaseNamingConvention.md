@@ -32,7 +32,7 @@ CamelCaseNamingConvention
 
 #### Defined in
 
-[lib/naming-conventions/camel-case-naming-convention.ts:9](https://github.com/nartc/mapper/blob/f06bf24a/packages/core/src/lib/naming-conventions/camel-case-naming-convention.ts#L9)
+[lib/naming-conventions/camel-case-naming-convention.ts:9](https://github.com/nartc/mapper/blob/3ff1b7bf/packages/core/src/lib/naming-conventions/camel-case-naming-convention.ts#L9)
 
 ___
 
@@ -46,7 +46,7 @@ ___
 
 #### Defined in
 
-[lib/naming-conventions/camel-case-naming-convention.ts:10](https://github.com/nartc/mapper/blob/f06bf24a/packages/core/src/lib/naming-conventions/camel-case-naming-convention.ts#L10)
+[lib/naming-conventions/camel-case-naming-convention.ts:10](https://github.com/nartc/mapper/blob/3ff1b7bf/packages/core/src/lib/naming-conventions/camel-case-naming-convention.ts#L10)
 
 ## Methods
 
@@ -70,4 +70,4 @@ ___
 
 #### Defined in
 
-[lib/naming-conventions/camel-case-naming-convention.ts:12](https://github.com/nartc/mapper/blob/f06bf24a/packages/core/src/lib/naming-conventions/camel-case-naming-convention.ts#L12)
+[lib/naming-conventions/camel-case-naming-convention.ts:12](https://github.com/nartc/mapper/blob/3ff1b7bf/packages/core/src/lib/naming-conventions/camel-case-naming-convention.ts#L12)

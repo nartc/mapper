@@ -1,7 +1,7 @@
 # AutoMapper TypeScript
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-8-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-9-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=nartc_mapper&metric=ncloc)](https://sonarcloud.io/dashboard?id=nartc_mapper)
@@ -59,6 +59,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/LennartH"><img src="https://avatars.githubusercontent.com/u/902689?v=4?s=75" width="75px;" alt=""/><br /><sub><b>Lennart Hensler</b></sub></a><br /><a href="https://github.com/nartc/mapper/commits?author=LennartH" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/jmplahitko"><img src="https://avatars.githubusercontent.com/u/3401828?v=4?s=75" width="75px;" alt=""/><br /><sub><b>jmplahitko</b></sub></a><br /><a href="https://github.com/nartc/mapper/commits?author=jmplahitko" title="Code">💻</a></td>
   </tr>
 </table>
 

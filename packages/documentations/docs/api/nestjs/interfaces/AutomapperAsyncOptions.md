@@ -27,7 +27,7 @@ Pick.imports
 
 #### Defined in
 
-node_modules/.pnpm/@nestjs+common@8.4.5_47vcjb2de6lyibr6g4enoa5lyu/node_modules/@nestjs/common/interfaces/modules/module-metadata.interface.d.ts:18
+node_modules/.pnpm/@nestjs+common@8.4.7_47vcjb2de6lyibr6g4enoa5lyu/node_modules/@nestjs/common/interfaces/modules/module-metadata.interface.d.ts:18
 
 ___
 
@@ -37,7 +37,7 @@ ___
 
 #### Defined in
 
-[packages/nestjs/src/lib/options.ts:25](https://github.com/nartc/mapper/blob/a29e3690/packages/nestjs/src/lib/options.ts#L25)
+[packages/nestjs/src/lib/options.ts:25](https://github.com/nartc/mapper/blob/f06bf24a/packages/nestjs/src/lib/options.ts#L25)
 
 ___
 
@@ -47,7 +47,7 @@ ___
 
 #### Defined in
 
-[packages/nestjs/src/lib/options.ts:27](https://github.com/nartc/mapper/blob/a29e3690/packages/nestjs/src/lib/options.ts#L27)
+[packages/nestjs/src/lib/options.ts:27](https://github.com/nartc/mapper/blob/f06bf24a/packages/nestjs/src/lib/options.ts#L27)
 
 ___
 
@@ -57,7 +57,7 @@ ___
 
 #### Defined in
 
-[packages/nestjs/src/lib/options.ts:26](https://github.com/nartc/mapper/blob/a29e3690/packages/nestjs/src/lib/options.ts#L26)
+[packages/nestjs/src/lib/options.ts:26](https://github.com/nartc/mapper/blob/f06bf24a/packages/nestjs/src/lib/options.ts#L26)
 
 ## Methods
 
@@ -77,4 +77,4 @@ ___
 
 #### Defined in
 
-[packages/nestjs/src/lib/options.ts:28](https://github.com/nartc/mapper/blob/a29e3690/packages/nestjs/src/lib/options.ts#L28)
+[packages/nestjs/src/lib/options.ts:28](https://github.com/nartc/mapper/blob/f06bf24a/packages/nestjs/src/lib/options.ts#L28)

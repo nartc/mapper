@@ -14,13 +14,23 @@ custom_edit_url: null
 
 ## Properties
 
+### applyMetadata
+
+• `Readonly` **applyMetadata**: [`ApplyMetadataFn`](../modules.md#applymetadatafn)
+
+#### Defined in
+
+[lib/types.ts:606](https://github.com/nartc/mapper/blob/f06bf24a/packages/core/src/lib/types.ts#L606)
+
+___
+
 ### destinationConstructor
 
 • **destinationConstructor**: [`DestinationConstructor`](../modules.md#destinationconstructor)<`any`, `any`\>
 
 #### Defined in
 
-[lib/types.ts:560](https://github.com/nartc/mapper/blob/a29e3690/packages/core/src/lib/types.ts#L560)
+[lib/types.ts:604](https://github.com/nartc/mapper/blob/f06bf24a/packages/core/src/lib/types.ts#L604)
 
 ___
 
@@ -30,21 +40,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:561](https://github.com/nartc/mapper/blob/a29e3690/packages/core/src/lib/types.ts#L561)
-
-## Accessors
-
-### applyMetadata
-
-• `get` **applyMetadata**(): [`ApplyMetadataFn`](../modules.md#applymetadatafn)
-
-#### Returns
-
-[`ApplyMetadataFn`](../modules.md#applymetadatafn)
-
-#### Defined in
-
-[lib/types.ts:562](https://github.com/nartc/mapper/blob/a29e3690/packages/core/src/lib/types.ts#L562)
+[lib/types.ts:605](https://github.com/nartc/mapper/blob/f06bf24a/packages/core/src/lib/types.ts#L605)
 
 ## Methods
 
@@ -73,7 +69,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:573](https://github.com/nartc/mapper/blob/a29e3690/packages/core/src/lib/types.ts#L573)
+[lib/types.ts:617](https://github.com/nartc/mapper/blob/f06bf24a/packages/core/src/lib/types.ts#L617)
 
 ___
 
@@ -101,7 +97,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:566](https://github.com/nartc/mapper/blob/a29e3690/packages/core/src/lib/types.ts#L566)
+[lib/types.ts:610](https://github.com/nartc/mapper/blob/f06bf24a/packages/core/src/lib/types.ts#L610)
 
 ___
 
@@ -121,4 +117,4 @@ ___
 
 #### Defined in
 
-[lib/types.ts:563](https://github.com/nartc/mapper/blob/a29e3690/packages/core/src/lib/types.ts#L563)
+[lib/types.ts:607](https://github.com/nartc/mapper/blob/f06bf24a/packages/core/src/lib/types.ts#L607)

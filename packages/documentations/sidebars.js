@@ -83,6 +83,7 @@ const sidebars = {
             items: [
                 'misc/transformer-plugin',
                 'misc/mapped-types',
+                'misc/self-mapping',
                 'misc/fake-async',
             ],
         },
@@ -150,7 +151,6 @@ const sidebars = {
             ],
         },
     ],
-    
 };
 
 module.exports = sidebars;

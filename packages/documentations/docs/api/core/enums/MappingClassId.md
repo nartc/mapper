@@ -14,7 +14,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[lib/types.ts:465](https://github.com/nartc/mapper/blob/a29e3690/packages/core/src/lib/types.ts#L465)
+[lib/types.ts:509](https://github.com/nartc/mapper/blob/f06bf24a/packages/core/src/lib/types.ts#L509)
 
 ___
 
@@ -24,7 +24,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:463](https://github.com/nartc/mapper/blob/a29e3690/packages/core/src/lib/types.ts#L463)
+[lib/types.ts:507](https://github.com/nartc/mapper/blob/f06bf24a/packages/core/src/lib/types.ts#L507)
 
 ___
 
@@ -34,7 +34,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:460](https://github.com/nartc/mapper/blob/a29e3690/packages/core/src/lib/types.ts#L460)
+[lib/types.ts:504](https://github.com/nartc/mapper/blob/f06bf24a/packages/core/src/lib/types.ts#L504)
 
 ___
 
@@ -44,7 +44,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:459](https://github.com/nartc/mapper/blob/a29e3690/packages/core/src/lib/types.ts#L459)
+[lib/types.ts:503](https://github.com/nartc/mapper/blob/f06bf24a/packages/core/src/lib/types.ts#L503)
 
 ___
 
@@ -54,7 +54,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:462](https://github.com/nartc/mapper/blob/a29e3690/packages/core/src/lib/types.ts#L462)
+[lib/types.ts:506](https://github.com/nartc/mapper/blob/f06bf24a/packages/core/src/lib/types.ts#L506)
 
 ___
 
@@ -64,7 +64,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:466](https://github.com/nartc/mapper/blob/a29e3690/packages/core/src/lib/types.ts#L466)
+[lib/types.ts:510](https://github.com/nartc/mapper/blob/f06bf24a/packages/core/src/lib/types.ts#L510)
 
 ___
 
@@ -74,7 +74,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:461](https://github.com/nartc/mapper/blob/a29e3690/packages/core/src/lib/types.ts#L461)
+[lib/types.ts:505](https://github.com/nartc/mapper/blob/f06bf24a/packages/core/src/lib/types.ts#L505)
 
 ___
 
@@ -84,4 +84,4 @@ ___
 
 #### Defined in
 
-[lib/types.ts:464](https://github.com/nartc/mapper/blob/a29e3690/packages/core/src/lib/types.ts#L464)
+[lib/types.ts:508](https://github.com/nartc/mapper/blob/f06bf24a/packages/core/src/lib/types.ts#L508)

@@ -25,7 +25,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[packages/nestjs/src/lib/options.ts:8](https://github.com/nartc/mapper/blob/a29e3690/packages/nestjs/src/lib/options.ts#L8)
+[packages/nestjs/src/lib/options.ts:8](https://github.com/nartc/mapper/blob/f06bf24a/packages/nestjs/src/lib/options.ts#L8)
 
 ## Variables
 
@@ -35,7 +35,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[packages/nestjs/src/lib/di/get-mapper-token.ts:1](https://github.com/nartc/mapper/blob/a29e3690/packages/nestjs/src/lib/di/get-mapper-token.ts#L1)
+[packages/nestjs/src/lib/di/get-mapper-token.ts:1](https://github.com/nartc/mapper/blob/f06bf24a/packages/nestjs/src/lib/di/get-mapper-token.ts#L1)
 
 ## Functions
 
@@ -96,7 +96,7 @@ or symbols as the injection token.
 
 #### Defined in
 
-[packages/nestjs/src/lib/di/inject-mapper.ts:4](https://github.com/nartc/mapper/blob/a29e3690/packages/nestjs/src/lib/di/inject-mapper.ts#L4)
+[packages/nestjs/src/lib/di/inject-mapper.ts:4](https://github.com/nartc/mapper/blob/f06bf24a/packages/nestjs/src/lib/di/inject-mapper.ts#L4)
 
 ___
 
@@ -125,7 +125,7 @@ ___
 
 #### Defined in
 
-[packages/nestjs/src/lib/map.interceptor.ts:23](https://github.com/nartc/mapper/blob/a29e3690/packages/nestjs/src/lib/map.interceptor.ts#L23)
+[packages/nestjs/src/lib/map.interceptor.ts:23](https://github.com/nartc/mapper/blob/f06bf24a/packages/nestjs/src/lib/map.interceptor.ts#L23)
 
 ___
 
@@ -154,7 +154,7 @@ ___
 
 #### Defined in
 
-[packages/nestjs/src/lib/map.pipe.ts:17](https://github.com/nartc/mapper/blob/a29e3690/packages/nestjs/src/lib/map.pipe.ts#L17)
+[packages/nestjs/src/lib/map.pipe.ts:17](https://github.com/nartc/mapper/blob/f06bf24a/packages/nestjs/src/lib/map.pipe.ts#L17)
 
 ___
 
@@ -174,4 +174,4 @@ ___
 
 #### Defined in
 
-[packages/nestjs/src/lib/di/get-mapper-token.ts:3](https://github.com/nartc/mapper/blob/a29e3690/packages/nestjs/src/lib/di/get-mapper-token.ts#L3)
+[packages/nestjs/src/lib/di/get-mapper-token.ts:3](https://github.com/nartc/mapper/blob/f06bf24a/packages/nestjs/src/lib/di/get-mapper-token.ts#L3)

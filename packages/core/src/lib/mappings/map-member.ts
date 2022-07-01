@@ -114,16 +114,3 @@ export function mapMember<
     }
     return value;
 }
-
-function isObject(
-    val: unknown,
-    sourceMemberIdentifier: unknown,
-    destinationMemberIdentifier: unknown
-): boolean {
-    return (
-        typeof val === 'object' &&
-        !(val instanceof Date) &&
-        !!sourceMemberIdentifier &&
-        !!destinationMemberIdentifier
-    );
-}

@@ -1,5 +1,18 @@
 
 
+### [8.4.1](https://github.com/nartc/mapper/compare/8.4.0...8.4.1) (2022-07-01)
+
+
+### Bug Fixes
+
+* add exports field since web:rollup does not add it by default ([a2c2df1](https://github.com/nartc/mapper/commit/a2c2df11cb4538b00c15b4a61b69e00cf871b612)), closes [#485](https://github.com/nartc/mapper/issues/485) [#483](https://github.com/nartc/mapper/issues/483)
+* handle peer dependencies version ([82e447a](https://github.com/nartc/mapper/commit/82e447a9c075b207a534e6a7921d8511cc651746)), closes [#482](https://github.com/nartc/mapper/issues/482)
+
+
+### Documentations
+
+* add [@jmplahitko](https://github.com/jmplahitko) as a contributor ([3ff1b7b](https://github.com/nartc/mapper/commit/3ff1b7bf20e35348a7be90b54d7c820efd58ebe8))
+
 ## [8.4.0](https://github.com/nartc/mapper/compare/8.3.7...8.4.0) (2022-07-01)
 
 

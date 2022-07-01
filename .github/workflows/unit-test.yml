@@ -3,41 +3,40 @@
 
 name: Unit Test
 on:
-  # Allow triggering this workflow manually via GitHub CLI/web
-  workflow_dispatch:
+    # Allow triggering this workflow manually via GitHub CLI/web
+    workflow_dispatch:
 
-  push:
-    branches: [ main ]
-    paths:
-      - '**.ts'
-      - '**.js'
-      - 'package.json'
-      - 'package-lock.json'
-      - 'yarn.lock'
-  pull_request:
-    branches: [ main ]
-    paths:
-      - '**.ts'
-      - '**.js'
-      - 'package.json'
-      - 'package-lock.json'
-      - 'yarn.lock'
+    push:
+        branches: [main]
+        paths:
+            - '**.ts'
+            - '**.js'
+            - 'package.json'
+            - 'package-lock.json'
+            - 'yarn.lock'
+    pull_request:
+        branches: [main]
+        paths:
+            - '**.ts'
+            - '**.js'
+            - 'package.json'
+            - 'package-lock.json'
+            - 'yarn.lock'
 
 jobs:
-  jest:
+    jest:
+        runs-on: ${{matrix.os}}
 
-    runs-on: ${{matrix.os}}
+        strategy:
+            matrix:
+                node-version: [14.x]
+                os: [ubuntu-latest, macos-latest]
 
-    strategy:
-      matrix:
-        node-version: [ 14.x ]
-        os: [ ubuntu-latest, macos-latest ]
-
-    steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-      - run: npm install
-      - run: npm run test
+        steps:
+            - uses: actions/checkout@v2
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v1
+              with:
+                  node-version: ${{ matrix.node-version }}
+            - run: npm install
+            - run: npm run test

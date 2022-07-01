@@ -22,5 +22,6 @@
                 "accessToken": "MjMzYTA3OWMtMjQ1MS00YzFhLWExYTYtODMzMTM5MmQxZmE1fHJlYWQtd3JpdGU="
             }
         }
-    }
+    },
+    "$schema": "./node_modules/nx/schemas/nx-schema.json"
 }

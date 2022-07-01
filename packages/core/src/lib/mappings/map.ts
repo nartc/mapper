@@ -164,12 +164,23 @@ export function map<
             [destinationMemberIdentifier, sourceMemberIdentifier] = [],
         ] = propsToMap[i];
 
-        const hasSameIdentifier =
+        let hasSameIdentifier =
             !isPrimitiveConstructor(destinationMemberIdentifier) &&
             !isDateConstructor(destinationMemberIdentifier) &&
             !isPrimitiveConstructor(sourceMemberIdentifier) &&
             !isDateConstructor(sourceMemberIdentifier) &&
             sourceMemberIdentifier === destinationMemberIdentifier;
+
+        if (hasSameIdentifier) {
+            // at this point, we have a same identifier that aren't primitive or date
+            // we then check if there is a mapping created for this identifier
+            hasSameIdentifier = !getMapping(
+                mapper,
+                sourceMemberIdentifier as MetadataIdentifier,
+                destinationMemberIdentifier as MetadataIdentifier,
+                true
+            );
+        }
 
         // Setup a shortcut function to set destinationMemberPath on destination with value as argument
         const setMember = (valFn: () => unknown) => {

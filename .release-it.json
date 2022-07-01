@@ -25,11 +25,8 @@
             "infile": "CHANGELOG.md"
         },
         "@release-it/bumper": {
-          "in": "version.json",
-            "out": [
-                "version.json",
-                "dist/packages/**/package.json"
-            ]
+            "in": "version.json",
+            "out": ["version.json", "dist/packages/**/package.json"]
         }
     },
     "git": {
@@ -44,6 +41,9 @@
     },
     "hooks": {
         "before:bump": "npm run package",
-        "after:bump": "git checkout -- package.json"
+        "after:bump": [
+            "git checkout -- package.json",
+            "node tools/scripts/update-peer-deps.mjs"
+        ]
     }
 }

@@ -13,6 +13,8 @@ import type {
     Primitive,
 } from '../types';
 import { MapFnClassId, TransformationType } from '../types';
+import { isDateConstructor } from '../utils/is-date-constructor';
+import { isPrimitiveConstructor } from '../utils/is-primitive-constructor';
 
 export function mapMember<
     TSource extends Dictionary<TSource>,
@@ -31,6 +33,12 @@ export function mapMember<
     const transformationType: TransformationType =
         transformationMapFn[MapFnClassId.type];
     const mapFn = transformationMapFn[MapFnClassId.fn];
+    const shouldRunImplicitMap = !(
+        isPrimitiveConstructor(sourceMemberIdentifier) ||
+        isPrimitiveConstructor(destinationMemberIdentifier) ||
+        isDateConstructor(sourceMemberIdentifier) ||
+        isDateConstructor(destinationMemberIdentifier)
+    );
 
     switch (transformationType) {
         case TransformationType.MapFrom:
@@ -63,12 +71,7 @@ export function mapMember<
                 mapFn as ConditionReturn<TSource, TDestination>[MapFnClassId.fn]
             )(sourceObject, destinationMemberPath);
 
-            if (
-                typeof value === 'object' &&
-                !(value instanceof Date) &&
-                sourceMemberIdentifier &&
-                destinationMemberIdentifier
-            ) {
+            if (shouldRunImplicitMap && value != null) {
                 value = Array.isArray(value)
                     ? mapper.mapArray(
                           value,
@@ -110,4 +113,17 @@ export function mapMember<
             break;
     }
     return value;
+}
+
+function isObject(
+    val: unknown,
+    sourceMemberIdentifier: unknown,
+    destinationMemberIdentifier: unknown
+): boolean {
+    return (
+        typeof val === 'object' &&
+        !(val instanceof Date) &&
+        !!sourceMemberIdentifier &&
+        !!destinationMemberIdentifier
+    );
 }

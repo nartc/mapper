@@ -2,16 +2,6 @@
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "packages/integration-test/src",
     "targets": {
-        "build": {
-            "executor": "@nrwl/js:tsc",
-            "outputs": ["{options.outputPath}"],
-            "options": {
-                "outputPath": "dist/packages/integration-test",
-                "main": "packages/integration-test/src/index.ts",
-                "tsConfig": "packages/integration-test/tsconfig.lib.json",
-                "assets": ["packages/integration-test/*.md"]
-            }
-        },
         "lint": {
             "executor": "@nrwl/linter:eslint",
             "outputs": ["{options.outputFile}"],

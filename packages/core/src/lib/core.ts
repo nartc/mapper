@@ -25,6 +25,7 @@ import type {
 } from './types';
 import { Dictionary, MapOptions, ModelIdentifier } from './types';
 import { getMapping } from './utils/get-mapping';
+import { AutoMapperLogger } from './utils/logger';
 
 export interface CreateMapperOptions {
     strategyInitializer: MappingStrategyInitializer<MetadataIdentifier>;
@@ -173,7 +174,10 @@ Mapper {} is an empty Object as a Proxy. The following methods are available to 
                 if (p === ERROR_HANDLER) {
                     if (!errorHandler) {
                         errorHandler = {
-                            handle: console.error.bind(console, '[AutoMapper]'),
+                            handle: AutoMapperLogger.error
+                                ? AutoMapperLogger.error.bind(AutoMapperLogger)
+                                : // eslint-disable-next-line @typescript-eslint/no-empty-function
+                                  () => {},
                         };
                     }
                     return errorHandler;

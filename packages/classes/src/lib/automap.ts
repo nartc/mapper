@@ -1,4 +1,5 @@
 import type { Constructor } from '@automapper/core';
+import { AutoMapperLogger } from '@automapper/core';
 import 'reflect-metadata';
 import { AUTOMAP_PROPERTIES_METADATA_KEY } from './keys';
 
@@ -51,13 +52,15 @@ export function AutoMap(
 
         // if typeFn is still null/undefined, fail fast;
         if (options.type == null) {
-            console.warn(`
+            if (AutoMapperLogger.warn) {
+                AutoMapperLogger.warn(`
 Cannot determine type metadata of "${String(propertyKey)}" on class ${
-                target.constructor.name
-            }.
+                    target.constructor.name
+                }.
 "${String(propertyKey)}" metadata has been skipped.
 Manually provide the "type" metadata to prevent unexpected behavior.
 `);
+            }
             return;
         }
 

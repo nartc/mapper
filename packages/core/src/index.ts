@@ -7,6 +7,7 @@ export * from './lib/utils/is-empty';
 export * from './lib/utils/is-primitive-constructor';
 export * from './lib/utils/is-date-constructor';
 export * from './lib/utils/set';
+export * from './lib/utils/logger';
 
 export * from './lib/mappings/create-map';
 export * from './lib/mappings/add-profile';

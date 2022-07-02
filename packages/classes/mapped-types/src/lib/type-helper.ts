@@ -3,6 +3,7 @@ import {
     getMetadataList,
 } from '@automapper/classes';
 import type { Constructor } from '@automapper/core';
+import { AutoMapperLogger } from '@automapper/core';
 
 export function inheritAutoMapMetadata(
     parentClass: Constructor,
@@ -30,7 +31,9 @@ export function inheritAutoMapMetadata(
             targetClass
         );
     } catch (e) {
-        console.error(`Error trying to inherit metadata: ${e}`);
+        if (AutoMapperLogger.error) {
+            AutoMapperLogger.error(`Error trying to inherit metadata: ${e}`);
+        }
     }
 }
 
@@ -54,6 +57,8 @@ export function inheritPropertyInitializers(
                 target[propertyName] = tempInstance[propertyName];
             });
     } catch (e) {
-        console.error(`Error inheriting properties: ${e}`);
+        if (AutoMapperLogger.error) {
+            AutoMapperLogger.error(`Error inheriting properties: ${e}`);
+        }
     }
 }

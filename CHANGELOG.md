@@ -1,5 +1,12 @@
 
 
+## [8.5.0-beta.0](https://github.com/nartc/mapper/compare/8.4.1...8.5.0-beta.0) (2022-07-02)
+
+
+### Features
+
+* **core:** add logger ([51a7984](https://github.com/nartc/mapper/commit/51a7984ed061b201af44b1d6b5dccb58492e3b1f))
+
 ### [8.4.1](https://github.com/nartc/mapper/compare/8.4.0...8.4.1) (2022-07-01)
 
 

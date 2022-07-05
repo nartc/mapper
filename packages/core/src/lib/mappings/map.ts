@@ -136,13 +136,16 @@ export function map<
         destinationIdentifier
     );
 
+    // get extraArguments
+    const extraArguments = extraArgs?.(mapping, destination);
+
     // initialize an array of keys that have already been configured
     const configuredKeys: string[] = [];
 
     if (!isMapArray) {
         const beforeMap = mapBeforeCallback ?? mappingBeforeCallback;
         if (beforeMap) {
-            beforeMap(sourceObject, destination);
+            beforeMap(sourceObject, destination, extraArguments);
         }
     }
 
@@ -335,7 +338,7 @@ Original error: ${originalError}`;
                 sourceObject,
                 destination,
                 destinationMemberPath,
-                extraArgs?.(mapping, destination),
+                extraArguments,
                 mapper,
                 sourceMemberIdentifier,
                 destinationMemberIdentifier
@@ -346,7 +349,7 @@ Original error: ${originalError}`;
     if (!isMapArray) {
         const afterMap = mapAfterCallback ?? mappingAfterCallback;
         if (afterMap) {
-            afterMap(sourceObject, destination);
+            afterMap(sourceObject, destination, extraArguments);
         }
     }
 

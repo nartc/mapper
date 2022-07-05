@@ -105,16 +105,21 @@ export interface Converter<
 
 export type MapCallback<
     TSource extends Dictionary<TSource>,
-    TDestination extends Dictionary<TDestination>
-> = (source: TSource, destination: TDestination) => void;
+    TDestination extends Dictionary<TDestination>,
+    TExtraArgs extends Record<string, any> = Record<string, any>
+> = (
+    source: TSource,
+    destination: TDestination,
+    extraArguments?: TExtraArgs
+) => void;
 
 export interface MapOptions<
     TSource extends Dictionary<TSource>,
     TDestination extends Dictionary<TDestination>,
     TExtraArgs extends Record<string, any> = Record<string, any>
 > {
-    beforeMap?: MapCallback<TSource, TDestination>;
-    afterMap?: MapCallback<TSource, TDestination>;
+    beforeMap?: MapCallback<TSource, TDestination, TExtraArgs>;
+    afterMap?: MapCallback<TSource, TDestination, TExtraArgs>;
     destinationConstructor?: DestinationConstructor<TSource, TDestination>;
     extraArgs?: (
         mapping: Mapping<TSource, TDestination>,

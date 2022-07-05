@@ -37,7 +37,7 @@ ___
 
 #### Defined in
 
-[packages/nestjs/src/lib/options.ts:25](https://github.com/nartc/mapper/blob/3ff1b7bf/packages/nestjs/src/lib/options.ts#L25)
+[packages/nestjs/src/lib/options.ts:25](https://github.com/nartc/mapper/blob/33978de9/packages/nestjs/src/lib/options.ts#L25)
 
 ___
 
@@ -47,7 +47,7 @@ ___
 
 #### Defined in
 
-[packages/nestjs/src/lib/options.ts:27](https://github.com/nartc/mapper/blob/3ff1b7bf/packages/nestjs/src/lib/options.ts#L27)
+[packages/nestjs/src/lib/options.ts:27](https://github.com/nartc/mapper/blob/33978de9/packages/nestjs/src/lib/options.ts#L27)
 
 ___
 
@@ -57,7 +57,7 @@ ___
 
 #### Defined in
 
-[packages/nestjs/src/lib/options.ts:26](https://github.com/nartc/mapper/blob/3ff1b7bf/packages/nestjs/src/lib/options.ts#L26)
+[packages/nestjs/src/lib/options.ts:26](https://github.com/nartc/mapper/blob/33978de9/packages/nestjs/src/lib/options.ts#L26)
 
 ## Methods
 
@@ -77,4 +77,4 @@ ___
 
 #### Defined in
 
-[packages/nestjs/src/lib/options.ts:28](https://github.com/nartc/mapper/blob/3ff1b7bf/packages/nestjs/src/lib/options.ts#L28)
+[packages/nestjs/src/lib/options.ts:28](https://github.com/nartc/mapper/blob/33978de9/packages/nestjs/src/lib/options.ts#L28)

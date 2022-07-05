@@ -44,3 +44,37 @@ AutoMapper TypeScript comes with 4 official strategies:
 `mikro()` and `sequelize()` are extensions of `classes()`. They call `classes()` with different `MappingStrategyInitializerOptions`
 
 :::
+
+## Logger
+
+AutoMapper TypeScript exposes a logger via the symbol `AutoMapperLogger`. There are 4 log levels:
+
+- `log`
+- `warn`
+- `info`
+- `error`
+
+By default, these log levels are implemented using the `console`'s counterparts in addition to having `[AutoMapper]` as the prefix.
+
+```ts
+console.log('some log'); // some log
+AutoMapperLogger.log('some log'); // [AutoMapper]: some log
+```
+
+### Customization
+
+We can customize `AutoMapperLogger` via `AutoMapperLogger.configure()`
+
+```ts
+// in your application's entry point, at the top
+AutoMapperLogger.configure({
+  warn: null, // nullify "warn" completely
+});
+```
+
+There is one caveat in terms of customizing `AutoMapperLogger` which is **having to** call `AutoMapperLogger.configure()` **as soon as possible** so we need to pick a file that is guaranteed to run **early**, preferably earlier than **decorators**.
+
+- In NestJS, this can be `app.module.ts`
+- In Angular, this can be `polyfills.ts`
+
+The caveat stems from the fact that `@AutoMap` decorator from `@automapper/classes` does have a `AutoMapperLogger.warn` call when it fails to infer the type from Reflection. This might not be a desired behavior in certain environments.

@@ -1,5 +1,17 @@
 
 
+## [8.5.0](https://github.com/nartc/mapper/compare/8.5.0-beta.0...8.5.0) (2022-07-05)
+
+
+### Bug Fixes
+
+* **core:** adjust logger impl ([33978de](https://github.com/nartc/mapper/commit/33978de984a54a74d4acc70437985f5cdce60d5b))
+
+
+### Documentations
+
+* **core:** add documentations on AutoMapperLogger ([53b7b40](https://github.com/nartc/mapper/commit/53b7b40364b1ccb4848c98dc063c9933aa94ee18))
+
 ## [8.5.0-beta.0](https://github.com/nartc/mapper/compare/8.4.1...8.5.0-beta.0) (2022-07-02)
 
 

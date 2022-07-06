@@ -7,7 +7,7 @@ import type { NamingConvention } from '../types';
  */
 export class PascalCaseNamingConvention implements NamingConvention {
     separatorCharacter = '';
-    splittingExpression = /(^[A-Z]+(?=$|[A-Z]{1}[a-z0-9]+)|[A-Z]?[a-z0-9]+)/;
+    splittingExpression = /(^[A-Z]+(?=$|[A-Z][a-z0-9]+)|[A-Z]?[a-z0-9]+)/;
 
     public transformPropertyName(sourceNameParts: string[]): string {
         let result = '';

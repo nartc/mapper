@@ -10,16 +10,6 @@ import type {
     STRATEGY,
 } from './symbols';
 
-export type Unpacked<T> = T extends (infer U)[]
-    ? U
-    : T extends (...args: unknown[]) => infer U
-    ? U
-    : T extends new (...args: unknown[]) => infer U
-    ? U
-    : T extends Promise<infer U>
-    ? U
-    : T;
-
 export type Dictionary<T> = { [key in keyof T]?: unknown };
 
 export type AnyConstructor = new (...args: any[]) => any;
@@ -331,7 +321,7 @@ export type MemberMapReturnNoDefer<
     | ConvertUsingReturn<TSource, TDestination>
     | NullSubstitutionReturn<TSource, TDestination, TSelectorReturn>
     | UndefinedSubstitutionReturn<TSource, TDestination, TSelectorReturn>
-    | IgnoreReturn<TSource, TDestination, TSelectorReturn>
+    | IgnoreReturn<TSource, TDestination>
     | MapWithArgumentsReturn<TSource, TDestination, TSelectorReturn>;
 
 export type MemberMapReturn<
@@ -430,8 +420,7 @@ export type UndefinedSubstitutionReturn<
 
 export type IgnoreReturn<
     TSource extends Dictionary<TSource>,
-    TDestination extends Dictionary<TDestination>,
-    TSelectorReturn = SelectorReturn<TDestination>
+    TDestination extends Dictionary<TDestination>
 > = [TransformationType.Ignore];
 
 export type MapWithArgumentsReturn<

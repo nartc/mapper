@@ -185,7 +185,7 @@ export function map<
             );
         }
 
-        // Setup a shortcut function to set destinationMemberPath on destination with value as argument
+        // Set up a shortcut function to set destinationMemberPath on destination with value as argument
         const setMember = (valFn: () => unknown) => {
             try {
                 return setMemberFn(destinationMemberPath, destination)(valFn());
@@ -242,7 +242,7 @@ Original error: ${originalError}`;
             // if null/undefined
             // if isDate, isFile
             // if metadata is null, treat as-is
-            // if has same identifier that are not primitives or Date
+            // if it has same identifier that are not primitives or Date
             // if the initialized value was converted with typeConverter
             if (
                 mapInitializedValue == null ||

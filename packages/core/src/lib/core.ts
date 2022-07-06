@@ -13,7 +13,9 @@ import {
 } from './symbols';
 import type {
     ArrayKeyedMap,
+    Dictionary,
     ErrorHandler,
+    MapOptions,
     Mapper,
     Mapping,
     MappingConfiguration,
@@ -21,9 +23,9 @@ import type {
     MappingStrategyInitializer,
     Metadata,
     MetadataIdentifier,
+    ModelIdentifier,
     NamingConventionInput,
 } from './types';
-import { Dictionary, MapOptions, ModelIdentifier } from './types';
 import { getMapping } from './utils/get-mapping';
 import { AutoMapperLogger } from './utils/logger';
 
@@ -134,7 +136,7 @@ Mapper {} is an empty Object as a Proxy. The following methods are available to 
             },
         } as unknown as Mapper,
         {
-            get(target, p: string | symbol, receiver: any): any {
+            get(target, p: string | symbol, receiver) {
                 if (p === STRATEGY) {
                     if (!strategy) {
                         strategy = strategyInitializer(receiver);

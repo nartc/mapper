@@ -294,9 +294,10 @@ export class ModelVisitor {
     ) {
         // try getting type from typeChecker
         let type = typeChecker.getTypeAtLocation(node);
+        const typeNode = node.type;
 
         // no type for property node, skip
-        if (!type) return node;
+        if (!type || !typeNode) return node;
 
         // union with undefined or null like string | null, ?: string
         if (isNullableUnionType(type)) {
@@ -304,7 +305,7 @@ export class ModelVisitor {
         }
 
         // typeReference is [the type, if the type is array or not]
-        const typeReference = getTypeReference(type, typeChecker);
+        const typeReference = getTypeReference(type, typeNode, typeChecker);
 
         if (!typeReference[0]) {
             const typeReferenceFromNodeType =

@@ -1,23 +1,26 @@
 import { dirname, posix } from 'path';
-import type {
+import {
+    ArrayTypeNode,
     CallExpression,
     Decorator,
     EnumDeclaration,
     EnumMember,
     Identifier,
+    isArrayTypeNode,
+    isTypeNode,
     LeftHandSideExpression,
     Node,
     NodeArray,
+    NodeBuilderFlags,
     NodeFactory,
     PropertyAccessExpression,
+    SyntaxKind,
     Type,
     TypeChecker,
-    TypeReference,
-} from 'typescript/lib/tsserverlibrary';
-import {
-    SyntaxKind,
     TypeFlags,
     TypeFormatFlags,
+    TypeNode,
+    TypeReference,
 } from 'typescript/lib/tsserverlibrary';
 
 export function hasFlag(type: Type, flag: TypeFlags): boolean {
@@ -190,12 +193,32 @@ export function getDefaultTypeFormatFlags(enclosingNode?: Node): number {
 
 export function getTypeReference(
     type: Type,
+    typeNode: TypeNode,
     typeChecker: TypeChecker,
     isArray = false
 ): [elementType: string | undefined, isArray: boolean] {
-    if (isArrayType(type)) {
-        const [arrayType] = (type as TypeReference).typeArguments || [];
-        return getTypeReference(arrayType, typeChecker, true);
+    if (isArrayType(type) || isArrayTypeNode(typeNode)) {
+        const [arrayType] =
+            (type as TypeReference).typeArguments ||
+            ((typeNode as ArrayTypeNode).elementType
+                ? [(typeNode as ArrayTypeNode).elementType]
+                : []) ||
+            [];
+        const isArrayTypeNode = isTypeNode(arrayType as TypeNode);
+        return getTypeReference(
+            isArrayTypeNode
+                ? typeChecker.getTypeAtLocation(arrayType as TypeNode)
+                : (arrayType as Type),
+            isArrayTypeNode
+                ? (arrayType as TypeNode)
+                : (typeChecker.typeToTypeNode(
+                      arrayType as Type,
+                      typeNode,
+                      NodeBuilderFlags.NoTruncation
+                  ) as TypeNode),
+            typeChecker,
+            true
+        );
     }
 
     if (isBoolean(type)) {

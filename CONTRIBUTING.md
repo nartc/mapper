@@ -26,7 +26,7 @@ _packages
 
 ### Test your changes
 
--   Run `npm run test:all` to run all test suites.
+-   Run `npm run test` to run all test suites.
 
 ### Commit
 

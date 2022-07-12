@@ -17,7 +17,7 @@
     "tslib": "~2.4.0"
   },
   "devDependencies": {
-    "@mikro-orm/core": "5.2.2",
+    "@mikro-orm/core": "5.2.3",
     "@nestjs/common": "~8.4.7",
     "@nestjs/core": "~8.4.7",
     "@nestjs/platform-express": "~8.4.7",
@@ -35,10 +35,10 @@
     "@release-it/bumper": "4.0.0",
     "@release-it/conventional-changelog": "5.0.0",
     "@types/jest": "27.5.1",
-    "@types/node": "18.0.2",
+    "@types/node": "18.0.3",
     "@types/supertest": "2.0.12",
-    "@typescript-eslint/eslint-plugin": "5.30.5",
-    "@typescript-eslint/parser": "5.30.5",
+    "@typescript-eslint/eslint-plugin": "5.30.6",
+    "@typescript-eslint/parser": "5.30.6",
     "all-contributors-cli": "6.20.0",
     "babel-preset-minify": "0.5.2",
     "commitizen": "4.2.4",
@@ -52,8 +52,8 @@
     "prettier": "2.7.1",
     "reflect-metadata": "~0.1.13",
     "release-it": "15.1.1",
-    "rxjs": "~7.5.5",
-    "sequelize": "6.21.2",
+    "rxjs": "~7.5.6",
+    "sequelize": "6.21.3",
     "supertest": "6.2.4",
     "ts-jest": "27.1.4",
     "typescript": "4.7.4"

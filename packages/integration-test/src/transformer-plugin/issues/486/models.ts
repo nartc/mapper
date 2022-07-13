@@ -72,7 +72,8 @@ class SkillEntity extends QBaseEntity {
             ["label", { type: () => String, depth: 1 }],
             ["value", { type: () => String, depth: 1 }],
             ["isDefault", { type: () => Boolean, depth: 1 }],
-            ["status", { type: () => SkillStatusEnum, depth: 1 }]
+            ["status", { type: () => SkillStatusEnum, depth: 1 }],
+            ["categories", { type: () => [CategoryV2Entity], depth: 1 }]
         ];
     }
 }

@@ -46,13 +46,14 @@ export function isNullableUnionType(type: Type): boolean {
 }
 
 export function isArrayType(type: Type): boolean {
-    const symbol = type.getSymbol();
+    const symbol = type.getSymbol() || type.aliasSymbol;
     if (!symbol) {
         return false;
     }
     return (
         symbol.getName() === 'Array' &&
-        (type as TypeReference).typeArguments?.length === 1
+        ((type as TypeReference).typeArguments?.length === 1 ||
+            (type as TypeReference).aliasTypeArguments?.length === 1)
     );
 }
 
@@ -200,6 +201,7 @@ export function getTypeReference(
     if (isArrayType(type) || isArrayTypeNode(typeNode)) {
         const [arrayType] =
             (type as TypeReference).typeArguments ||
+            (type as TypeReference).aliasTypeArguments ||
             ((typeNode as ArrayTypeNode).elementType
                 ? [(typeNode as ArrayTypeNode).elementType]
                 : []) ||
@@ -237,7 +239,7 @@ export function getTypeReference(
         return [Date.name, isArray];
     }
 
-    if (type.isClass()) {
+    if (type.isClass() || type.aliasSymbol) {
         return [getText(type, typeChecker), isArray];
     }
 

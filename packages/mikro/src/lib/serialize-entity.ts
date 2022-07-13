@@ -13,7 +13,7 @@ const excluded = [
 
 export function serializeEntity(
     item: AnyEntity,
-    itemMetadata: Record<string, unknown>,
+    itemMetadata: Record<string, unknown> | undefined,
     toPojo = false
 ) {
     if (!Utils.isEntity(item)) return item;
@@ -26,7 +26,7 @@ export function serializeEntity(
         }
 
         const value = item[key];
-        const keyMetadata = itemMetadata[key] as Record<string, unknown>;
+        const keyMetadata = itemMetadata && itemMetadata[key] as Record<string, unknown>;
 
         if (Utils.isCollection(value)) {
             result[key] = (value.getSnapshot() || []).map((snapshot) => {

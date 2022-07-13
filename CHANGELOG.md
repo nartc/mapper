@@ -1,5 +1,24 @@
 
 
+### [8.5.1](https://github.com/nartc/mapper/compare/8.5.0...8.5.1) (2022-07-13)
+
+
+### Features
+
+* **core:** MapCallback is now called with extraArguments ([60a1da8](https://github.com/nartc/mapper/commit/60a1da8d26ffb1b087bd16e9a0e561af53539ec1))
+
+
+### Bug Fixes
+
+* **classes:** get type from typeNode in the case type isn't sufficient enough ([4ab3549](https://github.com/nartc/mapper/commit/4ab3549bcdd54fc320a5aec98fc205ec22899209))
+* **classes:** use aliasSymbol and aliasTypeArguments for transformer plugin if they exist ([6b0b5ae](https://github.com/nartc/mapper/commit/6b0b5ae2ff56497bf35bed2aebf843852bfdedc4))
+* **core:** skip nested mapping for array prop if destination identifier is primitive ([d2327bc](https://github.com/nartc/mapper/commit/d2327bca824882aadb52bf2042a1f301ef4f8ffa))
+
+
+### Documentations
+
+* fix mikro pagakage name on readme ([#487](https://github.com/nartc/mapper/issues/487)) ([13b7305](https://github.com/nartc/mapper/commit/13b7305b8759f34bc5841b4e2e00b3840013e2e8))
+
 ## [8.5.0](https://github.com/nartc/mapper/compare/8.5.0-beta.0...8.5.0) (2022-07-05)
 
 

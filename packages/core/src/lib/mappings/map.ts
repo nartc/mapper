@@ -278,6 +278,12 @@ Original error: ${originalError}`;
                     continue;
                 }
 
+                // if first is object but the destination identifier is a primitive
+                // then skip completely
+                if (isPrimitiveConstructor(destinationMemberIdentifier)) {
+                    continue;
+                }
+
                 setMember(() =>
                     mapInitializedValue.map((each) =>
                         mapReturn(

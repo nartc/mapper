@@ -8,6 +8,12 @@ import {
     ScriptTarget,
     transpileModule,
 } from 'typescript/lib/tsserverlibrary';
+import {
+    compiledCreateSkillRequestDto,
+    compiledSkillEntity,
+    createSkillRequestDtoText,
+    skillEntityText,
+} from './issues/486/models';
 
 import {
     userModelText,
@@ -137,6 +143,57 @@ describe('Classes - Transformer Plugin', () => {
 
             expect(result.outputText).toBeTruthy();
             expect(result.outputText).toEqual(userModelTranspiledTextESM);
+        });
+    });
+    describe('issue 486', () => {
+        it('should compile', () => {
+            const tsConfig: CompilerOptions = {
+                module: ModuleKind.CommonJS,
+                target: ScriptTarget.ESNext,
+                noEmitHelpers: true,
+            };
+
+            const createSkillFileName = 'create-skill.dto.ts';
+            const createSkillProgramStructure = createProgram(
+                [createSkillFileName],
+                tsConfig
+            );
+            const createSkillResult = transpileModule(
+                createSkillRequestDtoText,
+                {
+                    compilerOptions: tsConfig,
+                    fileName: createSkillFileName,
+                    transformers: {
+                        before: [
+                            automapperTransformerPlugin(
+                                createSkillProgramStructure
+                            ).before,
+                        ],
+                    },
+                }
+            );
+            expect(createSkillResult.outputText).toBeTruthy();
+            expect(createSkillResult.outputText).toEqual(
+                compiledCreateSkillRequestDto
+            );
+
+            const skillEntityFileName = 'skill.entity.ts';
+            const skillEntityProgramStructure = createProgram(
+                [skillEntityFileName],
+                tsConfig
+            );
+            const skillEntityResult = transpileModule(skillEntityText, {
+                compilerOptions: tsConfig,
+                fileName: skillEntityFileName,
+                transformers: {
+                    before: [
+                        automapperTransformerPlugin(skillEntityProgramStructure)
+                            .before,
+                    ],
+                },
+            });
+            expect(skillEntityResult.outputText).toBeTruthy();
+            expect(skillEntityResult.outputText).toEqual(compiledSkillEntity);
         });
     });
 });

@@ -1,23 +1,26 @@
 import { dirname, posix } from 'path';
-import type {
+import {
+    ArrayTypeNode,
     CallExpression,
     Decorator,
     EnumDeclaration,
     EnumMember,
     Identifier,
+    isArrayTypeNode,
+    isTypeNode,
     LeftHandSideExpression,
     Node,
     NodeArray,
+    NodeBuilderFlags,
     NodeFactory,
     PropertyAccessExpression,
+    SyntaxKind,
     Type,
     TypeChecker,
-    TypeReference,
-} from 'typescript/lib/tsserverlibrary';
-import {
-    SyntaxKind,
     TypeFlags,
     TypeFormatFlags,
+    TypeNode,
+    TypeReference,
 } from 'typescript/lib/tsserverlibrary';
 
 export function hasFlag(type: Type, flag: TypeFlags): boolean {
@@ -43,13 +46,14 @@ export function isNullableUnionType(type: Type): boolean {
 }
 
 export function isArrayType(type: Type): boolean {
-    const symbol = type.getSymbol();
+    const symbol = type.getSymbol() || type.aliasSymbol;
     if (!symbol) {
         return false;
     }
     return (
         symbol.getName() === 'Array' &&
-        (type as TypeReference).typeArguments?.length === 1
+        ((type as TypeReference).typeArguments?.length === 1 ||
+            (type as TypeReference).aliasTypeArguments?.length === 1)
     );
 }
 
@@ -190,12 +194,33 @@ export function getDefaultTypeFormatFlags(enclosingNode?: Node): number {
 
 export function getTypeReference(
     type: Type,
+    typeNode: TypeNode,
     typeChecker: TypeChecker,
     isArray = false
 ): [elementType: string | undefined, isArray: boolean] {
-    if (isArrayType(type)) {
-        const [arrayType] = (type as TypeReference).typeArguments || [];
-        return getTypeReference(arrayType, typeChecker, true);
+    if (isArrayType(type) || isArrayTypeNode(typeNode)) {
+        const [arrayType] =
+            (type as TypeReference).typeArguments ||
+            (type as TypeReference).aliasTypeArguments ||
+            ((typeNode as ArrayTypeNode).elementType
+                ? [(typeNode as ArrayTypeNode).elementType]
+                : []) ||
+            [];
+        const isArrayTypeNode = isTypeNode(arrayType as TypeNode);
+        return getTypeReference(
+            isArrayTypeNode
+                ? typeChecker.getTypeAtLocation(arrayType as TypeNode)
+                : (arrayType as Type),
+            isArrayTypeNode
+                ? (arrayType as TypeNode)
+                : (typeChecker.typeToTypeNode(
+                      arrayType as Type,
+                      typeNode,
+                      NodeBuilderFlags.NoTruncation
+                  ) as TypeNode),
+            typeChecker,
+            true
+        );
     }
 
     if (isBoolean(type)) {
@@ -214,7 +239,7 @@ export function getTypeReference(
         return [Date.name, isArray];
     }
 
-    if (type.isClass()) {
+    if (type.isClass() || type.aliasSymbol) {
         return [getText(type, typeChecker), isArray];
     }
 

@@ -7,7 +7,7 @@ import type { NamingConvention } from '../types';
  */
 export class CamelCaseNamingConvention implements NamingConvention {
     separatorCharacter = '';
-    splittingExpression = /(^[a-z]+(?=$|[A-Z]{1}[a-z0-9]+)|[A-Z]?[a-z0-9]+)/;
+    splittingExpression = /(^[a-z]+(?=$|[A-Z][a-z0-9]+)|[A-Z]?[a-z0-9]+)/;
 
     transformPropertyName(sourceNameParts: string[]): string {
         let result = '';

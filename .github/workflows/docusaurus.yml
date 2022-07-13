@@ -1,8 +1,18 @@
 name: Docusaurus
 on:
+    # Allow triggering this workflow manually via GitHub CLI/web
+    workflow_dispatch:
     push:
         branches: [main]
-#on: [ workflow_dispatch ]
+        paths:
+            - 'packages/documentations/docusaurus.config.js'
+            - 'packages/documentations/sidebars.js'
+            - 'packages/documentations/*.json'
+            - 'packages/documentations/docs/**/*.md'
+            - 'packages/documentations/docs/**/*.mdx'
+            - 'packages/documentations/static/**/*.*'
+            - 'packages/documentations/src/**/*.js'
+            - 'packages/documentations/src/**/*.css'
 jobs:
     build-docs:
         runs-on: ubuntu-latest

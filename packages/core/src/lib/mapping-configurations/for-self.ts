@@ -79,7 +79,7 @@ export function forSelf<
                 ];
             transformation[MappingTransformationClassId.memberMapFn][
                 MapFnClassId.fn
-            ] = (sourceObj: any) =>
+            ] = (sourceObj: TSource) =>
                 get(
                     selector(sourceObj),
                     mapProperty[MappingPropertiesClassId.path]

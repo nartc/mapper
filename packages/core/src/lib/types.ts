@@ -10,16 +10,6 @@ import type {
     STRATEGY,
 } from './symbols';
 
-export type Unpacked<T> = T extends (infer U)[]
-    ? U
-    : T extends (...args: unknown[]) => infer U
-    ? U
-    : T extends new (...args: unknown[]) => infer U
-    ? U
-    : T extends Promise<infer U>
-    ? U
-    : T;
-
 export type Dictionary<T> = { [key in keyof T]?: unknown };
 
 export type AnyConstructor = new (...args: any[]) => any;
@@ -105,16 +95,21 @@ export interface Converter<
 
 export type MapCallback<
     TSource extends Dictionary<TSource>,
-    TDestination extends Dictionary<TDestination>
-> = (source: TSource, destination: TDestination) => void;
+    TDestination extends Dictionary<TDestination>,
+    TExtraArgs extends Record<string, any> = Record<string, any>
+> = (
+    source: TSource,
+    destination: TDestination,
+    extraArguments?: TExtraArgs
+) => void;
 
 export interface MapOptions<
     TSource extends Dictionary<TSource>,
     TDestination extends Dictionary<TDestination>,
     TExtraArgs extends Record<string, any> = Record<string, any>
 > {
-    beforeMap?: MapCallback<TSource, TDestination>;
-    afterMap?: MapCallback<TSource, TDestination>;
+    beforeMap?: MapCallback<TSource, TDestination, TExtraArgs>;
+    afterMap?: MapCallback<TSource, TDestination, TExtraArgs>;
     destinationConstructor?: DestinationConstructor<TSource, TDestination>;
     extraArgs?: (
         mapping: Mapping<TSource, TDestination>,
@@ -326,7 +321,7 @@ export type MemberMapReturnNoDefer<
     | ConvertUsingReturn<TSource, TDestination>
     | NullSubstitutionReturn<TSource, TDestination, TSelectorReturn>
     | UndefinedSubstitutionReturn<TSource, TDestination, TSelectorReturn>
-    | IgnoreReturn<TSource, TDestination, TSelectorReturn>
+    | IgnoreReturn<TSource, TDestination>
     | MapWithArgumentsReturn<TSource, TDestination, TSelectorReturn>;
 
 export type MemberMapReturn<
@@ -425,8 +420,7 @@ export type UndefinedSubstitutionReturn<
 
 export type IgnoreReturn<
     TSource extends Dictionary<TSource>,
-    TDestination extends Dictionary<TDestination>,
-    TSelectorReturn = SelectorReturn<TDestination>
+    TDestination extends Dictionary<TDestination>
 > = [TransformationType.Ignore];
 
 export type MapWithArgumentsReturn<

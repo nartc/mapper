@@ -136,13 +136,16 @@ export function map<
         destinationIdentifier
     );
 
+    // get extraArguments
+    const extraArguments = extraArgs?.(mapping, destination);
+
     // initialize an array of keys that have already been configured
     const configuredKeys: string[] = [];
 
     if (!isMapArray) {
         const beforeMap = mapBeforeCallback ?? mappingBeforeCallback;
         if (beforeMap) {
-            beforeMap(sourceObject, destination);
+            beforeMap(sourceObject, destination, extraArguments);
         }
     }
 
@@ -182,7 +185,7 @@ export function map<
             );
         }
 
-        // Setup a shortcut function to set destinationMemberPath on destination with value as argument
+        // Set up a shortcut function to set destinationMemberPath on destination with value as argument
         const setMember = (valFn: () => unknown) => {
             try {
                 return setMemberFn(destinationMemberPath, destination)(valFn());
@@ -239,7 +242,7 @@ Original error: ${originalError}`;
             // if null/undefined
             // if isDate, isFile
             // if metadata is null, treat as-is
-            // if has same identifier that are not primitives or Date
+            // if it has same identifier that are not primitives or Date
             // if the initialized value was converted with typeConverter
             if (
                 mapInitializedValue == null ||
@@ -272,6 +275,12 @@ Original error: ${originalError}`;
                 // if first is empty
                 if (isEmpty(first)) {
                     setMember(() => []);
+                    continue;
+                }
+
+                // if first is object but the destination identifier is a primitive
+                // then skip completely
+                if (isPrimitiveConstructor(destinationMemberIdentifier)) {
                     continue;
                 }
 
@@ -335,7 +344,7 @@ Original error: ${originalError}`;
                 sourceObject,
                 destination,
                 destinationMemberPath,
-                extraArgs?.(mapping, destination),
+                extraArguments,
                 mapper,
                 sourceMemberIdentifier,
                 destinationMemberIdentifier
@@ -346,7 +355,7 @@ Original error: ${originalError}`;
     if (!isMapArray) {
         const afterMap = mapAfterCallback ?? mappingAfterCallback;
         if (afterMap) {
-            afterMap(sourceObject, destination);
+            afterMap(sourceObject, destination, extraArguments);
         }
     }
 

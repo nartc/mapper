@@ -92,6 +92,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "hoa00",
+      "name": "Hoa Truong",
+      "avatar_url": "https://avatars.githubusercontent.com/u/376698?v=4",
+      "profile": "https://hoadev.com/",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7

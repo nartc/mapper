@@ -1,8 +1,9 @@
 ## CONTRIBUTING
 
 -   Fork this repo and clone the forked on your local environment
--   Run `npm install` to install all dependencies
-    -   Run `npx husky install` to enable commit hooks
+-   [Install **pnpm**](https://pnpm.io/installation)
+-   Run `pnpm install` to install all dependencies
+-   Run `npx husky install` to enable commit hooks
 -   Start working on changes
 
 ### Structure
@@ -26,7 +27,7 @@ _packages
 
 ### Test your changes
 
--   Run `npm run test:all` to run all test suites.
+-   Run `npm run test` to run all test suites.
 
 ### Commit
 

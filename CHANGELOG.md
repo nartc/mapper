@@ -1,5 +1,25 @@
 
 
+## [8.6.0](https://github.com/nartc/mapper/compare/8.5.1...8.6.0) (2022-07-25)
+
+
+### Features
+
+* **nestjs:** add 9.X.X compatibility [#488](https://github.com/nartc/mapper/issues/488) ([#494](https://github.com/nartc/mapper/issues/494)) ([e815c54](https://github.com/nartc/mapper/commit/e815c548f040642dd3ad3c016cd441f6454e0828))
+
+
+### Bug Fixes
+
+* [docs] Wrong hyperlink [#476](https://github.com/nartc/mapper/issues/476) ([#490](https://github.com/nartc/mapper/issues/490)) ([96af5f9](https://github.com/nartc/mapper/commit/96af5f9430b962524e1591d1b6f6f49681619e3b))
+* **mikro:** cannot read properties of undefined (reading 'id') bug ([#493](https://github.com/nartc/mapper/issues/493)) ([4fe4e37](https://github.com/nartc/mapper/commit/4fe4e370910b59c14953bfa92103ec09b9ad5360))
+
+
+### Documentations
+
+* add @Alwinator as a contributor ([5fe1547](https://github.com/nartc/mapper/commit/5fe1547873a0541f01c6879d2bb1b85f77d4fe98))
+* add @VPecquerie as a contributor ([2f5c5af](https://github.com/nartc/mapper/commit/2f5c5aff9f65fc7f57a16c3b6f4aa9933eab9231))
+* update ([aca0d8d](https://github.com/nartc/mapper/commit/aca0d8d0f3960d54c06559b90c71ae67b6925a5c))
+
 ### [8.5.1](https://github.com/nartc/mapper/compare/8.5.0...8.5.1) (2022-07-13)
 
 

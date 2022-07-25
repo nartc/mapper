@@ -101,6 +101,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "VPecquerie",
+      "name": "Vincent Pecquerie",
+      "avatar_url": "https://avatars.githubusercontent.com/u/6575007?v=4",
+      "profile": "https://www.vincent-p.fr/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7

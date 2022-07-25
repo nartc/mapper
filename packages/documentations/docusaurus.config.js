@@ -15,6 +15,7 @@ const config = {
     favicon: 'img/favicon.ico',
     organizationName: 'nartc',
     projectName: 'mapper',
+    trailingSlash: false, // remove trailing slashes from URLs/links
     presets: [
         [
             'classic',

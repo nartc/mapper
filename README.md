@@ -1,7 +1,7 @@
 # AutoMapper TypeScript
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-11-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-12-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=nartc_mapper&metric=ncloc)](https://sonarcloud.io/dashboard?id=nartc_mapper)
@@ -62,6 +62,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/jmplahitko"><img src="https://avatars.githubusercontent.com/u/3401828?v=4?s=75" width="75px;" alt=""/><br /><sub><b>jmplahitko</b></sub></a><br /><a href="https://github.com/nartc/mapper/commits?author=jmplahitko" title="Code">💻</a></td>
     <td align="center"><a href="https://hoadev.com/"><img src="https://avatars.githubusercontent.com/u/376698?v=4?s=75" width="75px;" alt=""/><br /><sub><b>Hoa Truong</b></sub></a><br /><a href="https://github.com/nartc/mapper/commits?author=hoa00" title="Documentation">📖</a></td>
     <td align="center"><a href="https://www.vincent-p.fr/"><img src="https://avatars.githubusercontent.com/u/6575007?v=4?s=75" width="75px;" alt=""/><br /><sub><b>Vincent Pecquerie</b></sub></a><br /><a href="https://github.com/nartc/mapper/commits?author=VPecquerie" title="Code">💻</a></td>
+    <td align="center"><a href="https://alwinschuster.at/"><img src="https://avatars.githubusercontent.com/u/39517491?v=4?s=75" width="75px;" alt=""/><br /><sub><b>Alwin J. Schuster</b></sub></a><br /><a href="https://github.com/nartc/mapper/commits?author=Alwinator" title="Code">💻</a></td>
   </tr>
 </table>
 

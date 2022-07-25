@@ -20,7 +20,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[lib/types.ts:606](https://github.com/nartc/mapper/blob/33978de9/packages/core/src/lib/types.ts#L606)
+[lib/types.ts:600](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L600)
 
 ___
 
@@ -30,7 +30,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:604](https://github.com/nartc/mapper/blob/33978de9/packages/core/src/lib/types.ts#L604)
+[lib/types.ts:598](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L598)
 
 ___
 
@@ -40,7 +40,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:605](https://github.com/nartc/mapper/blob/33978de9/packages/core/src/lib/types.ts#L605)
+[lib/types.ts:599](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L599)
 
 ## Methods
 
@@ -69,7 +69,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:617](https://github.com/nartc/mapper/blob/33978de9/packages/core/src/lib/types.ts#L617)
+[lib/types.ts:611](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L611)
 
 ___
 
@@ -97,7 +97,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:610](https://github.com/nartc/mapper/blob/33978de9/packages/core/src/lib/types.ts#L610)
+[lib/types.ts:604](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L604)
 
 ___
 
@@ -117,4 +117,4 @@ ___
 
 #### Defined in
 
-[lib/types.ts:607](https://github.com/nartc/mapper/blob/33978de9/packages/core/src/lib/types.ts#L607)
+[lib/types.ts:601](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L601)

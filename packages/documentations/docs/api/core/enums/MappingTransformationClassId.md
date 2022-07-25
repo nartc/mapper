@@ -14,7 +14,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[lib/types.ts:452](https://github.com/nartc/mapper/blob/33978de9/packages/core/src/lib/types.ts#L452)
+[lib/types.ts:446](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L446)
 
 ___
 
@@ -24,4 +24,4 @@ ___
 
 #### Defined in
 
-[lib/types.ts:453](https://github.com/nartc/mapper/blob/33978de9/packages/core/src/lib/types.ts#L453)
+[lib/types.ts:447](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L447)

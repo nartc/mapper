@@ -20,7 +20,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[packages/nestjs/src/lib/automapper-profile.ts:9](https://github.com/nartc/mapper/blob/33978de9/packages/nestjs/src/lib/automapper-profile.ts#L9)
+[packages/nestjs/src/lib/automapper-profile.ts:9](https://github.com/nartc/mapper/blob/efc4cb9d/packages/nestjs/src/lib/automapper-profile.ts#L9)
 
 ## Properties
 
@@ -40,7 +40,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[packages/nestjs/src/lib/automapper-profile.ts:17](https://github.com/nartc/mapper/blob/33978de9/packages/nestjs/src/lib/automapper-profile.ts#L17)
+[packages/nestjs/src/lib/automapper-profile.ts:17](https://github.com/nartc/mapper/blob/efc4cb9d/packages/nestjs/src/lib/automapper-profile.ts#L17)
 
 ___
 
@@ -54,4 +54,4 @@ ___
 
 #### Defined in
 
-[packages/nestjs/src/lib/automapper-profile.ts:15](https://github.com/nartc/mapper/blob/33978de9/packages/nestjs/src/lib/automapper-profile.ts#L15)
+[packages/nestjs/src/lib/automapper-profile.ts:15](https://github.com/nartc/mapper/blob/efc4cb9d/packages/nestjs/src/lib/automapper-profile.ts#L15)

@@ -24,4 +24,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[lib/sequelize.ts:12](https://github.com/nartc/mapper/blob/33978de9/packages/sequelize/src/lib/sequelize.ts#L12)
+[lib/sequelize.ts:12](https://github.com/nartc/mapper/blob/efc4cb9d/packages/sequelize/src/lib/sequelize.ts#L12)

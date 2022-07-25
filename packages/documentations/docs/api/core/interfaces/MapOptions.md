@@ -18,21 +18,21 @@ custom_edit_url: null
 
 ### afterMap
 
-• `Optional` **afterMap**: [`MapCallback`](../modules.md#mapcallback)<`TSource`, `TDestination`\>
+• `Optional` **afterMap**: [`MapCallback`](../modules.md#mapcallback)<`TSource`, `TDestination`, `TExtraArgs`\>
 
 #### Defined in
 
-[lib/types.ts:117](https://github.com/nartc/mapper/blob/33978de9/packages/core/src/lib/types.ts#L117)
+[lib/types.ts:112](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L112)
 
 ___
 
 ### beforeMap
 
-• `Optional` **beforeMap**: [`MapCallback`](../modules.md#mapcallback)<`TSource`, `TDestination`\>
+• `Optional` **beforeMap**: [`MapCallback`](../modules.md#mapcallback)<`TSource`, `TDestination`, `TExtraArgs`\>
 
 #### Defined in
 
-[lib/types.ts:116](https://github.com/nartc/mapper/blob/33978de9/packages/core/src/lib/types.ts#L116)
+[lib/types.ts:111](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L111)
 
 ___
 
@@ -42,7 +42,7 @@ ___
 
 #### Defined in
 
-[lib/types.ts:118](https://github.com/nartc/mapper/blob/33978de9/packages/core/src/lib/types.ts#L118)
+[lib/types.ts:113](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L113)
 
 ## Methods
 
@@ -63,4 +63,4 @@ ___
 
 #### Defined in
 
-[lib/types.ts:119](https://github.com/nartc/mapper/blob/33978de9/packages/core/src/lib/types.ts#L119)
+[lib/types.ts:114](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L114)

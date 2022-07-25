@@ -20,7 +20,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[lib/utils/logger.ts:2](https://github.com/nartc/mapper/blob/33978de9/packages/core/src/lib/utils/logger.ts#L2)
+[lib/utils/logger.ts:2](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/utils/logger.ts#L2)
 
 ___
 
@@ -30,7 +30,7 @@ ___
 
 #### Defined in
 
-[lib/utils/logger.ts:3](https://github.com/nartc/mapper/blob/33978de9/packages/core/src/lib/utils/logger.ts#L3)
+[lib/utils/logger.ts:3](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/utils/logger.ts#L3)
 
 ## Methods
 
@@ -50,7 +50,7 @@ ___
 
 #### Defined in
 
-[lib/utils/logger.ts:5](https://github.com/nartc/mapper/blob/33978de9/packages/core/src/lib/utils/logger.ts#L5)
+[lib/utils/logger.ts:5](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/utils/logger.ts#L5)
 
 ___
 
@@ -70,7 +70,7 @@ ___
 
 #### Defined in
 
-[lib/utils/logger.ts:27](https://github.com/nartc/mapper/blob/33978de9/packages/core/src/lib/utils/logger.ts#L27)
+[lib/utils/logger.ts:27](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/utils/logger.ts#L27)
 
 ___
 
@@ -90,7 +90,7 @@ ___
 
 #### Defined in
 
-[lib/utils/logger.ts:31](https://github.com/nartc/mapper/blob/33978de9/packages/core/src/lib/utils/logger.ts#L31)
+[lib/utils/logger.ts:31](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/utils/logger.ts#L31)
 
 ___
 
@@ -110,7 +110,7 @@ ___
 
 #### Defined in
 
-[lib/utils/logger.ts:19](https://github.com/nartc/mapper/blob/33978de9/packages/core/src/lib/utils/logger.ts#L19)
+[lib/utils/logger.ts:19](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/utils/logger.ts#L19)
 
 ___
 
@@ -130,4 +130,4 @@ ___
 
 #### Defined in
 
-[lib/utils/logger.ts:23](https://github.com/nartc/mapper/blob/33978de9/packages/core/src/lib/utils/logger.ts#L23)
+[lib/utils/logger.ts:23](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/utils/logger.ts#L23)

@@ -1,5 +1,12 @@
 
 
+## [8.7.0](https://github.com/nartc/mapper/compare/8.6.0...8.7.0) (2022-07-27)
+
+
+### Features
+
+* **core:** add custom properties to isolate forMember configuration ([e5b7028](https://github.com/nartc/mapper/commit/e5b7028ac9ef9b4e65f36f3d80e4211c538b9ce1)), closes [#497](https://github.com/nartc/mapper/issues/497)
+
 ## [8.6.0](https://github.com/nartc/mapper/compare/8.5.1...8.6.0) (2022-07-25)
 
 

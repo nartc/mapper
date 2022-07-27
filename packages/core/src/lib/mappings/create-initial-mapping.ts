@@ -74,6 +74,7 @@ export function createInitialMapping<
         [source, destination],
         [sourceObject as TSource, destinationObject as TDestination],
         [],
+        [],
         mapper,
         destinationConstructor,
     ];
@@ -89,7 +90,8 @@ export function createInitialMapping<
     const destinationPaths = getPathRecursive(destinationObject);
 
     const mappingProperties = mapping[MappingClassId.properties];
-    const hasCustomMappingProperties = mappingProperties.length > 0;
+    const customMappingProperties = mapping[MappingClassId.customProperties];
+    const hasCustomMappingProperties = customMappingProperties.length > 0;
 
     const namingConventions = mapping[MappingClassId.namingConventions];
 
@@ -104,7 +106,7 @@ export function createInitialMapping<
         // for this destination path, skip it
         if (
             hasCustomMappingProperties &&
-            mappingProperties.some((property) =>
+            customMappingProperties.some((property) =>
                 isPrimitiveArrayEqual(
                     property[MappingPropertiesClassId.path],
                     destinationPath
@@ -213,11 +215,16 @@ export function createInitialMapping<
             }
         }
 
-        mappingProperties.unshift([
+        mappingProperties.push([
             destinationPath,
             [destinationPath, transformation],
             nestedMappingPair,
         ]);
+    }
+
+    // consolidate mapping properties
+    for (const customMappingProperty of customMappingProperties) {
+        mappingProperties.push(customMappingProperty);
     }
 
     return mapping;

@@ -113,6 +113,7 @@ export function map<
         [sourceIdentifier, destinationIdentifier],
         [, destinationWithMetadata],
         propsToMap,
+        ,
         mapper,
         destinationConstructor,
         ,

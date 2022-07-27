@@ -497,6 +497,7 @@ export const enum MappingClassId {
     identifiers,
     identifierMetadata,
     properties,
+    customProperties,
     mapper,
     destinationConstructor,
     typeConverters,
@@ -514,6 +515,20 @@ export type Mapping<
     ],
     identifierMetadata: [source: TSource, destination: TDestination],
     properties: Array<
+        [
+            path: string[],
+            mappingProperty: MappingProperty<
+                TSource,
+                TDestination,
+                SelectorReturn<TDestination>
+            >,
+            nestedMappingPair?: [
+                destination: MetadataIdentifier | Primitive | Date,
+                source: MetadataIdentifier | Primitive | Date
+            ]
+        ]
+    >,
+    customProperties: Array<
         [
             path: string[],
             mappingProperty: MappingProperty<

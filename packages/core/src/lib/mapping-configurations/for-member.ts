@@ -108,7 +108,7 @@ export function forMember<
             ];
         }
 
-        mapping[MappingClassId.properties].push([
+        mapping[MappingClassId.customProperties].push([
             memberPath,
             mappingProperty,
             nestedMappingPair,

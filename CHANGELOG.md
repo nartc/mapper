@@ -1,5 +1,12 @@
 
 
+### [8.7.1](https://github.com/nartc/mapper/compare/8.7.0...8.7.1) (2022-07-29)
+
+
+### Bug Fixes
+
+* **core:** ensure forMember to always push mapping property to customProperties ([27c1ca0](https://github.com/nartc/mapper/commit/27c1ca0a899cb6ff40368172183f4b5503570e17))
+
 ## [8.7.0](https://github.com/nartc/mapper/compare/8.6.0...8.7.0) (2022-07-27)
 
 

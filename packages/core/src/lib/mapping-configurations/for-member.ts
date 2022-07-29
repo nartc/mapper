@@ -86,7 +86,7 @@ export function forMember<
 
         // sourcePath is not in sourceObject. No AutoMap available
         if (!(sourcePath[0] in sourceObject)) {
-            mapping[MappingClassId.properties].push([
+            mapping[MappingClassId.customProperties].push([
                 memberPath,
                 mappingProperty,
                 nestedMappingPair,

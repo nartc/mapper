@@ -29,10 +29,6 @@
         "prod": ["!{projectRoot}/**/*.spec.ts"]
     },
     "targetDefaults": {
-        "package": {
-            "inputs": ["prod", "^prod"],
-            "dependsOn": ["^package"]
-        },
         "test": {
             "inputs": ["default", "^prod"]
         }

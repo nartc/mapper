@@ -1,5 +1,12 @@
 
 
+### [8.7.3](https://github.com/nartc/mapper/compare/8.7.2...8.7.3) (2022-08-02)
+
+
+### Bug Fixes
+
+* remove target default on package that affects the secondary entry point ([4993411](https://github.com/nartc/mapper/commit/499341180cdd40b7af10c8e520e7fb2910894f21))
+
 ### [8.7.2](https://github.com/nartc/mapper/compare/8.7.1...8.7.2) (2022-07-31)
 
 Re-release due to erroneous artifacts in 8.7.1

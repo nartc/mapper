@@ -1,5 +1,7 @@
 
 
+### [8.7.4](https://github.com/nartc/mapper/compare/8.7.3...8.7.4) (2022-08-02)
+
 ### [8.7.3](https://github.com/nartc/mapper/compare/8.7.2...8.7.3) (2022-08-02)
 
 

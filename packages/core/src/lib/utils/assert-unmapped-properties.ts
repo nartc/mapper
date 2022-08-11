@@ -42,12 +42,18 @@ export function assertUnmappedProperties<
     );
 
     if (unmappedKeys.length) {
-        const parentInfo = `${
-            (sourceIdentifier as Constructor)['name'] ?? sourceIdentifier
-        } -> ${
-            (destinationIdentifier as Constructor)['name'] ??
-            destinationIdentifier
-        }`;
+        let source = sourceIdentifier.toString();
+        let destination = destinationIdentifier.toString();
+
+        if ((sourceIdentifier as Constructor)['name']) {
+            source = (sourceIdentifier as Constructor)['name'];
+        }
+
+        if ((destinationIdentifier as Constructor)['name']) {
+            destination = (destinationIdentifier as Constructor)['name'];
+        }
+
+        const parentInfo = `${source} -> ${destination}`;
         errorHandler.handle(`
 Unmapped properties for ${parentInfo}:
 -------------------

@@ -7,6 +7,7 @@ import type {
     ImportDeclaration,
     JSDocTag,
     MethodDeclaration,
+  Modifier,
     NodeFactory,
     ObjectLiteralExpression,
     Program,
@@ -195,7 +196,7 @@ export class ModelVisitor {
         return factory.updateClassDeclaration(
             classNode,
             classNode.decorators,
-            classNode.modifiers,
+            classNode.modifiers as unknown as Modifier[],
             classNode.name,
             classNode.typeParameters,
             classNode.heritageClauses,

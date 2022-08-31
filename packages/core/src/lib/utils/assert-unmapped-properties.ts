@@ -41,17 +41,25 @@ export function assertUnmappedProperties<
         [] as string[]
     );
 
+    const sourceText = getTextFromIdentifier(sourceIdentifier);
+    const destinationText = getTextFromIdentifier(destinationIdentifier);
+
     if (unmappedKeys.length) {
-        const parentInfo = `${
-            (sourceIdentifier as Constructor)['name'] ?? sourceIdentifier
-        } -> ${
-            (destinationIdentifier as Constructor)['name'] ??
-            destinationIdentifier
-        }`;
+        const parentInfo = `${sourceText} -> ${destinationText}`;
         errorHandler.handle(`
 Unmapped properties for ${parentInfo}:
 -------------------
 ${unmappedKeys.join(',\n')}
 `);
     }
+}
+
+function getTextFromIdentifier(identifier: MetadataIdentifier): string {
+    let text = identifier.toString();
+
+    if ((identifier as Constructor).name) {
+        text = (identifier as Constructor).name;
+    }
+
+    return text;
 }

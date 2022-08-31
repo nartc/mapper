@@ -194,7 +194,7 @@ export function map<
                 const errorMessage = `
 Error at "${destinationMemberPath}" on ${
                     (destinationIdentifier as Constructor)['prototype']
-                        ?.constructor?.name || destinationIdentifier
+                        ?.constructor?.name || destinationIdentifier.toString()
                 } (${JSON.stringify(destination)})
 ---------------------------------------------------------------------
 Original error: ${originalError}`;

@@ -1,5 +1,12 @@
 
 
+### [8.7.6](https://github.com/nartc/mapper/compare/8.7.5...8.7.6) (2022-08-31)
+
+
+### Bug Fixes
+
+* **core:** handle stringify symbol ([0f7f90d](https://github.com/nartc/mapper/commit/0f7f90d8d8e17ad509c4448fbaa00fc6cd679232)), closes [#501](https://github.com/nartc/mapper/issues/501)
+
 ### [8.7.5](https://github.com/nartc/mapper/compare/8.7.4...8.7.5) (2022-08-03)
 
 ### [8.7.4](https://github.com/nartc/mapper/compare/8.7.3...8.7.4) (2022-08-02)

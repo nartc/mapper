@@ -4,7 +4,7 @@
     "projectType": "library",
     "targets": {
         "package": {
-            "executor": "@nrwl/workspace:run-commands",
+            "executor": "nx:run-commands",
             "options": {
                 "commands": [
                     "nx package-lib classes",
@@ -37,14 +37,14 @@
         },
         "test": {
             "executor": "@nrwl/jest:jest",
-            "outputs": ["coverage/packages/classes"],
+            "outputs": ["{workspaceRoot}/coverage/packages/classes"],
             "options": {
                 "jestConfig": "packages/classes/jest.config.cjs",
                 "passWithNoTests": true
             }
         },
         "publish": {
-            "executor": "@nrwl/workspace:run-commands",
+            "executor": "nx:run-commands",
             "options": {
                 "command": "npm publish",
                 "cwd": "dist/packages/classes"

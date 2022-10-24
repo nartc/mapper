@@ -11,7 +11,7 @@
         },
         "test": {
             "executor": "@nrwl/jest:jest",
-            "outputs": ["coverage/packages/integration-test"],
+            "outputs": ["{workspaceRoot}/coverage/packages/integration-test"],
             "options": {
                 "jestConfig": "packages/integration-test/jest.config.ts",
                 "passWithNoTests": true

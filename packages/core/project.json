@@ -4,7 +4,7 @@
     "projectType": "library",
     "targets": {
         "package": {
-            "executor": "@nrwl/workspace:run-commands",
+            "executor": "nx:run-commands",
             "options": {
                 "commands": ["NX_CLOUD=true nx package-lib core"],
                 "parallel": false
@@ -26,7 +26,7 @@
             }
         },
         "package-all": {
-            "executor": "@nrwl/workspace:run-commands",
+            "executor": "nx:run-commands",
             "options": {
                 "commands": [
                     "nx package core",
@@ -50,14 +50,14 @@
         },
         "test": {
             "executor": "@nrwl/jest:jest",
-            "outputs": ["coverage/packages/core"],
+            "outputs": ["{workspaceRoot}/coverage/packages/core"],
             "options": {
                 "jestConfig": "packages/core/jest.config.cjs",
                 "passWithNoTests": true
             }
         },
         "publish": {
-            "executor": "@nrwl/workspace:run-commands",
+            "executor": "nx:run-commands",
             "options": {
                 "command": "npm publish",
                 "cwd": "dist/packages/core"

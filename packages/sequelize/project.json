@@ -3,7 +3,7 @@
     "sourceRoot": "packages/sequelize/src",
     "targets": {
         "package": {
-            "executor": "@nrwl/workspace:run-commands",
+            "executor": "nx:run-commands",
             "options": {
                 "commands": ["NX_CLOUD=true nx package-lib sequelize"],
                 "parallel": false
@@ -38,14 +38,14 @@
         },
         "test": {
             "executor": "@nrwl/jest:jest",
-            "outputs": ["coverage/packages/sequelize"],
+            "outputs": ["{workspaceRoot}/coverage/packages/sequelize"],
             "options": {
                 "jestConfig": "packages/sequelize/jest.config.cjs",
                 "passWithNoTests": true
             }
         },
         "publish": {
-            "executor": "@nrwl/workspace:run-commands",
+            "executor": "nx:run-commands",
             "options": {
                 "command": "npm publish",
                 "cwd": "dist/packages/sequelize"

@@ -3,7 +3,7 @@
     "sourceRoot": "packages/classes/transformer-plugin/src",
     "targets": {
         "package": {
-            "executor": "@nrwl/workspace:run-commands",
+            "executor": "nx:run-commands",
             "options": {
                 "commands": [
                     "NX_CLOUD=true nx package-lib classes-transformer-plugin"
@@ -37,7 +37,9 @@
         },
         "test": {
             "executor": "@nrwl/jest:jest",
-            "outputs": ["coverage/packages/classes/transformer-plugin"],
+            "outputs": [
+                "{workspaceRoot}/coverage/packages/classes/transformer-plugin"
+            ],
             "options": {
                 "jestConfig": "packages/classes/transformer-plugin/jest.config.cjs",
                 "passWithNoTests": true

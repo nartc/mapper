@@ -31,6 +31,9 @@
     "targetDefaults": {
         "test": {
             "inputs": ["default", "^prod"]
+        },
+        "lint": {
+            "inputs": ["default", "{workspaceRoot}/.eslintrc.json"]
         }
     },
     "pluginsConfig": {

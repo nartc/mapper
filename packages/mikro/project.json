@@ -3,7 +3,7 @@
     "sourceRoot": "packages/mikro/src",
     "targets": {
         "package": {
-            "executor": "@nrwl/workspace:run-commands",
+            "executor": "nx:run-commands",
             "options": {
                 "commands": ["NX_CLOUD=true nx package-lib mikro"],
                 "parallel": false
@@ -38,14 +38,14 @@
         },
         "test": {
             "executor": "@nrwl/jest:jest",
-            "outputs": ["coverage/packages/mikro"],
+            "outputs": ["{workspaceRoot}/coverage/packages/mikro"],
             "options": {
                 "jestConfig": "packages/mikro/jest.config.cjs",
                 "passWithNoTests": true
             }
         },
         "publish": {
-            "executor": "@nrwl/workspace:run-commands",
+            "executor": "nx:run-commands",
             "options": {
                 "command": "npm publish",
                 "cwd": "dist/packages/mikro"

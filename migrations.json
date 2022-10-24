@@ -1,12 +1,84 @@
 {
   "migrations": [
     {
-      "version": "14.5.5-beta.0",
+      "version": "14.8.0-beta.0",
+      "description": "Migrates from @nrwl/workspace:run-commands to nx:run-commands",
       "cli": "nx",
-      "description": "Exclude jest.config.ts from tsconfig where missing.",
-      "factory": "./src/migrations/update-14-0-0/update-jest-config-ext",
+      "implementation": "./src/migrations/update-14-8-0/change-run-commands-executor",
+      "package": "@nrwl/workspace",
+      "name": "14-8-0-change-run-commands-executor"
+    },
+    {
+      "version": "14.6.0-beta.0",
+      "cli": "nx",
+      "description": "Update jest configs to support jest 28 changes (https://jestjs.io/docs/upgrading-to-jest28#configuration-options)",
+      "factory": "./src/migrations/update-14-6-0/update-configs-jest-28",
       "package": "@nrwl/jest",
-      "name": "exclude-jest-config-from-ts-config"
+      "name": "update-configs-jest-28"
+    },
+    {
+      "version": "14.6.0-beta.0",
+      "cli": "nx",
+      "description": "Update jest test files to support jest 28 changes (https://jestjs.io/docs/upgrading-to-jest28)",
+      "factory": "./src/migrations/update-14-6-0/update-tests-jest-28",
+      "package": "@nrwl/jest",
+      "name": "update-tests-jest-28"
+    },
+    {
+      "version": "15.0.0-beta.0",
+      "cli": "nx",
+      "description": "Stop hashing jest spec files and config files for build targets and dependent tasks",
+      "factory": "./src/migrations/update-15-0-0/add-jest-inputs",
+      "package": "@nrwl/jest",
+      "name": "add-jest-inputs"
+    },
+    {
+      "cli": "nx",
+      "version": "15.0.0-beta.0",
+      "description": "Stop hashing eslint config files for build targets and dependent tasks",
+      "factory": "./src/migrations/update-15-0-0/add-eslint-inputs",
+      "package": "@nrwl/linter",
+      "name": "add-eslint-inputs"
+    },
+    {
+      "cli": "nx",
+      "version": "14.7.6-beta.1",
+      "description": "Update usages of webpack executors to @nrwl/webpack",
+      "factory": "./src/migrations/update-14-7-6/update-webpack-executor",
+      "package": "@nrwl/web",
+      "name": "update-webpack-executor"
+    },
+    {
+      "cli": "nx",
+      "version": "15.0.0-beta.0",
+      "description": "Adds babel.config.json to the hash of all tasks",
+      "factory": "./src/migrations/update-15-0-0/add-babel-inputs",
+      "package": "@nrwl/web",
+      "name": "add-babel-inputs"
+    },
+    {
+      "cli": "nx",
+      "version": "15.0.0-beta.1",
+      "description": "Update usages of rollup executors to @nrwl/rollup",
+      "factory": "./src/migrations/update-15-0-0/update-rollup-executor",
+      "package": "@nrwl/web",
+      "name": "update-rollup-executor"
+    },
+    {
+      "cli": "nx",
+      "version": "15.0.0-beta.1",
+      "description": "Replace implicitDependencies with namedInputs + target inputs",
+      "implementation": "./src/migrations/update-15-0-0/migrate-to-inputs",
+      "package": "nx",
+      "name": "15.0.0-migrate-to-inputs"
+    },
+    {
+      "cli": "nx",
+      "version": "15.0.0-beta.1",
+      "description": "Prefix outputs with {workspaceRoot}/{projectRoot} if needed",
+      "implementation": "./src/migrations/update-15-0-0/prefix-outputs",
+      "package": "nx",
+      "name": "15.0.0-prefix-outputs"
     }
   ]
 }

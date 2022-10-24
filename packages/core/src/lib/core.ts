@@ -458,7 +458,7 @@ Mapper {} is an empty Object as a Proxy. The following methods are available to 
                                 options
                             );
 
-                            setTimeout(res);
+                            setTimeout(res, 0);
                         });
                     };
                 }
@@ -561,7 +561,7 @@ Mapper {} is an empty Object as a Proxy. The following methods are available to 
                                 options
                             );
 
-                            setTimeout(res);
+                            setTimeout(res, 0);
                         });
                     };
                 }

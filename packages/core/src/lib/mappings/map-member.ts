@@ -54,7 +54,11 @@ export function mapMember<
         case TransformationType.MapWith:
             value = (
                 mapFn as MapWithReturn<TSource, TDestination>[MapFnClassId.fn]
-            )(sourceObject, mapper);
+            )(
+                sourceObject,
+                mapper,
+                extraArgs ? { extraArgs: () => extraArgs } : undefined
+            );
             break;
         case TransformationType.ConvertUsing:
             value = (

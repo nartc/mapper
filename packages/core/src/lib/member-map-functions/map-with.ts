@@ -1,5 +1,6 @@
 import type {
     Dictionary,
+    MapOptions,
     MapWithReturn,
     ModelIdentifier,
     SelectorReturn,
@@ -26,21 +27,23 @@ export function mapWith<
 ): MapWithReturn<TSource, TDestination, TSelectorReturn> {
     return [
         TransformationType.MapWith,
-        (source, mapper) => {
+        (source, mapper, options) => {
             const sourceValue = withSourceValue(source);
 
             if (Array.isArray(sourceValue)) {
                 return mapper.mapArray(
                     sourceValue,
                     withSource,
-                    withDestination
+                    withDestination,
+                    options as unknown as MapOptions<TSource[], TDestination[]>
                 ) as unknown as TSelectorReturn;
             }
 
             return mapper.map(
                 sourceValue,
                 withSource,
-                withDestination
+                withDestination,
+                options
             ) as unknown as TSelectorReturn;
         },
     ];

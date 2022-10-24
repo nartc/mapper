@@ -372,7 +372,11 @@ export type MapWithReturn<
     TSelectorReturn = SelectorReturn<TDestination>
 > = [
     TransformationType.MapWith,
-    (sourceObj: TSource, mapper: Mapper) => TSelectorReturn | undefined | null
+    (
+        sourceObj: TSource,
+        mapper: Mapper,
+        options?: MapOptions<TSource, TDestination>
+    ) => TSelectorReturn | undefined | null
 ];
 
 export interface ConditionPredicate<TSource extends Dictionary<TSource>> {

@@ -13,7 +13,7 @@ specifiers:
   '@nrwl/js': 15.0.1
   '@nrwl/linter': 15.0.1
   '@nrwl/nest': 15.0.1
-  '@nrwl/nx-cloud': 15.0.0
+  '@nrwl/nx-cloud': latest
   '@nrwl/web': 15.0.1
   '@nrwl/workspace': 15.0.1
   '@release-it/bumper': 4.0.0

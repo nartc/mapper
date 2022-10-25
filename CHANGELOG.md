@@ -1,5 +1,13 @@
 
 
+### [8.7.7](https://github.com/nartc/mapper/compare/8.7.6...8.7.7) (2022-10-25)
+
+
+### Bug Fixes
+
+* **core:** extend uses customProperties instead of properties because it is custom ([b29f2ef](https://github.com/nartc/mapper/commit/b29f2ef6658c8110b7f5c4cf39a9509b5104f33a))
+* **core:** send extraArgs from original map operation to mapWith operations ([65c6a74](https://github.com/nartc/mapper/commit/65c6a746c7baeb62cdf6b06fd69c69ec9e9c5668)), closes [#509](https://github.com/nartc/mapper/issues/509)
+
 ### [8.7.6](https://github.com/nartc/mapper/compare/8.7.5...8.7.6) (2022-08-31)
 
 

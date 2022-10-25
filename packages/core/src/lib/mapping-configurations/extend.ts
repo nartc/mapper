@@ -57,11 +57,11 @@ export function extend<
                 propToExtendMappingProp,
                 propToExtendNestedMapping,
             ] = propsToExtend[i];
-            const existProp = mapping[MappingClassId.properties].find(
+            const existProp = mapping[MappingClassId.customProperties].find(
                 ([pKey]) => isSamePath(pKey, propToExtendKey)
             );
             if (existProp) continue;
-            mapping[MappingClassId.properties].push([
+            mapping[MappingClassId.customProperties].push([
                 propToExtendKey,
                 propToExtendMappingProp as MappingProperty<
                     TSource,

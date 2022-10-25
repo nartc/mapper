@@ -24,7 +24,8 @@ describe(mapWith.name, () => {
         expect(mapper.map).toHaveBeenCalledWith(
             {},
             withDestination,
-            withSource
+            withSource,
+            undefined
         );
     });
 
@@ -35,7 +36,8 @@ describe(mapWith.name, () => {
         expect(mapper.mapArray).toHaveBeenCalledWith(
             [],
             withDestination,
-            withSource
+            withSource,
+            undefined
         );
     });
 });

@@ -23,10 +23,12 @@ export function getMapping(
         ?.get(destinationIdentifier);
 
     if (mapping == null && !allowNull) {
+        const sourceName =
+            typeof source === 'function' ? (source.name || String(source)) : String(source);
+        const destinationName =
+            typeof destination === 'function' ? (destination.name || String(destination)) : String(destination);
         const errorHandler = getErrorHandler(mapper);
-        const errorMessage = `Mapping is not found for ${String(
-            source
-        )} and ${String(destination)}`;
+        const errorMessage = `Mapping is not found for ${sourceName} and ${destinationName}`;
         errorHandler.handle(errorMessage);
         throw new Error(errorMessage);
     }

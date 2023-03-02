@@ -12,20 +12,23 @@ import { SimpleUser } from './models/simple-user';
 describe('Map Async Classes', () => {
     const mapper = createMapper({ strategyInitializer: classes() });
 
-    it('should map', async () => {
+    it('should map a single', async () => {
         createMap(
             mapper,
             SimpleUser,
             SimpleUserDto,
             forMember((d) => d.fullName, ignore()),
             afterMap(async (_, destination) => {
-                const fullName = await Promise.resolve().then(
-                    () => 'Tran Chau'
-                );
+                const fullName = await new Promise((resolve) => {
+                    setTimeout(() => {
+                        resolve(
+                          'Tran Chau'
+                        );
+                    }, 1000);
+                });
                 Object.assign(destination, { fullName });
             })
         );
-
         const dto = await mapper.mapAsync(
             new SimpleUser('Chau', 'Tran'),
             SimpleUser,
@@ -33,4 +36,29 @@ describe('Map Async Classes', () => {
         );
         expect(dto.fullName).toEqual('Tran Chau');
     });
+
+    it('should map an array', async () => {
+        createMap(
+            mapper,
+            SimpleUser,
+            SimpleUserDto,
+            forMember((d) => d.fullName, ignore()),
+            afterMap(async (_, destination) => {
+                const fullName = await new Promise((resolve) => {
+                    setTimeout(() => {
+                        resolve(
+                          'Tran Chau'
+                        );
+                    }, 1000);
+                });
+                Object.assign(destination, { fullName });
+            })
+        );
+        const dtos = await mapper.mapArrayAsync(
+            [new SimpleUser('Chau', 'Tran')],
+            SimpleUser,
+            SimpleUserDto
+        );
+        expect(dtos[0].fullName).toEqual('Tran Chau');
+    })
 });

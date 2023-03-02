@@ -497,16 +497,42 @@ Mapper {} is an empty Object as a Proxy. The following methods are available to 
                             | MapOptions<TSource, TDestination>,
                         options?: MapOptions<TSource, TDestination>
                     ) => {
-                        return new Promise((res) => {
-                            receiver['mutate'](
-                                sourceObject,
-                                destinationObject,
+                        //
+                        receiver['mutate'](
+                            sourceObject,
+                            destinationObject,
+                            sourceIdentifier,
+                            destinationIdentifierOrOptions,
+                            options
+                        );
+
+                        // start get mappings
+                        const { destinationIdentifier, mapOptions } =
+                            getOptions(
                                 sourceIdentifier,
                                 destinationIdentifierOrOptions,
                                 options
                             );
 
-                            setTimeout(res, 0);
+                        const mapping = getMapping(
+                            receiver,
+                            sourceIdentifier,
+                            destinationIdentifier
+                        );
+
+                        return new Promise<void>((resolve, reject) => {
+                            mapAsyncHandler(
+                                mapping,
+                                sourceObject,
+                                destinationIdentifier,
+                                mapOptions || {}
+                            )
+                                .then(() => {
+                                    resolve();
+                                })
+                                .catch((err) => {
+                                    reject(err);
+                                });
                         });
                     };
                 }
@@ -600,17 +626,36 @@ Mapper {} is an empty Object as a Proxy. The following methods are available to 
                             | MapOptions<TSource[], TDestination[]>,
                         options?: MapOptions<TSource[], TDestination[]>
                     ) => {
-                        return new Promise((res) => {
-                            receiver['mutateArray'](
-                                sourceArray,
-                                destinationArray,
+                        receiver['mutateArray'](
+                            sourceArray,
+                            destinationArray,
+                            sourceIdentifier,
+                            destinationIdentifierOrOptions,
+                            options
+                        );
+                        const { destinationIdentifier, mapOptions } =
+                            getOptions(
                                 sourceIdentifier,
                                 destinationIdentifierOrOptions,
                                 options
                             );
 
-                            setTimeout(res, 0);
-                        });
+                        const mapping = getMapping(
+                            receiver,
+                            sourceIdentifier,
+                            destinationIdentifier
+                        );
+
+                        return Promise.all(
+                            sourceArray.map(async (sourceObject) => {
+                                mapAsyncHandler(
+                                    mapping,
+                                    sourceObject,
+                                    destinationIdentifier,
+                                    mapOptions || {}
+                                );
+                            })
+                        );
                     };
                 }
 

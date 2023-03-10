@@ -6,10 +6,20 @@ import type {
 import { ModelVisitor } from './lib/model-visitor';
 import type { AutomapperTransformerPluginOptions } from './lib/options';
 import { isFilenameMatched } from './lib/utils';
+import { version as pluginVersion } from './lib/version';
 
 const defaultOptions: AutomapperTransformerPluginOptions = {
     modelFileNameSuffix: ['.entity.ts', '.model.ts', '.dto.ts', '.vm.ts'],
 };
+
+/**
+ * Remember to increase the version whenever transformer's content is changed. This is to inform Jest to not reuse
+ * the previous cache which contains old transformer's content
+ */
+export const version = pluginVersion;
+
+// Used for constructing cache key
+export const name = 'automapper-transformer-plugin';
 
 export default function automapperTransformerPlugin(
     program: Program,

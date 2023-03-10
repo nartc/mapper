@@ -4,22 +4,10 @@
             "preset": {
                 "name": "conventionalcommits",
                 "types": [
-                    {
-                        "type": "feat",
-                        "section": "Features"
-                    },
-                    {
-                        "type": "fix",
-                        "section": "Bug Fixes"
-                    },
-                    {
-                        "type": "cleanup",
-                        "section": "Cleanup"
-                    },
-                    {
-                        "type": "docs",
-                        "section": "Documentations"
-                    }
+                    { "type": "feat", "section": "Features" },
+                    { "type": "fix", "section": "Bug Fixes" },
+                    { "type": "cleanup", "section": "Cleanup" },
+                    { "type": "docs", "section": "Documentations" }
                 ]
             },
             "infile": "CHANGELOG.md"
@@ -43,7 +31,8 @@
         "before:bump": "npm run package",
         "after:bump": [
             "git checkout -- package.json",
-            "node tools/scripts/update-peer-deps.mjs"
+            "node tools/scripts/update-peer-deps.mjs",
+            "node tools/scripts/update-plugin-version.mjs"
         ]
     }
 }

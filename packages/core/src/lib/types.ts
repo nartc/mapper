@@ -16,13 +16,14 @@ export type AnyConstructor = new (...args: any[]) => any;
 export type Constructor<T = any> = (new (...args: any[]) => T) &
     TransformerMetadataFactory<T>;
 
-export type Primitive = String | Number | Boolean;
+export type Primitive = String | Number | Boolean | BigInt;
 export type PrimitiveExtended = Primitive | Date;
 
 export type PrimitiveConstructor =
     | StringConstructor
     | NumberConstructor
-    | BooleanConstructor;
+    | BooleanConstructor
+    | BigIntConstructor;
 
 export type PrimitiveConstructorExtended =
     | PrimitiveConstructor

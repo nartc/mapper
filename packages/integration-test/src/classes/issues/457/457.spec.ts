@@ -1,16 +1,15 @@
 import { AutoMap, classes } from '@automapper/classes';
 import { createMap, createMapper, typeConverter } from '@automapper/core';
-import { BigNumber } from 'ethers';
 
 export class SlippageDetails {
-    @AutoMap(() => BigNumber)
-    amountTryBought!: BigNumber;
-    @AutoMap(() => BigNumber)
-    actualAmountBought!: BigNumber;
-    @AutoMap(() => BigNumber)
-    amountTrySold!: BigNumber;
-    @AutoMap(() => BigNumber)
-    actualAmountSold!: BigNumber;
+    @AutoMap()
+    amountTryBought!: bigint;
+    @AutoMap()
+    actualAmountBought!: bigint;
+    @AutoMap()
+    amountTrySold!: bigint;
+    @AutoMap()
+    actualAmountSold!: bigint;
 }
 
 export class SlippageDetailsResponse {
@@ -32,7 +31,7 @@ describe('Discussion 457', () => {
             mapper,
             SlippageDetailsResponse,
             SlippageDetails,
-            typeConverter(String, BigNumber, (str) => BigNumber.from(str))
+            typeConverter(String, BigInt, (str) => BigInt(str))
         );
 
         const details = mapper.map(
@@ -47,16 +46,12 @@ describe('Discussion 457', () => {
         );
 
         expect(details.amountTryBought).toEqual(
-            BigNumber.from('118037573493144275546370733802')
+            BigInt('118037573493144275546370733802')
         );
         expect(details.actualAmountBought).toEqual(
-            BigNumber.from('100333357843974197803636520962')
+            BigInt('100333357843974197803636520962')
         );
-        expect(details.amountTrySold).toEqual(
-            BigNumber.from('8459357670662208186')
-        );
-        expect(details.actualAmountSold).toEqual(
-            BigNumber.from('7212834513173318076')
-        );
+        expect(details.amountTrySold).toEqual(BigInt('8459357670662208186'));
+        expect(details.actualAmountSold).toEqual(BigInt('7212834513173318076'));
     });
 });

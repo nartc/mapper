@@ -1,13 +1,14 @@
 import { AUTOMAPPER_METADATA_FACTORY_KEY } from '@automapper/classes';
-import type {
+import {
     ArrayLiteralExpression,
     ClassDeclaration,
     GetAccessorDeclaration,
+    getDecorators,
     Identifier,
     ImportDeclaration,
     JSDocTag,
     MethodDeclaration,
-  Modifier,
+    Modifier,
     NodeFactory,
     ObjectLiteralExpression,
     Program,
@@ -19,8 +20,6 @@ import type {
     TypeChecker,
     TypeReferenceNode,
     Visitor,
-} from 'typescript/lib/tsserverlibrary';
-import {
     getAllJSDocTags,
     isClassDeclaration,
     isGetAccessorDeclaration,
@@ -99,11 +98,10 @@ export class ModelVisitor {
                     isPropertyDeclaration(node) ||
                     isGetAccessorDeclaration(node)
                 ) {
-                    const decorators = node.decorators;
+                    const decorators = getDecorators(node);
                     const existingAutoMapDecorator =
                         getDecoratorOrUndefinedByNames(
                             [AUTOMAPPER_DECORATOR_NAME],
-                            ctx.factory,
                             decorators
                         );
 
@@ -195,7 +193,6 @@ export class ModelVisitor {
         // add the factory static method at the end of the class
         return factory.updateClassDeclaration(
             classNode,
-            classNode.decorators,
             classNode.modifiers as unknown as Modifier[],
             classNode.name,
             classNode.typeParameters,
@@ -241,7 +238,6 @@ export class ModelVisitor {
          * }
          */
         return factory.createMethodDeclaration(
-            undefined,
             [factory.createModifier(SyntaxKind.StaticKeyword)],
             undefined,
             factory.createIdentifier(AUTOMAPPER_METADATA_FACTORY_KEY),
@@ -396,7 +392,6 @@ export class ModelVisitor {
         importDeclaration: ImportDeclaration
     ) {
         return factory.createImportDeclaration(
-            importDeclaration.decorators,
             importDeclaration.modifiers,
             importDeclaration.importClause,
             importDeclaration.moduleSpecifier

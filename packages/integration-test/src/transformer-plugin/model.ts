@@ -7,6 +7,9 @@ enum StringEnum {
   FOO = "foo",
   BAR = "bar"
 }
+function AutoMap(): PropertyDecorator {
+  return () => {}
+}
 class Address {
   street: string;
 }
@@ -44,6 +47,8 @@ export class User {
    * @autoMapIgnore
    */
   ignoreMe: string;
+  @AutoMap()
+  ignoreMeToo: string;
 }
 `;
 
@@ -55,6 +60,9 @@ enum Role {
 enum StringEnum {
   FOO = "foo",
   BAR = "bar"
+}
+function AutoMap(): PropertyDecorator {
+  return () => {}
 }
 class Address {
   street!: string;
@@ -93,6 +101,8 @@ export class User {
    * @autoMapIgnore
    */
   ignoreMe: string;
+  @AutoMap()
+  ignoreMeToo!: string;
 }
 `;
 
@@ -109,6 +119,9 @@ var StringEnum;
     StringEnum["FOO"] = "foo";
     StringEnum["BAR"] = "bar";
 })(StringEnum || (StringEnum = {}));
+function AutoMap() {
+    return () => { };
+}
 class Address {
     street;
     static __AUTOMAPPER_METADATA_FACTORY__() {
@@ -169,6 +182,7 @@ class User {
      * @autoMapIgnore
      */
     ignoreMe;
+    ignoreMeToo;
     static __AUTOMAPPER_METADATA_FACTORY__() {
         return [
             ["firstName", { type: () => String, depth: 1 }],
@@ -186,6 +200,9 @@ class User {
         ];
     }
 }
+__decorate([
+    AutoMap()
+], User.prototype, "ignoreMeToo", void 0);
 exports.User = User;
 `;
 
@@ -199,6 +216,9 @@ var StringEnum;
     StringEnum["FOO"] = "foo";
     StringEnum["BAR"] = "bar";
 })(StringEnum || (StringEnum = {}));
+function AutoMap() {
+    return () => { };
+}
 class Address {
     street;
     static __AUTOMAPPER_METADATA_FACTORY__() {
@@ -259,6 +279,7 @@ export class User {
      * @autoMapIgnore
      */
     ignoreMe;
+    ignoreMeToo;
     static __AUTOMAPPER_METADATA_FACTORY__() {
         return [
             ["firstName", { type: () => String, depth: 1 }],
@@ -276,4 +297,7 @@ export class User {
         ];
     }
 }
+__decorate([
+    AutoMap()
+], User.prototype, "ignoreMeToo", void 0);
 `;

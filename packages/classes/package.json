@@ -7,8 +7,8 @@
         "reflect-metadata": "~0.1.13"
     },
     "exports": {
-        ".": {
-            "types": "./index.d.ts",
+        "./": {
+            "types": "./src/index.d.ts",
             "import": "./index.js",
             "require": "./index.cjs"
         },
@@ -25,7 +25,7 @@
     },
     "sideEffects": false,
     "engines": {
-        "node": ">=14.0.0"
+        "node": ">=16.0.0"
     },
     "publishConfig": {
         "access": "public"

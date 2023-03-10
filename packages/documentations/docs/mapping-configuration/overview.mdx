@@ -71,16 +71,17 @@ In addition, there is [Auto Flattening](../fundamentals/auto-flattening). These 
 
 `MappingConfiguration` are functions that augment a `Mapping`. When creating a `Mapping` with `createMap()`, we can pass in as many `MappingConfiguration` as we like and in any order that we want.
 
-| mapping configuration | description                                                             |
-| --------------------- | ----------------------------------------------------------------------- |
-| `afterMap()`          | Attach a `MapCallback` to run after the map operation                   |
-| `beforeMap()`         | Attach a `MapCallback` to run before the map operation                  |
-| `constructUsing()`    | Set a custom constructor for the `Destination` before the map operation |
-| `extend()`            | Extend another `Mapping`                                                |
-| `forMember()`         | Configure a `MappingTransformation` for a property on the `Destination` |
-| `forSelf()`           | Configure flattening for `Destination` from a different `Source`        |
-| `namingConventions()` | Configure the `NamingConvention` for this `Mapping`                     |
-| `typeConverters()`    | Configure the `TypeConverter` for this `Mapping`                        |
+| mapping configuration | description                                                                                                        |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `afterMap()`          | Attach a `MapCallback` to run after the map operation                                                              |
+| `autoMap()`           | Alternative to the `@AutoMap` decorator. Maps a property with same name and type on the `Source` and `Destination` |
+| `beforeMap()`         | Attach a `MapCallback` to run before the map operation                                                             |
+| `constructUsing()`    | Set a custom constructor for the `Destination` before the map operation                                            |
+| `extend()`            | Extend another `Mapping`                                                                                           |
+| `forMember()`         | Configure a `MappingTransformation` for a property on the `Destination`                                            |
+| `forSelf()`           | Configure flattening for `Destination` from a different `Source`                                                   |
+| `namingConventions()` | Configure the `NamingConvention` for this `Mapping`                                                                |
+| `typeConverters()`    | Configure the `TypeConverter` for this `Mapping`                                                                   |
 
 :::caution
 

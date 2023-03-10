@@ -1,3 +1,5 @@
+import { createMappingUtil } from '../mappings/create-initial-mapping';
+import { createMap } from '../mappings/create-map';
 import { getMetadataMap } from '../symbols';
 import type {
     Dictionary,
@@ -53,60 +55,37 @@ export function forMember<
     ];
 
     return (mapping) => {
-        // TODO: consolidate this logic with the one in createInitialMapping
         const [sourceIdentifier, destinationIdentifier] =
             mapping[MappingClassId.identifiers];
         const mapper = mapping[MappingClassId.mapper];
         const namingConventions = mapping[MappingClassId.namingConventions];
         const [sourceObject] = mapping[MappingClassId.identifierMetadata];
 
-        const metadataMap = getMetadataMap(mapper);
-        const destinationMetadata =
-            metadataMap.get(destinationIdentifier) || [];
-        const sourceMetadata = metadataMap.get(sourceIdentifier) || [];
+        const { getNestedMappingPair, getMetadataAtMember, processSourcePath } =
+            createMappingUtil(mapper, sourceIdentifier, destinationIdentifier);
 
-        let nestedMappingPair: NestedMappingPair | undefined = undefined;
-
-        const metadataAtMember = destinationMetadata.find((metadata) =>
-            isPrimitiveArrayEqual(
-                metadata[MetadataClassId.propertyKeys],
-                memberPath
-            )
+        const sourcePath = processSourcePath(
+            sourceObject,
+            namingConventions,
+            memberPath
         );
-
-        let sourcePath = memberPath;
-
-        if (namingConventions) {
-            sourcePath = getFlatteningPaths(
-                sourceObject,
-                getPath(memberPath, namingConventions),
-                namingConventions
-            );
-        }
 
         // sourcePath is not in sourceObject. No AutoMap available
         if (!(sourcePath[0] in sourceObject)) {
             mapping[MappingClassId.customProperties].push([
                 memberPath,
                 mappingProperty,
-                nestedMappingPair,
+                undefined,
             ]);
             return;
         }
 
-        const metadataAtSource = sourceMetadata.find((metadata) =>
-            isPrimitiveArrayEqual(
-                metadata[MetadataClassId.propertyKeys],
-                sourcePath
-            )
+        const metadataAtMember = getMetadataAtMember(memberPath, 'destination');
+        const metadataAtSource = getMetadataAtMember(sourcePath, 'source');
+        const nestedMappingPair = getNestedMappingPair(
+            metadataAtSource,
+            metadataAtMember
         );
-
-        if (metadataAtSource && metadataAtMember) {
-            nestedMappingPair = [
-                metadataAtMember[MetadataClassId.metaFn](),
-                metadataAtSource[MetadataClassId.metaFn](),
-            ];
-        }
 
         mapping[MappingClassId.customProperties].push([
             memberPath,

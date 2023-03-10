@@ -11,6 +11,7 @@ import type {
     Mapping,
     MappingConfiguration,
     MappingTransformation,
+    Metadata,
     MetadataIdentifier,
     NestedMappingPair,
     Selector,
@@ -94,10 +95,8 @@ export function createInitialMapping<
     const hasCustomMappingProperties = customMappingProperties.length > 0;
 
     const namingConventions = mapping[MappingClassId.namingConventions];
-
-    const metadataMap = getMetadataMap(mapper);
-    const destinationMetadata = metadataMap.get(destination) || [];
-    const sourceMetadata = metadataMap.get(source) || [];
+    const { processSourcePath, getMetadataAtMember, getNestedMappingPair } =
+        createMappingUtil(mapper, source, destination);
 
     for (let i = 0, length = destinationPaths.length; i < length; i++) {
         const destinationPath = destinationPaths[i];
@@ -116,50 +115,35 @@ export function createInitialMapping<
             continue;
         }
 
-        const metadataAtDestination = destinationMetadata.find((metadata) =>
-            isPrimitiveArrayEqual(
-                metadata[MetadataClassId.propertyKeys],
-                destinationPath
-            )
-        );
-
         // try getting the sourcePath that is associated with this destinationPath
         /**
          * with naming conventions: fooBar -> [foo, bar]
          * without naming conventions: fooBar -> fooBar
          */
-        let sourcePath = destinationPath;
-
-        if (namingConventions) {
-            sourcePath = getFlatteningPaths(
-                sourceObject,
-                getPath(destinationPath, namingConventions),
-                namingConventions
-            );
-        }
+        const sourcePath = processSourcePath(
+            sourceObject as TSource,
+            namingConventions,
+            destinationPath
+        );
 
         // sourcePath is not in sourceObject. No AutoMap available
         if (!(sourcePath[0] in sourceObject)) {
             continue;
         }
 
-        const metadataAtSource = sourceMetadata.find((metadata) =>
-            isPrimitiveArrayEqual(
-                metadata[MetadataClassId.propertyKeys],
-                sourcePath
-            )
+        const metadataAtDestination = getMetadataAtMember(
+            destinationPath,
+            'destination'
         );
 
-        let nestedMappingPair: NestedMappingPair | undefined = undefined;
+        const metadataAtSource = getMetadataAtMember(sourcePath, 'source');
 
         if (!metadataAtSource && !metadataAtDestination) continue;
 
-        if (metadataAtSource && metadataAtDestination) {
-            nestedMappingPair = [
-                metadataAtDestination[MetadataClassId.metaFn](),
-                metadataAtSource[MetadataClassId.metaFn](),
-            ];
-        }
+        const nestedMappingPair = getNestedMappingPair(
+            metadataAtSource,
+            metadataAtDestination
+        );
 
         const transformation: MappingTransformation<TSource, TDestination> = [
             mapInitialize(sourcePath),
@@ -228,4 +212,60 @@ export function createInitialMapping<
     }
 
     return mapping;
+}
+
+export function createMappingUtil<
+    TSource extends Dictionary<TSource>,
+    TDestination extends Dictionary<TDestination>
+>(
+    mapper: Mapper,
+    sourceIdentifier: MetadataIdentifier<TSource>,
+    destinationIdentifier: MetadataIdentifier<TDestination>
+) {
+    const metadataMap = getMetadataMap(mapper);
+    const destinationMetadata = metadataMap.get(destinationIdentifier) || [];
+    const sourceMetadata = metadataMap.get(sourceIdentifier) || [];
+
+    return {
+        getMetadataAtMember: (
+            memberPath: string[],
+            type: 'source' | 'destination'
+        ) =>
+            (type === 'source' ? sourceMetadata : destinationMetadata).find(
+                (m) =>
+                    isPrimitiveArrayEqual(
+                        m[MetadataClassId.propertyKeys],
+                        memberPath
+                    )
+            ),
+        processSourcePath: (
+            sourceObject: TSource,
+            namingConventions: Mapping[MappingClassId.namingConventions],
+            memberPath: string[]
+        ) => {
+            let sourcePath = memberPath;
+
+            if (namingConventions) {
+                sourcePath = getFlatteningPaths(
+                    sourceObject,
+                    getPath(memberPath, namingConventions),
+                    namingConventions
+                );
+            }
+
+            return sourcePath;
+        },
+        getNestedMappingPair: (
+            metadataAtSource: Metadata | undefined,
+            metadataAtDestination: Metadata | undefined
+        ): NestedMappingPair | undefined => {
+            if (metadataAtSource && metadataAtDestination) {
+                return [
+                    metadataAtDestination[MetadataClassId.metaFn](),
+                    metadataAtSource[MetadataClassId.metaFn](),
+                ];
+            }
+            return undefined;
+        },
+    };
 }

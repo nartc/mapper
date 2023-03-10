@@ -1,4 +1,5 @@
 {
+    "name": "mikro",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "packages/mikro/src",
     "targets": {
@@ -10,7 +11,7 @@
             }
         },
         "package-lib": {
-            "executor": "@nrwl/web:rollup",
+            "executor": "@nrwl/rollup:rollup",
             "outputs": ["{options.outputPath}"],
             "options": {
                 "project": "packages/mikro/package.json",

@@ -4,13 +4,7 @@
     "sourceRoot": "packages/classes/mapped-types/src",
     "targets": {
         "package": {
-            "executor": "nx:run-commands",
-            "options": {
-                "commands": [
-                    "NX_CLOUD=true nx package-lib classes-mapped-types"
-                ],
-                "parallel": false
-            }
+            "command": "NX_CLOUD=true nx package-lib classes-mapped-types"
         },
         "package-lib": {
             "executor": "@nrwl/rollup:rollup",

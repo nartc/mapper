@@ -4,11 +4,7 @@
     "sourceRoot": "packages/nestjs/src",
     "targets": {
         "package": {
-            "executor": "nx:run-commands",
-            "options": {
-                "commands": ["NX_CLOUD=true nx package-lib nestjs"],
-                "parallel": false
-            }
+            "command": "NX_CLOUD=true nx package-lib nestjs"
         },
         "package-lib": {
             "executor": "@nrwl/rollup:rollup",

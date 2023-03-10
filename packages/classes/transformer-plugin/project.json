@@ -4,13 +4,7 @@
     "sourceRoot": "packages/classes/transformer-plugin/src",
     "targets": {
         "package": {
-            "executor": "nx:run-commands",
-            "options": {
-                "commands": [
-                    "NX_CLOUD=true nx package-lib classes-transformer-plugin"
-                ],
-                "parallel": false
-            }
+            "command": "NX_CLOUD=true nx package-lib classes-transformer-plugin"
         },
         "package-lib": {
             "executor": "@nrwl/rollup:rollup",

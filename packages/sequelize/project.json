@@ -4,11 +4,7 @@
     "sourceRoot": "packages/sequelize/src",
     "targets": {
         "package": {
-            "executor": "nx:run-commands",
-            "options": {
-                "commands": ["NX_CLOUD=true nx package-lib sequelize"],
-                "parallel": false
-            }
+            "command": "NX_CLOUD=true nx package-lib sequelize"
         },
         "package-lib": {
             "executor": "@nrwl/rollup:rollup",

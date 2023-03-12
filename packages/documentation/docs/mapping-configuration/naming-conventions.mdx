@@ -1,0 +1,36 @@
+---
+id: naming-conventions
+title: NamingConventions
+sidebar_label: NamingConventions
+sidebar_position: 9
+---
+
+Call `namingConventions()` and pass in a `NamingConventionInput` to customize the Mapping's [NamingConvention](../fundamentals/naming-convention)
+
+```ts
+export type NamingConventionInput =
+    | NamingConvention
+    | {
+          source: NamingConvention;
+          destination: NamingConvention;
+      };
+```
+
+```ts
+createMap(
+    mapper,
+    User,
+    UserDto,
+    namingConventions(new CamelCaseNamingConvention())
+);
+
+createMap(
+    mapper,
+    Product,
+    ProductDto,
+    namingConventions({
+        source: new SnakeCaseNamingConvention(),
+        destination: new CamelCaseNamingConvention(),
+    })
+);
+```

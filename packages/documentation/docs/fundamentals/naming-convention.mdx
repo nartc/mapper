@@ -1,0 +1,51 @@
+---
+id: naming-convention
+title: Naming Conventions
+sidebar_label: Naming Conventions
+sidebar_position: 3
+---
+
+`NamingConvention` allows AutoMapper to map models with different casing convention in terms of properties' names. Out of the box, AutoMapper provides 3 conventions:
+
+-   `CamelCaseNamingConvention`
+-   `PascalCaseNamingConvention`
+-   `SnakeCaseNamingConvention`
+
+By default, AutoMapper does not set a default convention. [Auto Flattening](./auto-flattening) can only be applied when `NamingConvention` is set on the models, even if they share the same casing.
+
+```ts
+// Mapper level conventions (global for all Mappings)
+const mapper = createMapper({
+    strategyInitializer: classes(),
+    namingConventions: new CamelCaseNamingConvention(),
+});
+
+// Mapping level conventions (applied for one specific Mapping)
+createMap(
+    mapper,
+    User,
+    UserDto,
+    namingConventions(new CamelCaseNamingConvention())
+);
+
+// Profile level conventions (applied for ALL Mappings inside a Profile)
+addProfile(
+    mapper,
+    userProfile,
+    namingConventions(new CamelCaseNamingConvention())
+);
+```
+
+### Different conventions for `Source` and `Destination`
+
+All variants of `namingConventions` also accept an object type `{ source: NamingConvention, destination: NamingConvention }` to set different conventions on different models.
+
+```ts
+const mapper = createMapper({
+    strategyInitializer: classes(),
+    namingConventions: {
+        source: new PascalCaseNamingConvention(),
+        destination: new CamelCaseNamingConvention(),
+    },
+});
+```

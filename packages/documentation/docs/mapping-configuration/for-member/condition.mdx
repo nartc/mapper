@@ -1,0 +1,40 @@
+---
+id: condition
+title: Condition
+sidebar_label: Condition
+sidebar_position: 4
+---
+
+Call `condition()` to _conditionally_ execute the auto-map operation for the property (e.g: `Source#propertyName -> Destination#propertyName`) by passing in a `predicateFn` that will be called with the `sourceObject`
+
+```ts
+createMap(
+    mapper,
+    User,
+    UserDto,
+    forMember(
+        (destination) => destination.petName,
+        condition((source) => source.hasPet)
+    )
+);
+```
+
+If `source.hasPet` is evaluated to truthy, then `destination.petName` will be mapped with `source.petName`. Otherwise, `destination.petName` will be `undefined`.
+
+## Default Value
+
+`condition()` accepts an optional `defaultValue`. In the case that the `predicateFn` is evaluated to falsy, the `defaultValue` will be used to mapped to the configured property instead of `undefined`
+
+```ts
+createMap(
+    mapper,
+    User,
+    UserDto,
+    forMember(
+        (destination) => destination.petName,
+        condition((source) => source.hasPet, 'default pet name')
+    )
+);
+```
+
+`condition()` sets the `TransformationType` to `TransformationType.Condition`

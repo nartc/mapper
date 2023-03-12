@@ -1,0 +1,31 @@
+---
+id: null-substitution
+title: NullSubstitution
+sidebar_label: NullSubstitution
+sidebar_position: 8
+---
+
+Call `nullSubstitution()` and pass in a raw value to map to the configured property in the case of the same property on `Source` is `null`. If we pass in an object, AutoMapper will map the object as-is without any consideration for nested mapping.
+
+:::info
+
+AutoMapper uses strict equality check against `null` (`=== null`) to make the comparison. Hence, `undefined` value will **not** be substituted.
+
+:::
+
+```ts
+createMap(
+    mapper,
+    User,
+    UserDto,
+    forMember(
+        (destination) => destination.fullName,
+        nullSubstitution('raw value')
+    )
+);
+
+const user = { fullName: null };
+mapper.map(user, User, UserDto); // UserDto { fullName: 'raw value' }
+```
+
+`nullSubstitution()` sets the `TransformationType` to `TransformationType.NullSubstitution`

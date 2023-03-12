@@ -1,0 +1,49 @@
+---
+id: mapping
+title: Mapping
+sidebar_label: Mapping
+sidebar_position: 2
+---
+
+## Mapping
+
+`Mapping` is a contract between a `Source` model and a `Destination` model. `Mapping` is created by invoking `createMap()`. Within a `Mapper`, a `Mapping` is **unidirectional** and **unique**.
+
+```ts
+createMap(mapper, Source, Destination); // Mapping<Source, Destination>
+createMap(mapper, Destination, Source); // Mapping<Destination, Source>
+```
+
+:::info
+
+We can also create a Mapping between the same model (identifier). Read more about [Self Mapping](../misc/self-mapping)
+
+:::
+
+## MappingProperty
+
+`MappingProperty` is a set of information about a particular property on the `Destination`
+
+-   Property path
+-   [MappingTransformation](#mappingtransformation) of that property
+-   Nested metadata modifier of the property and its counterpart on the `Source` (e.g: `Bio#birthday` is `Date`, `BioDto#birthday` is `String`. So the data stored on `MappingProperty` is `[String, Date]`)
+
+## MappingTransformation
+
+`MappingTransformation` is the instruction of how `Mapper` should map the property. `MappingTransformation` operates based on different types of `TransformationType`
+
+There are currently 10 `TransformationType`
+
+| type                  | member map function       | description                                                                                                                                                                                      |
+| --------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Ignore                | `ignore()`                | Ignore a member on the `Destination`                                                                                                                                                             |
+| MapFrom               | `mapFrom()`               | Customize instruction for a member with a `Selector` or a [Resolver](../mapping-configuration/for-member/map-from#value-resolver)                                                                |
+| Condition             | `condition()`             | If the member on the `Destination` matches with another member on the `Source`, this will conditionally map the member on the `Source` to `Destination` if some predicate is evaluated to truthy |
+| FromValue             | `fromValue()`             | Map a raw value to the member                                                                                                                                                                    |
+| MapWith               | `mapWith()`               | In some cases where nested models do not work automatically, this is to specify the nested `Destination` of the member as well as the nested `Source`                                            |
+| ConvertUsing          | `convertUsing()`          | Map a member using [Converters](../mapping-configuration/for-member/convert-using)                                                                                                               |
+| MapInitialize         | `mapInitialize()`         | This is used internally to initialize the `MappingProperty` with the `Destination` metadata                                                                                                      |
+| NullSubstitution      | `nullSubstitution()`      | If the member on `Source` is `null`, this will substitute the `null` value with a different value for that member on `Destination`                                                               |
+| UndefinedSubstitution | `undefinedSubstitution()` | If the member on `Source` is `undefined`, this will substitute the `undefined` value with a different value for that member on `Destination`                                                     |
+| MapWithArguments      | `mapWithArguments()`      | This can be used to map with extra arguments where the arguments come in at runtime when `map()` is invoked                                                                                      |
+| MapDefer              | `mapDefer()`              | This can be used to defer a `TransformationType` with the `Source`. For example, if `Source` has data A, we want `MapFrom` but if `Source` has B, we want to `Ignore`                            |

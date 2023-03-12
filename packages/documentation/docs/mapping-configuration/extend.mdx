@@ -1,0 +1,28 @@
+---
+id: extend
+title: Extend
+sidebar_label: Extend
+sidebar_position: 6
+---
+
+Call `extend()` and pass in either a `Mapping` or a pair of models to tell AutoMapper to extend the `MappingProperties` to the `Mapping` we are creating
+
+```ts
+const baseMapping = createMap(mapper, Base, BaseDto);
+createMap(
+    // 👆 the Mapping we are creating
+    mapper,
+    User,
+    UserDto, // 👇 the Mapping we are extending
+    extend(baseMapping)
+);
+
+// or
+createMap(mapper, User, UserDto, extend(Base, BaseDto));
+```
+
+:::tip
+
+We can still override the extended `MappingProperties` with `forMember()` **after** the `extend()`
+
+:::

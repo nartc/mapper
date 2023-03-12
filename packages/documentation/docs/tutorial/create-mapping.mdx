@@ -1,0 +1,89 @@
+---
+id: create-mapping
+title: Create Mappings
+sidebar_label: Create Mappings
+sidebar_position: 3
+---
+
+Our models have been prepped from the last step. It is time to create the `Mapping` between them.
+
+:::tip
+
+Mappings creation are fast and should be placed where the application starts so that they are only created **once**.
+
+:::
+
+## `createMap()`
+
+```ts title="/src/main.ts"
+import { createMap } from '@automapper/core';
+import { mapper } from './mappings/mapper';
+import { Bio, BioDto } from './models/bio';
+import { User, UserDto } from './models/user';
+
+createMap(mapper, Bio, BioDto);
+createMap(mapper, User, UserDto);
+```
+
+:::tip
+
+Order of `createMap()` matters. Since `Bio` and `BioDto` are nested models on `User` and `UserDto`, the `Mapping<Bio, BioDto>` needs to be created first in order for `Mapping<User, UserDto>` to be initialized correctly.
+
+:::
+
+`createMap(mapper, Source, Destination)` will create and return a `Mapping<Source, Destination>`. Let's test the Mappings out with the following `User`
+
+```ts
+const user = new User();
+user.firstName = 'Chau';
+user.lastName = 'Tran';
+user.username = 'ctran';
+user.password = '123456';
+user.bio = new Bio();
+user.bio.avatarUrl = 'google.com';
+user.bio.birthday = new Date();
+user.bio.job = new Job();
+user.bio.job.title = 'Developer';
+user.bio.job.salary = 99999;
+```
+
+## `map()`
+
+To execute a map operation from `User` to `UserDto`, you invoke:
+
+```ts
+const dto = mapper.map(user, User, UserDto);
+```
+
+You will notice that the call runs successfully but with two errors logged to the console.
+
+```
+[AutoMapper]
+Unmapped properties for Bio -> BioDto:
+-------------------
+jobTitle,
+jobSalary
+
+[AutoMapper]
+Unmapped properties for User -> UserDto:
+-------------------
+fullName
+```
+
+Let's also take a look at the `dto`
+
+```
+UserDto {
+    bio: BioDto {
+        avatarUrl: 'google.com',
+        birthday: 2022-03-23T22:46:17.110Z
+    },
+    username: 'ctran',
+    lastName: 'Tran',
+    firstName: 'Chau'
+}
+```
+
+It is clear that `bio.jobTitle`, `bio.jobSalary`, and `fullName` are missing. The errors are correct. Additionally, there's also another "error": `UserDto#birthday` is a `string` but it holds a `Date` value now because it was mapped from `User#birthday`.
+
+Let's fix the issues one by one in the next section.

@@ -1,0 +1,47 @@
+---
+id: sequelize
+title: automapper/sequelize
+sidebar_label: automapper/sequelize
+sidebar_position: 4
+---
+
+## Overview
+
+`@automapper/sequelize` is an official strategy that works with [Sequelize](https://sequelize.org/). `@automapper/sequelize` is an extension of `@automapper/classes`
+
+## Installation
+
+```shell
+npm i @automapper/core @automapper/classes @automapper/sequelize
+```
+
+```shell
+yarn add @automapper/core @automapper/classes @automapper/sequelize
+```
+
+## Usage
+
+Using `@automapper/sequelize` isn't different from using [`@automapper/classes`](./classes#usage). The difference is `@automapper/sequelize` has a custom `preMap` that handles how to serialize the `sourceObject` because of how Sequelize returns the object upon a Retrieve operation and a custom `destinationConstructor`.
+
+### `preMap`
+
+Use `Sequelize#Model.get()` if it's available to serialize the `sourceObject`
+
+### `destinationConstructor`
+
+Use `Sequelize#Model.build()` if it's available to construct the `destinationObject`.
+
+We can customize this `preMap` via `MappingStrategyInitializerOptions`
+
+```ts
+const mapper = createMapper({
+    strategyInitializer: sequelize({
+        preMap: customPreMap,
+        destinationConstructor: customDestinationConstructor,
+    }),
+});
+```
+
+## Metadata
+
+See [@automapper/classes](./classes#metadata)

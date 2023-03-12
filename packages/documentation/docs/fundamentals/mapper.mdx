@@ -1,0 +1,80 @@
+---
+id: mapper
+title: Mapper
+sidebar_label: Mapper
+sidebar_position: 1
+---
+
+## Mapper
+
+`Mapper` is the main character in AutoMapper TypeScript. Everything starts with a `Mapper`. To create a `Mapper`, call `createMapper()` along with a [Strategy](#mappingstrategy)
+
+```ts
+const mapper = createMapper({
+    strategyInitializer: classes(),
+});
+```
+
+## MappingStrategy
+
+In order for `Mapper` to map properties, `Mapper` needs to know about the properties' metadata. That's what the Strategy provides to the `Mapper`. A Strategy deals with:
+
+-   Discover the metadata: Based on the user input, a strategy needs to know how to discover the metadata of the models from that input. E.g: `@automapper/classes` can discover the metadata with `@AutoMap` decorator.
+-   Retrieve the metadata: A strategy has its own "storage" to store the raw metadata. In order for `Mapper` to work consistently, a Strategy needs to provide a way to retrieve this metadata in the shape that `Mapper` can understand. E.g: `@automapper/classes` stores the metadata in `Reflect` object.
+-   Apply the metadata: By default, `Mapper` knows how to apply the metadata for a specific model. However, the consumers can customize this behavior by passing in a custom `applyMetadata` function.
+
+In addition to dealing with metadata, a Strategy also provides two hooks:
+
+-   `preMap`: Runs before the map operation starts. This step is usually to prepare the `sourceObject` before it goes into the `map` operation.
+-   `postMap`: Runs after the map operation starts. This step is usually to massage the result `destinationObject` before it gets returned to the user.
+
+### Official Strategies
+
+AutoMapper TypeScript comes with 4 official strategies:
+
+| package                 | strategy      | description                                                       |
+| ----------------------- | ------------- | ----------------------------------------------------------------- |
+| `@automapper/classes`   | `classes()`   | Works with TS/ES6 Classes                                         |
+| `@automapper/pojos`     | `pojos()`     | Works with Interfaces/Types                                       |
+| `@automapper/mikro`     | `mikro()`     | Works with TS/ES6 Classes and [MikroORM](https://mikro-orm.io/)   |
+| `@automapper/sequelize` | `sequelize()` | Works with TS/ES6 Classes and [Sequelize](https://sequelize.org/) |
+
+:::info
+
+`mikro()` and `sequelize()` are extensions of `classes()`. They call `classes()` with different `MappingStrategyInitializerOptions`
+
+:::
+
+## Logger
+
+AutoMapper TypeScript exposes a logger via the symbol `AutoMapperLogger`. There are 4 log levels:
+
+- `log`
+- `warn`
+- `info`
+- `error`
+
+By default, these log levels are implemented using the `console`'s counterparts in addition to having `[AutoMapper]` as the prefix.
+
+```ts
+console.log('some log'); // some log
+AutoMapperLogger.log('some log'); // [AutoMapper]: some log
+```
+
+### Customization
+
+We can customize `AutoMapperLogger` via `AutoMapperLogger.configure()`
+
+```ts
+// in your application's entry point, at the top
+AutoMapperLogger.configure({
+  warn: null, // nullify "warn" completely
+});
+```
+
+There is one caveat in terms of customizing `AutoMapperLogger` which is **having to** call `AutoMapperLogger.configure()` **as soon as possible** so we need to pick a file that is guaranteed to run **early**, preferably earlier than **decorators**.
+
+- In NestJS, this can be `app.module.ts`
+- In Angular, this can be `polyfills.ts`
+
+The caveat stems from the fact that `@AutoMap` decorator from `@automapper/classes` does have a `AutoMapperLogger.warn` call when it fails to infer the type from Reflection. This might not be a desired behavior in certain environments.

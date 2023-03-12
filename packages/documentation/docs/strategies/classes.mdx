@@ -1,0 +1,116 @@
+---
+id: classes
+title: automapper/classes
+sidebar_label: automapper/classes
+sidebar_position: 1
+---
+
+## Overview
+
+`@automapper/classes` is an official strategy that works with ES6/TS Class-based projects. It is recommended to use with [NestJS](https://nestjs.com) backend as NestJS works very well with Classes.
+
+## Installation
+
+```shell
+npm i @automapper/core @automapper/classes
+```
+
+```shell
+yarn add @automapper/core @automapper/classes
+```
+
+## Usage
+
+We have been using `@automapper/classes` throughout the documentation. Check [Tutorial](../tutorial/preface) for more information about usage.
+
+## Metadata
+
+### `AutoMap`
+
+`AutoMap` is a `PropertyDecorator` to track a property's metadata on a class. `@AutoMap()` has 3 overloads:
+
+-   `@AutoMap()`: Use on primitives like `string`, `number`, and `boolean`. `Date` is also acceptable.
+-   `@AutoMap(() => Type | [Type])`: Supply a `Type` so `AutoMap` does not have to guess (or cannot guess). Use on nested models, enums, array types, complex union types, or ambiguous types (e.g: `any`, `Record`)
+
+-   `@AutoMap(AutoMapOptions)`: Take complete control of the data that `AutoMap` stores
+
+#### Enum
+
+In TypeScript, there are 2 main types of Enums that we can have: String and Numeric. In order for AutoMapper to work correctly with Enums, we need to supply the type of our enums with `AutoMap()`
+
+```ts
+enum Color {
+    Red,
+    Green,
+    Blue,
+}
+
+enum Role {
+    Admin = 'admin',
+    User = 'user',
+}
+
+class User {
+    @AutoMap(() => String) // string enum
+    role!: Role;
+    @AutoMap(() => Number) // numeric enum
+    color!: Color;
+}
+```
+
+#### Array type
+
+As mentioned above, we need to explicitly supply a type to `AutoMap` if the property has an Array type
+
+```ts
+class User {
+    @AutoMap(() => [Date])
+    logins!: Date[];
+}
+```
+
+#### Circular Dependency
+
+It is common to have circular dependency in terms of models when we work with an ORM. By default, AutoMapper sets a `depth` value of `1` for nested models.
+
+In other words, let's assume we have a circular dependency: `A <-> B`
+
+```ts
+class A {
+    b: B;
+}
+
+class B {
+    a: A;
+}
+
+// depth 1
+A {
+    b: B {
+        a: A {
+            b: undefined
+        }
+    }
+}
+
+// depth 2
+A {
+    b: B {
+        a: A {
+            b: B {
+                a: undefined
+            }
+        }
+    }
+}
+```
+
+We can configure the `depth` by using the `AutoMapOptions` with `AutoMap`
+
+### Transformer Plugin
+
+This section is meant to be a placeholder because `Transformer Plugin` is related to `@automapper/classes`. Please check the dedicated [TransformerPlugin](../misc/transformer-plugin)
+
+### Mapped Types
+
+This section is meant to be a placeholder because `Mapped Types` is related to `@automapper/classes`. Please check the dedicated [MappedTypes](../misc/mapped-types)

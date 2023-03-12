@@ -1,0 +1,251 @@
+---
+id: mapping-configurations
+title: Use Mapping Configurations
+sidebar_label: Use Mapping Configurations
+sidebar_position: 4
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+## `fullName`
+
+In this particular case, you can call `fullName` a _computed_ property because the Source (`User`)
+does not have a `fullName` property. Hence, it must be computed from something else. To configure the mapping instruction for a property, you can use `forMember()` with `createMap()`
+
+```ts
+import { createMap, forMember, mapFrom } from '@automapper/core';
+
+createMap(
+    mapper,
+    User,
+    UserDto,
+    // highlight-start
+    forMember(
+        (destination) => destination.fullName,
+        mapFrom((source) => source.firstName + ' ' + source.lastName)
+    )
+    // highlight-end
+);
+```
+
+`forMember()` accepts two arguments:
+
+-   A `Selector` to select the property you want to configure the instruction for.
+-   A `MemberMapFn` that carries a specific instruction.
+
+:::info
+
+Read more about [ForMember](../mapping-configuration/for-member/overview)
+
+:::
+
+Here, `forMember()` is saying: For `destination.fullName`, use `source.firstName + ' ' + source.lastName` as the result.
+
+## `birthday`
+
+For `birthday`, let's try using another `MappingConfiguration` function: `typeConverter`. Here, we want to convert from `Date` to `string`.
+
+```ts
+createMap(
+    mapper,
+    Bio,
+    BioDto,
+    // highlight-next-line
+    typeConverter(Date, String, (date) => date.toDateString())
+);
+```
+
+`typeConverter()` is saying: If a property on the Source is of type `Date` and the matching property on the Destination is of type `String`, use the conversion of `date.toDateString()`
+
+:::note
+
+-   `typeConverter` will apply `Date -> String` conversion for ALL pairs of `Date, String`, not just `birthday`
+-   Instead of `typeConverter`, you can also use `forMember()` to map `BioDto#birthday` by itself.
+
+:::
+
+## `jobTitle` and `jobSalary`
+
+These two properties are a bit different from `fullName` and `birthday`. If you notice, you will see that `jobTitle` and `jobSalary` are **flatten** properties of `job.title` and `job.salary`.
+
+AutoMapper supports [Auto Flattening](../fundamentals/auto-flattening) out of the box with the concept of [Naming Conventions](../fundamentals/naming-convention). With that in mind, let's provide a `NamingConvention` for `Mapping<Bio, BioDto>` by using yet another `MappingConfiguration` function: `namingConventions()`
+
+```ts
+createMap(
+    mapper,
+    Bio,
+    BioDto,
+    typeConverter(Date, String, (date) => date.toDateString()),
+    // highlight-next-line
+    namingConventions(new CamelCaseNamingConvention())
+);
+```
+
+Let's execute the map operation again, you'll get the complete `UserDto` 🎉
+
+```
+UserDto {
+    bio: BioDto {
+        avatarUrl: 'google.com',
+        birthday: 'Wed Mar 23 2022',
+        jobSalary: 99999,
+        jobTitle: 'Developer'
+    },
+    username: 'ctran',
+    lastName: 'Tran',
+    firstName: 'Chau',
+    fullName: 'Chau Tran'
+}
+```
+
+## Summary
+
+-   Without AutoMapper, mapping logic is repetitive and hard to scale. DTOs and Entities are coupling.
+-   With AutoMapper, matching properties are mapped _automatically_ (`firstName`, `lastName`, `username`, `bio`, and `bio.avatarUrl`)
+-   [Auto Flattening](../fundamentals/auto-flattening) with [Naming Conventions](../fundamentals/naming-convention)
+-   [Type Converter](../mapping-configuration/type-converters) allows for using the same conversion for the same pair of types.
+
+<Tabs>
+<TabItem default value="userentity" label="user.ts">
+
+```ts
+export class User {
+    @AutoMap()
+    firstName: string;
+
+    @AutoMap()
+    lastName: string;
+
+    @AutoMap()
+    username: string;
+
+    password: string; // <- we purposely left this one out because we don't want to map "password"
+
+    @AutoMap(() => Bio)
+    bio: Bio;
+}
+
+export class Bio {
+    @AutoMap(() => Job)
+    job: Job;
+
+    @AutoMap()
+    birthday: Date;
+
+    @AutoMap()
+    avatarUrl: string;
+}
+
+export class Job {
+    @AutoMap()
+    title: string;
+
+    @AutoMap()
+    salary: number;
+}
+```
+
+</TabItem>
+<TabItem value="userdto" label="user.dto.ts">
+
+```ts
+export class UserDto {
+    @AutoMap()
+    firstName: string;
+
+    @AutoMap()
+    lastName: string;
+
+    @AutoMap()
+    fullName: string;
+
+    @AutoMap()
+    username: string;
+
+    @AutoMap(() => BioDto)
+    bio: BioDto;
+}
+
+export class BioDto {
+    @AutoMap()
+    jobTitle: string;
+
+    @AutoMap()
+    jobSalary: number;
+
+    @AutoMap()
+    birthday: string;
+
+    @AutoMap()
+    avatarUrl: string;
+}
+```
+
+</TabItem>
+<TabItem value="mapper" label="mapper.ts">
+
+```ts
+import { createMapper } from '@automapper/core';
+import { classes } from '@automapper/classes';
+
+// Create and export the mapper
+export const mapper = createMapper({
+    strategyInitializer: classes(),
+});
+```
+
+</TabItem>
+<TabItem value="main" label="main.ts">
+
+```ts
+createMap(
+    mapper,
+    Bio,
+    BioDto,
+    typeConverter(Date, String, (date) => date.toDateString()),
+    namingConventions(new CamelCaseNamingConvention())
+);
+createMap(
+    mapper,
+    User,
+    UserDto,
+    forMember(
+        (destination) => destination.fullName,
+        mapFrom((source) => source.firstName + ' ' + source.lastName)
+    )
+);
+```
+
+</TabItem>
+<TabItem value="test" label="user.service.ts">
+
+```ts
+export class UserService {
+    testMapping() {
+        const user = new User();
+        user.firstName = 'Chau';
+        user.lastName = 'Tran';
+        user.username = 'ctran';
+        user.password = '123456';
+        user.bio = new Bio();
+        user.bio.avatarUrl = 'google.com';
+        user.bio.birthday = new Date();
+        user.bio.job = new Job();
+        user.bio.job.title = 'Developer';
+        user.bio.job.salary = 99999;
+
+        const dto = mapper.map(user, User, UserDto);
+    }
+}
+```
+
+</TabItem>
+</Tabs>
+
+<iframe
+    src="https://stackblitz.com/edit/typescript-1dfb3g?ctl=1&devToolsHeight=100&embed=1&file=index.ts"
+    frameBorder="0"
+    width="100%"
+    height="500"
+/>

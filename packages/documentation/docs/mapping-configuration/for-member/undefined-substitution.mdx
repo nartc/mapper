@@ -1,0 +1,30 @@
+---
+id: undefined-substitution
+title: UndefinedSubstitution
+sidebar_label: UndefinedSubstitution
+sidebar_position: 9
+---
+
+Call `undefinedSubstitution()` and pass in a raw value to map to the configured property in the case of the same property on `Source` is `undefined`. If we pass in an object, AutoMapper will map the object as-is without any consideration for nested mapping.
+
+:::info
+
+AutoMapper uses strict equality check against `undefined` (`=== undefined`) to make the comparison. Hence, `null` value will **not** be substituted.
+
+:::
+
+```ts
+createMap(
+    mapper,
+    User,
+    UserDto,
+    forMember(
+        (destination) => destination.fullName,
+        undefinedSubstitution('raw value')
+    )
+);
+
+mapper.map({}, User, UserDto); // UserDto { fullName: 'raw value' }
+```
+
+`undefinedSubstitution()` sets the `TransformationType` to `TransformationType.UndefinedSubstitution`

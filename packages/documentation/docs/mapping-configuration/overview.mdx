@@ -1,0 +1,89 @@
+---
+id: overview
+title: Overview
+sidebar_label: Overview
+sidebar_position: 1
+---
+
+## Convention over Configuration
+
+AutoMapper does have _Auto_ in its name. If we follow closely _Conventions_, we rarely need `MappingConfiguration`.
+
+As we have already seen in previous examples, matching properties are mapped automatically as long as the metadata is provided.
+
+```ts
+class User {
+    @AutoMap()
+    firstName!: string;
+    @AutoMap()
+    lastName!: string;
+}
+
+class UserDto {
+    @AutoMap()
+    firstName!: string;
+    @AutoMap()
+    lastName!: string;
+}
+```
+
+Nested models are also _auto-mapped_.
+
+```ts
+class Address {
+    @AutoMap()
+    street!: string;
+}
+
+class Bio {
+    @AutoMap()
+    text!: string;
+    @AutoMap(() => [Address])
+    addresses: Address[] = [];
+}
+
+class User {
+    @AutoMap(() => Bio)
+    bio!: Bio;
+}
+
+class AddressDto {
+    @AutoMap()
+    street!: string;
+}
+
+class BioDto {
+    @AutoMap()
+    text!: string;
+    @AutoMap(() => [AddressDto])
+    addresses: AddressDto[] = [];
+}
+
+class UserDto {
+    @AutoMap(() => BioDto)
+    bio!: BioDto;
+}
+```
+
+In addition, there is [Auto Flattening](../fundamentals/auto-flattening). These features should encourage us to stay as close to the conventions as possible.
+
+## Custom Configuration
+
+`MappingConfiguration` are functions that augment a `Mapping`. When creating a `Mapping` with `createMap()`, we can pass in as many `MappingConfiguration` as we like and in any order that we want.
+
+| mapping configuration | description                                                             |
+| --------------------- | ----------------------------------------------------------------------- |
+| `afterMap()`          | Attach a `MapCallback` to run after the map operation                   |
+| `beforeMap()`         | Attach a `MapCallback` to run before the map operation                  |
+| `constructUsing()`    | Set a custom constructor for the `Destination` before the map operation |
+| `extend()`            | Extend another `Mapping`                                                |
+| `forMember()`         | Configure a `MappingTransformation` for a property on the `Destination` |
+| `forSelf()`           | Configure flattening for `Destination` from a different `Source`        |
+| `namingConventions()` | Configure the `NamingConvention` for this `Mapping`                     |
+| `typeConverters()`    | Configure the `TypeConverter` for this `Mapping`                        |
+
+:::caution
+
+If the Mapping have an absurd amount of custom `MappingConfiguration`, it's time to re-evaluate the models or if AutoMapper is the right tool for the project.
+
+:::

@@ -1,0 +1,53 @@
+---
+id: map-from
+title: MapFrom
+sidebar_label: MapFrom
+sidebar_position: 3
+---
+
+Call `mapFrom()` to select the value, from the `sourceObject`, to map to the property being configured
+
+## Value Selector
+
+`mapFrom()` accepts a `ValueSelector` that AutoMapper will use to get the value from the `sourceObject` upon mapping the configured property
+
+```ts
+createMap(
+    mapper,
+    User,
+    UserDto,
+    forMember(
+        (d) => d.fullName,
+        mapFrom((source) => source.firstName + ' ' + source.lastName)
+    )
+);
+```
+
+## Value Resolver
+
+A slightly less common approach is to use a `Resolver` with `mapFrom()`. `Resolver` has the following interface:
+
+```ts
+export interface Resolver<TheSource, TheDestination, TheReturnType> {
+    resolve(source: TheSource, destination?: TheDestination): TheReturnType;
+}
+```
+
+`Resolver#resolve()` is called with the whole `sourceObject` and the `destinationObject` which allows us to handle some complex logic to arrive at the result for the configured property. We can reuse `Resolver` as well as separating `Resolver` in a different file to manage easier.
+
+```ts
+export const taxResolver: Resolver<Item, ItemDto, number> = {
+    resolve(item): number {
+        return item.type === 'A' ? item.price * 0.5 : item.price * 0.9;
+    },
+};
+
+createMap(
+    mapper,
+    Item,
+    ItemDto,
+    forMember((d) => d.tax, mapFrom(taxResolver))
+);
+```
+
+`mapFrom()` sets the `TransformationType` to `TransformationType.MapFrom`

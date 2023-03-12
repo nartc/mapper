@@ -1,0 +1,25 @@
+---
+id: construct-using
+title: ConstructUsing
+sidebar_label: ConstructUsing
+sidebar_position: 5
+---
+
+Call `constructUsing()` and pass in a `DestinationConstructor` to customize how AutoMapper should construct the `Destination` before every map operation against that `Destination`.
+
+```ts
+createMap(
+    mapper,
+    User,
+    UserDto, // 👈 --the destination modifier--👇
+    constructUsing((sourceObject, destinationIdentifier) => {
+        // sourceObject is the data when run: mapper.map(sourceObject...);
+    })
+);
+```
+
+:::info
+
+All built-in `MappingStrategy` should have a default `destinationConstructor` (e.g: `@automapper/classes` default is `new Destination()`).
+
+:::

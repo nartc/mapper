@@ -1,0 +1,55 @@
+---
+id: self-mapping
+title: Self Mapping (Same Identifier)
+sidebar_label: Self Mapping
+sidebar_position: 3
+---
+
+In some cases, we might want to map a model (identifier) to itself. In AutoMapper TypeScript, this is called **Self Mapping**. Let's explore the following models
+
+```ts
+export class Person {
+  @AutoMap()
+  name!: string; // always required
+  @AutoMap()
+  nickname?: string; // can be optional
+}
+
+export class Org {
+  @AutoMap(() => [Person])
+  people!: Person[];
+}
+
+export class OrgDto {
+  @AutoMap(() => [Person])
+  people!: Person[];
+}
+```
+
+Instead of having a `PersonDto`, our `Org` and `OrgDto` use `Person` for the field `people`. There are situations where this is the case. With this in mind, we can create our mappings as follow:
+
+```ts
+/**
+ * Short-hand syntax for
+ *
+ * createMap(
+ *   mapper,
+ *   Person,
+ *   Person,
+ *   forMember(...)
+ * )
+ */
+createMap(mapper, Person, forMember(d => d.nickname, mapFrom(s => s.nickname ?? s.name));
+createMap(mapper, Org, OrgDto);
+```
+
+We can then map `Org` to `OrgDto` as normal
+
+```ts
+const dto = mapper.map(org, Org, OrgDto);
+// we can also map the "people"
+/**
+ * Short-hand syntax for: mapper.mapArray(org.people, Person, Person);
+ */
+const mappedPeople = mapper.mapArray(org.people, Person);
+```

@@ -1,0 +1,105 @@
+---
+id: type-converters
+title: TypeConverters
+sidebar_label: TypeConverters
+sidebar_position: 10
+---
+
+## What is Type Converter?
+
+Sometimes, we would want to take complete control over the conversion of one data type to another. Suppose we have the following model:
+
+```ts
+export class Source {
+    @AutoMap()
+    value1!: string;
+    @AutoMap()
+    value2!: string;
+    @AutoMap()
+    value3!: string;
+}
+```
+
+and we would like to map it to:
+
+```ts
+export class Destination {
+    @AutoMap()
+    value1!: number;
+    @AutoMap()
+    value2!: Date;
+    @AutoMap()
+    value3!: boolean;
+}
+```
+
+If we were to try and map `Source` to `Destination` as-is, we would end up with mismatch values and types on the `Destination`. For example, `Source.value1` will be mapped to `Destination.value1` even though the types of each `value1` are different. Instead of throwing an error, AutoMapper will map as-is to respect the dynamic nature of JavaScript. To control the conversions for these types when the properties are _matching_, we need to supply Type Converters to a specific Mapping
+
+Call `typeConverter()` in a `createMap()` to supply a Type Converter to the Mapping
+
+```ts
+createMap(
+    mapper,
+    Source,
+    Destination,
+    typeConverter(String, Date, (str) => new Date(str)),
+    typeConverter(String, Number, (str) => parseInt(str, 10)),
+    typeConverter(String, Boolean, (str) => Boolean(str))
+);
+```
+
+Here, we're telling AutoMapper:
+
+-   If you are mapping from a `String` to a `Number`, use `parseInt()`
+-   If you are mapping from a `String` to a `Date`, use `new Date()`
+-   If you are mapping from a `String` to a `Boolean`, use `Boolean()`
+
+```ts
+const source = new Source();
+source.value1 = '123';
+source.value2 = '10/14/1991';
+source.value3 = 'truthy';
+
+const destination = mapper.map(source, Destination, Source);
+/**
+ * Destination {
+    value1: 123, // number
+    value2: Mon Oct 14 1991 00:00:00 GMT-0500 (Central Daylight Time), // a Date instance
+    value3; true // boolean
+ * }
+ */
+```
+
+:::caution
+
+Properties (on the Destination) that are subject to Type Converters will be treated as-is in the mapping pipeline. In other words, they will be mapped like a primitive and will **NOT** go through any automatic nested mapping even if the properties' types are **Object** types.
+
+:::
+
+## Type of Type Converters
+
+There are 4 types of Type Converters:
+
+-   `Type -> Type`: This is what we've just used above. A single Type to another single Type
+-   `Type -> [Type]`: AutoMapper can also set up Type Converter from a single Type to an Array Type.
+-   `[Type] -> Type`: The opposite is also true
+-   `[Type] -> [Type]`: Last but not least, AutoMapper can set up Type Converter between two Array Types.
+
+```ts
+// a more complex example
+createMap(
+    mapper,
+    TypeConverter,
+    TypeConverterDto,
+    typeConverter(String, Number, (str) => parseInt(str) + 1),
+    typeConverter(String, Boolean, (str) => Boolean(str)),
+    typeConverter(String, Date, (str) => new Date(str)),
+    typeConverter([String], [Number], (manyStrs) =>
+        manyStrs.map((str) => parseInt(str))
+    ),
+    typeConverter(DateString, String, (dateStr) => dateStr.toDateString()),
+    typeConverter(TimestampString, String, (timestampStr) =>
+        timestampStr.toISOString()
+    )
+);
+```

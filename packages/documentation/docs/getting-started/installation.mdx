@@ -1,0 +1,62 @@
+---
+id: installation
+title: Installation
+sidebar_label: Installation
+sidebar_position: 3
+---
+
+### Core
+
+Install the `core` module via `npm` or `yarn` along with at least one strategy:
+
+```shell
+npm i @automapper/core @automapper/classes reflect-metadata # for classes
+npm i @automapper/core @automapper/pojos # for pojos
+```
+
+```shell
+yarn add @automapper/core @automapper/classes reflect-metadata # for classes
+yarn add @automapper/core @automapper/pojos # for pojos
+```
+
+#### `tsconfig`
+
+```js
+{
+    "skipLibCheck": true,
+    "experimentalDecorators": true, // for @automapper/classes
+    "emitDecoratorMetadata": true // for @automapper/classes
+}
+```
+
+### ORMs
+
+If you are using an ORM, AutoMapper TypeScript provides support for [Sequelize](https://sequelize.org/) and [MikroORM](https://mikro-orm.io/). Both work with `@automapper/classes`
+
+```shell
+npm i @automapper/core @automapper/classes reflect-metadata @automapper/mikro # for mikro-orm
+npm i @automapper/core @automapper/classes reflect-metadata @automapper/sequelize # for sequelize
+```
+
+```shell
+yarn add @automapper/core @automapper/classes reflect-metadata @automapper/mikro # for mikro-orm
+yarn add @automapper/core @automapper/classes reflect-metadata @automapper/sequelize # for sequelize
+```
+
+### NestJS
+
+AutoMapper TypeScript provides official integration with [NestJS](https://nestjs.com)
+
+```shell
+npm i @automapper/core @automapper/nestjs @automapper/classes reflect-metadata # for classes
+npm i @automapper/core @automapper/nestjs @automapper/classes reflect-metadata @automapper/mikro # for classes + mikro-orm
+npm i @automapper/core @automapper/nestjs @automapper/classes reflect-metadata @automapper/sequelize # for classes + sequelize
+npm i @automapper/core @automapper/nestjs @automapper/pojos # for pojos
+```
+
+```shell
+yarn add @automapper/core @automapper/nestjs @automapper/classes reflect-metadata # for classes
+yarn add @automapper/core @automapper/nestjs @automapper/classes reflect-metadata @automapper/mikro # for classes + mikro-orm
+yarn add @automapper/core @automapper/nestjs @automapper/classes reflect-metadata @automapper/sequelize # for classes + sequelize
+yarn add @automapper/core @automapper/nestjs @automapper/pojos # for pojos
+```

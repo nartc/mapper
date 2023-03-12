@@ -1,0 +1,7 @@
+{
+    "name": "documentation",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "packages/documentation/src",
+    "projectType": "library",
+    "tags": ["documentation"]
+}

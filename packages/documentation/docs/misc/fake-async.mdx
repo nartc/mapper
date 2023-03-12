@@ -1,0 +1,32 @@
+---
+id: fake-async
+title: Fake Async
+sidebar_label: Fake Async
+sidebar_position: 4
+---
+
+## "Fake" Async
+
+Currently, AutoMapper is manipulating the [Event Loop](https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop) to provide a "fake" async support for the `mapAsync()` and `mutateAsync()` variants.
+
+```ts
+//                  👇 simplified for brevity
+function mapAsync(...args) {
+    const result = map(...args);
+    return new Promise((res) => {
+        setTimeout(res, 0, result);
+    });
+}
+
+//                      👇 simplified for brevity
+function mutateAsync(...args) {
+    return new Promise((res) => {
+        mutate(...args);
+        setTimeout(res);
+    });
+}
+```
+
+## Help wanted
+
+Real async support can be achieved by some Isomorphic Worker that would execute the map operations on the Worker thread. However, AutoMapper implementation is full of `Function` which cannot be serialized (easily) to transfer to the Worker thread. If anyone wants to contribute Asynchronous support, I'm happy to walk you through the repository.

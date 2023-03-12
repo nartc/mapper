@@ -1,0 +1,658 @@
+---
+id: migrate-to-automapper-v8
+title: Migrating to AutoMapper 8
+sidebar_label: Migrating to AutoMapper 8
+sidebar_position: 2
+---
+
+## Overview
+
+In AutoMapper 8, the overall APIs of AutoMapper have changed from [Fluent API](https://en.wikipedia.org/wiki/Fluent_interface) to a more [Functional](https://en.wikipedia.org/wiki/Functional_programming) approach. AutoMapper 8 also adopts the term **Mapping Strategy** (Strategy) to replace **Mapping Plugin** (Plugin). Strategy API is drastically simplified and made consistent across all Strategies.
+
+```ts
+// before: Plugin Initializer sometimes is a function, other times is a function that needs to be invoked
+const mapperOptions = {
+    // pluginInitializer: classes
+    // pluginInitializer: pojos
+    // pluginInitializer: mikro()
+    // pluginInitializer: sequelize()
+};
+
+// after: All Strategies are functions that need to be invoked
+const mapperOptions = {
+    // strategyInitializer: classes()
+    // strategyInitializer: pojos()
+    // strategyInitializer: mikro()
+    // strategyInitializer: sequelize()
+};
+```
+
+## Migrations
+
+### `skipLibCheck`
+
+If you haven't had `skipLibCheck: true` in your `tsconfig.json` already, go ahead and do so.
+
+### `createMapper(CreateMapperOptions)`
+
+1. `CreateMapperOptions` no longer requires a `name`
+2. `CreateMapperOptions` accepts `strategyInitializer` instead of `pluginInitializer`
+
+```ts
+// before
+const mapper = createMapper({
+    name: 'arbitrary',
+    pluginInitializer: classes,
+    /* namingConventions and errorHandler stay the same */
+});
+
+// after
+const mapper = createMapper({
+    strategyInitializer: classes(),
+    /* namingConventions and errorHandler stay the same */
+});
+```
+
+### `createMap()`
+
+Previously, `createMap()` was a method available on the `Mapper` object (returned by `createMapper()`). Now, `createMap()` is a standalone function instead.
+
+#### Syntax
+
+```ts
+// before
+mapper.createMap(User, UserDto);
+
+// after
+createMap(mapper, User, UserDto);
+```
+
+#### API
+
+Previously, `mapper.createMap()` returns a `CreateMapFluentFunctions` which allows you to chain `forMember()` and other methods to customize the `Mapping` you are creating. Now, `createMap()` returns a `Mapping` itself. Customization is provided by using other standalone functions. In AutoMapper 8, we call these functions `MappingConfiguration`.
+
+```ts
+// before
+mapper
+    .createMap(User, UserDto)
+    .forMember(/* ... */)
+    .forSelf(/* ... */)
+    .beforeMap(/* ... */)
+    .afterMap(/* ... */);
+
+// after
+createMap(
+    mapper,
+    User,
+    UserDto,
+    forMember(/* ... */),
+    forSelf(/* ... */),
+    beforeMap(/* ... */),
+    afterMap(/* ... */)
+);
+```
+
+This Functional API allows for better tree-shaking and grouping `MappingConfiguration` into reusable functions that you can use on different `createMap()`.
+
+#### `CreateMapOptions`
+
+Previously, you can pass in a `CreateMapOptions` to `mapper.createMap()`. Now, those options are provided by different
+standalone `MappingConfiguration` as well.
+
+```ts
+// before
+mapper.createMap(Base, BaseDto);
+mapper.createMap(User, UserDto, {
+    extend: [mapper.getMapping(Base, BaseDto)],
+    namingConventions: new PascalCaseNamingConvention(),
+});
+
+// after
+const baseMapping = createMap(mapper, Base, BaseDto);
+createMap(
+    mapper,
+    User,
+    UserDto,
+    extend(baseMapping),
+    // or you can call: extend(Base, BaseDto)
+    namingConventions(new PascalCaseNamingConvention())
+);
+```
+
+### `addProfile()`
+
+Same as `createMap()`, `addProfile()` was a method on the `Mapper` in previous versions. Now, `addProfile()` is a standalone function
+
+#### Syntax
+
+```ts
+// before
+mapper.addProfile(productProfile).addProfile(userProfile);
+
+// after
+addProfile(mapper, productProfile);
+addProfile(mapper, userProfile);
+```
+
+#### API
+
+Previously, `mapper.addProfile()` returns the `Mapper` so you can chain `addProfile()`. Now, `addProfile()` is a `void` function. The main difference is `addProfile()` now accepts a list of `MappingConfiguration` as well. The idea is you can have common `MappingConfiguration` that you can pass to ALL the `createMap()` inside of a particular `MappingProfile`.
+
+```ts
+// before
+const productProfile: MappingProfile = (mapper) => {
+    const baseMapping = mapper.getMapping(Base, BaseDto);
+    const camelCaseConvention = new CamelCaseNamingConvention();
+
+    const beforeMap = () => {
+        /* do something common for all Mappings */
+    };
+    const afterMap = () => {
+        /* do something common for all Mappings */
+    };
+
+    // duplicate the configurations for all Mappings
+    mapper
+        .createMap(Product, ProductDto, {
+            extend: [baseMapping],
+            namingConventions: camelCaseConvention,
+        })
+        .beforeMap(beforeMap)
+        .afterMap(afterMap);
+
+    mapper
+        .createMap(Product, ProductDetailDto, {
+            extend: [baseMapping],
+            namingConventions: camelCaseConvention,
+        })
+        .beforeMap(beforeMap)
+        .afterMap(afterMap);
+
+    mapper
+        .createMap(Product, MinimalProductDto, {
+            extend: [baseMapping],
+            namingConventions: camelCaseConvention,
+        })
+        .beforeMap(beforeMap)
+        .afterMap(afterMap);
+};
+mapper.addProfile(productProfile);
+
+// after
+const productProfile: MappingProfile = (mapper) => {
+    createMap(mapper, Product, ProductDto);
+    createMap(mapper, Product, ProductDetailDto);
+    createMap(mapper, Product, MinimalProductDto);
+};
+
+// pass the common configurations to the profile
+addProfile(
+    mapper,
+    productProfile,
+    extend(Base, BaseDto),
+    namingConventions(new CamelCaseNamingConvention()),
+    beforeMap(() => {
+        /* do something common for all Mappings */
+    }),
+    afterMap(() => {
+        /* do something common for all Mappings */
+    })
+);
+```
+
+AutoMapper 8 version is cleaner. How it works is each `MappingProfile` has a `MappingProfileContext` created upon invoked. All the `createMap()` inside a particular `MappingProfile` has access to that `MappingProfileContext` which includes all the common `MappingConfiguration`.
+
+### `addTypeConverter()`
+
+Previously, `addTypeConverter()` is a method on the `Mapper` object that allows you to create a converter between two types. The type converter then gets applied to every pair of properties that match the two types. However, type converters added by `addTypeConverter` will be applied for **ALL** mappings, and that might not be the case.
+
+In AutoMapper 8, `typeConverter()` is a `MappingConfiguration` function that can be passed to `createMap()` (to configure for that `Mapping`) or `addProfile()` (to configure for all mappings inside a `MappingProfile`). There is no equivalence to `Mapper` level type converters in AutoMapper 8.
+
+```ts
+// before
+mapper.addTypeConverter(String, Number, (str) => parseInt(str));
+
+mapper.createMap(User, UserDto);
+mapper.createMap(Product, ProductDto);
+
+// after
+createMap(
+    mapper,
+    User,
+    UserDto,
+    typeConverter(String, Number, (str) => parseInt(str))
+);
+createMap(
+    mapper,
+    Product,
+    ProductDto,
+    typeConverter(String, Number, (str) => parseInt(str) + 10)
+);
+```
+
+### `map()`
+
+#### Syntax
+
+```ts
+// before
+mapper.map(user, UserDto, User);
+
+// after
+mapper.map(user, User, UserDto);
+```
+
+This is a subtle breaking change that I've been holding off for a while. The positional arguments for `Source` and `Destination` are now switched to be more logical: "I want to map `sourceObject` from `Source` to `Destination`". This particularly makes it less confusing for `@automapper/pojos` users.
+
+```ts
+// before
+mapper.map<User, UserDto>(user, 'UserDto', 'User'); // weird order
+
+// after
+mapper.map<User, UserDto>(user, 'User', 'UserDto'); // matching order
+```
+
+#### API
+
+##### Mutation
+
+The **mutation** API of `mapper.map()` has been separated into a whole set of methods on `Mapper`, `mapper.mutate()`. This is to create a clear distinction between `mapping` and `mutating`.
+
+```ts
+// before
+const destinationObj = {};
+mapper.map(sourceObj, Destination, Source, destinationObj);
+
+// after
+const destinationObj = {};
+mapper.mutate(sourceObj, destinationObj, Source, Destination);
+```
+
+The `mapper.mutate()` family has matching APIs with `mapper.map()`
+
+```ts
+mapper.map();
+mapper.mapAsync();
+mapper.mapArray();
+mapper.mapArrayAsync();
+
+mapper.mutate();
+mapper.mutateAsync();
+mapper.mutateArray();
+mapper.mutateArrayAsync();
+```
+
+##### Extra Arguments
+
+When invoking a map operation with `mapper.map()`, you have the ability to pass in a `MapOptions` object with a property called: `extraArguments`. This is to allow for passing in dynamic arguments (that are only available at the time the map is invoked) to a particular map operation.
+
+In AutoMapper 8, `extraArguments` has been renamed to `extraArgs` and is a `Function` instead of just a `Record<string, unknown>`.
+
+```ts
+// before
+mapper.map(user, UserDto, User, { extraArguments: { extra: 123 } });
+
+// after
+mapper.map(user, User, UserDto, {
+    extraArgs: (mapping, destinationObject) => ({ extra: 123 }),
+});
+```
+
+With `extraArgs` being a function, you will have all the information you need to return a more sophisticated **extra arguments object**. In addition to the `Mapper` and the `sourceObject` that you already have access to (eg: `mapper.map(sourceObject, ...)`), `extraArgs` is called with the `Mapping` and the `destinationObject`, which you don't _easily_ have access to.
+
+:::caution
+
+`destinationObject` might **not** be the complete destination object because it might be a particular property's turn with `mapWithArguments`.
+
+:::
+
+### `MemberMapFunctions`
+
+#### `convertUsing`
+
+The 2nd argument (`Selector`) is now required.
+
+```ts
+// before
+const dateToStringConverter: Converter<User, string> = {
+    convert(source: User): string {
+        return source.birthday.toDateString();
+    },
+};
+mapper.createMap(User, UserDto).forMember(
+    (d) => d.birthday,
+    // 2nd argument is optional.
+    // If not passed in, convertUsing will call the converter#convert with the whole sourceObject
+    convertUsing(dateToStringConverter)
+);
+
+// after
+const dateToStringConverter: Converter<Date, string> = {
+    convert(source: Date): string {
+        return source.toDateString();
+    },
+};
+createMap(
+    mapper,
+    User,
+    UserDto,
+    forMember(
+        (d) => d.birthday,
+        // 2nd argument is required.
+        convertUsing(dateToStringConverter, (src) => src.birthday)
+    )
+);
+```
+
+This breaking change encourages better `Converter` usages. In the above example, it makes `dateToStringConverter` easier to reuse. If you have use-cases that use the whole `sourceObject`, consider using `mapFrom(Resolver)` instead.
+
+## Strategy (previously Plugin)
+
+Strategy can be customized with `MappingStrategyInitializerOptions` which has the following interface:
+
+```ts
+export interface MappingStrategyInitializerOptions {
+    applyMetadata?: ApplyMetadata;
+    destinationConstructor?: DestinationConstructor;
+    preMap?<TSource extends Dictionary<TSource>>(source: TSource): TSource;
+    postMap?<
+        TSource extends Dictionary<TSource>,
+        TDestination extends Dictionary<TDestination>
+    >(
+        source: TSource,
+        destination: TDestination
+    ): TDestination;
+}
+
+const mapper = createMapper({
+    strategyInitializer: classes({
+        applyMetadata, // customize how a Strategy applies the metadata to a model
+        destinationConstructor, // customize the default constructor of the Destination model
+        preMap, // customize what to do before a map happens
+        postMap, // customize what to do after a map happens
+    }),
+});
+```
+
+## `@automapper/classes`
+
+### Initializer
+
+```ts
+// before
+const mapper = createMapper({
+    pluginInitializer: classes, // no ()
+});
+
+// after
+const mapper = createMapper({
+    strategyInitializer: classes(), // invoking
+});
+```
+
+### `AutoMap`
+
+-   `typeFn` has been renamed to `type`
+
+```ts
+// before
+@AutoMap({ typeFn: () => User })
+
+// after
+@AutoMap({ type: () => User })
+```
+
+-   If you only have `typeFn` in `AutoMapOptions`, you can omit the object altogether
+
+```ts
+// before
+@AutoMap({ typeFn: () => User })
+
+// after
+@AutoMap(() => User)
+```
+
+-   Default `depth` is set to 1 instead of 0.
+-   `AutoMap` now warns if it cannot infer the type of the property. If you have dynamic type like `any`, `Record`, or something similar, please configure the property via `forMember()`.
+-   Array metadata is now required to be explicitly specified
+
+```ts
+// before
+export class User {
+    @AutoMap({ typeFn: () => Address })
+    addresses: Address[];
+}
+
+// after
+export class User {
+    @AutoMap(() => [Address])
+    addresses: Address[];
+}
+```
+
+## `@automapper/pojos`
+
+### Initializer
+
+```ts
+// before
+const mapper = createMapper({
+    pluginInitializer: pojos, // no ()
+});
+
+// after
+const mapper = createMapper({
+    strategyInitializer: pojos(), // invoking
+});
+```
+
+### `createMetadataMap()`
+
+-   Has been replaced with `PojosMetadataMap.create()`
+    -   Accepts `string | symbol` for the key instead of just `string`
+    -   No longer accepts `null` for metadata.
+    -   No longer allows for "extending" previously created metadata. Explicit is better in the case of metadata.
+-   `PojosMetadataMap.reset()` has been added to clear all the stored metadata (useful for the testing environment)
+
+```ts
+// before
+createMetadataMap('SimpleUser', {
+    firstName: String,
+    lastName: String,
+});
+createMetadataMap('SimpleUserDto', 'SimpleUser', {
+    fullName: String,
+});
+
+// after
+PojosMetadataMap.create<SimpleUser>('SimpleUser', {
+    firstName: String,
+    lastName: String,
+});
+PojosMetadataMap.create<SimpleUserDto>('SimpleUserDto', {
+    firstName: String,
+    lastName: String,
+    fullName: String,
+});
+```
+
+> If you want to share `firstName` and `lastName`, you can always make an object and spread it.
+
+-   Array metadata is now required to be explicitly specified
+
+```ts
+export interface User {
+    addresses: Address[];
+}
+
+// before
+createMetadataMap<User>('User', {
+    addresses: 'Address',
+});
+
+// after
+PojosMetadataMap.create<User>('User', {
+    addresses: ['Address'],
+});
+```
+
+## NestJS
+
+### `AutomapperModule.forRoot`
+
+```ts
+// before
+AutomapperModule.forRoot({
+    singular: true,
+    options: [
+        {
+            pluginInitializer: classes,
+            namingConventions: new CamelCaseNamingConvention(),
+        },
+    ],
+    globalErrorHandler,
+    globalNamingConventions,
+});
+
+AutomapperModule.forRoot({
+    options: [
+        {
+            name: 'classes',
+            pluginInitializer: classes,
+        },
+        {
+            name: 'pojos',
+            pluginInitializer: pojos,
+        },
+    ],
+    globalErrorHandler,
+    globalNamingConventions: new CamelCaseNamingConvention(),
+});
+
+// after
+AutomapperModule.forRoot({
+    strategyInitializer: classes(),
+    namingConventions: new CamelCaseNamingConvention(),
+});
+AutomapperModule.forRoot(
+    [
+        {
+            name: 'classes',
+            strategyInitializer: classes(),
+        },
+        {
+            name: 'pojos',
+            strategyInitializer: pojos(),
+        },
+    ],
+    {
+        globalErrorHandler,
+        globalNamingConventions: new CamelCaseNamingConvention(),
+    }
+);
+```
+
+### `AutomapperModule.forRootAsync`
+
+```ts
+import { EntityManager } from '@mikro-orm/mongodb';
+
+AutomapperModule.forRootAsync({
+    inject: [EntityManager],
+    useFactory: (em: EntityManager) => ({
+        strategyInitializer: classes({
+            destinationConstructor: (sourceObject, destinationIdentifier) =>
+                em.create(destinationIdentifier, {}),
+        }),
+    }),
+});
+```
+
+### `AutomapperProfile`
+
+-   `mapProfile` has been changed to `get profile`
+
+```ts
+@Injectable()
+export class UserProfile extends AutomapperProfile {
+    constructor(@InjectMapper() mapper: Mapper) {
+        super(mapper);
+    }
+
+    // before
+    override mapProfile(): MappingProfile {
+        return (mapper) => {
+            mapper.createMap(/*...*/);
+        };
+    }
+
+    // after
+    override get profile(): MappingProfile {
+        return (mapper) => {
+            createMap(mapper /*...*/);
+        };
+    }
+}
+```
+
+-   A new getter `get mappingConfigurations` that returns a `MappingConfiguration[]` to be passed to all `createMap()` inside the Profile
+
+```ts
+@Injectable()
+export class UserProfile extends AutomapperProfile {
+    constructor(@InjectMapper() mapper: Mapper) {
+        super(mapper);
+    }
+
+    get profile(): MappingProfile {
+        return (mapper) => {
+            createMap(mapper, UserEntity, UserDto);
+            createMap(mapper, UserEntity, UserInformationDto);
+            createMap(mapper, UserEntity, AuthUserDto);
+        };
+    }
+
+    protected get mappingConfigurations(): MappingConfiguration[] {
+        // the 3 createMap() above will get this `extend()`
+        return [extend(BaseEntity, BaseDto)];
+    }
+}
+```
+
+### `MapPipe`
+
+```ts
+export class SomeController {
+    // before
+    @Post()
+    someMethod(@Body(MapPipe(UserDto, User)) dto: UserDto) {
+        /*..*/
+    }
+
+    // after
+    @Post()
+    someMethod(@Body(MapPipe(User, UserDto)) dto: UserDto) {
+        /*..*/
+    }
+}
+```
+
+### `MapInterceptor`
+
+```ts
+export class SomeController {
+    // before
+    @Get()
+    @UseInterceptors(MapInterceptor(UserDto, User))
+    get() {
+        /*...*/
+    }
+
+    // after
+    @Get()
+    @UseInterceptors(MapInterceptor(User, UserDto))
+    get() {
+        /*...*/
+    }
+}
+```

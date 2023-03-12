@@ -1,0 +1,127 @@
+---
+id: for-self
+title: ForSelf
+sidebar_label: ForSelf
+sidebar_position: 8
+---
+
+In previous sections, we've learned that we can have [Auto Flattening](../fundamentals/auto-flattening) with [Naming Conventions](../fundamentals/naming-convention).
+
+Let's assume we have the following models
+
+```ts
+class Item {
+    @AutoMap()
+    name: string;
+    @AutoMap()
+    price: number;
+    @AutoMap()
+    stock: number;
+}
+
+class CartItem {
+    @AutoMap(() => Item)
+    item: Item;
+    @AutoMap()
+    quantity: number;
+}
+
+class CartItemDto {
+    @AutoMap()
+    itemName: string;
+    @AutoMap()
+    itemPrice: number;
+    @AutoMap()
+    quantity: number;
+
+    get total() {
+        return this.price * this.quantity;
+    }
+}
+```
+
+From [Auto Flattening](../fundamentals/auto-flattening) documentation, we know that `CartItemDto.itemName` will be mapped automatically from `CartItem.item.name` and `CartItemDto.itemPrice` will be mapped automatically from `CartItem.item.price`.
+
+While that works, we want to keep out DTOs cleaner sometimes without having to prefix some fields to achieve Auto Flattening. Let's adjust our models a little
+
+```ts
+class Item {
+    @AutoMap()
+    name: string;
+    @AutoMap()
+    price: number;
+    @AutoMap()
+    stock: number;
+}
+
+class CartItem {
+    @AutoMap(() => Item)
+    item: Item;
+    @AutoMap()
+    quantity: number;
+}
+
+class CartItemDto {
+    // highlight-start
+    @AutoMap()
+    name: string;
+    @AutoMap()
+    price: number;
+    // highlight-end
+    @AutoMap()
+    quantity: number;
+
+    get total() {
+        return this.price * this.quantity;
+    }
+}
+```
+
+There are two approaches we can go about this
+
+1. Use `forMember()` explicitly
+
+```ts
+createMap(
+    mapper,
+    CartItem,
+    CartItemDto,
+    forMember(
+        (destination) => destination.name,
+        mapFrom((source) => source.item.name)
+    ),
+    forMember(
+        (destination) => destination.price,
+        mapFrom((source) => source.item.price)
+    )
+);
+```
+
+2. Use `forSelf()`
+
+Call `forSelf()` and pass in the nested model so AutoMapper will map the matching properties between the `Destination` and that nested model. In other words, AutoMapper creates a Mapping between the nested model and `Destination` then have the original Mapping extend it. The second argument lets AutoMapper knows where to find the data whose value is of type nested model.
+
+```ts
+createMap(
+    mapper,
+    CartItem,
+    CartItemDto,
+    forSelf(Item, (source) => source.item)
+);
+```
+
+:::tip
+
+`forSelf()` also accepts a `Mapping` instead of just the nested model.
+
+```ts
+const mapping = createMap(mapper, Item, CartItemDto);
+createMap(
+    mapper,
+    CartItem,
+    CartItemDto,
+    forSelf(mapping, (source) => source.item)
+);
+```
+
+:::

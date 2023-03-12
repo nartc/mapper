@@ -1,0 +1,46 @@
+---
+id: before-map
+title: BeforeMap
+sidebar_label: BeforeMap
+sidebar_position: 4
+---
+
+As the name suggests, `beforeMap()` sets up a `MapCallback` to be called **before** the map operation.
+
+## Configure on `Mapping`
+
+Pass `beforeMap()` in `createMap()` to sets up the `MapCallback`
+
+```ts
+createMap(
+    mapper,
+    User,
+    UserDto,
+    beforeMap((source, destination) => {})
+);
+```
+
+## Configure on `map()`
+
+Pass `beforeMap` in `MapOptions` when calling `map()` to sets up the `MapCallback`
+
+```ts
+mapper.map(user, User, UserDto, {
+    beforeMap: (source, destination) => {},
+});
+```
+
+:::info
+
+-   `beforeMap()` on `map()` has precedence over `Mapping`
+-   For `mapArray` (and its variants), `beforeMap()` on `Mapping` is **ignored** because it would be bad for performance if we run `beforeMap` for each and every item of the array. `beforeMap()` on `mapArray()` will be invoked with `(sourceArray, [])` instead
+
+:::
+
+## What about `preMap`?
+
+When create the `Mapper`, we can customize the `preMap` function on the `MappingStrategy`. The differences between `preMap` and `beforeMap` are:
+
+-   `preMap` runs before every **map** operation
+-   There is only one `preMap` per `Mapper`
+-   `preMap` runs **BEFORE** `beforeMap`

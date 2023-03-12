@@ -20,6 +20,7 @@ module.exports = {
             description: 'AutoMapper classes strategy',
         },
         { name: 'pojos', description: 'AutoMapper pojos strategy' },
+        { name: 'zod', description: 'AutoMapper zod strategy' },
         {
             name: 'nestjs',
             description: 'AutoMapper nestjs integration))',

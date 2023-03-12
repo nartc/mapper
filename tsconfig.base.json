@@ -29,7 +29,8 @@
             "@automapper/mikro": ["packages/mikro/src/index.ts"],
             "@automapper/nestjs": ["packages/nestjs/src/index.ts"],
             "@automapper/pojos": ["packages/pojos/src/index.ts"],
-            "@automapper/sequelize": ["packages/sequelize/src/index.ts"]
+            "@automapper/sequelize": ["packages/sequelize/src/index.ts"],
+            "@automapper/zod": ["packages/zod/src/index.ts"]
         }
     },
     "exclude": ["node_modules", "tmp"]

@@ -1,34 +1,34 @@
 import { mapMutate, mapReturn } from './mappings/map';
 import {
-    CUSTOM_NODE_INSPECT,
-    ERROR_HANDLER,
-    MAPPINGS,
-    METADATA_MAP,
-    METADATA_OBJECT_MAP,
-    NAMING_CONVENTIONS,
-    PROFILE_CONFIGURATION_CONTEXT,
-    RECURSIVE_COUNT,
-    RECURSIVE_DEPTH,
-    STRATEGY,
+  CUSTOM_NODE_INSPECT,
+  ERROR_HANDLER,
+  MAPPINGS,
+  METADATA_MAP,
+  METADATA_OBJECT_MAP,
+  NAMING_CONVENTIONS,
+  PROFILE_CONFIGURATION_CONTEXT,
+  RECURSIVE_COUNT,
+  RECURSIVE_DEPTH,
+  STRATEGY
 } from './symbols';
 import {
-    ArrayKeyedMap,
-    Dictionary,
-    ErrorHandler,
-    MapOptions,
-    Mapper,
-    Mapping,
-    MappingConfiguration,
-    MappingStrategy,
-    MappingStrategyInitializer,
-    Metadata,
-    MetadataIdentifier,
-    ModelIdentifier,
-    NamingConventionInput,
+  ArrayKeyedMap,
+  Dictionary,
+  ErrorHandler,
+  MapOptions,
+  Mapper,
+  Mapping,
+  MappingConfiguration,
+  MappingStrategy,
+  MappingStrategyInitializer,
+  Metadata,
+  MetadataIdentifier,
+  ModelIdentifier,
+  NamingConventionInput
 } from './types';
+import { mapAsyncHandler } from './utils/async-map-handler';
 import { getMapping } from './utils/get-mapping';
 import { AutoMapperLogger } from './utils/logger';
-import { mapAsyncHandler } from './utils/async-map-handler';
 
 export interface CreateMapperOptions {
     strategyInitializer: MappingStrategyInitializer<MetadataIdentifier>;
@@ -275,7 +275,7 @@ Mapper {} is an empty Object as a Proxy. The following methods are available to 
                             | MapOptions<TSource, TDestination>,
                         options?: MapOptions<TSource, TDestination>
                     ): Promise<TDestination> => {
-                        receiver['map'](
+                        const mapped = receiver['map'](
                             sourceObject,
                             sourceIdentifier,
                             destinationIdentifierOrOptions,
@@ -302,7 +302,8 @@ Mapper {} is an empty Object as a Proxy. The following methods are available to 
                                 mapping,
                                 sourceObject,
                                 destinationIdentifier,
-                                mapOptions || {}
+                                mapOptions || {},
+                                mapped
                             )
                                 .then((result) => {
                                     resolve(result);
@@ -408,7 +409,7 @@ Mapper {} is an empty Object as a Proxy. The following methods are available to 
                             | MapOptions<TSource[], TDestination[]>,
                         options?: MapOptions<TSource[], TDestination[]>
                     ) => {
-                        receiver['mapArray'](
+                        const mapped = receiver['mapArray'](
                             sourceArray,
                             sourceIdentifier,
                             destinationIdentifierOrOptions,
@@ -428,14 +429,20 @@ Mapper {} is an empty Object as a Proxy. The following methods are available to 
                         );
 
                         return Promise.all(
-                            sourceArray.map(async (sourceObject) => {
-                                return mapAsyncHandler(
-                                    mapping,
-                                    sourceObject,
-                                    destinationIdentifier,
-                                    mapOptions || {}
-                                );
-                            })
+                            mapped.map(
+                                async (
+                                    sourceObject: TDestination,
+                                    i: number
+                                ) => {
+                                    return mapAsyncHandler(
+                                        mapping,
+                                        sourceArray[i],
+                                        destinationIdentifier,
+                                        mapOptions || {},
+                                        sourceObject
+                                    );
+                                }
+                            )
                         );
                     };
                 }

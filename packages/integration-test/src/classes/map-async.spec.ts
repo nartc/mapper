@@ -1,10 +1,10 @@
 import { classes } from '@automapper/classes';
 import {
-    afterMap,
-    createMap,
-    createMapper,
-    forMember,
-    ignore,
+  afterMap,
+  createMap,
+  createMapper,
+  forMember,
+  ignore
 } from '@automapper/core';
 import { SimpleUserDto } from './dtos/simple-user.dto';
 import { SimpleUser } from './models/simple-user';
@@ -21,9 +21,7 @@ describe('Map Async Classes', () => {
             afterMap(async (_, destination) => {
                 const fullName = await new Promise((resolve) => {
                     setTimeout(() => {
-                        resolve(
-                          'Tran Chau'
-                        );
+                        resolve('Tran Chau');
                     }, 1000);
                 });
                 Object.assign(destination, { fullName });
@@ -44,14 +42,12 @@ describe('Map Async Classes', () => {
             SimpleUserDto,
             forMember((d) => d.fullName, ignore()),
             afterMap(async (_, destination) => {
-                const fullName = await new Promise((resolve) => {
+                const fullName = await new Promise<string>((resolve) => {
                     setTimeout(() => {
-                        resolve(
-                          'Tran Chau'
-                        );
+                        resolve('Tran Chau');
                     }, 1000);
                 });
-                Object.assign(destination, { fullName });
+                destination.fullName = fullName;
             })
         );
         const dtos = await mapper.mapArrayAsync(
@@ -60,5 +56,5 @@ describe('Map Async Classes', () => {
             SimpleUserDto
         );
         expect(dtos[0].fullName).toEqual('Tran Chau');
-    })
+    });
 });

@@ -9,7 +9,8 @@ export async function mapAsyncHandler<
     mapping: Mapping<TSource, TDestination>,
     source: TSource,
     destination: TDestination,
-    extraArguments: TExtraArgs
+    extraArguments: TExtraArgs,
+    mapped?: TDestination
 ) {
     if (!mapping[7]) {
         mapping[7] = [];
@@ -22,5 +23,9 @@ export async function mapAsyncHandler<
     if (afterMap) {
         await afterMap(source, destination, extraArguments);
     }
-    return destination;
+    if (mapped) {
+        return Object.assign(mapped, destination);
+    } else {
+        return destination;
+    }
 }

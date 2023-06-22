@@ -199,9 +199,9 @@ export default {
 };
 ```
 
-### ttypescript
+### ts-patch
 
-ttypescript patches typescript in order to use transformers in tsconfig.json. See [ttypescript's README](https://github.com/cevek/ttypescript) for how to use this with module bundlers such as webpack or Rollup.
+ts-patch patches typescript in order to use transformers in tsconfig.json. See [ts-patch's README](https://github.com/nonara/ts-patch) for how to use this with module bundlers such as webpack or Rollup.
 
 ```
 {
@@ -210,6 +210,7 @@ ttypescript patches typescript in order to use transformers in tsconfig.json. Se
     "plugins": [
         {
             "transform": "@automapper/classes/transformer-plugin",
+            "import": "tspBefore",
             "modelFileNameSuffix": [...]
         }
     ],

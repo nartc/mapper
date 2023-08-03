@@ -19,7 +19,7 @@
         "@mdx-js/react": "^1.6.22",
         "@mikro-orm/core": "~5.1.1",
         "@nestjs/common": "~8.4.3",
-        "@nestjs/core": "~8.4.3",
+        "@nestjs/core": "~9.0.5",
         "@types/node": "~16.11.7",
         "clsx": "^1.1.1",
         "docusaurus-plugin-typedoc": "0.17.2",

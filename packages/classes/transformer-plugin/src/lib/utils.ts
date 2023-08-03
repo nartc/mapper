@@ -39,7 +39,7 @@ export function getDecoratorOrUndefinedByNames(
     names: string[],
     decorators?: readonly Decorator[]
 ): Decorator | undefined {
-    return (decorators || []).find((item) =>
+    return (decorators ? decorators : []).find((item) =>
         names.includes(getDecoratorName(item) as string)
     );
 }

@@ -7,25 +7,25 @@ sidebar_position: 3
 
 ## Overview
 
-`@automapper/mikro` is an official strategy that works with [MikroORM](https://mikro-orm.io/). `@automapper/mikro` is an extension of `@automapper/classes`
+`@jersmart/automapper-mikro` is an official strategy that works with [MikroORM](https://mikro-orm.io/). `@jersmart/automapper-mikro` is an extension of `@jersmart/automapper-classes`
 
 ## Installation
 
 ```shell
-npm i @automapper/core @automapper/classes @automapper/mikro
+npm i @jersmart/automapper-core @jersmart/automapper-classes @jersmart/automapper-mikro
 ```
 
 ```shell
-yarn add @automapper/core @automapper/classes @automapper/mikro
+yarn add @jersmart/automapper-core @jersmart/automapper-classes @jersmart/automapper-mikro
 ```
 
 ## Usage
 
-Using `@automapper/mikro` isn't different from using [`@automapper/classes`](./classes#usage). The difference is `@automapper/mikro` has a custom `preMap` that handles how to serialize the `sourceObject` because of how MikroORM returns the object upon a Retrieve operation.
+Using `@jersmart/automapper-mikro` isn't different from using [`@jersmart/automapper-classes`](./classes#usage). The difference is `@jersmart/automapper-mikro` has a custom `preMap` that handles how to serialize the `sourceObject` because of how MikroORM returns the object upon a Retrieve operation.
 
 ### `preMap`
 
-The default `preMap` from `@automapper/mikro` checks for Collection, Reference, and Entity recursively to serialize the `sourceObject` to their raw JSON data.
+The default `preMap` from `@jersmart/automapper-mikro` checks for Collection, Reference, and Entity recursively to serialize the `sourceObject` to their raw JSON data.
 
 We can customize this `preMap` via `MappingStrategyInitializerOptions`
 
@@ -37,4 +37,4 @@ const mapper = createMapper({
 
 ## Metadata
 
-See [@automapper/classes](./classes#metadata)
+See [@jersmart/automapper-classes](./classes#metadata)

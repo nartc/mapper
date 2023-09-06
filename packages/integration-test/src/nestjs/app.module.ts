@@ -1,6 +1,6 @@
-import { classes } from '@automapper/classes';
-import { CamelCaseNamingConvention } from '@automapper/core';
-import { AutomapperModule } from '@automapper/nestjs';
+import { classes } from '@jersmart/automapper-classes';
+import { CamelCaseNamingConvention } from '@jersmart/automapper-core';
+import { AutomapperModule } from '@jersmart/automapper-nestjs';
 import { Module } from '@nestjs/common';
 
 import { AppController } from './app.controller';

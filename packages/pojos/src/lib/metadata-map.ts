@@ -3,7 +3,7 @@ import type {
     Constructor,
     Dictionary,
     ModelIdentifier,
-} from '@automapper/core';
+} from '@jersmart/automapper-core';
 
 export type PojoMetadata =
     | Exclude<ModelIdentifier, Constructor>

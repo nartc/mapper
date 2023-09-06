@@ -1,4 +1,4 @@
-import { AutoMap } from '@automapper/classes';
+import { AutoMap } from '@jersmart/automapper-classes';
 import { Address, PascalAddress, SnakeAddress } from './address';
 import { Avatar, PascalAvatar, SnakeAvatar } from './avatar';
 

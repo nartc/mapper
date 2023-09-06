@@ -1,7 +1,7 @@
 import version from '../../version.json' assert { type: 'json' };
 import { readJsonFile, writeJsonFile } from 'nx/src/utils/fileutils.js';
 
-const peerDeps = ['@automapper/core', '@automapper/classes'];
+const peerDeps = ['@jersmart/automapper-core', '@jersmart/automapper-classes'];
 const distRoot = 'dist/packages';
 const distPackageJson = [
     'classes',

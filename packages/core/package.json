@@ -1,5 +1,5 @@
 {
-    "name": "@automapper/core",
+    "name": "@jersmart/automapper-core",
     "version": "0.0.0",
     "type": "module",
     "sideEffects": false,

@@ -1,4 +1,4 @@
-import { classes } from '@automapper/classes';
+import { classes } from '@jersmart/automapper-classes';
 import type {
     Constructor,
     Dictionary,
@@ -6,11 +6,11 @@ import type {
     MappingStrategyInitializer,
     MappingStrategyInitializerOptions,
     MetadataIdentifier,
-} from '@automapper/core';
+} from '@jersmart/automapper-core';
 import {
     defaultStrategyInitializerOptions,
     MappingClassId,
-} from '@automapper/core';
+} from '@jersmart/automapper-core';
 import { serializeEntity } from './serialize-entity';
 
 export function mikro(

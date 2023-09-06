@@ -1,4 +1,4 @@
-import { AUTOMAPPER_METADATA_FACTORY_KEY } from '@automapper/classes';
+import { AUTOMAPPER_METADATA_FACTORY_KEY } from '@jersmart/automapper-classes';
 import {
     ArrayLiteralExpression,
     ClassDeclaration,

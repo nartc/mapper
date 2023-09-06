@@ -1,40 +1,40 @@
 ---
-id: "modules"
-title: "@automapper/classes"
-sidebar_label: "Exports"
+id: 'modules'
+title: '@jersmart/automapper-classes'
+sidebar_label: 'Exports'
 sidebar_position: 0.5
 custom_edit_url: null
 ---
 
 ## Interfaces
 
-- [AutoMapOptions](interfaces/AutoMapOptions.md)
+-   [AutoMapOptions](interfaces/AutoMapOptions.md)
 
 ## Variables
 
-### AUTOMAPPER\_METADATA\_FACTORY\_KEY
+### AUTOMAPPER_METADATA_FACTORY_KEY
 
-• `Const` **AUTOMAPPER\_METADATA\_FACTORY\_KEY**: ``"__AUTOMAPPER_METADATA_FACTORY__"``
+• `Const` **AUTOMAPPER_METADATA_FACTORY_KEY**: `"__AUTOMAPPER_METADATA_FACTORY__"`
 
 #### Defined in
 
 [lib/keys.ts:1](https://github.com/nartc/mapper/blob/efc4cb9d/packages/classes/src/lib/keys.ts#L1)
 
-___
+---
 
-### AUTOMAP\_PROPERTIES\_METADATA\_KEY
+### AUTOMAP_PROPERTIES_METADATA_KEY
 
-• `Const` **AUTOMAP\_PROPERTIES\_METADATA\_KEY**: ``"automap:properties"``
+• `Const` **AUTOMAP_PROPERTIES_METADATA_KEY**: `"automap:properties"`
 
 #### Defined in
 
 [lib/keys.ts:3](https://github.com/nartc/mapper/blob/efc4cb9d/packages/classes/src/lib/keys.ts#L3)
 
-___
+---
 
-### AUTOMAP\_STANDALONE\_METADATA\_KEY
+### AUTOMAP_STANDALONE_METADATA_KEY
 
-• `Const` **AUTOMAP\_STANDALONE\_METADATA\_KEY**: ``"automap:standalone"``
+• `Const` **AUTOMAP_STANDALONE_METADATA_KEY**: `"automap:standalone"`
 
 #### Defined in
 
@@ -58,8 +58,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type                                                   |
+| :------- | :----------------------------------------------------- |
 | `typeFn` | () => `Constructor`<`any`\> \| [`Constructor`<`any`\>] |
 
 #### Returns
@@ -74,8 +74,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name      | Type                                             |
+| :-------- | :----------------------------------------------- |
 | `options` | [`AutoMapOptions`](interfaces/AutoMapOptions.md) |
 
 #### Returns
@@ -86,7 +86,7 @@ ___
 
 [lib/automap.ts:25](https://github.com/nartc/mapper/blob/efc4cb9d/packages/classes/src/lib/automap.ts#L25)
 
-___
+---
 
 ### classes
 
@@ -94,8 +94,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name      | Type                                |
+| :-------- | :---------------------------------- |
 | `options` | `MappingStrategyInitializerOptions` |
 
 #### Returns
@@ -106,7 +106,7 @@ ___
 
 [lib/classes.ts:14](https://github.com/nartc/mapper/blob/efc4cb9d/packages/classes/src/lib/classes.ts#L14)
 
-___
+---
 
 ### getMetadataList
 
@@ -114,8 +114,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name    | Type                  |
+| :------ | :-------------------- |
 | `model` | `Constructor`<`any`\> |
 
 #### Returns

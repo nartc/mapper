@@ -1,4 +1,4 @@
-import type { Mapper } from '@automapper/core';
+import type { Mapper } from '@jersmart/automapper-core';
 import {
     condition,
     createMap,
@@ -7,7 +7,7 @@ import {
     mapFrom,
     nullSubstitution,
     preCondition,
-} from '@automapper/core';
+} from '@jersmart/automapper-core';
 import {
     AvatarDto,
     createAvatarDtoMetadata,

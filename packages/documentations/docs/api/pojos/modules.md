@@ -1,14 +1,14 @@
 ---
-id: "modules"
-title: "@automapper/pojos"
-sidebar_label: "Exports"
+id: 'modules'
+title: '@jersmart/automapper-pojos'
+sidebar_label: 'Exports'
 sidebar_position: 0.5
 custom_edit_url: null
 ---
 
 ## Classes
 
-- [PojosMetadataMap](classes/PojosMetadataMap.md)
+-   [PojosMetadataMap](classes/PojosMetadataMap.md)
 
 ## Type aliases
 
@@ -28,8 +28,8 @@ custom_edit_url: null
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name      | Type                                |
+| :-------- | :---------------------------------- |
 | `options` | `MappingStrategyInitializerOptions` |
 
 #### Returns

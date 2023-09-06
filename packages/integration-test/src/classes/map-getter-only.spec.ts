@@ -1,5 +1,5 @@
-import { AutoMap, classes } from '@automapper/classes';
-import { createMap, createMapper } from '@automapper/core';
+import { AutoMap, classes } from '@jersmart/automapper-classes';
+import { createMap, createMapper } from '@jersmart/automapper-core';
 
 describe('Map - Getter Only', () => {
     class Foo {

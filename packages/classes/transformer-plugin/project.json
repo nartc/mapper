@@ -16,7 +16,11 @@
                 "tsConfig": "packages/classes/transformer-plugin/tsconfig.lib.json",
                 "assets": ["packages/classes/transformer-plugin/src/README.md"],
                 "compiler": "babel",
-                "external": ["typescript", "tslib", "@automapper/classes"],
+                "external": [
+                    "typescript",
+                    "tslib",
+                    "@jersmart/automapper-classes"
+                ],
                 "format": ["cjs", "esm"],
                 "updateBuildableProjectDepsInPackageJson": false
             }

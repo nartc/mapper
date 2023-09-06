@@ -1,31 +1,31 @@
-# @automapper/nestjs
+# @jersmart/automapper-nestjs
 
 This is a NestJS module to integrate `@automapper` with NestJS.
 
 ## Installation
 
 ```sh
-npm i @automapper/nestjs
+npm i @jersmart/automapper-nestjs
 ```
 
 or with `yarn`:
 
 ```sh
-yarn add @automapper/nestjs
+yarn add @jersmart/automapper-nestjs
 ```
 
 #### `peerDependencies`
 
-`@automapper/nestjs` depends on `@automapper/core`
+`@jersmart/automapper-nestjs` depends on `@jersmart/automapper-core`
 
 ```sh
-npm i @automapper/core
+npm i @jersmart/automapper-core
 ```
 
 or with `yarn`:
 
 ```sh
-yarn add @automapper/core
+yarn add @jersmart/automapper-core
 ```
 
 ## Usage

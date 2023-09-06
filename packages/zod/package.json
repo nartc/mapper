@@ -1,5 +1,5 @@
 {
-    "name": "@automapper/zod",
+    "name": "@jersmart/automapper-zod",
     "version": "0.0.1",
     "type": "commonjs"
 }

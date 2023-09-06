@@ -1,4 +1,9 @@
-import { createMap, forMember, mapFrom, Mapper } from '@automapper/core';
+import {
+    createMap,
+    forMember,
+    mapFrom,
+    Mapper,
+} from '@jersmart/automapper-core';
 import {
     CompositeFairingDto,
     EnginesDto,

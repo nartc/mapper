@@ -40,7 +40,7 @@ After you finish with the changes
 
 ### Semantic Versioning
 
-`@automapper/*` follows SemVer (`major.minor.patch` versioning) and utilizes `release-it` to semi-automate the release process. The next version will be based on the type of changes from the commits
+`@jersmart/automapper-*` follows SemVer (`major.minor.patch` versioning) and utilizes `release-it` to semi-automate the release process. The next version will be based on the type of changes from the commits
 
 -   `feat` will issue a `minor` version bump. Eg: `1.0.0` -> `1.1.0`
 -   `fix`, `perf`, and `refactor` will issue a `patch` version bump. Eg: `1.0.0` -> `1.0.1`

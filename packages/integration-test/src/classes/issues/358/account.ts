@@ -1,5 +1,5 @@
-import { AutoMap } from '@automapper/classes';
-import { createMap, MappingProfile } from '@automapper/core';
+import { AutoMap } from '@jersmart/automapper-classes';
+import { createMap, MappingProfile } from '@jersmart/automapper-core';
 
 export enum AccountRole {
     Foo = 'foo',

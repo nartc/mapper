@@ -2,8 +2,8 @@ import {
     addProfile,
     CamelCaseNamingConvention,
     createMapper,
-} from '@automapper/core';
-import { pojos, PojosMetadataMap } from '@automapper/pojos';
+} from '@jersmart/automapper-core';
+import { pojos, PojosMetadataMap } from '@jersmart/automapper-pojos';
 import { UserDto } from './dtos/user.dto';
 import { User } from './models/user';
 import { addressProfile } from './profiles/address.profile';

@@ -15,22 +15,24 @@
         "skipDefaultLibCheck": true,
         "baseUrl": ".",
         "paths": {
-            "@automapper/classes": ["packages/classes/src/index.ts"],
-            "@automapper/classes/mapped-types": [
+            "@jersmart/automapper-classes": ["packages/classes/src/index.ts"],
+            "@jersmart/automapper-classes/mapped-types": [
                 "packages/classes/mapped-types/src/index.ts"
             ],
-            "@automapper/classes/transformer-plugin": [
+            "@jersmart/automapper-classes/transformer-plugin": [
                 "packages/classes/transformer-plugin/src/index.ts"
             ],
-            "@automapper/core": ["packages/core/src/index.ts"],
-            "@automapper/integration-test": [
+            "@jersmart/automapper-core": ["packages/core/src/index.ts"],
+            "@jersmart/automapper-integration-test": [
                 "packages/integration-test/src/index.ts"
             ],
-            "@automapper/mikro": ["packages/mikro/src/index.ts"],
-            "@automapper/nestjs": ["packages/nestjs/src/index.ts"],
-            "@automapper/pojos": ["packages/pojos/src/index.ts"],
-            "@automapper/sequelize": ["packages/sequelize/src/index.ts"],
-            "@automapper/zod": ["packages/zod/src/index.ts"]
+            "@jersmart/automapper-mikro": ["packages/mikro/src/index.ts"],
+            "@jersmart/automapper-nestjs": ["packages/nestjs/src/index.ts"],
+            "@jersmart/automapper-pojos": ["packages/pojos/src/index.ts"],
+            "@jersmart/automapper-sequelize": [
+                "packages/sequelize/src/index.ts"
+            ],
+            "@jersmart/automapper-zod": ["packages/zod/src/index.ts"]
         }
     },
     "exclude": ["node_modules", "tmp"]

@@ -1,6 +1,6 @@
-import { AutoMap, classes } from '@automapper/classes';
-import type { Mapper } from '@automapper/core';
-import { createMap, createMapper } from '@automapper/core';
+import { AutoMap, classes } from '@jersmart/automapper-classes';
+import type { Mapper } from '@jersmart/automapper-core';
+import { createMap, createMapper } from '@jersmart/automapper-core';
 import { MapperIntersectionType } from '../mapper-intersection-type';
 
 describe(MapperIntersectionType.name, () => {

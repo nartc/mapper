@@ -3,7 +3,7 @@ import type {
     MapOptions,
     Mapper,
     ModelIdentifier,
-} from '@automapper/core';
+} from '@jersmart/automapper-core';
 import type {
     CallHandler,
     ExecutionContext,

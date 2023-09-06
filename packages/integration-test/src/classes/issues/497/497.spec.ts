@@ -1,9 +1,9 @@
-import { AutoMap, classes } from '@automapper/classes';
+import { AutoMap, classes } from '@jersmart/automapper-classes';
 import {
     CamelCaseNamingConvention,
     createMap,
     createMapper,
-} from '@automapper/core';
+} from '@jersmart/automapper-core';
 
 export class UserEntity {
     @AutoMap()

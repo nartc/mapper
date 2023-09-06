@@ -6,8 +6,8 @@ import {
     forSelf,
     fromValue,
     mapFrom,
-} from '@automapper/core';
-import { pojos, PojosMetadataMap } from '@automapper/pojos';
+} from '@jersmart/automapper-core';
+import { pojos, PojosMetadataMap } from '@jersmart/automapper-pojos';
 import { CartItemDto } from '../classes/dtos/cart-item.dto';
 import { createCartItemDtoMetadata } from './dtos/cart-item.dto';
 import { CartItem, createCartItemMetadata, Item } from './models/cart-item';

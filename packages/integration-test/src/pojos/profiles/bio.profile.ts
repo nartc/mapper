@@ -1,5 +1,5 @@
-import type { Converter, Mapper } from '@automapper/core';
-import { convertUsing, createMap, forMember } from '@automapper/core';
+import type { Converter, Mapper } from '@jersmart/automapper-core';
+import { convertUsing, createMap, forMember } from '@jersmart/automapper-core';
 import {
     BioDto,
     createBioDtoMetadata,

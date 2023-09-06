@@ -1,8 +1,8 @@
 ---
-id: "index"
-title: "@automapper/mikro"
-slug: "/api/mikro/"
-sidebar_label: "README"
+id: 'index'
+title: '@jersmart/automapper-mikro'
+slug: '/api/mikro/'
+sidebar_label: 'README'
 sidebar_position: 0
 custom_edit_url: null
 ---

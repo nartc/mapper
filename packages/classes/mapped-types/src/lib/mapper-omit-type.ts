@@ -1,4 +1,4 @@
-import type { Constructor } from '@automapper/core';
+import type { Constructor } from '@jersmart/automapper-core';
 import type { MappedType } from './mapped-type';
 import {
     inheritAutoMapMetadata,
@@ -8,7 +8,7 @@ import {
 export function MapperOmitType<T, K extends keyof T>(
     classRef: Constructor<T>,
     keys: readonly K[]
-): MappedType<Omit<T, typeof keys[number]>> {
+): MappedType<Omit<T, (typeof keys)[number]>> {
     const isInheritedPredicate = (propertyKey: string) =>
         !keys.includes(propertyKey as K);
 
@@ -23,5 +23,5 @@ export function MapperOmitType<T, K extends keyof T>(
     }
 
     inheritAutoMapMetadata(classRef, OmitClassType, isInheritedPredicate);
-    return OmitClassType as MappedType<Omit<T, typeof keys[number]>>;
+    return OmitClassType as MappedType<Omit<T, (typeof keys)[number]>>;
 }

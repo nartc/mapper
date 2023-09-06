@@ -1,45 +1,45 @@
 ---
-id: "modules"
-title: "@automapper/core"
-sidebar_label: "Exports"
+id: 'modules'
+title: '@jersmart/automapper-core'
+sidebar_label: 'Exports'
 sidebar_position: 0.5
 custom_edit_url: null
 ---
 
 ## Enumerations
 
-- [MapFnClassId](enums/MapFnClassId.md)
-- [MappingCallbacksClassId](enums/MappingCallbacksClassId.md)
-- [MappingClassId](enums/MappingClassId.md)
-- [MappingPropertiesClassId](enums/MappingPropertiesClassId.md)
-- [MappingPropertyClassId](enums/MappingPropertyClassId.md)
-- [MappingTransformationClassId](enums/MappingTransformationClassId.md)
-- [MetadataClassId](enums/MetadataClassId.md)
-- [MetadataObjectMapClassId](enums/MetadataObjectMapClassId.md)
-- [NestedMappingPairClassId](enums/NestedMappingPairClassId.md)
-- [TransformationType](enums/TransformationType.md)
+-   [MapFnClassId](enums/MapFnClassId.md)
+-   [MappingCallbacksClassId](enums/MappingCallbacksClassId.md)
+-   [MappingClassId](enums/MappingClassId.md)
+-   [MappingPropertiesClassId](enums/MappingPropertiesClassId.md)
+-   [MappingPropertyClassId](enums/MappingPropertyClassId.md)
+-   [MappingTransformationClassId](enums/MappingTransformationClassId.md)
+-   [MetadataClassId](enums/MetadataClassId.md)
+-   [MetadataObjectMapClassId](enums/MetadataObjectMapClassId.md)
+-   [NestedMappingPairClassId](enums/NestedMappingPairClassId.md)
+-   [TransformationType](enums/TransformationType.md)
 
 ## Classes
 
-- [AutoMapperLogger](classes/AutoMapperLogger.md)
-- [CamelCaseNamingConvention](classes/CamelCaseNamingConvention.md)
-- [PascalCaseNamingConvention](classes/PascalCaseNamingConvention.md)
-- [SnakeCaseNamingConvention](classes/SnakeCaseNamingConvention.md)
+-   [AutoMapperLogger](classes/AutoMapperLogger.md)
+-   [CamelCaseNamingConvention](classes/CamelCaseNamingConvention.md)
+-   [PascalCaseNamingConvention](classes/PascalCaseNamingConvention.md)
+-   [SnakeCaseNamingConvention](classes/SnakeCaseNamingConvention.md)
 
 ## Interfaces
 
-- [ConditionPredicate](interfaces/ConditionPredicate.md)
-- [Converter](interfaces/Converter.md)
-- [CreateMapperOptions](interfaces/CreateMapperOptions.md)
-- [DeferFunction](interfaces/DeferFunction.md)
-- [ErrorHandler](interfaces/ErrorHandler.md)
-- [MapOptions](interfaces/MapOptions.md)
-- [Mapper](interfaces/Mapper.md)
-- [MappingStrategy](interfaces/MappingStrategy.md)
-- [MappingStrategyInitializerOptions](interfaces/MappingStrategyInitializerOptions.md)
-- [NamingConvention](interfaces/NamingConvention.md)
-- [Resolver](interfaces/Resolver.md)
-- [TransformerMetadataFactory](interfaces/TransformerMetadataFactory.md)
+-   [ConditionPredicate](interfaces/ConditionPredicate.md)
+-   [Converter](interfaces/Converter.md)
+-   [CreateMapperOptions](interfaces/CreateMapperOptions.md)
+-   [DeferFunction](interfaces/DeferFunction.md)
+-   [ErrorHandler](interfaces/ErrorHandler.md)
+-   [MapOptions](interfaces/MapOptions.md)
+-   [Mapper](interfaces/Mapper.md)
+-   [MappingStrategy](interfaces/MappingStrategy.md)
+-   [MappingStrategyInitializerOptions](interfaces/MappingStrategyInitializerOptions.md)
+-   [NamingConvention](interfaces/NamingConvention.md)
+-   [Resolver](interfaces/Resolver.md)
+-   [TransformerMetadataFactory](interfaces/TransformerMetadataFactory.md)
 
 ## Type aliases
 
@@ -53,15 +53,15 @@ custom_edit_url: null
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name      | Type    |
+| :-------- | :------ |
 | `...args` | `any`[] |
 
 #### Defined in
 
 [lib/types.ts:15](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L15)
 
-___
+---
 
 ### ApplyMetadata
 
@@ -73,8 +73,8 @@ ___
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name       | Type                                                                                                       |
+| :--------- | :--------------------------------------------------------------------------------------------------------- |
 | `strategy` | [`MappingStrategy`](interfaces/MappingStrategy.md)<[`MetadataIdentifier`](modules.md#metadataidentifier)\> |
 
 ##### Returns
@@ -85,7 +85,7 @@ ___
 
 [lib/types.ts:571](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L571)
 
-___
+---
 
 ### ApplyMetadataFn
 
@@ -97,16 +97,16 @@ ___
 
 ##### Type parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type                                                     |
+| :------- | :------------------------------------------------------- |
 | `TModel` | extends [`Dictionary`](modules.md#dictionary)<`TModel`\> |
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name    | Type                                                             |
+| :------ | :--------------------------------------------------------------- |
 | `model` | [`MetadataIdentifier`](modules.md#metadataidentifier)<`TModel`\> |
-| `as` | [`MetadataObjectMapClassId`](enums/MetadataObjectMapClassId.md) |
+| `as`    | [`MetadataObjectMapClassId`](enums/MetadataObjectMapClassId.md)  |
 
 ##### Returns
 
@@ -116,7 +116,7 @@ ___
 
 [lib/types.ts:566](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L566)
 
-___
+---
 
 ### ArrayKeyedMap
 
@@ -126,7 +126,7 @@ ___
 
 [lib/types.ts:559](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L559)
 
-___
+---
 
 ### ConditionReturn
 
@@ -134,17 +134,17 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> |
-| `TDestination` | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
+| Name              | Type                                                           |
+| :---------------- | :------------------------------------------------------------- |
+| `TSource`         | extends [`Dictionary`](modules.md#dictionary)<`TSource`\>      |
+| `TDestination`    | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
 | `TSelectorReturn` | [`SelectorReturn`](modules.md#selectorreturn)<`TDestination`\> |
 
 #### Defined in
 
 [lib/types.ts:382](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L382)
 
-___
+---
 
 ### Constructor
 
@@ -152,15 +152,15 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `T` | `any` |
+| Name | Type  |
+| :--- | :---- |
+| `T`  | `any` |
 
 #### Defined in
 
 [lib/types.ts:16](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L16)
 
-___
+---
 
 ### ConvertUsingReturn
 
@@ -168,17 +168,17 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> |
-| `TDestination` | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
+| Name              | Type                                                           |
+| :---------------- | :------------------------------------------------------------- |
+| `TSource`         | extends [`Dictionary`](modules.md#dictionary)<`TSource`\>      |
+| `TDestination`    | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
 | `TSelectorReturn` | [`SelectorReturn`](modules.md#selectorreturn)<`TDestination`\> |
 
 #### Defined in
 
 [lib/types.ts:397](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L397)
 
-___
+---
 
 ### DataMap
 
@@ -188,7 +188,7 @@ ___
 
 [lib/types.ts:555](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L555)
 
-___
+---
 
 ### DestinationConstructor
 
@@ -196,9 +196,9 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> = `any` |
+| Name           | Type                                                                   |
+| :------------- | :--------------------------------------------------------------------- |
+| `TSource`      | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> = `any`      |
 | `TDestination` | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> = `any` |
 
 #### Type declaration
@@ -207,9 +207,9 @@ ___
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `sourceObject` | `TSource` |
+| Name                    | Type                                                                   |
+| :---------------------- | :--------------------------------------------------------------------- |
+| `sourceObject`          | `TSource`                                                              |
 | `destinationIdentifier` | [`MetadataIdentifier`](modules.md#metadataidentifier)<`TDestination`\> |
 
 ##### Returns
@@ -220,7 +220,7 @@ ___
 
 [lib/types.ts:575](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L575)
 
-___
+---
 
 ### Dictionary
 
@@ -229,14 +229,14 @@ ___
 #### Type parameters
 
 | Name |
-| :------ |
-| `T` |
+| :--- |
+| `T`  |
 
 #### Defined in
 
 [lib/types.ts:13](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L13)
 
-___
+---
 
 ### FromValueReturn
 
@@ -244,17 +244,17 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> |
-| `TDestination` | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
+| Name              | Type                                                           |
+| :---------------- | :------------------------------------------------------------- |
+| `TSource`         | extends [`Dictionary`](modules.md#dictionary)<`TSource`\>      |
+| `TDestination`    | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
 | `TSelectorReturn` | [`SelectorReturn`](modules.md#selectorreturn)<`TDestination`\> |
 
 #### Defined in
 
 [lib/types.ts:391](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L391)
 
-___
+---
 
 ### IgnoreReturn
 
@@ -262,16 +262,16 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> |
+| Name           | Type                                                           |
+| :------------- | :------------------------------------------------------------- |
+| `TSource`      | extends [`Dictionary`](modules.md#dictionary)<`TSource`\>      |
 | `TDestination` | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
 
 #### Defined in
 
 [lib/types.ts:421](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L421)
 
-___
+---
 
 ### MapCallback
 
@@ -279,11 +279,11 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> |
-| `TDestination` | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
-| `TExtraArgs` | extends `Record`<`string`, `any`\> = `Record`<`string`, `any`\> |
+| Name           | Type                                                            |
+| :------------- | :-------------------------------------------------------------- |
+| `TSource`      | extends [`Dictionary`](modules.md#dictionary)<`TSource`\>       |
+| `TDestination` | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\>  |
+| `TExtraArgs`   | extends `Record`<`string`, `any`\> = `Record`<`string`, `any`\> |
 
 #### Type declaration
 
@@ -291,11 +291,11 @@ ___
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `source` | `TSource` |
-| `destination` | `TDestination` |
-| `extraArguments?` | `TExtraArgs` |
+| Name              | Type           |
+| :---------------- | :------------- |
+| `source`          | `TSource`      |
+| `destination`     | `TDestination` |
+| `extraArguments?` | `TExtraArgs`   |
 
 ##### Returns
 
@@ -305,7 +305,7 @@ ___
 
 [lib/types.ts:96](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L96)
 
-___
+---
 
 ### MapDeferReturn
 
@@ -313,17 +313,17 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> |
-| `TDestination` | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
+| Name              | Type                                                           |
+| :---------------- | :------------------------------------------------------------- |
+| `TSource`         | extends [`Dictionary`](modules.md#dictionary)<`TSource`\>      |
+| `TDestination`    | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
 | `TSelectorReturn` | [`SelectorReturn`](modules.md#selectorreturn)<`TDestination`\> |
 
 #### Defined in
 
 [lib/types.ts:354](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L354)
 
-___
+---
 
 ### MapFromReturn
 
@@ -331,17 +331,17 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> |
-| `TDestination` | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
+| Name              | Type                                                           |
+| :---------------- | :------------------------------------------------------------- |
+| `TSource`         | extends [`Dictionary`](modules.md#dictionary)<`TSource`\>      |
+| `TDestination`    | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
 | `TSelectorReturn` | [`SelectorReturn`](modules.md#selectorreturn)<`TDestination`\> |
 
 #### Defined in
 
 [lib/types.ts:363](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L363)
 
-___
+---
 
 ### MapInitializeReturn
 
@@ -349,17 +349,17 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> |
-| `TDestination` | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
+| Name              | Type                                                           |
+| :---------------- | :------------------------------------------------------------- |
+| `TSource`         | extends [`Dictionary`](modules.md#dictionary)<`TSource`\>      |
+| `TDestination`    | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
 | `TSelectorReturn` | [`SelectorReturn`](modules.md#selectorreturn)<`TDestination`\> |
 
 #### Defined in
 
 [lib/types.ts:435](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L435)
 
-___
+---
 
 ### MapWithArgumentsReturn
 
@@ -367,35 +367,35 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> |
-| `TDestination` | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
+| Name              | Type                                                           |
+| :---------------- | :------------------------------------------------------------- |
+| `TSource`         | extends [`Dictionary`](modules.md#dictionary)<`TSource`\>      |
+| `TDestination`    | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
 | `TSelectorReturn` | [`SelectorReturn`](modules.md#selectorreturn)<`TDestination`\> |
 
 #### Defined in
 
 [lib/types.ts:426](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L426)
 
-___
+---
 
 ### MapWithReturn
 
-Ƭ **MapWithReturn**<`TSource`, `TDestination`, `TSelectorReturn`\>: [[`MapWith`](enums/TransformationType.md#mapwith), (`sourceObj`: `TSource`, `mapper`: [`Mapper`](interfaces/Mapper.md)) => `TSelectorReturn` \| `undefined` \| ``null``]
+Ƭ **MapWithReturn**<`TSource`, `TDestination`, `TSelectorReturn`\>: [[`MapWith`](enums/TransformationType.md#mapwith), (`sourceObj`: `TSource`, `mapper`: [`Mapper`](interfaces/Mapper.md)) => `TSelectorReturn` \| `undefined` \| `null`]
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> |
-| `TDestination` | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
+| Name              | Type                                                           |
+| :---------------- | :------------------------------------------------------------- |
+| `TSource`         | extends [`Dictionary`](modules.md#dictionary)<`TSource`\>      |
+| `TDestination`    | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
 | `TSelectorReturn` | [`SelectorReturn`](modules.md#selectorreturn)<`TDestination`\> |
 
 #### Defined in
 
 [lib/types.ts:369](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L369)
 
-___
+---
 
 ### Mapping
 
@@ -403,16 +403,16 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> = `any` |
+| Name           | Type                                                                   |
+| :------------- | :--------------------------------------------------------------------- |
+| `TSource`      | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> = `any`      |
 | `TDestination` | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> = `any` |
 
 #### Defined in
 
 [lib/types.ts:507](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L507)
 
-___
+---
 
 ### MappingConfiguration
 
@@ -420,9 +420,9 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> = `any` |
+| Name           | Type                                                                   |
+| :------------- | :--------------------------------------------------------------------- |
+| `TSource`      | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> = `any`      |
 | `TDestination` | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> = `any` |
 
 #### Type declaration
@@ -431,8 +431,8 @@ ___
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name      | Type                                                        |
+| :-------- | :---------------------------------------------------------- |
 | `mapping` | [`Mapping`](modules.md#mapping)<`TSource`, `TDestination`\> |
 
 ##### Returns
@@ -443,7 +443,7 @@ ___
 
 [lib/types.ts:561](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L561)
 
-___
+---
 
 ### MappingProfile
 
@@ -455,8 +455,8 @@ ___
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type                             |
+| :------- | :------------------------------- |
 | `mapper` | [`Mapper`](interfaces/Mapper.md) |
 
 ##### Returns
@@ -467,7 +467,7 @@ ___
 
 [lib/types.ts:583](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L583)
 
-___
+---
 
 ### MappingProperty
 
@@ -475,17 +475,17 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> |
-| `TDestination` | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
+| Name              | Type                                                           |
+| :---------------- | :------------------------------------------------------------- |
+| `TSource`         | extends [`Dictionary`](modules.md#dictionary)<`TSource`\>      |
+| `TDestination`    | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
 | `TSelectorReturn` | [`SelectorReturn`](modules.md#selectorreturn)<`TDestination`\> |
 
 #### Defined in
 
 [lib/types.ts:463](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L463)
 
-___
+---
 
 ### MappingStrategyInitializer
 
@@ -493,8 +493,8 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name          | Type                                                          |
+| :------------ | :------------------------------------------------------------ |
 | `TIdentifier` | extends [`MetadataIdentifier`](modules.md#metadataidentifier) |
 
 #### Type declaration
@@ -503,8 +503,8 @@ ___
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type                             |
+| :------- | :------------------------------- |
 | `mapper` | [`Mapper`](interfaces/Mapper.md) |
 
 ##### Returns
@@ -515,7 +515,7 @@ ___
 
 [lib/types.ts:621](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L621)
 
-___
+---
 
 ### MappingTransformation
 
@@ -523,17 +523,17 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> = `any` |
-| `TDestination` | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> = `any` |
-| `TSelectorReturn` | [`SelectorReturn`](modules.md#selectorreturn)<`TDestination`\> |
+| Name              | Type                                                                   |
+| :---------------- | :--------------------------------------------------------------------- |
+| `TSource`         | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> = `any`      |
+| `TDestination`    | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> = `any` |
+| `TSelectorReturn` | [`SelectorReturn`](modules.md#selectorreturn)<`TDestination`\>         |
 
 #### Defined in
 
 [lib/types.ts:450](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L450)
 
-___
+---
 
 ### MemberMapReturn
 
@@ -541,17 +541,17 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> |
-| `TDestination` | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
+| Name              | Type                                                           |
+| :---------------- | :------------------------------------------------------------- |
+| `TSource`         | extends [`Dictionary`](modules.md#dictionary)<`TSource`\>      |
+| `TDestination`    | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
 | `TSelectorReturn` | [`SelectorReturn`](modules.md#selectorreturn)<`TDestination`\> |
 
 #### Defined in
 
 [lib/types.ts:327](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L327)
 
-___
+---
 
 ### MemberMapReturnNoDefer
 
@@ -559,17 +559,17 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> |
-| `TDestination` | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
+| Name              | Type                                                           |
+| :---------------- | :------------------------------------------------------------- |
+| `TSource`         | extends [`Dictionary`](modules.md#dictionary)<`TSource`\>      |
+| `TDestination`    | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
 | `TSelectorReturn` | [`SelectorReturn`](modules.md#selectorreturn)<`TDestination`\> |
 
 #### Defined in
 
 [lib/types.ts:311](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L311)
 
-___
+---
 
 ### Metadata
 
@@ -579,7 +579,7 @@ ___
 
 [lib/types.ts:136](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L136)
 
-___
+---
 
 ### MetadataIdentifier
 
@@ -587,15 +587,15 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `T` | `any` |
+| Name | Type  |
+| :--- | :---- |
+| `T`  | `any` |
 
 #### Defined in
 
 [lib/types.ts:122](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L122)
 
-___
+---
 
 ### MetadataList
 
@@ -605,7 +605,7 @@ ___
 
 [lib/types.ts:585](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L585)
 
-___
+---
 
 ### ModelIdentifier
 
@@ -613,25 +613,25 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `T` | `any` |
+| Name | Type  |
+| :--- | :---- |
+| `T`  | `any` |
 
 #### Defined in
 
 [lib/types.ts:120](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L120)
 
-___
+---
 
 ### NamingConventionInput
 
-Ƭ **NamingConventionInput**: [`NamingConvention`](interfaces/NamingConvention.md) \| { `destination`: [`NamingConvention`](interfaces/NamingConvention.md) ; `source`: [`NamingConvention`](interfaces/NamingConvention.md)  }
+Ƭ **NamingConventionInput**: [`NamingConvention`](interfaces/NamingConvention.md) \| { `destination`: [`NamingConvention`](interfaces/NamingConvention.md) ; `source`: [`NamingConvention`](interfaces/NamingConvention.md) }
 
 #### Defined in
 
 [lib/types.ts:59](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L59)
 
-___
+---
 
 ### NestedMappingPair
 
@@ -641,7 +641,7 @@ ___
 
 [lib/types.ts:491](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L491)
 
-___
+---
 
 ### NullSubstitutionReturn
 
@@ -649,17 +649,17 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> |
-| `TDestination` | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
+| Name              | Type                                                           |
+| :---------------- | :------------------------------------------------------------- |
+| `TSource`         | extends [`Dictionary`](modules.md#dictionary)<`TSource`\>      |
+| `TDestination`    | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
 | `TSelectorReturn` | [`SelectorReturn`](modules.md#selectorreturn)<`TDestination`\> |
 
 #### Defined in
 
 [lib/types.ts:403](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L403)
 
-___
+---
 
 ### PathMap
 
@@ -669,7 +669,7 @@ ___
 
 [lib/types.ts:557](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L557)
 
-___
+---
 
 ### PreConditionReturn
 
@@ -677,17 +677,17 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> |
-| `TDestination` | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
+| Name              | Type                                                           |
+| :---------------- | :------------------------------------------------------------- |
+| `TSource`         | extends [`Dictionary`](modules.md#dictionary)<`TSource`\>      |
+| `TDestination`    | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
 | `TSelectorReturn` | [`SelectorReturn`](modules.md#selectorreturn)<`TDestination`\> |
 
 #### Defined in
 
 [lib/types.ts:335](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L335)
 
-___
+---
 
 ### Primitive
 
@@ -697,7 +697,7 @@ ___
 
 [lib/types.ts:19](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L19)
 
-___
+---
 
 ### PrimitiveConstructor
 
@@ -707,7 +707,7 @@ ___
 
 [lib/types.ts:22](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L22)
 
-___
+---
 
 ### PrimitiveConstructorExtended
 
@@ -717,7 +717,7 @@ ___
 
 [lib/types.ts:27](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L27)
 
-___
+---
 
 ### PrimitiveConstructorReturnType
 
@@ -725,15 +725,15 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name    | Type                                                                              |
+| :------ | :-------------------------------------------------------------------------------- |
 | `TType` | extends [`PrimitiveConstructorExtended`](modules.md#primitiveconstructorextended) |
 
 #### Defined in
 
 [lib/types.ts:32](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L32)
 
-___
+---
 
 ### PrimitiveExtended
 
@@ -743,7 +743,7 @@ ___
 
 [lib/types.ts:20](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L20)
 
-___
+---
 
 ### Selector
 
@@ -751,10 +751,10 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TObject` | extends [`Dictionary`](modules.md#dictionary)<`TObject`\> = `any` |
-| `TReturnType` | `unknown` |
+| Name          | Type                                                              |
+| :------------ | :---------------------------------------------------------------- |
+| `TObject`     | extends [`Dictionary`](modules.md#dictionary)<`TObject`\> = `any` |
+| `TReturnType` | `unknown`                                                         |
 
 #### Type declaration
 
@@ -762,8 +762,8 @@ ___
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name  | Type      |
+| :---- | :-------- |
 | `obj` | `TObject` |
 
 ##### Returns
@@ -774,7 +774,7 @@ ___
 
 [lib/types.ts:66](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L66)
 
-___
+---
 
 ### SelectorReturn
 
@@ -782,15 +782,15 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name      | Type                                                      |
+| :-------- | :-------------------------------------------------------- |
 | `TObject` | extends [`Dictionary`](modules.md#dictionary)<`TObject`\> |
 
 #### Defined in
 
 [lib/types.ts:71](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L71)
 
-___
+---
 
 ### UndefinedSubstitutionReturn
 
@@ -798,17 +798,17 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> |
-| `TDestination` | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
+| Name              | Type                                                           |
+| :---------------- | :------------------------------------------------------------- |
+| `TSource`         | extends [`Dictionary`](modules.md#dictionary)<`TSource`\>      |
+| `TDestination`    | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
 | `TSelectorReturn` | [`SelectorReturn`](modules.md#selectorreturn)<`TDestination`\> |
 
 #### Defined in
 
 [lib/types.ts:412](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L412)
 
-___
+---
 
 ### ValueSelector
 
@@ -816,11 +816,11 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> = `any` |
+| Name           | Type                                                                   |
+| :------------- | :--------------------------------------------------------------------- |
+| `TSource`      | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> = `any`      |
 | `TDestination` | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> = `any` |
-| `TValueReturn` | [`SelectorReturn`](modules.md#selectorreturn)<`TDestination`\> |
+| `TValueReturn` | [`SelectorReturn`](modules.md#selectorreturn)<`TDestination`\>         |
 
 #### Type declaration
 
@@ -828,8 +828,8 @@ ___
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type      |
+| :------- | :-------- |
 | `source` | `TSource` |
 
 ##### Returns
@@ -844,7 +844,7 @@ ___
 
 ### defaultStrategyInitializerOptions
 
-• `Const` **defaultStrategyInitializerOptions**: `Required`<`Omit`<[`MappingStrategyInitializerOptions`](interfaces/MappingStrategyInitializerOptions.md), ``"destinationConstructor"``\>\>
+• `Const` **defaultStrategyInitializerOptions**: `Required`<`Omit`<[`MappingStrategyInitializerOptions`](interfaces/MappingStrategyInitializerOptions.md), `"destinationConstructor"`\>\>
 
 #### Defined in
 
@@ -858,10 +858,10 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `mapper` | [`Mapper`](interfaces/Mapper.md) |
-| `profile` | [`MappingProfile`](modules.md#mappingprofile) |
+| Name                       | Type                                                                       |
+| :------------------------- | :------------------------------------------------------------------------- |
+| `mapper`                   | [`Mapper`](interfaces/Mapper.md)                                           |
+| `profile`                  | [`MappingProfile`](modules.md#mappingprofile)                              |
 | `...mappingConfigurations` | [`MappingConfiguration`](modules.md#mappingconfiguration)<`any`, `any`\>[] |
 
 #### Returns
@@ -872,7 +872,7 @@ ___
 
 [lib/mappings/add-profile.ts:4](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/mappings/add-profile.ts#L4)
 
-___
+---
 
 ### afterMap
 
@@ -880,15 +880,15 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> |
+| Name           | Type                                                           |
+| :------------- | :------------------------------------------------------------- |
+| `TSource`      | extends [`Dictionary`](modules.md#dictionary)<`TSource`\>      |
 | `TDestination` | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name | Type                                                                                            |
+| :--- | :---------------------------------------------------------------------------------------------- |
 | `cb` | [`MapCallback`](modules.md#mapcallback)<`TSource`, `TDestination`, `Record`<`string`, `any`\>\> |
 
 #### Returns
@@ -899,7 +899,7 @@ ___
 
 [lib/mapping-configurations/after-map.ts:4](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/mapping-configurations/after-map.ts#L4)
 
-___
+---
 
 ### beforeMap
 
@@ -907,15 +907,15 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> |
+| Name           | Type                                                           |
+| :------------- | :------------------------------------------------------------- |
+| `TSource`      | extends [`Dictionary`](modules.md#dictionary)<`TSource`\>      |
 | `TDestination` | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name | Type                                                                                            |
+| :--- | :---------------------------------------------------------------------------------------------- |
 | `cb` | [`MapCallback`](modules.md#mapcallback)<`TSource`, `TDestination`, `Record`<`string`, `any`\>\> |
 
 #### Returns
@@ -926,7 +926,7 @@ ___
 
 [lib/mapping-configurations/before-map.ts:4](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/mapping-configurations/before-map.ts#L4)
 
-___
+---
 
 ### condition
 
@@ -934,18 +934,18 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> |
-| `TDestination` | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
-| `TSelectorReturn` | `unknown` |
+| Name              | Type                                                           |
+| :---------------- | :------------------------------------------------------------- |
+| `TSource`         | extends [`Dictionary`](modules.md#dictionary)<`TSource`\>      |
+| `TDestination`    | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
+| `TSelectorReturn` | `unknown`                                                      |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `predicate` | [`ConditionPredicate`](interfaces/ConditionPredicate.md)<`TSource`\> |
-| `defaultValue?` | `TSelectorReturn` |
+| Name            | Type                                                                 |
+| :-------------- | :------------------------------------------------------------------- |
+| `predicate`     | [`ConditionPredicate`](interfaces/ConditionPredicate.md)<`TSource`\> |
+| `defaultValue?` | `TSelectorReturn`                                                    |
 
 #### Returns
 
@@ -955,7 +955,7 @@ ___
 
 [lib/member-map-functions/condition.ts:10](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/member-map-functions/condition.ts#L10)
 
-___
+---
 
 ### constructUsing
 
@@ -963,15 +963,15 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> |
+| Name           | Type                                                           |
+| :------------- | :------------------------------------------------------------- |
+| `TSource`      | extends [`Dictionary`](modules.md#dictionary)<`TSource`\>      |
 | `TDestination` | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name                     | Type                                                                                      |
+| :----------------------- | :---------------------------------------------------------------------------------------- |
 | `destinationConstructor` | [`DestinationConstructor`](modules.md#destinationconstructor)<`TSource`, `TDestination`\> |
 
 #### Returns
@@ -982,7 +982,7 @@ ___
 
 [lib/mapping-configurations/construct-using.ts:9](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/mapping-configurations/construct-using.ts#L9)
 
-___
+---
 
 ### convertUsing
 
@@ -990,19 +990,19 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> |
-| `TDestination` | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
-| `TSelectorReturn` | `unknown` |
-| `TConvertSourceReturn` | `unknown` |
+| Name                   | Type                                                           |
+| :--------------------- | :------------------------------------------------------------- |
+| `TSource`              | extends [`Dictionary`](modules.md#dictionary)<`TSource`\>      |
+| `TDestination`         | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
+| `TSelectorReturn`      | `unknown`                                                      |
+| `TConvertSourceReturn` | `unknown`                                                      |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name        | Type                                                                               |
+| :---------- | :--------------------------------------------------------------------------------- |
 | `converter` | [`Converter`](interfaces/Converter.md)<`TConvertSourceReturn`, `TSelectorReturn`\> |
-| `selector` | [`Selector`](modules.md#selector)<`TSource`, `TConvertSourceReturn`\> |
+| `selector`  | [`Selector`](modules.md#selector)<`TSource`, `TConvertSourceReturn`\>              |
 
 #### Returns
 
@@ -1012,7 +1012,7 @@ ___
 
 [lib/member-map-functions/convert-using.ts:10](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/member-map-functions/convert-using.ts#L10)
 
-___
+---
 
 ### createMap
 
@@ -1020,16 +1020,16 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name      | Type                                                      |
+| :-------- | :-------------------------------------------------------- |
 | `TSource` | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `mapper` | [`Mapper`](interfaces/Mapper.md) |
-| `source` | [`ModelIdentifier`](modules.md#modelidentifier)<`TSource`\> |
+| Name                  | Type                                                                                                |
+| :-------------------- | :-------------------------------------------------------------------------------------------------- |
+| `mapper`              | [`Mapper`](interfaces/Mapper.md)                                                                    |
+| `source`              | [`ModelIdentifier`](modules.md#modelidentifier)<`TSource`\>                                         |
 | `...mappingConfigFns` | (`undefined` \| [`MappingConfiguration`](modules.md#mappingconfiguration)<`TSource`, `TSource`\>)[] |
 
 #### Returns
@@ -1044,18 +1044,18 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> |
+| Name           | Type                                                           |
+| :------------- | :------------------------------------------------------------- |
+| `TSource`      | extends [`Dictionary`](modules.md#dictionary)<`TSource`\>      |
 | `TDestination` | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `mapper` | [`Mapper`](interfaces/Mapper.md) |
-| `source` | [`ModelIdentifier`](modules.md#modelidentifier)<`TSource`\> |
-| `destination` | [`ModelIdentifier`](modules.md#modelidentifier)<`TDestination`\> |
+| Name                  | Type                                                                                                     |
+| :-------------------- | :------------------------------------------------------------------------------------------------------- |
+| `mapper`              | [`Mapper`](interfaces/Mapper.md)                                                                         |
+| `source`              | [`ModelIdentifier`](modules.md#modelidentifier)<`TSource`\>                                              |
+| `destination`         | [`ModelIdentifier`](modules.md#modelidentifier)<`TDestination`\>                                         |
 | `...mappingConfigFns` | (`undefined` \| [`MappingConfiguration`](modules.md#mappingconfiguration)<`TSource`, `TDestination`\>)[] |
 
 #### Returns
@@ -1066,25 +1066,26 @@ ___
 
 [lib/mappings/create-map.ts:23](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/mappings/create-map.ts#L23)
 
-___
+---
 
 ### createMapper
 
 ▸ **createMapper**(`options`): [`Mapper`](interfaces/Mapper.md)
 
 Creates and returns a Mapper {} as a Proxy. The following methods are available to use with a Mapper:
- ```
- - Mapper#map(Array)(Async), Mapper#mutate(Array)(Async)
- - createMap()
- - addProfile()
- - getMapping()
- - getMappings()
- ```
+
+```
+- Mapper#map(Array)(Async), Mapper#mutate(Array)(Async)
+- createMap()
+- addProfile()
+- getMapping()
+- getMappings()
+```
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name      | Type                                                       |
+| :-------- | :--------------------------------------------------------- |
 | `options` | [`CreateMapperOptions`](interfaces/CreateMapperOptions.md) |
 
 #### Returns
@@ -1095,7 +1096,7 @@ Creates and returns a Mapper {} as a Proxy. The following methods are available 
 
 [lib/core.ts:49](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/core.ts#L49)
 
-___
+---
 
 ### extend
 
@@ -1103,17 +1104,17 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> |
-| `TDestination` | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
-| `TExtendSource` | extends [`Dictionary`](modules.md#dictionary)<`TExtendSource`\> |
+| Name                 | Type                                                                 |
+| :------------------- | :------------------------------------------------------------------- |
+| `TSource`            | extends [`Dictionary`](modules.md#dictionary)<`TSource`\>            |
+| `TDestination`       | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\>       |
+| `TExtendSource`      | extends [`Dictionary`](modules.md#dictionary)<`TExtendSource`\>      |
 | `TExtendDestination` | extends [`Dictionary`](modules.md#dictionary)<`TExtendDestination`\> |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name      | Type                                                                    |
+| :-------- | :---------------------------------------------------------------------- |
 | `mapping` | [`Mapping`](modules.md#mapping)<`TExtendSource`, `TExtendDestination`\> |
 
 #### Returns
@@ -1128,18 +1129,18 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> |
-| `TDestination` | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
-| `TExtendSource` | extends [`Dictionary`](modules.md#dictionary)<`TExtendSource`\> |
+| Name                 | Type                                                                 |
+| :------------------- | :------------------------------------------------------------------- |
+| `TSource`            | extends [`Dictionary`](modules.md#dictionary)<`TSource`\>            |
+| `TDestination`       | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\>       |
+| `TExtendSource`      | extends [`Dictionary`](modules.md#dictionary)<`TExtendSource`\>      |
 | `TExtendDestination` | extends [`Dictionary`](modules.md#dictionary)<`TExtendDestination`\> |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `source` | [`ModelIdentifier`](modules.md#modelidentifier)<`TExtendSource`\> |
+| Name          | Type                                                                   |
+| :------------ | :--------------------------------------------------------------------- |
+| `source`      | [`ModelIdentifier`](modules.md#modelidentifier)<`TExtendSource`\>      |
 | `destination` | [`ModelIdentifier`](modules.md#modelidentifier)<`TExtendDestination`\> |
 
 #### Returns
@@ -1150,7 +1151,7 @@ ___
 
 [lib/mapping-configurations/extend.ts:20](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/mapping-configurations/extend.ts#L20)
 
-___
+---
 
 ### forMember
 
@@ -1158,18 +1159,18 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> |
+| Name           | Type                                                           |
+| :------------- | :------------------------------------------------------------- |
+| `TSource`      | extends [`Dictionary`](modules.md#dictionary)<`TSource`\>      |
 | `TDestination` | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
-| `TMemberType` | `unknown` |
+| `TMemberType`  | `unknown`                                                      |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `selector` | [`Selector`](modules.md#selector)<`TDestination`, `TMemberType`\> |
-| `...fns` | [preCondOrMapMemberFn: PreConditionReturn<TSource, TDestination, TMemberType\> \| MemberMapReturn<TSource, TDestination, TMemberType\>, mapMemberFn?: MemberMapReturn<TSource, TDestination, TMemberType\>] |
+| Name       | Type                                                                                                                                                                                                        |
+| :--------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `selector` | [`Selector`](modules.md#selector)<`TDestination`, `TMemberType`\>                                                                                                                                           |
+| `...fns`   | [preCondOrMapMemberFn: PreConditionReturn<TSource, TDestination, TMemberType\> \| MemberMapReturn<TSource, TDestination, TMemberType\>, mapMemberFn?: MemberMapReturn<TSource, TDestination, TMemberType\>] |
 
 #### Returns
 
@@ -1179,7 +1180,7 @@ ___
 
 [lib/mapping-configurations/for-member.ts:16](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/mapping-configurations/for-member.ts#L16)
 
-___
+---
 
 ### forSelf
 
@@ -1187,18 +1188,18 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> |
+| Name           | Type                                                           |
+| :------------- | :------------------------------------------------------------- |
+| `TSource`      | extends [`Dictionary`](modules.md#dictionary)<`TSource`\>      |
 | `TDestination` | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
-| `TSelfSource` | extends [`Dictionary`](modules.md#dictionary)<`TSelfSource`\> |
+| `TSelfSource`  | extends [`Dictionary`](modules.md#dictionary)<`TSelfSource`\>  |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name              | Type                                                                                                                               |
+| :---------------- | :--------------------------------------------------------------------------------------------------------------------------------- |
 | `sourceOrMapping` | [`ModelIdentifier`](modules.md#modelidentifier)<`TSelfSource`\> \| [`Mapping`](modules.md#mapping)<`TSelfSource`, `TDestination`\> |
-| `selector` | [`Selector`](modules.md#selector)<`TSource`, `TSelfSource`\> |
+| `selector`        | [`Selector`](modules.md#selector)<`TSource`, `TSelfSource`\>                                                                       |
 
 #### Returns
 
@@ -1208,7 +1209,7 @@ ___
 
 [lib/mapping-configurations/for-self.ts:23](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/mapping-configurations/for-self.ts#L23)
 
-___
+---
 
 ### fromValue
 
@@ -1216,16 +1217,16 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> |
-| `TDestination` | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
-| `TSelectorReturn` | `unknown` |
+| Name              | Type                                                           |
+| :---------------- | :------------------------------------------------------------- |
+| `TSource`         | extends [`Dictionary`](modules.md#dictionary)<`TSource`\>      |
+| `TDestination`    | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
+| `TSelectorReturn` | `unknown`                                                      |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name       | Type              |
+| :--------- | :---------------- |
 | `rawValue` | `TSelectorReturn` |
 
 #### Returns
@@ -1236,7 +1237,7 @@ ___
 
 [lib/member-map-functions/from-value.ts:4](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/member-map-functions/from-value.ts#L4)
 
-___
+---
 
 ### getRecursiveValue
 
@@ -1244,11 +1245,11 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name           | Type                                                                                                               |
+| :------------- | :----------------------------------------------------------------------------------------------------------------- |
 | `recursiveMap` | `Map`<[`MetadataIdentifier`](modules.md#metadataidentifier)<`any`\>, [`ArrayKeyedMap`](modules.md#arraykeyedmap)\> |
-| `parent` | [`MetadataIdentifier`](modules.md#metadataidentifier)<`any`\> |
-| `member` | `string`[] |
+| `parent`       | [`MetadataIdentifier`](modules.md#metadataidentifier)<`any`\>                                                      |
+| `member`       | `string`[]                                                                                                         |
 
 #### Returns
 
@@ -1258,7 +1259,7 @@ ___
 
 [lib/utils/recursion.ts:10](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/utils/recursion.ts#L10)
 
-___
+---
 
 ### ignore
 
@@ -1266,9 +1267,9 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> |
+| Name           | Type                                                           |
+| :------------- | :------------------------------------------------------------- |
+| `TSource`      | extends [`Dictionary`](modules.md#dictionary)<`TSource`\>      |
 | `TDestination` | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
 
 #### Returns
@@ -1279,7 +1280,7 @@ ___
 
 [lib/member-map-functions/ignore.ts:4](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/member-map-functions/ignore.ts#L4)
 
-___
+---
 
 ### isDateConstructor
 
@@ -1289,8 +1290,8 @@ Check if value is a Date constructor
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name    | Type      |
+| :------ | :-------- |
 | `value` | `unknown` |
 
 #### Returns
@@ -1301,7 +1302,7 @@ Check if value is a Date constructor
 
 [lib/utils/is-date-constructor.ts:6](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/utils/is-date-constructor.ts#L6)
 
-___
+---
 
 ### isEmpty
 
@@ -1309,8 +1310,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name    | Type      |
+| :------ | :-------- |
 | `value` | `unknown` |
 
 #### Returns
@@ -1321,7 +1322,7 @@ ___
 
 [lib/utils/is-empty.ts:1](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/utils/is-empty.ts#L1)
 
-___
+---
 
 ### isPrimitiveConstructor
 
@@ -1331,8 +1332,8 @@ Check if value is a String/Number/Boolean/Array constructor
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name    | Type      |
+| :------ | :-------- |
 | `value` | `unknown` |
 
 #### Returns
@@ -1343,7 +1344,7 @@ Check if value is a String/Number/Boolean/Array constructor
 
 [lib/utils/is-primitive-constructor.ts:6](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/utils/is-primitive-constructor.ts#L6)
 
-___
+---
 
 ### mapDefer
 
@@ -1351,16 +1352,16 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> = `any` |
-| `TDestination` | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> = `any` |
-| `TSelectorReturn` | `unknown` |
+| Name              | Type                                                                   |
+| :---------------- | :--------------------------------------------------------------------- |
+| `TSource`         | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> = `any`      |
+| `TDestination`    | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> = `any` |
+| `TSelectorReturn` | `unknown`                                                              |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name    | Type                                                                                          |
+| :------ | :-------------------------------------------------------------------------------------------- |
 | `defer` | [`DeferFunction`](interfaces/DeferFunction.md)<`TSource`, `TDestination`, `TSelectorReturn`\> |
 
 #### Returns
@@ -1371,7 +1372,7 @@ ___
 
 [lib/member-map-functions/map-defer.ts:4](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/member-map-functions/map-defer.ts#L4)
 
-___
+---
 
 ### mapFrom
 
@@ -1379,16 +1380,16 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> |
-| `TDestination` | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
-| `TSelectorReturn` | `unknown` |
+| Name              | Type                                                           |
+| :---------------- | :------------------------------------------------------------- |
+| `TSource`         | extends [`Dictionary`](modules.md#dictionary)<`TSource`\>      |
+| `TDestination`    | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
+| `TSelectorReturn` | `unknown`                                                      |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name   | Type                                                                                                                                                                              |
+| :----- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `from` | [`ValueSelector`](modules.md#valueselector)<`TSource`, `TDestination`, `TSelectorReturn`\> \| [`Resolver`](interfaces/Resolver.md)<`TSource`, `TDestination`, `TSelectorReturn`\> |
 
 #### Returns
@@ -1399,7 +1400,7 @@ ___
 
 [lib/member-map-functions/map-from.ts:11](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/member-map-functions/map-from.ts#L11)
 
-___
+---
 
 ### mapWith
 
@@ -1407,21 +1408,21 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> |
-| `TDestination` | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
-| `TSelectorReturn` | `unknown` |
-| `TWithDestination` | extends [`ModelIdentifier`](modules.md#modelidentifier)<`any`\> = [`ModelIdentifier`](modules.md#modelidentifier)<`any`\> |
-| `TWithSource` | extends [`ModelIdentifier`](modules.md#modelidentifier)<`any`\> = [`ModelIdentifier`](modules.md#modelidentifier)<`any`\> |
+| Name               | Type                                                                                                                                                                                                                                                                                                              |
+| :----------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `TSource`          | extends [`Dictionary`](modules.md#dictionary)<`TSource`\>                                                                                                                                                                                                                                                         |
+| `TDestination`     | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\>                                                                                                                                                                                                                                                    |
+| `TSelectorReturn`  | `unknown`                                                                                                                                                                                                                                                                                                         |
+| `TWithDestination` | extends [`ModelIdentifier`](modules.md#modelidentifier)<`any`\> = [`ModelIdentifier`](modules.md#modelidentifier)<`any`\>                                                                                                                                                                                         |
+| `TWithSource`      | extends [`ModelIdentifier`](modules.md#modelidentifier)<`any`\> = [`ModelIdentifier`](modules.md#modelidentifier)<`any`\>                                                                                                                                                                                         |
 | `TWithSourceValue` | extends [`ValueSelector`](modules.md#valueselector)<`any`, `any`, `unknown`\> = `TWithSource` extends `Constructor`<`InferredWithSource`\> ? [`ValueSelector`](modules.md#valueselector)<`TSource`, `InferredWithSource`, `unknown`\> : [`ValueSelector`](modules.md#valueselector)<`TSource`, `any`, `unknown`\> |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name              | Type               |
+| :---------------- | :----------------- |
 | `withDestination` | `TWithDestination` |
-| `withSource` | `TWithSource` |
+| `withSource`      | `TWithSource`      |
 | `withSourceValue` | `TWithSourceValue` |
 
 #### Returns
@@ -1432,7 +1433,7 @@ ___
 
 [lib/member-map-functions/map-with.ts:11](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/member-map-functions/map-with.ts#L11)
 
-___
+---
 
 ### mapWithArguments
 
@@ -1440,16 +1441,16 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> |
-| `TDestination` | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
-| `TSelectorReturn` | `unknown` |
+| Name              | Type                                                           |
+| :---------------- | :------------------------------------------------------------- |
+| `TSource`         | extends [`Dictionary`](modules.md#dictionary)<`TSource`\>      |
+| `TDestination`    | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
+| `TSelectorReturn` | `unknown`                                                      |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name                    | Type                                                                                                                                                                                                |
+| :---------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `withArgumentsResolver` | (`source`: `TSource`, `extraArguments`: `Record`<`string`, `unknown`\>) => `TSelectorReturn` \| [`Resolver`](interfaces/Resolver.md)<`TSource`, `Record`<`string`, `unknown`\>, `TSelectorReturn`\> |
 
 #### Returns
@@ -1460,7 +1461,7 @@ ___
 
 [lib/member-map-functions/map-with-arguments.ts:10](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/member-map-functions/map-with-arguments.ts#L10)
 
-___
+---
 
 ### namingConventions
 
@@ -1468,15 +1469,15 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> |
+| Name           | Type                                                           |
+| :------------- | :------------------------------------------------------------- |
+| `TSource`      | extends [`Dictionary`](modules.md#dictionary)<`TSource`\>      |
 | `TDestination` | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name                     | Type                                                        |
+| :----------------------- | :---------------------------------------------------------- |
 | `namingConventionsInput` | [`NamingConventionInput`](modules.md#namingconventioninput) |
 
 #### Returns
@@ -1487,7 +1488,7 @@ ___
 
 [lib/mapping-configurations/naming-conventions.ts:10](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/mapping-configurations/naming-conventions.ts#L10)
 
-___
+---
 
 ### nullSubstitution
 
@@ -1495,16 +1496,16 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> |
-| `TDestination` | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
-| `TSelectorReturn` | `unknown` |
+| Name              | Type                                                           |
+| :---------------- | :------------------------------------------------------------- |
+| `TSource`         | extends [`Dictionary`](modules.md#dictionary)<`TSource`\>      |
+| `TDestination`    | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
+| `TSelectorReturn` | `unknown`                                                      |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name           | Type              |
+| :------------- | :---------------- |
 | `substitution` | `TSelectorReturn` |
 
 #### Returns
@@ -1515,7 +1516,7 @@ ___
 
 [lib/member-map-functions/null-substitution.ts:9](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/member-map-functions/null-substitution.ts#L9)
 
-___
+---
 
 ### preCondition
 
@@ -1523,18 +1524,18 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> |
-| `TDestination` | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
-| `TSelectorReturn` | `unknown` |
+| Name              | Type                                                           |
+| :---------------- | :------------------------------------------------------------- |
+| `TSource`         | extends [`Dictionary`](modules.md#dictionary)<`TSource`\>      |
+| `TDestination`    | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
+| `TSelectorReturn` | `unknown`                                                      |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `predicate` | [`ConditionPredicate`](interfaces/ConditionPredicate.md)<`TSource`\> |
-| `defaultValue?` | `TSelectorReturn` |
+| Name            | Type                                                                 |
+| :-------------- | :------------------------------------------------------------------- |
+| `predicate`     | [`ConditionPredicate`](interfaces/ConditionPredicate.md)<`TSource`\> |
+| `defaultValue?` | `TSelectorReturn`                                                    |
 
 #### Returns
 
@@ -1544,35 +1545,35 @@ ___
 
 [lib/member-map-functions/pre-condition.ts:8](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/member-map-functions/pre-condition.ts#L8)
 
-___
+---
 
 ### set
 
-▸ **set**<`T`\>(`object`, `path`, `value`): `T` & { `[p: string]`: `unknown`;  } \| `T`
+▸ **set**<`T`\>(`object`, `path`, `value`): `T` & { `[p: string]`: `unknown`; } \| `T`
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `T` | extends `Record`<`string`, `unknown`\> |
+| Name | Type                                   |
+| :--- | :------------------------------------- |
+| `T`  | extends `Record`<`string`, `unknown`\> |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `object` | `T` |
-| `path` | `string`[] |
-| `value` | `unknown` |
+| Name     | Type       |
+| :------- | :--------- |
+| `object` | `T`        |
+| `path`   | `string`[] |
+| `value`  | `unknown`  |
 
 #### Returns
 
-`T` & { `[p: string]`: `unknown`;  } \| `T`
+`T` & { `[p: string]`: `unknown`; } \| `T`
 
 #### Defined in
 
 [lib/utils/set.ts:1](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/utils/set.ts#L1)
 
-___
+---
 
 ### setMutate
 
@@ -1580,17 +1581,17 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `T` | extends `Record`<`string`, `unknown`\> |
+| Name | Type                                   |
+| :--- | :------------------------------------- |
+| `T`  | extends `Record`<`string`, `unknown`\> |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `object` | `T` |
-| `path` | `string`[] |
-| `value` | `unknown` |
+| Name     | Type       |
+| :------- | :--------- |
+| `object` | `T`        |
+| `path`   | `string`[] |
+| `value`  | `unknown`  |
 
 #### Returns
 
@@ -1600,7 +1601,7 @@ ___
 
 [lib/utils/set.ts:28](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/utils/set.ts#L28)
 
-___
+---
 
 ### setRecursiveValue
 
@@ -1608,12 +1609,12 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name           | Type                                                                                                               |
+| :------------- | :----------------------------------------------------------------------------------------------------------------- |
 | `recursiveMap` | `Map`<[`MetadataIdentifier`](modules.md#metadataidentifier)<`any`\>, [`ArrayKeyedMap`](modules.md#arraykeyedmap)\> |
-| `parent` | [`MetadataIdentifier`](modules.md#metadataidentifier)<`any`\> |
-| `member` | `string`[] |
-| `value` | `number` |
+| `parent`       | [`MetadataIdentifier`](modules.md#metadataidentifier)<`any`\>                                                      |
+| `member`       | `string`[]                                                                                                         |
+| `value`        | `number`                                                                                                           |
 
 #### Returns
 
@@ -1623,7 +1624,7 @@ ___
 
 [lib/utils/recursion.ts:19](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/utils/recursion.ts#L19)
 
-___
+---
 
 ### typeConverter
 
@@ -1631,19 +1632,19 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> |
-| `TDestination` | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
-| `TSourceConstructor` | extends [`PrimitiveConstructorExtended`](modules.md#primitiveconstructorextended) \| [[`PrimitiveConstructorExtended`](modules.md#primitiveconstructorextended)] |
+| Name                      | Type                                                                                                                                                             |
+| :------------------------ | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `TSource`                 | extends [`Dictionary`](modules.md#dictionary)<`TSource`\>                                                                                                        |
+| `TDestination`            | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\>                                                                                                   |
+| `TSourceConstructor`      | extends [`PrimitiveConstructorExtended`](modules.md#primitiveconstructorextended) \| [[`PrimitiveConstructorExtended`](modules.md#primitiveconstructorextended)] |
 | `TDestinationConstructor` | extends [`PrimitiveConstructorExtended`](modules.md#primitiveconstructorextended) \| [[`PrimitiveConstructorExtended`](modules.md#primitiveconstructorextended)] |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `source` | `TSourceConstructor` |
-| `destination` | `TDestinationConstructor` |
+| Name                       | Type                                                                         |
+| :------------------------- | :--------------------------------------------------------------------------- |
+| `source`                   | `TSourceConstructor`                                                         |
+| `destination`              | `TDestinationConstructor`                                                    |
 | `converterOrValueSelector` | `ConverterOrValueSelector`<`TSourceConstructor`, `TDestinationConstructor`\> |
 
 #### Returns
@@ -1654,7 +1655,7 @@ ___
 
 [lib/mapping-configurations/type-converters.ts:41](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/mapping-configurations/type-converters.ts#L41)
 
-___
+---
 
 ### undefinedSubstitution
 
@@ -1662,16 +1663,16 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](modules.md#dictionary)<`TSource`\> |
-| `TDestination` | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
-| `TSelectorReturn` | `unknown` |
+| Name              | Type                                                           |
+| :---------------- | :------------------------------------------------------------- |
+| `TSource`         | extends [`Dictionary`](modules.md#dictionary)<`TSource`\>      |
+| `TDestination`    | extends [`Dictionary`](modules.md#dictionary)<`TDestination`\> |
+| `TSelectorReturn` | `unknown`                                                      |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name           | Type              |
+| :------------- | :---------------- |
 | `substitution` | `TSelectorReturn` |
 
 #### Returns

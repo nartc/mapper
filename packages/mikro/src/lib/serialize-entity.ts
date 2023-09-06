@@ -1,4 +1,4 @@
-import { isEmpty } from '@automapper/core';
+import { isEmpty } from '@jersmart/automapper-core';
 import type { AnyEntity } from '@mikro-orm/core';
 import { Reference, Utils, wrap } from '@mikro-orm/core';
 
@@ -26,7 +26,8 @@ export function serializeEntity(
         }
 
         const value = item[key];
-        const keyMetadata = itemMetadata && itemMetadata[key] as Record<string, unknown>;
+        const keyMetadata =
+            itemMetadata && (itemMetadata[key] as Record<string, unknown>);
 
         if (Utils.isCollection(value)) {
             result[key] = (value.getSnapshot() || []).map((snapshot) => {

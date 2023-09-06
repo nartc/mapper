@@ -1,7 +1,7 @@
-import { classes } from '@automapper/classes';
-import type { Mapper } from '@automapper/core';
-import { createMapper } from '@automapper/core';
-import { getMapperToken } from '@automapper/nestjs';
+import { classes } from '@jersmart/automapper-classes';
+import type { Mapper } from '@jersmart/automapper-core';
+import { createMapper } from '@jersmart/automapper-core';
+import { getMapperToken } from '@jersmart/automapper-nestjs';
 import { Test } from '@nestjs/testing';
 import { AddressDto } from '../../classes/dtos/address.dto';
 import { AvatarDto } from '../../classes/dtos/avatar.dto';

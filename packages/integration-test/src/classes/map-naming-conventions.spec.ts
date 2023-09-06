@@ -1,11 +1,11 @@
-import { classes } from '@automapper/classes';
+import { classes } from '@jersmart/automapper-classes';
 import {
     addProfile,
     CamelCaseNamingConvention,
     createMapper,
     PascalCaseNamingConvention,
     SnakeCaseNamingConvention,
-} from '@automapper/core';
+} from '@jersmart/automapper-core';
 import { PascalUserDto, SnakeUserDto, UserDto } from './dtos/user.dto';
 import { PascalUser, SnakeUser, User } from './models/user';
 import {

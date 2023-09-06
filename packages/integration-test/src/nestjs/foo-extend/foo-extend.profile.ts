@@ -1,6 +1,6 @@
-import type { Mapper, MappingProfile } from '@automapper/core';
-import { createMap, extend } from '@automapper/core';
-import { AutomapperProfile, InjectMapper } from '@automapper/nestjs';
+import type { Mapper, MappingProfile } from '@jersmart/automapper-core';
+import { createMap, extend } from '@jersmart/automapper-core';
+import { AutomapperProfile, InjectMapper } from '@jersmart/automapper-nestjs';
 import { Injectable } from '@nestjs/common';
 import { Foo, FooDto } from '../foo/foo';
 import { FooExtend, FooExtendDto } from './foo-extend';

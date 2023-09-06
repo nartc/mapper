@@ -1,5 +1,5 @@
-import { classes } from '@automapper/classes';
-import { addProfile, createMapper } from '@automapper/core';
+import { classes } from '@jersmart/automapper-classes';
+import { addProfile, createMapper } from '@jersmart/automapper-core';
 
 import { DecoratorlessUserDto } from './dtos/decoratorless-user.dto';
 import { DecoratorlessUser } from './models/decoratorless-user';

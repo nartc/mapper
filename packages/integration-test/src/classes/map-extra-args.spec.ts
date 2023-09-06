@@ -1,4 +1,4 @@
-import { AutoMap, classes } from '@automapper/classes';
+import { AutoMap, classes } from '@jersmart/automapper-classes';
 import {
     CamelCaseNamingConvention,
     createMap,
@@ -7,7 +7,7 @@ import {
     mapWith,
     mapWithArguments,
     Resolver,
-} from '@automapper/core';
+} from '@jersmart/automapper-core';
 
 class Bar {
     @AutoMap(() => String)

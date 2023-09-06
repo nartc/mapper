@@ -1,9 +1,9 @@
-import { classes } from '@automapper/classes';
+import { classes } from '@jersmart/automapper-classes';
 import {
     CamelCaseNamingConvention,
     createMap,
     createMapper,
-} from '@automapper/core';
+} from '@jersmart/automapper-core';
 import { Customer, Order, Product } from './order';
 import { OrderDto } from './order.dto';
 

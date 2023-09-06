@@ -1,4 +1,4 @@
-import { AutoMap, classes } from '@automapper/classes';
+import { AutoMap, classes } from '@jersmart/automapper-classes';
 import {
     CamelCaseNamingConvention,
     createMap,
@@ -6,7 +6,7 @@ import {
     extend,
     forMember,
     mapFrom,
-} from '@automapper/core';
+} from '@jersmart/automapper-core';
 
 describe('Issue 396', () => {
     class NestedOptionalClass {

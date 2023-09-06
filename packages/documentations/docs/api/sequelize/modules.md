@@ -1,7 +1,7 @@
 ---
-id: "modules"
-title: "@automapper/sequelize"
-sidebar_label: "Exports"
+id: 'modules'
+title: '@jersmart/automapper-sequelize'
+sidebar_label: 'Exports'
 sidebar_position: 0.5
 custom_edit_url: null
 ---
@@ -14,8 +14,8 @@ custom_edit_url: null
 
 #### Parameters
 
-| Name | Type | Default value |
-| :------ | :------ | :------ |
+| Name      | Type                                | Default value                       |
+| :-------- | :---------------------------------- | :---------------------------------- |
 | `options` | `MappingStrategyInitializerOptions` | `defaultStrategyInitializerOptions` |
 
 #### Returns

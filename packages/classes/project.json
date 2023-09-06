@@ -24,7 +24,11 @@
                 "tsConfig": "packages/classes/tsconfig.lib.json",
                 "assets": ["packages/classes/src/README.md"],
                 "compiler": "babel",
-                "external": ["typescript", "tslib", "@automapper/core"],
+                "external": [
+                    "typescript",
+                    "tslib",
+                    "@jersmart/automapper-core"
+                ],
                 "format": ["cjs", "esm"],
                 "updateBuildableProjectDepsInPackageJson": false
             }

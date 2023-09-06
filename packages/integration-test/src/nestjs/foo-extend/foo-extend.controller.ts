@@ -1,5 +1,5 @@
-import type { Mapper } from '@automapper/core';
-import { InjectMapper } from '@automapper/nestjs';
+import type { Mapper } from '@jersmart/automapper-core';
+import { InjectMapper } from '@jersmart/automapper-nestjs';
 import { Controller, Get } from '@nestjs/common';
 import { Bar } from '../foo/foo';
 import { FooExtend, FooExtendDto } from './foo-extend';

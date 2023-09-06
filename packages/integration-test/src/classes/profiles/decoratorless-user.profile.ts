@@ -4,7 +4,7 @@ import {
     forMember,
     mapFrom,
     MappingProfile,
-} from '@automapper/core';
+} from '@jersmart/automapper-core';
 import { DecoratorlessUserDto } from '../dtos/decoratorless-user.dto';
 import { DecoratorlessUser } from '../models/decoratorless-user';
 

@@ -1,5 +1,5 @@
 {
-    "name": "@automapper/classes/transformer-plugin",
+    "name": "@jersmart/automapper-classes/transformer-plugin",
     "version": "0.0.0",
     "type": "module",
     "sideEffects": false,
@@ -7,8 +7,8 @@
         "access": "public"
     },
     "peerDependencies": {
-        "@automapper/core": "latest",
-        "@automapper/classes": "latest"
+        "@jersmart/automapper-core": "latest",
+        "@jersmart/automapper-classes": "latest"
     },
     "repository": {
         "type": "git",

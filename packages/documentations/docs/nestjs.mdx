@@ -4,29 +4,29 @@ title: Usage with NestJS
 sidebar_label: Usage with NestJS
 ---
 
-`@automapper/nestjs` is the official integration for [NestJS](https://nestjs.com).
+`@jersmart/automapper-nestjs` is the official integration for [NestJS](https://nestjs.com).
 
 ## Installation
 
 ```shell
-npm i @automapper/core @automapper/nestjs
+npm i @jersmart/automapper-core @jersmart/automapper-nestjs
 ```
 
 ```shell
-yarn add @automapper/core @automapper/nestjs
+yarn add @jersmart/automapper-core @jersmart/automapper-nestjs
 ```
 
 ### Strategy
 
-Recommendation is to use `@automapper/classes` in a NestJS application.
+Recommendation is to use `@jersmart/automapper-classes` in a NestJS application.
 
 ## Usage
 
 -   Call `AutomapperModule.forRoot()` in `AppModule`
 
 ```ts
-import { AutomapperModule } from '@automapper/nestjs';
-import { classes } from '@automapper/classes';
+import { AutomapperModule } from '@jersmart/automapper-nestjs';
+import { classes } from '@jersmart/automapper-classes';
 
 // single strategy
 @Module({
@@ -75,10 +75,10 @@ TBD: `AutomapperModule.forRootAsync()`
 `AutomapperProfile` is an `Injectable` in NestJS. Make sure to `extends AutomapperProfile`
 
 ```ts
-import { AutomapperProfile, InjectMapper } from '@automapper/nestjs';
-import type { Mapper } from '@automapper/core';
+import { AutomapperProfile, InjectMapper } from '@jersmart/automapper-nestjs';
+import type { Mapper } from '@jersmart/automapper-core';
 import { Injectable } from '@nestjs/common';
-import { createMap } from '@automapper/core';
+import { createMap } from '@jersmart/automapper-core';
 
 @Injectable()
 export class UserProfile extends AutomapperProfile {
@@ -111,7 +111,7 @@ export class UserModule {}
 Same concept as [Share Configuration using MappingProfile](./tutorial/mapping-profile#share-mappingconfiguration), `AutomapperProfile` has an optional `protected get mappingConfigurations()` that subclasses can override to provide an array of `MappingConfiguration`. These configurations are passed to all `createMap()` in `get profile()`
 
 ```ts
-import { AutomapperProfile, InjectMapper } from '@automapper/nestjs';
+import { AutomapperProfile, InjectMapper } from '@jersmart/automapper-nestjs';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
@@ -137,11 +137,11 @@ export class UserProfile extends AutomapperProfile {
 
 ## `MapInterceptor`
 
-`@automapper/nestjs` provides `MapInterceptor`. In cases where you do not care about annotating the correct return type for a **Controller#method** and want your **Service** to be a little cleaner, you can utilize the `MapInterceptor` to execute the mapping.
+`@jersmart/automapper-nestjs` provides `MapInterceptor`. In cases where you do not care about annotating the correct return type for a **Controller#method** and want your **Service** to be a little cleaner, you can utilize the `MapInterceptor` to execute the mapping.
 
 ```ts
 import { UseInterceptors } from '@nestjs/common';
-import { MapInterceptor } from '@automapper/nestjs';
+import { MapInterceptor } from '@jersmart/automapper-nestjs';
 
 export class UserController {
     @Get('me')
@@ -164,10 +164,10 @@ MapInterceptor(sourceModelType, destinationModelType, {
 
 ## `MapPipe`
 
-`@automapper/nestjs` provides `MapPipe`. When you want to transform the incoming request body before it gets to the route handler, you can utilize `MapPipe` to achieve this behavior
+`@jersmart/automapper-nestjs` provides `MapPipe`. When you want to transform the incoming request body before it gets to the route handler, you can utilize `MapPipe` to achieve this behavior
 
 ```ts
-import { MapPipe } from '@automapper/nestjs';
+import { MapPipe } from '@jersmart/automapper-nestjs';
 
 @Post('/from-body')
 postFromBody(@Body(MapPipe(User, UserDto)) user: UserDto) {
@@ -179,7 +179,7 @@ postFromBody(@Body(MapPipe(User, UserDto)) user: UserDto) {
 `MapPipe` only works with `@Body` or `@Query`.
 
 ```ts
-import { MapPipe } from '@automapper/nestjs';
+import { MapPipe } from '@jersmart/automapper-nestjs';
 
 @Get('/from-query')
 getFromQuery(@Query(MapPipe(User, UserDto)) user: UserDto) {

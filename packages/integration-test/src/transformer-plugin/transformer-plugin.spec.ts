@@ -1,6 +1,6 @@
 import automapperTransformerPlugin, {
     before,
-} from '@automapper/classes/transformer-plugin';
+} from '@jersmart/automapper-classes/transformer-plugin';
 import type { CompilerOptions } from 'typescript/lib/tsserverlibrary';
 import {
     createProgram,

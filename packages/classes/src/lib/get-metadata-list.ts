@@ -1,5 +1,8 @@
-import type { Constructor } from '@automapper/core';
-import { isDateConstructor, isPrimitiveConstructor } from '@automapper/core';
+import type { Constructor } from '@jersmart/automapper-core';
+import {
+    isDateConstructor,
+    isPrimitiveConstructor,
+} from '@jersmart/automapper-core';
 import 'reflect-metadata';
 import {
     AUTOMAP_PROPERTIES_METADATA_KEY,

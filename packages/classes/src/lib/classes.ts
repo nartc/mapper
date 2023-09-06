@@ -7,7 +7,7 @@ import {
     MappingStrategyInitializer,
     MappingStrategyInitializerOptions,
     MetadataIdentifier,
-} from '@automapper/core';
+} from '@jersmart/automapper-core';
 import 'reflect-metadata';
 import { getMetadataList } from './get-metadata-list';
 

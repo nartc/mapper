@@ -1,4 +1,4 @@
-import { AutoMap } from '@automapper/classes';
+import { AutoMap } from '@jersmart/automapper-classes';
 import { BioDto, PascalBioDto, SnakeBioDto } from './bio.dto';
 
 export class UserDto {

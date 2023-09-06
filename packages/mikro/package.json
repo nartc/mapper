@@ -1,9 +1,9 @@
 {
-    "name": "@automapper/mikro",
+    "name": "@jersmart/automapper-mikro",
     "version": "0.0.0",
     "type": "module",
     "peerDependencies": {
-        "@automapper/classes": "latest",
+        "@jersmart/automapper-classes": "latest",
         "@mikro-orm/core": "^5.0.0",
         "reflect-metadata": "~0.1.13"
     },

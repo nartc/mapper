@@ -1,4 +1,4 @@
-import { PojosMetadataMap } from '@automapper/pojos';
+import { PojosMetadataMap } from '@jersmart/automapper-pojos';
 
 export interface Avatar {
     url: string;

@@ -1,10 +1,10 @@
-import { classes } from '@automapper/classes';
+import { classes } from '@jersmart/automapper-classes';
 import {
     addProfile,
     CamelCaseNamingConvention,
     createMapper,
     SnakeCaseNamingConvention,
-} from '@automapper/core';
+} from '@jersmart/automapper-core';
 import { RocketDto } from './dtos/rocket.dto';
 import { Rocket } from './models/rocket';
 import { rocketProfile } from './profiles/rocket.profile';

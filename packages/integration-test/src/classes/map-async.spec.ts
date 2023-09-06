@@ -1,11 +1,11 @@
-import { classes } from '@automapper/classes';
+import { classes } from '@jersmart/automapper-classes';
 import {
     afterMap,
     createMap,
     createMapper,
     forMember,
     ignore,
-} from '@automapper/core';
+} from '@jersmart/automapper-core';
 import { SimpleUserDto } from './dtos/simple-user.dto';
 import { SimpleUser } from './models/simple-user';
 

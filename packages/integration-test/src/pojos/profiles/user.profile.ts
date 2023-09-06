@@ -1,5 +1,5 @@
-import type { Mapper, Resolver } from '@automapper/core';
-import { createMap, forMember, mapFrom } from '@automapper/core';
+import type { Mapper, Resolver } from '@jersmart/automapper-core';
+import { createMap, forMember, mapFrom } from '@jersmart/automapper-core';
 import {
     createUserDtoMetadata,
     PascalUserDto,

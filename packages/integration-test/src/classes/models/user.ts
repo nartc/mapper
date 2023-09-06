@@ -1,4 +1,4 @@
-import { AutoMap } from '@automapper/classes';
+import { AutoMap } from '@jersmart/automapper-classes';
 import { Bio, PascalBio, SnakeBio } from './bio';
 import { Job, PascalJob, SnakeJob } from './job';
 

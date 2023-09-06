@@ -3,8 +3,8 @@ import type {
     MapOptions,
     Mapper,
     ModelIdentifier,
-} from '@automapper/core';
-import { isEmpty } from '@automapper/core';
+} from '@jersmart/automapper-core';
+import { isEmpty } from '@jersmart/automapper-core';
 
 export function shouldSkipTransform<
     TSource extends Dictionary<TSource>,

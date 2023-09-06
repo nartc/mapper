@@ -1,12 +1,12 @@
-import { classes } from '@automapper/classes';
+import { classes } from '@jersmart/automapper-classes';
 import type {
     Constructor,
     Dictionary,
     MappingStrategyInitializer,
     MappingStrategyInitializerOptions,
     MetadataIdentifier,
-} from '@automapper/core';
-import { defaultStrategyInitializerOptions } from '@automapper/core';
+} from '@jersmart/automapper-core';
+import { defaultStrategyInitializerOptions } from '@jersmart/automapper-core';
 import type { Model } from 'sequelize';
 
 export function sequelize(

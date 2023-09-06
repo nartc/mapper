@@ -1,4 +1,4 @@
-import { AutoMap } from '@automapper/classes';
+import { AutoMap } from '@jersmart/automapper-classes';
 
 export class OrderDto {
     @AutoMap()

@@ -242,7 +242,7 @@ mapper.map(user, UserDto, User);
 mapper.map(user, User, UserDto);
 ```
 
-This is a subtle breaking change that I've been holding off for a while. The positional arguments for `Source` and `Destination` are now switched to be more logical: "I want to map `sourceObject` from `Source` to `Destination`". This particularly makes it less confusing for `@automapper/pojos` users.
+This is a subtle breaking change that I've been holding off for a while. The positional arguments for `Source` and `Destination` are now switched to be more logical: "I want to map `sourceObject` from `Source` to `Destination`". This particularly makes it less confusing for `@jersmart/automapper-pojos` users.
 
 ```ts
 // before
@@ -374,7 +374,7 @@ const mapper = createMapper({
 });
 ```
 
-## `@automapper/classes`
+## `@jersmart/automapper-classes`
 
 ### Initializer
 
@@ -430,7 +430,7 @@ export class User {
 }
 ```
 
-## `@automapper/pojos`
+## `@jersmart/automapper-pojos`
 
 ### Initializer
 

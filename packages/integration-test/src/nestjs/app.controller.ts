@@ -1,4 +1,4 @@
-import { MapInterceptor, MapPipe } from '@automapper/nestjs';
+import { MapInterceptor, MapPipe } from '@jersmart/automapper-nestjs';
 import { Body, Controller, Get, Post, UseInterceptors } from '@nestjs/common';
 import { UserDto } from '../classes/dtos/user.dto';
 import { User } from '../classes/models/user';

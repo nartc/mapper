@@ -1,12 +1,12 @@
-# @automapper/classes/transformer-plugin
+# @jersmart/automapper-classes/transformer-plugin
 
-`@automapper/classes/transformer-plugin` is part of the public API of `@automapper/classes`.
+`@jersmart/automapper-classes/transformer-plugin` is part of the public API of `@jersmart/automapper-classes`.
 
 ## Problem
 
 Decorating Classes' members with `@AutoMap()` is verbose, even when you're being meticulous about what members are being **auto-configured** vs **custom-configured**. In some other cases, the Classes themselves are being **generated**, and/or from **external libraries** that the consumers **cannot** touch.
 
-`@automapper/classes/transformer-plugin` is to ease this pain point when using `@automapper/classes`
+`@jersmart/automapper-classes/transformer-plugin` is to ease this pain point when using `@jersmart/automapper-classes`
 
 ## How it works
 
@@ -31,7 +31,7 @@ class Profile {}
 class User {}
 ```
 
-The requirement for `@automapper/classes` to work is to decorate all the members of both classes with `@AutoMap` in order for `@automapper/classes` to keep track of the metadata of each property on each class.
+The requirement for `@jersmart/automapper-classes` to work is to decorate all the members of both classes with `@AutoMap` in order for `@jersmart/automapper-classes` to keep track of the metadata of each property on each class.
 
 ```ts
 class Profile {
@@ -52,13 +52,13 @@ class User {
 
 This will get very verbose very soon.
 
-`@automapper/classes/transformer-plugin` runs a `before` transformer that affects the **AST** directly before the Compilation step.
+`@jersmart/automapper-classes/transformer-plugin` runs a `before` transformer that affects the **AST** directly before the Compilation step.
 
 The transformer will
 
 -   Look at files that end with `.entity`, `.model.ts`, `.vm.ts`, and `.dto.ts` (this can be changed via transformer plugin options)
 -   Iterate through all the members (`PropertyDeclaration` and `GetAccessorDeclaration`) of each class (`ClassDeclaration`) that it finds
--   Store the members in a metadata list that `@automapper/classes` can understand
+-   Store the members in a metadata list that `@jersmart/automapper-classes` can understand
 -   Add to each class a `static method` and return the metadata list that is later retrieved and stored on the Mapper.
 
 Let's look at the above snippet again
@@ -103,21 +103,21 @@ class User {
 }
 ```
 
-After compilation, the members will be gone, but the static function will stay making it available to be called at runtime. Hence, the metadata will be available. `@automapper/classes/transformer-plugin` only adds the minimum amount of code needed to keep track of the metadata.
+After compilation, the members will be gone, but the static function will stay making it available to be called at runtime. Hence, the metadata will be available. `@jersmart/automapper-classes/transformer-plugin` only adds the minimum amount of code needed to keep track of the metadata.
 
 ## Experimental?
 
-`@automapper/classes/transformer-plugin` utilizes [TypeScript Compiler API](https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API) to traverse and manipulate the **Abstract Syntax Tree (AST)** to automate the process of decorating the Classes. The Compiler API, while having been around for quite some time, is still marked as [not yet stable](https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API#disclaimer).
+`@jersmart/automapper-classes/transformer-plugin` utilizes [TypeScript Compiler API](https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API) to traverse and manipulate the **Abstract Syntax Tree (AST)** to automate the process of decorating the Classes. The Compiler API, while having been around for quite some time, is still marked as [not yet stable](https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API#disclaimer).
 
 ## Limitations
 
-Currently, `@automapper/classes/transformer-plugin` will handle most `Nullable` (`type | null`) and `Maybe` (`propKey?: type`) cases. However, for complex cases where you have unions with different types (`string | number | boolean` or `ClassA | ClassB`), please consider decorate the property (field) manually with `@AutoMap()` decorator or use `forMember()` to provide a more comprehensive mapping configuration.
+Currently, `@jersmart/automapper-classes/transformer-plugin` will handle most `Nullable` (`type | null`) and `Maybe` (`propKey?: type`) cases. However, for complex cases where you have unions with different types (`string | number | boolean` or `ClassA | ClassB`), please consider decorate the property (field) manually with `@AutoMap()` decorator or use `forMember()` to provide a more comprehensive mapping configuration.
 
 Matrices (Array of Array type. Eg: `string[][]`) should also be handled manually.
 
 ## Usage
 
-As mentioned above, this is utilizing an experimental feature of TypeScript. Hence, you need to modify the build step of your project to use `@automapper/classes/transformer-plugin`
+As mentioned above, this is utilizing an experimental feature of TypeScript. Hence, you need to modify the build step of your project to use `@jersmart/automapper-classes/transformer-plugin`
 
 ### Options
 
@@ -135,7 +135,7 @@ If you use `ts-loader` or some fork of `ts-loader`, you can configure Webpack co
 
 ```ts
 // snip
-const automapperTransformerPlugin = require('@automapper/classes/transformer-plugin');
+const automapperTransformerPlugin = require('@jersmart/automapper-classes/transformer-plugin');
 const pluginOptions = {
     modelFileNameSuffix: [
         /*...*/
@@ -170,7 +170,7 @@ module.exports = {
 Use `rollup-plugin-typescript2` as it has `transformers` capability
 
 ```ts
-import automapperTransformerPlugin from '@automapper/classes/transformer-plugin';
+import automapperTransformerPlugin from '@jersmart/automapper-classes/transformer-plugin';
 import typescript from 'rollup-plugin-typescript2';
 const pluginOptions = {
     modelFileNameSuffix: [
@@ -209,7 +209,7 @@ ttypescript patches typescript in order to use transformers in tsconfig.json. Se
     ...,
     "plugins": [
         {
-            "transform": "@automapper/classes/transformer-plugin",
+            "transform": "@jersmart/automapper-classes/transformer-plugin",
             "modelFileNameSuffix": [...]
         }
     ],
@@ -227,7 +227,7 @@ ttypescript patches typescript in order to use transformers in tsconfig.json. Se
     "collection": "@nestjs/schematics",
     "sourceRoot": "src",
     "compilerOptions": {
-        "plugins": ["@automapper/classes/transformer-plugin"]
+        "plugins": ["@jersmart/automapper-classes/transformer-plugin"]
     }
 }
 ```
@@ -241,7 +241,7 @@ or with options
     "compilerOptions": {
         "plugins": [
             {
-                "name": "@automapper/classes/transformer-plugin",
+                "name": "@jersmart/automapper-classes/transformer-plugin",
                 "options": {
                     "modelFileNameSuffix": [".dto.ts", ".vm.ts"]
                 }
@@ -264,7 +264,7 @@ In Nx workspaces, NestJS applications and buildable libraries are handled with `
                 "options": {
                     "transformers": [
                         {
-                            "name": "@automapper/classes/transformer-plugin",
+                            "name": "@jersmart/automapper-classes/transformer-plugin",
                             "options": {
                                 "modelFileNameSuffix": [".dto.ts"]
                             }
@@ -281,7 +281,7 @@ In Nx workspaces, NestJS applications and buildable libraries are handled with `
                 "options": {
                     "transformers": [
                         {
-                            "name": "@automapper/classes/transformer-plugin",
+                            "name": "@jersmart/automapper-classes/transformer-plugin",
                             "options": {
                                 "modelFileNameSuffix": [".dto.ts"]
                             }

@@ -1,27 +1,27 @@
 ---
-id: "modules"
-title: "@automapper/nestjs"
-sidebar_label: "Exports"
+id: 'modules'
+title: '@jersmart/automapper-nestjs'
+sidebar_label: 'Exports'
 sidebar_position: 0.5
 custom_edit_url: null
 ---
 
 ## Classes
 
-- [AutomapperModule](classes/AutomapperModule.md)
-- [AutomapperProfile](classes/AutomapperProfile.md)
+-   [AutomapperModule](classes/AutomapperModule.md)
+-   [AutomapperProfile](classes/AutomapperProfile.md)
 
 ## Interfaces
 
-- [AutomapperAsyncOptions](interfaces/AutomapperAsyncOptions.md)
-- [AutomapperGlobalOptions](interfaces/AutomapperGlobalOptions.md)
-- [AutomapperOptionsFactory](interfaces/AutomapperOptionsFactory.md)
+-   [AutomapperAsyncOptions](interfaces/AutomapperAsyncOptions.md)
+-   [AutomapperGlobalOptions](interfaces/AutomapperGlobalOptions.md)
+-   [AutomapperOptionsFactory](interfaces/AutomapperOptionsFactory.md)
 
 ## Type aliases
 
 ### AutomapperOptions
 
-Ƭ **AutomapperOptions**: `CreateMapperOptions` \| `CreateMapperOptions` & { `name`: `string`  }[]
+Ƭ **AutomapperOptions**: `CreateMapperOptions` \| `CreateMapperOptions` & { `name`: `string` }[]
 
 #### Defined in
 
@@ -29,9 +29,9 @@ custom_edit_url: null
 
 ## Variables
 
-### DEFAULT\_MAPPER\_TOKEN
+### DEFAULT_MAPPER_TOKEN
 
-• `Const` **DEFAULT\_MAPPER\_TOKEN**: ``"automapper:nestjs:default"``
+• `Const` **DEFAULT_MAPPER_TOKEN**: `"automapper:nestjs:default"`
 
 #### Defined in
 
@@ -45,8 +45,8 @@ custom_edit_url: null
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name    | Type     |
+| :------ | :------- |
 | `name?` | `string` |
 
 #### Returns
@@ -62,14 +62,15 @@ Any injected provider must be visible within the module scope (loosely
 speaking, the containing module) of the class it is being injected into. This
 can be done by:
 
-- defining the provider in the same module scope
-- exporting the provider from one module scope and importing that module into the
-  module scope of the class being injected into
-- exporting the provider from a module that is marked as global using the
-  `@Global()` decorator
+-   defining the provider in the same module scope
+-   exporting the provider from one module scope and importing that module into the
+    module scope of the class being injected into
+-   exporting the provider from a module that is marked as global using the
+    `@Global()` decorator
 
 #### Injection tokens
-Can be *types* (class names), *strings* or *symbols*. This depends on how the
+
+Can be _types_ (class names), _strings_ or _symbols_. This depends on how the
 provider with which it is associated was defined. Providers defined with the
 `@Injectable()` decorator use the class name. Custom Providers may use strings
 or symbols as the injection token.
@@ -84,11 +85,11 @@ or symbols as the injection token.
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `target` | `object` |
-| `key` | `string` \| `symbol` |
-| `index?` | `number` |
+| Name     | Type                 |
+| :------- | :------------------- |
+| `target` | `object`             |
+| `key`    | `string` \| `symbol` |
+| `index?` | `number`             |
 
 ##### Returns
 
@@ -98,7 +99,7 @@ or symbols as the injection token.
 
 [packages/nestjs/src/lib/di/inject-mapper.ts:4](https://github.com/nartc/mapper/blob/efc4cb9d/packages/nestjs/src/lib/di/inject-mapper.ts#L4)
 
-___
+---
 
 ### MapInterceptor
 
@@ -106,18 +107,18 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends `Dictionary`<`TSource`\> |
+| Name           | Type                                  |
+| :------------- | :------------------------------------ |
+| `TSource`      | extends `Dictionary`<`TSource`\>      |
 | `TDestination` | extends `Dictionary`<`TDestination`\> |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `from` | `ModelIdentifier`<`TSource`\> |
-| `to` | `ModelIdentifier`<`TDestination`\> |
-| `options?` | { `isArray?`: `boolean` ; `mapperName?`: `string`  } & `MapOptions`<`TSource`, `TDestination`, `Record`<`string`, `any`\>\> |
+| Name       | Type                                                                                                                       |
+| :--------- | :------------------------------------------------------------------------------------------------------------------------- |
+| `from`     | `ModelIdentifier`<`TSource`\>                                                                                              |
+| `to`       | `ModelIdentifier`<`TDestination`\>                                                                                         |
+| `options?` | { `isArray?`: `boolean` ; `mapperName?`: `string` } & `MapOptions`<`TSource`, `TDestination`, `Record`<`string`, `any`\>\> |
 
 #### Returns
 
@@ -127,7 +128,7 @@ ___
 
 [packages/nestjs/src/lib/map.interceptor.ts:23](https://github.com/nartc/mapper/blob/efc4cb9d/packages/nestjs/src/lib/map.interceptor.ts#L23)
 
-___
+---
 
 ### MapPipe
 
@@ -135,18 +136,18 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends `Dictionary`<`TSource`\> |
+| Name           | Type                                  |
+| :------------- | :------------------------------------ |
+| `TSource`      | extends `Dictionary`<`TSource`\>      |
 | `TDestination` | extends `Dictionary`<`TDestination`\> |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `from` | `ModelIdentifier`<`TSource`\> |
-| `to` | `ModelIdentifier`<`TDestination`\> |
-| `options?` | { `isArray?`: `boolean` ; `mapperName?`: `string`  } & `MapOptions`<`TSource`, `TDestination`, `Record`<`string`, `any`\>\> |
+| Name       | Type                                                                                                                       |
+| :--------- | :------------------------------------------------------------------------------------------------------------------------- |
+| `from`     | `ModelIdentifier`<`TSource`\>                                                                                              |
+| `to`       | `ModelIdentifier`<`TDestination`\>                                                                                         |
+| `options?` | { `isArray?`: `boolean` ; `mapperName?`: `string` } & `MapOptions`<`TSource`, `TDestination`, `Record`<`string`, `any`\>\> |
 
 #### Returns
 
@@ -156,7 +157,7 @@ ___
 
 [packages/nestjs/src/lib/map.pipe.ts:17](https://github.com/nartc/mapper/blob/efc4cb9d/packages/nestjs/src/lib/map.pipe.ts#L17)
 
-___
+---
 
 ### getMapperToken
 
@@ -164,8 +165,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name    | Type     |
+| :------ | :------- |
 | `name?` | `string` |
 
 #### Returns

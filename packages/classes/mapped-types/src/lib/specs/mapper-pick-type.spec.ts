@@ -1,11 +1,11 @@
-import { AutoMap, classes } from '@automapper/classes';
+import { AutoMap, classes } from '@jersmart/automapper-classes';
 import {
     createMap,
     createMapper,
     forMember,
     mapFrom,
     Mapper,
-} from '@automapper/core';
+} from '@jersmart/automapper-core';
 import { MapperPickType } from '../mapper-pick-type';
 
 describe(MapperPickType.name, () => {

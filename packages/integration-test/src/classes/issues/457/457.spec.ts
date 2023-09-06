@@ -1,5 +1,9 @@
-import { AutoMap, classes } from '@automapper/classes';
-import { createMap, createMapper, typeConverter } from '@automapper/core';
+import { AutoMap, classes } from '@jersmart/automapper-classes';
+import {
+    createMap,
+    createMapper,
+    typeConverter,
+} from '@jersmart/automapper-core';
 
 export class SlippageDetails {
     @AutoMap()

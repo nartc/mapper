@@ -1,9 +1,9 @@
-import { classes } from '@automapper/classes';
+import { classes } from '@jersmart/automapper-classes';
 import {
     addProfile,
     CamelCaseNamingConvention,
     createMapper,
-} from '@automapper/core';
+} from '@jersmart/automapper-core';
 import { TypeConverterDto } from './dtos/type-converter.dto';
 import { TypeConverter } from './models/type-converter';
 import { typeConverterProfile } from './profiles/type-converter.profile';

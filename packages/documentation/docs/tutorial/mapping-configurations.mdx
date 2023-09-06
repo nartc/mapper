@@ -14,7 +14,7 @@ In this particular case, you can call `fullName` a _computed_ property because t
 does not have a `fullName` property. Hence, it must be computed from something else. To configure the mapping instruction for a property, you can use `forMember()` with `createMap()`
 
 ```ts
-import { createMap, forMember, mapFrom } from '@automapper/core';
+import { createMap, forMember, mapFrom } from '@jersmart/automapper-core';
 
 createMap(
     mapper,
@@ -186,8 +186,8 @@ export class BioDto {
 <TabItem value="mapper" label="mapper.ts">
 
 ```ts
-import { createMapper } from '@automapper/core';
-import { classes } from '@automapper/classes';
+import { createMapper } from '@jersmart/automapper-core';
+import { classes } from '@jersmart/automapper-classes';
 
 // Create and export the mapper
 export const mapper = createMapper({

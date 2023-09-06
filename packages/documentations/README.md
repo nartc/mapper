@@ -1,3 +1,3 @@
-# @automapper/documentations
+# @jersmart/automapper-documentations
 
 This is the documentations source for AutoMapper TypeScript

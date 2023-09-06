@@ -1,31 +1,31 @@
 ---
-id: "index"
-title: "@automapper/core"
-slug: "/api/core/"
-sidebar_label: "README"
+id: 'index'
+title: '@jersmart/automapper-core'
+slug: '/api/core/'
+sidebar_label: 'README'
 sidebar_position: 0
 custom_edit_url: null
 ---
 
-# @automapper/core
+# @jersmart/automapper-core
 
 This is the core package that will handle mapping configurations and mapping operations.
 
 ## Installation
 
 ```sh
-npm i @automapper/core
+npm i @jersmart/automapper-core
 ```
 
 or with `yarn`
 
 ```sh
-yarn add @automapper/core
+yarn add @jersmart/automapper-core
 ```
 
 ## Usage
 
-`@automapper/core` exposes `createMapper()` method to create a `Mapper` object with a accompany `MappingStrategy` (read more
+`@jersmart/automapper-core` exposes `createMapper()` method to create a `Mapper` object with a accompany `MappingStrategy` (read more
 about [Strategies](#Strategies))
 
 `createMapper` accepts a `CreateMapperOptions` object with the following shape:
@@ -52,8 +52,8 @@ A Strategy will be responsible for:
 
 `@automapper` provides the following official strategies:
 
--   `@automapper/classes`: Work with TS/ES6 classes.
--   `@automapper/pojos`: Work with Interfaces/Types along with POJOs. In projects that do not make use of Class, `pojos`
+-   `@jersmart/automapper-classes`: Work with TS/ES6 classes.
+-   `@jersmart/automapper-pojos`: Work with Interfaces/Types along with POJOs. In projects that do not make use of Class, `pojos`
     can be used instead.
--   `@automapper/mikro`: Work together with TS/ES6 classes along with [MikroORM](https://github.com/mikro-orm/mikro-orm)
--   `@automapper/sequelize`: Work together with TS/ES6 classes along with [Sequelize](https://github.com/sequelize/sequelize)
+-   `@jersmart/automapper-mikro`: Work together with TS/ES6 classes along with [MikroORM](https://github.com/mikro-orm/mikro-orm)
+-   `@jersmart/automapper-sequelize`: Work together with TS/ES6 classes along with [Sequelize](https://github.com/sequelize/sequelize)

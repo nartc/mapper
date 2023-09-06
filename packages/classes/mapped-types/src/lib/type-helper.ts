@@ -1,9 +1,9 @@
 import {
     AUTOMAP_PROPERTIES_METADATA_KEY,
     getMetadataList,
-} from '@automapper/classes';
-import type { Constructor } from '@automapper/core';
-import { AutoMapperLogger } from '@automapper/core';
+} from '@jersmart/automapper-classes';
+import type { Constructor } from '@jersmart/automapper-core';
+import { AutoMapperLogger } from '@jersmart/automapper-core';
 
 export function inheritAutoMapMetadata(
     parentClass: Constructor,

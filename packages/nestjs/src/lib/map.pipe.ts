@@ -3,7 +3,7 @@ import type {
     MapOptions,
     Mapper,
     ModelIdentifier,
-} from '@automapper/core';
+} from '@jersmart/automapper-core';
 import type { ArgumentMetadata, PipeTransform } from '@nestjs/common';
 import { mixin, Optional } from '@nestjs/common';
 import { InjectMapper } from './di/inject-mapper';

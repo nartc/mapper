@@ -10,20 +10,20 @@ import TabItem from '@theme/TabItem';
 
 ## Installation
 
-First step is to install `@automapper/*` via `npm` or `yarn`
+First step is to install `@jersmart/automapper-*` via `npm` or `yarn`
 
 ```shell
-npm i @automapper/core @automapper/classes reflect-metadata
+npm i @jersmart/automapper-core @jersmart/automapper-classes reflect-metadata
 ```
 
 ```shell
-yarn add @automapper/core @automapper/classes reflect-metadata
+yarn add @jersmart/automapper-core @jersmart/automapper-classes reflect-metadata
 ```
 
 :::info
 
--   We are using `@automapper/classes` for this tutorial. Check [Installation](../getting-started/installation) for more details.
--   The rest of the tutorial will apply to `@automapper/classes` only. If you're using `@automapper/pojos`, please check [POJOs Strategy](../strategies/pojos)
+-   We are using `@jersmart/automapper-classes` for this tutorial. Check [Installation](../getting-started/installation) for more details.
+-   The rest of the tutorial will apply to `@jersmart/automapper-classes` only. If you're using `@jersmart/automapper-pojos`, please check [POJOs Strategy](../strategies/pojos)
 
 :::
 
@@ -42,8 +42,8 @@ Next, let's adjust the `tsconfig` of your project. Make sure that you have the f
 Now that you have everything installed and configured, let's start creating the Mapper.
 
 ```ts title="/src/mappings/mapper.ts"
-import { createMapper } from '@automapper/core';
-import { classes } from '@automapper/classes';
+import { createMapper } from '@jersmart/automapper-core';
+import { classes } from '@jersmart/automapper-classes';
 
 // Create and export the mapper
 export const mapper = createMapper({
@@ -67,7 +67,7 @@ A typical project should only have a singleton `Mapper` with a certain `MappingS
 
 For AutoMapper to do the _Auto_ part, you need to tell AutoMapper about your models. In other words, let AutoMapper know what your models have, what properties, what types those properties have.
 
-With `@automapper/classes`, you will use `@AutoMap()` decorator to do so. Let's bring back the models
+With `@jersmart/automapper-classes`, you will use `@AutoMap()` decorator to do so. Let's bring back the models
 
 <Tabs>
 <TabItem value="user" label="user.entity.ts" default>

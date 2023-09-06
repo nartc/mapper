@@ -1,5 +1,5 @@
-import type { CreateMapperOptions, Mapper } from '@automapper/core';
-import { createMapper } from '@automapper/core';
+import type { CreateMapperOptions, Mapper } from '@jersmart/automapper-core';
+import { createMapper } from '@jersmart/automapper-core';
 import type { DynamicModule, Provider } from '@nestjs/common';
 import { Module } from '@nestjs/common';
 import { getMapperToken } from './di/get-mapper-token';

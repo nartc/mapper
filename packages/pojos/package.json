@@ -1,5 +1,5 @@
 {
-    "name": "@automapper/pojos",
+    "name": "@jersmart/automapper-pojos",
     "version": "0.0.0",
     "type": "module",
     "sideEffects": false,
@@ -10,7 +10,7 @@
         "access": "public"
     },
     "peerDependencies": {
-        "@automapper/core": "latest"
+        "@jersmart/automapper-core": "latest"
     },
     "repository": {
         "type": "git",

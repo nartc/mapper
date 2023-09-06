@@ -1,4 +1,4 @@
-import { PojosMetadataMap } from '@automapper/pojos';
+import { PojosMetadataMap } from '@jersmart/automapper-pojos';
 import { BioDto, PascalBioDto, SnakeBioDto } from './bio.dto';
 
 export interface UserDto {

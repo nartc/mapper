@@ -1,4 +1,4 @@
-import { PojosMetadataMap } from '@automapper/pojos';
+import { PojosMetadataMap } from '@jersmart/automapper-pojos';
 import { Address, PascalAddress, SnakeAddress } from './address';
 import { Avatar, PascalAvatar, SnakeAvatar } from './avatar';
 

@@ -1,4 +1,8 @@
-import { createMap, MappingProfile, typeConverter } from '@automapper/core';
+import {
+    createMap,
+    MappingProfile,
+    typeConverter,
+} from '@jersmart/automapper-core';
 import {
     createTypeConverterDtoMetadata,
     TypeConverterDto,

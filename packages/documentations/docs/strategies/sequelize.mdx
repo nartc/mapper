@@ -7,21 +7,21 @@ sidebar_position: 4
 
 ## Overview
 
-`@automapper/sequelize` is an official strategy that works with [Sequelize](https://sequelize.org/). `@automapper/sequelize` is an extension of `@automapper/classes`
+`@jersmart/automapper-sequelize` is an official strategy that works with [Sequelize](https://sequelize.org/). `@jersmart/automapper-sequelize` is an extension of `@jersmart/automapper-classes`
 
 ## Installation
 
 ```shell
-npm i @automapper/core @automapper/classes @automapper/sequelize
+npm i @jersmart/automapper-core @jersmart/automapper-classes @jersmart/automapper-sequelize
 ```
 
 ```shell
-yarn add @automapper/core @automapper/classes @automapper/sequelize
+yarn add @jersmart/automapper-core @jersmart/automapper-classes @jersmart/automapper-sequelize
 ```
 
 ## Usage
 
-Using `@automapper/sequelize` isn't different from using [`@automapper/classes`](./classes#usage). The difference is `@automapper/sequelize` has a custom `preMap` that handles how to serialize the `sourceObject` because of how Sequelize returns the object upon a Retrieve operation and a custom `destinationConstructor`.
+Using `@jersmart/automapper-sequelize` isn't different from using [`@jersmart/automapper-classes`](./classes#usage). The difference is `@jersmart/automapper-sequelize` has a custom `preMap` that handles how to serialize the `sourceObject` because of how Sequelize returns the object upon a Retrieve operation and a custom `destinationConstructor`.
 
 ### `preMap`
 
@@ -44,4 +44,4 @@ const mapper = createMapper({
 
 ## Metadata
 
-See [@automapper/classes](./classes#metadata)
+See [@jersmart/automapper-classes](./classes#metadata)

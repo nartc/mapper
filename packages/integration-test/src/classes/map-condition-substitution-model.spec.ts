@@ -1,4 +1,4 @@
-import { AutoMap, classes } from '@automapper/classes';
+import { AutoMap, classes } from '@jersmart/automapper-classes';
 import {
     condition,
     createMap,
@@ -6,7 +6,7 @@ import {
     forMember,
     nullSubstitution,
     undefinedSubstitution,
-} from '@automapper/core';
+} from '@jersmart/automapper-core';
 
 describe('Map - Condition/Substitutions with Models', () => {
     class Foo {}

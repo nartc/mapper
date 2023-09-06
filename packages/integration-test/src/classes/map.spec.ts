@@ -1,5 +1,9 @@
-import { classes } from '@automapper/classes';
-import { addProfile, CamelCaseNamingConvention, createMapper } from '@automapper/core';
+import { classes } from '@jersmart/automapper-classes';
+import {
+    addProfile,
+    CamelCaseNamingConvention,
+    createMapper,
+} from '@jersmart/automapper-core';
 import { UserDto } from './dtos/user.dto';
 import { User } from './models/user';
 import { addressProfile } from './profiles/address.profile';
@@ -39,19 +43,21 @@ describe('Map Classes', () => {
     });
 
     it('should not freeze source', () => {
-      addProfile(mapper, addressProfile);
-      addProfile(mapper, avatarProfile);
-      addProfile(mapper, bioProfile);
-      addProfile(mapper, userProfile);
+        addProfile(mapper, addressProfile);
+        addProfile(mapper, avatarProfile);
+        addProfile(mapper, bioProfile);
+        addProfile(mapper, userProfile);
 
-      const user = getUser();
-      mapper.map(user, User, UserDto);
+        const user = getUser();
+        mapper.map(user, User, UserDto);
 
-      expect(Object.isFrozen(user.bio.avatar)).toBe(false);
-      user.bio.addresses.forEach((a) => expect(Object.isFrozen(a)).toBe(false));
-      expect(Object.isFrozen(user.job)).toBe(false);
-      expect(Object.isFrozen(user.bio)).toBe(false);
-      expect(Object.isFrozen(user)).toBe(false);
+        expect(Object.isFrozen(user.bio.avatar)).toBe(false);
+        user.bio.addresses.forEach((a) =>
+            expect(Object.isFrozen(a)).toBe(false)
+        );
+        expect(Object.isFrozen(user.job)).toBe(false);
+        expect(Object.isFrozen(user.bio)).toBe(false);
+        expect(Object.isFrozen(user)).toBe(false);
     });
 
     it('should not freeze source array items', () => {
@@ -64,7 +70,9 @@ describe('Map Classes', () => {
         mapper.mapArray([user], User, UserDto);
 
         expect(Object.isFrozen(user.bio.avatar)).toBe(false);
-        user.bio.addresses.forEach((a) => expect(Object.isFrozen(a)).toBe(false));
+        user.bio.addresses.forEach((a) =>
+            expect(Object.isFrozen(a)).toBe(false)
+        );
         expect(Object.isFrozen(user.job)).toBe(false);
         expect(Object.isFrozen(user.bio)).toBe(false);
         expect(Object.isFrozen(user)).toBe(false);
@@ -80,7 +88,9 @@ describe('Map Classes', () => {
         const dto = mapper.map(user, User, UserDto);
 
         expect(Object.isFrozen(dto.bio.avatar)).toBe(false);
-        dto.bio.addresses.forEach((a) => expect(Object.isFrozen(a)).toBe(false));
+        dto.bio.addresses.forEach((a) =>
+            expect(Object.isFrozen(a)).toBe(false)
+        );
         expect(Object.isFrozen(dto)).toBe(false);
     });
 
@@ -94,7 +104,9 @@ describe('Map Classes', () => {
         const dtos = mapper.mapArray([user], User, UserDto);
 
         expect(Object.isFrozen(dtos[0].bio.avatar)).toBe(false);
-        dtos[0].bio.addresses.forEach((a) => expect(Object.isFrozen(a)).toBe(false));
+        dtos[0].bio.addresses.forEach((a) =>
+            expect(Object.isFrozen(a)).toBe(false)
+        );
         expect(Object.isFrozen(dtos[0])).toBe(false);
     });
 

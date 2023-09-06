@@ -1,6 +1,11 @@
-import type { Mapper, MappingProfile } from '@automapper/core';
-import { createMap, forMember, mapFrom, mapWith } from '@automapper/core';
-import { AutomapperProfile, InjectMapper } from '@automapper/nestjs';
+import type { Mapper, MappingProfile } from '@jersmart/automapper-core';
+import {
+    createMap,
+    forMember,
+    mapFrom,
+    mapWith,
+} from '@jersmart/automapper-core';
+import { AutomapperProfile, InjectMapper } from '@jersmart/automapper-nestjs';
 import { Injectable } from '@nestjs/common';
 import { Bar, BarDto, Foo, FooDto } from './foo';
 

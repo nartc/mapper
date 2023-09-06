@@ -1,6 +1,9 @@
-import { classes } from '@automapper/classes';
-import { CamelCaseNamingConvention, createMapper } from '@automapper/core';
-import { getMapperToken } from '@automapper/nestjs';
+import { classes } from '@jersmart/automapper-classes';
+import {
+    CamelCaseNamingConvention,
+    createMapper,
+} from '@jersmart/automapper-core';
+import { getMapperToken } from '@jersmart/automapper-nestjs';
 import { Test } from '@nestjs/testing';
 import { UserDto } from '../classes/dtos/user.dto';
 import { User } from '../classes/models/user';

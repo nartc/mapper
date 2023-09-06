@@ -1,7 +1,7 @@
 ---
-id: "modules"
-title: "@automapper/mikro"
-sidebar_label: "Exports"
+id: 'modules'
+title: '@jersmart/automapper-mikro'
+sidebar_label: 'Exports'
 sidebar_position: 0.5
 custom_edit_url: null
 ---
@@ -14,8 +14,8 @@ custom_edit_url: null
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name      | Type                                |
+| :-------- | :---------------------------------- |
 | `options` | `MappingStrategyInitializerOptions` |
 
 #### Returns

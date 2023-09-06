@@ -1,3 +1,7 @@
+
+
+### [9.0.1](https://github.com/jersmart/automapper-typescript/compare/9.0.0...9.0.1) (2023-09-06)
+
 ## 9.0.0 (2023-09-06)
 
 ### ⚠ BREAKING CHANGES

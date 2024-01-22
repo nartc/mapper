@@ -1,0 +1,63 @@
+---
+id: auto-map
+title: AutoMap
+sidebar_label: AutoMap
+sidebar_position: 3
+---
+
+`autoMap()` is an alternative to the the `@AutoMap()` decorator. It trivially maps a property with the **same name and type** on the `Source` and `Destination` objects.
+
+## Decoratorless entities and DTOs
+
+Use this specially when your entities and DTOs cannot have the `@AutoMap()` decorator (e.g. when using **constructor assignments**), or when you would rather avoid them:
+
+```ts
+import {
+    autoMap,
+    createMap,
+    forMember,
+    mapFrom,
+    Mapper,
+} from '@automapper/core';
+
+export class DecoratorlessUserEntity {
+    constructor(
+        public readonly firstName: string,
+        public readonly lastName: string,
+        public readonly birthday: Date
+    ) {}
+}
+
+export class DecoratorlessUserDto {
+    firstName!: string;
+    lastName!: string;
+    birthday!: string;
+    fullName!: string;
+}
+
+export function decoratorlessUserProfile(mapper: Mapper) {
+    createMap(
+        mapper,
+        DecoratorlessUserEntity,
+        DecoratorlessUserDto,
+        // Use `autoMap()` on properties that can be trivially mapped.
+        autoMap('firstName'),
+        autoMap('lastName'),
+
+        // Use more elaborate mapping configurations when necessary:
+
+        // 'birthday' exists on both `Source` and `Destination`, but with
+        // different types.
+        forMember(
+          (d) => d.birthday,
+            mapFrom((s) => s.birthday.toDateString())
+        ),
+
+        // 'fullName' doesn't exist on `Source` and must be mapped manually.
+        forMember(
+            (d) => d.fullName,
+            mapFrom((s) => `${s.firstName} ${s.lastName}`)
+        )
+    );
+}
+```

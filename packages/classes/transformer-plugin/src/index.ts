@@ -52,5 +52,10 @@ export const before = (
     program: Program
 ) => automapperTransformerPlugin(program, options).before;
 
+export const tspBefore = (
+  program: Program,
+  options: AutomapperTransformerPluginOptions
+) => automapperTransformerPlugin(program, options).before;
+
 export * from './lib/options';
 export * from './lib/constants';

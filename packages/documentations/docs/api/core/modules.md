@@ -901,6 +901,35 @@ ___
 
 ___
 
+### autoMap
+
+▸ **autoMap**<`TSource`, `TDestination`, `TKey`, `TValue`\>(`prop`): [`MappingConfiguration`](modules.md#mappingconfiguration)<`TSource`, `TDestination`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TSource` | extends { [key in `TKey`]: `TValue` } |
+| `TDestination` | extends { [key in `TKey`]: `TValue` } |
+| `TKey` | extends keyof `TSource` & keyof `TDestination` |
+| `TValue` | extends `TSource`[`TKey`] & `TDestination`[`TKey`] |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `prop` | `TKey` |
+
+#### Returns
+
+[`MappingConfiguration`](modules.md#mappingconfiguration)<`TSource`, `TDestination`\>
+
+#### Defined in
+
+[lib/mapping-configurations/auto-map.ts:6](https://github.com/nartc/mapper/blob/5906addd/packages/core/src/lib/mapping-configurations/auto-map.ts#L6)
+
+___
+
 ### beforeMap
 
 ▸ **beforeMap**<`TSource`, `TDestination`\>(`cb`): [`MappingConfiguration`](modules.md#mappingconfiguration)<`TSource`, `TDestination`\>

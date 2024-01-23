@@ -1,5 +1,20 @@
 
 
+### [8.8.1](https://github.com/nartc/mapper/compare/8.8.0...8.8.1) (2024-01-23)
+
+
+### Bug Fixes
+
+* **classes:** fixed transformer ttypescript / ts-patch support ([#556](https://github.com/nartc/mapper/issues/556)) ([eafd79b](https://github.com/nartc/mapper/commit/eafd79b630220285de65984a9f740c4fec08080a))
+* ignore import path transformations on win32 platform ([#570](https://github.com/nartc/mapper/issues/570)) ([4089bb4](https://github.com/nartc/mapper/commit/4089bb4d35548eb06a1defd6ee47ce23ca359a09))
+* **mikro:** infinite loop when using OneToOne eager loading ([#546](https://github.com/nartc/mapper/issues/546)) ([ec00a0d](https://github.com/nartc/mapper/commit/ec00a0d54855d542585413134eaf49dcb6c28b7d))
+* remove / from  @automapper/classes default exports ([#589](https://github.com/nartc/mapper/issues/589)) ([d1d2df5](https://github.com/nartc/mapper/commit/d1d2df585717ffdfab351886bf98732f58227160))
+
+
+### Documentations
+
+* **core:** add autoMap mapping configuration docs ([#539](https://github.com/nartc/mapper/issues/539)) ([d92f62f](https://github.com/nartc/mapper/commit/d92f62f582140e710c966167cb7c575a777ee347))
+
 ## [8.8.0](https://github.com/nartc/mapper/compare/8.7.7...8.8.0) (2024-01-22)
 
 

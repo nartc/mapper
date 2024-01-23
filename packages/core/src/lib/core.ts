@@ -1,31 +1,32 @@
 import { mapMutate, mapReturn } from './mappings/map';
 import {
-    CUSTOM_NODE_INSPECT,
-    ERROR_HANDLER,
-    MAPPINGS,
-    METADATA_MAP,
-    METADATA_OBJECT_MAP,
-    NAMING_CONVENTIONS,
-    PROFILE_CONFIGURATION_CONTEXT,
-    RECURSIVE_COUNT,
-    RECURSIVE_DEPTH,
-    STRATEGY,
+  CUSTOM_NODE_INSPECT,
+  ERROR_HANDLER,
+  MAPPINGS,
+  METADATA_MAP,
+  METADATA_OBJECT_MAP,
+  NAMING_CONVENTIONS,
+  PROFILE_CONFIGURATION_CONTEXT,
+  RECURSIVE_COUNT,
+  RECURSIVE_DEPTH,
+  STRATEGY
 } from './symbols';
-import type {
-    ArrayKeyedMap,
-    Dictionary,
-    ErrorHandler,
-    MapOptions,
-    Mapper,
-    Mapping,
-    MappingConfiguration,
-    MappingStrategy,
-    MappingStrategyInitializer,
-    Metadata,
-    MetadataIdentifier,
-    ModelIdentifier,
-    NamingConventionInput,
+import {
+  ArrayKeyedMap,
+  Dictionary,
+  ErrorHandler,
+  MapOptions,
+  Mapper,
+  Mapping,
+  MappingConfiguration,
+  MappingStrategy,
+  MappingStrategyInitializer,
+  Metadata,
+  MetadataIdentifier,
+  ModelIdentifier,
+  NamingConventionInput
 } from './types';
+import { mapAsyncHandler } from './utils/async-map-handler';
 import { getMapping } from './utils/get-mapping';
 import { AutoMapperLogger } from './utils/logger';
 
@@ -274,14 +275,42 @@ Mapper {} is an empty Object as a Proxy. The following methods are available to 
                             | MapOptions<TSource, TDestination>,
                         options?: MapOptions<TSource, TDestination>
                     ): Promise<TDestination> => {
-                        const result = receiver['map'](
+                        const mapped = receiver['map'](
                             sourceObject,
                             sourceIdentifier,
                             destinationIdentifierOrOptions,
                             options
                         );
-                        return new Promise((res) => {
-                            setTimeout(res, 0, result);
+
+                        // start get mappings
+                        const { destinationIdentifier, mapOptions } =
+                            getOptions(
+                                sourceIdentifier,
+                                destinationIdentifierOrOptions,
+                                options
+                            );
+
+                        const mapping = getMapping(
+                            receiver,
+                            sourceIdentifier,
+                            destinationIdentifier
+                        );
+                        //
+
+                        return new Promise((resolve, reject) => {
+                            mapAsyncHandler(
+                                mapping,
+                                sourceObject,
+                                destinationIdentifier,
+                                mapOptions || {},
+                                mapped
+                            )
+                                .then((result) => {
+                                    resolve(result);
+                                })
+                                .catch((err) => {
+                                    reject(err);
+                                });
                         });
                     };
                 }
@@ -380,15 +409,41 @@ Mapper {} is an empty Object as a Proxy. The following methods are available to 
                             | MapOptions<TSource[], TDestination[]>,
                         options?: MapOptions<TSource[], TDestination[]>
                     ) => {
-                        const result = receiver['mapArray'](
+                        const mapped = receiver['mapArray'](
                             sourceArray,
                             sourceIdentifier,
                             destinationIdentifierOrOptions,
                             options
                         );
-                        return new Promise((res) => {
-                            setTimeout(res, 0, result);
-                        });
+                        const { destinationIdentifier, mapOptions } =
+                            getOptions(
+                                sourceIdentifier,
+                                destinationIdentifierOrOptions,
+                                options
+                            );
+
+                        const mapping = getMapping(
+                            receiver,
+                            sourceIdentifier,
+                            destinationIdentifier
+                        );
+
+                        return Promise.all(
+                            mapped.map(
+                                async (
+                                    sourceObject: TDestination,
+                                    i: number
+                                ) => {
+                                    return mapAsyncHandler(
+                                        mapping,
+                                        sourceArray[i],
+                                        destinationIdentifier,
+                                        mapOptions || {},
+                                        sourceObject
+                                    );
+                                }
+                            )
+                        );
                     };
                 }
 
@@ -449,16 +504,42 @@ Mapper {} is an empty Object as a Proxy. The following methods are available to 
                             | MapOptions<TSource, TDestination>,
                         options?: MapOptions<TSource, TDestination>
                     ) => {
-                        return new Promise((res) => {
-                            receiver['mutate'](
-                                sourceObject,
-                                destinationObject,
+                        //
+                        receiver['mutate'](
+                            sourceObject,
+                            destinationObject,
+                            sourceIdentifier,
+                            destinationIdentifierOrOptions,
+                            options
+                        );
+
+                        // start get mappings
+                        const { destinationIdentifier, mapOptions } =
+                            getOptions(
                                 sourceIdentifier,
                                 destinationIdentifierOrOptions,
                                 options
                             );
 
-                            setTimeout(res, 0);
+                        const mapping = getMapping(
+                            receiver,
+                            sourceIdentifier,
+                            destinationIdentifier
+                        );
+
+                        return new Promise<void>((resolve, reject) => {
+                            mapAsyncHandler(
+                                mapping,
+                                sourceObject,
+                                destinationIdentifier,
+                                mapOptions || {}
+                            )
+                                .then(() => {
+                                    resolve();
+                                })
+                                .catch((err) => {
+                                    reject(err);
+                                });
                         });
                     };
                 }
@@ -552,17 +633,36 @@ Mapper {} is an empty Object as a Proxy. The following methods are available to 
                             | MapOptions<TSource[], TDestination[]>,
                         options?: MapOptions<TSource[], TDestination[]>
                     ) => {
-                        return new Promise((res) => {
-                            receiver['mutateArray'](
-                                sourceArray,
-                                destinationArray,
+                        receiver['mutateArray'](
+                            sourceArray,
+                            destinationArray,
+                            sourceIdentifier,
+                            destinationIdentifierOrOptions,
+                            options
+                        );
+                        const { destinationIdentifier, mapOptions } =
+                            getOptions(
                                 sourceIdentifier,
                                 destinationIdentifierOrOptions,
                                 options
                             );
 
-                            setTimeout(res, 0);
-                        });
+                        const mapping = getMapping(
+                            receiver,
+                            sourceIdentifier,
+                            destinationIdentifier
+                        );
+
+                        return Promise.all(
+                            sourceArray.map(async (sourceObject) => {
+                                mapAsyncHandler(
+                                    mapping,
+                                    sourceObject,
+                                    destinationIdentifier,
+                                    mapOptions || {}
+                                );
+                            })
+                        );
                     };
                 }
 

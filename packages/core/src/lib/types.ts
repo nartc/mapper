@@ -94,6 +94,16 @@ export interface Converter<
     convert(source: TSource): TConvertDestination;
 }
 
+export type MapCallbackAsync<
+    TSource extends Dictionary<TSource>,
+    TDestination extends Dictionary<TDestination>,
+    TExtraArgs extends Record<string, any> = Record<string, any>
+> = (
+    source: TSource,
+    destination: TDestination,
+    extraArguments?: TExtraArgs
+) => Promise<void>;
+
 export type MapCallback<
     TSource extends Dictionary<TSource>,
     TDestination extends Dictionary<TDestination>,

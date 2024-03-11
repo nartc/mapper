@@ -36,7 +36,7 @@ export function getFlatteningPaths(
     );
     let trueFirstPartOfSource = first;
     let stopIndex = 0;
-    let found = hasProperty(src, trueFirstPartOfSource);
+    let found = hasProperty(src, trueFirstPartOfSource) && typeof src[trueFirstPartOfSource] === 'object';
 
     if (!found) {
         for (let i = 0, len = paths.length; i < len; i++) {
@@ -45,7 +45,7 @@ export function getFlatteningPaths(
                     trueFirstPartOfSource,
                     paths[i],
                 ]);
-            if (hasProperty(src, trueFirstPartOfSource)) {
+            if (hasProperty(src, trueFirstPartOfSource) && typeof src[trueFirstPartOfSource] === 'object') {
                 stopIndex = i + 1;
                 found = true;
                 break;

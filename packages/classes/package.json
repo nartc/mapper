@@ -3,7 +3,7 @@
   "version": "8.8.1",
 
   "main": "./index.cjs.js",
-  "module": "./index.js",
+  "module": "./index.esm.js",
   "types": "./src/index.d.ts",
   "peerDependencies": {
     "@automapper/core": "workspace:*",
@@ -26,25 +26,25 @@
       "types": "./transformer-plugin/index.d.ts",
       "import": {
         "types": "./transformer-plugin/index.d.ts",
-        "default": "./transformer-plugin/index.js"
+        "default": "./transformer-plugin/index.esm.js"
       },
       "require": {
         "types": "./transformer-plugin/index.d.ts",
         "default": "./transformer-plugin/index.cjs.js"
       },
-      "default": "./transformer-plugin/index.js"
+      "default": "./transformer-plugin/index.esm.js"
     },
     "./mapped-types": {
       "types": "./mapped-types/index.d.ts",
       "import": {
         "types": "./mapped-types/index.d.ts",
-        "default": "./mapped-types/index.js"
+        "default": "./mapped-types/index.esm.js"
       },
       "require": {
         "types": "./mapped-types/index.d.ts",
         "default": "./mapped-types/index.cjs.js"
       },
-      "default": "./mapped-types/index.js"
+      "default": "./mapped-types/index.esm.js"
     }
   },
   "sideEffects": false,

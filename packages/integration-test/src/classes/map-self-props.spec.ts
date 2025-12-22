@@ -126,7 +126,6 @@ class EnvironmentEntity {
 }
 
 type Type<T = any> = new (...args: any[]) => T;
-let counter = 0;
 export function createEntityMap<
     E extends Type,
     P extends Type,
@@ -153,7 +152,6 @@ export function createEntityMap<
         constructUsing((source: InstanceType<typeof PersistenceClass>, id) => {
             const props = new DtoClass();
             Object.assign(props, source);
-            Reflect.set(source, IS_MAPPING, true);
             function hasSetter<T extends object>(
                 target: T,
                 prop: PropertyKey
@@ -174,19 +172,19 @@ export function createEntityMap<
                 return false;
             }
             const instance = new EntityClass(props, source.id);
-            counter++;
+            Reflect.set(instance, IS_MAPPING, true);
+
             const mapped = new Proxy<InstanceType<typeof EntityClass>>(
                 instance,
                 {
-                    set(target, p, newValue, receiver) {
-                        const isMapping = Reflect.get(source, IS_MAPPING);
+                    set(target, p, newValue) {
+                        const isMapping = Reflect.get(instance, IS_MAPPING);
+                        if (p === IS_MAPPING && !newValue) {
+                            return Reflect.deleteProperty(target, p);
+                        }
                         if (!isMapping) {
                             // Check if property has a setter, otherwise skip
-                            if (hasSetter(target, p)) {
-                                return Reflect.set(target, p, newValue);
-                            }
-                            // Property only has getter, ignore the set operation
-                            return true;
+                            return Reflect.set(target, p, newValue);
                         } else {
                             if (hasSetter(target, p)) {
                                 return Reflect.set(target, p, newValue);
@@ -199,8 +197,8 @@ export function createEntityMap<
 
             return mapped;
         }),
-        afterMap((src) => {
-            Reflect.set(src, IS_MAPPING, false);
+        afterMap((_, dest) => {
+            Reflect.set(dest, IS_MAPPING, false);
         })
     );
 }

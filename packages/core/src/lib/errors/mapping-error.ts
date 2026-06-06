@@ -1,7 +1,7 @@
 import { ModelIdentifier } from '../types';
 
 export class MappingError<S = any, D = any> extends Error {
-    cause?: unknown | undefined;
+    override cause?: unknown | undefined;
     source?: ModelIdentifier;
     destination?: ModelIdentifier;
     sourceObject?: S;

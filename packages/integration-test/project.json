@@ -12,11 +12,16 @@
             }
         },
         "test": {
-            "executor": "@nx/jest:jest",
-            "outputs": ["{workspaceRoot}/coverage/packages/integration-test"],
+            "executor": "@nx/vitest:test",
+            "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
             "options": {
-                "jestConfig": "packages/integration-test/jest.config.ts",
+                "config": "packages/integration-test/vitest.config.mts",
                 "passWithNoTests": true
+            },
+            "configurations": {
+                "ci": {
+                    "coverage": true
+                }
             }
         }
     }

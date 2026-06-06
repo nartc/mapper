@@ -1,13 +1,14 @@
 import type { Mapper } from '../../types';
 import { MapFnClassId, TransformationType } from '../../types';
 import { mapWith } from '../map-with';
+import { describe, it, expect, vi } from 'vitest';
 
 describe(mapWith.name, () => {
     const selector = (s: any) => s;
     const withDestination = '';
     const withSource = '';
 
-    const mapper = { map: jest.fn(), mapArray: jest.fn() };
+    const mapper = { map: vi.fn(), mapArray: vi.fn() };
 
     it('should return correctly', () => {
         const mapWithFn = mapWith(withDestination, withSource, selector);

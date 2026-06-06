@@ -1,57 +1,24 @@
 {
-  "compileOnSave": false,
   "compilerOptions": {
-    "rootDir": ".",
-    "sourceMap": true,
-    "declaration": false,
-    "moduleResolution": "bundler",
+    "composite": true,
+    "declarationMap": true,
+    "emitDeclarationOnly": true,
+    "importHelpers": true,
+    "isolatedModules": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "importHelpers": true,
-    "target": "es2020",
-    "module": "esnext",
-    "lib": [
-      "es2020",
-      "dom"
-    ],
+    "lib": ["es2022"],
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "noEmitOnError": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
     "skipLibCheck": true,
-    "skipDefaultLibCheck": true,
-    "baseUrl": ".",
-    "paths": {
-      "@automapper/classes": [
-        "packages/classes/src/index.ts"
-      ],
-      "@automapper/classes/mapped-types": [
-        "packages/classes/mapped-types/src/index.ts"
-      ],
-      "@automapper/classes/transformer-plugin": [
-        "packages/classes/transformer-plugin/src/index.ts"
-      ],
-      "@automapper/core": [
-        "packages/core/src/index.ts"
-      ],
-      "@automapper/integration-test": [
-        "packages/integration-test/src/index.ts"
-      ],
-      "@automapper/mikro": [
-        "packages/mikro/src/index.ts"
-      ],
-      "@automapper/nestjs": [
-        "packages/nestjs/src/index.ts"
-      ],
-      "@automapper/pojos": [
-        "packages/pojos/src/index.ts"
-      ],
-      "@automapper/sequelize": [
-        "packages/sequelize/src/index.ts"
-      ],
-      "@automapper/zod": [
-        "packages/zod/src/index.ts"
-      ]
-    }
-  },
-  "exclude": [
-    "node_modules",
-    "tmp"
-  ]
+    "strict": true,
+    "target": "es2022",
+    "forceConsistentCasingInFileNames": true,
+    "customConditions": ["development"]
+  }
 }

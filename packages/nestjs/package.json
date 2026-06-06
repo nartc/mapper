@@ -1,12 +1,13 @@
 {
   "name": "@automapper/nestjs",
   "version": "8.8.1",
-
   "main": "./index.cjs.js",
   "module": "./index.js",
   "types": "./src/index.d.ts",
   "exports": {
+    "./package.json": "./package.json",
     ".": {
+      "development": "./src/index.ts",
       "types": "./src/index.d.ts",
       "import": {
         "types": "./src/index.d.ts",

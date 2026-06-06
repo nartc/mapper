@@ -1,10 +1,11 @@
 import 'reflect-metadata';
 import { AUTOMAP_PROPERTIES_METADATA_KEY } from '../keys';
 import { AutoMap } from '../automap';
+import { describe, it, expect, vi } from 'vitest';
 
 describe(AutoMap.name, () => {
-    const spiedReflectDefine = jest.spyOn(Reflect, 'defineMetadata');
-    const spiedReflectGet = jest.spyOn(Reflect, 'getMetadata');
+    const spiedReflectDefine = vi.spyOn(Reflect, 'defineMetadata');
+    const spiedReflectGet = vi.spyOn(Reflect, 'getMetadata');
 
     describe('primitives', () => {
         class Bar {

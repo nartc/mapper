@@ -1,54 +1,69 @@
 {
-    "name": "mikro",
-    "$schema": "../../node_modules/nx/schemas/project-schema.json",
-    "sourceRoot": "packages/mikro/src",
-    "tags": ["mikro"],
-    "targets": {
-        "package": {
-            "command": "NX_CLOUD=true nx package-lib mikro"
-        },
-        "package-lib": {
-            "executor": "@nx/rollup:rollup",
-            "outputs": ["{options.outputPath}"],
-            "options": {
-                "project": "packages/mikro/package.json",
-                "outputPath": "dist/packages/mikro",
-                "entryFile": "packages/mikro/src/index.ts",
-                "tsConfig": "packages/mikro/tsconfig.lib.json",
-                "assets": ["packages/mikro/src/README.md"],
-                "compiler": "babel",
-                "external": [
-                    "typescript",
-                    "tslib",
-                    "@automapper/core",
-                    "@automapper/classes"
-                ],
-                "format": ["cjs", "esm"],
-                "updateBuildableProjectDepsInPackageJson": false,
-                "babelUpwardRootMode": true
-            }
-        },
-        "lint": {
-            "executor": "@nx/eslint:lint",
-            "outputs": ["{options.outputFile}"],
-            "options": {
-                "lintFilePatterns": ["packages/mikro/**/*.ts"]
-            }
-        },
-        "test": {
-            "executor": "@nx/jest:jest",
-            "outputs": ["{workspaceRoot}/coverage/packages/mikro"],
-            "options": {
-                "jestConfig": "packages/mikro/jest.config.cjs",
-                "passWithNoTests": true
-            }
-        },
-        "publish": {
-            "executor": "nx:run-commands",
-            "options": {
-                "command": "npm publish",
-                "cwd": "dist/packages/mikro"
-            }
-        }
+  "name": "mikro",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/mikro/src",
+  "tags": [
+    "mikro"
+  ],
+  "targets": {
+    "package": {
+      "command": "NX_CLOUD=true nx package-lib mikro"
+    },
+    "package-lib": {
+      "executor": "@nx/rollup:rollup",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "project": "packages/mikro/package.json",
+        "outputPath": "dist/packages/mikro",
+        "entryFile": "packages/mikro/src/index.ts",
+        "tsConfig": "packages/mikro/tsconfig.build.json",
+        "assets": [
+          "packages/mikro/src/README.md"
+        ],
+        "compiler": "babel",
+        "external": [
+          "typescript",
+          "tslib",
+          "@automapper/core",
+          "@automapper/classes"
+        ],
+        "format": [
+          "cjs",
+          "esm"
+        ],
+        "updateBuildableProjectDepsInPackageJson": false,
+        "babelUpwardRootMode": true
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "packages/mikro/**/*.ts"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nx/vitest:test",
+      "outputs": [
+        "{workspaceRoot}/coverage/packages/mikro"
+      ],
+      "options": {
+        "config": "packages/mikro/vitest.config.mts",
+        "passWithNoTests": true
+      }
+    },
+    "publish": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npm publish",
+        "cwd": "dist/packages/mikro"
+      }
     }
+  }
 }

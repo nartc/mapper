@@ -1,11 +1,12 @@
 import type { Mapping } from '../../types';
 import { MappingCallbacksClassId, MappingClassId } from '../../types';
 import { beforeMap } from '../before-map';
+import { describe, it, expect, vi } from 'vitest';
 
 describe(beforeMap.name, () => {
     it('should update mapping configuration with beforeMap', () => {
         const mapping = [] as unknown as Mapping;
-        const cb = jest.fn();
+        const cb = vi.fn();
         beforeMap(cb)(mapping);
         expect(
             mapping[MappingClassId.callbacks]![

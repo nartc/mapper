@@ -8,4 +8,4 @@ Run `nx build mikro` to build the library.
 
 ## Running unit tests
 
-Run `nx test mikro` to execute the unit tests via [Jest](https://jestjs.io).
+Run `nx test mikro` to execute the unit tests via [Vitest](https://vitest.dev).

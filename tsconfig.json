@@ -1,0 +1,17 @@
+{
+    "extends": "./tsconfig.base.json",
+    "compileOnSave": false,
+    "files": [],
+    "references": [
+        { "path": "./packages/core" },
+        { "path": "./packages/classes" },
+        { "path": "./packages/classes/transformer-plugin" },
+        { "path": "./packages/classes/mapped-types" },
+        { "path": "./packages/pojos" },
+        { "path": "./packages/nestjs" },
+        { "path": "./packages/mikro" },
+        { "path": "./packages/sequelize" },
+        { "path": "./packages/zod" },
+        { "path": "./packages/integration-test" }
+    ]
+}

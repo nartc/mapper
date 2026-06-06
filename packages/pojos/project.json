@@ -1,49 +1,68 @@
 {
-    "name": "pojos",
-    "$schema": "../../node_modules/nx/schemas/project-schema.json",
-    "sourceRoot": "packages/pojos/src",
-    "tags": ["pojos"],
-    "targets": {
-        "package": {
-            "command": "NX_CLOUD=true nx package-lib pojos"
-        },
-        "package-lib": {
-            "executor": "@nx/rollup:rollup",
-            "outputs": ["{options.outputPath}"],
-            "options": {
-                "project": "packages/pojos/package.json",
-                "outputPath": "dist/packages/pojos",
-                "entryFile": "packages/pojos/src/index.ts",
-                "tsConfig": "packages/pojos/tsconfig.lib.json",
-                "assets": ["packages/pojos/src/README.md"],
-                "compiler": "babel",
-                "external": ["typescript", "tslib", "@automapper/core"],
-                "format": ["cjs", "esm"],
-                "updateBuildableProjectDepsInPackageJson": false,
-                "babelUpwardRootMode": true
-            }
-        },
-        "lint": {
-            "executor": "@nx/eslint:lint",
-            "outputs": ["{options.outputFile}"],
-            "options": {
-                "lintFilePatterns": ["packages/pojos/**/*.ts"]
-            }
-        },
-        "test": {
-            "executor": "@nx/jest:jest",
-            "outputs": ["{workspaceRoot}/coverage/packages/pojos"],
-            "options": {
-                "jestConfig": "packages/pojos/jest.config.cjs",
-                "passWithNoTests": true
-            }
-        },
-        "publish": {
-            "executor": "nx:run-commands",
-            "options": {
-                "command": "npm publish",
-                "cwd": "dist/packages/pojos"
-            }
-        }
+  "name": "pojos",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/pojos/src",
+  "tags": [
+    "pojos"
+  ],
+  "targets": {
+    "package": {
+      "command": "NX_CLOUD=true nx package-lib pojos"
+    },
+    "package-lib": {
+      "executor": "@nx/rollup:rollup",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "project": "packages/pojos/package.json",
+        "outputPath": "dist/packages/pojos",
+        "entryFile": "packages/pojos/src/index.ts",
+        "tsConfig": "packages/pojos/tsconfig.build.json",
+        "assets": [
+          "packages/pojos/src/README.md"
+        ],
+        "compiler": "babel",
+        "external": [
+          "typescript",
+          "tslib",
+          "@automapper/core"
+        ],
+        "format": [
+          "cjs",
+          "esm"
+        ],
+        "updateBuildableProjectDepsInPackageJson": false,
+        "babelUpwardRootMode": true
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "packages/pojos/**/*.ts"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nx/vitest:test",
+      "outputs": [
+        "{workspaceRoot}/coverage/packages/pojos"
+      ],
+      "options": {
+        "config": "packages/pojos/vitest.config.mts",
+        "passWithNoTests": true
+      }
+    },
+    "publish": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npm publish",
+        "cwd": "dist/packages/pojos"
+      }
     }
+  }
 }

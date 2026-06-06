@@ -1,46 +1,61 @@
 {
-    "name": "classes-transformer-plugin",
-    "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-    "sourceRoot": "packages/classes/transformer-plugin/src",
-    "tags": ["classes"],
-    "targets": {
-        "package": {
-            "command": "NX_CLOUD=true nx package-lib classes-transformer-plugin"
-        },
-        "package-lib": {
-            "executor": "@nx/rollup:rollup",
-            "outputs": ["{options.outputPath}"],
-            "options": {
-                "project": "packages/classes/transformer-plugin/package.json",
-                "outputPath": "dist/packages/classes/transformer-plugin",
-                "entryFile": "packages/classes/transformer-plugin/src/index.ts",
-                "tsConfig": "packages/classes/transformer-plugin/tsconfig.lib.json",
-                "assets": ["packages/classes/transformer-plugin/src/README.md"],
-                "compiler": "babel",
-                "external": ["typescript", "tslib", "@automapper/classes"],
-                "format": ["cjs", "esm"],
-                "updateBuildableProjectDepsInPackageJson": false,
-                "babelUpwardRootMode": true
-            }
-        },
-        "lint": {
-            "executor": "@nx/eslint:lint",
-            "outputs": ["{options.outputFile}"],
-            "options": {
-                "lintFilePatterns": [
-                    "packages/classes/transformer-plugin/**/*.ts"
-                ]
-            }
-        },
-        "test": {
-            "executor": "@nx/jest:jest",
-            "outputs": [
-                "{workspaceRoot}/coverage/packages/classes/transformer-plugin"
-            ],
-            "options": {
-                "jestConfig": "packages/classes/transformer-plugin/jest.config.cjs",
-                "passWithNoTests": true
-            }
-        }
+  "name": "classes-transformer-plugin",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/classes/transformer-plugin/src",
+  "tags": [
+    "classes"
+  ],
+  "targets": {
+    "package": {
+      "command": "NX_CLOUD=true nx package-lib classes-transformer-plugin"
+    },
+    "package-lib": {
+      "executor": "@nx/rollup:rollup",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "project": "packages/classes/transformer-plugin/package.json",
+        "outputPath": "dist/packages/classes/transformer-plugin",
+        "entryFile": "packages/classes/transformer-plugin/src/index.ts",
+        "tsConfig": "packages/classes/transformer-plugin/tsconfig.build.json",
+        "assets": [
+          "packages/classes/transformer-plugin/src/README.md"
+        ],
+        "compiler": "babel",
+        "external": [
+          "typescript",
+          "tslib",
+          "@automapper/classes"
+        ],
+        "format": [
+          "cjs",
+          "esm"
+        ],
+        "updateBuildableProjectDepsInPackageJson": false,
+        "babelUpwardRootMode": true
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "packages/classes/transformer-plugin/**/*.ts"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nx/vitest:test",
+      "outputs": [
+        "{workspaceRoot}/coverage/packages/classes/transformer-plugin"
+      ],
+      "options": {
+        "config": "packages/classes/transformer-plugin/vitest.config.mts",
+        "passWithNoTests": true
+      }
     }
+  }
 }

@@ -1,7 +1,6 @@
 {
   "name": "@automapper/classes",
   "version": "8.8.1",
-
   "main": "./index.cjs.js",
   "module": "./index.esm.js",
   "types": "./src/index.d.ts",
@@ -9,8 +8,13 @@
     "@automapper/core": "workspace:*",
     "reflect-metadata": "~0.1.13 || ^0.2.0"
   },
+  "devDependencies": {
+    "@automapper/core": "workspace:*"
+  },
   "exports": {
+    "./package.json": "./package.json",
     ".": {
+      "development": "./src/index.ts",
       "types": "./src/index.d.ts",
       "import": {
         "types": "./src/index.d.ts",
@@ -23,6 +27,7 @@
       "default": "./index.esm.js"
     },
     "./transformer-plugin": {
+      "development": "./transformer-plugin/src/index.ts",
       "types": "./transformer-plugin/index.d.ts",
       "import": {
         "types": "./transformer-plugin/index.d.ts",
@@ -35,6 +40,7 @@
       "default": "./transformer-plugin/index.esm.js"
     },
     "./mapped-types": {
+      "development": "./mapped-types/src/index.ts",
       "types": "./mapped-types/index.d.ts",
       "import": {
         "types": "./mapped-types/index.d.ts",
@@ -73,5 +79,83 @@
   "license": "MIT",
   "files": [
     "**/*"
-  ]
+  ],
+  "nx": {
+    "name": "classes",
+    "tags": [
+      "classes"
+    ],
+    "targets": {
+      "package": {
+        "executor": "nx:run-commands",
+        "options": {
+          "commands": [
+            "nx package-lib classes",
+            "tsc packages/classes/shim/index.ts --outDir dist/packages/classes/shim/"
+          ],
+          "parallel": false
+        }
+      },
+      "package-lib": {
+        "executor": "@nx/rollup:rollup",
+        "outputs": [
+          "{options.outputPath}"
+        ],
+        "options": {
+          "project": "packages/classes/package.json",
+          "outputPath": "dist/packages/classes",
+          "entryFile": "packages/classes/src/index.ts",
+          "tsConfig": "packages/classes/tsconfig.build.json",
+          "assets": [
+            "packages/classes/src/README.md"
+          ],
+          "compiler": "babel",
+          "external": [
+            "typescript",
+            "tslib",
+            "@automapper/core"
+          ],
+          "format": [
+            "cjs",
+            "esm"
+          ],
+          "updateBuildableProjectDepsInPackageJson": false,
+          "babelUpwardRootMode": true
+        }
+      },
+      "lint": {
+        "executor": "@nx/eslint:lint",
+        "outputs": [
+          "{options.outputFile}"
+        ],
+        "options": {
+          "lintFilePatterns": [
+            "packages/classes/**/*.ts"
+          ]
+        }
+      },
+      "test": {
+        "executor": "@nx/vitest:test",
+        "outputs": [
+          "{workspaceRoot}/coverage/{projectRoot}"
+        ],
+        "options": {
+          "config": "packages/classes/vitest.config.mts",
+          "passWithNoTests": true
+        },
+        "configurations": {
+          "ci": {
+            "coverage": true
+          }
+        }
+      },
+      "publish": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "npm publish",
+          "cwd": "dist/packages/classes"
+        }
+      }
+    }
+  }
 }

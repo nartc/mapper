@@ -1,6 +1,6 @@
 const defaultKey = 'default';
 
-// eslint-disable-next-line @typescript-eslint/ban-types
+// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 export function memoize(fn: Function) {
     const cache: Record<string, unknown> = {};
     return (...args: any[]) => {

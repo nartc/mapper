@@ -1,5 +1,6 @@
 packages:
   - packages/*
+  - packages/classes/*
   - tools/*
 ignore-workspace-root-check: true
 onlyBuiltDependencies:

@@ -18,7 +18,8 @@
       "{projectRoot}/**/*"
     ],
     "prod": [
-      "!{projectRoot}/**/*.spec.ts"
+      "!{projectRoot}/**/*.spec.ts",
+      "!{projectRoot}/tsconfig.spec.json"
     ]
   },
   "targetDefaults": {
@@ -47,6 +48,13 @@
     },
     "package-lib": {
       "cache": true
+    },
+    "@nx/vitest:test": {
+      "cache": true,
+      "inputs": [
+        "default",
+        "^default"
+      ]
     }
   },
   "pluginsConfig": {

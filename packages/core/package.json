@@ -1,25 +1,19 @@
 {
   "name": "@automapper/core",
   "version": "8.8.1",
-
   "main": "./index.cjs.js",
-  "module": "./index.js",
+  "module": "./index.esm.js",
   "types": "./src/index.d.ts",
   "exports": {
+    "./package.json": "./package.json",
     ".": {
+      "development": "./src/index.ts",
       "types": "./src/index.d.ts",
-      "import": {
-        "types": "./src/index.d.ts",
-        "default": "./index.esm.js"
-      },
-      "require": {
-        "types": "./src/index.d.ts",
-        "default": "./index.cjs.js"
-      },
+      "import": "./index.esm.js",
+      "require": "./index.cjs.js",
       "default": "./index.esm.js"
     }
   },
-  "sideEffects": false,
   "engines": {
     "node": ">=16.0.0"
   },
@@ -45,5 +39,91 @@
   "license": "MIT",
   "files": [
     "**/*"
-  ]
+  ],
+  "nx": {
+    "name": "core",
+    "tags": [
+      "core"
+    ],
+    "targets": {
+      "package": {
+        "command": "NX_CLOUD=true nx package-lib core"
+      },
+      "package-lib": {
+        "executor": "@nx/rollup:rollup",
+        "outputs": [
+          "{options.outputPath}"
+        ],
+        "options": {
+          "project": "packages/core/package.json",
+          "outputPath": "dist/packages/core",
+          "entryFile": "packages/core/src/index.ts",
+          "tsConfig": "packages/core/tsconfig.build.json",
+          "assets": [
+            "packages/core/src/README.md"
+          ],
+          "compiler": "babel",
+          "external": [
+            "typescript",
+            "tslib"
+          ],
+          "format": [
+            "cjs",
+            "esm"
+          ],
+          "updateBuildableProjectDepsInPackageJson": false,
+          "babelUpwardRootMode": true
+        }
+      },
+      "package-all": {
+        "executor": "nx:run-commands",
+        "options": {
+          "commands": [
+            "nx package core",
+            "nx package classes",
+            "nx package classes-mapped-types",
+            "nx package classes-transformer-plugin",
+            "nx package pojos",
+            "nx package nestjs",
+            "nx package mikro",
+            "nx package sequelize"
+          ],
+          "parallel": false
+        }
+      },
+      "lint": {
+        "executor": "@nx/eslint:lint",
+        "outputs": [
+          "{options.outputFile}"
+        ],
+        "options": {
+          "lintFilePatterns": [
+            "packages/core/**/*.ts"
+          ]
+        }
+      },
+      "test": {
+        "executor": "@nx/vitest:test",
+        "outputs": [
+          "{workspaceRoot}/coverage/{projectRoot}"
+        ],
+        "options": {
+          "config": "packages/core/vitest.config.mts",
+          "passWithNoTests": true
+        },
+        "configurations": {
+          "ci": {
+            "coverage": true
+          }
+        }
+      },
+      "publish": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "npm publish",
+          "cwd": "dist/packages/core"
+        }
+      }
+    }
+  }
 }

@@ -1,47 +1,52 @@
 {
-    "name": "@automapper/classes-transformer-plugin",
-    "version": "8.8.1",
-
-    "main": "./index.cjs.js",
-    "module": "./index.js",
-    "types": "./src/index.d.ts",
-    "exports": {
-        ".": {
-            "types": "./src/index.d.ts",
-            "import": {
-                "types": "./src/index.d.ts",
-                "default": "./index.esm.js"
-            },
-            "require": {
-                "types": "./src/index.d.ts",
-                "default": "./index.cjs.js"
-            },
-            "default": "./index.esm.js"
-        }
-    },
-    "sideEffects": false,
-    "publishConfig": {
-        "access": "public"
-    },
-    "peerDependencies": {
-        "@automapper/core": "workspace:*",
-        "@automapper/classes": "workspace:*"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/nartc/mapper/tree/main/packages/classes/transformer-plugin"
-    },
-    "author": {
-        "name": "Chau Tran",
-        "email": "nartc7789@gmail.com",
-        "url": "https://nartc.me"
-    },
-    "description": "AutoMapper TypeScript Transformer Plugin for Classes strategy",
-    "keywords": [
-        "typescript",
-        "automapper",
-        "mapper",
-        "nx"
-    ],
-    "license": "MIT"
+  "name": "@automapper/classes-transformer-plugin",
+  "version": "8.8.1",
+  "main": "./index.cjs.js",
+  "module": "./index.js",
+  "types": "./src/index.d.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "development": "./src/index.ts",
+      "types": "./src/index.d.ts",
+      "import": {
+        "types": "./src/index.d.ts",
+        "default": "./index.esm.js"
+      },
+      "require": {
+        "types": "./src/index.d.ts",
+        "default": "./index.cjs.js"
+      },
+      "default": "./index.esm.js"
+    }
+  },
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "@automapper/core": "workspace:*",
+    "@automapper/classes": "workspace:*"
+  },
+  "devDependencies": {
+    "@automapper/core": "workspace:*",
+    "@automapper/classes": "workspace:*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nartc/mapper/tree/main/packages/classes/transformer-plugin"
+  },
+  "author": {
+    "name": "Chau Tran",
+    "email": "nartc7789@gmail.com",
+    "url": "https://nartc.me"
+  },
+  "description": "AutoMapper TypeScript Transformer Plugin for Classes strategy",
+  "keywords": [
+    "typescript",
+    "automapper",
+    "mapper",
+    "nx"
+  ],
+  "license": "MIT"
 }

@@ -13,8 +13,8 @@ const defaultOptions: AutomapperTransformerPluginOptions = {
 };
 
 /**
- * Remember to increase the version whenever transformer's content is changed. This is to inform Jest to not reuse
- * the previous cache which contains old transformer's content
+ * Remember to increase the version whenever transformer's content is changed. This is to inform the compiler to not
+ * reuse the previous cache which contains old transformer's content
  */
 export const version = pluginVersion;
 

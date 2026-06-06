@@ -1,54 +1,69 @@
 {
-    "name": "sequelize",
-    "$schema": "../../node_modules/nx/schemas/project-schema.json",
-    "sourceRoot": "packages/sequelize/src",
-    "tags": ["sequelize"],
-    "targets": {
-        "package": {
-            "command": "NX_CLOUD=true nx package-lib sequelize"
-        },
-        "package-lib": {
-            "executor": "@nx/rollup:rollup",
-            "outputs": ["{options.outputPath}"],
-            "options": {
-                "project": "packages/sequelize/package.json",
-                "outputPath": "dist/packages/sequelize",
-                "entryFile": "packages/sequelize/src/index.ts",
-                "tsConfig": "packages/sequelize/tsconfig.lib.json",
-                "assets": ["packages/sequelize/src/README.md"],
-                "compiler": "babel",
-                "external": [
-                    "typescript",
-                    "tslib",
-                    "@automapper/core",
-                    "@automapper/classes"
-                ],
-                "format": ["cjs", "esm"],
-                "updateBuildableProjectDepsInPackageJson": false,
-                "babelUpwardRootMode": true
-            }
-        },
-        "lint": {
-            "executor": "@nx/eslint:lint",
-            "outputs": ["{options.outputFile}"],
-            "options": {
-                "lintFilePatterns": ["packages/sequelize/**/*.ts"]
-            }
-        },
-        "test": {
-            "executor": "@nx/jest:jest",
-            "outputs": ["{workspaceRoot}/coverage/packages/sequelize"],
-            "options": {
-                "jestConfig": "packages/sequelize/jest.config.cjs",
-                "passWithNoTests": true
-            }
-        },
-        "publish": {
-            "executor": "nx:run-commands",
-            "options": {
-                "command": "npm publish",
-                "cwd": "dist/packages/sequelize"
-            }
-        }
+  "name": "sequelize",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/sequelize/src",
+  "tags": [
+    "sequelize"
+  ],
+  "targets": {
+    "package": {
+      "command": "NX_CLOUD=true nx package-lib sequelize"
+    },
+    "package-lib": {
+      "executor": "@nx/rollup:rollup",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "project": "packages/sequelize/package.json",
+        "outputPath": "dist/packages/sequelize",
+        "entryFile": "packages/sequelize/src/index.ts",
+        "tsConfig": "packages/sequelize/tsconfig.build.json",
+        "assets": [
+          "packages/sequelize/src/README.md"
+        ],
+        "compiler": "babel",
+        "external": [
+          "typescript",
+          "tslib",
+          "@automapper/core",
+          "@automapper/classes"
+        ],
+        "format": [
+          "cjs",
+          "esm"
+        ],
+        "updateBuildableProjectDepsInPackageJson": false,
+        "babelUpwardRootMode": true
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "packages/sequelize/**/*.ts"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nx/vitest:test",
+      "outputs": [
+        "{workspaceRoot}/coverage/packages/sequelize"
+      ],
+      "options": {
+        "config": "packages/sequelize/vitest.config.mts",
+        "passWithNoTests": true
+      }
+    },
+    "publish": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npm publish",
+        "cwd": "dist/packages/sequelize"
+      }
     }
+  }
 }

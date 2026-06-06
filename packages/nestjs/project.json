@@ -1,55 +1,70 @@
 {
-    "name": "nestjs",
-    "$schema": "../../node_modules/nx/schemas/project-schema.json",
-    "sourceRoot": "packages/nestjs/src",
-    "tags": ["nestjs"],
-    "targets": {
-        "package": {
-            "command": "NX_CLOUD=true nx package-lib nestjs"
-        },
-        "package-lib": {
-            "executor": "@nx/rollup:rollup",
-            "outputs": ["{options.outputPath}"],
-            "options": {
-                "project": "packages/nestjs/package.json",
-                "outputPath": "dist/packages/nestjs",
-                "entryFile": "packages/nestjs/src/index.ts",
-                "tsConfig": "packages/nestjs/tsconfig.lib.json",
-                "assets": ["packages/nestjs/src/README.md"],
-                "compiler": "babel",
-                "external": [
-                    "typescript",
-                    "tslib",
-                    "@automapper/core",
-                    "@nestjs/common",
-                    "rxjs"
-                ],
-                "format": ["cjs", "esm"],
-                "updateBuildableProjectDepsInPackageJson": false,
-                "babelUpwardRootMode": true
-            }
-        },
-        "lint": {
-            "executor": "@nx/eslint:lint",
-            "outputs": ["{options.outputFile}"],
-            "options": {
-                "lintFilePatterns": ["packages/nestjs/**/*.ts"]
-            }
-        },
-        "test": {
-            "executor": "@nx/jest:jest",
-            "outputs": ["{workspaceRoot}/coverage/packages/nestjs"],
-            "options": {
-                "jestConfig": "packages/nestjs/jest.config.cjs",
-                "passWithNoTests": true
-            }
-        },
-        "publish": {
-            "executor": "nx:run-commands",
-            "options": {
-                "command": "npm publish",
-                "cwd": "dist/packages/nestjs"
-            }
-        }
+  "name": "nestjs",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/nestjs/src",
+  "tags": [
+    "nestjs"
+  ],
+  "targets": {
+    "package": {
+      "command": "NX_CLOUD=true nx package-lib nestjs"
+    },
+    "package-lib": {
+      "executor": "@nx/rollup:rollup",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "project": "packages/nestjs/package.json",
+        "outputPath": "dist/packages/nestjs",
+        "entryFile": "packages/nestjs/src/index.ts",
+        "tsConfig": "packages/nestjs/tsconfig.build.json",
+        "assets": [
+          "packages/nestjs/src/README.md"
+        ],
+        "compiler": "babel",
+        "external": [
+          "typescript",
+          "tslib",
+          "@automapper/core",
+          "@nestjs/common",
+          "rxjs"
+        ],
+        "format": [
+          "cjs",
+          "esm"
+        ],
+        "updateBuildableProjectDepsInPackageJson": false,
+        "babelUpwardRootMode": true
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "packages/nestjs/**/*.ts"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nx/vitest:test",
+      "outputs": [
+        "{workspaceRoot}/coverage/packages/nestjs"
+      ],
+      "options": {
+        "config": "packages/nestjs/vitest.config.mts",
+        "passWithNoTests": true
+      }
+    },
+    "publish": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npm publish",
+        "cwd": "dist/packages/nestjs"
+      }
     }
+  }
 }

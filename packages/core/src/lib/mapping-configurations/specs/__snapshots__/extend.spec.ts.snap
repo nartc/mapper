@@ -1,4 +1,74 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`extend > should extend another mapping 1`] = `
+[
+  [
+    [
+      "foo",
+    ],
+    [
+      [
+        "foo",
+      ],
+      [
+        [
+          6,
+          [Function],
+        ],
+      ],
+    ],
+    [
+      [Function],
+      [Function],
+    ],
+  ],
+]
+`;
+
+exports[`extend > should skip existing mapping properties on extended mapping 1`] = `
+[
+  [
+    [
+      "foo",
+    ],
+    [
+      [
+        "foo",
+      ],
+      [
+        [
+          6,
+          [Function],
+        ],
+      ],
+    ],
+    [
+      [Function],
+      [Function],
+    ],
+  ],
+  [
+    [
+      "bar",
+    ],
+    [
+      [
+        "bar",
+      ],
+      [
+        [
+          6,
+          [Function],
+        ],
+      ],
+    ],
+    [
+      [Function],
+      [Function],
+    ],
+  ],
+]
+`;
 
 exports[`extend should extend another mapping 1`] = `
 Array [

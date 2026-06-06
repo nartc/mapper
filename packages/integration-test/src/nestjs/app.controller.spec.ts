@@ -5,14 +5,15 @@ import { getUser, getUserDto } from '../classes/utils/get-user';
 import { AppController } from './app.controller';
 import { AppModule } from './app.module';
 import { AppService } from './app.service';
+import { describe, it, expect, beforeAll, afterAll, vi } from 'vitest';
 
 describe(AppController.name, () => {
     let app: INestApplication;
 
     const mockedAppService = {
-        getData: jest.fn(),
-        getUserDto: jest.fn(),
-        getRawUser: jest.fn(),
+        getData: vi.fn(),
+        getUserDto: vi.fn(),
+        getRawUser: vi.fn(),
     };
 
     beforeAll(async () => {

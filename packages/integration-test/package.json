@@ -1,5 +1,12 @@
 {
     "name": "@automapper/integration-test",
     "version": "0.0.1",
-    "type": "commonjs"
+    "type": "commonjs",
+    "dependencies": {
+      "@automapper/classes": "workspace:*",
+      "@automapper/core":"workspace:*",
+      "@automapper/nestjs":"workspace:*",
+      "@automapper/mikro":"workspace:*",
+      "@automapper/pojos":"workspace:*"
+    }
 }

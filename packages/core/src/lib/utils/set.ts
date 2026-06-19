@@ -1,28 +1,32 @@
 export function set<T extends Record<string, unknown>>(
     object: T,
     path: string[],
-    value: unknown
+    value: unknown,
+    index = 0
 ): (T & { [p: string]: unknown }) | T {
-    const { decomposedPath, base } = decomposePath(path);
+    const obj = object as Record<string, unknown>;
 
-    if (base === undefined) {
+    // empty path writes the '' key (preserves prior decomposePath base='' behavior)
+    if (path.length < 1) {
+        obj[''] = value;
         return object;
     }
 
-    // assign an empty object in order to spread object
-    assignEmpty(object, base);
+    const base = path[index];
 
-    // Determine if there is still layers to traverse
-    value =
-        decomposedPath.length <= 1
-            ? value
-            : set(
-                  object[base] as Record<string, unknown>,
-                  decomposedPath.slice(1),
-                  value
-              );
+    // leaf: write directly. Avoids the per-level `Object.assign({[base]: value})`
+    // temp object and `path.slice(1)` array allocation of the old recursion
+    // (mirrors setMutate, which already does this).
+    if (index >= path.length - 1) {
+        obj[base] = value;
+        return object;
+    }
 
-    return Object.assign(object, { [base]: value });
+    if (!Object.prototype.hasOwnProperty.call(object, base)) {
+        obj[base] = {};
+    }
+    set(obj[base] as Record<string, unknown>, path, value, index + 1);
+    return object;
 }
 
 export function setMutate<T extends Record<string, unknown>>(

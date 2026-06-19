@@ -7,7 +7,7 @@
             "command": "NX_CLOUD=true nx package-lib classes-mapped-types"
         },
         "package-lib": {
-            "executor": "@nrwl/rollup:rollup",
+            "executor": "@nx/rollup:rollup",
             "outputs": ["{options.outputPath}"],
             "options": {
                 "project": "packages/classes/mapped-types/package.json",
@@ -27,14 +27,14 @@
             }
         },
         "lint": {
-            "executor": "@nrwl/linter:eslint",
+            "executor": "@nx/linter:eslint",
             "outputs": ["{options.outputFile}"],
             "options": {
                 "lintFilePatterns": ["packages/classes/mapped-types/**/*.ts"]
             }
         },
         "test": {
-            "executor": "@nrwl/jest:jest",
+            "executor": "@nx/jest:jest",
             "outputs": [
                 "{workspaceRoot}/coverage/packages/classes/mapped-types"
             ],

@@ -7,7 +7,7 @@
             "command": "NX_CLOUD=true nx package-lib sequelize"
         },
         "package-lib": {
-            "executor": "@nrwl/rollup:rollup",
+            "executor": "@nx/rollup:rollup",
             "outputs": ["{options.outputPath}"],
             "options": {
                 "project": "packages/sequelize/package.json",
@@ -27,14 +27,14 @@
             }
         },
         "lint": {
-            "executor": "@nrwl/linter:eslint",
+            "executor": "@nx/linter:eslint",
             "outputs": ["{options.outputFile}"],
             "options": {
                 "lintFilePatterns": ["packages/sequelize/**/*.ts"]
             }
         },
         "test": {
-            "executor": "@nrwl/jest:jest",
+            "executor": "@nx/jest:jest",
             "outputs": ["{workspaceRoot}/coverage/packages/sequelize"],
             "options": {
                 "jestConfig": "packages/sequelize/jest.config.cjs",

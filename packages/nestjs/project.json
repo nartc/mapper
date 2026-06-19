@@ -7,7 +7,7 @@
             "command": "NX_CLOUD=true nx package-lib nestjs"
         },
         "package-lib": {
-            "executor": "@nrwl/rollup:rollup",
+            "executor": "@nx/rollup:rollup",
             "outputs": ["{options.outputPath}"],
             "options": {
                 "project": "packages/nestjs/package.json",
@@ -28,14 +28,14 @@
             }
         },
         "lint": {
-            "executor": "@nrwl/linter:eslint",
+            "executor": "@nx/linter:eslint",
             "outputs": ["{options.outputFile}"],
             "options": {
                 "lintFilePatterns": ["packages/nestjs/**/*.ts"]
             }
         },
         "test": {
-            "executor": "@nrwl/jest:jest",
+            "executor": "@nx/jest:jest",
             "outputs": ["{workspaceRoot}/coverage/packages/nestjs"],
             "options": {
                 "jestConfig": "packages/nestjs/jest.config.cjs",

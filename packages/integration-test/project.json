@@ -4,14 +4,14 @@
     "sourceRoot": "packages/integration-test/src",
     "targets": {
         "lint": {
-            "executor": "@nrwl/linter:eslint",
+            "executor": "@nx/linter:eslint",
             "outputs": ["{options.outputFile}"],
             "options": {
                 "lintFilePatterns": ["packages/integration-test/**/*.ts"]
             }
         },
         "test": {
-            "executor": "@nrwl/jest:jest",
+            "executor": "@nx/jest:jest",
             "outputs": ["{workspaceRoot}/coverage/packages/integration-test"],
             "options": {
                 "jestConfig": "packages/integration-test/jest.config.ts",

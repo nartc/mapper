@@ -1,15 +1,7 @@
 {
-    "extends": "nx/presets/core.json",
-    "npmScope": "automapper",
-    "affected": {
-        "defaultBase": "main"
-    },
-    "cli": {
-        "defaultCollection": "@nrwl/workspace"
-    },
     "tasksRunnerOptions": {
         "default": {
-            "runner": "@nrwl/nx-cloud",
+            "runner": "nx-cloud",
             "options": {
                 "cacheableOperations": [
                     "build",
@@ -22,6 +14,14 @@
                 "accessToken": "MjMzYTA3OWMtMjQ1MS00YzFhLWExYTYtODMzMTM5MmQxZmE1fHJlYWQtd3JpdGU="
             }
         }
+    },
+    "extends": "nx/presets/core.json",
+    "npmScope": "automapper",
+    "affected": {
+        "defaultBase": "main"
+    },
+    "cli": {
+        "defaultCollection": "@nx/workspace"
     },
     "$schema": "./node_modules/nx/schemas/nx-schema.json",
     "namedInputs": {
@@ -37,7 +37,7 @@
         }
     },
     "pluginsConfig": {
-        "@nrwl/js": {
+        "@nx/js": {
             "analyzeSourceFiles": true
         }
     }

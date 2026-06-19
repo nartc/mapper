@@ -6,37 +6,10 @@
     "tags": ["core"],
     "targets": {
         "package": {
-            "command": "NX_CLOUD=true nx package-lib core"
-        },
-        "package-lib": {
-            "executor": "@nx/rollup:rollup",
-            "outputs": ["{options.outputPath}"],
-            "options": {
-                "project": "packages/core/package.json",
-                "outputPath": "dist/packages/core",
-                "entryFile": "packages/core/src/index.ts",
-                "tsConfig": "packages/core/tsconfig.lib.json",
-                "assets": ["packages/core/src/README.md"],
-                "compiler": "babel",
-                "external": ["typescript", "tslib"],
-                "format": ["cjs", "esm"],
-                "babelUpwardRootMode": true
-            }
-        },
-        "package-all": {
             "executor": "nx:run-commands",
+            "outputs": ["{workspaceRoot}/dist/packages/core"],
             "options": {
-                "commands": [
-                    "nx package core",
-                    "nx package classes",
-                    "nx package classes-mapped-types",
-                    "nx package classes-transformer-plugin",
-                    "nx package pojos",
-                    "nx package nestjs",
-                    "nx package mikro",
-                    "nx package sequelize"
-                ],
-                "parallel": false
+                "command": "node tools/scripts/build-packages.mjs core"
             }
         },
         "lint": {

@@ -5,26 +5,10 @@
     "tags": ["mikro"],
     "targets": {
         "package": {
-            "command": "NX_CLOUD=true nx package-lib mikro"
-        },
-        "package-lib": {
-            "executor": "@nx/rollup:rollup",
-            "outputs": ["{options.outputPath}"],
+            "executor": "nx:run-commands",
+            "outputs": ["{workspaceRoot}/dist/packages/mikro"],
             "options": {
-                "project": "packages/mikro/package.json",
-                "outputPath": "dist/packages/mikro",
-                "entryFile": "packages/mikro/src/index.ts",
-                "tsConfig": "packages/mikro/tsconfig.lib.json",
-                "assets": ["packages/mikro/src/README.md"],
-                "compiler": "babel",
-                "external": [
-                    "typescript",
-                    "tslib",
-                    "@automapper/core",
-                    "@automapper/classes"
-                ],
-                "format": ["cjs", "esm"],
-                "babelUpwardRootMode": true
+                "command": "node tools/scripts/build-packages.mjs mikro"
             }
         },
         "lint": {

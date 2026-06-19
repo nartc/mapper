@@ -5,26 +5,10 @@
     "tags": ["sequelize"],
     "targets": {
         "package": {
-            "command": "NX_CLOUD=true nx package-lib sequelize"
-        },
-        "package-lib": {
-            "executor": "@nx/rollup:rollup",
-            "outputs": ["{options.outputPath}"],
+            "executor": "nx:run-commands",
+            "outputs": ["{workspaceRoot}/dist/packages/sequelize"],
             "options": {
-                "project": "packages/sequelize/package.json",
-                "outputPath": "dist/packages/sequelize",
-                "entryFile": "packages/sequelize/src/index.ts",
-                "tsConfig": "packages/sequelize/tsconfig.lib.json",
-                "assets": ["packages/sequelize/src/README.md"],
-                "compiler": "babel",
-                "external": [
-                    "typescript",
-                    "tslib",
-                    "@automapper/core",
-                    "@automapper/classes"
-                ],
-                "format": ["cjs", "esm"],
-                "babelUpwardRootMode": true
+                "command": "node tools/scripts/build-packages.mjs sequelize"
             }
         },
         "lint": {

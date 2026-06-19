@@ -7,27 +7,9 @@
     "targets": {
         "package": {
             "executor": "nx:run-commands",
+            "outputs": ["{workspaceRoot}/dist/packages/classes"],
             "options": {
-                "commands": [
-                    "nx package-lib classes",
-                    "tsc packages/classes/shim/index.ts --outDir dist/packages/classes/shim/"
-                ],
-                "parallel": false
-            }
-        },
-        "package-lib": {
-            "executor": "@nx/rollup:rollup",
-            "outputs": ["{options.outputPath}"],
-            "options": {
-                "project": "packages/classes/package.json",
-                "outputPath": "dist/packages/classes",
-                "entryFile": "packages/classes/src/index.ts",
-                "tsConfig": "packages/classes/tsconfig.lib.json",
-                "assets": ["packages/classes/src/README.md"],
-                "compiler": "babel",
-                "external": ["typescript", "tslib", "@automapper/core"],
-                "format": ["cjs", "esm"],
-                "babelUpwardRootMode": true
+                "command": "node tools/scripts/build-packages.mjs classes"
             }
         },
         "lint": {

@@ -5,21 +5,10 @@
     "tags": ["pojos"],
     "targets": {
         "package": {
-            "command": "NX_CLOUD=true nx package-lib pojos"
-        },
-        "package-lib": {
-            "executor": "@nx/rollup:rollup",
-            "outputs": ["{options.outputPath}"],
+            "executor": "nx:run-commands",
+            "outputs": ["{workspaceRoot}/dist/packages/pojos"],
             "options": {
-                "project": "packages/pojos/package.json",
-                "outputPath": "dist/packages/pojos",
-                "entryFile": "packages/pojos/src/index.ts",
-                "tsConfig": "packages/pojos/tsconfig.lib.json",
-                "assets": ["packages/pojos/src/README.md"],
-                "compiler": "babel",
-                "external": ["typescript", "tslib", "@automapper/core"],
-                "format": ["cjs", "esm"],
-                "babelUpwardRootMode": true
+                "command": "node tools/scripts/build-packages.mjs pojos"
             }
         },
         "lint": {

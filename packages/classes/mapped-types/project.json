@@ -4,29 +4,6 @@
     "sourceRoot": "packages/classes/mapped-types/src",
     "tags": ["classes"],
     "targets": {
-        "package": {
-            "command": "NX_CLOUD=true nx package-lib classes-mapped-types"
-        },
-        "package-lib": {
-            "executor": "@nx/rollup:rollup",
-            "outputs": ["{options.outputPath}"],
-            "options": {
-                "project": "packages/classes/mapped-types/package.json",
-                "outputPath": "dist/packages/classes/mapped-types",
-                "entryFile": "packages/classes/mapped-types/src/index.ts",
-                "tsConfig": "packages/classes/mapped-types/tsconfig.lib.json",
-                "assets": ["packages/classes/mapped-types/src/README.md"],
-                "compiler": "babel",
-                "external": [
-                    "typescript",
-                    "tslib",
-                    "@automapper/core",
-                    "@automapper/classes"
-                ],
-                "format": ["cjs", "esm"],
-                "babelUpwardRootMode": true
-            }
-        },
         "lint": {
             "executor": "@nx/eslint:lint"
         },

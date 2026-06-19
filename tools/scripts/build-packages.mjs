@@ -17,6 +17,9 @@ const PACKAGES = [
     {
         dir: 'packages/classes',
         out: 'dist/packages/classes',
+        // Frontend bundler-alias shim (no-op @AutoMap); published as shim/index.js,
+        // compiled with bare tsc to match the 8.x contract. Not in the exports map.
+        shim: 'packages/classes/shim/index.ts',
         subpaths: [
             { key: './mapped-types', srcDir: 'packages/classes/mapped-types', sub: 'mapped-types' },
             { key: './transformer-plugin', srcDir: 'packages/classes/transformer-plugin', sub: 'transformer-plugin' },
@@ -105,6 +108,15 @@ for (const pkg of targets) {
             tsconfig: existsSync(resolve(ROOT, sp.srcDir, 'tsconfig.lib.json')) ? resolve(ROOT, sp.srcDir, 'tsconfig.lib.json') : undefined,
         });
         exportsMap[sp.key] = condFor(`./${sp.sub}/`);
+    }
+
+    // frontend shim (classes): bare tsc, matches the 8.x published shim/index.js
+    if (pkg.shim) {
+        execFileSync(
+            resolve(ROOT, 'node_modules/.bin/tsc'),
+            [resolve(ROOT, pkg.shim), '--outDir', resolve(outAbs, 'shim')],
+            { cwd: ROOT, stdio: 'inherit' }
+        );
     }
 
     // dist package.json: preserve metadata, set entry points + exports map

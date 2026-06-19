@@ -10,7 +10,7 @@
     "release": "dotenv release-it --",
     "release:beta": "dotenv release-it -- major --preRelease=beta",
     "test": "nx run-many --all --target=test --parallel",
-    "package": "node tools/scripts/build-packages.mjs",
+    "package": "nx run-many --target=package",
     "publish": "nx run-many --target=publish --all --parallel"
   },
   "private": true,
@@ -31,7 +31,6 @@
     "@nx/jest": "22.7.5",
     "@nx/js": "22.7.5",
     "@nx/nest": "22.7.5",
-    "@nx/rollup": "22.7.5",
     "@nx/web": "22.7.5",
     "@nx/workspace": "22.7.5",
     "@release-it/bumper": "4.0.2",

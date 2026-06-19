@@ -1,4 +1,4 @@
-import { getErrorHandler, getMetadataMap } from '../symbols';
+import { getErrorHandler } from '../symbols';
 import type {
     Constructor,
     Dictionary,
@@ -7,13 +7,12 @@ import type {
     Mapping,
     MetadataIdentifier,
 } from '../types';
-import { MapFnClassId, MetadataClassId, TransformationType } from '../types';
+import { MapFnClassId, TransformationType } from '../types';
 import { assertUnmappedProperties } from '../utils/assert-unmapped-properties';
 import { get } from '../utils/get';
 import { getMapping } from '../utils/get-mapping';
 import { isDateConstructor } from '../utils/is-date-constructor';
 import { isEmpty } from '../utils/is-empty';
-import { isPrimitiveArrayEqual } from '../utils/is-primitive-array-equal';
 import { isPrimitiveConstructor } from '../utils/is-primitive-constructor';
 import { set, setMutate } from '../utils/set';
 import { mapMember } from './map-member';
@@ -130,7 +129,6 @@ export function map<
     } = options ?? {};
 
     const errorHandler = getErrorHandler(mapper);
-    const metadataMap = getMetadataMap(mapper);
 
     const destination: TDestination = mapDestinationConstructor(
         sourceObject,
@@ -220,17 +218,6 @@ Original error: ${originalError}`;
             transformationMapFn[MapFnClassId.type] ===
             TransformationType.MapInitialize
         ) {
-            // check if metadata as destinationMemberPath is null
-            const destinationMetadata = metadataMap.get(destinationIdentifier);
-            const hasNullMetadata =
-                destinationMetadata &&
-                destinationMetadata.find((metadata) =>
-                    isPrimitiveArrayEqual(
-                        metadata[MetadataClassId.propertyKeys],
-                        destinationMemberPath
-                    )
-                ) === null;
-
             const mapInitializedValue = (
                 transformationMapFn[MapFnClassId.fn] as MapInitializeReturn<
                     TSource,
@@ -242,7 +229,6 @@ Original error: ${originalError}`;
 
             // if null/undefined
             // if isDate, isFile
-            // if metadata is null, treat as-is
             // if it has same identifier that are not primitives or Date
             // if the initialized value was converted with typeConverter
             if (
@@ -251,7 +237,6 @@ Original error: ${originalError}`;
                 Object.prototype.toString
                     .call(mapInitializedValue)
                     .slice(8, -1) === 'File' ||
-                hasNullMetadata ||
                 hasSameIdentifier ||
                 isTypedConverted
             ) {

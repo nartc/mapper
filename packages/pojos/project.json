@@ -2,6 +2,7 @@
     "name": "pojos",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "packages/pojos/src",
+    "tags": ["pojos"],
     "targets": {
         "package": {
             "command": "NX_CLOUD=true nx package-lib pojos"
@@ -18,22 +19,17 @@
                 "compiler": "babel",
                 "external": ["typescript", "tslib", "@automapper/core"],
                 "format": ["cjs", "esm"],
-                "updateBuildableProjectDepsInPackageJson": false
+                "babelUpwardRootMode": true
             }
         },
         "lint": {
-            "executor": "@nx/linter:eslint",
-            "outputs": ["{options.outputFile}"],
-            "options": {
-                "lintFilePatterns": ["packages/pojos/**/*.ts"]
-            }
+            "executor": "@nx/eslint:lint"
         },
         "test": {
             "executor": "@nx/jest:jest",
             "outputs": ["{workspaceRoot}/coverage/packages/pojos"],
             "options": {
-                "jestConfig": "packages/pojos/jest.config.cjs",
-                "passWithNoTests": true
+                "jestConfig": "packages/pojos/jest.config.cjs"
             }
         },
         "publish": {
@@ -43,6 +39,5 @@
                 "cwd": "dist/packages/pojos"
             }
         }
-    },
-    "tags": ["pojos"]
+    }
 }

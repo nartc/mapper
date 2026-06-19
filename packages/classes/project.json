@@ -3,6 +3,7 @@
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "packages/classes/src",
     "projectType": "library",
+    "tags": ["classes"],
     "targets": {
         "package": {
             "executor": "nx:run-commands",
@@ -26,22 +27,17 @@
                 "compiler": "babel",
                 "external": ["typescript", "tslib", "@automapper/core"],
                 "format": ["cjs", "esm"],
-                "updateBuildableProjectDepsInPackageJson": false
+                "babelUpwardRootMode": true
             }
         },
         "lint": {
-            "executor": "@nx/linter:eslint",
-            "outputs": ["{options.outputFile}"],
-            "options": {
-                "lintFilePatterns": ["packages/classes/**/*.ts"]
-            }
+            "executor": "@nx/eslint:lint"
         },
         "test": {
             "executor": "@nx/jest:jest",
             "outputs": ["{workspaceRoot}/coverage/packages/classes"],
             "options": {
-                "jestConfig": "packages/classes/jest.config.cjs",
-                "passWithNoTests": true
+                "jestConfig": "packages/classes/jest.config.cjs"
             }
         },
         "publish": {
@@ -51,6 +47,5 @@
                 "cwd": "dist/packages/classes"
             }
         }
-    },
-    "tags": ["classes"]
+    }
 }

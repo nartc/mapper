@@ -2,6 +2,7 @@
     "name": "classes-mapped-types",
     "$schema": "../../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "packages/classes/mapped-types/src",
+    "tags": ["classes"],
     "targets": {
         "package": {
             "command": "NX_CLOUD=true nx package-lib classes-mapped-types"
@@ -23,15 +24,11 @@
                     "@automapper/classes"
                 ],
                 "format": ["cjs", "esm"],
-                "updateBuildableProjectDepsInPackageJson": false
+                "babelUpwardRootMode": true
             }
         },
         "lint": {
-            "executor": "@nx/linter:eslint",
-            "outputs": ["{options.outputFile}"],
-            "options": {
-                "lintFilePatterns": ["packages/classes/mapped-types/**/*.ts"]
-            }
+            "executor": "@nx/eslint:lint"
         },
         "test": {
             "executor": "@nx/jest:jest",
@@ -39,10 +36,8 @@
                 "{workspaceRoot}/coverage/packages/classes/mapped-types"
             ],
             "options": {
-                "jestConfig": "packages/classes/mapped-types/jest.config.cjs",
-                "passWithNoTests": true
+                "jestConfig": "packages/classes/mapped-types/jest.config.cjs"
             }
         }
-    },
-    "tags": ["classes"]
+    }
 }

@@ -25,6 +25,7 @@ import {
     isGetAccessorDeclaration,
     isImportDeclaration,
     isPropertyDeclaration,
+    isSourceFile,
     ModuleKind,
     SyntaxKind,
     visitEachChild,
@@ -152,10 +153,13 @@ export class ModelVisitor {
             return nodeVisitor;
         }
 
+        // TS 5.x: visitNode returns `Node | undefined` and needs a type guard
+        // to narrow back to SourceFile.
         const visitedSourceFile = visitNode(
             sourceFile,
-            nodeVisitorFactory(context, sourceFile)
-        );
+            nodeVisitorFactory(context, sourceFile),
+            isSourceFile
+        ) as SourceFile;
 
         // if the target is CommonJS, keep as is
         if (ModelVisitor.isCommonJS) {

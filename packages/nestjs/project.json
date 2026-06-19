@@ -2,6 +2,7 @@
     "name": "nestjs",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "packages/nestjs/src",
+    "tags": ["nestjs"],
     "targets": {
         "package": {
             "command": "NX_CLOUD=true nx package-lib nestjs"
@@ -24,22 +25,17 @@
                     "rxjs"
                 ],
                 "format": ["cjs", "esm"],
-                "updateBuildableProjectDepsInPackageJson": false
+                "babelUpwardRootMode": true
             }
         },
         "lint": {
-            "executor": "@nx/linter:eslint",
-            "outputs": ["{options.outputFile}"],
-            "options": {
-                "lintFilePatterns": ["packages/nestjs/**/*.ts"]
-            }
+            "executor": "@nx/eslint:lint"
         },
         "test": {
             "executor": "@nx/jest:jest",
             "outputs": ["{workspaceRoot}/coverage/packages/nestjs"],
             "options": {
-                "jestConfig": "packages/nestjs/jest.config.cjs",
-                "passWithNoTests": true
+                "jestConfig": "packages/nestjs/jest.config.cjs"
             }
         },
         "publish": {
@@ -49,6 +45,5 @@
                 "cwd": "dist/packages/nestjs"
             }
         }
-    },
-    "tags": ["nestjs"]
+    }
 }

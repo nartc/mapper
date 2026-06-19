@@ -2,6 +2,7 @@
     "name": "classes-transformer-plugin",
     "$schema": "../../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "packages/classes/transformer-plugin/src",
+    "tags": ["classes"],
     "targets": {
         "package": {
             "command": "NX_CLOUD=true nx package-lib classes-transformer-plugin"
@@ -18,17 +19,11 @@
                 "compiler": "babel",
                 "external": ["typescript", "tslib", "@automapper/classes"],
                 "format": ["cjs", "esm"],
-                "updateBuildableProjectDepsInPackageJson": false
+                "babelUpwardRootMode": true
             }
         },
         "lint": {
-            "executor": "@nx/linter:eslint",
-            "outputs": ["{options.outputFile}"],
-            "options": {
-                "lintFilePatterns": [
-                    "packages/classes/transformer-plugin/**/*.ts"
-                ]
-            }
+            "executor": "@nx/eslint:lint"
         },
         "test": {
             "executor": "@nx/jest:jest",
@@ -36,10 +31,8 @@
                 "{workspaceRoot}/coverage/packages/classes/transformer-plugin"
             ],
             "options": {
-                "jestConfig": "packages/classes/transformer-plugin/jest.config.cjs",
-                "passWithNoTests": true
+                "jestConfig": "packages/classes/transformer-plugin/jest.config.cjs"
             }
         }
-    },
-    "tags": ["classes"]
+    }
 }

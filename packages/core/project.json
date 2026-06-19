@@ -3,6 +3,7 @@
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "packages/core/src",
     "projectType": "library",
+    "tags": ["core"],
     "targets": {
         "package": {
             "command": "NX_CLOUD=true nx package-lib core"
@@ -19,7 +20,7 @@
                 "compiler": "babel",
                 "external": ["typescript", "tslib"],
                 "format": ["cjs", "esm"],
-                "updateBuildableProjectDepsInPackageJson": false
+                "babelUpwardRootMode": true
             }
         },
         "package-all": {
@@ -39,18 +40,13 @@
             }
         },
         "lint": {
-            "executor": "@nx/linter:eslint",
-            "outputs": ["{options.outputFile}"],
-            "options": {
-                "lintFilePatterns": ["packages/core/**/*.ts"]
-            }
+            "executor": "@nx/eslint:lint"
         },
         "test": {
             "executor": "@nx/jest:jest",
             "outputs": ["{workspaceRoot}/coverage/packages/core"],
             "options": {
-                "jestConfig": "packages/core/jest.config.cjs",
-                "passWithNoTests": true
+                "jestConfig": "packages/core/jest.config.cjs"
             }
         },
         "publish": {
@@ -60,6 +56,5 @@
                 "cwd": "dist/packages/core"
             }
         }
-    },
-    "tags": ["core"]
+    }
 }

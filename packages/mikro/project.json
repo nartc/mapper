@@ -2,6 +2,7 @@
     "name": "mikro",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "packages/mikro/src",
+    "tags": ["mikro"],
     "targets": {
         "package": {
             "command": "NX_CLOUD=true nx package-lib mikro"
@@ -23,22 +24,17 @@
                     "@automapper/classes"
                 ],
                 "format": ["cjs", "esm"],
-                "updateBuildableProjectDepsInPackageJson": false
+                "babelUpwardRootMode": true
             }
         },
         "lint": {
-            "executor": "@nx/linter:eslint",
-            "outputs": ["{options.outputFile}"],
-            "options": {
-                "lintFilePatterns": ["packages/mikro/**/*.ts"]
-            }
+            "executor": "@nx/eslint:lint"
         },
         "test": {
             "executor": "@nx/jest:jest",
             "outputs": ["{workspaceRoot}/coverage/packages/mikro"],
             "options": {
-                "jestConfig": "packages/mikro/jest.config.cjs",
-                "passWithNoTests": true
+                "jestConfig": "packages/mikro/jest.config.cjs"
             }
         },
         "publish": {
@@ -48,6 +44,5 @@
                 "cwd": "dist/packages/mikro"
             }
         }
-    },
-    "tags": ["mikro"]
+    }
 }

@@ -33,12 +33,6 @@ export function mapMember<
     const transformationType: TransformationType =
         transformationMapFn[MapFnClassId.type];
     const mapFn = transformationMapFn[MapFnClassId.fn];
-    const shouldRunImplicitMap = !(
-        isPrimitiveConstructor(sourceMemberIdentifier) ||
-        isPrimitiveConstructor(destinationMemberIdentifier) ||
-        isDateConstructor(sourceMemberIdentifier) ||
-        isDateConstructor(destinationMemberIdentifier)
-    );
 
     switch (transformationType) {
         case TransformationType.MapFrom:
@@ -75,18 +69,29 @@ export function mapMember<
                 mapFn as ConditionReturn<TSource, TDestination>[MapFnClassId.fn]
             )(sourceObject, destinationMemberPath);
 
-            if (shouldRunImplicitMap && value != null) {
-                value = Array.isArray(value)
-                    ? mapper.mapArray(
-                          value,
-                          sourceMemberIdentifier as MetadataIdentifier,
-                          destinationMemberIdentifier as MetadataIdentifier
-                      )
-                    : mapper.map(
-                          value,
-                          sourceMemberIdentifier as MetadataIdentifier,
-                          destinationMemberIdentifier as MetadataIdentifier
-                      );
+            if (value != null) {
+                // primitive/date identifiers => no implicit (member) mapping.
+                // Computed lazily: only Condition/Null/Undefined reach this, so
+                // the other transformation types skip these predicate calls.
+                const shouldRunImplicitMap = !(
+                    isPrimitiveConstructor(sourceMemberIdentifier) ||
+                    isPrimitiveConstructor(destinationMemberIdentifier) ||
+                    isDateConstructor(sourceMemberIdentifier) ||
+                    isDateConstructor(destinationMemberIdentifier)
+                );
+                if (shouldRunImplicitMap) {
+                    value = Array.isArray(value)
+                        ? mapper.mapArray(
+                              value,
+                              sourceMemberIdentifier as MetadataIdentifier,
+                              destinationMemberIdentifier as MetadataIdentifier
+                          )
+                        : mapper.map(
+                              value,
+                              sourceMemberIdentifier as MetadataIdentifier,
+                              destinationMemberIdentifier as MetadataIdentifier
+                          );
+                }
             }
 
             break;

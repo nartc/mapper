@@ -2,6 +2,7 @@
     "name": "automapper",
     "version": "0.0.0",
     "license": "MIT",
+    "packageManager": "pnpm@8.15.9",
     "scripts": {
         "commit": "git-cz",
         "contributors:init": "all-contributors init",

@@ -62,7 +62,8 @@
     "tsdown": "^0.22.3",
     "typescript": "~5.9.0",
     "unplugin-swc": "1.5.9",
-    "vitest": "4.1.9"
+    "vitest": "4.1.9",
+    "zod": "^4.4.3"
   },
   "config": {
     "commitizen": {

@@ -7,7 +7,7 @@ import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
-const PKGS = ['core', 'classes', 'pojos', 'nestjs', 'mikro', 'sequelize'];
+const PKGS = ['core', 'classes', 'pojos', 'nestjs', 'mikro', 'sequelize', 'zod'];
 
 let failed = false;
 for (const p of PKGS) {

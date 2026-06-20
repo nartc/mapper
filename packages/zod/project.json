@@ -5,18 +5,11 @@
     "projectType": "library",
     "tags": [],
     "targets": {
-        "build": {
-            "executor": "@nx/rollup:rollup",
-            "outputs": [
-                "{options.outputPath}"
-            ],
+        "package": {
+            "executor": "nx:run-commands",
+            "outputs": ["{workspaceRoot}/dist/packages/zod"],
             "options": {
-                "outputPath": "dist/packages/zod",
-                "main": "packages/zod/src/index.ts",
-                "tsConfig": "packages/zod/tsconfig.lib.json",
-                "assets": [],
-                "project": "packages/zod/package.json",
-                "babelUpwardRootMode": true
+                "command": "node tools/scripts/build-packages.mjs zod"
             }
         },
         "lint": {
@@ -27,6 +20,19 @@
             "options": {
                 "command": "vitest run",
                 "cwd": "packages/zod"
+            }
+        },
+        "publish": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "npm publish --tag alpha",
+                "cwd": "dist/packages/zod"
+            }
+        },
+        "nx-release-publish": {
+            "executor": "@nx/js:release-publish",
+            "options": {
+                "packageRoot": "dist/packages/zod"
             }
         }
     }

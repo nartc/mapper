@@ -35,7 +35,15 @@
         }
     },
     "release": {
-        "projects": ["core", "classes", "pojos", "nestjs", "mikro", "sequelize"],
+        "projects": [
+            "core",
+            "classes",
+            "pojos",
+            "nestjs",
+            "mikro",
+            "sequelize",
+            "zod"
+        ],
         "projectsRelationship": "independent",
         "releaseTagPattern": "{projectName}@{version}",
         "version": {

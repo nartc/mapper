@@ -5,6 +5,24 @@ import type {
     MetadataIdentifier,
 } from '../types';
 
+// The writable keys of a destinationMetadata are fixed per mapping, but
+// assertUnmappedProperties runs on every map() (per element in mapArray).
+// Cache the Object.keys + getOwnPropertyDescriptor work per metadata object.
+const writableKeysCache = new WeakMap<object, string[]>();
+
+function getWritableKeys(destinationMetadata: object): string[] {
+    let keys = writableKeysCache.get(destinationMetadata);
+    if (keys === undefined) {
+        keys = Object.keys(destinationMetadata).filter(
+            (key) =>
+                Object.getOwnPropertyDescriptor(destinationMetadata, key)
+                    ?.writable === true
+        );
+        writableKeysCache.set(destinationMetadata, keys);
+    }
+    return keys;
+}
+
 /**
  * Depends on implementation of strategy.createMapping
  */
@@ -18,34 +36,26 @@ export function assertUnmappedProperties<
     destinationIdentifier: MetadataIdentifier,
     errorHandler: ErrorHandler
 ) {
-    const unmappedKeys = Object.keys(destinationMetadata).reduce(
-        (result, key) => {
-            const isOnDestination = key in destinationObject;
-            const isAlreadyConfigured = configuredKeys.some(
-                (configuredKey) => configuredKey === key
-            );
-            const isWritable =
-                Object.getOwnPropertyDescriptor(destinationMetadata, key)
-                    ?.writable === true;
-            if (
-                !isAlreadyConfigured &&
-                !isOnDestination &&
-                isWritable &&
-                destinationObject[key as keyof typeof destinationObject] ===
-                    undefined
-            ) {
-                result.push(key);
-            }
-            return result;
-        },
-        [] as string[]
-    );
+    const writableKeys = getWritableKeys(destinationMetadata as object);
+    const configured = new Set(configuredKeys);
 
-    const sourceText = getTextFromIdentifier(sourceIdentifier);
-    const destinationText = getTextFromIdentifier(destinationIdentifier);
+    const unmappedKeys: string[] = [];
+    for (let i = 0, len = writableKeys.length; i < len; i++) {
+        const key = writableKeys[i];
+        if (
+            !configured.has(key) &&
+            !(key in destinationObject) &&
+            destinationObject[key as keyof typeof destinationObject] ===
+                undefined
+        ) {
+            unmappedKeys.push(key);
+        }
+    }
 
     if (unmappedKeys.length) {
-        const parentInfo = `${sourceText} -> ${destinationText}`;
+        const parentInfo = `${getTextFromIdentifier(
+            sourceIdentifier
+        )} -> ${getTextFromIdentifier(destinationIdentifier)}`;
         errorHandler.handle(`
 Unmapped properties for ${parentInfo}:
 -------------------

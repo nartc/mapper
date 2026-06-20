@@ -206,8 +206,11 @@ Mapper {} is an empty Object as a Proxy. The following methods are available to 
                 if (p === 'dispose') {
                     return () => {
                         mappings?.clear();
-                        // TODO: why can metadata not be clear?
-                        // metadata?.clear();
+                        // metadataMap is intentionally left intact: strategies
+                        // cache which identifiers they've retrieved metadata for
+                        // (e.g. classes' metadataTracker), so clearing it here
+                        // without resetting that cache would leave re-created
+                        // mappings with no metadata.
                         metadataObjectMap?.clear();
                         recursiveDepth?.clear();
                         recursiveCount?.clear();
@@ -253,9 +256,8 @@ Mapper {} is an empty Object as a Proxy. The following methods are available to 
 
                         return strategy.postMap(
                             sourceObject,
-                            // seal destination so that consumers cannot add properties to it
-                            // or change the property descriptors. but they can still modify it
-                            // the ideal behavior is seal but the consumers might need to add/modify the object after map finishes
+                            // returned as-is: intentionally NOT sealed, so
+                            // consumers can add/modify the result after mapping
                             destination,
                             mapping
                         );
@@ -351,9 +353,8 @@ Mapper {} is an empty Object as a Proxy. The following methods are available to 
                             destinationArray.push(
                                 strategy.postMap(
                                     sourceObject,
-                                    // seal destination so that consumers cannot add properties to it
-                                    // or change the property descriptors. but they can still modify it
-                                    // the ideal behavior is seal but the consumers might need to add/modify the object after map finishes
+                                    // returned as-is: intentionally NOT sealed,
+                                    // so consumers can add/modify after mapping
                                     destination,
                                     mapping
                                 ) as TDestination

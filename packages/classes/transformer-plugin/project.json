@@ -2,18 +2,18 @@
     "name": "classes-transformer-plugin",
     "$schema": "../../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "packages/classes/transformer-plugin/src",
-    "tags": ["classes"],
+    "tags": [
+        "classes"
+    ],
     "targets": {
         "lint": {
             "executor": "@nx/eslint:lint"
         },
         "test": {
-            "executor": "@nx/jest:jest",
-            "outputs": [
-                "{workspaceRoot}/coverage/packages/classes/transformer-plugin"
-            ],
+            "executor": "nx:run-commands",
             "options": {
-                "jestConfig": "packages/classes/transformer-plugin/jest.config.cjs"
+                "command": "vitest run",
+                "cwd": "packages/classes/transformer-plugin"
             }
         }
     }

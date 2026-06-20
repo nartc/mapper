@@ -8,10 +8,10 @@
             "executor": "@nx/eslint:lint"
         },
         "test": {
-            "executor": "@nx/jest:jest",
-            "outputs": ["{workspaceRoot}/coverage/packages/integration-test"],
+            "executor": "nx:run-commands",
             "options": {
-                "jestConfig": "packages/integration-test/jest.config.ts"
+                "command": "vitest run",
+                "cwd": "packages/integration-test"
             }
         }
     }

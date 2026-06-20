@@ -2,18 +2,18 @@
     "name": "classes-mapped-types",
     "$schema": "../../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "packages/classes/mapped-types/src",
-    "tags": ["classes"],
+    "tags": [
+        "classes"
+    ],
     "targets": {
         "lint": {
             "executor": "@nx/eslint:lint"
         },
         "test": {
-            "executor": "@nx/jest:jest",
-            "outputs": [
-                "{workspaceRoot}/coverage/packages/classes/mapped-types"
-            ],
+            "executor": "nx:run-commands",
             "options": {
-                "jestConfig": "packages/classes/mapped-types/jest.config.cjs"
+                "command": "vitest run",
+                "cwd": "packages/classes/mapped-types"
             }
         }
     }

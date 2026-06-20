@@ -20,12 +20,10 @@
             "executor": "@nx/eslint:lint"
         },
         "test": {
-            "executor": "@nx/jest:jest",
-            "outputs": [
-                "{workspaceRoot}/coverage/packages/core"
-            ],
+            "executor": "nx:run-commands",
             "options": {
-                "jestConfig": "packages/core/jest.config.cjs"
+                "command": "vitest run",
+                "cwd": "packages/core"
             }
         },
         "publish": {

@@ -19,12 +19,10 @@
             "executor": "@nx/eslint:lint"
         },
         "test": {
-            "executor": "@nx/jest:jest",
-            "outputs": [
-                "{workspaceRoot}/coverage/packages/pojos"
-            ],
+            "executor": "nx:run-commands",
             "options": {
-                "jestConfig": "packages/pojos/jest.config.cjs"
+                "command": "vitest run",
+                "cwd": "packages/pojos"
             }
         },
         "publish": {

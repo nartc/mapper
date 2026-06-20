@@ -7,7 +7,9 @@
     "targets": {
         "build": {
             "executor": "@nx/rollup:rollup",
-            "outputs": ["{options.outputPath}"],
+            "outputs": [
+                "{options.outputPath}"
+            ],
             "options": {
                 "outputPath": "dist/packages/zod",
                 "main": "packages/zod/src/index.ts",
@@ -21,10 +23,10 @@
             "executor": "@nx/eslint:lint"
         },
         "test": {
-            "executor": "@nx/jest:jest",
-            "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+            "executor": "nx:run-commands",
             "options": {
-                "jestConfig": "packages/zod/jest.config.cjs"
+                "command": "vitest run",
+                "cwd": "packages/zod"
             }
         }
     }

@@ -19,12 +19,10 @@
             "executor": "@nx/eslint:lint"
         },
         "test": {
-            "executor": "@nx/jest:jest",
-            "outputs": [
-                "{workspaceRoot}/coverage/packages/nestjs"
-            ],
+            "executor": "nx:run-commands",
             "options": {
-                "jestConfig": "packages/nestjs/jest.config.cjs"
+                "command": "vitest run",
+                "cwd": "packages/nestjs"
             }
         },
         "publish": {

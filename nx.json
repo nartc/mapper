@@ -15,18 +15,9 @@
         "package-lib": {
             "cache": true
         },
-        "@nx/jest:jest": {
+        "test": {
             "inputs": ["default", "^prod"],
-            "cache": true,
-            "options": {
-                "passWithNoTests": true
-            },
-            "configurations": {
-                "ci": {
-                    "ci": true,
-                    "codeCoverage": true
-                }
-            }
+            "cache": true
         },
         "@nx/eslint:lint": {
             "inputs": [

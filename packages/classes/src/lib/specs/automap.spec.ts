@@ -3,8 +3,8 @@ import { AUTOMAP_PROPERTIES_METADATA_KEY } from '../keys';
 import { AutoMap } from '../automap';
 
 describe(AutoMap.name, () => {
-    const spiedReflectDefine = jest.spyOn(Reflect, 'defineMetadata');
-    const spiedReflectGet = jest.spyOn(Reflect, 'getMetadata');
+    const spiedReflectDefine = vi.spyOn(Reflect, 'defineMetadata');
+    const spiedReflectGet = vi.spyOn(Reflect, 'getMetadata');
 
     describe('primitives', () => {
         class Bar {

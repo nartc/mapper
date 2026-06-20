@@ -3,7 +3,7 @@ import { CamelCaseNamingConvention } from '@automapper/core';
 import { AutomapperModule } from '@automapper/nestjs';
 import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
-import * as request from 'supertest';
+import request from 'supertest';
 import { BarDto } from '../foo/foo';
 import { FooModule } from '../foo/foo.module';
 import { FooExtendDto } from './foo-extend';

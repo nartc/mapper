@@ -19,12 +19,10 @@
             "executor": "@nx/eslint:lint"
         },
         "test": {
-            "executor": "@nx/jest:jest",
-            "outputs": [
-                "{workspaceRoot}/coverage/packages/sequelize"
-            ],
+            "executor": "nx:run-commands",
             "options": {
-                "jestConfig": "packages/sequelize/jest.config.cjs"
+                "command": "vitest run",
+                "cwd": "packages/sequelize"
             }
         },
         "publish": {

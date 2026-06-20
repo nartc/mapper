@@ -30,6 +30,12 @@
             "files": ["*.js", "*.jsx"],
             "extends": ["plugin:@nx/javascript"],
             "rules": {}
+        },
+        {
+            "files": ["**/vitest.config.ts", "vitest.shared.ts"],
+            "rules": {
+                "@nx/enforce-module-boundaries": "off"
+            }
         }
     ]
 }

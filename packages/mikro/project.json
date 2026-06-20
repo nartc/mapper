@@ -19,12 +19,10 @@
             "executor": "@nx/eslint:lint"
         },
         "test": {
-            "executor": "@nx/jest:jest",
-            "outputs": [
-                "{workspaceRoot}/coverage/packages/mikro"
-            ],
+            "executor": "nx:run-commands",
             "options": {
-                "jestConfig": "packages/mikro/jest.config.cjs"
+                "command": "vitest run",
+                "cwd": "packages/mikro"
             }
         },
         "publish": {

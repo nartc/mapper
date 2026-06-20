@@ -374,23 +374,23 @@ export type MapDeferReturn<
     TDestination extends Dictionary<TDestination>,
     TSelectorReturn = SelectorReturn<TDestination>
 > = [
-    TransformationType.MapDefer,
-    DeferFunction<TSource, TDestination, TSelectorReturn>
+    type: TransformationType.MapDefer,
+    fn: DeferFunction<TSource, TDestination, TSelectorReturn>
 ];
 
 export type MapFromReturn<
     TSource extends Dictionary<TSource>,
     TDestination extends Dictionary<TDestination>,
     TSelectorReturn = SelectorReturn<TDestination>
-> = [TransformationType.MapFrom, Selector<TSource, TSelectorReturn>];
+> = [type: TransformationType.MapFrom, fn: Selector<TSource, TSelectorReturn>];
 
 export type MapWithReturn<
     TSource extends Dictionary<TSource>,
     TDestination extends Dictionary<TDestination>,
     TSelectorReturn = SelectorReturn<TDestination>
 > = [
-    TransformationType.MapWith,
-    (
+    type: TransformationType.MapWith,
+    fn: (
         sourceObj: TSource,
         mapper: Mapper,
         options?: MapOptions<TSource, TDestination>
@@ -406,29 +406,32 @@ export type ConditionReturn<
     TDestination extends Dictionary<TDestination>,
     TSelectorReturn = SelectorReturn<TDestination>
 > = [
-    TransformationType.Condition,
-    (source: TSource, sourceMemberPath: string[]) => TSelectorReturn
+    type: TransformationType.Condition,
+    fn: (source: TSource, sourceMemberPath: string[]) => TSelectorReturn
 ];
 
 export type FromValueReturn<
     TSource extends Dictionary<TSource>,
     TDestination extends Dictionary<TDestination>,
     TSelectorReturn = SelectorReturn<TDestination>
-> = [TransformationType.FromValue, () => TSelectorReturn];
+> = [type: TransformationType.FromValue, fn: () => TSelectorReturn];
 
 export type ConvertUsingReturn<
     TSource extends Dictionary<TSource>,
     TDestination extends Dictionary<TDestination>,
     TSelectorReturn = SelectorReturn<TDestination>
-> = [TransformationType.ConvertUsing, Selector<TSource, TSelectorReturn>];
+> = [
+    type: TransformationType.ConvertUsing,
+    fn: Selector<TSource, TSelectorReturn>
+];
 
 export type NullSubstitutionReturn<
     TSource extends Dictionary<TSource>,
     TDestination extends Dictionary<TDestination>,
     TSelectorReturn = SelectorReturn<TDestination>
 > = [
-    TransformationType.NullSubstitution,
-    (source: TSource, sourceMemberPath: string[]) => TSelectorReturn
+    type: TransformationType.NullSubstitution,
+    fn: (source: TSource, sourceMemberPath: string[]) => TSelectorReturn
 ];
 
 export type UndefinedSubstitutionReturn<
@@ -436,22 +439,25 @@ export type UndefinedSubstitutionReturn<
     TDestination extends Dictionary<TDestination>,
     TSelectorReturn = SelectorReturn<TDestination>
 > = [
-    TransformationType.UndefinedSubstitution,
-    (source: TSource, sourceMemberPath: string[]) => TSelectorReturn
+    type: TransformationType.UndefinedSubstitution,
+    fn: (source: TSource, sourceMemberPath: string[]) => TSelectorReturn
 ];
 
 export type IgnoreReturn<
     TSource extends Dictionary<TSource>,
     TDestination extends Dictionary<TDestination>
-> = [TransformationType.Ignore];
+> = [type: TransformationType.Ignore];
 
 export type MapWithArgumentsReturn<
     TSource extends Dictionary<TSource>,
     TDestination extends Dictionary<TDestination>,
     TSelectorReturn = SelectorReturn<TDestination>
 > = [
-    TransformationType.MapWithArguments,
-    (source: TSource, extraArguments: Record<string, unknown>) => TSelectorReturn
+    type: TransformationType.MapWithArguments,
+    fn: (
+        source: TSource,
+        extraArguments: Record<string, unknown>
+    ) => TSelectorReturn
 ];
 
 export type MapInitializeReturn<
@@ -459,9 +465,9 @@ export type MapInitializeReturn<
     TDestination extends Dictionary<TDestination>,
     TSelectorReturn = SelectorReturn<TDestination>
 > = [
-    TransformationType.MapInitialize,
-    Selector<TSource, TSelectorReturn>,
-    boolean?
+    type: TransformationType.MapInitialize,
+    fn: Selector<TSource, TSelectorReturn>,
+    isConverted?: boolean
 ];
 
 export const enum MappingTransformationClassId {
@@ -511,8 +517,8 @@ export const enum NestedMappingPairClassId {
 }
 
 export type NestedMappingPair = [
-    MetadataIdentifier | Primitive | Date,
-    MetadataIdentifier | Primitive | Date
+    destination: MetadataIdentifier | Primitive | Date,
+    source: MetadataIdentifier | Primitive | Date
 ];
 
 export const enum MappingClassId {

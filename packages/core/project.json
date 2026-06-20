@@ -3,11 +3,15 @@
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "packages/core/src",
     "projectType": "library",
-    "tags": ["core"],
+    "tags": [
+        "core"
+    ],
     "targets": {
         "package": {
             "executor": "nx:run-commands",
-            "outputs": ["{workspaceRoot}/dist/packages/core"],
+            "outputs": [
+                "{workspaceRoot}/dist/packages/core"
+            ],
             "options": {
                 "command": "node tools/scripts/build-packages.mjs core"
             }
@@ -17,7 +21,9 @@
         },
         "test": {
             "executor": "@nx/jest:jest",
-            "outputs": ["{workspaceRoot}/coverage/packages/core"],
+            "outputs": [
+                "{workspaceRoot}/coverage/packages/core"
+            ],
             "options": {
                 "jestConfig": "packages/core/jest.config.cjs"
             }
@@ -27,6 +33,12 @@
             "options": {
                 "command": "npm publish --tag alpha",
                 "cwd": "dist/packages/core"
+            }
+        },
+        "nx-release-publish": {
+            "executor": "@nx/js:release-publish",
+            "options": {
+                "packageRoot": "dist/packages/core"
             }
         }
     }

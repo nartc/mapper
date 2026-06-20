@@ -2,11 +2,15 @@
     "name": "sequelize",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "packages/sequelize/src",
-    "tags": ["sequelize"],
+    "tags": [
+        "sequelize"
+    ],
     "targets": {
         "package": {
             "executor": "nx:run-commands",
-            "outputs": ["{workspaceRoot}/dist/packages/sequelize"],
+            "outputs": [
+                "{workspaceRoot}/dist/packages/sequelize"
+            ],
             "options": {
                 "command": "node tools/scripts/build-packages.mjs sequelize"
             }
@@ -16,7 +20,9 @@
         },
         "test": {
             "executor": "@nx/jest:jest",
-            "outputs": ["{workspaceRoot}/coverage/packages/sequelize"],
+            "outputs": [
+                "{workspaceRoot}/coverage/packages/sequelize"
+            ],
             "options": {
                 "jestConfig": "packages/sequelize/jest.config.cjs"
             }
@@ -26,6 +32,12 @@
             "options": {
                 "command": "npm publish --tag alpha",
                 "cwd": "dist/packages/sequelize"
+            }
+        },
+        "nx-release-publish": {
+            "executor": "@nx/js:release-publish",
+            "options": {
+                "packageRoot": "dist/packages/sequelize"
             }
         }
     }

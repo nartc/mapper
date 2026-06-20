@@ -2,11 +2,15 @@
     "name": "mikro",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "packages/mikro/src",
-    "tags": ["mikro"],
+    "tags": [
+        "mikro"
+    ],
     "targets": {
         "package": {
             "executor": "nx:run-commands",
-            "outputs": ["{workspaceRoot}/dist/packages/mikro"],
+            "outputs": [
+                "{workspaceRoot}/dist/packages/mikro"
+            ],
             "options": {
                 "command": "node tools/scripts/build-packages.mjs mikro"
             }
@@ -16,7 +20,9 @@
         },
         "test": {
             "executor": "@nx/jest:jest",
-            "outputs": ["{workspaceRoot}/coverage/packages/mikro"],
+            "outputs": [
+                "{workspaceRoot}/coverage/packages/mikro"
+            ],
             "options": {
                 "jestConfig": "packages/mikro/jest.config.cjs"
             }
@@ -26,6 +32,12 @@
             "options": {
                 "command": "npm publish --tag alpha",
                 "cwd": "dist/packages/mikro"
+            }
+        },
+        "nx-release-publish": {
+            "executor": "@nx/js:release-publish",
+            "options": {
+                "packageRoot": "dist/packages/mikro"
             }
         }
     }

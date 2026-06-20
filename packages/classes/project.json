@@ -3,11 +3,15 @@
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "packages/classes/src",
     "projectType": "library",
-    "tags": ["classes"],
+    "tags": [
+        "classes"
+    ],
     "targets": {
         "package": {
             "executor": "nx:run-commands",
-            "outputs": ["{workspaceRoot}/dist/packages/classes"],
+            "outputs": [
+                "{workspaceRoot}/dist/packages/classes"
+            ],
             "options": {
                 "command": "node tools/scripts/build-packages.mjs classes"
             }
@@ -17,7 +21,9 @@
         },
         "test": {
             "executor": "@nx/jest:jest",
-            "outputs": ["{workspaceRoot}/coverage/packages/classes"],
+            "outputs": [
+                "{workspaceRoot}/coverage/packages/classes"
+            ],
             "options": {
                 "jestConfig": "packages/classes/jest.config.cjs"
             }
@@ -27,6 +33,12 @@
             "options": {
                 "command": "npm publish --tag alpha",
                 "cwd": "dist/packages/classes"
+            }
+        },
+        "nx-release-publish": {
+            "executor": "@nx/js:release-publish",
+            "options": {
+                "packageRoot": "dist/packages/classes"
             }
         }
     }

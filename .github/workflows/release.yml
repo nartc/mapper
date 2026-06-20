@@ -1,0 +1,59 @@
+name: Release
+
+on:
+    workflow_dispatch:
+        inputs:
+            first-release:
+                description: 'First release using the {projectName}@{version} tag scheme (no prior tags to diff against)'
+                type: boolean
+                default: false
+            dry-run:
+                description: 'Compute versions/changelogs without writing, tagging, or publishing'
+                type: boolean
+                default: false
+
+concurrency:
+    group: release
+    cancel-in-progress: false
+
+permissions:
+    contents: write # push version-bump commit + tags, create GitHub releases
+    id-token: write # npm provenance / OIDC trusted publishing
+
+jobs:
+    release:
+        name: nx release (alpha)
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0 # full history is required for conventional-commit version analysis
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: '22'
+                  registry-url: 'https://registry.npmjs.org'
+            - run: corepack enable
+            - run: pnpm install --frozen-lockfile
+
+            # 1. bump versions, write changelogs, tag, create GitHub releases — but do not publish yet
+            - name: Version + changelog + tag
+              run: >-
+                  pnpm exec nx release
+                  ${{ inputs.first-release && '--first-release' || '' }}
+                  ${{ inputs.dry-run && '--dry-run' || '' }}
+                  --skip-publish --yes
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+            # 2. build the dist artifacts with the freshly-bumped versions
+            - name: Build packages
+              if: ${{ !inputs.dry-run }}
+              run: pnpm run package
+
+            # 3. publish the built dist to npm under the alpha dist-tag with provenance
+            - name: Publish (alpha, provenance)
+              if: ${{ !inputs.dry-run }}
+              run: pnpm exec nx release publish --tag=alpha
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+                  NPM_CONFIG_PROVENANCE: true

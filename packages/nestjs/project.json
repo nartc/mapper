@@ -2,11 +2,15 @@
     "name": "nestjs",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "packages/nestjs/src",
-    "tags": ["nestjs"],
+    "tags": [
+        "nestjs"
+    ],
     "targets": {
         "package": {
             "executor": "nx:run-commands",
-            "outputs": ["{workspaceRoot}/dist/packages/nestjs"],
+            "outputs": [
+                "{workspaceRoot}/dist/packages/nestjs"
+            ],
             "options": {
                 "command": "node tools/scripts/build-packages.mjs nestjs"
             }
@@ -16,7 +20,9 @@
         },
         "test": {
             "executor": "@nx/jest:jest",
-            "outputs": ["{workspaceRoot}/coverage/packages/nestjs"],
+            "outputs": [
+                "{workspaceRoot}/coverage/packages/nestjs"
+            ],
             "options": {
                 "jestConfig": "packages/nestjs/jest.config.cjs"
             }
@@ -26,6 +32,12 @@
             "options": {
                 "command": "npm publish --tag alpha",
                 "cwd": "dist/packages/nestjs"
+            }
+        },
+        "nx-release-publish": {
+            "executor": "@nx/js:release-publish",
+            "options": {
+                "packageRoot": "dist/packages/nestjs"
             }
         }
     }

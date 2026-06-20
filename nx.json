@@ -38,6 +38,21 @@
             "cache": true
         }
     },
+    "release": {
+        "projects": ["core", "classes", "pojos", "nestjs", "mikro", "sequelize"],
+        "projectsRelationship": "independent",
+        "releaseTagPattern": "{projectName}@{version}",
+        "version": {
+            "conventionalCommits": true,
+            "preserveLocalDependencyProtocols": true
+        },
+        "changelog": {
+            "automaticFromRef": true,
+            "projectChangelogs": {
+                "createRelease": "github"
+            }
+        }
+    },
     "pluginsConfig": {
         "@nx/js": {
             "analyzeSourceFiles": true

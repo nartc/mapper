@@ -9,7 +9,9 @@
     },
     "dependencies": {
         "@automapper/core": "workspace:*",
-        "@automapper/pojos": "workspace:*"
+        "@automapper/classes": "workspace:*",
+        "@automapper/pojos": "workspace:*",
+        "reflect-metadata": "^0.2.0"
     },
     "devDependencies": {
         "mitata": "^1.0.0",

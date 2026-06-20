@@ -4,24 +4,12 @@
     "type": "module",
     "peerDependencies": {
         "@automapper/core": "latest",
-        "reflect-metadata": "~0.1.13"
+        "reflect-metadata": "^0.2.0"
     },
     "exports": {
-        ".": {
-            "types": "./src/index.d.ts",
-            "import": "./index.js",
-            "require": "./index.cjs"
-        },
-        "./transformer-plugin": {
-            "types": "./transformer-plugin/index.d.ts",
-            "import": "./transformer-plugin/index.js",
-            "require": "./transformer-plugin/index.cjs"
-        },
-        "./mapped-types": {
-            "types": "./mapped-types/index.d.ts",
-            "import": "./mapped-types/index.js",
-            "require": "./mapped-types/index.cjs"
-        }
+        ".": "./src/index.ts",
+        "./mapped-types": "./mapped-types/src/index.ts",
+        "./transformer-plugin": "./transformer-plugin/src/index.ts"
     },
     "sideEffects": false,
     "engines": {

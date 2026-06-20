@@ -5,7 +5,9 @@
         "moduleResolution": "bundler",
         "strict": true,
         "skipLibCheck": true,
-        "types": ["node"]
+        "experimentalDecorators": true,
+        "useDefineForClassFields": false,
+        "types": ["node", "reflect-metadata"]
     },
     "include": ["src/**/*.ts"]
 }

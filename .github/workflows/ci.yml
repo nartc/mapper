@@ -2,20 +2,41 @@ name: CI
 
 on:
     push:
-        branches:
-            - main
+        branches: [main]
     pull_request:
 
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
 jobs:
-    main:
-        name: Nx Cloud - Main Job
-        uses: nrwl/ci/.github/workflows/nx-cloud-main.yml@v0.8
-        with:
-            parallel-commands-on-agents: |
-                pnpm exec nx affected --target=test --parallel=3 --ci --code-coverage
-    #                pnpm exec nx affected --target=package --parallel=2
-    agents:
-        name: Nx Cloud - Agents
-        uses: nrwl/ci/.github/workflows/nx-cloud-agents.yml@v0.8
-        with:
-            number-of-agents: 3
+    verify:
+        name: lint · build · test (node ${{ matrix.node }})
+        runs-on: ubuntu-latest
+        strategy:
+            fail-fast: false
+            matrix:
+                node: ['20', '22']
+        steps:
+            - uses: actions/checkout@v4
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: ${{ matrix.node }}
+            - run: corepack enable
+            - run: pnpm install --frozen-lockfile
+            - run: pnpm run lint
+            - run: pnpm run package
+            - run: pnpm run test
+
+    package-contract:
+        name: publint + attw
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: '22'
+            - run: corepack enable
+            - run: pnpm install --frozen-lockfile
+            - run: pnpm run package
+            - run: pnpm run check:packages

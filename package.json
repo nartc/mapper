@@ -10,7 +10,9 @@
     "release": "dotenv release-it --",
     "release:beta": "dotenv release-it -- major --preRelease=beta",
     "test": "nx run-many --all --target=test --parallel",
+    "lint": "nx run-many --target=lint --parallel",
     "package": "nx run-many --target=package",
+    "check:packages": "node tools/scripts/check-packages.mjs",
     "publish": "nx run-many --target=publish --all --parallel"
   },
   "private": true,

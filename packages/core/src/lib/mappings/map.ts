@@ -11,7 +11,7 @@ import { MapFnClassId, TransformationType } from '../types';
 import { assertUnmappedProperties } from '../utils/assert-unmapped-properties';
 import { get } from '../utils/get';
 import { getMapping } from '../utils/get-mapping';
-import { isDateConstructor } from '../utils/is-date-constructor';
+import { isMappableIdentifier } from '../utils/is-mappable-identifier';
 import { isEmpty } from '../utils/is-empty';
 import { isPrimitiveConstructor } from '../utils/is-primitive-constructor';
 import { set, setMutate } from '../utils/set';
@@ -167,10 +167,8 @@ export function map<
         ] = propsToMap[i];
 
         let hasSameIdentifier =
-            !isPrimitiveConstructor(destinationMemberIdentifier) &&
-            !isDateConstructor(destinationMemberIdentifier) &&
-            !isPrimitiveConstructor(sourceMemberIdentifier) &&
-            !isDateConstructor(sourceMemberIdentifier) &&
+            isMappableIdentifier(destinationMemberIdentifier) &&
+            isMappableIdentifier(sourceMemberIdentifier) &&
             sourceMemberIdentifier === destinationMemberIdentifier;
 
         if (hasSameIdentifier) {

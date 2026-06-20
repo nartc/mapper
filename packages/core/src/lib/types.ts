@@ -64,6 +64,14 @@ export type NamingConventionInput =
           destination: NamingConvention;
       };
 
+// The `= any` generic defaults below (Selector/ValueSelector/Resolver/Converter
+// and ModelIdentifier/Constructor) are intentional, not laziness. AutoMapper is a
+// runtime, identifier-driven mapper whose types are routinely used without
+// explicit generics (`createMap(mapper, Source, Dest)` infers them); an `any`
+// default keeps that ergonomic and avoids forcing `unknown` casts through the
+// dynamic core, while concrete call sites still infer precise types. Data that
+// crosses the user boundary (extraArguments) is `unknown`, and return positions
+// are `unknown` rather than `any`.
 export type Selector<
     TObject extends Dictionary<TObject> = any,
     TReturnType = unknown
@@ -97,7 +105,7 @@ export interface Converter<
 export type MapCallback<
     TSource extends Dictionary<TSource>,
     TDestination extends Dictionary<TDestination>,
-    TExtraArgs extends Record<string, any> = Record<string, any>
+    TExtraArgs extends Record<string, unknown> = Record<string, unknown>
 > = (
     source: TSource,
     destination: TDestination,
@@ -107,7 +115,7 @@ export type MapCallback<
 export interface MapOptions<
     TSource extends Dictionary<TSource>,
     TDestination extends Dictionary<TDestination>,
-    TExtraArgs extends Record<string, any> = Record<string, any>
+    TExtraArgs extends Record<string, unknown> = Record<string, unknown>
 > {
     beforeMap?: MapCallback<TSource, TDestination, TExtraArgs>;
     afterMap?: MapCallback<TSource, TDestination, TExtraArgs>;
@@ -443,7 +451,7 @@ export type MapWithArgumentsReturn<
     TSelectorReturn = SelectorReturn<TDestination>
 > = [
     TransformationType.MapWithArguments,
-    (source: TSource, extraArguments: Record<string, any>) => TSelectorReturn
+    (source: TSource, extraArguments: Record<string, unknown>) => TSelectorReturn
 ];
 
 export type MapInitializeReturn<

@@ -23,7 +23,7 @@ export function mapMember<
     sourceObject: TSource,
     destinationObject: TDestination,
     destinationMemberPath: string[],
-    extraArgs: Record<string, any> | undefined,
+    extraArgs: Record<string, unknown> | undefined,
     mapper: Mapper,
     sourceMemberIdentifier?: MetadataIdentifier | Primitive | Date,
     destinationMemberIdentifier?: MetadataIdentifier | Primitive | Date

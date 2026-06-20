@@ -30,7 +30,7 @@ import {
     SyntaxKind,
     visitEachChild,
     visitNode,
-} from 'typescript/lib/tsserverlibrary';
+} from 'typescript';
 import {
     AUTOMAP_IGNORE_TAG,
     AUTOMAPPER_DECORATOR_NAME,

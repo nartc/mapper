@@ -1,13 +1,13 @@
 import automapperTransformerPlugin, {
     before,
 } from '@automapper/classes/transformer-plugin';
-import type { CompilerOptions } from 'typescript/lib/tsserverlibrary';
+import type { CompilerOptions } from 'typescript';
 import {
     createProgram,
     ModuleKind,
     ScriptTarget,
     transpileModule,
-} from 'typescript/lib/tsserverlibrary';
+} from 'typescript';
 import {
     compiledCreateSkillRequestDto,
     compiledSkillEntity,

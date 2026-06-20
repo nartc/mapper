@@ -34,9 +34,8 @@ const PACKAGES = [
     { dir: 'packages/zod', out: 'dist/packages/zod' },
 ];
 
-// Always external (compiler/runtime helpers); `typescript/lib/tsserverlibrary`
-// is a subpath specifier that `typescript` alone does not match.
-const ALWAYS_EXTERNAL = ['typescript', 'typescript/lib/tsserverlibrary', 'tslib'];
+// Always external (compiler/runtime helpers).
+const ALWAYS_EXTERNAL = ['typescript', 'tslib'];
 
 // Everything third-party lives in the ROOT package.json (deps + devDeps) since
 // this isn't a pnpm workspace yet; treat all of it as external so only each

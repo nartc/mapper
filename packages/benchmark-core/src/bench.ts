@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { createMap, createMapper } from '@automapper/core';
+import { createMap, createMapper, forMember, mapFrom } from '@automapper/core';
 import { AutoMap, classes } from '@automapper/classes';
 import { pojos, PojosMetadataMap } from '@automapper/pojos';
 import { bench, group, run } from 'mitata';
@@ -33,21 +33,47 @@ const profiles1000 = Array.from({ length: 1000 }, (_, i) => makeProfile(i));
 // ===========================================================================
 // pojos strategy
 // ===========================================================================
-PojosMetadataMap.create('Address', { street: String, city: String, zip: String });
-PojosMetadataMap.create('AddressDto', { street: String, city: String, zip: String });
+PojosMetadataMap.create('Address', {
+    street: String,
+    city: String,
+    zip: String,
+});
+PojosMetadataMap.create('AddressDto', {
+    street: String,
+    city: String,
+    zip: String,
+});
 PojosMetadataMap.create('User', {
-    firstName: String, lastName: String, email: String, age: Number,
-    active: Boolean, role: String, score: Number, createdAt: String,
+    firstName: String,
+    lastName: String,
+    email: String,
+    age: Number,
+    active: Boolean,
+    role: String,
+    score: Number,
+    createdAt: String,
 });
 PojosMetadataMap.create('UserDto', {
-    firstName: String, lastName: String, email: String, age: Number,
-    active: Boolean, role: String, score: Number, createdAt: String,
+    firstName: String,
+    lastName: String,
+    email: String,
+    age: Number,
+    active: Boolean,
+    role: String,
+    score: Number,
+    createdAt: String,
 });
 PojosMetadataMap.create('Profile', {
-    id: String, username: String, address: 'Address', tags: [String],
+    id: String,
+    username: String,
+    address: 'Address',
+    tags: [String],
 });
 PojosMetadataMap.create('ProfileDto', {
-    id: String, username: String, address: 'AddressDto', tags: [String],
+    id: String,
+    username: String,
+    address: 'AddressDto',
+    tags: [String],
 });
 
 const pojosMapper = createMapper({ strategyInitializer: pojos() });
@@ -112,19 +138,27 @@ createMap(classesMapper, Profile, ProfileDto);
 // ===========================================================================
 group('pojos / flat (8 primitive members)', () => {
     bench('map x1', () => pojosMapper.map(user, 'User', 'UserDto'));
-    bench('mapArray x1000', () => pojosMapper.mapArray(users1000, 'User', 'UserDto'));
+    bench('mapArray x1000', () =>
+        pojosMapper.mapArray(users1000, 'User', 'UserDto')
+    );
 });
 group('classes / flat (8 primitive members)', () => {
     bench('map x1', () => classesMapper.map(user, User, UserDto));
-    bench('mapArray x1000', () => classesMapper.mapArray(users1000, User, UserDto));
+    bench('mapArray x1000', () =>
+        classesMapper.mapArray(users1000, User, UserDto)
+    );
 });
 group('pojos / nested (object member + array)', () => {
     bench('map x1', () => pojosMapper.map(profile, 'Profile', 'ProfileDto'));
-    bench('mapArray x1000', () => pojosMapper.mapArray(profiles1000, 'Profile', 'ProfileDto'));
+    bench('mapArray x1000', () =>
+        pojosMapper.mapArray(profiles1000, 'Profile', 'ProfileDto')
+    );
 });
 group('classes / nested (object member + array)', () => {
     bench('map x1', () => classesMapper.map(profile, Profile, ProfileDto));
-    bench('mapArray x1000', () => classesMapper.mapArray(profiles1000, Profile, ProfileDto));
+    bench('mapArray x1000', () =>
+        classesMapper.mapArray(profiles1000, Profile, ProfileDto)
+    );
 });
 
 await run();

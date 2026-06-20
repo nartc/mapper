@@ -19,7 +19,7 @@ import {
     TypeFormatFlags,
     TypeNode,
     TypeReference,
-} from 'typescript/lib/tsserverlibrary';
+} from 'typescript';
 
 export function isFilenameMatched(
     patterns: string[],

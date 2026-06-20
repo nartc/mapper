@@ -6,9 +6,11 @@ import type {
     MapInitializeReturn,
     MapOptions,
     Mapping,
+    MemberMapReturn,
     MetadataIdentifier,
+    Primitive,
 } from '../types';
-import { MapFnClassId, TransformationType } from '../types';
+import { MapFnClassId, MappingClassId, TransformationType } from '../types';
 import { assertUnmappedProperties } from '../utils/assert-unmapped-properties';
 import { get } from '../utils/get';
 import { getMapping } from '../utils/get-mapping';
@@ -124,6 +126,87 @@ export function pushAsyncHook(value: unknown): void {
     }
 }
 
+// --- Compiled mapping plan -------------------------------------------------
+// Every property in a mapping's `properties` array is a positional tuple whose
+// shape is fixed at createMap time. The interpreter previously re-destructured
+// that nested tuple (with its default fallbacks) and rebuilt the configuredKeys
+// array on *every* map() call. Both are invariant per mapping, so we destructure
+// once into a flat descriptor list and cache it keyed by the (immutable)
+// properties array. `hasSameIdentifier` is intentionally NOT cached — it depends
+// on the mapper's mapping registry, which can grow after this mapping is created.
+interface CompiledMappingProperty<
+    TSource extends Dictionary<TSource>,
+    TDestination extends Dictionary<TDestination>
+> {
+    destinationMemberPath: string[];
+    transformationMapFn: MemberMapReturn<TSource, TDestination>;
+    transformationType: TransformationType;
+    transformationPreConditionPredicate?: (source: TSource) => boolean;
+    transformationPreConditionDefaultValue?: unknown;
+    destinationMemberIdentifier?: MetadataIdentifier | Primitive | Date;
+    sourceMemberIdentifier?: MetadataIdentifier | Primitive | Date;
+}
+
+interface CompiledMapping<
+    TSource extends Dictionary<TSource>,
+    TDestination extends Dictionary<TDestination>
+> {
+    props: CompiledMappingProperty<TSource, TDestination>[];
+    configuredKeys: string[];
+}
+
+const compiledMappingCache = new WeakMap<object, CompiledMapping<any, any>>();
+
+function getCompiledMapping<
+    TSource extends Dictionary<TSource>,
+    TDestination extends Dictionary<TDestination>
+>(
+    propsToMap: Mapping<TSource, TDestination>[MappingClassId.properties]
+): CompiledMapping<TSource, TDestination> {
+    const cached = compiledMappingCache.get(propsToMap);
+    if (cached !== undefined) {
+        return cached as CompiledMapping<TSource, TDestination>;
+    }
+
+    const props: CompiledMappingProperty<TSource, TDestination>[] = [];
+    const configuredKeys: string[] = [];
+
+    for (let i = 0, length = propsToMap.length; i < length; i++) {
+        const [
+            destinationMemberPath,
+            [
+                ,
+                [
+                    transformationMapFn,
+                    [
+                        transformationPreConditionPredicate,
+                        transformationPreConditionDefaultValue = undefined,
+                    ] = [],
+                ],
+            ],
+            [destinationMemberIdentifier, sourceMemberIdentifier] = [],
+        ] = propsToMap[i];
+
+        props.push({
+            destinationMemberPath,
+            transformationMapFn,
+            transformationType: transformationMapFn[MapFnClassId.type],
+            transformationPreConditionPredicate,
+            transformationPreConditionDefaultValue,
+            destinationMemberIdentifier,
+            sourceMemberIdentifier,
+        });
+        configuredKeys.push(destinationMemberPath[0]);
+    }
+
+    const compiled: CompiledMapping<TSource, TDestination> = {
+        props,
+        configuredKeys,
+    };
+    compiledMappingCache.set(propsToMap, compiled);
+    return compiled;
+}
+
 export function map<
     TSource extends Dictionary<TSource>,
     TDestination extends Dictionary<TDestination>
@@ -166,8 +249,10 @@ export function map<
     // get extraArguments
     const extraArguments = extraArgs?.(mapping, destination);
 
-    // initialize an array of keys that have already been configured
-    const configuredKeys: string[] = [];
+    // Pre-compiled (cached) property descriptors + the invariant set of keys
+    // that this mapping configures — destructured once per mapping, not per call.
+    const { props: compiledProps, configuredKeys } =
+        getCompiledMapping(propsToMap);
 
     if (!isMapArray) {
         const beforeMap = mapBeforeCallback ?? mappingBeforeCallback;
@@ -177,22 +262,16 @@ export function map<
     }
 
     // map
-    for (let i = 0, length = propsToMap.length; i < length; i++) {
-        // destructure mapping property
-        const [
+    for (let i = 0, length = compiledProps.length; i < length; i++) {
+        const {
             destinationMemberPath,
-            [
-                ,
-                [
-                    transformationMapFn,
-                    [
-                        transformationPreConditionPredicate,
-                        transformationPreConditionDefaultValue = undefined,
-                    ] = [],
-                ],
-            ],
-            [destinationMemberIdentifier, sourceMemberIdentifier] = [],
-        ] = propsToMap[i];
+            transformationMapFn,
+            transformationType,
+            transformationPreConditionPredicate,
+            transformationPreConditionDefaultValue,
+            destinationMemberIdentifier,
+            sourceMemberIdentifier,
+        } = compiledProps[i];
 
         let hasSameIdentifier =
             isMappableIdentifier(destinationMemberIdentifier) &&
@@ -231,9 +310,6 @@ export function map<
             }
         };
 
-        // This destination key is being configured. Push to configuredKeys array
-        configuredKeys.push(destinationMemberPath[0]);
-
         // Pre Condition check
         if (
             transformationPreConditionPredicate &&
@@ -244,10 +320,7 @@ export function map<
         }
 
         // Start with all the mapInitialize
-        if (
-            transformationMapFn[MapFnClassId.type] ===
-            TransformationType.MapInitialize
-        ) {
+        if (transformationType === TransformationType.MapInitialize) {
             const mapInitializedValue = (
                 transformationMapFn[MapFnClassId.fn] as MapInitializeReturn<
                     TSource,

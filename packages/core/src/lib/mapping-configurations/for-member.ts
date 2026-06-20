@@ -1,6 +1,4 @@
 import { createMappingUtil } from '../mappings/create-initial-mapping';
-import { createMap } from '../mappings/create-map';
-import { getMetadataMap } from '../symbols';
 import type {
     Dictionary,
     MappingConfiguration,
@@ -10,10 +8,8 @@ import type {
     Selector,
     SelectorReturn,
 } from '../types';
-import { MappingClassId, MetadataClassId, NestedMappingPair } from '../types';
+import { MappingClassId } from '../types';
 import { getMemberPath } from '../utils/get-member-path';
-import { getFlatteningPaths, getPath } from '../utils/get-path';
-import { isPrimitiveArrayEqual } from '../utils/is-primitive-array-equal';
 
 export function forMember<
     TSource extends Dictionary<TSource>,

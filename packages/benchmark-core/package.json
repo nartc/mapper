@@ -1,0 +1,18 @@
+{
+    "name": "@automapper/benchmark-core",
+    "version": "0.0.0",
+    "private": true,
+    "type": "module",
+    "description": "Benchmark harness for @automapper/core hot path (map / mapArray)",
+    "scripts": {
+        "bench": "tsx src/bench.ts"
+    },
+    "dependencies": {
+        "@automapper/core": "workspace:*",
+        "@automapper/pojos": "workspace:*"
+    },
+    "devDependencies": {
+        "mitata": "^1.0.0",
+        "tsx": "^4.19.0"
+    }
+}

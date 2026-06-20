@@ -64,7 +64,7 @@
     "ts-jest": "29.4.11",
     "ts-node": "10.9.1",
     "tsdown": "^0.22.3",
-    "typescript": "5.4.5"
+    "typescript": "~5.9.0"
   },
   "config": {
     "commitizen": {

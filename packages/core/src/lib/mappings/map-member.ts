@@ -13,8 +13,7 @@ import type {
     Primitive,
 } from '../types';
 import { MapFnClassId, TransformationType } from '../types';
-import { isDateConstructor } from '../utils/is-date-constructor';
-import { isPrimitiveConstructor } from '../utils/is-primitive-constructor';
+import { isMappableIdentifier } from '../utils/is-mappable-identifier';
 
 export function mapMember<
     TSource extends Dictionary<TSource>,
@@ -73,12 +72,9 @@ export function mapMember<
                 // primitive/date identifiers => no implicit (member) mapping.
                 // Computed lazily: only Condition/Null/Undefined reach this, so
                 // the other transformation types skip these predicate calls.
-                const shouldRunImplicitMap = !(
-                    isPrimitiveConstructor(sourceMemberIdentifier) ||
-                    isPrimitiveConstructor(destinationMemberIdentifier) ||
-                    isDateConstructor(sourceMemberIdentifier) ||
-                    isDateConstructor(destinationMemberIdentifier)
-                );
+                const shouldRunImplicitMap =
+                    isMappableIdentifier(sourceMemberIdentifier) &&
+                    isMappableIdentifier(destinationMemberIdentifier);
                 if (shouldRunImplicitMap) {
                     value = Array.isArray(value)
                         ? mapper.mapArray(

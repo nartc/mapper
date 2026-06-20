@@ -7,6 +7,7 @@ export * from './lib/utils/recursion';
 export * from './lib/utils/is-empty';
 export * from './lib/utils/is-primitive-constructor';
 export * from './lib/utils/is-date-constructor';
+export * from './lib/utils/is-mappable-identifier';
 export * from './lib/utils/set';
 export * from './lib/utils/logger';
 

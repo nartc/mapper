@@ -1,5 +1,7 @@
-// Build all publishable @automapper packages with tsdown (dual cjs/esm + dual dts)
-// and generate contract-correct dist package.json (exports map, main/module/types).
+// Build all publishable @automapper packages with tsdown (ESM-only: .mjs + .d.mts)
+// and generate the dist package.json (ESM exports map, module/types). 9.0 dropped
+// the CommonJS output — `require('@automapper/...')` no longer resolves (the v8
+// line stays dual/CJS for consumers that need it).
 // Usage: node tools/scripts/build-packages.mjs [pkgName ...]   (default: all)
 import { execFileSync } from 'node:child_process';
 import { readFileSync, writeFileSync, copyFileSync, mkdirSync, existsSync, rmSync } from 'node:fs';
@@ -67,7 +69,7 @@ const only = process.argv.slice(2);
 const targets = only.length ? PACKAGES.filter((p) => only.includes(p.dir.split('/').pop())) : PACKAGES;
 
 function tsdown({ entry, outDir, external, tsconfig }) {
-    const args = [entry, '--format', 'cjs,esm', '--dts', '--out-dir', outDir];
+    const args = [entry, '--format', 'esm', '--dts', '--out-dir', outDir];
     for (const e of external) args.push('--external', e);
     if (tsconfig) args.push('--tsconfig', tsconfig);
     execFileSync(TSDOWN, args, {
@@ -77,9 +79,10 @@ function tsdown({ entry, outDir, external, tsconfig }) {
     });
 }
 
+// ESM-only conditions: no `require` branch (CommonJS is intentionally dropped in 9.0).
 const condFor = (prefix) => ({
-    import: { types: `${prefix}index.d.mts`, default: `${prefix}index.mjs` },
-    require: { types: `${prefix}index.d.cts`, default: `${prefix}index.cjs` },
+    types: `${prefix}index.d.mts`,
+    import: `${prefix}index.mjs`,
 });
 
 for (const pkg of targets) {
@@ -119,10 +122,11 @@ for (const pkg of targets) {
         );
     }
 
-    // dist package.json: preserve metadata, set entry points + exports map
-    manifest.main = './index.cjs';
+    // dist package.json: preserve metadata, set ESM entry points + exports map.
+    // No `main` — there is no CommonJS entry; `module`/`types` point at the ESM build.
+    delete manifest.main;
     manifest.module = './index.mjs';
-    manifest.types = './index.d.cts';
+    manifest.types = './index.d.mts';
     manifest.exports = exportsMap;
     writeFileSync(resolve(outAbs, 'package.json'), JSON.stringify(manifest, null, 2) + '\n');
 

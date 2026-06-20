@@ -10,7 +10,12 @@
             "cache": true
         },
         "package": {
-            "cache": true
+            "cache": true,
+            "inputs": [
+                "default",
+                "^default",
+                "{workspaceRoot}/tools/scripts/build-packages.mjs"
+            ]
         },
         "package-lib": {
             "cache": true

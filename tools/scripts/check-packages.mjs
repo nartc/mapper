@@ -24,10 +24,13 @@ for (const p of PKGS) {
         failed = true;
     }
     try {
-        execFileSync('npx', ['-y', '@arethetypeswrong/cli@latest', '--pack', dir], {
-            cwd: ROOT,
-            stdio: 'inherit',
-        });
+        // 9.0 is ESM-only by design: a CJS `require()` resolving to ESM is the
+        // intended behavior (consumers use dynamic import), so ignore that rule.
+        execFileSync(
+            'npx',
+            ['-y', '@arethetypeswrong/cli@latest', '--pack', dir, '--ignore-rules', 'cjs-resolves-to-esm'],
+            { cwd: ROOT, stdio: 'inherit' }
+        );
     } catch {
         failed = true;
     }

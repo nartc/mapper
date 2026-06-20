@@ -97,6 +97,33 @@ interface MapParameter<
     isMapArray?: boolean;
 }
 
+// The synchronous map engine invokes before/after callbacks fire-and-forget.
+// When a callback is async it returns a promise that would otherwise be dropped;
+// mapAsync() opens a sink here so it can collect and genuinely await those
+// promises instead of approximating with setTimeout.
+let asyncHookSink: Promise<unknown>[] | null = null;
+
+export function collectAsyncHooks<T>(fn: () => T): [T, Promise<unknown>[]] {
+    const previous = asyncHookSink;
+    const sink: Promise<unknown>[] = [];
+    asyncHookSink = sink;
+    try {
+        return [fn(), sink];
+    } finally {
+        asyncHookSink = previous;
+    }
+}
+
+export function pushAsyncHook(value: unknown): void {
+    if (
+        asyncHookSink !== null &&
+        value != null &&
+        typeof (value as { then?: unknown }).then === 'function'
+    ) {
+        asyncHookSink.push(value as Promise<unknown>);
+    }
+}
+
 export function map<
     TSource extends Dictionary<TSource>,
     TDestination extends Dictionary<TDestination>
@@ -145,7 +172,7 @@ export function map<
     if (!isMapArray) {
         const beforeMap = mapBeforeCallback ?? mappingBeforeCallback;
         if (beforeMap) {
-            beforeMap(sourceObject, destination, extraArguments);
+            pushAsyncHook(beforeMap(sourceObject, destination, extraArguments));
         }
     }
 
@@ -344,7 +371,7 @@ export function map<
     if (!isMapArray) {
         const afterMap = mapAfterCallback ?? mappingAfterCallback;
         if (afterMap) {
-            afterMap(sourceObject, destination, extraArguments);
+            pushAsyncHook(afterMap(sourceObject, destination, extraArguments));
         }
     }
 

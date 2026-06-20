@@ -157,6 +157,15 @@ export interface Mapper {
         options?: MapOptions<TSource, TSource>
     ): TSource;
 
+    /**
+     * Maps `sourceObject` and resolves with the result.
+     *
+     * @remarks
+     * Member mapping itself is synchronous, but any `beforeMap`/`afterMap`
+     * callbacks that return a promise are collected and awaited before the
+     * returned promise resolves. Use the synchronous {@link map} when no async
+     * callbacks are involved.
+     */
     mapAsync<
         TSource extends Dictionary<TSource>,
         TDestination extends Dictionary<TDestination>

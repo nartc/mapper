@@ -1,13 +1,13 @@
 {
     "name": "@automapper/core",
-    "version": "0.0.0",
+    "version": "9.0.0-alpha.0",
     "type": "module",
     "sideEffects": false,
     "exports": {
         ".": "./src/index.ts"
     },
     "engines": {
-        "node": ">=16.0.0"
+        "node": ">=20.0.0"
     },
     "publishConfig": {
         "access": "public"

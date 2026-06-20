@@ -1,9 +1,9 @@
 {
     "name": "@automapper/classes",
-    "version": "0.0.0",
+    "version": "9.0.0-alpha.0",
     "type": "module",
     "peerDependencies": {
-        "@automapper/core": "latest",
+        "@automapper/core": "^9.0.0-alpha.0",
         "reflect-metadata": "^0.2.0"
     },
     "exports": {
@@ -13,7 +13,7 @@
     },
     "sideEffects": false,
     "engines": {
-        "node": ">=16.0.0"
+        "node": ">=20.0.0"
     },
     "publishConfig": {
         "access": "public"

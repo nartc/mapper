@@ -183,8 +183,8 @@ importers:
   packages/classes:
     dependencies:
       '@automapper/core':
-        specifier: latest
-        version: 8.8.1
+        specifier: ^9.0.0-alpha.0
+        version: link:../core
       reflect-metadata:
         specifier: 0.2.2
         version: 0.2.2
@@ -194,8 +194,8 @@ importers:
   packages/pojos:
     dependencies:
       '@automapper/core':
-        specifier: latest
-        version: 8.8.1
+        specifier: ^9.0.0-alpha.0
+        version: link:../core
 
 packages:
 
@@ -238,11 +238,6 @@ packages:
       '@csstools/css-tokenizer': 3.0.4
       lru-cache: 10.4.3
     dev: true
-
-  /@automapper/core@8.8.1:
-    resolution: {integrity: sha512-VIRULNAImqaTojp8zqhVGVimjxjriawqZWlemooWh5B5tX2XlgA6icPrQBQh+M9wY8IVQipBTOcr338N9lf8RA==}
-    engines: {node: '>=16.0.0'}
-    dev: false
 
   /@babel/code-frame@7.29.7:
     resolution: {integrity: sha512-Aup7aUOfpbAUg2ROOJN6Iw5f9DMBlzu0mIkm/malLQFN/YQgO48wCj0Kxa3sEHJvPVFg7siR+qRInwXd2qhQKw==}

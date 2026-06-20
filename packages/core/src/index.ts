@@ -1,5 +1,6 @@
 export * from './lib/core';
 export * from './lib/types';
+export * from './lib/errors';
 export * from './lib/default-strategy-initializer-options';
 
 export * from './lib/utils/recursion';

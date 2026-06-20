@@ -1,3 +1,4 @@
+import { MapMemberError } from '../errors';
 import { getErrorHandler } from '../symbols';
 import type {
     Constructor,
@@ -189,15 +190,19 @@ export function map<
             try {
                 return setMemberFn(destinationMemberPath, destination)(valFn());
             } catch (originalError) {
-                const errorMessage = `
-Error at "${destinationMemberPath}" on ${
+                const destinationName =
                     (destinationIdentifier as Constructor)['prototype']
-                        ?.constructor?.name || destinationIdentifier.toString()
-                } (${JSON.stringify(destination)})
----------------------------------------------------------------------
-Original error: ${originalError}`;
-                errorHandler.handle(errorMessage);
-                throw new Error(errorMessage);
+                        ?.constructor?.name ||
+                    destinationIdentifier.toString();
+                // note: do NOT JSON.stringify(destination) here — it throws on
+                // circular references and floods logs on large objects.
+                const error = new MapMemberError(
+                    String(destinationMemberPath),
+                    destinationName,
+                    originalError
+                );
+                errorHandler.handle(error.message);
+                throw error;
             }
         };
 

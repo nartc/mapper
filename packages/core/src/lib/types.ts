@@ -521,6 +521,34 @@ export type NestedMappingPair = [
     source: MetadataIdentifier | Primitive | Date
 ];
 
+// --- Compiled mapping plan -------------------------------------------------
+// A mapping's `properties` are positional tuples whose shape is fixed at
+// createMap time. Rather than re-destructuring that nested tuple on every
+// map() call, we destructure once into a flat descriptor list and hang it on
+// the mapping itself (MappingClassId.compiledPlan), built eagerly at createMap.
+// `sourceMemberIdentifier`/`destinationMemberIdentifier` equality that depends
+// on the mapper's registry (which can grow later) is NOT baked in here.
+export interface CompiledMappingProperty<
+    TSource extends Dictionary<TSource> = any,
+    TDestination extends Dictionary<TDestination> = any
+> {
+    destinationMemberPath: string[];
+    transformationMapFn: MemberMapReturn<TSource, TDestination>;
+    transformationType: TransformationType;
+    transformationPreConditionPredicate?: (source: TSource) => boolean;
+    transformationPreConditionDefaultValue?: unknown;
+    destinationMemberIdentifier?: MetadataIdentifier | Primitive | Date;
+    sourceMemberIdentifier?: MetadataIdentifier | Primitive | Date;
+}
+
+export interface CompiledMapping<
+    TSource extends Dictionary<TSource> = any,
+    TDestination extends Dictionary<TDestination> = any
+> {
+    props: CompiledMappingProperty<TSource, TDestination>[];
+    configuredKeys: string[];
+}
+
 export const enum MappingClassId {
     identifiers,
     identifierMetadata,
@@ -531,6 +559,7 @@ export const enum MappingClassId {
     typeConverters,
     callbacks,
     namingConventions,
+    compiledPlan,
 }
 
 export type Mapping<
@@ -592,7 +621,9 @@ export type Mapping<
     namingConventions?: [
         source: NamingConvention,
         destination: NamingConvention
-    ]
+    ],
+    // built eagerly at createMap; flat per-property descriptors consumed by map()
+    compiledPlan?: CompiledMapping<TSource, TDestination>
 ];
 
 export type DataMap = Map<symbol, number>;

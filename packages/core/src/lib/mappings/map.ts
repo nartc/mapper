@@ -7,9 +7,7 @@ import type {
     MapInitializeReturn,
     MapOptions,
     Mapping,
-    MemberMapReturn,
     MetadataIdentifier,
-    Primitive,
 } from '../types';
 import { MapFnClassId, MappingClassId, TransformationType } from '../types';
 import { assertUnmappedProperties } from '../utils/assert-unmapped-properties';
@@ -19,6 +17,7 @@ import { isMappableIdentifier } from '../utils/is-mappable-identifier';
 import { isEmpty } from '../utils/is-empty';
 import { isPrimitiveConstructor } from '../utils/is-primitive-constructor';
 import { set, setMutate } from '../utils/set';
+import { compileMapping } from './compile-mapping';
 import { mapMember } from './map-member';
 
 function setMemberReturnFn<TDestination extends Dictionary<TDestination> = any>(
@@ -174,87 +173,6 @@ export function deferAsyncAfterMap(fn: () => unknown): void {
     }
 }
 
-// --- Compiled mapping plan -------------------------------------------------
-// Every property in a mapping's `properties` array is a positional tuple whose
-// shape is fixed at createMap time. The interpreter previously re-destructured
-// that nested tuple (with its default fallbacks) and rebuilt the configuredKeys
-// array on *every* map() call. Both are invariant per mapping, so we destructure
-// once into a flat descriptor list and cache it keyed by the (immutable)
-// properties array. `hasSameIdentifier` is intentionally NOT cached — it depends
-// on the mapper's mapping registry, which can grow after this mapping is created.
-interface CompiledMappingProperty<
-    TSource extends Dictionary<TSource>,
-    TDestination extends Dictionary<TDestination>
-> {
-    destinationMemberPath: string[];
-    transformationMapFn: MemberMapReturn<TSource, TDestination>;
-    transformationType: TransformationType;
-    transformationPreConditionPredicate?: (source: TSource) => boolean;
-    transformationPreConditionDefaultValue?: unknown;
-    destinationMemberIdentifier?: MetadataIdentifier | Primitive | Date;
-    sourceMemberIdentifier?: MetadataIdentifier | Primitive | Date;
-}
-
-interface CompiledMapping<
-    TSource extends Dictionary<TSource>,
-    TDestination extends Dictionary<TDestination>
-> {
-    props: CompiledMappingProperty<TSource, TDestination>[];
-    configuredKeys: string[];
-}
-
-const compiledMappingCache = new WeakMap<object, CompiledMapping<any, any>>();
-
-function getCompiledMapping<
-    TSource extends Dictionary<TSource>,
-    TDestination extends Dictionary<TDestination>
->(
-    propsToMap: Mapping<TSource, TDestination>[MappingClassId.properties]
-): CompiledMapping<TSource, TDestination> {
-    const cached = compiledMappingCache.get(propsToMap);
-    if (cached !== undefined) {
-        return cached as CompiledMapping<TSource, TDestination>;
-    }
-
-    const props: CompiledMappingProperty<TSource, TDestination>[] = [];
-    const configuredKeys: string[] = [];
-
-    for (let i = 0, length = propsToMap.length; i < length; i++) {
-        const [
-            destinationMemberPath,
-            [
-                ,
-                [
-                    transformationMapFn,
-                    [
-                        transformationPreConditionPredicate,
-                        transformationPreConditionDefaultValue = undefined,
-                    ] = [],
-                ],
-            ],
-            [destinationMemberIdentifier, sourceMemberIdentifier] = [],
-        ] = propsToMap[i];
-
-        props.push({
-            destinationMemberPath,
-            transformationMapFn,
-            transformationType: transformationMapFn[MapFnClassId.type],
-            transformationPreConditionPredicate,
-            transformationPreConditionDefaultValue,
-            destinationMemberIdentifier,
-            sourceMemberIdentifier,
-        });
-        configuredKeys.push(destinationMemberPath[0]);
-    }
-
-    const compiled: CompiledMapping<TSource, TDestination> = {
-        props,
-        configuredKeys,
-    };
-    compiledMappingCache.set(propsToMap, compiled);
-    return compiled;
-}
-
 // Wrap a member failure (sync throw or async rejection) as MapMemberError and
 // route it through the mapper's error handler. Module-level so the hot map loop
 // allocates no per-member closure for it.
@@ -320,10 +238,15 @@ export function map<
     // get extraArguments
     const extraArguments = extraArgs?.(mapping, destination);
 
-    // Pre-compiled (cached) property descriptors + the invariant set of keys
-    // that this mapping configures — destructured once per mapping, not per call.
-    const { props: compiledProps, configuredKeys } =
-        getCompiledMapping(propsToMap);
+    // Flat per-property descriptors + the invariant set of configured keys.
+    // Built eagerly at createMap and hung on the mapping; the lazy fallback only
+    // fires for a mapping constructed outside the normal createMap path.
+    let compiledPlan = mapping[MappingClassId.compiledPlan];
+    if (compiledPlan === undefined) {
+        compiledPlan = compileMapping(propsToMap);
+        mapping[MappingClassId.compiledPlan] = compiledPlan;
+    }
+    const { props: compiledProps, configuredKeys } = compiledPlan;
 
     if (!isMapArray) {
         const beforeMap = mapBeforeCallback ?? mappingBeforeCallback;

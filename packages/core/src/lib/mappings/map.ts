@@ -3,6 +3,7 @@ import { getErrorHandler } from '../symbols';
 import type {
     Constructor,
     Dictionary,
+    ErrorHandler,
     MapInitializeReturn,
     MapOptions,
     Mapping,
@@ -99,30 +100,77 @@ interface MapParameter<
     isMapArray?: boolean;
 }
 
-// The synchronous map engine invokes before/after callbacks fire-and-forget.
-// When a callback is async it returns a promise that would otherwise be dropped;
-// mapAsync() opens a sink here so it can collect and genuinely await those
-// promises instead of approximating with setTimeout.
-let asyncHookSink: Promise<unknown>[] | null = null;
+// TRUE async support. The map engine itself is synchronous, but
+// mapAsync()/mapArrayAsync()/mutate(Array)Async() run it inside an "async
+// context" so they can await work that only resolves later:
+//   - async member resolvers (mapFrom/convertUsing/mapWith/... returning a
+//     promise): the resolved value is assigned once it settles, instead of a
+//     Promise leaking onto the destination;
+//   - async before-map callbacks: collected and awaited;
+//   - after-map callbacks: DEFERRED until members have settled, so they observe
+//     a fully-mapped destination (and are awaited too if async).
+// In the synchronous path the context is null and behaviour/throughput are
+// unchanged (one null-check per member).
+export interface AsyncMapContext {
+    // member-value + before-map promises, awaited before the deferred after-maps
+    pending: Promise<unknown>[];
+    // after-map thunks, run in collection order (depth-first) once pending settles
+    deferredAfterMaps: Array<() => unknown>;
+}
 
-export function collectAsyncHooks<T>(fn: () => T): [T, Promise<unknown>[]] {
-    const previous = asyncHookSink;
-    const sink: Promise<unknown>[] = [];
-    asyncHookSink = sink;
+let asyncMapContext: AsyncMapContext | null = null;
+
+export function isAsyncMapActive(): boolean {
+    return asyncMapContext !== null;
+}
+
+export function isThenable(value: unknown): value is Promise<unknown> {
+    return (
+        value != null &&
+        typeof (value as { then?: unknown }).then === 'function'
+    );
+}
+
+// Run a synchronous map() call inside a fresh async context and hand back the
+// context. Nested map() calls share whichever context is active, so a nested
+// map's async members/after-maps are collected by the outermost mapAsync().
+export function runAsyncMap<T>(fn: () => T): [T, AsyncMapContext] {
+    const previous = asyncMapContext;
+    const context: AsyncMapContext = { pending: [], deferredAfterMaps: [] };
+    asyncMapContext = context;
     try {
-        return [fn(), sink];
+        return [fn(), context];
     } finally {
-        asyncHookSink = previous;
+        asyncMapContext = previous;
     }
 }
 
-export function pushAsyncHook(value: unknown): void {
-    if (
-        asyncHookSink !== null &&
-        value != null &&
-        typeof (value as { then?: unknown }).then === 'function'
-    ) {
-        asyncHookSink.push(value as Promise<unknown>);
+// Await everything a context collected: pending member/before-map promises
+// first, then the deferred after-maps (sequentially; each may be async).
+export async function settleAsyncMap(context: AsyncMapContext): Promise<void> {
+    if (context.pending.length) {
+        await Promise.all(context.pending);
+    }
+    for (let i = 0, len = context.deferredAfterMaps.length; i < len; i++) {
+        const result = context.deferredAfterMaps[i]();
+        if (isThenable(result)) await result;
+    }
+}
+
+// Collect a promise (e.g. an async before-map) to await before after-maps run.
+export function pushAsyncPending(value: unknown): void {
+    if (asyncMapContext !== null && isThenable(value)) {
+        asyncMapContext.pending.push(value as Promise<unknown>);
+    }
+}
+
+// Defer an after-map (array-level or mapping-level) past member resolution when
+// running async; runs it immediately when synchronous.
+export function deferAsyncAfterMap(fn: () => unknown): void {
+    if (asyncMapContext !== null) {
+        asyncMapContext.deferredAfterMaps.push(fn);
+    } else {
+        fn();
     }
 }
 
@@ -207,6 +255,29 @@ function getCompiledMapping<
     return compiled;
 }
 
+// Wrap a member failure (sync throw or async rejection) as MapMemberError and
+// route it through the mapper's error handler. Module-level so the hot map loop
+// allocates no per-member closure for it.
+function makeMemberError(
+    destinationMemberPath: string[],
+    destinationIdentifier: MetadataIdentifier,
+    errorHandler: ErrorHandler,
+    originalError: unknown
+): MapMemberError {
+    const destinationName =
+        (destinationIdentifier as Constructor)['prototype']?.constructor
+            ?.name || destinationIdentifier.toString();
+    // note: do NOT JSON.stringify(destination) here — it throws on circular
+    // references and floods logs on large objects.
+    const error = new MapMemberError(
+        String(destinationMemberPath),
+        destinationName,
+        originalError
+    );
+    errorHandler.handle(error.message);
+    return error;
+}
+
 export function map<
     TSource extends Dictionary<TSource>,
     TDestination extends Dictionary<TDestination>
@@ -257,7 +328,9 @@ export function map<
     if (!isMapArray) {
         const beforeMap = mapBeforeCallback ?? mappingBeforeCallback;
         if (beforeMap) {
-            pushAsyncHook(beforeMap(sourceObject, destination, extraArguments));
+            pushAsyncPending(
+                beforeMap(sourceObject, destination, extraArguments)
+            );
         }
     }
 
@@ -289,24 +362,38 @@ export function map<
             );
         }
 
-        // Set up a shortcut function to set destinationMemberPath on destination with value as argument
+        // Set up a shortcut function to set destinationMemberPath on destination
+        // with the value as argument. In an async context a thenable value is
+        // awaited and the *resolved* value is assigned (instead of the promise).
+        // Errors (sync throw or async rejection) wrap via the module-level
+        // makeMemberError — no per-member closure on the hot path.
         const setMember = (valFn: () => unknown) => {
             try {
-                return setMemberFn(destinationMemberPath, destination)(valFn());
+                const value = valFn();
+                const setValue = setMemberFn(destinationMemberPath, destination);
+                if (asyncMapContext !== null && isThenable(value)) {
+                    asyncMapContext.pending.push(
+                        Promise.resolve(value)
+                            .then(setValue)
+                            .catch((originalError) => {
+                                throw makeMemberError(
+                                    destinationMemberPath,
+                                    destinationIdentifier,
+                                    errorHandler,
+                                    originalError
+                                );
+                            })
+                    );
+                    return;
+                }
+                return setValue(value);
             } catch (originalError) {
-                const destinationName =
-                    (destinationIdentifier as Constructor)['prototype']
-                        ?.constructor?.name ||
-                    destinationIdentifier.toString();
-                // note: do NOT JSON.stringify(destination) here — it throws on
-                // circular references and floods logs on large objects.
-                const error = new MapMemberError(
-                    String(destinationMemberPath),
-                    destinationName,
+                throw makeMemberError(
+                    destinationMemberPath,
+                    destinationIdentifier,
+                    errorHandler,
                     originalError
                 );
-                errorHandler.handle(error.message);
-                throw error;
             }
         };
 
@@ -444,7 +531,9 @@ export function map<
     if (!isMapArray) {
         const afterMap = mapAfterCallback ?? mappingAfterCallback;
         if (afterMap) {
-            pushAsyncHook(afterMap(sourceObject, destination, extraArguments));
+            deferAsyncAfterMap(() =>
+                afterMap(sourceObject, destination, extraArguments)
+            );
         }
     }
 

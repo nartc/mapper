@@ -1,8 +1,10 @@
 import {
-    collectAsyncHooks,
+    deferAsyncAfterMap,
     mapMutate,
     mapReturn,
-    pushAsyncHook,
+    pushAsyncPending,
+    runAsyncMap,
+    settleAsyncMap,
 } from './mappings/map';
 import {
     CUSTOM_NODE_INSPECT,
@@ -187,9 +189,10 @@ export function createMapper({
                 | MapOptions<TSource, TDestination>,
             options?: MapOptions<TSource, TDestination>
         ): Promise<TDestination> {
-            // Mapping is synchronous, but before/after callbacks may be async —
-            // collect any promises they return and genuinely await them.
-            const [result, asyncHooks] = collectAsyncHooks(() =>
+            // Run the synchronous engine inside an async context, then await any
+            // async member resolvers / before-map, and finally the deferred
+            // after-maps — so the resolved Promise carries a fully-mapped result.
+            const [result, asyncContext] = runAsyncMap(() =>
                 mapper.map(
                     sourceObject,
                     sourceIdentifier,
@@ -197,9 +200,7 @@ export function createMapper({
                     options
                 )
             );
-            return asyncHooks.length
-                ? Promise.all(asyncHooks).then(() => result)
-                : Promise.resolve(result);
+            return settleAsyncMap(asyncContext).then(() => result);
         },
 
         mapArray<
@@ -231,7 +232,7 @@ export function createMapper({
                 {}) as MapOptions<TSource[], TDestination[]>;
 
             if (beforeMap) {
-                pushAsyncHook(beforeMap(sourceArray, []));
+                pushAsyncPending(beforeMap(sourceArray, []));
             }
 
             const destinationArray: TDestination[] = [];
@@ -264,7 +265,9 @@ export function createMapper({
             }
 
             if (afterMap) {
-                pushAsyncHook(afterMap(sourceArray, destinationArray));
+                deferAsyncAfterMap(() =>
+                    afterMap(sourceArray, destinationArray)
+                );
             }
 
             return destinationArray;
@@ -281,7 +284,7 @@ export function createMapper({
                 | MapOptions<TSource[], TDestination[]>,
             options?: MapOptions<TSource[], TDestination[]>
         ): Promise<TDestination[]> {
-            const [result, asyncHooks] = collectAsyncHooks(() =>
+            const [result, asyncContext] = runAsyncMap(() =>
                 mapper.mapArray(
                     sourceArray,
                     sourceIdentifier,
@@ -289,9 +292,7 @@ export function createMapper({
                     options
                 )
             );
-            return asyncHooks.length
-                ? Promise.all(asyncHooks).then(() => result)
-                : Promise.resolve(result);
+            return settleAsyncMap(asyncContext).then(() => result);
         },
 
         mutate<
@@ -344,7 +345,7 @@ export function createMapper({
                 | MapOptions<TSource, TDestination>,
             options?: MapOptions<TSource, TDestination>
         ): Promise<void> {
-            const [, asyncHooks] = collectAsyncHooks(() =>
+            const [, asyncContext] = runAsyncMap(() =>
                 mapper.mutate(
                     sourceObject,
                     destinationObject,
@@ -353,9 +354,7 @@ export function createMapper({
                     options
                 )
             );
-            return asyncHooks.length
-                ? Promise.all(asyncHooks).then(() => undefined)
-                : Promise.resolve();
+            return settleAsyncMap(asyncContext);
         },
 
         mutateArray<
@@ -388,7 +387,7 @@ export function createMapper({
                 {}) as MapOptions<TSource[], TDestination[]>;
 
             if (beforeMap) {
-                pushAsyncHook(beforeMap(sourceArray, destinationArray));
+                pushAsyncPending(beforeMap(sourceArray, destinationArray));
             }
 
             for (let i = 0, length = sourceArray.length; i < length; i++) {
@@ -413,7 +412,9 @@ export function createMapper({
             }
 
             if (afterMap) {
-                pushAsyncHook(afterMap(sourceArray, destinationArray));
+                deferAsyncAfterMap(() =>
+                    afterMap(sourceArray, destinationArray)
+                );
             }
         },
 
@@ -429,7 +430,7 @@ export function createMapper({
                 | MapOptions<TSource[], TDestination[]>,
             options?: MapOptions<TSource[], TDestination[]>
         ): Promise<void> {
-            const [, asyncHooks] = collectAsyncHooks(() =>
+            const [, asyncContext] = runAsyncMap(() =>
                 mapper.mutateArray(
                     sourceArray,
                     destinationArray,
@@ -438,9 +439,7 @@ export function createMapper({
                     options
                 )
             );
-            return asyncHooks.length
-                ? Promise.all(asyncHooks).then(() => undefined)
-                : Promise.resolve();
+            return settleAsyncMap(asyncContext);
         },
 
         dispose(): void {

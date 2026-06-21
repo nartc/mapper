@@ -8,15 +8,15 @@ import { MapFnClassId, MappingClassId } from '../types';
 
 // Destructure a mapping's positional `properties` tuples once into a flat
 // descriptor list (plus the invariant set of configured destination keys).
-// Called eagerly at createMap time; the result is stored on the mapping at
-// MappingClassId.compiledPlan and read directly by the map() hot loop, so no
-// per-call re-destructuring (and no WeakMap probe) happens.
+// Called eagerly at createMap time (via buildMapPlan, which also attaches the
+// compiled steps); the result is stored on the mapping and read directly by the
+// map() hot loop, so no per-call re-destructuring (and no WeakMap probe) happens.
 export function compileMapping<
     TSource extends Dictionary<TSource>,
     TDestination extends Dictionary<TDestination>
 >(
     propsToMap: Mapping<TSource, TDestination>[MappingClassId.properties]
-): CompiledMapping<TSource, TDestination> {
+): Omit<CompiledMapping<TSource, TDestination>, 'steps'> {
     const props: CompiledMappingProperty<TSource, TDestination>[] = [];
     const configuredKeys: string[] = [];
 

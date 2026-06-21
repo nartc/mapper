@@ -14,8 +14,8 @@ import type {
 } from '../types';
 import { MappingClassId } from '../types';
 import { storeMetadata } from '../utils/store-metadata';
-import { compileMapping } from './compile-mapping';
 import { createInitialMapping } from './create-initial-mapping';
+import { buildMapPlan } from './map';
 
 export function createMap<TSource extends Dictionary<TSource>>(
     mapper: Mapper,
@@ -108,9 +108,9 @@ export function createMap<
             ) as MappingConfiguration[]
     );
 
-    // properties are finalized — compile the flat per-property plan once, now,
-    // so map() never has to re-destructure the positional tuples at runtime.
-    mapping[MappingClassId.compiledPlan] = compileMapping(
+    // properties are finalized — compile the per-property step plan once, now,
+    // so map() never has to re-inspect the positional tuples at runtime.
+    mapping[MappingClassId.compiledPlan] = buildMapPlan(
         mapping[MappingClassId.properties]
     );
 

@@ -1,10 +1,13 @@
 import { MapMemberError } from '../errors';
 import { getErrorHandler } from '../symbols';
 import type {
+    CompiledMapping,
+    CompiledMappingProperty,
     Constructor,
     Dictionary,
     ErrorHandler,
     MapInitializeReturn,
+    Mapper,
     MapOptions,
     Mapping,
     MetadataIdentifier,
@@ -196,6 +199,303 @@ function makeMemberError(
     return error;
 }
 
+// Per-call state handed to each compiled step. Built once per map() call; the
+// step closures capture everything that is invariant per mapping (paths,
+// transformation fns, precomputed identifier flags) at compile time and read
+// only the call-varying bits from here.
+interface MapStepContext<
+    TSource extends Dictionary<TSource>,
+    TDestination extends Dictionary<TDestination>
+> {
+    sourceObject: TSource;
+    destination: TDestination;
+    extraArguments: Record<string, unknown> | undefined;
+    extraArgs: MapOptions<TSource, TDestination>['extraArgs'];
+    mapper: Mapper;
+    errorHandler: ErrorHandler;
+    destinationIdentifier: MetadataIdentifier;
+    setMemberFn: MapParameter<TSource, TDestination>['setMemberFn'];
+    getMemberFn: MapParameter<TSource, TDestination>['getMemberFn'];
+}
+
+type MapStep<
+    TSource extends Dictionary<TSource>,
+    TDestination extends Dictionary<TDestination>
+> = (context: MapStepContext<TSource, TDestination>) => void;
+
+// Assign an already-resolved value onto the destination. In an async context a
+// thenable is awaited and the *resolved* value assigned (the promise is collected
+// as pending); async rejections wrap via makeMemberError. NO try/catch here — the
+// caller wraps sync throws so the failure is wrapped exactly once.
+function assignResolved<
+    TSource extends Dictionary<TSource>,
+    TDestination extends Dictionary<TDestination>
+>(
+    value: unknown,
+    destinationMemberPath: string[],
+    ctx: MapStepContext<TSource, TDestination>
+): void {
+    const setValue = ctx.setMemberFn(destinationMemberPath, ctx.destination);
+    if (asyncMapContext !== null && isThenable(value)) {
+        asyncMapContext.pending.push(
+            Promise.resolve(value)
+                .then(setValue)
+                .catch((originalError) => {
+                    throw makeMemberError(
+                        destinationMemberPath,
+                        ctx.destinationIdentifier,
+                        ctx.errorHandler,
+                        originalError
+                    );
+                })
+        );
+        return;
+    }
+    setValue(value);
+}
+
+// Assign a precomputed value (its production already happened, or cannot throw).
+function assignMember<
+    TSource extends Dictionary<TSource>,
+    TDestination extends Dictionary<TDestination>
+>(
+    value: unknown,
+    destinationMemberPath: string[],
+    ctx: MapStepContext<TSource, TDestination>
+): void {
+    try {
+        assignResolved(value, destinationMemberPath, ctx);
+    } catch (originalError) {
+        throw makeMemberError(
+            destinationMemberPath,
+            ctx.destinationIdentifier,
+            ctx.errorHandler,
+            originalError
+        );
+    }
+}
+
+// Produce a value (which may throw — nested map(), mapMember(), etc.) then assign
+// it. A single try wraps both production and assignment, matching the original
+// per-member setMember semantics (one MapMemberError wrap on failure).
+function setMemberValue<
+    TSource extends Dictionary<TSource>,
+    TDestination extends Dictionary<TDestination>
+>(
+    valueFn: () => unknown,
+    destinationMemberPath: string[],
+    ctx: MapStepContext<TSource, TDestination>
+): void {
+    try {
+        assignResolved(valueFn(), destinationMemberPath, ctx);
+    } catch (originalError) {
+        throw makeMemberError(
+            destinationMemberPath,
+            ctx.destinationIdentifier,
+            ctx.errorHandler,
+            originalError
+        );
+    }
+}
+
+// Specialize one property into a step closure. The TransformationType switch and
+// the per-mapping-invariant identifier equality are resolved here, once, so the
+// map() loop is straight-line `steps[i](context)`.
+function compileStep<
+    TSource extends Dictionary<TSource>,
+    TDestination extends Dictionary<TDestination>
+>(
+    prop: CompiledMappingProperty<TSource, TDestination>
+): MapStep<TSource, TDestination> {
+    const {
+        destinationMemberPath,
+        transformationMapFn,
+        transformationType,
+        transformationPreConditionPredicate: preCond,
+        transformationPreConditionDefaultValue: preCondDefault,
+        destinationMemberIdentifier,
+        sourceMemberIdentifier,
+    } = prop;
+
+    // Everything that isn't MapInitialize dispatches through mapMember(); no
+    // identifier/value-shape inspection is needed here.
+    if (transformationType !== TransformationType.MapInitialize) {
+        return (ctx) => {
+            if (preCond && !preCond(ctx.sourceObject)) {
+                assignMember(preCondDefault, destinationMemberPath, ctx);
+                return;
+            }
+            setMemberValue(
+                () =>
+                    mapMember(
+                        transformationMapFn,
+                        ctx.sourceObject,
+                        ctx.destination,
+                        destinationMemberPath,
+                        ctx.extraArguments,
+                        ctx.mapper,
+                        sourceMemberIdentifier,
+                        destinationMemberIdentifier
+                    ),
+                destinationMemberPath,
+                ctx
+            );
+        };
+    }
+
+    // MapInitialize. Hoist the invariant pieces: the initialize fn, the
+    // typeConverter flag, the identifier-equality *candidate* (the registry
+    // lookup that completes it stays at runtime), and whether the destination
+    // identifier is a primitive constructor.
+    const mapInitializeFn = transformationMapFn[
+        MapFnClassId.fn
+    ] as MapInitializeReturn<TSource, TDestination>[MapFnClassId.fn];
+    const isTypedConverted = transformationMapFn[MapFnClassId.isConverted];
+    const sameIdentifierCandidate =
+        isMappableIdentifier(destinationMemberIdentifier) &&
+        isMappableIdentifier(sourceMemberIdentifier) &&
+        sourceMemberIdentifier === destinationMemberIdentifier;
+    const destinationIsPrimitive = isPrimitiveConstructor(
+        destinationMemberIdentifier
+    );
+
+    return (ctx) => {
+        if (preCond && !preCond(ctx.sourceObject)) {
+            assignMember(preCondDefault, destinationMemberPath, ctx);
+            return;
+        }
+
+        const mapInitializedValue = mapInitializeFn(ctx.sourceObject);
+
+        // a same identifier that isn't a primitive/Date AND has no mapping of
+        // its own — assigned as-is. getMapping is only consulted when the
+        // (invariant) candidate held, so primitives never hit the registry.
+        const hasSameIdentifier =
+            sameIdentifierCandidate &&
+            !getMapping(
+                ctx.mapper,
+                sourceMemberIdentifier as MetadataIdentifier,
+                destinationMemberIdentifier as MetadataIdentifier,
+                true
+            );
+
+        if (
+            mapInitializedValue == null ||
+            mapInitializedValue instanceof Date ||
+            Object.prototype.toString
+                .call(mapInitializedValue)
+                .slice(8, -1) === 'File' ||
+            hasSameIdentifier ||
+            isTypedConverted
+        ) {
+            assignMember(mapInitializedValue, destinationMemberPath, ctx);
+            return;
+        }
+
+        if (Array.isArray(mapInitializedValue)) {
+            const [first] = mapInitializedValue;
+            // primitive/Date/File element array — shallow copy
+            if (
+                typeof first !== 'object' ||
+                first instanceof Date ||
+                Object.prototype.toString.call(first).slice(8, -1) === 'File'
+            ) {
+                assignMember(
+                    mapInitializedValue.slice(),
+                    destinationMemberPath,
+                    ctx
+                );
+                return;
+            }
+
+            if (isEmpty(first)) {
+                assignMember([], destinationMemberPath, ctx);
+                return;
+            }
+
+            // object array but destination identifier is primitive — skip
+            if (destinationIsPrimitive) {
+                return;
+            }
+
+            setMemberValue(
+                () =>
+                    mapInitializedValue.map((each) =>
+                        mapReturn(
+                            getMapping(
+                                ctx.mapper,
+                                sourceMemberIdentifier as MetadataIdentifier,
+                                destinationMemberIdentifier as MetadataIdentifier
+                            ),
+                            each,
+                            { extraArgs: ctx.extraArgs }
+                        )
+                    ),
+                destinationMemberPath,
+                ctx
+            );
+            return;
+        }
+
+        if (typeof mapInitializedValue === 'object') {
+            const nestedMapping = getMapping(
+                ctx.mapper,
+                sourceMemberIdentifier as MetadataIdentifier,
+                destinationMemberIdentifier as MetadataIdentifier
+            );
+
+            // nested mutate — recurse directly (unwrapped, as before)
+            if (ctx.getMemberFn) {
+                const memberValue = ctx.getMemberFn(destinationMemberPath);
+                if (memberValue !== undefined) {
+                    map({
+                        sourceObject: mapInitializedValue as TSource,
+                        mapping: nestedMapping,
+                        options: { extraArgs: ctx.extraArgs },
+                        setMemberFn: setMemberMutateFn(memberValue),
+                        getMemberFn: getMemberMutateFn(memberValue),
+                    });
+                }
+                return;
+            }
+
+            setMemberValue(
+                () =>
+                    map({
+                        mapping: nestedMapping,
+                        sourceObject: mapInitializedValue as TSource,
+                        options: { extraArgs: ctx.extraArgs },
+                        setMemberFn: setMemberReturnFn,
+                    }),
+                destinationMemberPath,
+                ctx
+            );
+            return;
+        }
+
+        // primitive
+        assignMember(mapInitializedValue, destinationMemberPath, ctx);
+    };
+}
+
+// Build the full compiled plan for a mapping's properties: flat descriptors,
+// configured keys, and the specialized step closures. Called once at createMap.
+export function buildMapPlan<
+    TSource extends Dictionary<TSource>,
+    TDestination extends Dictionary<TDestination>
+>(
+    propsToMap: Mapping<TSource, TDestination>[MappingClassId.properties]
+): CompiledMapping<TSource, TDestination> {
+    const { props, configuredKeys } = compileMapping<TSource, TDestination>(
+        propsToMap
+    );
+    const steps: MapStep<TSource, TDestination>[] = new Array(props.length);
+    for (let i = 0, length = props.length; i < length; i++) {
+        steps[i] = compileStep(props[i]);
+    }
+    return { props, configuredKeys, steps };
+}
+
 export function map<
     TSource extends Dictionary<TSource>,
     TDestination extends Dictionary<TDestination>
@@ -238,15 +538,15 @@ export function map<
     // get extraArguments
     const extraArguments = extraArgs?.(mapping, destination);
 
-    // Flat per-property descriptors + the invariant set of configured keys.
-    // Built eagerly at createMap and hung on the mapping; the lazy fallback only
-    // fires for a mapping constructed outside the normal createMap path.
+    // Compiled plan (specialized step closures + configured keys). Built eagerly
+    // at createMap and hung on the mapping; the lazy fallback only fires for a
+    // mapping constructed outside the normal createMap path.
     let compiledPlan = mapping[MappingClassId.compiledPlan];
     if (compiledPlan === undefined) {
-        compiledPlan = compileMapping(propsToMap);
+        compiledPlan = buildMapPlan(propsToMap);
         mapping[MappingClassId.compiledPlan] = compiledPlan;
     }
-    const { props: compiledProps, configuredKeys } = compiledPlan;
+    const { steps, configuredKeys } = compiledPlan;
 
     if (!isMapArray) {
         const beforeMap = mapBeforeCallback ?? mappingBeforeCallback;
@@ -257,198 +557,21 @@ export function map<
         }
     }
 
-    // map
-    for (let i = 0, length = compiledProps.length; i < length; i++) {
-        const {
-            destinationMemberPath,
-            transformationMapFn,
-            transformationType,
-            transformationPreConditionPredicate,
-            transformationPreConditionDefaultValue,
-            destinationMemberIdentifier,
-            sourceMemberIdentifier,
-        } = compiledProps[i];
-
-        let hasSameIdentifier =
-            isMappableIdentifier(destinationMemberIdentifier) &&
-            isMappableIdentifier(sourceMemberIdentifier) &&
-            sourceMemberIdentifier === destinationMemberIdentifier;
-
-        if (hasSameIdentifier) {
-            // at this point, we have a same identifier that aren't primitive or date
-            // we then check if there is a mapping created for this identifier
-            hasSameIdentifier = !getMapping(
-                mapper,
-                sourceMemberIdentifier as MetadataIdentifier,
-                destinationMemberIdentifier as MetadataIdentifier,
-                true
-            );
-        }
-
-        // Set up a shortcut function to set destinationMemberPath on destination
-        // with the value as argument. In an async context a thenable value is
-        // awaited and the *resolved* value is assigned (instead of the promise).
-        // Errors (sync throw or async rejection) wrap via the module-level
-        // makeMemberError — no per-member closure on the hot path.
-        const setMember = (valFn: () => unknown) => {
-            try {
-                const value = valFn();
-                const setValue = setMemberFn(destinationMemberPath, destination);
-                if (asyncMapContext !== null && isThenable(value)) {
-                    asyncMapContext.pending.push(
-                        Promise.resolve(value)
-                            .then(setValue)
-                            .catch((originalError) => {
-                                throw makeMemberError(
-                                    destinationMemberPath,
-                                    destinationIdentifier,
-                                    errorHandler,
-                                    originalError
-                                );
-                            })
-                    );
-                    return;
-                }
-                return setValue(value);
-            } catch (originalError) {
-                throw makeMemberError(
-                    destinationMemberPath,
-                    destinationIdentifier,
-                    errorHandler,
-                    originalError
-                );
-            }
-        };
-
-        // Pre Condition check
-        if (
-            transformationPreConditionPredicate &&
-            !transformationPreConditionPredicate(sourceObject)
-        ) {
-            setMember(() => transformationPreConditionDefaultValue);
-            continue;
-        }
-
-        // Start with all the mapInitialize
-        if (transformationType === TransformationType.MapInitialize) {
-            const mapInitializedValue = (
-                transformationMapFn[MapFnClassId.fn] as MapInitializeReturn<
-                    TSource,
-                    TDestination
-                >[MapFnClassId.fn]
-            )(sourceObject);
-            const isTypedConverted =
-                transformationMapFn[MapFnClassId.isConverted];
-
-            // if null/undefined
-            // if isDate, isFile
-            // if it has same identifier that are not primitives or Date
-            // if the initialized value was converted with typeConverter
-            if (
-                mapInitializedValue == null ||
-                mapInitializedValue instanceof Date ||
-                Object.prototype.toString
-                    .call(mapInitializedValue)
-                    .slice(8, -1) === 'File' ||
-                hasSameIdentifier ||
-                isTypedConverted
-            ) {
-                setMember(() => mapInitializedValue);
-                continue;
-            }
-
-            // if isArray
-            if (Array.isArray(mapInitializedValue)) {
-                const [first] = mapInitializedValue;
-                // if first item is a primitive
-                if (
-                    typeof first !== 'object' ||
-                    first instanceof Date ||
-                    Object.prototype.toString.call(first).slice(8, -1) ===
-                        'File'
-                ) {
-                    setMember(() => mapInitializedValue.slice());
-                    continue;
-                }
-
-                // if first is empty
-                if (isEmpty(first)) {
-                    setMember(() => []);
-                    continue;
-                }
-
-                // if first is object but the destination identifier is a primitive
-                // then skip completely
-                if (isPrimitiveConstructor(destinationMemberIdentifier)) {
-                    continue;
-                }
-
-                setMember(() =>
-                    mapInitializedValue.map((each) =>
-                        mapReturn(
-                            getMapping(
-                                mapper,
-                                sourceMemberIdentifier as MetadataIdentifier,
-                                destinationMemberIdentifier as MetadataIdentifier
-                            ),
-                            each,
-                            { extraArgs }
-                        )
-                    )
-                );
-                continue;
-            }
-
-            if (typeof mapInitializedValue === 'object') {
-                const nestedMapping = getMapping(
-                    mapper,
-                    sourceMemberIdentifier as MetadataIdentifier,
-                    destinationMemberIdentifier as MetadataIdentifier
-                );
-
-                // nested mutate
-                if (getMemberFn) {
-                    const memberValue = getMemberFn(destinationMemberPath);
-                    if (memberValue !== undefined) {
-                        map({
-                            sourceObject: mapInitializedValue as TSource,
-                            mapping: nestedMapping,
-                            options: { extraArgs },
-                            setMemberFn: setMemberMutateFn(memberValue),
-                            getMemberFn: getMemberMutateFn(memberValue),
-                        });
-                    }
-                    continue;
-                }
-
-                setMember(() =>
-                    map({
-                        mapping: nestedMapping,
-                        sourceObject: mapInitializedValue as TSource,
-                        options: { extraArgs },
-                        setMemberFn: setMemberReturnFn,
-                    })
-                );
-                continue;
-            }
-
-            // if is primitive
-            setMember(() => mapInitializedValue);
-            continue;
-        }
-
-        setMember(() =>
-            mapMember(
-                transformationMapFn,
-                sourceObject,
-                destination,
-                destinationMemberPath,
-                extraArguments,
-                mapper,
-                sourceMemberIdentifier,
-                destinationMemberIdentifier
-            )
-        );
+    // Build the per-call context once, then run each compiled step. All the
+    // per-member branching/destructuring was resolved at compile time.
+    const context: MapStepContext<TSource, TDestination> = {
+        sourceObject,
+        destination,
+        extraArguments,
+        extraArgs,
+        mapper,
+        errorHandler,
+        destinationIdentifier,
+        setMemberFn,
+        getMemberFn,
+    };
+    for (let i = 0, length = steps.length; i < length; i++) {
+        (steps[i] as MapStep<TSource, TDestination>)(context);
     }
 
     if (!isMapArray) {

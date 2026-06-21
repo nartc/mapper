@@ -541,12 +541,18 @@ export interface CompiledMappingProperty<
     sourceMemberIdentifier?: MetadataIdentifier | Primitive | Date;
 }
 
+// A single property's work, specialized once at compile time so the map() loop
+// runs `steps[i](context)` with no per-member type switch or descriptor
+// destructuring. The context is map()-internal; kept opaque here.
+export type CompiledMapStep = (context: any) => void;
+
 export interface CompiledMapping<
     TSource extends Dictionary<TSource> = any,
     TDestination extends Dictionary<TDestination> = any
 > {
     props: CompiledMappingProperty<TSource, TDestination>[];
     configuredKeys: string[];
+    steps: CompiledMapStep[];
 }
 
 export const enum MappingClassId {

@@ -10,7 +10,7 @@ import type {
 // mappings that target the same destination).
 const writableKeysCache = new WeakMap<object, string[]>();
 
-export function getWritableKeys(destinationMetadata: object): string[] {
+function getWritableKeys(destinationMetadata: object): string[] {
     let keys = writableKeysCache.get(destinationMetadata);
     if (keys === undefined) {
         keys = Object.keys(destinationMetadata).filter(

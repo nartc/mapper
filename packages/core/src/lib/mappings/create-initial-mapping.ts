@@ -28,6 +28,7 @@ import {
 import { getFlatteningPaths, getPath } from '../utils/get-path';
 import { getPathRecursive } from '../utils/get-path-recursive';
 import { isPrimitiveArrayEqual } from '../utils/is-primitive-array-equal';
+import { pathKey } from '../utils/path-key';
 
 export function createInitialMapping<
     TSource extends Dictionary<TSource>,
@@ -93,13 +94,12 @@ export function createInitialMapping<
     const mappingProperties = mapping[MappingClassId.properties];
     const customMappingProperties = mapping[MappingClassId.customProperties];
     const hasCustomMappingProperties = customMappingProperties.length > 0;
-    // Configured destination paths as a Set (null-byte-joined; collision-proof
-    // for string segments, equivalent to isPrimitiveArrayEqual). Built once
-    // instead of an O(custom) .some scan per destination path.
+    // Configured destination paths as a Set, built once instead of an O(custom)
+    // .some scan per destination path.
     const customPropertyKeys = hasCustomMappingProperties
         ? new Set(
               customMappingProperties.map((property) =>
-                  property[MappingPropertiesClassId.path].join('\0')
+                  pathKey(property[MappingPropertiesClassId.path])
               )
           )
         : null;
@@ -113,10 +113,7 @@ export function createInitialMapping<
 
         // a forMember (custom mapping configuration) already exists for this
         // destination path — skip it
-        if (
-            customPropertyKeys &&
-            customPropertyKeys.has(destinationPath.join('\0'))
-        ) {
+        if (customPropertyKeys && customPropertyKeys.has(pathKey(destinationPath))) {
             continue;
         }
 
@@ -240,7 +237,7 @@ export function createMappingUtil<
         if (meta.length <= METADATA_INDEX_GATE) return null;
         const index = new Map<string, Metadata>();
         for (let i = 0, len = meta.length; i < len; i++) {
-            const key = meta[i][MetadataClassId.propertyKeys].join('\0');
+            const key = pathKey(meta[i][MetadataClassId.propertyKeys]);
             if (!index.has(key)) index.set(key, meta[i]);
         }
         return index;
@@ -255,7 +252,7 @@ export function createMappingUtil<
         ) => {
             const index = type === 'source' ? sourceIndex : destinationIndex;
             if (index) {
-                return index.get(memberPath.join('\0'));
+                return index.get(pathKey(memberPath));
             }
             return (
                 type === 'source' ? sourceMetadata : destinationMetadata

@@ -26,13 +26,18 @@ import { set, setMutate } from '../utils/set';
 import { compileMapping } from './compile-mapping';
 import { mapMember } from './map-member';
 
-// Well-known Symbol.toStringTag, hoisted once. A genuine File (and any
-// File-like value) reports `[object File]`, i.e. its [Symbol.toStringTag] is
-// 'File'; reading the symbol directly avoids the per-call
-// `Object.prototype.toString.call(x).slice(8, -1)` string allocation on the hot
-// MapInitialize path. NOT constructor.name, which false-positives on user
-// classes named "File".
+// A genuine File (and any File-like value) reports `[object File]`, i.e. its
+// [Symbol.toStringTag] is 'File'. Reading the symbol directly avoids the
+// per-call `Object.prototype.toString.call(x).slice(8, -1)` string allocation on
+// the hot MapInitialize path, and is null-safe for the array-element check. NOT
+// constructor.name, which false-positives on user classes named "File".
 const FILE_TAG = Symbol.toStringTag;
+function isFileTagged(value: unknown): boolean {
+    return (
+        value != null &&
+        (value as Record<symbol, unknown>)[FILE_TAG] === 'File'
+    );
+}
 
 // Direct per-member writer (no per-member closure). set() returns the same
 // object reference for a non-empty path, so the old `destination = set(...)`
@@ -303,6 +308,8 @@ interface MapStepContext<
     destination: TDestination;
     extraArguments: Record<string, unknown> | undefined;
     extraArgs: MapOptions<TSource, TDestination>['extraArgs'];
+    // reusable options object for nested map() recursion (shared, read-only)
+    nestedOptions: MapOptions<TSource, TDestination>;
     mapper: Mapper;
     errorHandler: ErrorHandler;
     destinationIdentifier: MetadataIdentifier;
@@ -555,8 +562,7 @@ function compileStep<
 
         if (
             mapInitializedValue instanceof Date ||
-            (mapInitializedValue as Record<symbol, unknown>)[FILE_TAG] ===
-                'File' ||
+            isFileTagged(mapInitializedValue) ||
             hasSameIdentifier ||
             isTypedConverted
         ) {
@@ -566,12 +572,12 @@ function compileStep<
 
         if (Array.isArray(mapInitializedValue)) {
             const [first] = mapInitializedValue;
-            // primitive/Date/File element array — shallow copy. The optional
-            // chain keeps a null first element on the empty/isEmpty path below.
+            // primitive/Date/File element array — shallow copy. isFileTagged is
+            // null-safe, so a null first element falls through to isEmpty below.
             if (
                 typeof first !== 'object' ||
                 first instanceof Date ||
-                (first as Record<symbol, unknown> | null)?.[FILE_TAG] === 'File'
+                isFileTagged(first)
             ) {
                 assignMember(
                     mapInitializedValue.slice(),
@@ -601,7 +607,7 @@ function compileStep<
                                 destinationMemberIdentifier as MetadataIdentifier
                             ),
                             each,
-                            { extraArgs: ctx.extraArgs }
+                            ctx.nestedOptions
                         )
                     ),
                 destinationMemberPath,
@@ -626,7 +632,7 @@ function compileStep<
                 map({
                     sourceObject: mapInitializedValue as TSource,
                     mapping: nestedMapping,
-                    options: { extraArgs: ctx.extraArgs },
+                    options: ctx.nestedOptions,
                     setMemberFn: setMemberMutateFn(memberValue),
                     getMemberFn: getMemberMutateFn(memberValue),
                 });
@@ -639,7 +645,7 @@ function compileStep<
                 map({
                     mapping: nestedMapping,
                     sourceObject: mapInitializedValue as TSource,
-                    options: { extraArgs: ctx.extraArgs },
+                    options: ctx.nestedOptions,
                     setMemberFn: setMemberReturnFn,
                 }),
             destinationMemberPath,
@@ -718,6 +724,12 @@ export function map<
     // get extraArguments
     const extraArguments = extraArgs?.(mapping, destination);
 
+    // One options object reused by every nested map() (object members,
+    // object-array elements, nested mutate) instead of allocating
+    // `{ extraArgs }` per nested call. options is read-only in map(), so a
+    // shared instance is safe.
+    const nestedOptions: MapOptions<TSource, TDestination> = { extraArgs };
+
     // Compiled plan (specialized step closures + configured keys). Built eagerly
     // at createMap and hung on the mapping; the lazy fallback only fires for a
     // mapping constructed outside the normal createMap path.
@@ -735,6 +747,7 @@ export function map<
         destination,
         extraArguments,
         extraArgs,
+        nestedOptions,
         mapper,
         errorHandler,
         destinationIdentifier,

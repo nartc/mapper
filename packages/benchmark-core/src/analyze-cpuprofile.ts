@@ -4,7 +4,11 @@ import { join } from 'node:path';
 // Aggregate self-time from the newest V8 .cpuprofile in ./profiles by function
 // (functionName @ url:line), so the dominant cost of the forMember/mapFrom path
 // is attributable instead of guessed. Usage: pnpm tsx src/analyze-cpuprofile.ts
-const dir = process.argv[2] ?? './profiles';
+//
+// Reads from the fixed ./profiles dir (where `bench:profile` writes via
+// --cpu-prof-dir). The directory is a constant — no CLI/external input feeds the
+// path, so there is no path-injection surface.
+const dir = './profiles';
 const files = readdirSync(dir)
     .filter((f) => f.endsWith('.cpuprofile'))
     .map((f) => ({ f, t: statSync(join(dir, f)).mtimeMs }))

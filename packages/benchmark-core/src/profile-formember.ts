@@ -1,6 +1,7 @@
 import 'reflect-metadata';
-import { createMap, createMapper, forMember, mapFrom } from '@automapper/core';
-import { AutoMap, classes } from '@automapper/classes';
+import { createMapper } from '@automapper/core';
+import { classes } from '@automapper/classes';
+import { makeUser, registerUserMaps, User, UserView } from './fixtures';
 
 // ===========================================================================
 // Focused CPU-profile driver for the common path: classes strategy,
@@ -11,68 +12,8 @@ import { AutoMap, classes } from '@automapper/classes';
 // cleanly to map()/set()/mapMember()/step-closures rather than the harness.
 // ===========================================================================
 
-const makeUser = (i: number) => ({
-    firstName: `First${i}`,
-    lastName: `Last${i}`,
-    email: `user${i}@example.com`,
-    age: 20 + (i % 50),
-    active: i % 2 === 0,
-    role: i % 3 === 0 ? 'admin' : 'user',
-    score: i * 1.5,
-    createdAt: 'Fri Jun 19 2026',
-});
-
-class User {
-    @AutoMap(() => String) firstName!: string;
-    @AutoMap(() => String) lastName!: string;
-    @AutoMap(() => String) email!: string;
-    @AutoMap(() => Number) age!: number;
-    @AutoMap(() => Boolean) active!: boolean;
-    @AutoMap(() => String) role!: string;
-    @AutoMap(() => Number) score!: number;
-    @AutoMap(() => String) createdAt!: string;
-}
-class UserView {
-    @AutoMap(() => String) firstName!: string;
-    @AutoMap(() => String) lastName!: string;
-    @AutoMap(() => String) fullName!: string;
-    @AutoMap(() => String) emailLower!: string;
-    @AutoMap(() => String) ageGroup!: string;
-    @AutoMap(() => Boolean) isActive!: boolean;
-    @AutoMap(() => String) roleLabel!: string;
-    @AutoMap(() => Number) scoreRounded!: number;
-}
-
 const mapper = createMapper({ strategyInitializer: classes() });
-createMap(
-    mapper,
-    User,
-    UserView,
-    forMember(
-        (d) => d.fullName,
-        mapFrom((s) => `${s.firstName} ${s.lastName}`)
-    ),
-    forMember(
-        (d) => d.emailLower,
-        mapFrom((s) => s.email.toLowerCase())
-    ),
-    forMember(
-        (d) => d.ageGroup,
-        mapFrom((s) => (s.age < 30 ? 'young' : 'adult'))
-    ),
-    forMember(
-        (d) => d.isActive,
-        mapFrom((s) => s.active)
-    ),
-    forMember(
-        (d) => d.roleLabel,
-        mapFrom((s) => s.role.toUpperCase())
-    ),
-    forMember(
-        (d) => d.scoreRounded,
-        mapFrom((s) => Math.round(s.score))
-    )
-);
+registerUserMaps(mapper); // registers User -> UserView (among others)
 
 const POOL = 64;
 const pool = Array.from({ length: POOL }, (_, i) => makeUser(i));
@@ -85,7 +26,9 @@ const ITERS = 4_000_000;
 let sink = 0;
 const t0 = process.hrtime.bigint();
 for (let i = 0; i < ITERS; i++) {
-    const v = mapper.map(pool[i & (POOL - 1)], User, UserView);
+    const v = mapper.map(pool[i & (POOL - 1)], User, UserView) as {
+        fullName: string;
+    };
     sink += v.fullName.length;
 }
 // a few large mapArray passes too (per-element compounding)

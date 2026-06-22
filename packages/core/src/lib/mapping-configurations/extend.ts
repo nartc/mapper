@@ -50,6 +50,38 @@ export function extend<
         }
 
         const propsToExtend = mappingToExtend[MappingClassId.properties];
+        const customProperties = mapping[MappingClassId.customProperties];
+
+        // For a wide parent the per-prop `.find(isSamePath)` is O(P_parent ×
+        // P_custom). Above the gate, index the present keys in a Set (null-byte
+        // join — collision-proof, equivalent to isSamePath) and add on push, so
+        // dedup within this extend batch is preserved. Below the gate the .find
+        // avoids the Set-construction overhead.
+        const EXTEND_SIZE_GATE = 30;
+        if (propsToExtend.length > EXTEND_SIZE_GATE) {
+            const present = new Set(
+                customProperties.map(([pKey]) => pKey.join('\0'))
+            );
+            for (let i = 0, length = propsToExtend.length; i < length; i++) {
+                const [
+                    propToExtendKey,
+                    propToExtendMappingProp,
+                    propToExtendNestedMapping,
+                ] = propsToExtend[i];
+                const key = propToExtendKey.join('\0');
+                if (present.has(key)) continue;
+                present.add(key);
+                customProperties.push([
+                    propToExtendKey,
+                    propToExtendMappingProp as MappingProperty<
+                        TSource,
+                        TDestination
+                    >,
+                    propToExtendNestedMapping,
+                ]);
+            }
+            return;
+        }
 
         for (let i = 0, length = propsToExtend.length; i < length; i++) {
             const [
@@ -57,11 +89,11 @@ export function extend<
                 propToExtendMappingProp,
                 propToExtendNestedMapping,
             ] = propsToExtend[i];
-            const existProp = mapping[MappingClassId.customProperties].find(
-                ([pKey]) => isSamePath(pKey, propToExtendKey)
+            const existProp = customProperties.find(([pKey]) =>
+                isSamePath(pKey, propToExtendKey)
             );
             if (existProp) continue;
-            mapping[MappingClassId.customProperties].push([
+            customProperties.push([
                 propToExtendKey,
                 propToExtendMappingProp as MappingProperty<
                     TSource,

@@ -33,14 +33,15 @@ export function getMetadataList(model: MetadataIdentifier): [
         return [[], []];
     }
 
+    // `model` is a class (function); @AutoMap stores metadata on the class via
+    // `target.constructor`, and Reflect.getMetadata walks the class's prototype
+    // chain (so subclass inheritance is already covered). The old
+    // `model.constructor.prototype` read was `Function.prototype` — never a
+    // metadata target — so it always contributed []. `.concat()` keeps the
+    // defensive copy (never hand out the stored array).
     let metadataList: MetadataList = (
-        model.constructor?.prototype
-            ? Reflect.getMetadata(
-                  AUTOMAP_PROPERTIES_METADATA_KEY,
-                  model.constructor.prototype
-              ) || []
-            : []
-    ).concat(Reflect.getMetadata(AUTOMAP_PROPERTIES_METADATA_KEY, model) || []);
+        Reflect.getMetadata(AUTOMAP_PROPERTIES_METADATA_KEY, model) || []
+    ).concat();
 
     const metadataFactoryFn = model[AUTOMAPPER_METADATA_FACTORY_KEY];
     if (metadataFactoryFn) {

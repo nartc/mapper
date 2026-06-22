@@ -266,6 +266,14 @@ export function createMapper({
                 mappingCallbacks?.[MappingCallbacksClassId.afterMapArray];
 
             const runArrayMapping = () => {
+                // options is read-only in map()/mapReturn — share one object for
+                // every element instead of allocating `{ extraArgs }` per element.
+                const elementOptions = {
+                    extraArgs: extraArgs as MapOptions<
+                        TSource,
+                        TDestination
+                    >['extraArgs'],
+                };
                 for (let i = 0, length = sourceArray.length; i < length; i++) {
                     let sourceObject = sourceArray[i];
                     sourceObject = strategy.preMap(sourceObject, mapping);
@@ -273,12 +281,7 @@ export function createMapper({
                     const destination = mapReturn(
                         mapping,
                         sourceObject,
-                        {
-                            extraArgs: extraArgs as MapOptions<
-                                TSource,
-                                TDestination
-                            >['extraArgs'],
-                        },
+                        elementOptions,
                         true
                     );
 
@@ -470,6 +473,14 @@ export function createMapper({
                 mappingCallbacks?.[MappingCallbacksClassId.afterMapArray];
 
             const runArrayMapping = () => {
+                // options is read-only in map()/mapMutate — share one object for
+                // every element instead of allocating `{ extraArgs }` per element.
+                const elementOptions = {
+                    extraArgs: extraArgs as MapOptions<
+                        TSource,
+                        TDestination
+                    >['extraArgs'],
+                };
                 for (let i = 0, length = sourceArray.length; i < length; i++) {
                     let sourceObject = sourceArray[i];
 
@@ -483,12 +494,7 @@ export function createMapper({
                         mapping,
                         sourceObject,
                         destination,
-                        {
-                            extraArgs: extraArgs as MapOptions<
-                                TSource,
-                                TDestination
-                            >['extraArgs'],
-                        },
+                        elementOptions,
                         true
                     );
 

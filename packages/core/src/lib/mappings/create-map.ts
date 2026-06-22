@@ -111,7 +111,8 @@ export function createMap<
     // properties are finalized — compile the per-property step plan once, now,
     // so map() never has to re-inspect the positional tuples at runtime.
     mapping[MappingClassId.compiledPlan] = buildMapPlan(
-        mapping[MappingClassId.properties]
+        mapping[MappingClassId.properties],
+        mapping[MappingClassId.identifierMetadata][1]
     );
 
     // store the mapping

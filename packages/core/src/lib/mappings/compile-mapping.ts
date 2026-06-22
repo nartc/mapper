@@ -1,5 +1,5 @@
 import type {
-    CompiledMapping,
+    CompiledMappingDescriptors,
     CompiledMappingProperty,
     Dictionary,
     Mapping,
@@ -16,7 +16,7 @@ export function compileMapping<
     TDestination extends Dictionary<TDestination>
 >(
     propsToMap: Mapping<TSource, TDestination>[MappingClassId.properties]
-): Omit<CompiledMapping<TSource, TDestination>, 'steps'> {
+): CompiledMappingDescriptors<TSource, TDestination> {
     const props: CompiledMappingProperty<TSource, TDestination>[] = [];
     const configuredKeys: string[] = [];
 

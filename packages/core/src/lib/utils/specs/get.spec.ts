@@ -35,4 +35,21 @@ describe('get', () => {
         const result = get(obj);
         expect(result).toEqual(undefined);
     });
+
+    // single-segment path (the flat-member fast path)
+    it('should return a single-segment leaf value', () => {
+        expect(get({ foo: 'bar' }, ['foo'])).toEqual('bar');
+    });
+
+    it('should return null for a single-segment null value', () => {
+        expect(get({ foo: null }, ['foo'])).toEqual(null);
+    });
+
+    it('should return undefined for a single-segment unknown key', () => {
+        expect(get({ foo: 'bar' }, ['baz'])).toEqual(undefined);
+    });
+
+    it('should return undefined for a single-segment path on a null object', () => {
+        expect(get(null, ['foo'])).toEqual(undefined);
+    });
 });

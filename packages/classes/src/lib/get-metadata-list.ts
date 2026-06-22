@@ -1,4 +1,4 @@
-import type { Constructor } from '@automapper/core';
+import type { ClassIdentifier, MetadataIdentifier } from '@automapper/core';
 import { isDateConstructor, isPrimitiveConstructor } from '@automapper/core';
 import 'reflect-metadata';
 import {
@@ -10,25 +10,29 @@ type MetadataList = Array<
     [
         string,
         {
-            type: () => Constructor | [Constructor];
+            type: () => ClassIdentifier | [ClassIdentifier];
             depth: number;
             isGetterOnly?: boolean;
         }
     ]
 >;
 
-export function getMetadataList(model: Constructor): [
+export function getMetadataList(model: MetadataIdentifier): [
     metadataList: [
         string,
         {
-            type: () => Constructor;
+            type: () => MetadataIdentifier;
             isArray: boolean;
             depth: number;
             isGetterOnly?: boolean;
         }
     ][],
-    nestedConstructor: Constructor[]
+    nestedConstructor: MetadataIdentifier[]
 ] {
+    if (typeof model !== 'function') {
+        return [[], []];
+    }
+
     let metadataList: MetadataList = (
         model.constructor?.prototype
             ? Reflect.getMetadata(
@@ -70,13 +74,13 @@ export function getMetadataList(model: Constructor): [
             metadataList: [
                 string,
                 {
-                    type: () => Constructor;
+                    type: () => MetadataIdentifier;
                     isArray: boolean;
                     depth: number;
                     isGetterOnly?: boolean;
                 }
             ][],
-            nestedConstructor: Constructor[]
+            nestedConstructor: MetadataIdentifier[]
         ]
     );
 }

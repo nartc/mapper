@@ -20,6 +20,8 @@ export * from './lib/mapping-configurations/type-converters';
 export * from './lib/mapping-configurations/construct-using';
 export * from './lib/mapping-configurations/before-map';
 export * from './lib/mapping-configurations/after-map';
+export * from './lib/mapping-configurations/before-map-array';
+export * from './lib/mapping-configurations/after-map-array';
 export * from './lib/mapping-configurations/extend';
 export * from './lib/mapping-configurations/naming-conventions';
 export * from './lib/mapping-configurations/auto-map';

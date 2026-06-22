@@ -17,18 +17,18 @@ export class AutoMapperLogger {
     }
 
     static log(message: string) {
-        console.log.bind(console, this.AUTOMAPPER_PREFIX, message);
+        console.log.call(console, this.AUTOMAPPER_PREFIX, message);
     }
 
     static warn(warning: string) {
-        console.warn.bind(console, this.AUTOMAPPER_PREFIX, warning);
+        console.warn.call(console, this.AUTOMAPPER_PREFIX, warning);
     }
 
     static error(error: string) {
-        console.error.bind(console, this.AUTOMAPPER_PREFIX, error);
+        console.error.call(console, this.AUTOMAPPER_PREFIX, error);
     }
 
     static info(info: string) {
-        console.info.bind(console, this.AUTOMAPPER_PREFIX, info);
+        console.info.call(console, this.AUTOMAPPER_PREFIX, info);
     }
 }

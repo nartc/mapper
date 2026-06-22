@@ -11,7 +11,7 @@ import type { Model } from 'sequelize';
 
 export function sequelize(
     options: MappingStrategyInitializerOptions = defaultStrategyInitializerOptions
-): MappingStrategyInitializer<Constructor> {
+): MappingStrategyInitializer<MetadataIdentifier> {
     const mergedOptions = {
         ...defaultStrategyInitializerOptions,
         destinationConstructor: (

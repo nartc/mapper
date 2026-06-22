@@ -15,7 +15,7 @@ import { serializeEntity } from './serialize-entity';
 
 export function mikro(
     options: MappingStrategyInitializerOptions = {}
-): MappingStrategyInitializer<Constructor> {
+): MappingStrategyInitializer<MetadataIdentifier> {
     const mergedOptions = {
         ...defaultStrategyInitializerOptions,
         destinationConstructor: (

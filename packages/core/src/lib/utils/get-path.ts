@@ -30,13 +30,19 @@ export function getFlatteningPaths(
         )
     );
 
+    if (srcPath.length === 1 && hasProperty(src, srcPath[0])) {
+        return srcPath;
+    }
+
     const [first, ...paths] = splitSourcePaths.slice(
         0,
         splitSourcePaths.length - 1
     );
     let trueFirstPartOfSource = first;
     let stopIndex = 0;
-    let found = hasProperty(src, trueFirstPartOfSource);
+    let found =
+        hasProperty(src, trueFirstPartOfSource) &&
+        isRecord(src[trueFirstPartOfSource]);
 
     if (!found) {
         for (let i = 0, len = paths.length; i < len; i++) {
@@ -45,7 +51,10 @@ export function getFlatteningPaths(
                     trueFirstPartOfSource,
                     paths[i],
                 ]);
-            if (hasProperty(src, trueFirstPartOfSource)) {
+            if (
+                hasProperty(src, trueFirstPartOfSource) &&
+                isRecord(src[trueFirstPartOfSource])
+            ) {
                 stopIndex = i + 1;
                 found = true;
                 break;
@@ -66,6 +75,7 @@ export function getFlatteningPaths(
 
     if (
         restPaths.length > 1 &&
+        isRecord(src[trueFirstPartOfSource]) &&
         !hasProperty(
             src[trueFirstPartOfSource] as Record<string, unknown>,
             transformedRestPaths
@@ -99,4 +109,8 @@ export function getFlatteningPaths(
 
 function hasProperty(obj: Record<string, unknown>, property: string): boolean {
     return Object.prototype.hasOwnProperty.call(obj, property);
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+    return typeof value === 'object' && value !== null;
 }

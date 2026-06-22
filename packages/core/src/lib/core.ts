@@ -1,8 +1,12 @@
 import {
-    deferAsyncAfterMap,
+    deferAsyncAfterMapAfterPending,
+    getAsyncMapContext,
+    isAsyncMapActive,
+    isThenable,
     mapMutate,
     mapReturn,
     pushAsyncPending,
+    runInAsyncMapContext,
     runAsyncMap,
     settleAsyncMap,
 } from './mappings/map';
@@ -33,6 +37,7 @@ import type {
     ModelIdentifier,
     NamingConventionInput,
 } from './types';
+import { MappingCallbacksClassId, MappingClassId } from './types';
 import { getMapping } from './utils/get-mapping';
 import { AutoMapperLogger } from './utils/logger';
 
@@ -189,18 +194,38 @@ export function createMapper({
                 | MapOptions<TSource, TDestination>,
             options?: MapOptions<TSource, TDestination>
         ): Promise<TDestination> {
+            if (sourceObject == null) {
+                return Promise.resolve(sourceObject as TDestination);
+            }
+
+            const { destinationIdentifier, mapOptions } = getOptions(
+                sourceIdentifier,
+                destinationIdentifierOrOptions,
+                options
+            );
+
+            const mapping = getMapping(
+                mapper,
+                sourceIdentifier,
+                destinationIdentifier
+            );
+
+            sourceObject = strategy.preMap(sourceObject, mapping);
+
             // Run the synchronous engine inside an async context, then await any
             // async member resolvers / before-map, and finally the deferred
             // after-maps — so the resolved Promise carries a fully-mapped result.
-            const [result, asyncContext] = runAsyncMap(() =>
-                mapper.map(
-                    sourceObject,
-                    sourceIdentifier,
-                    destinationIdentifierOrOptions as ModelIdentifier<TDestination>,
-                    options
-                )
+            const [destination, asyncContext] = runAsyncMap(() =>
+                mapReturn(mapping, sourceObject, mapOptions || {})
             );
-            return settleAsyncMap(asyncContext).then(() => result);
+            return settleAsyncMap(asyncContext).then(
+                () =>
+                    strategy.postMap(
+                        sourceObject,
+                        destination,
+                        mapping
+                    ) as TDestination
+            );
         },
 
         mapArray<
@@ -231,43 +256,77 @@ export function createMapper({
             const { beforeMap, afterMap, extraArgs } = (mapOptions ||
                 {}) as MapOptions<TSource[], TDestination[]>;
 
-            if (beforeMap) {
-                pushAsyncPending(beforeMap(sourceArray, []));
-            }
-
             const destinationArray: TDestination[] = [];
+            const mappingCallbacks = mapping[MappingClassId.callbacks];
+            const beforeMapArray =
+                beforeMap ??
+                mappingCallbacks?.[MappingCallbacksClassId.beforeMapArray];
+            const afterMapArray =
+                afterMap ??
+                mappingCallbacks?.[MappingCallbacksClassId.afterMapArray];
 
-            for (let i = 0, length = sourceArray.length; i < length; i++) {
-                let sourceObject = sourceArray[i];
-                sourceObject = strategy.preMap(sourceObject, mapping);
+            const runArrayMapping = () => {
+                for (let i = 0, length = sourceArray.length; i < length; i++) {
+                    let sourceObject = sourceArray[i];
+                    sourceObject = strategy.preMap(sourceObject, mapping);
 
-                const destination = mapReturn(
-                    mapping,
-                    sourceObject,
-                    {
-                        extraArgs: extraArgs as MapOptions<
-                            TSource,
-                            TDestination
-                        >['extraArgs'],
-                    },
-                    true
-                );
-
-                destinationArray.push(
-                    strategy.postMap(
+                    const destination = mapReturn(
+                        mapping,
                         sourceObject,
-                        // returned as-is: intentionally NOT sealed, so
-                        // consumers can add/modify after mapping
-                        destination,
-                        mapping
-                    ) as TDestination
+                        {
+                            extraArgs: extraArgs as MapOptions<
+                                TSource,
+                                TDestination
+                            >['extraArgs'],
+                        },
+                        true
+                    );
+
+                    destinationArray.push(
+                        strategy.postMap(
+                            sourceObject,
+                            // returned as-is: intentionally NOT sealed, so
+                            // consumers can add/modify after mapping
+                            destination,
+                            mapping
+                        ) as TDestination
+                    );
+                }
+            };
+
+            let arrayMappingDeferredUntilBeforeMap = false;
+            const queueAfterMapArray = () => {
+                if (afterMapArray) {
+                    deferAsyncAfterMapAfterPending(() =>
+                        afterMapArray(sourceArray, destinationArray)
+                    );
+                }
+            };
+
+            if (beforeMapArray) {
+                const beforeMapResult = beforeMapArray(
+                    sourceArray,
+                    destinationArray
                 );
+                if (isAsyncMapActive() && isThenable(beforeMapResult)) {
+                    const asyncMapContext = getAsyncMapContext();
+                    arrayMappingDeferredUntilBeforeMap = true;
+                    pushAsyncPending(
+                        Promise.resolve(beforeMapResult).then(() =>
+                            runInAsyncMapContext(asyncMapContext!, () => {
+                                runArrayMapping();
+                                queueAfterMapArray();
+                            })
+                        )
+                    );
+                } else {
+                    pushAsyncPending(beforeMapResult);
+                }
             }
 
-            if (afterMap) {
-                deferAsyncAfterMap(() =>
-                    afterMap(sourceArray, destinationArray)
-                );
+            if (!arrayMappingDeferredUntilBeforeMap) {
+                runArrayMapping();
+                queueAfterMapArray();
             }
 
             return destinationArray;
@@ -345,16 +404,33 @@ export function createMapper({
                 | MapOptions<TSource, TDestination>,
             options?: MapOptions<TSource, TDestination>
         ): Promise<void> {
+            if (sourceObject == null) return Promise.resolve();
+
+            const { destinationIdentifier, mapOptions } = getOptions(
+                sourceIdentifier,
+                destinationIdentifierOrOptions,
+                options
+            );
+
+            const mapping = getMapping(
+                mapper,
+                sourceIdentifier,
+                destinationIdentifier
+            );
+
+            sourceObject = strategy.preMap(sourceObject, mapping);
+
             const [, asyncContext] = runAsyncMap(() =>
-                mapper.mutate(
+                mapMutate(
+                    mapping,
                     sourceObject,
                     destinationObject,
-                    sourceIdentifier,
-                    destinationIdentifierOrOptions as ModelIdentifier<TDestination>,
-                    options
+                    mapOptions || {}
                 )
             );
-            return settleAsyncMap(asyncContext);
+            return settleAsyncMap(asyncContext).then(() => {
+                strategy.postMap(sourceObject, destinationObject, mapping);
+            });
         },
 
         mutateArray<
@@ -385,36 +461,74 @@ export function createMapper({
 
             const { beforeMap, afterMap, extraArgs } = (mapOptions ||
                 {}) as MapOptions<TSource[], TDestination[]>;
+            const mappingCallbacks = mapping[MappingClassId.callbacks];
+            const beforeMapArray =
+                beforeMap ??
+                mappingCallbacks?.[MappingCallbacksClassId.beforeMapArray];
+            const afterMapArray =
+                afterMap ??
+                mappingCallbacks?.[MappingCallbacksClassId.afterMapArray];
 
-            if (beforeMap) {
-                pushAsyncPending(beforeMap(sourceArray, destinationArray));
+            const runArrayMapping = () => {
+                for (let i = 0, length = sourceArray.length; i < length; i++) {
+                    let sourceObject = sourceArray[i];
+
+                    sourceObject = strategy.preMap(sourceObject, mapping);
+
+                    const destination =
+                        destinationArray[i] ??
+                        (destinationArray[i] = {} as TDestination);
+
+                    mapMutate(
+                        mapping,
+                        sourceObject,
+                        destination,
+                        {
+                            extraArgs: extraArgs as MapOptions<
+                                TSource,
+                                TDestination
+                            >['extraArgs'],
+                        },
+                        true
+                    );
+
+                    strategy.postMap(sourceObject, destination, mapping);
+                }
+            };
+
+            let arrayMappingDeferredUntilBeforeMap = false;
+            const queueAfterMapArray = () => {
+                if (afterMapArray) {
+                    deferAsyncAfterMapAfterPending(() =>
+                        afterMapArray(sourceArray, destinationArray)
+                    );
+                }
+            };
+
+            if (beforeMapArray) {
+                const beforeMapResult = beforeMapArray(
+                    sourceArray,
+                    destinationArray
+                );
+                if (isAsyncMapActive() && isThenable(beforeMapResult)) {
+                    const asyncMapContext = getAsyncMapContext();
+                    arrayMappingDeferredUntilBeforeMap = true;
+                    pushAsyncPending(
+                        Promise.resolve(beforeMapResult).then(() =>
+                            runInAsyncMapContext(asyncMapContext!, () => {
+                                runArrayMapping();
+                                queueAfterMapArray();
+                            })
+                        )
+                    );
+                } else {
+                    pushAsyncPending(beforeMapResult);
+                }
             }
 
-            for (let i = 0, length = sourceArray.length; i < length; i++) {
-                let sourceObject = sourceArray[i];
-
-                sourceObject = strategy.preMap(sourceObject, mapping);
-
-                mapMutate(
-                    mapping,
-                    sourceObject,
-                    destinationArray[i] || {},
-                    {
-                        extraArgs: extraArgs as MapOptions<
-                            TSource,
-                            TDestination
-                        >['extraArgs'],
-                    },
-                    true
-                );
-
-                strategy.postMap(sourceObject, destinationArray[i], mapping);
-            }
-
-            if (afterMap) {
-                deferAsyncAfterMap(() =>
-                    afterMap(sourceArray, destinationArray)
-                );
+            if (!arrayMappingDeferredUntilBeforeMap) {
+                runArrayMapping();
+                queueAfterMapArray();
             }
         },
 

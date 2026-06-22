@@ -117,13 +117,36 @@ export interface AsyncMapContext {
     // member-value + before-map promises, awaited before the deferred after-maps
     pending: Promise<unknown>[];
     // after-map thunks, run in collection order (depth-first) once pending settles
-    deferredAfterMaps: Array<() => unknown>;
+    deferredAfterMaps: Array<{
+        fn: () => unknown;
+        depth: number;
+        order: number;
+    }>;
+    nextAfterMapOrder: number;
 }
 
 let asyncMapContext: AsyncMapContext | null = null;
+let asyncMapDepth = 0;
 
 export function isAsyncMapActive(): boolean {
     return asyncMapContext !== null;
+}
+
+export function getAsyncMapContext(): AsyncMapContext | null {
+    return asyncMapContext;
+}
+
+export function runInAsyncMapContext<T>(
+    context: AsyncMapContext,
+    fn: () => T
+): T {
+    const previous = asyncMapContext;
+    asyncMapContext = context;
+    try {
+        return fn();
+    } finally {
+        asyncMapContext = previous;
+    }
 }
 
 export function isThenable(value: unknown): value is Promise<unknown> {
@@ -138,24 +161,38 @@ export function isThenable(value: unknown): value is Promise<unknown> {
 // map's async members/after-maps are collected by the outermost mapAsync().
 export function runAsyncMap<T>(fn: () => T): [T, AsyncMapContext] {
     const previous = asyncMapContext;
-    const context: AsyncMapContext = { pending: [], deferredAfterMaps: [] };
+    const previousDepth = asyncMapDepth;
+    const context: AsyncMapContext = {
+        pending: [],
+        deferredAfterMaps: [],
+        nextAfterMapOrder: 0,
+    };
     asyncMapContext = context;
+    asyncMapDepth = 0;
     try {
         return [fn(), context];
     } finally {
         asyncMapContext = previous;
+        asyncMapDepth = previousDepth;
     }
 }
 
 // Await everything a context collected: pending member/before-map promises
 // first, then the deferred after-maps (sequentially; each may be async).
 export async function settleAsyncMap(context: AsyncMapContext): Promise<void> {
-    if (context.pending.length) {
-        await Promise.all(context.pending);
+    while (context.pending.length) {
+        await Promise.all(context.pending.splice(0));
     }
-    for (let i = 0, len = context.deferredAfterMaps.length; i < len; i++) {
-        const result = context.deferredAfterMaps[i]();
+    while (context.deferredAfterMaps.length) {
+        context.deferredAfterMaps.sort(
+            (a, b) => b.depth - a.depth || a.order - b.order
+        );
+        const { fn } = context.deferredAfterMaps.shift()!;
+        const result = runInAsyncMapContext(context, fn);
         if (isThenable(result)) await result;
+        while (context.pending.length) {
+            await Promise.all(context.pending.splice(0));
+        }
     }
 }
 
@@ -168,12 +205,49 @@ export function pushAsyncPending(value: unknown): void {
 
 // Defer an after-map (array-level or mapping-level) past member resolution when
 // running async; runs it immediately when synchronous.
-export function deferAsyncAfterMap(fn: () => unknown): void {
+function runAtAsyncMapDepth<T>(depth: number, fn: () => T): T {
+    const previousDepth = asyncMapDepth;
+    asyncMapDepth = depth;
+    try {
+        return fn();
+    } finally {
+        asyncMapDepth = previousDepth;
+    }
+}
+
+export function deferAsyncAfterMap(
+    fn: () => unknown,
+    depth = asyncMapDepth
+): void {
     if (asyncMapContext !== null) {
-        asyncMapContext.deferredAfterMaps.push(fn);
+        asyncMapContext.deferredAfterMaps.push({
+            fn,
+            depth,
+            order: asyncMapContext.nextAfterMapOrder++,
+        });
     } else {
         fn();
     }
+}
+
+export function deferAsyncAfterMapAfterPending(
+    fn: () => unknown,
+    depth = asyncMapDepth
+): void {
+    if (asyncMapContext !== null && asyncMapContext.pending.length) {
+        const context = asyncMapContext;
+        const pendingBeforeAfterMap = context.pending.slice();
+        context.pending.push(
+            Promise.all(pendingBeforeAfterMap).then(() =>
+                runInAsyncMapContext(context, () =>
+                    deferAsyncAfterMap(fn, depth)
+                )
+            )
+        );
+        return;
+    }
+
+    deferAsyncAfterMap(fn, depth);
 }
 
 // Wrap a member failure (sync throw or async rejection) as MapMemberError and
@@ -236,7 +310,13 @@ function assignResolved<
     ctx: MapStepContext<TSource, TDestination>
 ): void {
     const setValue = ctx.setMemberFn(destinationMemberPath, ctx.destination);
-    if (asyncMapContext !== null && isThenable(value)) {
+    if (isThenable(value)) {
+        if (asyncMapContext === null) {
+            throw new Error(
+                'Async member mapping returned a Promise during synchronous map(). Use mapAsync() or mapArrayAsync() instead.'
+            );
+        }
+
         asyncMapContext.pending.push(
             Promise.resolve(value)
                 .then(setValue)
@@ -382,9 +462,8 @@ function compileStep<
         if (
             mapInitializedValue == null ||
             mapInitializedValue instanceof Date ||
-            Object.prototype.toString
-                .call(mapInitializedValue)
-                .slice(8, -1) === 'File' ||
+            Object.prototype.toString.call(mapInitializedValue).slice(8, -1) ===
+                'File' ||
             hasSameIdentifier ||
             isTypedConverted
         ) {
@@ -547,15 +626,7 @@ export function map<
         mapping[MappingClassId.compiledPlan] = compiledPlan;
     }
     const { steps, configuredKeys } = compiledPlan;
-
-    if (!isMapArray) {
-        const beforeMap = mapBeforeCallback ?? mappingBeforeCallback;
-        if (beforeMap) {
-            pushAsyncPending(
-                beforeMap(sourceObject, destination, extraArguments)
-            );
-        }
-    }
+    const currentMapDepth = asyncMapContext === null ? 0 : asyncMapDepth + 1;
 
     // Build the per-call context once, then run each compiled step. All the
     // per-member branching/destructuring was resolved at compile time.
@@ -570,28 +641,69 @@ export function map<
         setMemberFn,
         getMemberFn,
     };
-    for (let i = 0, length = steps.length; i < length; i++) {
-        (steps[i] as MapStep<TSource, TDestination>)(context);
-    }
+
+    const runStepsAndAssert = () => {
+        return runAtAsyncMapDepth(currentMapDepth, () => {
+            for (let i = 0, length = steps.length; i < length; i++) {
+                (steps[i] as MapStep<TSource, TDestination>)(context);
+            }
+
+            // Check unmapped properties after mapping steps have had a chance to
+            // assign destination values. When an async beforeMap gates the steps,
+            // this assertion runs inside the gated async work as well.
+            assertUnmappedProperties(
+                destination,
+                destinationWithMetadata,
+                configuredKeys,
+                sourceIdentifier,
+                destinationIdentifier,
+                errorHandler
+            );
+        });
+    };
+
+    let stepsDeferredUntilBeforeMap = false;
+    const queueAfterMap = () => {
+        if (!isMapArray) {
+            const afterMap = mapAfterCallback ?? mappingAfterCallback;
+            if (afterMap) {
+                deferAsyncAfterMapAfterPending(
+                    () => afterMap(sourceObject, destination, extraArguments),
+                    currentMapDepth
+                );
+            }
+        }
+    };
 
     if (!isMapArray) {
-        const afterMap = mapAfterCallback ?? mappingAfterCallback;
-        if (afterMap) {
-            deferAsyncAfterMap(() =>
-                afterMap(sourceObject, destination, extraArguments)
+        const beforeMap = mapBeforeCallback ?? mappingBeforeCallback;
+        if (beforeMap) {
+            const beforeMapResult = beforeMap(
+                sourceObject,
+                destination,
+                extraArguments
             );
+            if (asyncMapContext !== null && isThenable(beforeMapResult)) {
+                const context = asyncMapContext;
+                stepsDeferredUntilBeforeMap = true;
+                asyncMapContext.pending.push(
+                    Promise.resolve(beforeMapResult).then(() =>
+                        runInAsyncMapContext(context, () => {
+                            runStepsAndAssert();
+                            queueAfterMap();
+                        })
+                    )
+                );
+            } else {
+                pushAsyncPending(beforeMapResult);
+            }
         }
     }
 
-    // Check unmapped properties
-    assertUnmappedProperties(
-        destination,
-        destinationWithMetadata,
-        configuredKeys,
-        sourceIdentifier,
-        destinationIdentifier,
-        errorHandler
-    );
+    if (!stepsDeferredUntilBeforeMap) {
+        runStepsAndAssert();
+        queueAfterMap();
+    }
 
     return destination;
 }

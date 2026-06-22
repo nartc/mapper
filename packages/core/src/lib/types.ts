@@ -13,8 +13,13 @@ import type {
 export type Dictionary<T> = { [key in keyof T]?: unknown };
 
 export type AnyConstructor = new (...args: any[]) => any;
+export type AbstractConstructor<T = any> = abstract new (...args: any[]) => T;
 export type Constructor<T = any> = (new (...args: any[]) => T) &
     TransformerMetadataFactory<T>;
+export type ClassIdentifier<T = any> =
+    | Constructor<T>
+    | (AbstractConstructor<T> & TransformerMetadataFactory<T>)
+    | (Function & TransformerMetadataFactory<T> & { prototype: T });
 
 export type Primitive = String | Number | Boolean | BigInt;
 export type PrimitiveExtended = Primitive | Date;
@@ -36,11 +41,11 @@ export type PrimitiveConstructorReturnType<
     ? InstanceType<TType>
     : ReturnType<Extract<TType, PrimitiveConstructor>>;
 
-export interface TransformerMetadataFactory<TModel extends Dictionary<TModel>> {
+export interface TransformerMetadataFactory<TModel = any> {
     __AUTOMAPPER_METADATA_FACTORY__?: () => [
         propertyKey: string,
         options: {
-            type: () => Constructor | [Constructor];
+            type: () => ClassIdentifier | [ClassIdentifier];
             depth: number;
             isGetterOnly?: boolean;
         }
@@ -81,6 +86,8 @@ export type SelectorReturn<TObject extends Dictionary<TObject>> = ReturnType<
     Selector<TObject>
 >;
 
+export type MaybePromise<T> = T | Promise<T>;
+
 export type ValueSelector<
     TSource extends Dictionary<TSource> = any,
     TDestination extends Dictionary<TDestination> = any,
@@ -92,7 +99,10 @@ export interface Resolver<
     TDestination extends Dictionary<TDestination> = any,
     TResolvedType = SelectorReturn<TDestination>
 > {
-    resolve(source: TSource, destination?: TDestination): TResolvedType;
+    resolve(
+        source: TSource,
+        destination?: TDestination
+    ): MaybePromise<TResolvedType>;
 }
 
 export interface Converter<
@@ -110,7 +120,7 @@ export type MapCallback<
     source: TSource,
     destination: TDestination,
     extraArguments?: TExtraArgs
-) => void;
+) => MaybePromise<void>;
 
 export interface MapOptions<
     TSource extends Dictionary<TSource>,
@@ -126,7 +136,7 @@ export interface MapOptions<
     ) => TExtraArgs;
 }
 
-export type ModelIdentifier<T = any> = string | symbol | Constructor<T>;
+export type ModelIdentifier<T = any> = string | symbol | ClassIdentifier<T>;
 
 export type MetadataIdentifier<T = any> = Exclude<ModelIdentifier<T>, string>;
 
@@ -382,7 +392,10 @@ export type MapFromReturn<
     TSource extends Dictionary<TSource>,
     TDestination extends Dictionary<TDestination>,
     TSelectorReturn = SelectorReturn<TDestination>
-> = [type: TransformationType.MapFrom, fn: Selector<TSource, TSelectorReturn>];
+> = [
+    type: TransformationType.MapFrom,
+    fn: Selector<TSource, MaybePromise<TSelectorReturn>>
+];
 
 export type MapWithReturn<
     TSource extends Dictionary<TSource>,
@@ -457,7 +470,7 @@ export type MapWithArgumentsReturn<
     fn: (
         source: TSource,
         extraArguments: Record<string, unknown>
-    ) => TSelectorReturn
+    ) => MaybePromise<TSelectorReturn>
 ];
 
 export type MapInitializeReturn<
@@ -509,6 +522,8 @@ export const enum MappingPropertiesClassId {
 export const enum MappingCallbacksClassId {
     beforeMap,
     afterMap,
+    beforeMapArray,
+    afterMapArray,
 }
 
 export const enum NestedMappingPairClassId {
@@ -622,7 +637,9 @@ export type Mapping<
     >,
     callbacks?: [
         beforeMap?: MapCallback<TSource, TDestination>,
-        afterMap?: MapCallback<TSource, TDestination>
+        afterMap?: MapCallback<TSource, TDestination>,
+        beforeMapArray?: MapCallback<TSource[], TDestination[]>,
+        afterMapArray?: MapCallback<TSource[], TDestination[]>
     ],
     namingConventions?: [
         source: NamingConvention,

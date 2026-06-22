@@ -15,11 +15,11 @@ export type Dictionary<T> = { [key in keyof T]?: unknown };
 export type AnyConstructor = new (...args: any[]) => any;
 export type AbstractConstructor<T = any> = abstract new (...args: any[]) => T;
 export type Constructor<T = any> = (new (...args: any[]) => T) &
-    TransformerMetadataFactory<T>;
+    TransformerMetadataFactory;
 export type ClassIdentifier<T = any> =
     | Constructor<T>
-    | (AbstractConstructor<T> & TransformerMetadataFactory<T>)
-    | (Function & TransformerMetadataFactory<T> & { prototype: T });
+    | (AbstractConstructor<T> & TransformerMetadataFactory)
+    | (Function & TransformerMetadataFactory & { prototype: T });
 
 export type Primitive = String | Number | Boolean | BigInt;
 export type PrimitiveExtended = Primitive | Date;
@@ -41,7 +41,7 @@ export type PrimitiveConstructorReturnType<
     ? InstanceType<TType>
     : ReturnType<Extract<TType, PrimitiveConstructor>>;
 
-export interface TransformerMetadataFactory<TModel = any> {
+export interface TransformerMetadataFactory {
     __AUTOMAPPER_METADATA_FACTORY__?: () => [
         propertyKey: string,
         options: {

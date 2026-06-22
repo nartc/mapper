@@ -1,4 +1,4 @@
-import { dirname, posix } from 'path';
+import { posix } from 'path';
 import {
     ArrayTypeNode,
     CallExpression,
@@ -136,29 +136,6 @@ function isFilePathImport(path: string): boolean {
         /^[A-Za-z]:[\\/]/.test(path) ||
         path.includes('\\')
     );
-}
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function _replaceImportPathLegacy(
-    typeReference: string,
-    fileName: string
-): string | undefined {
-    let importPath = /\("([^)]).+(")/.exec(typeReference)?.[0];
-    if (!importPath) {
-        return undefined;
-    }
-
-    if (process.platform === 'win32') {
-        return typeReference.replace('import', 'require');
-    }
-
-    importPath = importPath.slice(2, importPath.length - 1);
-
-    let relativePath = posix.relative(dirname(fileName), importPath);
-    relativePath = relativePath[0] !== '.' ? './' + relativePath : relativePath;
-    typeReference = typeReference.replace(importPath, relativePath);
-
-    return typeReference.replace('import', 'require');
 }
 
 function hasFlag(type: Type, flag: TypeFlags): boolean {

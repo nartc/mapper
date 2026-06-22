@@ -334,7 +334,13 @@ function assignResolved<
     setValue(value);
 }
 
-// Assign a precomputed value (its production already happened, or cannot throw).
+// Assign a precomputed auto-map value (its production already happened). This is
+// the hot path — a same-identifier / primitive / Date / array value assigned
+// as-is — so it uses the async-first short-circuit and never tests isThenable on
+// the synchronous path. (An auto-mapped source value that is itself a thenable is
+// awaited under mapAsync() and assigned as-is under map(), matching the original
+// pre-async behavior; the sync-thenable guard intentionally lives on the resolver
+// path in assignResolved, where async member resolvers actually originate.)
 function assignMember<
     TSource extends Dictionary<TSource>,
     TDestination extends Dictionary<TDestination>
@@ -344,7 +350,26 @@ function assignMember<
     ctx: MapStepContext<TSource, TDestination>
 ): void {
     try {
-        assignResolved(value, destinationMemberPath, ctx);
+        const setValue = ctx.setMemberFn(
+            destinationMemberPath,
+            ctx.destination
+        );
+        if (asyncMapContext !== null && isThenable(value)) {
+            asyncMapContext.pending.push(
+                Promise.resolve(value)
+                    .then(setValue)
+                    .catch((originalError) => {
+                        throw makeMemberError(
+                            destinationMemberPath,
+                            ctx.destinationIdentifier,
+                            ctx.errorHandler,
+                            originalError
+                        );
+                    })
+            );
+            return;
+        }
+        setValue(value);
     } catch (originalError) {
         throw makeMemberError(
             destinationMemberPath,
@@ -626,7 +651,6 @@ export function map<
         mapping[MappingClassId.compiledPlan] = compiledPlan;
     }
     const { steps, configuredKeys } = compiledPlan;
-    const currentMapDepth = asyncMapContext === null ? 0 : asyncMapDepth + 1;
 
     // Build the per-call context once, then run each compiled step. All the
     // per-member branching/destructuring was resolved at compile time.
@@ -641,6 +665,48 @@ export function map<
         setMemberFn,
         getMemberFn,
     };
+
+    // Synchronous fast path: no mapAsync()/mapArrayAsync() context is active, so
+    // there is nothing to await, defer, or order by depth. Run before-map →
+    // steps → unmapped-assert → after-map straight-line with zero per-call
+    // closures — this is the hot path the compiled plan is built for. (A
+    // thenable returned by a sync before-map is dropped, matching prior
+    // behavior; async before-maps require mapAsync().)
+    if (asyncMapContext === null) {
+        if (!isMapArray) {
+            const beforeMap = mapBeforeCallback ?? mappingBeforeCallback;
+            if (beforeMap) {
+                beforeMap(sourceObject, destination, extraArguments);
+            }
+        }
+
+        for (let i = 0, length = steps.length; i < length; i++) {
+            (steps[i] as MapStep<TSource, TDestination>)(context);
+        }
+
+        assertUnmappedProperties(
+            destination,
+            destinationWithMetadata,
+            configuredKeys,
+            sourceIdentifier,
+            destinationIdentifier,
+            errorHandler
+        );
+
+        if (!isMapArray) {
+            const afterMap = mapAfterCallback ?? mappingAfterCallback;
+            if (afterMap) {
+                afterMap(sourceObject, destination, extraArguments);
+            }
+        }
+
+        return destination;
+    }
+
+    // Async path: a mapAsync()/mapArrayAsync() context is active. Track this
+    // map's depth so nested after-maps settle before their parents, and defer
+    // after-maps past member resolution.
+    const currentMapDepth = asyncMapDepth + 1;
 
     const runStepsAndAssert = () => {
         return runAtAsyncMapDepth(currentMapDepth, () => {
@@ -683,12 +749,12 @@ export function map<
                 destination,
                 extraArguments
             );
-            if (asyncMapContext !== null && isThenable(beforeMapResult)) {
-                const context = asyncMapContext;
+            if (isThenable(beforeMapResult)) {
+                const asyncCtx = asyncMapContext;
                 stepsDeferredUntilBeforeMap = true;
                 asyncMapContext.pending.push(
                     Promise.resolve(beforeMapResult).then(() =>
-                        runInAsyncMapContext(context, () => {
+                        runInAsyncMapContext(asyncCtx, () => {
                             runStepsAndAssert();
                             queueAfterMap();
                         })

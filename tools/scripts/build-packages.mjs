@@ -78,10 +78,14 @@ function tsdown({ entry, outDir, external, tsconfig }) {
     });
 }
 
-// ESM-only conditions: no `require` branch (CommonJS is intentionally dropped in 9.0).
+// ESM-only conditions: no `require` branch (CommonJS is intentionally dropped in
+// 9.0). `default` mirrors `import` as a catch-all for non-standard resolvers that
+// don't honor the `import` condition. Order matters: types, then import, then the
+// default fallback last.
 const condFor = (prefix) => ({
     types: `${prefix}index.d.mts`,
     import: `${prefix}index.mjs`,
+    default: `${prefix}index.mjs`,
 });
 
 for (const pkg of targets) {
@@ -111,6 +115,9 @@ for (const pkg of targets) {
         });
         exportsMap[sp.key] = condFor(`./${sp.sub}/`);
     }
+
+    // expose package.json (some tooling resolves '<pkg>/package.json')
+    exportsMap['./package.json'] = './package.json';
 
     // frontend shim (classes): bare tsc, matches the 8.x published shim/index.js
     // `--ignoreConfig` skips the workspace root tsconfig.json (TS5112) since

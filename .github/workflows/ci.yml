@@ -11,7 +11,7 @@ concurrency:
 
 jobs:
     verify:
-        name: lint · build · test (node ${{ matrix.node }})
+        name: sync · lint · typecheck · build · test (node ${{ matrix.node }})
         runs-on: ubuntu-latest
         strategy:
             fail-fast: false
@@ -24,7 +24,10 @@ jobs:
                   node-version: ${{ matrix.node }}
             - run: corepack enable
             - run: pnpm install --frozen-lockfile
+            # fail fast if tsconfig project references drift from the graph
+            - run: pnpm run sync:check
             - run: pnpm run lint
+            - run: pnpm run typecheck
             - run: pnpm run package
             - run: pnpm run test
 

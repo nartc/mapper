@@ -48,3 +48,7 @@ old
 .claude/worktrees
 .nx/polygraph
 .nx/self-healing
+
+# local agent planning and visual brainstorming artifacts
+.superpowers/
+docs/superpowers/

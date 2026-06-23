@@ -1,16 +1,22 @@
 {
     "extends": "./tsconfig.json",
     "compilerOptions": {
-        "outDir": "../../dist/out-tsc",
+        "outDir": "../../dist/out-tsc/classes/lib",
+        "composite": true,
         "declaration": true,
         "types": ["node"]
     },
-    "include": ["**/*.ts"],
+    "include": ["src/**/*.ts"],
     "exclude": [
         "**/*.spec.ts",
         "**/*.test.ts",
         "transformer-plugin/**/*",
         "shim/**/*",
         "mapped-types/**/*"
+    ],
+    "references": [
+        {
+            "path": "../core/tsconfig.lib.json"
+        }
     ]
 }

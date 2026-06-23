@@ -1,10 +1,28 @@
 {
     "extends": "./tsconfig.json",
     "compilerOptions": {
-        "outDir": "../../dist/out-tsc",
+        "outDir": "../../dist/out-tsc/integration-test/lib",
+        "composite": true,
         "declaration": true,
         "types": []
     },
-    "include": ["**/*.ts"],
-    "exclude": ["**/*.spec.ts", "**/*.test.ts", "vitest.config.ts"]
+    "include": ["src/**/*.ts"],
+    "exclude": ["**/*.spec.ts", "**/*.test.ts", "vitest.config.ts"],
+    "references": [
+        {
+            "path": "../classes/transformer-plugin/tsconfig.lib.json"
+        },
+        {
+            "path": "../nestjs/tsconfig.lib.json"
+        },
+        {
+            "path": "../pojos/tsconfig.lib.json"
+        },
+        {
+            "path": "../core/tsconfig.lib.json"
+        },
+        {
+            "path": "../classes/tsconfig.lib.json"
+        }
+    ]
 }

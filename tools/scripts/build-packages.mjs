@@ -113,10 +113,17 @@ for (const pkg of targets) {
     }
 
     // frontend shim (classes): bare tsc, matches the 8.x published shim/index.js
+    // `--ignoreConfig` skips the workspace root tsconfig.json (TS5112) since
+    // files are passed on the command line.
     if (pkg.shim) {
         execFileSync(
             resolve(ROOT, 'node_modules/.bin/tsc'),
-            [resolve(ROOT, pkg.shim), '--outDir', resolve(outAbs, 'shim')],
+            [
+                resolve(ROOT, pkg.shim),
+                '--outDir',
+                resolve(outAbs, 'shim'),
+                '--ignoreConfig',
+            ],
             { cwd: ROOT, stdio: 'inherit' }
         );
     }

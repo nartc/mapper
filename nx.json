@@ -1,6 +1,12 @@
 {
     "extends": "nx/presets/core.json",
     "$schema": "./node_modules/nx/schemas/nx-schema.json",
+    "plugins": [
+        {
+            "plugin": "@nx/js/typescript",
+            "exclude": ["packages/benchmark-core/*"]
+        }
+    ],
     "namedInputs": {
         "default": ["{projectRoot}/**/*"],
         "prod": ["!{projectRoot}/**/*.spec.ts"]
@@ -62,7 +68,7 @@
         }
     },
     "nxCloudAccessToken": "MjMzYTA3OWMtMjQ1MS00YzFhLWExYTYtODMzMTM5MmQxZmE1fHJlYWQtd3JpdGU=",
-    "useInferencePlugins": false,
+    "useInferencePlugins": true,
     "defaultBase": "main",
     "analytics": false
 }

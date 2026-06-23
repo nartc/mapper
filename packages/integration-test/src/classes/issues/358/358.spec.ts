@@ -22,36 +22,50 @@ describe('Issue 358', () => {
         mapper.dispose();
     });
 
-    it('should map array async', (done) => {
+    it('should map array async', () => {
         addProfile(mapper, accountProfile);
 
-        getAccounts()
-            .pipe(
-                switchMap((accounts) =>
-                    mapper.mapArrayAsync(accounts, AccountEntity, AccountDTO)
-                ),
-                take(1)
-            )
-            .subscribe((dtos) => {
-                expect(dtos).toHaveLength(1);
-                done();
-            });
+        return new Promise<void>((resolve, reject) => {
+            getAccounts()
+                .pipe(
+                    switchMap((accounts) =>
+                        mapper.mapArrayAsync(
+                            accounts,
+                            AccountEntity,
+                            AccountDTO
+                        )
+                    ),
+                    take(1)
+                )
+                .subscribe({
+                    next: (dtos) => {
+                        expect(dtos).toHaveLength(1);
+                        resolve();
+                    },
+                    error: reject,
+                });
+        });
     });
 
-    it('should map async', (done) => {
+    it('should map async', () => {
         addProfile(mapper, accountProfile);
 
-        getAccount()
-            .pipe(
-                switchMap((account) =>
-                    mapper.mapAsync(account, AccountEntity, AccountDTO)
-                ),
-                take(1)
-            )
-            .subscribe((dto) => {
-                expect(dto).toBeTruthy();
-                done();
-            });
+        return new Promise<void>((resolve, reject) => {
+            getAccount()
+                .pipe(
+                    switchMap((account) =>
+                        mapper.mapAsync(account, AccountEntity, AccountDTO)
+                    ),
+                    take(1)
+                )
+                .subscribe({
+                    next: (dto) => {
+                        expect(dto).toBeTruthy();
+                        resolve();
+                    },
+                    error: reject,
+                });
+        });
     });
 });
 

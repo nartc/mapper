@@ -1,5 +1,5 @@
 import { createMap, createMapper, extend, forMember, mapFrom } from '@automapper/core';
-import { pojos, PojosMetadataMap, type PojosMetadata } from '@automapper/pojos';
+import { pojos, PojosMetadataMap, type PojoMetadata } from '@automapper/pojos';
 
 // Exercises the size-gated cold-path branches (metadata index, extend
 // Set) which only trigger above ~30 properties — wider than any class in the rest
@@ -7,8 +7,8 @@ import { pojos, PojosMetadataMap, type PojosMetadata } from '@automapper/pojos';
 // produce the same results as the small-class .find paths.
 const WIDTH = 40; // > the 30 gate
 
-function wideMeta(): PojosMetadata {
-    const meta: PojosMetadata = {};
+function wideMeta(): Record<string, PojoMetadata> {
+    const meta: Record<string, PojoMetadata> = {};
     for (let i = 0; i < WIDTH; i++) meta['p' + i] = String;
     return meta;
 }

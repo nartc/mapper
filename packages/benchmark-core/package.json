@@ -5,7 +5,10 @@
     "type": "module",
     "description": "Benchmark harness for @automapper/core hot path (map / mapArray)",
     "scripts": {
-        "bench": "tsx src/bench.ts"
+        "bench": "node --expose-gc --import tsx src/bench.ts",
+        "bench:startup": "node --expose-gc --import tsx src/startup-bench.ts",
+        "bench:profile": "node --cpu-prof --cpu-prof-dir ./profiles --import tsx src/profile-formember.ts",
+        "bench:profile:analyze": "tsx src/analyze-cpuprofile.ts"
     },
     "dependencies": {
         "@automapper/core": "workspace:*",

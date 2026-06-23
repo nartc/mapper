@@ -565,9 +565,21 @@ export interface CompiledMapping<
     TSource extends Dictionary<TSource> = any,
     TDestination extends Dictionary<TDestination> = any
 > {
+    steps: CompiledMapStep[];
+    // writable destination keys this mapping does not configure, precomputed at
+    // createMap so assertUnmappedProperties does no per-call Set/scan work.
+    unmappedCandidateKeys: string[];
+}
+
+// Build-time intermediate produced by compileMapping(): `props` + `configuredKeys`
+// are consumed by buildMapPlan() to make `steps` + `unmappedCandidateKeys` and are
+// NOT retained on the compiled plan (nothing reads them at runtime).
+export interface CompiledMappingDescriptors<
+    TSource extends Dictionary<TSource> = any,
+    TDestination extends Dictionary<TDestination> = any
+> {
     props: CompiledMappingProperty<TSource, TDestination>[];
     configuredKeys: string[];
-    steps: CompiledMapStep[];
 }
 
 export const enum MappingClassId {

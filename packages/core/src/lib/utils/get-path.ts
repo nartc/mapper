@@ -24,15 +24,18 @@ export function getFlatteningPaths(
     namingConventions: [NamingConvention, NamingConvention]
 ): string[] {
     const [sourceNamingConvention] = namingConventions;
+
+    // single-segment path that already exists on source: no flattening needed —
+    // return before doing the regex split work.
+    if (srcPath.length === 1 && hasProperty(src, srcPath[0])) {
+        return srcPath;
+    }
+
     const splitSourcePaths: string[] = ([] as string[]).concat(
         ...srcPath.map((s) =>
             s.split(sourceNamingConvention.splittingExpression).filter(Boolean)
         )
     );
-
-    if (srcPath.length === 1 && hasProperty(src, srcPath[0])) {
-        return srcPath;
-    }
 
     const [first, ...paths] = splitSourcePaths.slice(
         0,

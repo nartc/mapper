@@ -13,7 +13,10 @@ import type {
     MetadataIdentifier,
 } from '../types';
 import { MapFnClassId, MappingClassId, TransformationType } from '../types';
-import { assertUnmappedProperties } from '../utils/assert-unmapped-properties';
+import {
+    assertUnmappedProperties,
+    computeUnmappedCandidateKeys,
+} from '../utils/assert-unmapped-properties';
 import { get } from '../utils/get';
 import { getMapping } from '../utils/get-mapping';
 import { isMappableIdentifier } from '../utils/is-mappable-identifier';
@@ -23,15 +26,30 @@ import { set, setMutate } from '../utils/set';
 import { compileMapping } from './compile-mapping';
 import { mapMember } from './map-member';
 
+// A genuine File (and any File-like value) reports `[object File]`, i.e. its
+// [Symbol.toStringTag] is 'File'. Reading the symbol directly avoids the
+// per-call `Object.prototype.toString.call(x).slice(8, -1)` string allocation on
+// the hot MapInitialize path, and is null-safe for the array-element check. NOT
+// constructor.name, which false-positives on user classes named "File".
+const FILE_TAG = Symbol.toStringTag;
+function isFileTagged(value: unknown): boolean {
+    return (
+        value != null &&
+        (value as Record<symbol, unknown>)[FILE_TAG] === 'File'
+    );
+}
+
+// Direct per-member writer (no per-member closure). set() returns the same
+// object reference for a non-empty path, so the old `destination = set(...)`
+// reassignment was a no-op and is dropped.
 function setMemberReturnFn<TDestination extends Dictionary<TDestination> = any>(
     destinationMemberPath: string[],
-    destination: TDestination | undefined
+    destination: TDestination | undefined,
+    value: unknown
 ) {
-    return (value: unknown) => {
-        if (destination) {
-            destination = set(destination, destinationMemberPath, value);
-        }
-    };
+    if (destination) {
+        set(destination, destinationMemberPath, value);
+    }
 }
 
 export function mapReturn<
@@ -53,7 +71,11 @@ export function mapReturn<
 }
 
 function setMemberMutateFn(destinationObj: Record<string, unknown>) {
-    return (destinationMember: string[]) => (value: unknown) => {
+    return (
+        destinationMember: string[],
+        _destination: unknown,
+        value: unknown
+    ) => {
         if (value !== undefined) {
             setMutate(destinationObj, destinationMember, value);
         }
@@ -94,8 +116,9 @@ interface MapParameter<
     options: MapOptions<TSource, TDestination>;
     setMemberFn: (
         destinationMemberPath: string[],
-        destination?: TDestination
-    ) => (value: unknown) => void;
+        destination: TDestination | undefined,
+        value: unknown
+    ) => void;
     getMemberFn?: (
         destinationMemberPath: string[] | undefined
     ) => Record<string, unknown>;
@@ -285,6 +308,8 @@ interface MapStepContext<
     destination: TDestination;
     extraArguments: Record<string, unknown> | undefined;
     extraArgs: MapOptions<TSource, TDestination>['extraArgs'];
+    // reusable options object for nested map() recursion (shared, read-only)
+    nestedOptions: MapOptions<TSource, TDestination>;
     mapper: Mapper;
     errorHandler: ErrorHandler;
     destinationIdentifier: MetadataIdentifier;
@@ -309,7 +334,6 @@ function assignResolved<
     destinationMemberPath: string[],
     ctx: MapStepContext<TSource, TDestination>
 ): void {
-    const setValue = ctx.setMemberFn(destinationMemberPath, ctx.destination);
     if (isThenable(value)) {
         if (asyncMapContext === null) {
             throw new Error(
@@ -319,7 +343,13 @@ function assignResolved<
 
         asyncMapContext.pending.push(
             Promise.resolve(value)
-                .then(setValue)
+                .then((resolved) =>
+                    ctx.setMemberFn(
+                        destinationMemberPath,
+                        ctx.destination,
+                        resolved
+                    )
+                )
                 .catch((originalError) => {
                     throw makeMemberError(
                         destinationMemberPath,
@@ -331,7 +361,7 @@ function assignResolved<
         );
         return;
     }
-    setValue(value);
+    ctx.setMemberFn(destinationMemberPath, ctx.destination, value);
 }
 
 // Assign a precomputed auto-map value (its production already happened). This is
@@ -350,14 +380,16 @@ function assignMember<
     ctx: MapStepContext<TSource, TDestination>
 ): void {
     try {
-        const setValue = ctx.setMemberFn(
-            destinationMemberPath,
-            ctx.destination
-        );
         if (asyncMapContext !== null && isThenable(value)) {
             asyncMapContext.pending.push(
                 Promise.resolve(value)
-                    .then(setValue)
+                    .then((resolved) =>
+                        ctx.setMemberFn(
+                            destinationMemberPath,
+                            ctx.destination,
+                            resolved
+                        )
+                    )
                     .catch((originalError) => {
                         throw makeMemberError(
                             destinationMemberPath,
@@ -369,7 +401,7 @@ function assignMember<
             );
             return;
         }
-        setValue(value);
+        ctx.setMemberFn(destinationMemberPath, ctx.destination, value);
     } catch (originalError) {
         throw makeMemberError(
             destinationMemberPath,
@@ -422,8 +454,40 @@ function compileStep<
         sourceMemberIdentifier,
     } = prop;
 
-    // Everything that isn't MapInitialize dispatches through mapMember(); no
-    // identifier/value-shape inspection is needed here.
+    // MapFrom is the most common member transform. Call the selector directly
+    // and assign, skipping both the per-member `() => mapMember(...)` thunk and
+    // the mapMember() type switch — mapMember's MapFrom arm is exactly
+    // `value = mapFn(sourceObject)` (no implicit member mapping), so this is
+    // equivalent. One try/catch wraps production + assignment in a single
+    // MapMemberError, matching setMemberValue.
+    if (transformationType === TransformationType.MapFrom) {
+        const mapFromFn = transformationMapFn[MapFnClassId.fn] as (
+            source: TSource
+        ) => unknown;
+        return (ctx) => {
+            if (preCond && !preCond(ctx.sourceObject)) {
+                assignMember(preCondDefault, destinationMemberPath, ctx);
+                return;
+            }
+            try {
+                assignResolved(
+                    mapFromFn(ctx.sourceObject),
+                    destinationMemberPath,
+                    ctx
+                );
+            } catch (originalError) {
+                throw makeMemberError(
+                    destinationMemberPath,
+                    ctx.destinationIdentifier,
+                    ctx.errorHandler,
+                    originalError
+                );
+            }
+        };
+    }
+
+    // Everything else that isn't MapInitialize dispatches through mapMember();
+    // no identifier/value-shape inspection is needed here.
     if (transformationType !== TransformationType.MapInitialize) {
         return (ctx) => {
             if (preCond && !preCond(ctx.sourceObject)) {
@@ -472,9 +536,21 @@ function compileStep<
 
         const mapInitializedValue = mapInitializeFn(ctx.sourceObject);
 
-        // a same identifier that isn't a primitive/Date AND has no mapping of
-        // its own — assigned as-is. getMapping is only consulted when the
-        // (invariant) candidate held, so primitives never hit the registry.
+        // Scalar fast-path: null/undefined and primitives are assigned as-is and
+        // can never be a Date/File/Array or carry a nested mapping of their own,
+        // so they skip the identifier registry probe and the Date/File tag checks
+        // entirely. This is the bulk of @AutoMap members (same-name primitives).
+        if (
+            mapInitializedValue == null ||
+            typeof mapInitializedValue !== 'object'
+        ) {
+            assignMember(mapInitializedValue, destinationMemberPath, ctx);
+            return;
+        }
+
+        // From here mapInitializedValue is a non-null object. A same identifier
+        // that isn't a Date/File AND has no mapping of its own is assigned as-is;
+        // getMapping is only consulted when the (invariant) candidate held.
         const hasSameIdentifier =
             sameIdentifierCandidate &&
             !getMapping(
@@ -485,10 +561,8 @@ function compileStep<
             );
 
         if (
-            mapInitializedValue == null ||
             mapInitializedValue instanceof Date ||
-            Object.prototype.toString.call(mapInitializedValue).slice(8, -1) ===
-                'File' ||
+            isFileTagged(mapInitializedValue) ||
             hasSameIdentifier ||
             isTypedConverted
         ) {
@@ -498,11 +572,12 @@ function compileStep<
 
         if (Array.isArray(mapInitializedValue)) {
             const [first] = mapInitializedValue;
-            // primitive/Date/File element array — shallow copy
+            // primitive/Date/File element array — shallow copy. isFileTagged is
+            // null-safe, so a null first element falls through to isEmpty below.
             if (
                 typeof first !== 'object' ||
                 first instanceof Date ||
-                Object.prototype.toString.call(first).slice(8, -1) === 'File'
+                isFileTagged(first)
             ) {
                 assignMember(
                     mapInitializedValue.slice(),
@@ -532,7 +607,7 @@ function compileStep<
                                 destinationMemberIdentifier as MetadataIdentifier
                             ),
                             each,
-                            { extraArgs: ctx.extraArgs }
+                            ctx.nestedOptions
                         )
                     ),
                 destinationMemberPath,
@@ -541,44 +616,41 @@ function compileStep<
             return;
         }
 
-        if (typeof mapInitializedValue === 'object') {
-            const nestedMapping = getMapping(
-                ctx.mapper,
-                sourceMemberIdentifier as MetadataIdentifier,
-                destinationMemberIdentifier as MetadataIdentifier
-            );
+        // non-null, non-array object: map it through its nested mapping. (The
+        // scalar fast-path above already handled primitives, so this is the only
+        // remaining case — no `typeof === 'object'` guard needed.)
+        const nestedMapping = getMapping(
+            ctx.mapper,
+            sourceMemberIdentifier as MetadataIdentifier,
+            destinationMemberIdentifier as MetadataIdentifier
+        );
 
-            // nested mutate — recurse directly (unwrapped, as before)
-            if (ctx.getMemberFn) {
-                const memberValue = ctx.getMemberFn(destinationMemberPath);
-                if (memberValue !== undefined) {
-                    map({
-                        sourceObject: mapInitializedValue as TSource,
-                        mapping: nestedMapping,
-                        options: { extraArgs: ctx.extraArgs },
-                        setMemberFn: setMemberMutateFn(memberValue),
-                        getMemberFn: getMemberMutateFn(memberValue),
-                    });
-                }
-                return;
+        // nested mutate — recurse directly (unwrapped, as before)
+        if (ctx.getMemberFn) {
+            const memberValue = ctx.getMemberFn(destinationMemberPath);
+            if (memberValue !== undefined) {
+                map({
+                    sourceObject: mapInitializedValue as TSource,
+                    mapping: nestedMapping,
+                    options: ctx.nestedOptions,
+                    setMemberFn: setMemberMutateFn(memberValue),
+                    getMemberFn: getMemberMutateFn(memberValue),
+                });
             }
-
-            setMemberValue(
-                () =>
-                    map({
-                        mapping: nestedMapping,
-                        sourceObject: mapInitializedValue as TSource,
-                        options: { extraArgs: ctx.extraArgs },
-                        setMemberFn: setMemberReturnFn,
-                    }),
-                destinationMemberPath,
-                ctx
-            );
             return;
         }
 
-        // primitive
-        assignMember(mapInitializedValue, destinationMemberPath, ctx);
+        setMemberValue(
+            () =>
+                map({
+                    mapping: nestedMapping,
+                    sourceObject: mapInitializedValue as TSource,
+                    options: ctx.nestedOptions,
+                    setMemberFn: setMemberReturnFn,
+                }),
+            destinationMemberPath,
+            ctx
+        );
     };
 }
 
@@ -588,7 +660,8 @@ export function buildMapPlan<
     TSource extends Dictionary<TSource>,
     TDestination extends Dictionary<TDestination>
 >(
-    propsToMap: Mapping<TSource, TDestination>[MappingClassId.properties]
+    propsToMap: Mapping<TSource, TDestination>[MappingClassId.properties],
+    destinationMetadata: TDestination
 ): CompiledMapping<TSource, TDestination> {
     const { props, configuredKeys } = compileMapping<TSource, TDestination>(
         propsToMap
@@ -597,7 +670,16 @@ export function buildMapPlan<
     for (let i = 0, length = props.length; i < length; i++) {
         steps[i] = compileStep(props[i]);
     }
-    return { props, configuredKeys, steps };
+    // Precompute the unmapped-candidate residual (writable destination keys this
+    // mapping doesn't configure) once, here, so assertUnmappedProperties never
+    // rebuilds a per-call Set nor rescans the full writable-key list on the hot
+    // path (it runs on every map() / every mapArray element).
+    const unmappedCandidateKeys = computeUnmappedCandidateKeys(
+        destinationMetadata as object,
+        configuredKeys
+    );
+    // props + configuredKeys are build-time only — not retained on the plan.
+    return { steps, unmappedCandidateKeys };
 }
 
 export function map<
@@ -642,15 +724,21 @@ export function map<
     // get extraArguments
     const extraArguments = extraArgs?.(mapping, destination);
 
+    // One options object reused by every nested map() (object members,
+    // object-array elements, nested mutate) instead of allocating
+    // `{ extraArgs }` per nested call. options is read-only in map(), so a
+    // shared instance is safe.
+    const nestedOptions: MapOptions<TSource, TDestination> = { extraArgs };
+
     // Compiled plan (specialized step closures + configured keys). Built eagerly
     // at createMap and hung on the mapping; the lazy fallback only fires for a
     // mapping constructed outside the normal createMap path.
     let compiledPlan = mapping[MappingClassId.compiledPlan];
     if (compiledPlan === undefined) {
-        compiledPlan = buildMapPlan(propsToMap);
+        compiledPlan = buildMapPlan(propsToMap, destinationWithMetadata);
         mapping[MappingClassId.compiledPlan] = compiledPlan;
     }
-    const { steps, configuredKeys } = compiledPlan;
+    const { steps, unmappedCandidateKeys } = compiledPlan;
 
     // Build the per-call context once, then run each compiled step. All the
     // per-member branching/destructuring was resolved at compile time.
@@ -659,6 +747,7 @@ export function map<
         destination,
         extraArguments,
         extraArgs,
+        nestedOptions,
         mapper,
         errorHandler,
         destinationIdentifier,
@@ -686,8 +775,7 @@ export function map<
 
         assertUnmappedProperties(
             destination,
-            destinationWithMetadata,
-            configuredKeys,
+            unmappedCandidateKeys,
             sourceIdentifier,
             destinationIdentifier,
             errorHandler
@@ -719,8 +807,7 @@ export function map<
             // this assertion runs inside the gated async work as well.
             assertUnmappedProperties(
                 destination,
-                destinationWithMetadata,
-                configuredKeys,
+                unmappedCandidateKeys,
                 sourceIdentifier,
                 destinationIdentifier,
                 errorHandler

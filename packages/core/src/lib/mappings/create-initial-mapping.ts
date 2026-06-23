@@ -28,6 +28,7 @@ import {
 import { getFlatteningPaths, getPath } from '../utils/get-path';
 import { getPathRecursive } from '../utils/get-path-recursive';
 import { isPrimitiveArrayEqual } from '../utils/is-primitive-array-equal';
+import { pathKey } from '../utils/path-key';
 
 export function createInitialMapping<
     TSource extends Dictionary<TSource>,
@@ -93,6 +94,15 @@ export function createInitialMapping<
     const mappingProperties = mapping[MappingClassId.properties];
     const customMappingProperties = mapping[MappingClassId.customProperties];
     const hasCustomMappingProperties = customMappingProperties.length > 0;
+    // Configured destination paths as a Set, built once instead of an O(custom)
+    // .some scan per destination path.
+    const customPropertyKeys = hasCustomMappingProperties
+        ? new Set(
+              customMappingProperties.map((property) =>
+                  pathKey(property[MappingPropertiesClassId.path])
+              )
+          )
+        : null;
 
     const namingConventions = mapping[MappingClassId.namingConventions];
     const { processSourcePath, getMetadataAtMember, getNestedMappingPair } =
@@ -101,17 +111,9 @@ export function createInitialMapping<
     for (let i = 0, length = destinationPaths.length; i < length; i++) {
         const destinationPath = destinationPaths[i];
 
-        // is a forMember (custom mapping configuration) already exists
-        // for this destination path, skip it
-        if (
-            hasCustomMappingProperties &&
-            customMappingProperties.some((property) =>
-                isPrimitiveArrayEqual(
-                    property[MappingPropertiesClassId.path],
-                    destinationPath
-                )
-            )
-        ) {
+        // a forMember (custom mapping configuration) already exists for this
+        // destination path — skip it
+        if (customPropertyKeys && customPropertyKeys.has(pathKey(destinationPath))) {
             continue;
         }
 
@@ -226,18 +228,41 @@ export function createMappingUtil<
     const destinationMetadata = metadataMap.get(destinationIdentifier) || [];
     const sourceMetadata = metadataMap.get(sourceIdentifier) || [];
 
+    // For wide classes, index metadata by null-byte-joined property path so
+    // getMetadataAtMember is O(1) rather than an O(P) .find — it runs twice per
+    // destination path, so the scan is O(P^2) over the class. Below the gate the
+    // .find is cheaper than building the Map; first-match-wins is preserved.
+    const METADATA_INDEX_GATE = 30;
+    const buildIndex = (meta: Metadata[]) => {
+        if (meta.length <= METADATA_INDEX_GATE) return null;
+        const index = new Map<string, Metadata>();
+        for (let i = 0, len = meta.length; i < len; i++) {
+            const key = pathKey(meta[i][MetadataClassId.propertyKeys]);
+            if (!index.has(key)) index.set(key, meta[i]);
+        }
+        return index;
+    };
+    const sourceIndex = buildIndex(sourceMetadata);
+    const destinationIndex = buildIndex(destinationMetadata);
+
     return {
         getMetadataAtMember: (
             memberPath: string[],
             type: 'source' | 'destination'
-        ) =>
-            (type === 'source' ? sourceMetadata : destinationMetadata).find(
-                (m) =>
-                    isPrimitiveArrayEqual(
-                        m[MetadataClassId.propertyKeys],
-                        memberPath
-                    )
-            ),
+        ) => {
+            const index = type === 'source' ? sourceIndex : destinationIndex;
+            if (index) {
+                return index.get(pathKey(memberPath));
+            }
+            return (
+                type === 'source' ? sourceMetadata : destinationMetadata
+            ).find((m) =>
+                isPrimitiveArrayEqual(
+                    m[MetadataClassId.propertyKeys],
+                    memberPath
+                )
+            );
+        },
         processSourcePath: (
             sourceObject: TSource,
             namingConventions: Mapping[MappingClassId.namingConventions],

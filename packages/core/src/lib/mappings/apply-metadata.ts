@@ -14,7 +14,6 @@ import { isDateConstructor } from '../utils/is-date-constructor';
 import { isEmpty } from '../utils/is-empty';
 import { isPrimitiveConstructor } from '../utils/is-primitive-constructor';
 import { getRecursiveValue, setRecursiveValue } from '../utils/recursion';
-import { setMutate } from '../utils/set';
 
 export function defaultApplyMetadata(
     strategy: MappingStrategy<MetadataIdentifier>
@@ -34,8 +33,10 @@ export function defaultApplyMetadata(
         // get the metadata of the model
         const metadata = metadataMap.get(model);
 
-        // instantiate a model
-        const instance = {};
+        // instantiate a model. Metadata property keys are always a single
+        // segment here (storeMetadata stores `[propertyKey]`), so members are
+        // assigned directly — no setMutate path-walk or throwaway temp object.
+        const instance: Record<string, unknown> = {};
 
         // if metadata is empty, return the instance early
         if (isEmpty(metadata) || !metadata) {
@@ -65,20 +66,20 @@ export function defaultApplyMetadata(
 
             // if the metadata is an Array, then assign an empty array
             if (isArray) {
-                setMutate(instance as Record<string, unknown>, key, []);
+                instance[key[0]] = [];
                 continue;
             }
 
             // if is String, Number, Boolean
             // null meta means this has any type or an arbitrary object, treat as primitives
             if (isPrimitiveConstructor(metaResult) || metaResult === null) {
-                setMutate(instance as Record<string, unknown>, key, undefined);
+                instance[key[0]] = undefined;
                 continue;
             }
 
             // if is Date, assign a new Date value if valueAtKey is defined, otherwise, undefined
             if (isDateConstructor(metaResult)) {
-                setMutate(instance as Record<string, unknown>, key, new Date());
+                instance[key[0]] = new Date();
                 continue;
             }
 
@@ -89,7 +90,7 @@ export function defaultApplyMetadata(
 
             // if no depth, just instantiate with new keyword without recursive
             if (depth === 0) {
-                setMutate(instance as Record<string, unknown>, key, {});
+                instance[key[0]] = {};
                 continue;
             }
 
@@ -99,7 +100,7 @@ export function defaultApplyMetadata(
                 if (root || !selfReference) {
                     setRecursiveValue(recursiveCountMap, model, key, 0);
                 }
-                setMutate(instance as Record<string, unknown>, key, {});
+                instance[key[0]] = {};
                 continue;
             }
 
@@ -116,7 +117,7 @@ export function defaultApplyMetadata(
                     false,
                     metaResult === model
                 );
-            setMutate(instance as Record<string, unknown>, key, childMetadata);
+            instance[key[0]] = childMetadata;
         }
 
         // after all, resetAllCount on the current model

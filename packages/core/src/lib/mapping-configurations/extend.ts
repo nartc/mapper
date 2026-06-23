@@ -7,7 +7,7 @@ import type {
 } from '../types';
 import { MappingClassId } from '../types';
 import { getMapping } from '../utils/get-mapping';
-import { isSamePath } from '../utils/is-same-path';
+import { pathKey } from '../utils/path-key';
 
 export function extend<
     TSource extends Dictionary<TSource>,
@@ -50,18 +50,25 @@ export function extend<
         }
 
         const propsToExtend = mappingToExtend[MappingClassId.properties];
+        const customProperties = mapping[MappingClassId.customProperties];
 
+        // Don't overwrite a destination already configured by a forMember.
+        // Index present keys in a Set (O(1) lookups instead of an O(custom)
+        // `.find` per parent prop) and add on push so dedup within this batch is
+        // preserved. Compile-time only, so the Set is cheap at any size.
+        const present = new Set(
+            customProperties.map(([pKey]) => pathKey(pKey))
+        );
         for (let i = 0, length = propsToExtend.length; i < length; i++) {
             const [
                 propToExtendKey,
                 propToExtendMappingProp,
                 propToExtendNestedMapping,
             ] = propsToExtend[i];
-            const existProp = mapping[MappingClassId.customProperties].find(
-                ([pKey]) => isSamePath(pKey, propToExtendKey)
-            );
-            if (existProp) continue;
-            mapping[MappingClassId.customProperties].push([
+            const key = pathKey(propToExtendKey);
+            if (present.has(key)) continue;
+            present.add(key);
+            customProperties.push([
                 propToExtendKey,
                 propToExtendMappingProp as MappingProperty<
                     TSource,

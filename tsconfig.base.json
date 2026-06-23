@@ -44,9 +44,6 @@
             ],
             "@automapper/sequelize": [
                 "packages/sequelize/src/index.ts"
-            ],
-            "@automapper/zod": [
-                "packages/zod/src/index.ts"
             ]
         },
         "ignoreDeprecations": "6.0"

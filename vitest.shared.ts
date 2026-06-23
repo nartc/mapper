@@ -20,7 +20,6 @@ const alias = [
     { find: '@automapper/mikro', replacement: r('packages/mikro/src/index.ts') },
     { find: '@automapper/nestjs', replacement: r('packages/nestjs/src/index.ts') },
     { find: '@automapper/sequelize', replacement: r('packages/sequelize/src/index.ts') },
-    { find: '@automapper/zod', replacement: r('packages/zod/src/index.ts') },
 ];
 
 // Single source of truth for every package's Vitest config.

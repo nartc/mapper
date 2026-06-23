@@ -8,7 +8,6 @@ const distPackageJson = [
     'classes/mapped-types',
     'classes/transformer-plugin',
     'core',
-    'zod',
     'mikro',
     'nestjs',
     'pojos',

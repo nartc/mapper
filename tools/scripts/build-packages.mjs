@@ -31,7 +31,6 @@ const PACKAGES = [
     { dir: 'packages/nestjs', out: 'dist/packages/nestjs' },
     { dir: 'packages/mikro', out: 'dist/packages/mikro' },
     { dir: 'packages/sequelize', out: 'dist/packages/sequelize' },
-    { dir: 'packages/zod', out: 'dist/packages/zod' },
 ];
 
 // Always external (compiler/runtime helpers).

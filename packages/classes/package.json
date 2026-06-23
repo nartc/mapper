@@ -11,6 +11,9 @@
         "./mapped-types": "./mapped-types/src/index.ts",
         "./transformer-plugin": "./transformer-plugin/src/index.ts"
     },
+    "devDependencies": {
+        "@automapper/classes": "workspace:*"
+    },
     "sideEffects": false,
     "engines": {
         "node": ">=20.0.0"

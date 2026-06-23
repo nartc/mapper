@@ -131,6 +131,10 @@ for (const pkg of targets) {
     // dist package.json: preserve metadata, set ESM entry points + exports map.
     // No `main` — there is no CommonJS entry; `module`/`types` point at the ESM build.
     delete manifest.main;
+    // Drop devDependencies (the workspace:* @automapper/* dev links used only for
+    // in-repo resolution) — they must not ship, and `workspace:` can't resolve in
+    // a packed tarball.
+    delete manifest.devDependencies;
     manifest.module = './index.mjs';
     manifest.types = './index.d.mts';
     manifest.exports = exportsMap;

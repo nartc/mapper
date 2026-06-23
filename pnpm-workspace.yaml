@@ -1,10 +1,14 @@
-# Scoped to the packages the benchmark consumes via workspace:* (+ the benchmark
-# itself). The other libs and the test/docs projects resolve @automapper/* via
-# tsconfig paths for build/test, so they don't need to be workspace members —
-# keeping this list small avoids pulling docusaurus's ancient deps (which created
-# a fan-out of conflicting @nestjs / rxjs / reflect-metadata versions).
+# All library + test packages are workspace members so @automapper/* resolves via
+# pnpm symlinks + each package's `exports` (source) — no tsconfig `paths` needed.
+# The docs projects (documentation/documentations/docs) are deliberately EXCLUDED:
+# they keep their own isolated installs so docusaurus's ancient deps don't fan out
+# conflicting @nestjs / rxjs / reflect-metadata versions into the workspace.
 packages:
   - 'packages/core'
   - 'packages/classes'
   - 'packages/pojos'
+  - 'packages/nestjs'
+  - 'packages/mikro'
+  - 'packages/sequelize'
+  - 'packages/integration-test'
   - 'packages/benchmark-core'

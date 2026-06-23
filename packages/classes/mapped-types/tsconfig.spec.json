@@ -1,8 +1,10 @@
 {
     "extends": "./tsconfig.json",
     "compilerOptions": {
-        "outDir": "../../../dist/out-tsc",
+        "outDir": "../../../dist/out-tsc/classes-mapped-types/spec",
         "module": "commonjs",
+        "composite": true,
+        "declaration": true,
         "types": [
             "vitest/globals",
             "node"
@@ -12,5 +14,16 @@
         "**/*.test.ts",
         "**/*.spec.ts",
         "**/*.d.ts"
+    ],
+    "references": [
+        {
+            "path": "./tsconfig.lib.json"
+        },
+        {
+            "path": "../tsconfig.lib.json"
+        },
+        {
+            "path": "../../core/tsconfig.lib.json"
+        }
     ]
 }

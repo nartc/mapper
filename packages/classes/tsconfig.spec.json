@@ -1,16 +1,28 @@
 {
     "extends": "./tsconfig.json",
     "compilerOptions": {
-        "outDir": "../../dist/out-tsc",
+        "outDir": "../../dist/out-tsc/classes/spec",
         "module": "commonjs",
+        "composite": true,
+        "declaration": true,
         "types": [
             "vitest/globals",
             "node"
         ]
     },
     "include": [
-        "**/*.test.ts",
-        "**/*.spec.ts",
-        "**/*.d.ts"
+        "src/**/*.test.ts",
+        "src/**/*.spec.ts",
+        "src/**/*.d.ts",
+        "shim/**/*.ts"
+    ],
+    "exclude": [
+        "transformer-plugin/**/*",
+        "mapped-types/**/*"
+    ],
+    "references": [
+        {
+            "path": "./tsconfig.lib.json"
+        }
     ]
 }

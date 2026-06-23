@@ -1,8 +1,10 @@
 {
     "extends": "./tsconfig.json",
     "compilerOptions": {
-        "outDir": "../../dist/out-tsc",
+        "outDir": "../../dist/out-tsc/core/spec",
         "module": "commonjs",
+        "composite": true,
+        "declaration": true,
         "types": [
             "vitest/globals",
             "node",
@@ -13,5 +15,10 @@
         "**/*.test.ts",
         "**/*.spec.ts",
         "**/*.d.ts"
+    ],
+    "references": [
+        {
+            "path": "./tsconfig.lib.json"
+        }
     ]
 }

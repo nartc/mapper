@@ -1,34 +1,156 @@
+export type AutoMapperLogFn = (
+    message: unknown,
+    ...optionalParams: unknown[]
+) => void;
+
+export interface AutoMapperLoggerLike {
+    log?: AutoMapperLogFn;
+    info?: AutoMapperLogFn;
+    warn?: AutoMapperLogFn;
+    error?: AutoMapperLogFn;
+    debug?: AutoMapperLogFn;
+    verbose?: AutoMapperLogFn;
+    fatal?: AutoMapperLogFn;
+    trace?: AutoMapperLogFn;
+}
+
+type AutoMapperDefaultLogger = Required<
+    Omit<AutoMapperLoggerLike, 'trace'>
+> &
+    Pick<AutoMapperLoggerLike, 'trace'>;
+
+const AUTO_MAPPER_LOG_LEVELS = [
+    'log',
+    'info',
+    'warn',
+    'error',
+    'debug',
+    'verbose',
+    'fatal',
+    'trace',
+] as const;
+
 export class AutoMapperLogger {
     private static readonly AUTOMAPPER_PREFIX = '[AutoMapper]: ' as const;
-    private static configured = false;
 
-    static configure(
-        customLogger: Partial<
-            Pick<typeof AutoMapperLogger, 'log' | 'info' | 'error' | 'warn'>
-        > = {}
-    ) {
-        if (this.configured) return;
-        this.configured = true;
-        Object.entries(customLogger).forEach(([logLevel, logImpl]) => {
+    private static readonly defaultLogger: AutoMapperDefaultLogger = {
+        log: (message, ...optionalParams) => {
+            console.log.call(
+                console,
+                AutoMapperLogger.AUTOMAPPER_PREFIX,
+                message,
+                ...optionalParams
+            );
+        },
+        info: (message, ...optionalParams) => {
+            console.info.call(
+                console,
+                AutoMapperLogger.AUTOMAPPER_PREFIX,
+                message,
+                ...optionalParams
+            );
+        },
+        warn: (message, ...optionalParams) => {
+            console.warn.call(
+                console,
+                AutoMapperLogger.AUTOMAPPER_PREFIX,
+                message,
+                ...optionalParams
+            );
+        },
+        error: (message, ...optionalParams) => {
+            console.error.call(
+                console,
+                AutoMapperLogger.AUTOMAPPER_PREFIX,
+                message,
+                ...optionalParams
+            );
+        },
+        debug: (message, ...optionalParams) => {
+            console.debug.call(
+                console,
+                AutoMapperLogger.AUTOMAPPER_PREFIX,
+                message,
+                ...optionalParams
+            );
+        },
+        verbose: (message, ...optionalParams) => {
+            console.debug.call(
+                console,
+                AutoMapperLogger.AUTOMAPPER_PREFIX,
+                message,
+                ...optionalParams
+            );
+        },
+        fatal: (message, ...optionalParams) => {
+            console.error.call(
+                console,
+                AutoMapperLogger.AUTOMAPPER_PREFIX,
+                message,
+                ...optionalParams
+            );
+        },
+        trace: undefined,
+    };
+
+    private static currentLogger = AutoMapperLogger.defaultLogger;
+
+    static configure(customLogger: AutoMapperLoggerLike = {}) {
+        const previousLogger = this.currentLogger;
+        this.currentLogger = this.createLogger(customLogger);
+
+        return () => {
+            this.currentLogger = previousLogger;
+        };
+    }
+
+    static reset() {
+        this.currentLogger = this.defaultLogger;
+    }
+
+    static log(message: unknown, ...optionalParams: unknown[]) {
+        this.currentLogger.log(message, ...optionalParams);
+    }
+
+    static warn(message: unknown, ...optionalParams: unknown[]) {
+        this.currentLogger.warn(message, ...optionalParams);
+    }
+
+    static error(message: unknown, ...optionalParams: unknown[]) {
+        this.currentLogger.error(message, ...optionalParams);
+    }
+
+    static info(message: unknown, ...optionalParams: unknown[]) {
+        this.currentLogger.info(message, ...optionalParams);
+    }
+
+    static debug(message: unknown, ...optionalParams: unknown[]) {
+        this.currentLogger.debug(message, ...optionalParams);
+    }
+
+    static verbose(message: unknown, ...optionalParams: unknown[]) {
+        this.currentLogger.verbose(message, ...optionalParams);
+    }
+
+    static fatal(message: unknown, ...optionalParams: unknown[]) {
+        this.currentLogger.fatal(message, ...optionalParams);
+    }
+
+    static get trace() {
+        return this.currentLogger.trace;
+    }
+
+    private static createLogger(customLogger: AutoMapperLoggerLike) {
+        const logger: AutoMapperDefaultLogger = { ...this.defaultLogger };
+
+        for (const logLevel of AUTO_MAPPER_LOG_LEVELS) {
+            const logImpl = customLogger[logLevel];
+
             if (logImpl !== undefined) {
-                this[logLevel as 'log' | 'info' | 'error' | 'warn'] = logImpl;
+                logger[logLevel] = logImpl;
             }
-        });
-    }
+        }
 
-    static log(message: string) {
-        console.log.call(console, this.AUTOMAPPER_PREFIX, message);
-    }
-
-    static warn(warning: string) {
-        console.warn.call(console, this.AUTOMAPPER_PREFIX, warning);
-    }
-
-    static error(error: string) {
-        console.error.call(console, this.AUTOMAPPER_PREFIX, error);
-    }
-
-    static info(info: string) {
-        console.info.call(console, this.AUTOMAPPER_PREFIX, info);
+        return logger;
     }
 }

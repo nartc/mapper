@@ -4,7 +4,7 @@
     "type": "module",
     "peerDependencies": {
         "@automapper/core": "^9.0.0-alpha.0",
-        "reflect-metadata": "^0.2.0"
+        "reflect-metadata": "^0.1.14 || ^0.2.0"
     },
     "exports": {
         ".": "./src/index.ts",

@@ -6,128 +6,75 @@ sidebar_position: 0
 custom_edit_url: null
 ---
 
-## Constructors
+## Logger types
 
-### constructor
+```ts
+export type AutoMapperLogFn = (
+    message: unknown,
+    ...optionalParams: unknown[]
+) => void;
 
-• **new AutoMapperLogger**()
+export interface AutoMapperLoggerLike {
+    log?: AutoMapperLogFn;
+    info?: AutoMapperLogFn;
+    warn?: AutoMapperLogFn;
+    error?: AutoMapperLogFn;
+    debug?: AutoMapperLogFn;
+    verbose?: AutoMapperLogFn;
+    fatal?: AutoMapperLogFn;
+    trace?: AutoMapperLogFn;
+}
+```
 
-## Properties
+## Configuration
 
-### AUTOMAPPER\_PREFIX
+Use `AutoMapperLogger.configure()` to route AutoMapper logs to a structured
+logger.
 
-▪ `Static` `Private` `Readonly` **AUTOMAPPER\_PREFIX**: ``"[AutoMapper]: "``
+```ts
+import { AutoMapperLogger } from '@automapper/core';
 
-#### Defined in
+const restore = AutoMapperLogger.configure({
+    info: (message, ...params) => logger.info(message, ...params),
+    warn: (message, ...params) => logger.warn(message, ...params),
+    error: (message, ...params) => logger.error(message, ...params),
+});
 
-[lib/utils/logger.ts:2](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/utils/logger.ts#L2)
+restore();
+```
 
-___
+`configure()` replaces the current custom logger. Later calls override earlier
+calls. The returned function restores the logger that was active before that
+`configure()` call.
 
-### configured
+Use `AutoMapperLogger.reset()` to restore the default console logger.
 
-▪ `Static` `Private` **configured**: `boolean` = `false`
+## Default levels
 
-#### Defined in
+- `log` -> `console.log`
+- `info` -> `console.info`
+- `warn` -> `console.warn`
+- `error` -> `console.error`
+- `debug` -> `console.debug`
+- `verbose` -> `console.debug`
+- `fatal` -> `console.error`
+- `trace` -> no default implementation
 
-[lib/utils/logger.ts:3](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/utils/logger.ts#L3)
+Default console logs preserve this output shape:
 
-## Methods
+```ts
+console.error('[AutoMapper]: ', message, ...optionalParams);
+```
 
-### configure
+`trace` is optional so AutoMapper does not accidentally call `console.trace()`
+and print stack traces. When using it, call it with optional chaining:
 
-▸ `Static` **configure**(`customLogger?`): `void`
+```ts
+AutoMapperLogger.trace?.('diagnostic message');
+```
 
-#### Parameters
+## Configure early
 
-| Name | Type |
-| :------ | :------ |
-| `customLogger` | `Partial`<`Pick`<typeof [`AutoMapperLogger`](AutoMapperLogger.md), ``"log"`` \| ``"info"`` \| ``"error"`` \| ``"warn"``\>\> |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[lib/utils/logger.ts:5](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/utils/logger.ts#L5)
-
-___
-
-### error
-
-▸ `Static` **error**(`error`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `error` | `string` |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[lib/utils/logger.ts:27](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/utils/logger.ts#L27)
-
-___
-
-### info
-
-▸ `Static` **info**(`info`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `info` | `string` |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[lib/utils/logger.ts:31](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/utils/logger.ts#L31)
-
-___
-
-### log
-
-▸ `Static` **log**(`message`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `message` | `string` |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[lib/utils/logger.ts:19](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/utils/logger.ts#L19)
-
-___
-
-### warn
-
-▸ `Static` **warn**(`warning`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `warning` | `string` |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[lib/utils/logger.ts:23](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/utils/logger.ts#L23)
+Some AutoMapper logs happen while decorators run, before a mapper exists. If you
+need decorator-time logs routed to your logger, call `AutoMapperLogger.configure()`
+before importing decorated model classes.

@@ -19,6 +19,9 @@ jobs:
                 node: ['20', '22']
         steps:
             - uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+                  filter: tree:0
             - uses: actions/setup-node@v4
               with:
                   node-version: ${{ matrix.node }}
@@ -26,6 +29,11 @@ jobs:
             - run: pnpm install --frozen-lockfile
             # fail fast if tsconfig project references drift from the graph
             - run: pnpm run sync:check
+            - name: Start Nx Agents
+              run: >-
+                  pnpm dlx nx@22.7.5 start-ci-run
+                  --distribute-on="3 linux-medium-node${{ matrix.node }}"
+                  --stop-agents-after=test
             - run: pnpm run lint
             - run: pnpm run typecheck
             - run: pnpm run package

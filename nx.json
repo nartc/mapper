@@ -8,13 +8,12 @@
         }
     ],
     "namedInputs": {
-        "default": ["{projectRoot}/**/*"],
-        "prod": ["!{projectRoot}/**/*.spec.ts"]
+        "default": ["{projectRoot}/**/*", "shared"],
+        "prod": ["!{projectRoot}/**/*.spec.ts"],
+        "shared": ["{workspaceRoot}/.github/workflows/ci.yml"]
     },
     "targetDefaults": {
-        "build": {
-            "cache": true
-        },
+        "build": { "cache": true },
         "package": {
             "cache": true,
             "inputs": [
@@ -23,13 +22,8 @@
                 "{workspaceRoot}/tools/scripts/build-packages.mjs"
             ]
         },
-        "package-lib": {
-            "cache": true
-        },
-        "test": {
-            "inputs": ["default", "^prod"],
-            "cache": true
-        },
+        "package-lib": { "cache": true },
+        "test": { "inputs": ["default", "^prod"], "cache": true },
         "@nx/eslint:lint": {
             "inputs": [
                 "default",
@@ -57,18 +51,12 @@
         },
         "changelog": {
             "automaticFromRef": true,
-            "projectChangelogs": {
-                "createRelease": "github"
-            }
+            "projectChangelogs": { "createRelease": "github" }
         }
     },
-    "pluginsConfig": {
-        "@nx/js": {
-            "analyzeSourceFiles": true
-        }
-    },
-    "nxCloudAccessToken": "MjMzYTA3OWMtMjQ1MS00YzFhLWExYTYtODMzMTM5MmQxZmE1fHJlYWQtd3JpdGU=",
-    "useInferencePlugins": true,
+    "pluginsConfig": { "@nx/js": { "analyzeSourceFiles": true } },
     "defaultBase": "main",
-    "analytics": false
+    "analytics": false,
+    "nxCloudId": "6a3e997e7427195a38f6bdbc",
+    "bust": "2"
 }

@@ -1,36 +1,30 @@
 launch-templates:
-  linux-medium-node20:
-    resource-class: 'docker_linux_amd64/medium'
-    image: 'ubuntu22.04-node24.14-v1'
-    init-steps:
-      - name: Checkout
-        uses: 'nrwl/nx-cloud-workflows/v6/workflow-steps/checkout/main.yaml'
+    linux-medium-node20:
+        resource-class: 'docker_linux_amd64/medium'
+        image: 'ubuntu22.04-node24.14-v1'
+        init-steps:
+            - name: Checkout
+              uses: 'nrwl/nx-cloud-workflows/v6/workflow-steps/checkout/main.yaml'
 
-      - name: Install Node 20
-        uses: 'nrwl/nx-cloud-workflows/v6/workflow-steps/install-node/main.yaml'
-        inputs:
-          node_version: '20'
+            - name: Install Node 20
+              uses: 'nrwl/nx-cloud-workflows/v6/workflow-steps/install-node/main.yaml'
+              inputs:
+                  node_version: '20'
 
-      - name: Install dependencies
-        script: |
-          corepack enable
-          corepack prepare pnpm@8.15.9 --activate
-          pnpm install --frozen-lockfile
+            - name: Install Node Nodules
+              uses: 'nrwl/nx-cloud-workflows/v4/workflow-steps/install-node-modules/main.yaml'
 
-  linux-medium-node22:
-    resource-class: 'docker_linux_amd64/medium'
-    image: 'ubuntu22.04-node24.14-v1'
-    init-steps:
-      - name: Checkout
-        uses: 'nrwl/nx-cloud-workflows/v6/workflow-steps/checkout/main.yaml'
+    linux-medium-node22:
+        resource-class: 'docker_linux_amd64/medium'
+        image: 'ubuntu22.04-node24.14-v1'
+        init-steps:
+            - name: Checkout
+              uses: 'nrwl/nx-cloud-workflows/v6/workflow-steps/checkout/main.yaml'
 
-      - name: Install Node 22
-        uses: 'nrwl/nx-cloud-workflows/v6/workflow-steps/install-node/main.yaml'
-        inputs:
-          node_version: '22'
+            - name: Install Node 22
+              uses: 'nrwl/nx-cloud-workflows/v6/workflow-steps/install-node/main.yaml'
+              inputs:
+                  node_version: '22'
 
-      - name: Install dependencies
-        script: |
-          corepack enable
-          corepack prepare pnpm@8.15.9 --activate
-          pnpm install --frozen-lockfile
+            - name: Install Node Nodules
+              uses: 'nrwl/nx-cloud-workflows/v4/workflow-steps/install-node-modules/main.yaml'

@@ -8,8 +8,9 @@
         }
     ],
     "namedInputs": {
-        "default": ["{projectRoot}/**/*"],
-        "prod": ["!{projectRoot}/**/*.spec.ts"]
+        "default": ["{projectRoot}/**/*", "shared"],
+        "prod": ["!{projectRoot}/**/*.spec.ts"],
+        "shared": ["{workspaceRoot}/.github/workflows/ci.yml"]
     },
     "targetDefaults": {
         "build": { "cache": true },
@@ -57,5 +58,5 @@
     "defaultBase": "main",
     "analytics": false,
     "nxCloudId": "6a3e997e7427195a38f6bdbc",
-    "bust": "1"
+    "bust": "2"
 }

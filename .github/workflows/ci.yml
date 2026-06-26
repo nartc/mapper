@@ -32,18 +32,20 @@ jobs:
                   node-version: ${{ matrix.node }}
             - run: corepack enable
             - run: pnpm install --frozen-lockfile
-            # fail fast if tsconfig project references drift from the graph
-            - run: pnpm run sync:check
             - name: Start Nx Agents
               run: >-
                   pnpm nx start-ci-run
                   --distribute-on="3 linux-medium-node${{ matrix.node }}"
                   --stop-agents-after=lint,typecheck,package,test
+            # fail fast if tsconfig project references drift from the graph
+            - run: pnpm nx record -- nx sync:check
             - run: pnpm nx run-many -t lint,typecheck,package,test
 
     package-contract:
         name: publint + attw
         runs-on: ubuntu-latest
+        env:
+            NX_CI_EXECUTION_ENV: 'publint + attw'
         steps:
             - uses: actions/checkout@v4
             - uses: actions/setup-node@v4
@@ -52,7 +54,7 @@ jobs:
             - run: corepack enable
             - run: pnpm install --frozen-lockfile
             - run: pnpm run package
-            - run: pnpm run check:packages
+            - run: pnpm nx record -- pnpm run check:packages
 
     # The main verify job runs against nestjs 11 (the installed version). This job
     # certifies the lower bound of @automapper/nestjs's `^10 || ^11` peer range by

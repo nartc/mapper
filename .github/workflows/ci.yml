@@ -20,6 +20,8 @@ jobs:
             fail-fast: false
             matrix:
                 node: ['20', '22']
+        env:
+            NX_CI_EXECUTION_ENV: 'node ${{ matrix.node }}'
         steps:
             - uses: actions/checkout@v4
               with:
@@ -34,13 +36,10 @@ jobs:
             - run: pnpm run sync:check
             - name: Start Nx Agents
               run: >-
-                  pnpm dlx nx@22.7.5 start-ci-run
+                  pnpm nx start-ci-run
                   --distribute-on="3 linux-medium-node${{ matrix.node }}"
-                  --stop-agents-after=test
-            - run: pnpm run lint
-            - run: pnpm run typecheck
-            - run: pnpm run package
-            - run: pnpm run test
+                  --stop-agents-after=lint,typecheck,package,test
+            - run: pnpm nx run-many -t lint,typecheck,package,test
 
     package-contract:
         name: publint + attw
@@ -61,6 +60,8 @@ jobs:
     nestjs-compat:
         name: nestjs 10 compat
         runs-on: ubuntu-latest
+        env:
+            NX_CI_EXECUTION_ENV: 'nestjs-compat'
         steps:
             - uses: actions/checkout@v4
             - uses: actions/setup-node@v4
@@ -70,4 +71,9 @@ jobs:
             - run: pnpm install --frozen-lockfile
             # downgrade only the @nestjs runtime; rxjs/reflect-metadata span both majors
             - run: pnpm --config.prefer-workspace-packages=true add -w @nestjs/common@^10 @nestjs/core@^10 @nestjs/testing@^10 @nestjs/platform-express@^10
-            - run: pnpm exec nx run integration-test:test
+            - name: Start Nx Agents
+              run: >-
+                  pnpm nx start-ci-run
+                  --distribute-on="3 linux-medium-node22"
+                  --stop-agents-after=test
+            - run: pnpm nx run integration-test:test

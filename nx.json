@@ -54,7 +54,6 @@
         }
     },
     "pluginsConfig": { "@nx/js": { "analyzeSourceFiles": true } },
-    "nxCloudAccessToken": "MjMzYTA3OWMtMjQ1MS00YzFhLWExYTYtODMzMTM5MmQxZmE1fHJlYWQtd3JpdGU=",
     "useInferencePlugins": true,
     "defaultBase": "main",
     "analytics": false,

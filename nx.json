@@ -56,5 +56,6 @@
     "pluginsConfig": { "@nx/js": { "analyzeSourceFiles": true } },
     "defaultBase": "main",
     "analytics": false,
-    "nxCloudId": "6a3e997e7427195a38f6bdbc"
+    "nxCloudId": "6a3e997e7427195a38f6bdbc",
+    "bust": "1"
 }

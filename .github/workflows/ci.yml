@@ -70,8 +70,4 @@ jobs:
             - run: pnpm install --frozen-lockfile
             # downgrade only the @nestjs runtime; rxjs/reflect-metadata span both majors
             - run: pnpm --config.prefer-workspace-packages=true add -w @nestjs/common@^10 @nestjs/core@^10 @nestjs/testing@^10 @nestjs/platform-express@^10
-            - run: pnpm exec nx run integration-test:debug-resolution
-            - run: pnpm why @automapper/core --filter @automapper/integration-test
-            - run: pnpm exec nx run integration-test:test -- src/diagnostics/resolution.spec.ts
-            - run: pnpm exec nx run integration-test:test -- src/classes/map-self-reference.spec.ts
             - run: pnpm exec nx run integration-test:test

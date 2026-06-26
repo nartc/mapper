@@ -13,20 +13,6 @@
                 "command": "vitest run",
                 "cwd": "packages/integration-test"
             }
-        },
-        "debug-resolution": {
-            "executor": "nx:run-commands",
-            "cache": true,
-            "inputs": [
-                "default",
-                "{workspaceRoot}/tools/scripts/debug-resolution.mjs",
-                { "env": "GITHUB_SHA" },
-                { "env": "GITHUB_RUN_ID" }
-            ],
-            "options": {
-                "command": "node ../../tools/scripts/debug-resolution.mjs",
-                "cwd": "packages/integration-test"
-            }
         }
     }
 }

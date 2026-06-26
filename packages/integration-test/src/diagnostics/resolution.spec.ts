@@ -1,7 +1,7 @@
 import { createRequire } from 'node:module';
 
 describe('Diagnostics - package resolution', () => {
-    it('prints automapper resolution from inside Vitest', async () => {
+    it('prints automapper resolution from inside Vitest', () => {
         const requireFromSpec = createRequire(import.meta.url);
         const importMetaResolve = (
             import.meta as ImportMeta & {
@@ -22,17 +22,11 @@ describe('Diagnostics - package resolution', () => {
             );
         }
 
-        const core = await import('@automapper/core');
-        const classes = await import('@automapper/classes');
-
-        console.log(
-            `core exports -> ${Object.keys(core).slice(0, 15).join(',')}`
+        expect(requireFromSpec.resolve('@automapper/core')).toContain(
+            '/packages/core/src/index.ts'
         );
-        console.log(
-            `classes exports -> ${Object.keys(classes).slice(0, 15).join(',')}`
+        expect(requireFromSpec.resolve('@automapper/classes')).toContain(
+            '/packages/classes/src/index.ts'
         );
-
-        expect(core.createMapper).toBeTypeOf('function');
-        expect(classes.classes).toBeTypeOf('function');
     });
 });

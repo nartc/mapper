@@ -16,6 +16,10 @@ import { defineConfig, type ViteUserConfig } from 'vitest/config';
 // identifier, so swc must not mangle class names.
 export function vitestConfig(testOverrides: ViteUserConfig['test'] = {}) {
     return defineConfig({
+        // unplugin-swc owns TypeScript transformation for legacy decorator
+        // metadata, so disable Vite's Oxc transform instead of the obsolete
+        // esbuild-only path configured by the plugin.
+        oxc: false,
         plugins: [
             swc.vite({
                 jsc: {

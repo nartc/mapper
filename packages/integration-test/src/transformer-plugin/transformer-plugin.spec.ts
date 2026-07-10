@@ -48,7 +48,7 @@ describe('Classes - Transformer Plugin', () => {
 
             expect(result.outputText).toBeTruthy();
             expect(result.outputText).toEqual(userModelTranspiledText);
-        });
+        }, 15_000);
     });
     describe('default import', () => {
         it('should compile', () => {

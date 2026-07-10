@@ -4,7 +4,13 @@
     "type": "module",
     "peerDependencies": {
         "@automapper/core": "^9.0.0-alpha.0",
-        "reflect-metadata": "^0.1.14 || ^0.2.0"
+        "reflect-metadata": "^0.1.14 || ^0.2.0",
+        "typescript": "^6.0.0"
+    },
+    "peerDependenciesMeta": {
+        "typescript": {
+            "optional": true
+        }
     },
     "exports": {
         ".": "./src/index.ts",
@@ -12,7 +18,8 @@
         "./transformer-plugin": "./transformer-plugin/src/index.ts"
     },
     "devDependencies": {
-        "@automapper/classes": "workspace:*"
+        "@automapper/classes": "workspace:*",
+        "typescript": "npm:@typescript/typescript6@6.0.2"
     },
     "sideEffects": false,
     "engines": {

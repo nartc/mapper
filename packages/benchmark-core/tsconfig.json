@@ -1,5 +1,10 @@
 {
+    "extends": "../../tsconfig.base.json",
     "compilerOptions": {
+        "rootDir": "src",
+        "outDir": "../../dist/out-tsc/benchmark-core",
+        "composite": true,
+        "declaration": true,
         "target": "es2020",
         "module": "esnext",
         "moduleResolution": "bundler",
@@ -9,5 +14,6 @@
         "useDefineForClassFields": false,
         "types": ["node", "reflect-metadata"]
     },
-    "include": ["src/**/*.ts"]
+    "include": ["src/**/*.ts"],
+    "references": []
 }

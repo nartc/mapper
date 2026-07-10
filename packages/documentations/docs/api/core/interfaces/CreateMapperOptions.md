@@ -1,37 +1,27 @@
----
-id: "CreateMapperOptions"
-title: "Interface: CreateMapperOptions"
-sidebar_label: "CreateMapperOptions"
-sidebar_position: 0
-custom_edit_url: null
----
+# Interface: CreateMapperOptions
+
+Defined in: [core/src/lib/core.ts:44](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/core.ts#L44)
 
 ## Properties
 
-### errorHandler
+### errorHandler?
 
-• `Optional` **errorHandler**: [`ErrorHandler`](ErrorHandler.md)
+> `optional` **errorHandler?**: [`ErrorHandler`](ErrorHandler.md)
 
-#### Defined in
+Defined in: [core/src/lib/core.ts:46](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/core.ts#L46)
 
-[lib/core.ts:34](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/core.ts#L34)
+***
 
-___
+### namingConventions?
 
-### namingConventions
+> `optional` **namingConventions?**: [`NamingConventionInput`](../type-aliases/NamingConventionInput.md)
 
-• `Optional` **namingConventions**: [`NamingConventionInput`](../modules.md#namingconventioninput)
+Defined in: [core/src/lib/core.ts:47](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/core.ts#L47)
 
-#### Defined in
-
-[lib/core.ts:35](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/core.ts#L35)
-
-___
+***
 
 ### strategyInitializer
 
-• **strategyInitializer**: [`MappingStrategyInitializer`](../modules.md#mappingstrategyinitializer)<[`MetadataIdentifier`](../modules.md#metadataidentifier)<`any`\>\>
+> **strategyInitializer**: [`MappingStrategyInitializer`](../type-aliases/MappingStrategyInitializer.md)\<[`MetadataIdentifier`](../type-aliases/MetadataIdentifier.md)\>
 
-#### Defined in
-
-[lib/core.ts:33](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/core.ts#L33)
+Defined in: [core/src/lib/core.ts:45](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/core.ts#L45)

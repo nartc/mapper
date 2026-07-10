@@ -1,12 +1,14 @@
 {
     "extends": "../tsconfig.base.json",
     "compilerOptions": {
-        "outDir": "../dist/out-tsc/tools",
-        "rootDir": ".",
-        "module": "commonjs",
-        "target": "es5",
-        "types": ["node"],
-        "importHelpers": false
+        "module": "esnext",
+        "moduleResolution": "bundler",
+        "noEmit": true,
+        "types": ["node"]
     },
-    "include": ["**/*.ts"]
+    "include": [
+        "../vitest.shared.ts",
+        "../packages/*/vitest.config.ts",
+        "../packages/classes/*/vitest.config.ts"
+    ]
 }

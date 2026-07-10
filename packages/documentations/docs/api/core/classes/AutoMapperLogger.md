@@ -1,80 +1,211 @@
----
-id: "AutoMapperLogger"
-title: "Class: AutoMapperLogger"
-sidebar_label: "AutoMapperLogger"
-sidebar_position: 0
-custom_edit_url: null
----
+# Class: AutoMapperLogger
 
-## Logger types
+Defined in: [core/src/lib/utils/logger.ts:33](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/utils/logger.ts#L33)
 
-```ts
-export type AutoMapperLogFn = (
-    message: unknown,
-    ...optionalParams: unknown[]
-) => void;
+## Constructors
 
-export interface AutoMapperLoggerLike {
-    log?: AutoMapperLogFn;
-    info?: AutoMapperLogFn;
-    warn?: AutoMapperLogFn;
-    error?: AutoMapperLogFn;
-    debug?: AutoMapperLogFn;
-    verbose?: AutoMapperLogFn;
-    fatal?: AutoMapperLogFn;
-    trace?: AutoMapperLogFn;
-}
-```
+### Constructor
 
-## Configuration
+> **new AutoMapperLogger**(): `AutoMapperLogger`
 
-Use `AutoMapperLogger.configure()` to route AutoMapper logs to a structured
-logger.
+#### Returns
 
-```ts
-import { AutoMapperLogger } from '@automapper/core';
+`AutoMapperLogger`
 
-const restore = AutoMapperLogger.configure({
-    info: (message, ...params) => logger.info(message, ...params),
-    warn: (message, ...params) => logger.warn(message, ...params),
-    error: (message, ...params) => logger.error(message, ...params),
-});
+## Accessors
 
-restore();
-```
+### trace
 
-`configure()` replaces the current custom logger. Later calls override earlier
-calls. The returned function restores the logger that was active before that
-`configure()` call.
+#### Get Signature
 
-Use `AutoMapperLogger.reset()` to restore the default console logger.
+> **get** `static` **trace**(): [`AutoMapperLogFn`](../type-aliases/AutoMapperLogFn.md) \| `undefined`
 
-## Default levels
+Defined in: [core/src/lib/utils/logger.ts:139](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/utils/logger.ts#L139)
 
-- `log` -> `console.log`
-- `info` -> `console.info`
-- `warn` -> `console.warn`
-- `error` -> `console.error`
-- `debug` -> `console.debug`
-- `verbose` -> `console.debug`
-- `fatal` -> `console.error`
-- `trace` -> no default implementation
+##### Returns
 
-Default console logs preserve this output shape:
+[`AutoMapperLogFn`](../type-aliases/AutoMapperLogFn.md) \| `undefined`
 
-```ts
-console.error('[AutoMapper]: ', message, ...optionalParams);
-```
+## Methods
 
-`trace` is optional so AutoMapper does not accidentally call `console.trace()`
-and print stack traces. When using it, call it with optional chaining:
+### configure()
 
-```ts
-AutoMapperLogger.trace?.('diagnostic message');
-```
+> `static` **configure**(`customLogger?`): () => `void`
 
-## Configure early
+Defined in: [core/src/lib/utils/logger.ts:98](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/utils/logger.ts#L98)
 
-Some AutoMapper logs happen while decorators run, before a mapper exists. If you
-need decorator-time logs routed to your logger, call `AutoMapperLogger.configure()`
-before importing decorated model classes.
+#### Parameters
+
+##### customLogger?
+
+[`AutoMapperLoggerLike`](../interfaces/AutoMapperLoggerLike.md) = `{}`
+
+#### Returns
+
+() => `void`
+
+***
+
+### debug()
+
+> `static` **debug**(`message`, ...`optionalParams`): `void`
+
+Defined in: [core/src/lib/utils/logger.ts:127](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/utils/logger.ts#L127)
+
+#### Parameters
+
+##### message
+
+`unknown`
+
+##### optionalParams
+
+...`unknown`[]
+
+#### Returns
+
+`void`
+
+***
+
+### error()
+
+> `static` **error**(`message`, ...`optionalParams`): `void`
+
+Defined in: [core/src/lib/utils/logger.ts:119](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/utils/logger.ts#L119)
+
+#### Parameters
+
+##### message
+
+`unknown`
+
+##### optionalParams
+
+...`unknown`[]
+
+#### Returns
+
+`void`
+
+***
+
+### fatal()
+
+> `static` **fatal**(`message`, ...`optionalParams`): `void`
+
+Defined in: [core/src/lib/utils/logger.ts:135](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/utils/logger.ts#L135)
+
+#### Parameters
+
+##### message
+
+`unknown`
+
+##### optionalParams
+
+...`unknown`[]
+
+#### Returns
+
+`void`
+
+***
+
+### info()
+
+> `static` **info**(`message`, ...`optionalParams`): `void`
+
+Defined in: [core/src/lib/utils/logger.ts:123](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/utils/logger.ts#L123)
+
+#### Parameters
+
+##### message
+
+`unknown`
+
+##### optionalParams
+
+...`unknown`[]
+
+#### Returns
+
+`void`
+
+***
+
+### log()
+
+> `static` **log**(`message`, ...`optionalParams`): `void`
+
+Defined in: [core/src/lib/utils/logger.ts:111](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/utils/logger.ts#L111)
+
+#### Parameters
+
+##### message
+
+`unknown`
+
+##### optionalParams
+
+...`unknown`[]
+
+#### Returns
+
+`void`
+
+***
+
+### reset()
+
+> `static` **reset**(): `void`
+
+Defined in: [core/src/lib/utils/logger.ts:107](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/utils/logger.ts#L107)
+
+#### Returns
+
+`void`
+
+***
+
+### verbose()
+
+> `static` **verbose**(`message`, ...`optionalParams`): `void`
+
+Defined in: [core/src/lib/utils/logger.ts:131](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/utils/logger.ts#L131)
+
+#### Parameters
+
+##### message
+
+`unknown`
+
+##### optionalParams
+
+...`unknown`[]
+
+#### Returns
+
+`void`
+
+***
+
+### warn()
+
+> `static` **warn**(`message`, ...`optionalParams`): `void`
+
+Defined in: [core/src/lib/utils/logger.ts:115](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/utils/logger.ts#L115)
+
+#### Parameters
+
+##### message
+
+`unknown`
+
+##### optionalParams
+
+...`unknown`[]
+
+#### Returns
+
+`void`

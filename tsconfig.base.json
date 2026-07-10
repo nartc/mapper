@@ -15,9 +15,7 @@
             "dom"
         ],
         "skipLibCheck": true,
-        "skipDefaultLibCheck": true,
-        "baseUrl": ".",
-        "ignoreDeprecations": "6.0"
+        "skipDefaultLibCheck": true
     },
     "exclude": [
         "node_modules",

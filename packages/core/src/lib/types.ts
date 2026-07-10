@@ -19,9 +19,12 @@ export type Constructor<T = any> = (new (...args: any[]) => T) &
 export type ClassIdentifier<T = any> =
     | Constructor<T>
     | (AbstractConstructor<T> & TransformerMetadataFactory)
+    // Supports abstract and private constructors, which cannot satisfy a
+    // public construct signature but are still valid runtime identifiers.
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
     | (Function & TransformerMetadataFactory & { prototype: T });
 
-export type Primitive = String | Number | Boolean | BigInt;
+export type Primitive = string | number | boolean | bigint;
 export type PrimitiveExtended = Primitive | Date;
 
 export type PrimitiveConstructor =

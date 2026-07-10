@@ -1,14 +1,14 @@
----
-id: "SnakeCaseNamingConvention"
-title: "Class: SnakeCaseNamingConvention"
-sidebar_label: "SnakeCaseNamingConvention"
-sidebar_position: 0
-custom_edit_url: null
----
+# Class: SnakeCaseNamingConvention
+
+Defined in: [core/src/lib/naming-conventions/snake-case-naming-convention.ts:8](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/naming-conventions/snake-case-naming-convention.ts#L8)
 
 SnakeCaseNamingConvention
 
-**`example`** this_is_snake_case
+## Example
+
+```ts
+this_is_snake_case
+```
 
 ## Implements
 
@@ -16,49 +16,51 @@ SnakeCaseNamingConvention
 
 ## Constructors
 
-### constructor
+### Constructor
 
-• **new SnakeCaseNamingConvention**()
+> **new SnakeCaseNamingConvention**(): `SnakeCaseNamingConvention`
+
+#### Returns
+
+`SnakeCaseNamingConvention`
 
 ## Properties
 
 ### separatorCharacter
 
-• **separatorCharacter**: `string` = `'_'`
+> **separatorCharacter**: `string` = `'_'`
+
+Defined in: [core/src/lib/naming-conventions/snake-case-naming-convention.ts:9](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/naming-conventions/snake-case-naming-convention.ts#L9)
 
 #### Implementation of
 
-[NamingConvention](../interfaces/NamingConvention.md).[separatorCharacter](../interfaces/NamingConvention.md#separatorcharacter)
+[`NamingConvention`](../interfaces/NamingConvention.md).[`separatorCharacter`](../interfaces/NamingConvention.md#separatorcharacter)
 
-#### Defined in
-
-[lib/naming-conventions/snake-case-naming-convention.ts:9](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/naming-conventions/snake-case-naming-convention.ts#L9)
-
-___
+***
 
 ### splittingExpression
 
-• **splittingExpression**: `RegExp`
+> **splittingExpression**: `RegExp`
+
+Defined in: [core/src/lib/naming-conventions/snake-case-naming-convention.ts:10](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/naming-conventions/snake-case-naming-convention.ts#L10)
 
 #### Implementation of
 
-[NamingConvention](../interfaces/NamingConvention.md).[splittingExpression](../interfaces/NamingConvention.md#splittingexpression)
-
-#### Defined in
-
-[lib/naming-conventions/snake-case-naming-convention.ts:10](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/naming-conventions/snake-case-naming-convention.ts#L10)
+[`NamingConvention`](../interfaces/NamingConvention.md).[`splittingExpression`](../interfaces/NamingConvention.md#splittingexpression)
 
 ## Methods
 
-### transformPropertyName
+### transformPropertyName()
 
-▸ **transformPropertyName**(`sourcePropNameParts`): `string`
+> **transformPropertyName**(`sourcePropNameParts`): `string`
+
+Defined in: [core/src/lib/naming-conventions/snake-case-naming-convention.ts:12](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/naming-conventions/snake-case-naming-convention.ts#L12)
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `sourcePropNameParts` | `string`[] |
+##### sourcePropNameParts
+
+`string`[]
 
 #### Returns
 
@@ -66,8 +68,4 @@ ___
 
 #### Implementation of
 
-[NamingConvention](../interfaces/NamingConvention.md).[transformPropertyName](../interfaces/NamingConvention.md#transformpropertyname)
-
-#### Defined in
-
-[lib/naming-conventions/snake-case-naming-convention.ts:12](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/naming-conventions/snake-case-naming-convention.ts#L12)
+[`NamingConvention`](../interfaces/NamingConvention.md).[`transformPropertyName`](../interfaces/NamingConvention.md#transformpropertyname)

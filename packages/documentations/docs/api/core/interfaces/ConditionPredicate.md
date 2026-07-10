@@ -1,33 +1,23 @@
----
-id: "ConditionPredicate"
-title: "Interface: ConditionPredicate<TSource>"
-sidebar_label: "ConditionPredicate"
-sidebar_position: 0
-custom_edit_url: null
----
+# Interface: ConditionPredicate()\<TSource\>
 
-## Type parameters
+Defined in: [core/src/lib/types.ts:416](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L416)
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](../modules.md#dictionary)<`TSource`\> |
+## Type Parameters
 
-## Callable
+### TSource
 
-### ConditionPredicate
+`TSource` *extends* [`Dictionary`](../type-aliases/Dictionary.md)\<`TSource`\>
 
-▸ **ConditionPredicate**(`source`): `boolean`
+> **ConditionPredicate**(`source`): `boolean`
 
-#### Parameters
+Defined in: [core/src/lib/types.ts:417](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L417)
 
-| Name | Type |
-| :------ | :------ |
-| `source` | `TSource` |
+## Parameters
 
-#### Returns
+### source
+
+`TSource`
+
+## Returns
 
 `boolean`
-
-#### Defined in
-
-[lib/types.ts:379](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L379)

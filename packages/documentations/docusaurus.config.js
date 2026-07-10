@@ -46,11 +46,7 @@ const config = {
                 id: 'api-core',
                 entryPoints: ['../core/src/index.ts'],
                 tsconfig: '../core/tsconfig.lib.json',
-                sidebar: {
-                    fullNames: true,
-                    readmeLabel: 'README',
-                },
-                out: './api/core',
+                out: './docs/api/core',
             },
         ],
         [
@@ -59,11 +55,7 @@ const config = {
                 id: 'api-classes',
                 entryPoints: ['../classes/src/index.ts'],
                 tsconfig: '../classes/tsconfig.lib.json',
-                sidebar: {
-                    fullNames: true,
-                    readmeLabel: 'README',
-                },
-                out: './api/classes',
+                out: './docs/api/classes',
             },
         ],
         [
@@ -72,11 +64,7 @@ const config = {
                 id: 'api-pojos',
                 entryPoints: ['../pojos/src/index.ts'],
                 tsconfig: '../pojos/tsconfig.lib.json',
-                sidebar: {
-                    fullNames: true,
-                    readmeLabel: 'README',
-                },
-                out: './api/pojos',
+                out: './docs/api/pojos',
             },
         ],
         [
@@ -85,11 +73,7 @@ const config = {
                 id: 'api-mikro',
                 entryPoints: ['../mikro/src/index.ts'],
                 tsconfig: '../mikro/tsconfig.lib.json',
-                sidebar: {
-                    fullNames: true,
-                    readmeLabel: 'README',
-                },
-                out: './api/mikro',
+                out: './docs/api/mikro',
             },
         ],
         [
@@ -98,11 +82,7 @@ const config = {
                 id: 'api-sequelize',
                 entryPoints: ['../sequelize/src/index.ts'],
                 tsconfig: '../sequelize/tsconfig.lib.json',
-                sidebar: {
-                    fullNames: true,
-                    readmeLabel: 'README',
-                },
-                out: './api/sequelize',
+                out: './docs/api/sequelize',
             },
         ],
         [
@@ -111,11 +91,7 @@ const config = {
                 id: 'api-nestjs',
                 entryPoints: ['../nestjs/src/index.ts'],
                 tsconfig: '../nestjs/tsconfig.lib.json',
-                sidebar: {
-                    fullNames: true,
-                    readmeLabel: 'README',
-                },
-                out: './api/nestjs',
+                out: './docs/api/nestjs',
             },
         ],
     ],

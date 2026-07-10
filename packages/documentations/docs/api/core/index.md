@@ -1,59 +1,135 @@
----
-id: "index"
-title: "@automapper/core"
-slug: "/api/core/"
-sidebar_label: "README"
-sidebar_position: 0
-custom_edit_url: null
----
-
 # @automapper/core
 
-This is the core package that will handle mapping configurations and mapping operations.
+## Enumerations
 
-## Installation
+- [MapFnClassId](enumerations/MapFnClassId.md)
+- [MappingCallbacksClassId](enumerations/MappingCallbacksClassId.md)
+- [MappingClassId](enumerations/MappingClassId.md)
+- [MappingPropertiesClassId](enumerations/MappingPropertiesClassId.md)
+- [MappingPropertyClassId](enumerations/MappingPropertyClassId.md)
+- [MappingTransformationClassId](enumerations/MappingTransformationClassId.md)
+- [MetadataClassId](enumerations/MetadataClassId.md)
+- [MetadataObjectMapClassId](enumerations/MetadataObjectMapClassId.md)
+- [NestedMappingPairClassId](enumerations/NestedMappingPairClassId.md)
+- [TransformationType](enumerations/TransformationType.md)
 
-```sh
-npm i @automapper/core
-```
+## Classes
 
-or with `yarn`
+- [AutoMapperError](classes/AutoMapperError.md)
+- [AutoMapperLogger](classes/AutoMapperLogger.md)
+- [CamelCaseNamingConvention](classes/CamelCaseNamingConvention.md)
+- [MapMemberError](classes/MapMemberError.md)
+- [MappingNotFoundError](classes/MappingNotFoundError.md)
+- [PascalCaseNamingConvention](classes/PascalCaseNamingConvention.md)
+- [SnakeCaseNamingConvention](classes/SnakeCaseNamingConvention.md)
 
-```sh
-yarn add @automapper/core
-```
+## Interfaces
 
-## Usage
+- [AutoMapperLoggerLike](interfaces/AutoMapperLoggerLike.md)
+- [CompiledMapping](interfaces/CompiledMapping.md)
+- [CompiledMappingDescriptors](interfaces/CompiledMappingDescriptors.md)
+- [CompiledMappingProperty](interfaces/CompiledMappingProperty.md)
+- [ConditionPredicate](interfaces/ConditionPredicate.md)
+- [Converter](interfaces/Converter.md)
+- [CreateMapperOptions](interfaces/CreateMapperOptions.md)
+- [DeferFunction](interfaces/DeferFunction.md)
+- [ErrorHandler](interfaces/ErrorHandler.md)
+- [MapOptions](interfaces/MapOptions.md)
+- [Mapper](interfaces/Mapper.md)
+- [MappingStrategy](interfaces/MappingStrategy.md)
+- [MappingStrategyInitializerOptions](interfaces/MappingStrategyInitializerOptions.md)
+- [NamingConvention](interfaces/NamingConvention.md)
+- [Resolver](interfaces/Resolver.md)
+- [TransformerMetadataFactory](interfaces/TransformerMetadataFactory.md)
 
-`@automapper/core` exposes `createMapper()` method to create a `Mapper` object with a accompany `MappingStrategy` (read more
-about [Strategies](#Strategies))
+## Type Aliases
 
-`createMapper` accepts a `CreateMapperOptions` object with the following shape:
+- [AbstractConstructor](type-aliases/AbstractConstructor.md)
+- [AnyConstructor](type-aliases/AnyConstructor.md)
+- [ApplyMetadata](type-aliases/ApplyMetadata.md)
+- [ApplyMetadataFn](type-aliases/ApplyMetadataFn.md)
+- [ArrayKeyedMap](type-aliases/ArrayKeyedMap.md)
+- [AutoMapperLogFn](type-aliases/AutoMapperLogFn.md)
+- [ClassIdentifier](type-aliases/ClassIdentifier.md)
+- [CompiledMapStep](type-aliases/CompiledMapStep.md)
+- [ConditionReturn](type-aliases/ConditionReturn.md)
+- [Constructor](type-aliases/Constructor.md)
+- [ConvertUsingReturn](type-aliases/ConvertUsingReturn.md)
+- [DataMap](type-aliases/DataMap.md)
+- [DestinationConstructor](type-aliases/DestinationConstructor.md)
+- [Dictionary](type-aliases/Dictionary.md)
+- [FromValueReturn](type-aliases/FromValueReturn.md)
+- [IgnoreReturn](type-aliases/IgnoreReturn.md)
+- [MapCallback](type-aliases/MapCallback.md)
+- [MapDeferReturn](type-aliases/MapDeferReturn.md)
+- [MapFromReturn](type-aliases/MapFromReturn.md)
+- [MapInitializeReturn](type-aliases/MapInitializeReturn.md)
+- [Mapping](type-aliases/Mapping.md)
+- [MappingConfiguration](type-aliases/MappingConfiguration.md)
+- [MappingProfile](type-aliases/MappingProfile.md)
+- [MappingProperty](type-aliases/MappingProperty.md)
+- [MappingStrategyInitializer](type-aliases/MappingStrategyInitializer.md)
+- [MappingTransformation](type-aliases/MappingTransformation.md)
+- [MapWithArgumentsReturn](type-aliases/MapWithArgumentsReturn.md)
+- [MapWithReturn](type-aliases/MapWithReturn.md)
+- [MaybePromise](type-aliases/MaybePromise.md)
+- [MemberMapReturn](type-aliases/MemberMapReturn.md)
+- [MemberMapReturnNoDefer](type-aliases/MemberMapReturnNoDefer.md)
+- [Metadata](type-aliases/Metadata.md)
+- [MetadataIdentifier](type-aliases/MetadataIdentifier.md)
+- [MetadataList](type-aliases/MetadataList.md)
+- [ModelIdentifier](type-aliases/ModelIdentifier.md)
+- [NamingConventionInput](type-aliases/NamingConventionInput.md)
+- [NestedMappingPair](type-aliases/NestedMappingPair.md)
+- [NullSubstitutionReturn](type-aliases/NullSubstitutionReturn.md)
+- [PathMap](type-aliases/PathMap.md)
+- [PreConditionReturn](type-aliases/PreConditionReturn.md)
+- [Primitive](type-aliases/Primitive.md)
+- [PrimitiveConstructor](type-aliases/PrimitiveConstructor.md)
+- [PrimitiveConstructorExtended](type-aliases/PrimitiveConstructorExtended.md)
+- [PrimitiveConstructorReturnType](type-aliases/PrimitiveConstructorReturnType.md)
+- [PrimitiveExtended](type-aliases/PrimitiveExtended.md)
+- [Selector](type-aliases/Selector.md)
+- [SelectorReturn](type-aliases/SelectorReturn.md)
+- [UndefinedSubstitutionReturn](type-aliases/UndefinedSubstitutionReturn.md)
+- [ValueSelector](type-aliases/ValueSelector.md)
 
-```ts
-export interface CreateMapperOptions {
-    strategyInitializer: MappingStrategyInitializer<MetadataIdentifier>;
-    errorHandler?: ErrorHandler;
-    namingConventions?: NamingConventionInput;
-}
-```
+## Variables
 
-Read more about usage on [documentation site](https://automapperts.netlify.app/docs/api/create-mapper)
+- [defaultStrategyInitializerOptions](variables/defaultStrategyInitializerOptions.md)
 
-## Strategies
+## Functions
 
-A given Mapper is accompanied by a Strategy by providing `strategyInitializer` when using `createMapper()`.
-
-A Strategy will be responsible for:
-
--   Discover metadata (eg: `classes` uses `@AutoMap()` decorator to discover the metadata of the properties on the Classes)
--   Retrieve metadata: how the metadata should be retrieved from the discovery phase (eg: `classes` discovers and stores the metadata to `Reflect`, retrieve metadata simply gets them from `Reflect`)
--   Apply metadata: how the metadata is applied to the Model
-
-`@automapper` provides the following official strategies:
-
--   `@automapper/classes`: Work with TS/ES6 classes.
--   `@automapper/pojos`: Work with Interfaces/Types along with POJOs. In projects that do not make use of Class, `pojos`
-    can be used instead.
--   `@automapper/mikro`: Work together with TS/ES6 classes along with [MikroORM](https://github.com/mikro-orm/mikro-orm)
--   `@automapper/sequelize`: Work together with TS/ES6 classes along with [Sequelize](https://github.com/sequelize/sequelize)
+- [addProfile](functions/addProfile.md)
+- [afterMap](functions/afterMap.md)
+- [afterMapArray](functions/afterMapArray.md)
+- [autoMap](functions/autoMap.md)
+- [beforeMap](functions/beforeMap.md)
+- [beforeMapArray](functions/beforeMapArray.md)
+- [condition](functions/condition.md)
+- [constructUsing](functions/constructUsing.md)
+- [convertUsing](functions/convertUsing.md)
+- [createMap](functions/createMap.md)
+- [createMapper](functions/createMapper.md)
+- [extend](functions/extend.md)
+- [forMember](functions/forMember.md)
+- [forSelf](functions/forSelf.md)
+- [fromValue](functions/fromValue.md)
+- [getRecursiveValue](functions/getRecursiveValue.md)
+- [ignore](functions/ignore.md)
+- [isDateConstructor](functions/isDateConstructor.md)
+- [isEmpty](functions/isEmpty.md)
+- [isMappableIdentifier](functions/isMappableIdentifier.md)
+- [isPrimitiveConstructor](functions/isPrimitiveConstructor.md)
+- [mapDefer](functions/mapDefer.md)
+- [mapFrom](functions/mapFrom.md)
+- [mapWith](functions/mapWith.md)
+- [mapWithArguments](functions/mapWithArguments.md)
+- [namingConventions](functions/namingConventions.md)
+- [nullSubstitution](functions/nullSubstitution.md)
+- [preCondition](functions/preCondition.md)
+- [set](functions/set.md)
+- [setMutate](functions/setMutate.md)
+- [setRecursiveValue](functions/setRecursiveValue.md)
+- [typeConverter](functions/typeConverter.md)
+- [undefinedSubstitution](functions/undefinedSubstitution.md)

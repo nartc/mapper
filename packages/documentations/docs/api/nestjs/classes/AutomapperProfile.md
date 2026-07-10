@@ -1,57 +1,57 @@
----
-id: "AutomapperProfile"
-title: "Class: AutomapperProfile"
-sidebar_label: "AutomapperProfile"
-sidebar_position: 0
-custom_edit_url: null
----
+# Abstract Class: AutomapperProfile
+
+Defined in: [packages/nestjs/src/lib/automapper-profile.ts:8](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/nestjs/src/lib/automapper-profile.ts#L8)
 
 ## Constructors
 
-### constructor
+### Constructor
 
-• `Protected` **new AutomapperProfile**(`mapper`)
+> `protected` **new AutomapperProfile**(`mapper`): `AutomapperProfile`
+
+Defined in: [packages/nestjs/src/lib/automapper-profile.ts:9](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/nestjs/src/lib/automapper-profile.ts#L9)
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `mapper` | `Mapper` |
+##### mapper
 
-#### Defined in
+`Mapper`
 
-[packages/nestjs/src/lib/automapper-profile.ts:9](https://github.com/nartc/mapper/blob/efc4cb9d/packages/nestjs/src/lib/automapper-profile.ts#L9)
+#### Returns
+
+`AutomapperProfile`
 
 ## Properties
 
 ### mapper
 
-• `Protected` **mapper**: `Mapper`
+> `protected` **mapper**: `Mapper`
+
+Defined in: [packages/nestjs/src/lib/automapper-profile.ts:9](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/nestjs/src/lib/automapper-profile.ts#L9)
 
 ## Accessors
 
 ### mappingConfigurations
 
-• `Protected` `get` **mappingConfigurations**(): `MappingConfiguration`<`any`, `any`\>[]
+#### Get Signature
 
-#### Returns
+> **get** `protected` **mappingConfigurations**(): `MappingConfiguration`[]
 
-`MappingConfiguration`<`any`, `any`\>[]
+Defined in: [packages/nestjs/src/lib/automapper-profile.ts:17](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/nestjs/src/lib/automapper-profile.ts#L17)
 
-#### Defined in
+##### Returns
 
-[packages/nestjs/src/lib/automapper-profile.ts:17](https://github.com/nartc/mapper/blob/efc4cb9d/packages/nestjs/src/lib/automapper-profile.ts#L17)
+`MappingConfiguration`[]
 
-___
+***
 
 ### profile
 
-• `Abstract` `get` **profile**(): `MappingProfile`
+#### Get Signature
 
-#### Returns
+> **get** `abstract` **profile**(): `MappingProfile`
+
+Defined in: [packages/nestjs/src/lib/automapper-profile.ts:15](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/nestjs/src/lib/automapper-profile.ts#L15)
+
+##### Returns
 
 `MappingProfile`
-
-#### Defined in
-
-[packages/nestjs/src/lib/automapper-profile.ts:15](https://github.com/nartc/mapper/blob/efc4cb9d/packages/nestjs/src/lib/automapper-profile.ts#L15)

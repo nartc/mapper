@@ -7,8 +7,7 @@ import { AutoMapperLogger } from '@automapper/core';
 
 export function inheritAutoMapMetadata(
     parentClass: Constructor,
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    targetClass: Function,
+    targetClass: Constructor,
     isPropertyInherited: (key: string) => boolean = () => true
 ) {
     try {
@@ -17,9 +16,7 @@ export function inheritAutoMapMetadata(
             return;
         }
 
-        const [existingMetadataList] = getMetadataList(
-            targetClass as Constructor
-        );
+        const [existingMetadataList] = getMetadataList(targetClass);
         Reflect.defineMetadata(
             AUTOMAP_PROPERTIES_METADATA_KEY,
             [

@@ -1,27 +1,19 @@
----
-id: "AutomapperGlobalOptions"
-title: "Interface: AutomapperGlobalOptions"
-sidebar_label: "AutomapperGlobalOptions"
-sidebar_position: 0
-custom_edit_url: null
----
+# Interface: AutomapperGlobalOptions
+
+Defined in: [packages/nestjs/src/lib/options.ts:12](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/nestjs/src/lib/options.ts#L12)
 
 ## Properties
 
-### globalErrorHandler
+### globalErrorHandler?
 
-• `Optional` **globalErrorHandler**: `ErrorHandler`
+> `optional` **globalErrorHandler?**: `ErrorHandler`
 
-#### Defined in
+Defined in: [packages/nestjs/src/lib/options.ts:13](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/nestjs/src/lib/options.ts#L13)
 
-[packages/nestjs/src/lib/options.ts:13](https://github.com/nartc/mapper/blob/efc4cb9d/packages/nestjs/src/lib/options.ts#L13)
+***
 
-___
+### globalNamingConventions?
 
-### globalNamingConventions
+> `optional` **globalNamingConventions?**: `NamingConventionInput`
 
-• `Optional` **globalNamingConventions**: `NamingConventionInput`
-
-#### Defined in
-
-[packages/nestjs/src/lib/options.ts:14](https://github.com/nartc/mapper/blob/efc4cb9d/packages/nestjs/src/lib/options.ts#L14)
+Defined in: [packages/nestjs/src/lib/options.ts:14](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/nestjs/src/lib/options.ts#L14)

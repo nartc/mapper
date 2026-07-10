@@ -1,171 +1,93 @@
----
-id: "AutomapperModule"
-title: "Class: AutomapperModule"
-sidebar_label: "AutomapperModule"
-sidebar_position: 0
-custom_edit_url: null
----
+# Class: AutomapperModule
+
+Defined in: [packages/nestjs/src/lib/automapper-nestjs.module.ts:14](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/nestjs/src/lib/automapper-nestjs.module.ts#L14)
 
 ## Constructors
 
-### constructor
+### Constructor
 
-• **new AutomapperModule**()
+> **new AutomapperModule**(): `AutomapperModule`
+
+#### Returns
+
+`AutomapperModule`
 
 ## Methods
 
-### createMapper
+### forRoot()
 
-▸ `Static` `Private` **createMapper**(`mapperOptions`, `globalOptions?`): `Mapper`
+#### Call Signature
 
-#### Parameters
+> `static` **forRoot**(`mapperOptions`): `DynamicModule`
 
-| Name | Type |
-| :------ | :------ |
-| `mapperOptions` | `CreateMapperOptions` |
-| `globalOptions?` | [`AutomapperGlobalOptions`](../interfaces/AutomapperGlobalOptions.md) |
+Defined in: [packages/nestjs/src/lib/automapper-nestjs.module.ts:15](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/nestjs/src/lib/automapper-nestjs.module.ts#L15)
 
-#### Returns
+##### Parameters
 
-`Mapper`
+###### mapperOptions
 
-#### Defined in
+`CreateMapperOptions`
 
-[packages/nestjs/src/lib/automapper-nestjs.module.ts:155](https://github.com/nartc/mapper/blob/efc4cb9d/packages/nestjs/src/lib/automapper-nestjs.module.ts#L155)
-
-___
-
-### createMapperProvider
-
-▸ `Static` `Private` **createMapperProvider**(`asyncMapperOptions`, `globalOptions?`): `Provider`<`any`\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `asyncMapperOptions` | [`AutomapperAsyncOptions`](../interfaces/AutomapperAsyncOptions.md) & { `name`: `string`  } |
-| `globalOptions?` | [`AutomapperGlobalOptions`](../interfaces/AutomapperGlobalOptions.md) |
-
-#### Returns
-
-`Provider`<`any`\>
-
-#### Defined in
-
-[packages/nestjs/src/lib/automapper-nestjs.module.ts:120](https://github.com/nartc/mapper/blob/efc4cb9d/packages/nestjs/src/lib/automapper-nestjs.module.ts#L120)
-
-___
-
-### createProvider
-
-▸ `Static` `Private` **createProvider**(`asyncMapperOptions`, `globalOptions?`): `Provider`<`any`\>[]
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `asyncMapperOptions` | [`AutomapperAsyncOptions`](../interfaces/AutomapperAsyncOptions.md) & { `name`: `string`  } |
-| `globalOptions?` | [`AutomapperGlobalOptions`](../interfaces/AutomapperGlobalOptions.md) |
-
-#### Returns
-
-`Provider`<`any`\>[]
-
-#### Defined in
-
-[packages/nestjs/src/lib/automapper-nestjs.module.ts:101](https://github.com/nartc/mapper/blob/efc4cb9d/packages/nestjs/src/lib/automapper-nestjs.module.ts#L101)
-
-___
-
-### createProviders
-
-▸ `Static` `Private` **createProviders**(`mapperOptions`, `globalOptions?`): `Provider`<`any`\>[]
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `mapperOptions` | `CreateMapperOptions` & { `name`: `string`  }[] |
-| `globalOptions?` | [`AutomapperGlobalOptions`](../interfaces/AutomapperGlobalOptions.md) |
-
-#### Returns
-
-`Provider`<`any`\>[]
-
-#### Defined in
-
-[packages/nestjs/src/lib/automapper-nestjs.module.ts:70](https://github.com/nartc/mapper/blob/efc4cb9d/packages/nestjs/src/lib/automapper-nestjs.module.ts#L70)
-
-___
-
-### forRoot
-
-▸ `Static` **forRoot**(`mapperOptions`): `DynamicModule`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `mapperOptions` | `CreateMapperOptions` |
-
-#### Returns
+##### Returns
 
 `DynamicModule`
 
-#### Defined in
+#### Call Signature
 
-[packages/nestjs/src/lib/automapper-nestjs.module.ts:15](https://github.com/nartc/mapper/blob/efc4cb9d/packages/nestjs/src/lib/automapper-nestjs.module.ts#L15)
+> `static` **forRoot**(`mapperOptions`, `globalOptions?`): `DynamicModule`
 
-▸ `Static` **forRoot**(`mapperOptions`, `globalOptions?`): `DynamicModule`
+Defined in: [packages/nestjs/src/lib/automapper-nestjs.module.ts:16](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/nestjs/src/lib/automapper-nestjs.module.ts#L16)
 
-#### Parameters
+##### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `mapperOptions` | `CreateMapperOptions` & { `name`: `string`  }[] |
-| `globalOptions?` | [`AutomapperGlobalOptions`](../interfaces/AutomapperGlobalOptions.md) |
+###### mapperOptions
 
-#### Returns
+`CreateMapperOptions` & `object`[]
 
-`DynamicModule`
+###### globalOptions?
 
-#### Defined in
+[`AutomapperGlobalOptions`](../interfaces/AutomapperGlobalOptions.md)
 
-[packages/nestjs/src/lib/automapper-nestjs.module.ts:16](https://github.com/nartc/mapper/blob/efc4cb9d/packages/nestjs/src/lib/automapper-nestjs.module.ts#L16)
-
-___
-
-### forRootAsync
-
-▸ `Static` **forRootAsync**(`asyncMapperOptions`): `DynamicModule`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `asyncMapperOptions` | [`AutomapperAsyncOptions`](../interfaces/AutomapperAsyncOptions.md) |
-
-#### Returns
+##### Returns
 
 `DynamicModule`
 
-#### Defined in
+***
 
-[packages/nestjs/src/lib/automapper-nestjs.module.ts:38](https://github.com/nartc/mapper/blob/efc4cb9d/packages/nestjs/src/lib/automapper-nestjs.module.ts#L38)
+### forRootAsync()
 
-▸ `Static` **forRootAsync**(`asyncMapperOptions`, `globalOptions?`): `DynamicModule`
+#### Call Signature
 
-#### Parameters
+> `static` **forRootAsync**(`asyncMapperOptions`): `DynamicModule`
 
-| Name | Type |
-| :------ | :------ |
-| `asyncMapperOptions` | [`AutomapperAsyncOptions`](../interfaces/AutomapperAsyncOptions.md) & { `name`: `string`  }[] |
-| `globalOptions?` | [`AutomapperGlobalOptions`](../interfaces/AutomapperGlobalOptions.md) |
+Defined in: [packages/nestjs/src/lib/automapper-nestjs.module.ts:38](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/nestjs/src/lib/automapper-nestjs.module.ts#L38)
 
-#### Returns
+##### Parameters
+
+###### asyncMapperOptions
+
+[`AutomapperAsyncOptions`](../interfaces/AutomapperAsyncOptions.md)
+
+##### Returns
 
 `DynamicModule`
 
-#### Defined in
+#### Call Signature
 
-[packages/nestjs/src/lib/automapper-nestjs.module.ts:41](https://github.com/nartc/mapper/blob/efc4cb9d/packages/nestjs/src/lib/automapper-nestjs.module.ts#L41)
+> `static` **forRootAsync**(`asyncMapperOptions`, `globalOptions?`): `DynamicModule`
+
+Defined in: [packages/nestjs/src/lib/automapper-nestjs.module.ts:41](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/nestjs/src/lib/automapper-nestjs.module.ts#L41)
+
+##### Parameters
+
+###### asyncMapperOptions
+
+[`AutomapperAsyncOptions`](../interfaces/AutomapperAsyncOptions.md) & `object`[]
+
+###### globalOptions?
+
+[`AutomapperGlobalOptions`](../interfaces/AutomapperGlobalOptions.md)
+
+##### Returns
+
+`DynamicModule`

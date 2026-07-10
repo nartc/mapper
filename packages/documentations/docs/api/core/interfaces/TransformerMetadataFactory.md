@@ -1,27 +1,15 @@
----
-id: "TransformerMetadataFactory"
-title: "Interface: TransformerMetadataFactory<TModel>"
-sidebar_label: "TransformerMetadataFactory"
-sidebar_position: 0
-custom_edit_url: null
----
+# Interface: TransformerMetadataFactory
 
-## Type parameters
+Defined in: [core/src/lib/types.ts:47](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L47)
 
-| Name | Type |
-| :------ | :------ |
-| `TModel` | extends [`Dictionary`](../modules.md#dictionary)<`TModel`\> |
+## Properties
 
-## Methods
+### \_\_AUTOMAPPER\_METADATA\_FACTORY\_\_?
 
-### \_\_AUTOMAPPER\_METADATA\_FACTORY\_\_
+> `optional` **\_\_AUTOMAPPER\_METADATA\_FACTORY\_\_?**: () => \[`string`, `object`\][]
 
-▸ `Optional` **__AUTOMAPPER_METADATA_FACTORY__**(): [propertyKey: string, options: Object][]
+Defined in: [core/src/lib/types.ts:48](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L48)
 
 #### Returns
 
-[propertyKey: string, options: Object][]
-
-#### Defined in
-
-[lib/types.ts:39](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L39)
+\[`string`, `object`\][]

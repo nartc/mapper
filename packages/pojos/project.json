@@ -2,47 +2,41 @@
     "name": "pojos",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "packages/pojos/src",
+    "tags": [
+        "pojos"
+    ],
     "targets": {
         "package": {
-            "command": "NX_CLOUD=true nx package-lib pojos"
-        },
-        "package-lib": {
-            "executor": "@nrwl/rollup:rollup",
-            "outputs": ["{options.outputPath}"],
+            "executor": "nx:run-commands",
+            "outputs": [
+                "{workspaceRoot}/dist/packages/pojos"
+            ],
             "options": {
-                "project": "packages/pojos/package.json",
-                "outputPath": "dist/packages/pojos",
-                "entryFile": "packages/pojos/src/index.ts",
-                "tsConfig": "packages/pojos/tsconfig.lib.json",
-                "assets": ["packages/pojos/src/README.md"],
-                "compiler": "babel",
-                "external": ["typescript", "tslib", "@automapper/core"],
-                "format": ["cjs", "esm"],
-                "updateBuildableProjectDepsInPackageJson": false
+                "command": "node tools/scripts/build-packages.mjs pojos"
             }
         },
         "lint": {
-            "executor": "@nrwl/linter:eslint",
-            "outputs": ["{options.outputFile}"],
-            "options": {
-                "lintFilePatterns": ["packages/pojos/**/*.ts"]
-            }
+            "executor": "@nx/eslint:lint"
         },
         "test": {
-            "executor": "@nrwl/jest:jest",
-            "outputs": ["{workspaceRoot}/coverage/packages/pojos"],
+            "executor": "nx:run-commands",
             "options": {
-                "jestConfig": "packages/pojos/jest.config.cjs",
-                "passWithNoTests": true
+                "command": "vitest run",
+                "cwd": "packages/pojos"
             }
         },
         "publish": {
             "executor": "nx:run-commands",
             "options": {
-                "command": "npm publish",
+                "command": "npm publish --tag alpha",
                 "cwd": "dist/packages/pojos"
             }
+        },
+        "nx-release-publish": {
+            "executor": "@nx/js:release-publish",
+            "options": {
+                "packageRoot": "dist/packages/pojos"
+            }
         }
-    },
-    "tags": ["pojos"]
+    }
 }

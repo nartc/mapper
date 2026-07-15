@@ -1,27 +1,21 @@
----
-id: "ErrorHandler"
-title: "Interface: ErrorHandler"
-sidebar_label: "ErrorHandler"
-sidebar_position: 0
-custom_edit_url: null
----
+# Interface: ErrorHandler
+
+Defined in: [core/src/lib/types.ts:58](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L58)
 
 ## Methods
 
-### handle
+### handle()
 
-▸ **handle**(`error`): `void`
+> **handle**(`error`): `void`
+
+Defined in: [core/src/lib/types.ts:59](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L59)
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `error` | `unknown` |
+##### error
+
+`unknown`
 
 #### Returns
 
 `void`
-
-#### Defined in
-
-[lib/types.ts:50](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L50)

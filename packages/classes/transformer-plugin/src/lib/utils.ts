@@ -1,4 +1,4 @@
-import { dirname, posix } from 'path';
+import { posix } from 'path';
 import {
     ArrayTypeNode,
     CallExpression,
@@ -19,7 +19,7 @@ import {
     TypeFormatFlags,
     TypeNode,
     TypeReference,
-} from 'typescript/lib/tsserverlibrary';
+} from 'typescript';
 
 export function isFilenameMatched(
     patterns: string[],
@@ -106,22 +106,36 @@ export function replaceImportPath(
     typeReference: string,
     fileName: string
 ): string | undefined {
-    let importPath = /\("([^)]).+(")/.exec(typeReference)?.[0];
+    const importPath = /import\("([^"]+)"\)/.exec(typeReference)?.[1];
     if (!importPath) {
         return undefined;
     }
 
-    if (process.platform === 'win32') {
-      return typeReference.replace('import', 'require')
+    if (!isFilePathImport(importPath)) {
+        return typeReference.replace('import', 'require');
     }
 
-    importPath = importPath.slice(2, importPath.length - 1);
-
-    let relativePath = posix.relative(dirname(fileName), importPath);
+    let relativePath = posix.relative(
+        posix.dirname(normalizePath(fileName)),
+        normalizePath(importPath)
+    );
     relativePath = relativePath[0] !== '.' ? './' + relativePath : relativePath;
     typeReference = typeReference.replace(importPath, relativePath);
 
     return typeReference.replace('import', 'require');
+}
+
+function normalizePath(path: string): string {
+    return path.replace(/\\/g, '/');
+}
+
+function isFilePathImport(path: string): boolean {
+    return (
+        path.startsWith('.') ||
+        path.startsWith('/') ||
+        /^[A-Za-z]:[\\/]/.test(path) ||
+        path.includes('\\')
+    );
 }
 
 function hasFlag(type: Type, flag: TypeFlags): boolean {

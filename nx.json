@@ -1,44 +1,61 @@
 {
     "extends": "nx/presets/core.json",
-    "npmScope": "automapper",
-    "affected": {
-        "defaultBase": "main"
-    },
-    "cli": {
-        "defaultCollection": "@nrwl/workspace"
-    },
-    "tasksRunnerOptions": {
-        "default": {
-            "runner": "@nrwl/nx-cloud",
-            "options": {
-                "cacheableOperations": [
-                    "build",
-                    "lint",
-                    "test",
-                    "e2e",
-                    "package",
-                    "package-lib"
-                ],
-                "accessToken": "MjMzYTA3OWMtMjQ1MS00YzFhLWExYTYtODMzMTM5MmQxZmE1fHJlYWQtd3JpdGU="
-            }
-        }
-    },
     "$schema": "./node_modules/nx/schemas/nx-schema.json",
+    "plugins": [
+        {
+            "plugin": "@nx/js/typescript"
+        }
+    ],
     "namedInputs": {
-        "default": ["{projectRoot}/**/*"],
-        "prod": ["!{projectRoot}/**/*.spec.ts"]
+        "default": ["{projectRoot}/**/*", "shared"],
+        "prod": ["!{projectRoot}/**/*.spec.ts"],
+        "shared": ["{workspaceRoot}/.github/workflows/ci.yml"]
     },
     "targetDefaults": {
-        "test": {
-            "inputs": ["default", "^prod"]
+        "build": { "cache": true },
+        "package": {
+            "cache": true,
+            "inputs": [
+                "default",
+                "^default",
+                "{workspaceRoot}/tools/scripts/build-packages.mjs"
+            ]
         },
-        "lint": {
-            "inputs": ["default", "{workspaceRoot}/.eslintrc.json"]
+        "package-lib": { "cache": true },
+        "test": { "inputs": ["default", "^prod"], "cache": true },
+        "@nx/eslint:lint": {
+            "inputs": [
+                "default",
+                "^default",
+                "{workspaceRoot}/.eslintrc.json",
+                "{workspaceRoot}/tools/eslint-rules/**/*"
+            ],
+            "cache": true
         }
     },
-    "pluginsConfig": {
-        "@nrwl/js": {
-            "analyzeSourceFiles": true
+    "release": {
+        "projects": [
+            "core",
+            "classes",
+            "pojos",
+            "nestjs",
+            "mikro",
+            "sequelize"
+        ],
+        "projectsRelationship": "independent",
+        "releaseTagPattern": "{projectName}@{version}",
+        "version": {
+            "conventionalCommits": true,
+            "preserveLocalDependencyProtocols": true
+        },
+        "changelog": {
+            "automaticFromRef": true,
+            "projectChangelogs": { "createRelease": "github" }
         }
-    }
+    },
+    "pluginsConfig": { "@nx/js": { "analyzeSourceFiles": true } },
+    "defaultBase": "main",
+    "analytics": false,
+    "nxCloudId": "6a3e997e7427195a38f6bdbc",
+    "bust": "2"
 }

@@ -4,34 +4,21 @@
         "rootDir": ".",
         "sourceMap": true,
         "declaration": false,
-        "moduleResolution": "node",
+        "moduleResolution": "bundler",
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "importHelpers": true,
-        "target": "es2020",
+        "target": "es2022",
         "module": "esnext",
-        "lib": ["es2020", "dom"],
+        "lib": [
+            "es2022",
+            "dom"
+        ],
         "skipLibCheck": true,
-        "skipDefaultLibCheck": true,
-        "baseUrl": ".",
-        "paths": {
-            "@automapper/classes": ["packages/classes/src/index.ts"],
-            "@automapper/classes/mapped-types": [
-                "packages/classes/mapped-types/src/index.ts"
-            ],
-            "@automapper/classes/transformer-plugin": [
-                "packages/classes/transformer-plugin/src/index.ts"
-            ],
-            "@automapper/core": ["packages/core/src/index.ts"],
-            "@automapper/integration-test": [
-                "packages/integration-test/src/index.ts"
-            ],
-            "@automapper/mikro": ["packages/mikro/src/index.ts"],
-            "@automapper/nestjs": ["packages/nestjs/src/index.ts"],
-            "@automapper/pojos": ["packages/pojos/src/index.ts"],
-            "@automapper/sequelize": ["packages/sequelize/src/index.ts"],
-            "@automapper/zod": ["packages/zod/src/index.ts"]
-        }
+        "skipDefaultLibCheck": true
     },
-    "exclude": ["node_modules", "tmp"]
+    "exclude": [
+        "node_modules",
+        "tmp"
+    ]
 }

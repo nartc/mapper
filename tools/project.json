@@ -1,0 +1,15 @@
+{
+    "name": "workspace-config",
+    "$schema": "../node_modules/nx/schemas/project-schema.json",
+    "projectType": "library",
+    "root": "tools",
+    "targets": {
+        "typecheck": {
+            "executor": "nx:run-commands",
+            "cache": false,
+            "options": {
+                "command": "tsc -p tools/tsconfig.tools.json"
+            }
+        }
+    }
+}

@@ -2,22 +2,17 @@
     "name": "integration-test",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "packages/integration-test/src",
+    "tags": [],
     "targets": {
         "lint": {
-            "executor": "@nrwl/linter:eslint",
-            "outputs": ["{options.outputFile}"],
-            "options": {
-                "lintFilePatterns": ["packages/integration-test/**/*.ts"]
-            }
+            "executor": "@nx/eslint:lint"
         },
         "test": {
-            "executor": "@nrwl/jest:jest",
-            "outputs": ["{workspaceRoot}/coverage/packages/integration-test"],
+            "executor": "nx:run-commands",
             "options": {
-                "jestConfig": "packages/integration-test/jest.config.ts",
-                "passWithNoTests": true
+                "command": "vitest run",
+                "cwd": "packages/integration-test"
             }
         }
-    },
-    "tags": []
+    }
 }

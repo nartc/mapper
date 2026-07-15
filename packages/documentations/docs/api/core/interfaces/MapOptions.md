@@ -1,66 +1,63 @@
----
-id: "MapOptions"
-title: "Interface: MapOptions<TSource, TDestination, TExtraArgs>"
-sidebar_label: "MapOptions"
-sidebar_position: 0
-custom_edit_url: null
----
+# Interface: MapOptions\<TSource, TDestination, TExtraArgs\>
 
-## Type parameters
+Defined in: [core/src/lib/types.ts:128](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L128)
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](../modules.md#dictionary)<`TSource`\> |
-| `TDestination` | extends [`Dictionary`](../modules.md#dictionary)<`TDestination`\> |
-| `TExtraArgs` | extends `Record`<`string`, `any`\> = `Record`<`string`, `any`\> |
+## Type Parameters
+
+### TSource
+
+`TSource` *extends* [`Dictionary`](../type-aliases/Dictionary.md)\<`TSource`\>
+
+### TDestination
+
+`TDestination` *extends* [`Dictionary`](../type-aliases/Dictionary.md)\<`TDestination`\>
+
+### TExtraArgs
+
+`TExtraArgs` *extends* `Record`\<`string`, `unknown`\> = `Record`\<`string`, `unknown`\>
 
 ## Properties
 
-### afterMap
+### afterMap?
 
-• `Optional` **afterMap**: [`MapCallback`](../modules.md#mapcallback)<`TSource`, `TDestination`, `TExtraArgs`\>
+> `optional` **afterMap?**: [`MapCallback`](../type-aliases/MapCallback.md)\<`TSource`, `TDestination`, `TExtraArgs`\>
 
-#### Defined in
+Defined in: [core/src/lib/types.ts:134](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L134)
 
-[lib/types.ts:112](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L112)
+***
 
-___
+### beforeMap?
 
-### beforeMap
+> `optional` **beforeMap?**: [`MapCallback`](../type-aliases/MapCallback.md)\<`TSource`, `TDestination`, `TExtraArgs`\>
 
-• `Optional` **beforeMap**: [`MapCallback`](../modules.md#mapcallback)<`TSource`, `TDestination`, `TExtraArgs`\>
+Defined in: [core/src/lib/types.ts:133](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L133)
 
-#### Defined in
+***
 
-[lib/types.ts:111](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L111)
+### destinationConstructor?
 
-___
+> `optional` **destinationConstructor?**: [`DestinationConstructor`](../type-aliases/DestinationConstructor.md)\<`TSource`, `TDestination`\>
 
-### destinationConstructor
+Defined in: [core/src/lib/types.ts:135](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L135)
 
-• `Optional` **destinationConstructor**: [`DestinationConstructor`](../modules.md#destinationconstructor)<`TSource`, `TDestination`\>
+***
 
-#### Defined in
+### extraArgs?
 
-[lib/types.ts:113](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L113)
+> `optional` **extraArgs?**: (`mapping`, `destinationObject`) => `TExtraArgs`
 
-## Methods
-
-### extraArgs
-
-▸ `Optional` **extraArgs**(`mapping`, `destinationObject`): `TExtraArgs`
+Defined in: [core/src/lib/types.ts:136](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L136)
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `mapping` | [`Mapping`](../modules.md#mapping)<`TSource`, `TDestination`\> |
-| `destinationObject` | `TDestination` |
+##### mapping
+
+[`Mapping`](../type-aliases/Mapping.md)\<`TSource`, `TDestination`\>
+
+##### destinationObject
+
+`TDestination`
 
 #### Returns
 
 `TExtraArgs`
-
-#### Defined in
-
-[lib/types.ts:114](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L114)

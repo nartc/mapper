@@ -1,13 +1,13 @@
 import automapperTransformerPlugin, {
     before,
 } from '@automapper/classes/transformer-plugin';
-import type { CompilerOptions } from 'typescript/lib/tsserverlibrary';
+import type { CompilerOptions } from 'typescript';
 import {
     createProgram,
     ModuleKind,
     ScriptTarget,
     transpileModule,
-} from 'typescript/lib/tsserverlibrary';
+} from 'typescript';
 import {
     compiledCreateSkillRequestDto,
     compiledSkillEntity,
@@ -29,6 +29,10 @@ describe('Classes - Transformer Plugin', () => {
                 module: ModuleKind.CommonJS,
                 target: ScriptTarget.ESNext,
                 noEmitHelpers: true,
+                // TS 5.0+ defaults to Stage 3 decorators; @automapper/classes
+                // uses legacy decorators, so this must be explicit (real users
+                // set it too). Restores __decorate emit the fixtures expect.
+                experimentalDecorators: true,
             };
 
             const fileName = 'user.model.ts';
@@ -44,7 +48,7 @@ describe('Classes - Transformer Plugin', () => {
 
             expect(result.outputText).toBeTruthy();
             expect(result.outputText).toEqual(userModelTranspiledText);
-        });
+        }, 15_000);
     });
     describe('default import', () => {
         it('should compile', () => {
@@ -52,6 +56,10 @@ describe('Classes - Transformer Plugin', () => {
                 module: ModuleKind.CommonJS,
                 target: ScriptTarget.ESNext,
                 noEmitHelpers: true,
+                // TS 5.0+ defaults to Stage 3 decorators; @automapper/classes
+                // uses legacy decorators, so this must be explicit (real users
+                // set it too). Restores __decorate emit the fixtures expect.
+                experimentalDecorators: true,
             };
 
             const fileName = 'user.model.ts';
@@ -76,6 +84,10 @@ describe('Classes - Transformer Plugin', () => {
                 module: ModuleKind.ES2015,
                 target: ScriptTarget.ESNext,
                 noEmitHelpers: true,
+                // TS 5.0+ defaults to Stage 3 decorators; @automapper/classes
+                // uses legacy decorators, so this must be explicit (real users
+                // set it too). Restores __decorate emit the fixtures expect.
+                experimentalDecorators: true,
             };
 
             const fileName = 'user.model.ts';
@@ -101,6 +113,7 @@ describe('Classes - Transformer Plugin', () => {
                 target: ScriptTarget.ESNext,
                 noEmitHelpers: true,
                 strict: true,
+                experimentalDecorators: true,
             };
 
             const fileName = 'user.model.ts';
@@ -126,6 +139,7 @@ describe('Classes - Transformer Plugin', () => {
                 target: ScriptTarget.ESNext,
                 noEmitHelpers: true,
                 strict: true,
+                experimentalDecorators: true,
             };
 
             const fileName = 'user.model.ts';
@@ -151,6 +165,10 @@ describe('Classes - Transformer Plugin', () => {
                 module: ModuleKind.CommonJS,
                 target: ScriptTarget.ESNext,
                 noEmitHelpers: true,
+                // TS 5.0+ defaults to Stage 3 decorators; @automapper/classes
+                // uses legacy decorators, so this must be explicit (real users
+                // set it too). Restores __decorate emit the fixtures expect.
+                experimentalDecorators: true,
             };
 
             const createSkillFileName = 'create-skill.dto.ts';

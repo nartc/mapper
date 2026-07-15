@@ -1,3 +1,4 @@
+import { MappingNotFoundError } from '../errors';
 import { getErrorHandler, getMappings } from '../symbols';
 import type {
     Mapper,
@@ -27,10 +28,9 @@ export function getMapping(
             typeof source === 'function' ? (source.name || String(source)) : String(source);
         const destinationName =
             typeof destination === 'function' ? (destination.name || String(destination)) : String(destination);
-        const errorHandler = getErrorHandler(mapper);
-        const errorMessage = `Mapping is not found for ${sourceName} and ${destinationName}`;
-        errorHandler.handle(errorMessage);
-        throw new Error(errorMessage);
+        const error = new MappingNotFoundError(sourceName, destinationName);
+        getErrorHandler(mapper).handle(error.message);
+        throw error;
     }
 
     return mapping as Mapping;

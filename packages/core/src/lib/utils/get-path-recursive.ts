@@ -1,6 +1,6 @@
 import { uniquePaths } from './unique-path';
 
-const EXCLUDE_KEYS = [
+const EXCLUDE_KEYS = new Set([
     'constructor',
     '__defineGetter__',
     '__defineSetter__',
@@ -13,7 +13,7 @@ const EXCLUDE_KEYS = [
     'valueOf',
     '__proto__',
     'toLocaleString',
-];
+]);
 
 export function getPathRecursive(
     node: Record<string, unknown>,
@@ -24,12 +24,11 @@ export function getPathRecursive(
 
     let hasChildPaths = false;
 
-    const keys = Array.from(
-        new Set(
-            [...Object.getOwnPropertyNames(node)].filter(
-                (key) => !EXCLUDE_KEYS.includes(key)
-            )
-        )
+    // Object.getOwnPropertyNames already returns unique keys, so the previous
+    // Array.from(new Set(...)) dedup removed nothing. Cross-node dedup (the only
+    // place a path can repeat) is still done by uniquePaths(result) below.
+    const keys = Object.getOwnPropertyNames(node).filter(
+        (key) => !EXCLUDE_KEYS.has(key)
     );
 
     for (let i = 0, len = keys.length; i < len; i++) {

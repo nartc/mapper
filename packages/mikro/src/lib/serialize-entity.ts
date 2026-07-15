@@ -1,7 +1,10 @@
 import { isEmpty } from '@automapper/core';
 import type { AnyEntity } from '@mikro-orm/core';
 import { Reference, Utils, wrap } from '@mikro-orm/core';
-import type { IWrappedEntityInternal } from '@mikro-orm/core/typings';
+
+type IWrappedEntityInternal<T> = {
+    __meta: { properties: Record<string, unknown> };
+} & T;
 
 const excluded = [
     '__gettersDefined',
@@ -23,7 +26,10 @@ export function serializeEntity(
     if (toPojo) return wrap(item).toPOJO();
 
     const result = {} as Record<string | symbol, unknown>;
-    const keys = Object.keys((wrap(item) as IWrappedEntityInternal<AnyEntity>).__meta.properties);
+    const keys = Object.keys(
+        (wrap(item) as unknown as IWrappedEntityInternal<AnyEntity>).__meta
+            .properties
+    );
     for (const key of keys) {
         if (typeof key === 'symbol' || excluded.includes(key)) {
             continue;

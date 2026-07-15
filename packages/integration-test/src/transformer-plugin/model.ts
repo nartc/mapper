@@ -200,10 +200,10 @@ class User {
         ];
     }
 }
+exports.User = User;
 __decorate([
     AutoMap()
 ], User.prototype, "ignoreMeToo", void 0);
-exports.User = User;
 `;
 
 export const userModelTranspiledTextESM = `var Role;

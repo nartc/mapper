@@ -1,84 +1,87 @@
----
-id: "MappingStrategyInitializerOptions"
-title: "Interface: MappingStrategyInitializerOptions"
-sidebar_label: "MappingStrategyInitializerOptions"
-sidebar_position: 0
-custom_edit_url: null
----
+# Interface: MappingStrategyInitializerOptions
+
+Defined in: [core/src/lib/types.ts:736](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L736)
 
 ## Properties
 
-### applyMetadata
+### applyMetadata?
 
-• `Optional` **applyMetadata**: [`ApplyMetadata`](../modules.md#applymetadata)
+> `optional` **applyMetadata?**: [`ApplyMetadata`](../type-aliases/ApplyMetadata.md)
 
-#### Defined in
+Defined in: [core/src/lib/types.ts:737](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L737)
 
-[lib/types.ts:625](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L625)
+***
 
-___
+### destinationConstructor?
 
-### destinationConstructor
+> `optional` **destinationConstructor?**: [`DestinationConstructor`](../type-aliases/DestinationConstructor.md)\<`any`, `any`\>
 
-• `Optional` **destinationConstructor**: [`DestinationConstructor`](../modules.md#destinationconstructor)<`any`, `any`\>
-
-#### Defined in
-
-[lib/types.ts:626](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L626)
+Defined in: [core/src/lib/types.ts:738](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L738)
 
 ## Methods
 
-### postMap
+### postMap()?
 
-▸ `Optional` **postMap**<`TSource`, `TDestination`\>(`source`, `destination`, `mapping`): `TDestination`
+> `optional` **postMap**\<`TSource`, `TDestination`\>(`source`, `destination`, `mapping`): `TDestination`
 
-#### Type parameters
+Defined in: [core/src/lib/types.ts:746](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L746)
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](../modules.md#dictionary)<`TSource`\> |
-| `TDestination` | extends [`Dictionary`](../modules.md#dictionary)<`TDestination`\> |
+#### Type Parameters
+
+##### TSource
+
+`TSource` *extends* [`Dictionary`](../type-aliases/Dictionary.md)\<`TSource`\>
+
+##### TDestination
+
+`TDestination` *extends* [`Dictionary`](../type-aliases/Dictionary.md)\<`TDestination`\>
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `source` | `TSource` |
-| `destination` | `TDestination` |
-| `mapping` | [`Mapping`](../modules.md#mapping)<`TSource`, `TDestination`\> |
+##### source
+
+`TSource`
+
+##### destination
+
+`TDestination`
+
+##### mapping
+
+[`Mapping`](../type-aliases/Mapping.md)\<`TSource`, `TDestination`\>
 
 #### Returns
 
 `TDestination`
 
-#### Defined in
+***
 
-[lib/types.ts:634](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L634)
+### preMap()?
 
-___
+> `optional` **preMap**\<`TSource`, `TDestination`\>(`source`, `mapping`): `TSource`
 
-### preMap
+Defined in: [core/src/lib/types.ts:739](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L739)
 
-▸ `Optional` **preMap**<`TSource`, `TDestination`\>(`source`, `mapping`): `TSource`
+#### Type Parameters
 
-#### Type parameters
+##### TSource
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](../modules.md#dictionary)<`TSource`\> |
-| `TDestination` | extends [`Dictionary`](../modules.md#dictionary)<`TDestination`\> |
+`TSource` *extends* [`Dictionary`](../type-aliases/Dictionary.md)\<`TSource`\>
+
+##### TDestination
+
+`TDestination` *extends* [`Dictionary`](../type-aliases/Dictionary.md)\<`TDestination`\>
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `source` | `TSource` |
-| `mapping` | [`Mapping`](../modules.md#mapping)<`TSource`, `TDestination`\> |
+##### source
+
+`TSource`
+
+##### mapping
+
+[`Mapping`](../type-aliases/Mapping.md)\<`TSource`, `TDestination`\>
 
 #### Returns
 
 `TSource`
-
-#### Defined in
-
-[lib/types.ts:627](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L627)

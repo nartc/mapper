@@ -2,53 +2,41 @@
     "name": "nestjs",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "packages/nestjs/src",
+    "tags": [
+        "nestjs"
+    ],
     "targets": {
         "package": {
-            "command": "NX_CLOUD=true nx package-lib nestjs"
-        },
-        "package-lib": {
-            "executor": "@nrwl/rollup:rollup",
-            "outputs": ["{options.outputPath}"],
+            "executor": "nx:run-commands",
+            "outputs": [
+                "{workspaceRoot}/dist/packages/nestjs"
+            ],
             "options": {
-                "project": "packages/nestjs/package.json",
-                "outputPath": "dist/packages/nestjs",
-                "entryFile": "packages/nestjs/src/index.ts",
-                "tsConfig": "packages/nestjs/tsconfig.lib.json",
-                "assets": ["packages/nestjs/src/README.md"],
-                "compiler": "babel",
-                "external": [
-                    "typescript",
-                    "tslib",
-                    "@automapper/core",
-                    "@nestjs/common",
-                    "rxjs"
-                ],
-                "format": ["cjs", "esm"],
-                "updateBuildableProjectDepsInPackageJson": false
+                "command": "node tools/scripts/build-packages.mjs nestjs"
             }
         },
         "lint": {
-            "executor": "@nrwl/linter:eslint",
-            "outputs": ["{options.outputFile}"],
-            "options": {
-                "lintFilePatterns": ["packages/nestjs/**/*.ts"]
-            }
+            "executor": "@nx/eslint:lint"
         },
         "test": {
-            "executor": "@nrwl/jest:jest",
-            "outputs": ["{workspaceRoot}/coverage/packages/nestjs"],
+            "executor": "nx:run-commands",
             "options": {
-                "jestConfig": "packages/nestjs/jest.config.cjs",
-                "passWithNoTests": true
+                "command": "vitest run",
+                "cwd": "packages/nestjs"
             }
         },
         "publish": {
             "executor": "nx:run-commands",
             "options": {
-                "command": "npm publish",
+                "command": "npm publish --tag alpha",
                 "cwd": "dist/packages/nestjs"
             }
+        },
+        "nx-release-publish": {
+            "executor": "@nx/js:release-publish",
+            "options": {
+                "packageRoot": "dist/packages/nestjs"
+            }
         }
-    },
-    "tags": ["nestjs"]
+    }
 }

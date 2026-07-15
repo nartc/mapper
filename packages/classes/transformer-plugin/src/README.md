@@ -278,7 +278,7 @@ In Nx workspaces, NestJS applications and buildable libraries are handled with `
     "lib": {
         "targets": {
             "build": {
-                "executor": "@nrwl/js:tsc",
+                "executor": "@nx/js:tsc",
                 "options": {
                     "transformers": [
                         {

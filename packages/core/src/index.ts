@@ -1,11 +1,13 @@
 export * from './lib/core';
 export * from './lib/types';
+export * from './lib/errors';
 export * from './lib/default-strategy-initializer-options';
 
 export * from './lib/utils/recursion';
 export * from './lib/utils/is-empty';
 export * from './lib/utils/is-primitive-constructor';
 export * from './lib/utils/is-date-constructor';
+export * from './lib/utils/is-mappable-identifier';
 export * from './lib/utils/set';
 export * from './lib/utils/logger';
 
@@ -18,6 +20,8 @@ export * from './lib/mapping-configurations/type-converters';
 export * from './lib/mapping-configurations/construct-using';
 export * from './lib/mapping-configurations/before-map';
 export * from './lib/mapping-configurations/after-map';
+export * from './lib/mapping-configurations/before-map-array';
+export * from './lib/mapping-configurations/after-map-array';
 export * from './lib/mapping-configurations/extend';
 export * from './lib/mapping-configurations/naming-conventions';
 export * from './lib/mapping-configurations/auto-map';

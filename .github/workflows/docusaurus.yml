@@ -8,39 +8,45 @@ on:
             - 'packages/documentations/docusaurus.config.js'
             - 'packages/documentations/sidebars.js'
             - 'packages/documentations/*.json'
+            - 'packages/documentations/pnpm-lock.yaml'
             - 'packages/documentations/docs/**/*.md'
             - 'packages/documentations/docs/**/*.mdx'
-            - 'packages/documentations/static/**/*.*'
+            - 'packages/documentations/static/**/*'
             - 'packages/documentations/src/**/*.js'
             - 'packages/documentations/src/**/*.css'
+            - 'packages/*/src/**/*.ts'
+            - 'packages/*/tsconfig*.json'
+            - 'pnpm-lock.yaml'
+            - 'pnpm-workspace.yaml'
+            - 'tsconfig.base.json'
 jobs:
     build-docs:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v4
               with:
                   persist-credentials: false
                   fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
 
-            - uses: pnpm/action-setup@v2.1.0
+            - uses: actions/setup-node@v4
               with:
-                  version: latest
-                  run_install: false
+                  node-version: '20'
 
-            - uses: actions/setup-node@v2
-              with:
-                  node-version: '16'
-                  cache: 'pnpm'
+            - run: corepack enable
 
+            # TypeDoc reads the library sources through their workspace links.
+            - name: Install workspace dependencies
+              run: pnpm install --frozen-lockfile
+
+            # docs are not a workspace member (the workspace is scoped to the
+            # publishable libs), so install them standalone.
             - name: Install dependencies
-              run: |
-                  pnpm install
-                  pnpm --filter "./packages/documentations" install
+              working-directory: packages/documentations
+              run: pnpm install --ignore-workspace --frozen-lockfile
 
             - name: Create local build artifacts
-              run: |
-                  echo 'Building documentations...'
-                  pnpm exec nx build documentations
+              working-directory: packages/documentations
+              run: pnpm build
 
             - name: Create local changes and commit
               run: |

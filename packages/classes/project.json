@@ -3,54 +3,41 @@
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "packages/classes/src",
     "projectType": "library",
+    "tags": [
+        "classes"
+    ],
     "targets": {
         "package": {
             "executor": "nx:run-commands",
+            "outputs": [
+                "{workspaceRoot}/dist/packages/classes"
+            ],
             "options": {
-                "commands": [
-                    "nx package-lib classes",
-                    "tsc packages/classes/shim/index.ts --outDir dist/packages/classes/shim/"
-                ],
-                "parallel": false
-            }
-        },
-        "package-lib": {
-            "executor": "@nrwl/rollup:rollup",
-            "outputs": ["{options.outputPath}"],
-            "options": {
-                "project": "packages/classes/package.json",
-                "outputPath": "dist/packages/classes",
-                "entryFile": "packages/classes/src/index.ts",
-                "tsConfig": "packages/classes/tsconfig.lib.json",
-                "assets": ["packages/classes/src/README.md"],
-                "compiler": "babel",
-                "external": ["typescript", "tslib", "@automapper/core"],
-                "format": ["cjs", "esm"],
-                "updateBuildableProjectDepsInPackageJson": false
+                "command": "node tools/scripts/build-packages.mjs classes"
             }
         },
         "lint": {
-            "executor": "@nrwl/linter:eslint",
-            "outputs": ["{options.outputFile}"],
-            "options": {
-                "lintFilePatterns": ["packages/classes/**/*.ts"]
-            }
+            "executor": "@nx/eslint:lint"
         },
         "test": {
-            "executor": "@nrwl/jest:jest",
-            "outputs": ["{workspaceRoot}/coverage/packages/classes"],
+            "executor": "nx:run-commands",
             "options": {
-                "jestConfig": "packages/classes/jest.config.cjs",
-                "passWithNoTests": true
+                "command": "vitest run",
+                "cwd": "packages/classes"
             }
         },
         "publish": {
             "executor": "nx:run-commands",
             "options": {
-                "command": "npm publish",
+                "command": "npm publish --tag alpha",
                 "cwd": "dist/packages/classes"
             }
+        },
+        "nx-release-publish": {
+            "executor": "@nx/js:release-publish",
+            "options": {
+                "packageRoot": "dist/packages/classes"
+            }
         }
-    },
-    "tags": ["classes"]
+    }
 }

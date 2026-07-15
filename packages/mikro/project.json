@@ -2,52 +2,41 @@
     "name": "mikro",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "packages/mikro/src",
+    "tags": [
+        "mikro"
+    ],
     "targets": {
         "package": {
-            "command": "NX_CLOUD=true nx package-lib mikro"
-        },
-        "package-lib": {
-            "executor": "@nrwl/rollup:rollup",
-            "outputs": ["{options.outputPath}"],
+            "executor": "nx:run-commands",
+            "outputs": [
+                "{workspaceRoot}/dist/packages/mikro"
+            ],
             "options": {
-                "project": "packages/mikro/package.json",
-                "outputPath": "dist/packages/mikro",
-                "entryFile": "packages/mikro/src/index.ts",
-                "tsConfig": "packages/mikro/tsconfig.lib.json",
-                "assets": ["packages/mikro/src/README.md"],
-                "compiler": "babel",
-                "external": [
-                    "typescript",
-                    "tslib",
-                    "@automapper/core",
-                    "@automapper/classes"
-                ],
-                "format": ["cjs", "esm"],
-                "updateBuildableProjectDepsInPackageJson": false
+                "command": "node tools/scripts/build-packages.mjs mikro"
             }
         },
         "lint": {
-            "executor": "@nrwl/linter:eslint",
-            "outputs": ["{options.outputFile}"],
-            "options": {
-                "lintFilePatterns": ["packages/mikro/**/*.ts"]
-            }
+            "executor": "@nx/eslint:lint"
         },
         "test": {
-            "executor": "@nrwl/jest:jest",
-            "outputs": ["{workspaceRoot}/coverage/packages/mikro"],
+            "executor": "nx:run-commands",
             "options": {
-                "jestConfig": "packages/mikro/jest.config.cjs",
-                "passWithNoTests": true
+                "command": "vitest run",
+                "cwd": "packages/mikro"
             }
         },
         "publish": {
             "executor": "nx:run-commands",
             "options": {
-                "command": "npm publish",
+                "command": "npm publish --tag alpha",
                 "cwd": "dist/packages/mikro"
             }
+        },
+        "nx-release-publish": {
+            "executor": "@nx/js:release-publish",
+            "options": {
+                "packageRoot": "dist/packages/mikro"
+            }
         }
-    },
-    "tags": ["mikro"]
+    }
 }

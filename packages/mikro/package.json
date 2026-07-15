@@ -1,18 +1,26 @@
 {
     "name": "@automapper/mikro",
-    "version": "0.0.0",
+    "version": "9.0.0-alpha.0",
     "type": "module",
+    "exports": {
+        ".": "./src/index.ts"
+    },
     "peerDependencies": {
-        "@automapper/classes": "latest",
-        "@mikro-orm/core": "^5.0.0",
-        "reflect-metadata": "~0.1.13"
+        "@automapper/classes": "^9.0.0-alpha.0",
+        "@mikro-orm/core": "^6.0.0",
+        "reflect-metadata": "^0.1.14 || ^0.2.0"
+    },
+    "devDependencies": {
+        "@automapper/classes": "workspace:*",
+        "@automapper/core": "workspace:*"
     },
     "sideEffects": false,
     "engines": {
-        "node": ">=16.0.0"
+        "node": ">=20.0.0"
     },
     "publishConfig": {
-        "access": "public"
+        "access": "public",
+        "provenance": true
     },
     "repository": {
         "type": "git",

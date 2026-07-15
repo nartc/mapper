@@ -8,6 +8,7 @@ import type {
     CallHandler,
     ExecutionContext,
     NestInterceptor,
+    Type,
 } from '@nestjs/common';
 import { mixin, Optional } from '@nestjs/common';
 import type { Observable } from 'rxjs';
@@ -30,7 +31,7 @@ export const MapInterceptor: <
         TSource,
         TDestination
     >
-) => NestInterceptor = memoize(createMapInterceptor);
+) => Type<NestInterceptor> = memoize(createMapInterceptor);
 
 function createMapInterceptor<
     TSource extends Dictionary<TSource>,

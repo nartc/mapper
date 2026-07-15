@@ -7,7 +7,7 @@ describe(mapWith.name, () => {
     const withDestination = '';
     const withSource = '';
 
-    const mapper = { map: jest.fn(), mapArray: jest.fn() };
+    const mapper = { map: vi.fn(), mapArray: vi.fn() };
 
     it('should return correctly', () => {
         const mapWithFn = mapWith(withDestination, withSource, selector);

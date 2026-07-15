@@ -4,7 +4,7 @@ import type {
     Mapper,
     ModelIdentifier,
 } from '@automapper/core';
-import type { ArgumentMetadata, PipeTransform } from '@nestjs/common';
+import type { ArgumentMetadata, PipeTransform, Type } from '@nestjs/common';
 import { mixin, Optional } from '@nestjs/common';
 import { InjectMapper } from './di/inject-mapper';
 import { memoize } from './utils/memoize';
@@ -24,7 +24,7 @@ export const MapPipe: <
         TSource,
         TDestination
     >
-) => PipeTransform = memoize(createMapPipe);
+) => Type<PipeTransform> = memoize(createMapPipe);
 
 function createMapPipe<
     TSource extends Dictionary<TSource>,
@@ -78,7 +78,7 @@ function createMapPipe<
                     to,
                     transformedMapOptions
                 ) as TDestination;
-            } catch (e) {
+            } catch {
                 return value;
             }
         }

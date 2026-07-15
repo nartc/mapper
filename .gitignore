@@ -6,7 +6,9 @@
 /out-tsc
 
 # dependencies
-/node_modules
+node_modules
+# per-package dist (per-package builds / workspace)
+packages/*/dist
 
 # IDEs and editors
 /.idea
@@ -40,3 +42,13 @@ Thumbs.db
 
 old
 .env
+
+.nx/cache
+.nx/workspace-data
+.claude/worktrees
+.nx/polygraph
+.nx/self-healing
+
+# local agent planning and visual brainstorming artifacts
+.superpowers/
+docs/superpowers/

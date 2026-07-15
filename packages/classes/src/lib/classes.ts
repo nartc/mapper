@@ -13,7 +13,7 @@ import { getMetadataList } from './get-metadata-list';
 
 export function classes(
     options: MappingStrategyInitializerOptions = {}
-): MappingStrategyInitializer<Constructor> {
+): MappingStrategyInitializer<MetadataIdentifier> {
     const {
         destinationConstructor = (
             _: Dictionary<object>,

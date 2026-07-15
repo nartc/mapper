@@ -6,7 +6,8 @@ class CreateSkillRequestDto {
 }
 `;
 
-export const compiledCreateSkillRequestDto = `class CreateSkillRequestDto {
+export const compiledCreateSkillRequestDto = `"use strict";
+class CreateSkillRequestDto {
     label;
     value;
     categories;
@@ -43,7 +44,8 @@ class SkillEntity extends QBaseEntity {
 }
 `;
 
-export const compiledSkillEntity = `class QBaseEntity {
+export const compiledSkillEntity = `"use strict";
+class QBaseEntity {
     _id;
     createdDateTime;
     updatedDateTime;

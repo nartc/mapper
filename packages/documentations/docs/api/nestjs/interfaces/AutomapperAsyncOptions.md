@@ -1,80 +1,64 @@
----
-id: "AutomapperAsyncOptions"
-title: "Interface: AutomapperAsyncOptions"
-sidebar_label: "AutomapperAsyncOptions"
-sidebar_position: 0
-custom_edit_url: null
----
+# Interface: AutomapperAsyncOptions
 
-## Hierarchy
+Defined in: [packages/nestjs/src/lib/options.ts:23](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/nestjs/src/lib/options.ts#L23)
 
-- `Pick`<`ModuleMetadata`, ``"imports"``\>
+## Extends
 
-  ↳ **`AutomapperAsyncOptions`**
+- `Pick`\<`ModuleMetadata`, `"imports"`\>
 
 ## Properties
 
-### imports
+### imports?
 
-• `Optional` **imports**: (`DynamicModule` \| `Type`<`any`\> \| `Promise`<`DynamicModule`\> \| `ForwardReference`<`any`\>)[]
+> `optional` **imports?**: (`DynamicModule` \| `Type`\<`any`\> \| `ForwardReference`\<`any`\> \| `Promise`\<`DynamicModule`\>)[]
+
+Defined in: node\_modules/.pnpm/@nestjs+common@11.1.27\_reflect-metadata@0.2.2\_rxjs@7.8.1/node\_modules/@nestjs/common/interfaces/modules/module-metadata.interface.d.ts:18
 
 Optional list of imported modules that export the providers which are
 required in this module.
 
 #### Inherited from
 
-Pick.imports
+`Pick.imports`
 
-#### Defined in
+***
 
-node_modules/.pnpm/@nestjs+common@8.4.7_j5hagqx4mwzscud4kyjdvubauy/node_modules/@nestjs/common/interfaces/modules/module-metadata.interface.d.ts:18
+### inject?
 
-___
+> `optional` **inject?**: `any`[]
 
-### inject
+Defined in: [packages/nestjs/src/lib/options.ts:25](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/nestjs/src/lib/options.ts#L25)
 
-• `Optional` **inject**: `any`[]
+***
 
-#### Defined in
+### useClass?
 
-[packages/nestjs/src/lib/options.ts:25](https://github.com/nartc/mapper/blob/efc4cb9d/packages/nestjs/src/lib/options.ts#L25)
+> `optional` **useClass?**: `Type`\<[`AutomapperOptionsFactory`](AutomapperOptionsFactory.md)\>
 
-___
+Defined in: [packages/nestjs/src/lib/options.ts:27](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/nestjs/src/lib/options.ts#L27)
 
-### useClass
+***
 
-• `Optional` **useClass**: `Type`<[`AutomapperOptionsFactory`](AutomapperOptionsFactory.md)\>
+### useExisting?
 
-#### Defined in
+> `optional` **useExisting?**: `Type`\<[`AutomapperOptionsFactory`](AutomapperOptionsFactory.md)\>
 
-[packages/nestjs/src/lib/options.ts:27](https://github.com/nartc/mapper/blob/efc4cb9d/packages/nestjs/src/lib/options.ts#L27)
+Defined in: [packages/nestjs/src/lib/options.ts:26](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/nestjs/src/lib/options.ts#L26)
 
-___
+***
 
-### useExisting
+### useFactory?
 
-• `Optional` **useExisting**: `Type`<[`AutomapperOptionsFactory`](AutomapperOptionsFactory.md)\>
+> `optional` **useFactory?**: (...`args`) => `CreateMapperOptions` \| `Promise`\<`CreateMapperOptions`\>
 
-#### Defined in
-
-[packages/nestjs/src/lib/options.ts:26](https://github.com/nartc/mapper/blob/efc4cb9d/packages/nestjs/src/lib/options.ts#L26)
-
-## Methods
-
-### useFactory
-
-▸ `Optional` **useFactory**(...`args`): `CreateMapperOptions` \| `Promise`<`CreateMapperOptions`\>
+Defined in: [packages/nestjs/src/lib/options.ts:28](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/nestjs/src/lib/options.ts#L28)
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `...args` | `any`[] |
+##### args
+
+...`any`[]
 
 #### Returns
 
-`CreateMapperOptions` \| `Promise`<`CreateMapperOptions`\>
-
-#### Defined in
-
-[packages/nestjs/src/lib/options.ts:28](https://github.com/nartc/mapper/blob/efc4cb9d/packages/nestjs/src/lib/options.ts#L28)
+`CreateMapperOptions` \| `Promise`\<`CreateMapperOptions`\>

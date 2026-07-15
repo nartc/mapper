@@ -2,20 +2,81 @@ name: CI
 
 on:
     push:
-        branches:
-            - main
+        branches: [main]
     pull_request:
 
+env:
+    NX_VERBOSE_LOGGING: 'true'
+    NX_CLOUD_CONTINUOUS_ASSIGNMENT: 'true'
+
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
 jobs:
-    main:
-        name: Nx Cloud - Main Job
-        uses: nrwl/ci/.github/workflows/nx-cloud-main.yml@v0.8
-        with:
-            parallel-commands-on-agents: |
-                pnpm exec nx affected --target=test --parallel=3 --ci --code-coverage
-    #                pnpm exec nx affected --target=package --parallel=2
-    agents:
-        name: Nx Cloud - Agents
-        uses: nrwl/ci/.github/workflows/nx-cloud-agents.yml@v0.8
-        with:
-            number-of-agents: 3
+    verify:
+        name: sync · lint · typecheck · build · test (node ${{ matrix.node }})
+        runs-on: ubuntu-latest
+        strategy:
+            fail-fast: false
+            matrix:
+                node: ['20', '22']
+        env:
+            NX_CI_EXECUTION_ENV: 'node ${{ matrix.node }}'
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+                  filter: tree:0
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: ${{ matrix.node }}
+            - run: corepack enable
+            - run: pnpm install --frozen-lockfile
+            - name: Start Nx Agents
+              run: >-
+                  pnpm nx start-ci-run
+                  --distribute-on="3 linux-medium-node${{ matrix.node }}"
+                  --stop-agents-after=lint,typecheck,package,test
+            # fail fast if tsconfig project references drift from the graph
+            - run: pnpm nx record -- nx sync:check
+            - run: pnpm nx run-many -t lint,typecheck,package,test
+
+    package-contract:
+        name: publint + attw
+        runs-on: ubuntu-latest
+        env:
+            NX_CI_EXECUTION_ENV: 'publint + attw'
+        steps:
+            - uses: actions/checkout@v4
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: '22'
+            - run: corepack enable
+            - run: pnpm install --frozen-lockfile
+            - run: pnpm run package
+            - run: pnpm nx record -- pnpm run check:packages
+
+    # The main verify job runs against nestjs 11 (the installed version). This job
+    # certifies the lower bound of @automapper/nestjs's `^10 || ^11` peer range by
+    # downgrading the @nestjs runtime to v10 and running the DI integration specs.
+    nestjs-compat:
+        name: nestjs 10 compat
+        runs-on: ubuntu-latest
+        env:
+            NX_CI_EXECUTION_ENV: 'nestjs-compat'
+        steps:
+            - uses: actions/checkout@v4
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: '22'
+            - run: corepack enable
+            - run: pnpm install --frozen-lockfile
+            # downgrade only the @nestjs runtime; rxjs/reflect-metadata span both majors
+            - run: pnpm --config.prefer-workspace-packages=true add -w @nestjs/common@^10 @nestjs/core@^10 @nestjs/testing@^10 @nestjs/platform-express@^10
+            - name: Start Nx Agents
+              run: >-
+                  pnpm nx start-ci-run
+                  --distribute-on="3 linux-medium-node22"
+                  --stop-agents-after=test
+            - run: pnpm nx run integration-test:test

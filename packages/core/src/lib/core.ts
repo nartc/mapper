@@ -1,4 +1,15 @@
-import { mapMutate, mapReturn } from './mappings/map';
+import {
+    deferAsyncAfterMapAfterPending,
+    getAsyncMapContext,
+    isAsyncMapActive,
+    isThenable,
+    mapMutate,
+    mapReturn,
+    pushAsyncPending,
+    runInAsyncMapContext,
+    runAsyncMap,
+    settleAsyncMap,
+} from './mappings/map';
 import {
     CUSTOM_NODE_INSPECT,
     ERROR_HANDLER,
@@ -26,6 +37,7 @@ import type {
     ModelIdentifier,
     NamingConventionInput,
 } from './types';
+import { MappingCallbacksClassId, MappingClassId } from './types';
 import { getMapping } from './utils/get-mapping';
 import { AutoMapperLogger } from './utils/logger';
 
@@ -36,7 +48,7 @@ export interface CreateMapperOptions {
 }
 
 /**
- * Creates and returns a Mapper {} as a Proxy. The following methods are available to use with a Mapper:
+ * Creates and returns a Mapper {}. The following methods are available to use with a Mapper:
  *  ```
  *  - Mapper#map(Array)(Async), Mapper#mutate(Array)(Async)
  *  - createMap()
@@ -53,25 +65,30 @@ export function createMapper({
 }: CreateMapperOptions): Mapper {
     let strategy: MappingStrategy<MetadataIdentifier>;
 
-    // this mapper is responsible for all mappings
-    let mappings: Map<MetadataIdentifier, Map<MetadataIdentifier, Mapping>>;
-
-    // this mapper is responsible for all metadata
-    let metadataMap: Map<MetadataIdentifier, Array<Metadata>>;
-    let metadataObjectMap: Map<
+    // all mapper state, created eagerly (cheap, always needed) so the mapper can
+    // be a plain object with direct property access instead of a Proxy get-trap.
+    const mappings: Map<
+        MetadataIdentifier,
+        Map<MetadataIdentifier, Mapping>
+    > = new Map();
+    const metadataMap: Map<MetadataIdentifier, Array<Metadata>> = new Map();
+    const metadataObjectMap: Map<
         MetadataIdentifier,
         [
             asSource?: Record<string, unknown>,
             asDestination?: Record<string, unknown>
         ]
-    >;
+    > = new Map();
+    const recursiveDepth: Map<MetadataIdentifier, ArrayKeyedMap> = new Map();
+    const recursiveCount: Map<MetadataIdentifier, ArrayKeyedMap> = new Map();
+    const profileConfigurationContext: Set<MappingConfiguration> = new Set();
 
-    // this mapper is responsible for recursive depths and counts
-    let recursiveDepth: Map<MetadataIdentifier, ArrayKeyedMap>;
-    let recursiveCount: Map<MetadataIdentifier, ArrayKeyedMap>;
-
-    // this mapper is tracking some context about the MappingProfile
-    let profileConfigurationContext: Set<MappingConfiguration>;
+    const resolvedErrorHandler: ErrorHandler = errorHandler ?? {
+        handle: AutoMapperLogger.error
+            ? AutoMapperLogger.error.bind(AutoMapperLogger)
+            : // eslint-disable-next-line @typescript-eslint/no-empty-function
+              () => {},
+    };
 
     function getOptions<
         TSource extends Dictionary<TSource>,
@@ -121,453 +138,474 @@ export function createMapper({
         return { destinationIdentifier, mapOptions: options };
     }
 
-    // return the Proxy
-    return new Proxy<Mapper>(
-        {
-            [CUSTOM_NODE_INSPECT]() {
-                return `
-Mapper {} is an empty Object as a Proxy. The following methods are available to use with a Mapper:
+    // A plain object (not a Proxy): direct, monomorphic property access at every
+    // call site, real stack traces, and `mapper.map === mapper.map`.
+    const mapper = {
+        map<
+            TSource extends Dictionary<TSource>,
+            TDestination extends Dictionary<TDestination>
+        >(
+            sourceObject: TSource,
+            sourceIdentifier: ModelIdentifier<TSource>,
+            destinationIdentifierOrOptions?:
+                | ModelIdentifier<TDestination>
+                | MapOptions<TSource, TDestination>,
+            options?: MapOptions<TSource, TDestination>
+        ): TDestination {
+            if (sourceObject == null) return sourceObject as TDestination;
+
+            const { destinationIdentifier, mapOptions } = getOptions(
+                sourceIdentifier,
+                destinationIdentifierOrOptions,
+                options
+            );
+
+            const mapping = getMapping(
+                mapper,
+                sourceIdentifier,
+                destinationIdentifier
+            );
+
+            sourceObject = strategy.preMap(sourceObject, mapping);
+
+            const destination = mapReturn(
+                mapping,
+                sourceObject,
+                mapOptions || {}
+            );
+
+            return strategy.postMap(
+                sourceObject,
+                // returned as-is: intentionally NOT sealed, so consumers can
+                // add/modify the result after mapping
+                destination,
+                mapping
+            );
+        },
+
+        mapAsync<
+            TSource extends Dictionary<TSource>,
+            TDestination extends Dictionary<TDestination>
+        >(
+            sourceObject: TSource,
+            sourceIdentifier: ModelIdentifier<TSource>,
+            destinationIdentifierOrOptions?:
+                | ModelIdentifier<TDestination>
+                | MapOptions<TSource, TDestination>,
+            options?: MapOptions<TSource, TDestination>
+        ): Promise<TDestination> {
+            if (sourceObject == null) {
+                return Promise.resolve(sourceObject as TDestination);
+            }
+
+            const { destinationIdentifier, mapOptions } = getOptions(
+                sourceIdentifier,
+                destinationIdentifierOrOptions,
+                options
+            );
+
+            const mapping = getMapping(
+                mapper,
+                sourceIdentifier,
+                destinationIdentifier
+            );
+
+            sourceObject = strategy.preMap(sourceObject, mapping);
+
+            // Run the synchronous engine inside an async context, then await any
+            // async member resolvers / before-map, and finally the deferred
+            // after-maps — so the resolved Promise carries a fully-mapped result.
+            const [destination, asyncContext] = runAsyncMap(() =>
+                mapReturn(mapping, sourceObject, mapOptions || {})
+            );
+            return settleAsyncMap(asyncContext).then(
+                () =>
+                    strategy.postMap(
+                        sourceObject,
+                        destination,
+                        mapping
+                    ) as TDestination
+            );
+        },
+
+        mapArray<
+            TSource extends Dictionary<TSource>,
+            TDestination extends Dictionary<TDestination>
+        >(
+            sourceArray: TSource[],
+            sourceIdentifier: ModelIdentifier<TSource>,
+            destinationIdentifierOrOptions?:
+                | ModelIdentifier<TDestination>
+                | MapOptions<TSource[], TDestination[]>,
+            options?: MapOptions<TSource[], TDestination[]>
+        ): TDestination[] {
+            if (!sourceArray.length) return [];
+
+            const { destinationIdentifier, mapOptions } = getOptions(
+                sourceIdentifier,
+                destinationIdentifierOrOptions,
+                options
+            );
+
+            const mapping = getMapping(
+                mapper,
+                sourceIdentifier,
+                destinationIdentifier
+            );
+
+            const { beforeMap, afterMap, extraArgs } = (mapOptions ||
+                {}) as MapOptions<TSource[], TDestination[]>;
+
+            const destinationArray: TDestination[] = [];
+            const mappingCallbacks = mapping[MappingClassId.callbacks];
+            const beforeMapArray =
+                beforeMap ??
+                mappingCallbacks?.[MappingCallbacksClassId.beforeMapArray];
+            const afterMapArray =
+                afterMap ??
+                mappingCallbacks?.[MappingCallbacksClassId.afterMapArray];
+
+            const runArrayMapping = () => {
+                // options is read-only in map()/mapReturn — share one object for
+                // every element instead of allocating `{ extraArgs }` per element.
+                const elementOptions = {
+                    extraArgs: extraArgs as MapOptions<
+                        TSource,
+                        TDestination
+                    >['extraArgs'],
+                };
+                for (let i = 0, length = sourceArray.length; i < length; i++) {
+                    let sourceObject = sourceArray[i];
+                    sourceObject = strategy.preMap(sourceObject, mapping);
+
+                    const destination = mapReturn(
+                        mapping,
+                        sourceObject,
+                        elementOptions,
+                        true
+                    );
+
+                    destinationArray.push(
+                        strategy.postMap(
+                            sourceObject,
+                            // returned as-is: intentionally NOT sealed, so
+                            // consumers can add/modify after mapping
+                            destination,
+                            mapping
+                        ) as TDestination
+                    );
+                }
+            };
+
+            let arrayMappingDeferredUntilBeforeMap = false;
+            const queueAfterMapArray = () => {
+                if (afterMapArray) {
+                    deferAsyncAfterMapAfterPending(() =>
+                        afterMapArray(sourceArray, destinationArray)
+                    );
+                }
+            };
+
+            if (beforeMapArray) {
+                const beforeMapResult = beforeMapArray(
+                    sourceArray,
+                    destinationArray
+                );
+                if (isAsyncMapActive() && isThenable(beforeMapResult)) {
+                    const asyncMapContext = getAsyncMapContext();
+                    arrayMappingDeferredUntilBeforeMap = true;
+                    pushAsyncPending(
+                        Promise.resolve(beforeMapResult).then(() =>
+                            runInAsyncMapContext(asyncMapContext!, () => {
+                                runArrayMapping();
+                                queueAfterMapArray();
+                            })
+                        )
+                    );
+                } else {
+                    pushAsyncPending(beforeMapResult);
+                }
+            }
+
+            if (!arrayMappingDeferredUntilBeforeMap) {
+                runArrayMapping();
+                queueAfterMapArray();
+            }
+
+            return destinationArray;
+        },
+
+        mapArrayAsync<
+            TSource extends Dictionary<TSource>,
+            TDestination extends Dictionary<TDestination>
+        >(
+            sourceArray: TSource[],
+            sourceIdentifier: ModelIdentifier<TSource>,
+            destinationIdentifierOrOptions?:
+                | ModelIdentifier<TDestination>
+                | MapOptions<TSource[], TDestination[]>,
+            options?: MapOptions<TSource[], TDestination[]>
+        ): Promise<TDestination[]> {
+            const [result, asyncContext] = runAsyncMap(() =>
+                mapper.mapArray(
+                    sourceArray,
+                    sourceIdentifier,
+                    destinationIdentifierOrOptions as ModelIdentifier<TDestination>,
+                    options
+                )
+            );
+            return settleAsyncMap(asyncContext).then(() => result);
+        },
+
+        mutate<
+            TSource extends Dictionary<TSource>,
+            TDestination extends Dictionary<TDestination>
+        >(
+            sourceObject: TSource,
+            destinationObject: TDestination,
+            sourceIdentifier: ModelIdentifier<TSource>,
+            destinationIdentifierOrOptions?:
+                | ModelIdentifier<TDestination>
+                | MapOptions<TSource, TDestination>,
+            options?: MapOptions<TSource, TDestination>
+        ): void {
+            if (sourceObject == null) return;
+
+            const { destinationIdentifier, mapOptions } = getOptions(
+                sourceIdentifier,
+                destinationIdentifierOrOptions,
+                options
+            );
+
+            const mapping = getMapping(
+                mapper,
+                sourceIdentifier,
+                destinationIdentifier
+            );
+
+            sourceObject = strategy.preMap(sourceObject, mapping);
+
+            mapMutate(
+                mapping,
+                sourceObject,
+                destinationObject,
+                mapOptions || {}
+            );
+
+            strategy.postMap(sourceObject, destinationObject, mapping);
+        },
+
+        mutateAsync<
+            TSource extends Dictionary<TSource>,
+            TDestination extends Dictionary<TDestination>
+        >(
+            sourceObject: TSource,
+            destinationObject: TDestination,
+            sourceIdentifier: ModelIdentifier<TSource>,
+            destinationIdentifierOrOptions?:
+                | ModelIdentifier<TDestination>
+                | MapOptions<TSource, TDestination>,
+            options?: MapOptions<TSource, TDestination>
+        ): Promise<void> {
+            if (sourceObject == null) return Promise.resolve();
+
+            const { destinationIdentifier, mapOptions } = getOptions(
+                sourceIdentifier,
+                destinationIdentifierOrOptions,
+                options
+            );
+
+            const mapping = getMapping(
+                mapper,
+                sourceIdentifier,
+                destinationIdentifier
+            );
+
+            sourceObject = strategy.preMap(sourceObject, mapping);
+
+            const [, asyncContext] = runAsyncMap(() =>
+                mapMutate(
+                    mapping,
+                    sourceObject,
+                    destinationObject,
+                    mapOptions || {}
+                )
+            );
+            return settleAsyncMap(asyncContext).then(() => {
+                strategy.postMap(sourceObject, destinationObject, mapping);
+            });
+        },
+
+        mutateArray<
+            TSource extends Dictionary<TSource>,
+            TDestination extends Dictionary<TDestination>
+        >(
+            sourceArray: TSource[],
+            destinationArray: TDestination[],
+            sourceIdentifier: ModelIdentifier<TSource>,
+            destinationIdentifierOrOptions?:
+                | ModelIdentifier<TDestination>
+                | MapOptions<TSource[], TDestination[]>,
+            options?: MapOptions<TSource[], TDestination[]>
+        ): void {
+            if (!sourceArray.length) return;
+
+            const { destinationIdentifier, mapOptions } = getOptions(
+                sourceIdentifier,
+                destinationIdentifierOrOptions,
+                options
+            );
+
+            const mapping = getMapping(
+                mapper,
+                sourceIdentifier,
+                destinationIdentifier
+            );
+
+            const { beforeMap, afterMap, extraArgs } = (mapOptions ||
+                {}) as MapOptions<TSource[], TDestination[]>;
+            const mappingCallbacks = mapping[MappingClassId.callbacks];
+            const beforeMapArray =
+                beforeMap ??
+                mappingCallbacks?.[MappingCallbacksClassId.beforeMapArray];
+            const afterMapArray =
+                afterMap ??
+                mappingCallbacks?.[MappingCallbacksClassId.afterMapArray];
+
+            const runArrayMapping = () => {
+                // options is read-only in map()/mapMutate — share one object for
+                // every element instead of allocating `{ extraArgs }` per element.
+                const elementOptions = {
+                    extraArgs: extraArgs as MapOptions<
+                        TSource,
+                        TDestination
+                    >['extraArgs'],
+                };
+                for (let i = 0, length = sourceArray.length; i < length; i++) {
+                    let sourceObject = sourceArray[i];
+
+                    sourceObject = strategy.preMap(sourceObject, mapping);
+
+                    const destination =
+                        destinationArray[i] ??
+                        (destinationArray[i] = {} as TDestination);
+
+                    mapMutate(
+                        mapping,
+                        sourceObject,
+                        destination,
+                        elementOptions,
+                        true
+                    );
+
+                    strategy.postMap(sourceObject, destination, mapping);
+                }
+            };
+
+            let arrayMappingDeferredUntilBeforeMap = false;
+            const queueAfterMapArray = () => {
+                if (afterMapArray) {
+                    deferAsyncAfterMapAfterPending(() =>
+                        afterMapArray(sourceArray, destinationArray)
+                    );
+                }
+            };
+
+            if (beforeMapArray) {
+                const beforeMapResult = beforeMapArray(
+                    sourceArray,
+                    destinationArray
+                );
+                if (isAsyncMapActive() && isThenable(beforeMapResult)) {
+                    const asyncMapContext = getAsyncMapContext();
+                    arrayMappingDeferredUntilBeforeMap = true;
+                    pushAsyncPending(
+                        Promise.resolve(beforeMapResult).then(() =>
+                            runInAsyncMapContext(asyncMapContext!, () => {
+                                runArrayMapping();
+                                queueAfterMapArray();
+                            })
+                        )
+                    );
+                } else {
+                    pushAsyncPending(beforeMapResult);
+                }
+            }
+
+            if (!arrayMappingDeferredUntilBeforeMap) {
+                runArrayMapping();
+                queueAfterMapArray();
+            }
+        },
+
+        mutateArrayAsync<
+            TSource extends Dictionary<TSource>,
+            TDestination extends Dictionary<TDestination>
+        >(
+            sourceArray: TSource[],
+            destinationArray: TDestination[],
+            sourceIdentifier: ModelIdentifier<TSource>,
+            destinationIdentifierOrOptions?:
+                | ModelIdentifier<TDestination>
+                | MapOptions<TSource[], TDestination[]>,
+            options?: MapOptions<TSource[], TDestination[]>
+        ): Promise<void> {
+            const [, asyncContext] = runAsyncMap(() =>
+                mapper.mutateArray(
+                    sourceArray,
+                    destinationArray,
+                    sourceIdentifier,
+                    destinationIdentifierOrOptions as ModelIdentifier<TDestination>,
+                    options
+                )
+            );
+            return settleAsyncMap(asyncContext);
+        },
+
+        dispose(): void {
+            mappings.clear();
+            // metadataMap is intentionally left intact: strategies cache which
+            // identifiers they've retrieved metadata for (e.g. classes'
+            // metadataTracker), so clearing it here without resetting that cache
+            // would leave re-created mappings with no metadata.
+            metadataObjectMap.clear();
+            recursiveDepth.clear();
+            recursiveCount.clear();
+            profileConfigurationContext.clear();
+        },
+    } as unknown as Mapper;
+
+    // internal state, exposed as (non-enumerable) symbol-keyed properties read
+    // by the get*/symbols helpers. STRATEGY is lazy because the initializer
+    // needs the fully-constructed mapper.
+    Object.defineProperties(mapper, {
+        [STRATEGY]: {
+            get() {
+                if (!strategy) {
+                    strategy = strategyInitializer(mapper);
+                }
+                return strategy;
+            },
+        },
+        [PROFILE_CONFIGURATION_CONTEXT]: { value: profileConfigurationContext },
+        [MAPPINGS]: { value: mappings },
+        [METADATA_MAP]: { value: metadataMap },
+        [METADATA_OBJECT_MAP]: { value: metadataObjectMap },
+        [ERROR_HANDLER]: { value: resolvedErrorHandler },
+        [NAMING_CONVENTIONS]: { value: namingConventions },
+        [RECURSIVE_DEPTH]: { value: recursiveDepth },
+        [RECURSIVE_COUNT]: { value: recursiveCount },
+        [CUSTOM_NODE_INSPECT]: {
+            value: () => `
+Mapper {} The following methods are available to use with a Mapper:
 - Mapper#map(Array)(Async), Mapper#mutate(Array)(Async)
 - createMap()
 - addProfile()
 - getMapping()
 - getMappings()
-        `;
-            },
-        } as unknown as Mapper,
-        {
-            get(target, p: string | symbol, receiver) {
-                if (p === STRATEGY) {
-                    if (!strategy) {
-                        strategy = strategyInitializer(receiver);
-                    }
-                    return strategy;
-                }
+        `,
+        },
+    });
 
-                if (p === PROFILE_CONFIGURATION_CONTEXT) {
-                    if (!profileConfigurationContext) {
-                        profileConfigurationContext = new Set();
-                    }
-                    return profileConfigurationContext;
-                }
-
-                if (p === MAPPINGS) {
-                    if (!mappings) {
-                        mappings = new Map();
-                    }
-                    return mappings;
-                }
-
-                if (p === METADATA_MAP) {
-                    if (!metadataMap) {
-                        metadataMap = new Map();
-                    }
-                    return metadataMap;
-                }
-
-                if (p === METADATA_OBJECT_MAP) {
-                    if (!metadataObjectMap) {
-                        metadataObjectMap = new Map();
-                    }
-
-                    return metadataObjectMap;
-                }
-
-                if (p === ERROR_HANDLER) {
-                    if (!errorHandler) {
-                        errorHandler = {
-                            handle: AutoMapperLogger.error
-                                ? AutoMapperLogger.error.bind(AutoMapperLogger)
-                                : // eslint-disable-next-line @typescript-eslint/no-empty-function
-                                  () => {},
-                        };
-                    }
-                    return errorHandler;
-                }
-
-                if (p === NAMING_CONVENTIONS) {
-                    return namingConventions;
-                }
-
-                if (p === RECURSIVE_DEPTH) {
-                    if (!recursiveDepth) {
-                        recursiveDepth = new Map();
-                    }
-                    return recursiveDepth;
-                }
-
-                if (p === RECURSIVE_COUNT) {
-                    if (!recursiveCount) {
-                        recursiveCount = new Map();
-                    }
-                    return recursiveCount;
-                }
-
-                if (p === 'dispose') {
-                    return () => {
-                        mappings?.clear();
-                        // TODO: why can metadata not be clear?
-                        // metadata?.clear();
-                        metadataObjectMap?.clear();
-                        recursiveDepth?.clear();
-                        recursiveCount?.clear();
-                        profileConfigurationContext?.clear();
-                    };
-                }
-
-                if (p === 'map') {
-                    return <
-                        TSource extends Dictionary<TSource>,
-                        TDestination extends Dictionary<TDestination>
-                    >(
-                        sourceObject: TSource,
-                        sourceIdentifier: ModelIdentifier<TSource>,
-                        destinationIdentifierOrOptions?:
-                            | ModelIdentifier<TDestination>
-                            | MapOptions<TSource, TDestination>,
-                        options?: MapOptions<TSource, TDestination>
-                    ): TDestination => {
-                        if (sourceObject == null)
-                            return sourceObject as TDestination;
-
-                        const { destinationIdentifier, mapOptions } =
-                            getOptions(
-                                sourceIdentifier,
-                                destinationIdentifierOrOptions,
-                                options
-                            );
-
-                        const mapping = getMapping(
-                            receiver,
-                            sourceIdentifier,
-                            destinationIdentifier
-                        );
-
-                        sourceObject = strategy.preMap(sourceObject, mapping);
-
-                        const destination = mapReturn(
-                            mapping,
-                            sourceObject,
-                            mapOptions || {}
-                        );
-
-                        return strategy.postMap(
-                            sourceObject,
-                            // seal destination so that consumers cannot add properties to it
-                            // or change the property descriptors. but they can still modify it
-                            // the ideal behavior is seal but the consumers might need to add/modify the object after map finishes
-                            destination,
-                            mapping
-                        );
-                    };
-                }
-
-                if (p === 'mapAsync') {
-                    return <
-                        TSource extends Dictionary<TSource>,
-                        TDestination extends Dictionary<TDestination>
-                    >(
-                        sourceObject: TSource,
-                        sourceIdentifier: ModelIdentifier<TSource>,
-                        destinationIdentifierOrOptions?:
-                            | ModelIdentifier<TDestination>
-                            | MapOptions<TSource, TDestination>,
-                        options?: MapOptions<TSource, TDestination>
-                    ): Promise<TDestination> => {
-                        const result = receiver['map'](
-                            sourceObject,
-                            sourceIdentifier,
-                            destinationIdentifierOrOptions,
-                            options
-                        );
-                        return new Promise((res) => {
-                            setTimeout(res, 0, result);
-                        });
-                    };
-                }
-
-                if (p === 'mapArray') {
-                    return <
-                        TSource extends Dictionary<TSource>,
-                        TDestination extends Dictionary<TDestination>
-                    >(
-                        sourceArray: TSource[],
-                        sourceIdentifier: ModelIdentifier<TSource>,
-                        destinationIdentifierOrOptions?:
-                            | ModelIdentifier<TDestination>
-                            | MapOptions<TSource[], TDestination[]>,
-                        options?: MapOptions<TSource[], TDestination[]>
-                    ): TDestination[] => {
-                        if (!sourceArray.length) return [];
-
-                        const { destinationIdentifier, mapOptions } =
-                            getOptions(
-                                sourceIdentifier,
-                                destinationIdentifierOrOptions,
-                                options
-                            );
-
-                        const mapping = getMapping(
-                            receiver,
-                            sourceIdentifier,
-                            destinationIdentifier
-                        );
-
-                        const { beforeMap, afterMap, extraArgs } =
-                            (mapOptions || {}) as MapOptions<
-                                TSource[],
-                                TDestination[]
-                            >;
-
-                        if (beforeMap) {
-                            beforeMap(sourceArray, []);
-                        }
-
-                        const destinationArray: TDestination[] = [];
-
-                        for (
-                            let i = 0, length = sourceArray.length;
-                            i < length;
-                            i++
-                        ) {
-                            let sourceObject = sourceArray[i];
-                            sourceObject = strategy.preMap(
-                                sourceObject,
-                                mapping
-                            );
-
-                            const destination = mapReturn(
-                                mapping,
-                                sourceObject,
-                                {
-                                    extraArgs: extraArgs as MapOptions<
-                                        TSource,
-                                        TDestination
-                                    >['extraArgs'],
-                                },
-                                true
-                            );
-
-                            destinationArray.push(
-                                strategy.postMap(
-                                    sourceObject,
-                                    // seal destination so that consumers cannot add properties to it
-                                    // or change the property descriptors. but they can still modify it
-                                    // the ideal behavior is seal but the consumers might need to add/modify the object after map finishes
-                                    destination,
-                                    mapping
-                                ) as TDestination
-                            );
-                        }
-
-                        if (afterMap) {
-                            afterMap(sourceArray, destinationArray);
-                        }
-
-                        return destinationArray;
-                    };
-                }
-
-                if (p === 'mapArrayAsync') {
-                    return <
-                        TSource extends Dictionary<TSource>,
-                        TDestination extends Dictionary<TDestination>
-                    >(
-                        sourceArray: TSource[],
-                        sourceIdentifier: ModelIdentifier<TSource>,
-                        destinationIdentifierOrOptions?:
-                            | ModelIdentifier<TDestination>
-                            | MapOptions<TSource[], TDestination[]>,
-                        options?: MapOptions<TSource[], TDestination[]>
-                    ) => {
-                        const result = receiver['mapArray'](
-                            sourceArray,
-                            sourceIdentifier,
-                            destinationIdentifierOrOptions,
-                            options
-                        );
-                        return new Promise((res) => {
-                            setTimeout(res, 0, result);
-                        });
-                    };
-                }
-
-                if (p === 'mutate') {
-                    return <
-                        TSource extends Dictionary<TSource>,
-                        TDestination extends Dictionary<TDestination>
-                    >(
-                        sourceObject: TSource,
-                        destinationObject: TDestination,
-                        sourceIdentifier: ModelIdentifier<TSource>,
-                        destinationIdentifierOrOptions?:
-                            | ModelIdentifier<TDestination>
-                            | MapOptions<TSource, TDestination>,
-                        options?: MapOptions<TSource, TDestination>
-                    ) => {
-                        if (sourceObject == null) return;
-
-                        const { destinationIdentifier, mapOptions } =
-                            getOptions(
-                                sourceIdentifier,
-                                destinationIdentifierOrOptions,
-                                options
-                            );
-
-                        const mapping = getMapping(
-                            receiver,
-                            sourceIdentifier,
-                            destinationIdentifier
-                        );
-
-                        sourceObject = strategy.preMap(sourceObject, mapping);
-
-                        mapMutate(
-                            mapping,
-                            sourceObject,
-                            destinationObject,
-                            mapOptions || {}
-                        );
-
-                        strategy.postMap(
-                            sourceObject,
-                            destinationObject,
-                            mapping
-                        );
-                    };
-                }
-                if (p === 'mutateAsync') {
-                    return <
-                        TSource extends Dictionary<TSource>,
-                        TDestination extends Dictionary<TDestination>
-                    >(
-                        sourceObject: TSource,
-                        destinationObject: TDestination,
-                        sourceIdentifier: ModelIdentifier<TSource>,
-                        destinationIdentifierOrOptions?:
-                            | ModelIdentifier<TDestination>
-                            | MapOptions<TSource, TDestination>,
-                        options?: MapOptions<TSource, TDestination>
-                    ) => {
-                        return new Promise((res) => {
-                            receiver['mutate'](
-                                sourceObject,
-                                destinationObject,
-                                sourceIdentifier,
-                                destinationIdentifierOrOptions,
-                                options
-                            );
-
-                            setTimeout(res, 0);
-                        });
-                    };
-                }
-
-                if (p === 'mutateArray') {
-                    return <
-                        TSource extends Dictionary<TSource>,
-                        TDestination extends Dictionary<TDestination>
-                    >(
-                        sourceArray: TSource[],
-                        destinationArray: TDestination[],
-                        sourceIdentifier: ModelIdentifier<TSource>,
-                        destinationIdentifierOrOptions?:
-                            | ModelIdentifier<TDestination>
-                            | MapOptions<TSource[], TDestination[]>,
-                        options?: MapOptions<TSource[], TDestination[]>
-                    ) => {
-                        if (!sourceArray.length) return;
-
-                        const { destinationIdentifier, mapOptions } =
-                            getOptions(
-                                sourceIdentifier,
-                                destinationIdentifierOrOptions,
-                                options
-                            );
-
-                        const mapping = getMapping(
-                            receiver,
-                            sourceIdentifier,
-                            destinationIdentifier
-                        );
-
-                        const { beforeMap, afterMap, extraArgs } =
-                            (mapOptions || {}) as MapOptions<
-                                TSource[],
-                                TDestination[]
-                            >;
-
-                        if (beforeMap) {
-                            beforeMap(sourceArray, destinationArray);
-                        }
-
-                        for (
-                            let i = 0, length = sourceArray.length;
-                            i < length;
-                            i++
-                        ) {
-                            let sourceObject = sourceArray[i];
-
-                            sourceObject = strategy.preMap(
-                                sourceObject,
-                                mapping
-                            );
-
-                            mapMutate(
-                                mapping,
-                                sourceObject,
-                                destinationArray[i] || {},
-                                {
-                                    extraArgs: extraArgs as MapOptions<
-                                        TSource,
-                                        TDestination
-                                    >['extraArgs'],
-                                },
-                                true
-                            );
-
-                            strategy.postMap(
-                                sourceObject,
-                                destinationArray[i],
-                                mapping
-                            );
-                        }
-
-                        if (afterMap) {
-                            afterMap(sourceArray, destinationArray);
-                        }
-                    };
-                }
-
-                if (p === 'mutateArrayAsync') {
-                    return <
-                        TSource extends Dictionary<TSource>,
-                        TDestination extends Dictionary<TDestination>
-                    >(
-                        sourceArray: TSource[],
-                        destinationArray: TDestination[],
-                        sourceIdentifier: ModelIdentifier<TSource>,
-                        destinationIdentifierOrOptions?:
-                            | ModelIdentifier<TDestination>
-                            | MapOptions<TSource[], TDestination[]>,
-                        options?: MapOptions<TSource[], TDestination[]>
-                    ) => {
-                        return new Promise((res) => {
-                            receiver['mutateArray'](
-                                sourceArray,
-                                destinationArray,
-                                sourceIdentifier,
-                                destinationIdentifierOrOptions,
-                                options
-                            );
-
-                            setTimeout(res, 0);
-                        });
-                    };
-                }
-
-                return Reflect.get(target, p, receiver);
-            },
-        }
-    );
+    return mapper;
 }

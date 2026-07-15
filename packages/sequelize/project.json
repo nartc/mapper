@@ -2,52 +2,41 @@
     "name": "sequelize",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "packages/sequelize/src",
+    "tags": [
+        "sequelize"
+    ],
     "targets": {
         "package": {
-            "command": "NX_CLOUD=true nx package-lib sequelize"
-        },
-        "package-lib": {
-            "executor": "@nrwl/rollup:rollup",
-            "outputs": ["{options.outputPath}"],
+            "executor": "nx:run-commands",
+            "outputs": [
+                "{workspaceRoot}/dist/packages/sequelize"
+            ],
             "options": {
-                "project": "packages/sequelize/package.json",
-                "outputPath": "dist/packages/sequelize",
-                "entryFile": "packages/sequelize/src/index.ts",
-                "tsConfig": "packages/sequelize/tsconfig.lib.json",
-                "assets": ["packages/sequelize/src/README.md"],
-                "compiler": "babel",
-                "external": [
-                    "typescript",
-                    "tslib",
-                    "@automapper/core",
-                    "@automapper/classes"
-                ],
-                "format": ["cjs", "esm"],
-                "updateBuildableProjectDepsInPackageJson": false
+                "command": "node tools/scripts/build-packages.mjs sequelize"
             }
         },
         "lint": {
-            "executor": "@nrwl/linter:eslint",
-            "outputs": ["{options.outputFile}"],
-            "options": {
-                "lintFilePatterns": ["packages/sequelize/**/*.ts"]
-            }
+            "executor": "@nx/eslint:lint"
         },
         "test": {
-            "executor": "@nrwl/jest:jest",
-            "outputs": ["{workspaceRoot}/coverage/packages/sequelize"],
+            "executor": "nx:run-commands",
             "options": {
-                "jestConfig": "packages/sequelize/jest.config.cjs",
-                "passWithNoTests": true
+                "command": "vitest run",
+                "cwd": "packages/sequelize"
             }
         },
         "publish": {
             "executor": "nx:run-commands",
             "options": {
-                "command": "npm publish",
+                "command": "npm publish --tag alpha",
                 "cwd": "dist/packages/sequelize"
             }
+        },
+        "nx-release-publish": {
+            "executor": "@nx/js:release-publish",
+            "options": {
+                "packageRoot": "dist/packages/sequelize"
+            }
         }
-    },
-    "tags": ["sequelize"]
+    }
 }

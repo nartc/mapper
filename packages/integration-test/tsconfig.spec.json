@@ -1,9 +1,39 @@
 {
     "extends": "./tsconfig.json",
     "compilerOptions": {
-        "outDir": "../../dist/out-tsc",
+        "outDir": "../../dist/out-tsc/integration-test/spec",
         "module": "commonjs",
-        "types": ["jest", "node", "reflect-metadata"]
+        "composite": true,
+        "declaration": true,
+        "types": [
+            "vitest/globals",
+            "node",
+            "reflect-metadata"
+        ]
     },
-    "include": ["**/*.test.ts", "**/*.spec.ts", "**/*.d.ts", "jest.config.ts"]
+    "include": [
+        "**/*.test.ts",
+        "**/*.spec.ts",
+        "**/*.d.ts"
+    ],
+    "references": [
+        {
+            "path": "./tsconfig.lib.json"
+        },
+        {
+            "path": "../core/tsconfig.lib.json"
+        },
+        {
+            "path": "../classes/tsconfig.lib.json"
+        },
+        {
+            "path": "../classes/transformer-plugin/tsconfig.lib.json"
+        },
+        {
+            "path": "../nestjs/tsconfig.lib.json"
+        },
+        {
+            "path": "../pojos/tsconfig.lib.json"
+        }
+    ]
 }

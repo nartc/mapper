@@ -2,7 +2,7 @@ import type {
     Program,
     SourceFile,
     TransformationContext,
-} from 'typescript/lib/tsserverlibrary';
+} from 'typescript';
 import { ModelVisitor } from './lib/model-visitor';
 import type { AutomapperTransformerPluginOptions } from './lib/options';
 import { isFilenameMatched } from './lib/utils';

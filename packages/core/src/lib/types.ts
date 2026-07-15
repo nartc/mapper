@@ -13,10 +13,18 @@ import type {
 export type Dictionary<T> = { [key in keyof T]?: unknown };
 
 export type AnyConstructor = new (...args: any[]) => any;
+export type AbstractConstructor<T = any> = abstract new (...args: any[]) => T;
 export type Constructor<T = any> = (new (...args: any[]) => T) &
-    TransformerMetadataFactory<T>;
+    TransformerMetadataFactory;
+export type ClassIdentifier<T = any> =
+    | Constructor<T>
+    | (AbstractConstructor<T> & TransformerMetadataFactory)
+    // Supports abstract and private constructors, which cannot satisfy a
+    // public construct signature but are still valid runtime identifiers.
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+    | (Function & TransformerMetadataFactory & { prototype: T });
 
-export type Primitive = String | Number | Boolean | BigInt;
+export type Primitive = string | number | boolean | bigint;
 export type PrimitiveExtended = Primitive | Date;
 
 export type PrimitiveConstructor =
@@ -36,11 +44,11 @@ export type PrimitiveConstructorReturnType<
     ? InstanceType<TType>
     : ReturnType<Extract<TType, PrimitiveConstructor>>;
 
-export interface TransformerMetadataFactory<TModel extends Dictionary<TModel>> {
+export interface TransformerMetadataFactory {
     __AUTOMAPPER_METADATA_FACTORY__?: () => [
         propertyKey: string,
         options: {
-            type: () => Constructor | [Constructor];
+            type: () => ClassIdentifier | [ClassIdentifier];
             depth: number;
             isGetterOnly?: boolean;
         }
@@ -64,6 +72,14 @@ export type NamingConventionInput =
           destination: NamingConvention;
       };
 
+// The `= any` generic defaults below (Selector/ValueSelector/Resolver/Converter
+// and ModelIdentifier/Constructor) are intentional, not laziness. AutoMapper is a
+// runtime, identifier-driven mapper whose types are routinely used without
+// explicit generics (`createMap(mapper, Source, Dest)` infers them); an `any`
+// default keeps that ergonomic and avoids forcing `unknown` casts through the
+// dynamic core, while concrete call sites still infer precise types. Data that
+// crosses the user boundary (extraArguments) is `unknown`, and return positions
+// are `unknown` rather than `any`.
 export type Selector<
     TObject extends Dictionary<TObject> = any,
     TReturnType = unknown
@@ -72,6 +88,8 @@ export type Selector<
 export type SelectorReturn<TObject extends Dictionary<TObject>> = ReturnType<
     Selector<TObject>
 >;
+
+export type MaybePromise<T> = T | Promise<T>;
 
 export type ValueSelector<
     TSource extends Dictionary<TSource> = any,
@@ -84,7 +102,10 @@ export interface Resolver<
     TDestination extends Dictionary<TDestination> = any,
     TResolvedType = SelectorReturn<TDestination>
 > {
-    resolve(source: TSource, destination?: TDestination): TResolvedType;
+    resolve(
+        source: TSource,
+        destination?: TDestination
+    ): MaybePromise<TResolvedType>;
 }
 
 export interface Converter<
@@ -97,17 +118,17 @@ export interface Converter<
 export type MapCallback<
     TSource extends Dictionary<TSource>,
     TDestination extends Dictionary<TDestination>,
-    TExtraArgs extends Record<string, any> = Record<string, any>
+    TExtraArgs extends Record<string, unknown> = Record<string, unknown>
 > = (
     source: TSource,
     destination: TDestination,
     extraArguments?: TExtraArgs
-) => void;
+) => MaybePromise<void>;
 
 export interface MapOptions<
     TSource extends Dictionary<TSource>,
     TDestination extends Dictionary<TDestination>,
-    TExtraArgs extends Record<string, any> = Record<string, any>
+    TExtraArgs extends Record<string, unknown> = Record<string, unknown>
 > {
     beforeMap?: MapCallback<TSource, TDestination, TExtraArgs>;
     afterMap?: MapCallback<TSource, TDestination, TExtraArgs>;
@@ -118,7 +139,7 @@ export interface MapOptions<
     ) => TExtraArgs;
 }
 
-export type ModelIdentifier<T = any> = string | symbol | Constructor<T>;
+export type ModelIdentifier<T = any> = string | symbol | ClassIdentifier<T>;
 
 export type MetadataIdentifier<T = any> = Exclude<ModelIdentifier<T>, string>;
 
@@ -157,6 +178,15 @@ export interface Mapper {
         options?: MapOptions<TSource, TSource>
     ): TSource;
 
+    /**
+     * Maps `sourceObject` and resolves with the result.
+     *
+     * @remarks
+     * Member mapping itself is synchronous, but any `beforeMap`/`afterMap`
+     * callbacks that return a promise are collected and awaited before the
+     * returned promise resolves. Use the synchronous {@link map} when no async
+     * callbacks are involved.
+     */
     mapAsync<
         TSource extends Dictionary<TSource>,
         TDestination extends Dictionary<TDestination>
@@ -357,23 +387,26 @@ export type MapDeferReturn<
     TDestination extends Dictionary<TDestination>,
     TSelectorReturn = SelectorReturn<TDestination>
 > = [
-    TransformationType.MapDefer,
-    DeferFunction<TSource, TDestination, TSelectorReturn>
+    type: TransformationType.MapDefer,
+    fn: DeferFunction<TSource, TDestination, TSelectorReturn>
 ];
 
 export type MapFromReturn<
     TSource extends Dictionary<TSource>,
     TDestination extends Dictionary<TDestination>,
     TSelectorReturn = SelectorReturn<TDestination>
-> = [TransformationType.MapFrom, Selector<TSource, TSelectorReturn>];
+> = [
+    type: TransformationType.MapFrom,
+    fn: Selector<TSource, MaybePromise<TSelectorReturn>>
+];
 
 export type MapWithReturn<
     TSource extends Dictionary<TSource>,
     TDestination extends Dictionary<TDestination>,
     TSelectorReturn = SelectorReturn<TDestination>
 > = [
-    TransformationType.MapWith,
-    (
+    type: TransformationType.MapWith,
+    fn: (
         sourceObj: TSource,
         mapper: Mapper,
         options?: MapOptions<TSource, TDestination>
@@ -389,29 +422,32 @@ export type ConditionReturn<
     TDestination extends Dictionary<TDestination>,
     TSelectorReturn = SelectorReturn<TDestination>
 > = [
-    TransformationType.Condition,
-    (source: TSource, sourceMemberPath: string[]) => TSelectorReturn
+    type: TransformationType.Condition,
+    fn: (source: TSource, sourceMemberPath: string[]) => TSelectorReturn
 ];
 
 export type FromValueReturn<
     TSource extends Dictionary<TSource>,
     TDestination extends Dictionary<TDestination>,
     TSelectorReturn = SelectorReturn<TDestination>
-> = [TransformationType.FromValue, () => TSelectorReturn];
+> = [type: TransformationType.FromValue, fn: () => TSelectorReturn];
 
 export type ConvertUsingReturn<
     TSource extends Dictionary<TSource>,
     TDestination extends Dictionary<TDestination>,
     TSelectorReturn = SelectorReturn<TDestination>
-> = [TransformationType.ConvertUsing, Selector<TSource, TSelectorReturn>];
+> = [
+    type: TransformationType.ConvertUsing,
+    fn: Selector<TSource, TSelectorReturn>
+];
 
 export type NullSubstitutionReturn<
     TSource extends Dictionary<TSource>,
     TDestination extends Dictionary<TDestination>,
     TSelectorReturn = SelectorReturn<TDestination>
 > = [
-    TransformationType.NullSubstitution,
-    (source: TSource, sourceMemberPath: string[]) => TSelectorReturn
+    type: TransformationType.NullSubstitution,
+    fn: (source: TSource, sourceMemberPath: string[]) => TSelectorReturn
 ];
 
 export type UndefinedSubstitutionReturn<
@@ -419,22 +455,25 @@ export type UndefinedSubstitutionReturn<
     TDestination extends Dictionary<TDestination>,
     TSelectorReturn = SelectorReturn<TDestination>
 > = [
-    TransformationType.UndefinedSubstitution,
-    (source: TSource, sourceMemberPath: string[]) => TSelectorReturn
+    type: TransformationType.UndefinedSubstitution,
+    fn: (source: TSource, sourceMemberPath: string[]) => TSelectorReturn
 ];
 
 export type IgnoreReturn<
     TSource extends Dictionary<TSource>,
     TDestination extends Dictionary<TDestination>
-> = [TransformationType.Ignore];
+> = [type: TransformationType.Ignore];
 
 export type MapWithArgumentsReturn<
     TSource extends Dictionary<TSource>,
     TDestination extends Dictionary<TDestination>,
     TSelectorReturn = SelectorReturn<TDestination>
 > = [
-    TransformationType.MapWithArguments,
-    (source: TSource, extraArguments: Record<string, any>) => TSelectorReturn
+    type: TransformationType.MapWithArguments,
+    fn: (
+        source: TSource,
+        extraArguments: Record<string, unknown>
+    ) => MaybePromise<TSelectorReturn>
 ];
 
 export type MapInitializeReturn<
@@ -442,9 +481,9 @@ export type MapInitializeReturn<
     TDestination extends Dictionary<TDestination>,
     TSelectorReturn = SelectorReturn<TDestination>
 > = [
-    TransformationType.MapInitialize,
-    Selector<TSource, TSelectorReturn>,
-    boolean?
+    type: TransformationType.MapInitialize,
+    fn: Selector<TSource, TSelectorReturn>,
+    isConverted?: boolean
 ];
 
 export const enum MappingTransformationClassId {
@@ -486,6 +525,8 @@ export const enum MappingPropertiesClassId {
 export const enum MappingCallbacksClassId {
     beforeMap,
     afterMap,
+    beforeMapArray,
+    afterMapArray,
 }
 
 export const enum NestedMappingPairClassId {
@@ -494,9 +535,55 @@ export const enum NestedMappingPairClassId {
 }
 
 export type NestedMappingPair = [
-    MetadataIdentifier | Primitive | Date,
-    MetadataIdentifier | Primitive | Date
+    destination: MetadataIdentifier | Primitive | Date,
+    source: MetadataIdentifier | Primitive | Date
 ];
+
+// --- Compiled mapping plan -------------------------------------------------
+// A mapping's `properties` are positional tuples whose shape is fixed at
+// createMap time. Rather than re-destructuring that nested tuple on every
+// map() call, we destructure once into a flat descriptor list and hang it on
+// the mapping itself (MappingClassId.compiledPlan), built eagerly at createMap.
+// `sourceMemberIdentifier`/`destinationMemberIdentifier` equality that depends
+// on the mapper's registry (which can grow later) is NOT baked in here.
+export interface CompiledMappingProperty<
+    TSource extends Dictionary<TSource> = any,
+    TDestination extends Dictionary<TDestination> = any
+> {
+    destinationMemberPath: string[];
+    transformationMapFn: MemberMapReturn<TSource, TDestination>;
+    transformationType: TransformationType;
+    transformationPreConditionPredicate?: (source: TSource) => boolean;
+    transformationPreConditionDefaultValue?: unknown;
+    destinationMemberIdentifier?: MetadataIdentifier | Primitive | Date;
+    sourceMemberIdentifier?: MetadataIdentifier | Primitive | Date;
+}
+
+// A single property's work, specialized once at compile time so the map() loop
+// runs `steps[i](context)` with no per-member type switch or descriptor
+// destructuring. The context is map()-internal; kept opaque here.
+export type CompiledMapStep = (context: any) => void;
+
+export interface CompiledMapping<
+    TSource extends Dictionary<TSource> = any,
+    TDestination extends Dictionary<TDestination> = any
+> {
+    steps: CompiledMapStep[];
+    // writable destination keys this mapping does not configure, precomputed at
+    // createMap so assertUnmappedProperties does no per-call Set/scan work.
+    unmappedCandidateKeys: string[];
+}
+
+// Build-time intermediate produced by compileMapping(): `props` + `configuredKeys`
+// are consumed by buildMapPlan() to make `steps` + `unmappedCandidateKeys` and are
+// NOT retained on the compiled plan (nothing reads them at runtime).
+export interface CompiledMappingDescriptors<
+    TSource extends Dictionary<TSource> = any,
+    TDestination extends Dictionary<TDestination> = any
+> {
+    props: CompiledMappingProperty<TSource, TDestination>[];
+    configuredKeys: string[];
+}
 
 export const enum MappingClassId {
     identifiers,
@@ -508,6 +595,7 @@ export const enum MappingClassId {
     typeConverters,
     callbacks,
     namingConventions,
+    compiledPlan,
 }
 
 export type Mapping<
@@ -564,12 +652,16 @@ export type Mapping<
     >,
     callbacks?: [
         beforeMap?: MapCallback<TSource, TDestination>,
-        afterMap?: MapCallback<TSource, TDestination>
+        afterMap?: MapCallback<TSource, TDestination>,
+        beforeMapArray?: MapCallback<TSource[], TDestination[]>,
+        afterMapArray?: MapCallback<TSource[], TDestination[]>
     ],
     namingConventions?: [
         source: NamingConvention,
         destination: NamingConvention
-    ]
+    ],
+    // built eagerly at createMap; flat per-property descriptors consumed by map()
+    compiledPlan?: CompiledMapping<TSource, TDestination>
 ];
 
 export type DataMap = Map<symbol, number>;

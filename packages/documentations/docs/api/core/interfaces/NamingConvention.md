@@ -1,53 +1,37 @@
----
-id: "NamingConvention"
-title: "Interface: NamingConvention"
-sidebar_label: "NamingConvention"
-sidebar_position: 0
-custom_edit_url: null
----
+# Interface: NamingConvention
 
-## Implemented by
-
-- [`CamelCaseNamingConvention`](../classes/CamelCaseNamingConvention.md)
-- [`PascalCaseNamingConvention`](../classes/PascalCaseNamingConvention.md)
-- [`SnakeCaseNamingConvention`](../classes/SnakeCaseNamingConvention.md)
+Defined in: [core/src/lib/types.ts:62](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L62)
 
 ## Properties
 
 ### separatorCharacter
 
-• **separatorCharacter**: `string`
+> **separatorCharacter**: `string`
 
-#### Defined in
+Defined in: [core/src/lib/types.ts:64](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L64)
 
-[lib/types.ts:55](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L55)
-
-___
+***
 
 ### splittingExpression
 
-• **splittingExpression**: `RegExp`
+> **splittingExpression**: `RegExp`
 
-#### Defined in
+Defined in: [core/src/lib/types.ts:63](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L63)
 
-[lib/types.ts:54](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L54)
-
-## Methods
+***
 
 ### transformPropertyName
 
-▸ **transformPropertyName**(`sourcePropNameParts`): `string`
+> **transformPropertyName**: (`sourcePropNameParts`) => `string`
+
+Defined in: [core/src/lib/types.ts:65](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L65)
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `sourcePropNameParts` | `string`[] |
+##### sourcePropNameParts
+
+`string`[]
 
 #### Returns
 
 `string`
-
-#### Defined in
-
-[lib/types.ts:56](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L56)

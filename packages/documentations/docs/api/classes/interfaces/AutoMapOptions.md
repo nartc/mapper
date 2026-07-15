@@ -1,47 +1,37 @@
----
-id: "AutoMapOptions"
-title: "Interface: AutoMapOptions"
-sidebar_label: "AutoMapOptions"
-sidebar_position: 0
-custom_edit_url: null
----
+# Interface: AutoMapOptions
+
+Defined in: [automap.ts:6](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/classes/src/lib/automap.ts#L6)
 
 ## Properties
 
-### depth
+### depth?
 
-• `Optional` **depth**: `number`
+> `optional` **depth?**: `number`
+
+Defined in: [automap.ts:14](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/classes/src/lib/automap.ts#L14)
 
 Depth for nested models. Default to 1
 
-#### Defined in
+***
 
-[lib/automap.ts:14](https://github.com/nartc/mapper/blob/efc4cb9d/packages/classes/src/lib/automap.ts#L14)
+### isGetterOnly?
 
-___
+> `optional` **isGetterOnly?**: `boolean`
 
-### isGetterOnly
-
-• `Optional` **isGetterOnly**: `boolean`
+Defined in: [automap.ts:18](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/classes/src/lib/automap.ts#L18)
 
 Is this property getter-only?
 
-#### Defined in
+***
 
-[lib/automap.ts:18](https://github.com/nartc/mapper/blob/efc4cb9d/packages/classes/src/lib/automap.ts#L18)
+### type?
 
-## Methods
+> `optional` **type?**: () => `ClassIdentifier` \| \[`ClassIdentifier`\]
 
-### type
-
-▸ `Optional` **type**(): `Constructor`<`any`\> \| [`Constructor`<`any`\>]
+Defined in: [automap.ts:10](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/classes/src/lib/automap.ts#L10)
 
 Type Function
 
 #### Returns
 
-`Constructor`<`any`\> \| [`Constructor`<`any`\>]
-
-#### Defined in
-
-[lib/automap.ts:10](https://github.com/nartc/mapper/blob/efc4cb9d/packages/classes/src/lib/automap.ts#L10)
+`ClassIdentifier` \| \[`ClassIdentifier`\]

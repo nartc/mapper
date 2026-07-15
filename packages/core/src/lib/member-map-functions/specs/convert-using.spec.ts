@@ -14,7 +14,10 @@ describe(convertUsing.name, () => {
     };
 
     it('should return correctly', () => {
-        const convertUsingFn = convertUsing<typeof source, {}>(
+        const convertUsingFn = convertUsing<
+            typeof source,
+            Record<never, never>
+        >(
             birthdayToStringConverter,
             (s) => s.birthday
         );
@@ -26,7 +29,10 @@ describe(convertUsing.name, () => {
     });
 
     it('should map correctly', () => {
-        const convertUsingFn = convertUsing<typeof source, {}>(
+        const convertUsingFn = convertUsing<
+            typeof source,
+            Record<never, never>
+        >(
             birthdayToStringConverter,
             (s) => s.birthday
         );

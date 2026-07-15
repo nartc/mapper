@@ -1,10 +1,11 @@
 {
     "extends": "./tsconfig.json",
     "compilerOptions": {
-        "outDir": "../../dist/out-tsc",
+        "outDir": "../../dist/out-tsc/core/lib",
+        "composite": true,
         "declaration": true,
         "types": []
     },
-    "include": ["**/*.ts"],
+    "include": ["src/**/*.ts"],
     "exclude": ["**/*.spec.ts", "**/*.test.ts"]
 }

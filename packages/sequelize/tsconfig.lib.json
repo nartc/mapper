@@ -1,10 +1,19 @@
 {
     "extends": "./tsconfig.json",
     "compilerOptions": {
-        "outDir": "../../dist/out-tsc",
+        "outDir": "../../dist/out-tsc/sequelize/lib",
+        "composite": true,
         "declaration": true,
         "types": []
     },
-    "include": ["**/*.ts"],
-    "exclude": ["**/*.spec.ts", "**/*.test.ts"]
+    "include": ["src/**/*.ts"],
+    "exclude": ["**/*.spec.ts", "**/*.test.ts"],
+    "references": [
+        {
+            "path": "../core/tsconfig.lib.json"
+        },
+        {
+            "path": "../classes/tsconfig.lib.json"
+        }
+    ]
 }

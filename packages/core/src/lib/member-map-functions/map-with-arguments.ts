@@ -1,6 +1,7 @@
 import type {
     Dictionary,
     MapWithArgumentsReturn,
+    MaybePromise,
     Resolver,
     SelectorReturn,
 } from '../types';
@@ -16,7 +17,7 @@ export function mapWithArguments<
         | ((
               source: TSource,
               extraArguments: Record<string, unknown>
-          ) => TSelectorReturn)
+          ) => MaybePromise<TSelectorReturn>)
         | Resolver<TSource, Record<string, unknown>, TSelectorReturn>
 ): MapWithArgumentsReturn<TSource, TDestination, TSelectorReturn> {
     if (isResolver(withArgumentsResolver)) {

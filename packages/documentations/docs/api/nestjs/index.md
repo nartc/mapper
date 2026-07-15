@@ -1,81 +1,27 @@
----
-id: "index"
-title: "@automapper/nestjs"
-slug: "/api/nestjs/"
-sidebar_label: "README"
-sidebar_position: 0
-custom_edit_url: null
----
-
 # @automapper/nestjs
 
-This is a NestJS module to integrate `@automapper` with NestJS.
+## Classes
 
-## Installation
+- [AutomapperModule](classes/AutomapperModule.md)
+- [AutomapperProfile](classes/AutomapperProfile.md)
 
-```sh
-npm i @automapper/nestjs
-```
+## Interfaces
 
-or with `yarn`:
+- [AutomapperAsyncOptions](interfaces/AutomapperAsyncOptions.md)
+- [AutomapperGlobalOptions](interfaces/AutomapperGlobalOptions.md)
+- [AutomapperOptionsFactory](interfaces/AutomapperOptionsFactory.md)
 
-```sh
-yarn add @automapper/nestjs
-```
+## Type Aliases
 
-#### `peerDependencies`
+- [AutomapperOptions](type-aliases/AutomapperOptions.md)
 
-`@automapper/nestjs` depends on `@automapper/core`
+## Variables
 
-```sh
-npm i @automapper/core
-```
+- [DEFAULT\_MAPPER\_TOKEN](variables/DEFAULT_MAPPER_TOKEN.md)
+- [MapInterceptor](variables/MapInterceptor.md)
+- [MapPipe](variables/MapPipe.md)
 
-or with `yarn`:
+## Functions
 
-```sh
-yarn add @automapper/core
-```
-
-## Usage
-
-Call `AutomapperModule.forRoot()` and provide some options to initialize the `Mapper` object(s).
-
-```ts
-// Single Mapper
-@Module({
-    imports: [
-        AutomapperModule.forRoot({
-            strategyInitializer: classes(),
-        }),
-    ],
-})
-export class AppModule {}
-
-// Multiple Mappers
-@Module({
-    imports: [
-        AutomapperModule.forRoot(
-            [
-                {
-                    name: 'classes',
-                    strategyInitializer: classes(),
-                },
-                {
-                    name: 'pojos',
-                    strategyInitializer: pojos(),
-                },
-            ],
-            {
-                /*  globalErrorHandler: ErrorHandler */
-                /*  globalNamingConventions: NamingConvention | {source, destination} */
-            }
-        ),
-    ],
-})
-export class AppModule {}
-```
-
-`AutomapperModule` is a `Global` module so when `Mapper` object(s) are initialized, they're available across the application.
-
-Read more about this on the [documentation site](https://automapperts.netlify.app/docs/nestjs)
+- [getMapperToken](functions/getMapperToken.md)
+- [InjectMapper](functions/InjectMapper.md)

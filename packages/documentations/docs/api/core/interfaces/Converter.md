@@ -1,34 +1,31 @@
----
-id: "Converter"
-title: "Interface: Converter<TSource, TConvertDestination>"
-sidebar_label: "Converter"
-sidebar_position: 0
-custom_edit_url: null
----
+# Interface: Converter\<TSource, TConvertDestination\>
 
-## Type parameters
+Defined in: [core/src/lib/types.ts:111](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L111)
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](../modules.md#dictionary)<`TSource`\> = `any` |
-| `TConvertDestination` | `any` |
+## Type Parameters
+
+### TSource
+
+`TSource` *extends* [`Dictionary`](../type-aliases/Dictionary.md)\<`TSource`\> = `any`
+
+### TConvertDestination
+
+`TConvertDestination` = `any`
 
 ## Methods
 
-### convert
+### convert()
 
-▸ **convert**(`source`): `TConvertDestination`
+> **convert**(`source`): `TConvertDestination`
+
+Defined in: [core/src/lib/types.ts:115](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L115)
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `source` | `TSource` |
+##### source
+
+`TSource`
 
 #### Returns
 
 `TConvertDestination`
-
-#### Defined in
-
-[lib/types.ts:93](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L93)

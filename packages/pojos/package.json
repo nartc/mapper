@@ -1,16 +1,20 @@
 {
     "name": "@automapper/pojos",
-    "version": "0.0.0",
+    "version": "9.0.0-alpha.0",
     "type": "module",
     "sideEffects": false,
+    "exports": {
+        ".": "./src/index.ts"
+    },
     "engines": {
-        "node": ">=16.0.0"
+        "node": ">=20.0.0"
     },
     "publishConfig": {
-        "access": "public"
+        "access": "public",
+        "provenance": true
     },
     "peerDependencies": {
-        "@automapper/core": "latest"
+        "@automapper/core": "^9.0.0-alpha.0"
     },
     "repository": {
         "type": "git",

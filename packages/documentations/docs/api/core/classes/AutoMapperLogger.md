@@ -1,133 +1,211 @@
----
-id: "AutoMapperLogger"
-title: "Class: AutoMapperLogger"
-sidebar_label: "AutoMapperLogger"
-sidebar_position: 0
-custom_edit_url: null
----
+# Class: AutoMapperLogger
+
+Defined in: [core/src/lib/utils/logger.ts:33](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/utils/logger.ts#L33)
 
 ## Constructors
 
-### constructor
+### Constructor
 
-• **new AutoMapperLogger**()
+> **new AutoMapperLogger**(): `AutoMapperLogger`
 
-## Properties
+#### Returns
 
-### AUTOMAPPER\_PREFIX
+`AutoMapperLogger`
 
-▪ `Static` `Private` `Readonly` **AUTOMAPPER\_PREFIX**: ``"[AutoMapper]: "``
+## Accessors
 
-#### Defined in
+### trace
 
-[lib/utils/logger.ts:2](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/utils/logger.ts#L2)
+#### Get Signature
 
-___
+> **get** `static` **trace**(): [`AutoMapperLogFn`](../type-aliases/AutoMapperLogFn.md) \| `undefined`
 
-### configured
+Defined in: [core/src/lib/utils/logger.ts:139](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/utils/logger.ts#L139)
 
-▪ `Static` `Private` **configured**: `boolean` = `false`
+##### Returns
 
-#### Defined in
-
-[lib/utils/logger.ts:3](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/utils/logger.ts#L3)
+[`AutoMapperLogFn`](../type-aliases/AutoMapperLogFn.md) \| `undefined`
 
 ## Methods
 
-### configure
+### configure()
 
-▸ `Static` **configure**(`customLogger?`): `void`
+> `static` **configure**(`customLogger?`): () => `void`
+
+Defined in: [core/src/lib/utils/logger.ts:98](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/utils/logger.ts#L98)
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `customLogger` | `Partial`<`Pick`<typeof [`AutoMapperLogger`](AutoMapperLogger.md), ``"log"`` \| ``"info"`` \| ``"error"`` \| ``"warn"``\>\> |
+##### customLogger?
+
+[`AutoMapperLoggerLike`](../interfaces/AutoMapperLoggerLike.md) = `{}`
+
+#### Returns
+
+() => `void`
+
+***
+
+### debug()
+
+> `static` **debug**(`message`, ...`optionalParams`): `void`
+
+Defined in: [core/src/lib/utils/logger.ts:127](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/utils/logger.ts#L127)
+
+#### Parameters
+
+##### message
+
+`unknown`
+
+##### optionalParams
+
+...`unknown`[]
 
 #### Returns
 
 `void`
 
-#### Defined in
+***
 
-[lib/utils/logger.ts:5](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/utils/logger.ts#L5)
+### error()
 
-___
+> `static` **error**(`message`, ...`optionalParams`): `void`
 
-### error
-
-▸ `Static` **error**(`error`): `void`
+Defined in: [core/src/lib/utils/logger.ts:119](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/utils/logger.ts#L119)
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `error` | `string` |
+##### message
+
+`unknown`
+
+##### optionalParams
+
+...`unknown`[]
 
 #### Returns
 
 `void`
 
-#### Defined in
+***
 
-[lib/utils/logger.ts:27](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/utils/logger.ts#L27)
+### fatal()
 
-___
+> `static` **fatal**(`message`, ...`optionalParams`): `void`
 
-### info
-
-▸ `Static` **info**(`info`): `void`
+Defined in: [core/src/lib/utils/logger.ts:135](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/utils/logger.ts#L135)
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `info` | `string` |
+##### message
+
+`unknown`
+
+##### optionalParams
+
+...`unknown`[]
 
 #### Returns
 
 `void`
 
-#### Defined in
+***
 
-[lib/utils/logger.ts:31](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/utils/logger.ts#L31)
+### info()
 
-___
+> `static` **info**(`message`, ...`optionalParams`): `void`
 
-### log
-
-▸ `Static` **log**(`message`): `void`
+Defined in: [core/src/lib/utils/logger.ts:123](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/utils/logger.ts#L123)
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `message` | `string` |
+##### message
+
+`unknown`
+
+##### optionalParams
+
+...`unknown`[]
 
 #### Returns
 
 `void`
 
-#### Defined in
+***
 
-[lib/utils/logger.ts:19](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/utils/logger.ts#L19)
+### log()
 
-___
+> `static` **log**(`message`, ...`optionalParams`): `void`
 
-### warn
-
-▸ `Static` **warn**(`warning`): `void`
+Defined in: [core/src/lib/utils/logger.ts:111](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/utils/logger.ts#L111)
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `warning` | `string` |
+##### message
+
+`unknown`
+
+##### optionalParams
+
+...`unknown`[]
 
 #### Returns
 
 `void`
 
-#### Defined in
+***
 
-[lib/utils/logger.ts:23](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/utils/logger.ts#L23)
+### reset()
+
+> `static` **reset**(): `void`
+
+Defined in: [core/src/lib/utils/logger.ts:107](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/utils/logger.ts#L107)
+
+#### Returns
+
+`void`
+
+***
+
+### verbose()
+
+> `static` **verbose**(`message`, ...`optionalParams`): `void`
+
+Defined in: [core/src/lib/utils/logger.ts:131](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/utils/logger.ts#L131)
+
+#### Parameters
+
+##### message
+
+`unknown`
+
+##### optionalParams
+
+...`unknown`[]
+
+#### Returns
+
+`void`
+
+***
+
+### warn()
+
+> `static` **warn**(`message`, ...`optionalParams`): `void`
+
+Defined in: [core/src/lib/utils/logger.ts:115](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/utils/logger.ts#L115)
+
+#### Parameters
+
+##### message
+
+`unknown`
+
+##### optionalParams
+
+...`unknown`[]
+
+#### Returns
+
+`void`

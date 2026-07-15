@@ -1,120 +1,119 @@
----
-id: "MappingStrategy"
-title: "Interface: MappingStrategy<TIdentifier>"
-sidebar_label: "MappingStrategy"
-sidebar_position: 0
-custom_edit_url: null
----
+# Interface: MappingStrategy\<TIdentifier\>
 
-## Type parameters
+Defined in: [core/src/lib/types.ts:709](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L709)
 
-| Name | Type |
-| :------ | :------ |
-| `TIdentifier` | extends [`MetadataIdentifier`](../modules.md#metadataidentifier) |
+## Type Parameters
+
+### TIdentifier
+
+`TIdentifier` *extends* [`MetadataIdentifier`](../type-aliases/MetadataIdentifier.md)
 
 ## Properties
 
 ### applyMetadata
 
-• `Readonly` **applyMetadata**: [`ApplyMetadataFn`](../modules.md#applymetadatafn)
+> `readonly` **applyMetadata**: [`ApplyMetadataFn`](../type-aliases/ApplyMetadataFn.md)
 
-#### Defined in
+Defined in: [core/src/lib/types.ts:712](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L712)
 
-[lib/types.ts:600](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L600)
-
-___
+***
 
 ### destinationConstructor
 
-• **destinationConstructor**: [`DestinationConstructor`](../modules.md#destinationconstructor)<`any`, `any`\>
+> **destinationConstructor**: [`DestinationConstructor`](../type-aliases/DestinationConstructor.md)
 
-#### Defined in
+Defined in: [core/src/lib/types.ts:710](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L710)
 
-[lib/types.ts:598](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L598)
-
-___
+***
 
 ### mapper
 
-• **mapper**: [`Mapper`](Mapper.md)
+> **mapper**: [`Mapper`](Mapper.md)
 
-#### Defined in
-
-[lib/types.ts:599](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L599)
+Defined in: [core/src/lib/types.ts:711](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L711)
 
 ## Methods
 
-### postMap
+### postMap()
 
-▸ **postMap**<`TSource`, `TDestination`\>(`source`, `destination`, `mapping`): `undefined` \| `TDestination`
+> **postMap**\<`TSource`, `TDestination`\>(`source`, `destination`, `mapping`): `TDestination` \| `undefined`
 
-#### Type parameters
+Defined in: [core/src/lib/types.ts:723](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L723)
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](../modules.md#dictionary)<`TSource`\> |
-| `TDestination` | extends [`Dictionary`](../modules.md#dictionary)<`TDestination`\> |
+#### Type Parameters
+
+##### TSource
+
+`TSource` *extends* [`Dictionary`](../type-aliases/Dictionary.md)\<`TSource`\>
+
+##### TDestination
+
+`TDestination` *extends* [`Dictionary`](../type-aliases/Dictionary.md)\<`TDestination`\>
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `source` | `TSource` |
-| `destination` | `TDestination` |
-| `mapping` | [`Mapping`](../modules.md#mapping)<`TSource`, `TDestination`\> |
+##### source
+
+`TSource`
+
+##### destination
+
+`TDestination`
+
+##### mapping
+
+[`Mapping`](../type-aliases/Mapping.md)\<`TSource`, `TDestination`\>
 
 #### Returns
 
-`undefined` \| `TDestination`
+`TDestination` \| `undefined`
 
-#### Defined in
+***
 
-[lib/types.ts:611](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L611)
+### preMap()
 
-___
+> **preMap**\<`TSource`, `TDestination`\>(`source`, `mapping`): `TSource`
 
-### preMap
+Defined in: [core/src/lib/types.ts:716](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L716)
 
-▸ **preMap**<`TSource`, `TDestination`\>(`source`, `mapping`): `TSource`
+#### Type Parameters
 
-#### Type parameters
+##### TSource
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](../modules.md#dictionary)<`TSource`\> |
-| `TDestination` | extends [`Dictionary`](../modules.md#dictionary)<`TDestination`\> |
+`TSource` *extends* [`Dictionary`](../type-aliases/Dictionary.md)\<`TSource`\>
+
+##### TDestination
+
+`TDestination` *extends* [`Dictionary`](../type-aliases/Dictionary.md)\<`TDestination`\>
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `source` | `TSource` |
-| `mapping` | [`Mapping`](../modules.md#mapping)<`TSource`, `TDestination`\> |
+##### source
+
+`TSource`
+
+##### mapping
+
+[`Mapping`](../type-aliases/Mapping.md)\<`TSource`, `TDestination`\>
 
 #### Returns
 
 `TSource`
 
-#### Defined in
+***
 
-[lib/types.ts:604](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L604)
+### retrieveMetadata()
 
-___
+> **retrieveMetadata**(...`identifiers`): `Map`\<`TIdentifier`, [`MetadataList`](../type-aliases/MetadataList.md)\>
 
-### retrieveMetadata
-
-▸ **retrieveMetadata**(...`identifiers`): `Map`<`TIdentifier`, [`MetadataList`](../modules.md#metadatalist)\>
+Defined in: [core/src/lib/types.ts:713](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L713)
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `...identifiers` | `TIdentifier`[] |
+##### identifiers
+
+...`TIdentifier`[]
 
 #### Returns
 
-`Map`<`TIdentifier`, [`MetadataList`](../modules.md#metadatalist)\>
-
-#### Defined in
-
-[lib/types.ts:601](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L601)
+`Map`\<`TIdentifier`, [`MetadataList`](../type-aliases/MetadataList.md)\>

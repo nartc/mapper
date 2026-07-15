@@ -1,4 +1,4 @@
-import type { Constructor } from '@automapper/core';
+import type { ClassIdentifier, MetadataIdentifier } from '@automapper/core';
 import { isDateConstructor, isPrimitiveConstructor } from '@automapper/core';
 import 'reflect-metadata';
 import {
@@ -10,33 +10,38 @@ type MetadataList = Array<
     [
         string,
         {
-            type: () => Constructor | [Constructor];
+            type: () => ClassIdentifier | [ClassIdentifier];
             depth: number;
             isGetterOnly?: boolean;
         }
     ]
 >;
 
-export function getMetadataList(model: Constructor): [
+export function getMetadataList(model: MetadataIdentifier): [
     metadataList: [
         string,
         {
-            type: () => Constructor;
+            type: () => MetadataIdentifier;
             isArray: boolean;
             depth: number;
             isGetterOnly?: boolean;
         }
     ][],
-    nestedConstructor: Constructor[]
+    nestedConstructor: MetadataIdentifier[]
 ] {
+    if (typeof model !== 'function') {
+        return [[], []];
+    }
+
+    // `model` is a class (function); @AutoMap stores metadata on the class via
+    // `target.constructor`, and Reflect.getMetadata walks the class's prototype
+    // chain (so subclass inheritance is already covered). The old
+    // `model.constructor.prototype` read was `Function.prototype` — never a
+    // metadata target — so it always contributed []. `.concat()` keeps the
+    // defensive copy (never hand out the stored array).
     let metadataList: MetadataList = (
-        model.constructor?.prototype
-            ? Reflect.getMetadata(
-                  AUTOMAP_PROPERTIES_METADATA_KEY,
-                  model.constructor.prototype
-              ) || []
-            : []
-    ).concat(Reflect.getMetadata(AUTOMAP_PROPERTIES_METADATA_KEY, model) || []);
+        Reflect.getMetadata(AUTOMAP_PROPERTIES_METADATA_KEY, model) || []
+    ).concat();
 
     const metadataFactoryFn = model[AUTOMAPPER_METADATA_FACTORY_KEY];
     if (metadataFactoryFn) {
@@ -70,13 +75,13 @@ export function getMetadataList(model: Constructor): [
             metadataList: [
                 string,
                 {
-                    type: () => Constructor;
+                    type: () => MetadataIdentifier;
                     isArray: boolean;
                     depth: number;
                     isGetterOnly?: boolean;
                 }
             ][],
-            nestedConstructor: Constructor[]
+            nestedConstructor: MetadataIdentifier[]
         ]
     );
 }

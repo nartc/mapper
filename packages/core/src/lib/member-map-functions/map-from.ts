@@ -1,9 +1,9 @@
 import type {
     Dictionary,
     MapFromReturn,
+    MaybePromise,
     Resolver,
     SelectorReturn,
-    ValueSelector,
 } from '../types';
 import { TransformationType } from '../types';
 import { isResolver } from '../utils/is-resolver';
@@ -14,7 +14,7 @@ export function mapFrom<
     TSelectorReturn = SelectorReturn<TDestination>
 >(
     from:
-        | ValueSelector<TSource, TDestination, TSelectorReturn>
+        | ((source: TSource) => MaybePromise<TSelectorReturn>)
         | Resolver<TSource, TDestination, TSelectorReturn>
 ): MapFromReturn<TSource, TDestination, TSelectorReturn> {
     if (isResolver(from)) {

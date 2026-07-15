@@ -1,35 +1,31 @@
----
-id: "DeferFunction"
-title: "Interface: DeferFunction<TSource, TDestination, TSelectorReturn>"
-sidebar_label: "DeferFunction"
-sidebar_position: 0
-custom_edit_url: null
----
+# Interface: DeferFunction()\<TSource, TDestination, TSelectorReturn\>
 
-## Type parameters
+Defined in: [core/src/lib/types.ts:375](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L375)
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](../modules.md#dictionary)<`TSource`\> |
-| `TDestination` | extends [`Dictionary`](../modules.md#dictionary)<`TDestination`\> |
-| `TSelectorReturn` | [`SelectorReturn`](../modules.md#selectorreturn)<`TDestination`\> |
+## Type Parameters
 
-## Callable
+### TSource
 
-### DeferFunction
+`TSource` *extends* [`Dictionary`](../type-aliases/Dictionary.md)\<`TSource`\>
 
-▸ **DeferFunction**(`source`): [`MemberMapReturnNoDefer`](../modules.md#membermapreturnnodefer)<`TSource`, `TDestination`, `TSelectorReturn`\>
+### TDestination
 
-#### Parameters
+`TDestination` *extends* [`Dictionary`](../type-aliases/Dictionary.md)\<`TDestination`\>
 
-| Name | Type |
-| :------ | :------ |
-| `source` | `TSource` |
+### TSelectorReturn
 
-#### Returns
+`TSelectorReturn` = [`SelectorReturn`](../type-aliases/SelectorReturn.md)\<`TDestination`\>
 
-[`MemberMapReturnNoDefer`](../modules.md#membermapreturnnodefer)<`TSource`, `TDestination`, `TSelectorReturn`\>
+> **DeferFunction**(`source`): [`MemberMapReturnNoDefer`](../type-aliases/MemberMapReturnNoDefer.md)\<`TSource`, `TDestination`, `TSelectorReturn`\>
 
-#### Defined in
+Defined in: [core/src/lib/types.ts:380](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L380)
 
-[lib/types.ts:349](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L349)
+## Parameters
+
+### source
+
+`TSource`
+
+## Returns
+
+[`MemberMapReturnNoDefer`](../type-aliases/MemberMapReturnNoDefer.md)\<`TSource`, `TDestination`, `TSelectorReturn`\>

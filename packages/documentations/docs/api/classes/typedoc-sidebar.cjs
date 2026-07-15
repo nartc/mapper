@@ -1,0 +1,4 @@
+// @ts-check
+/** @type {import("@docusaurus/plugin-content-docs").SidebarsConfig} */
+const typedocSidebar = {items:[{type:"category",label:"Interfaces",items:[{type:"doc",id:"api/classes/interfaces/AutoMapOptions",label:"AutoMapOptions"}]},{type:"category",label:"Variables",items:[{type:"doc",id:"api/classes/variables/AUTOMAP_PROPERTIES_METADATA_KEY",label:"AUTOMAP_PROPERTIES_METADATA_KEY"},{type:"doc",id:"api/classes/variables/AUTOMAP_STANDALONE_METADATA_KEY",label:"AUTOMAP_STANDALONE_METADATA_KEY"},{type:"doc",id:"api/classes/variables/AUTOMAPPER_METADATA_FACTORY_KEY",label:"AUTOMAPPER_METADATA_FACTORY_KEY"}]},{type:"category",label:"Functions",items:[{type:"doc",id:"api/classes/functions/AutoMap",label:"AutoMap"},{type:"doc",id:"api/classes/functions/classes",label:"classes"},{type:"doc",id:"api/classes/functions/getMetadataList",label:"getMetadataList"}]}]};
+module.exports = typedocSidebar.items;

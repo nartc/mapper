@@ -1,0 +1,10 @@
+# TypeDoc 0.28 emits one page per symbol instead of the former module pages.
+/docs/api/core/modules                  /docs/api/core                                  301
+/docs/api/classes/modules               /docs/api/classes                               301
+/docs/api/pojos/modules                 /docs/api/pojos                                 301
+/docs/api/mikro/modules                 /docs/api/mikro                                 301
+/docs/api/sequelize/modules             /docs/api/sequelize                             301
+/docs/api/nestjs/modules                /docs/api/nestjs                                301
+
+# "enums" was renamed to "enumerations"; symbol names remain stable.
+/docs/api/core/enums/* /docs/api/core/enumerations/:splat 301

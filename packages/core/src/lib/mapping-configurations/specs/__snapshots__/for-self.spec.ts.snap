@@ -1,43 +1,43 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`forSelf should skip existing mapping properties from another mapping 1`] = `
-Array [
-  Array [
-    Array [
+exports[`forSelf > should skip existing mapping properties from another mapping 1`] = `
+[
+  [
+    [
       "foo",
     ],
-    Array [
-      Array [
+    [
+      [
         "foo",
       ],
-      Array [
-        Array [
+      [
+        [
           6,
           [Function],
         ],
       ],
     ],
-    Array [
+    [
       [Function],
       [Function],
     ],
   ],
-  Array [
-    Array [
+  [
+    [
       "bar",
     ],
-    Array [
-      Array [
+    [
+      [
         "bar",
       ],
-      Array [
-        Array [
+      [
+        [
           6,
           [Function],
         ],
       ],
     ],
-    Array [
+    [
       [Function],
       [Function],
     ],
@@ -45,24 +45,24 @@ Array [
 ]
 `;
 
-exports[`forSelf should update mapping properties with another mapping 1`] = `
-Array [
-  Array [
-    Array [
+exports[`forSelf > should update mapping properties with another mapping 1`] = `
+[
+  [
+    [
       "foo",
     ],
-    Array [
-      Array [
+    [
+      [
         "foo",
       ],
-      Array [
-        Array [
+      [
+        [
           6,
           [Function],
         ],
       ],
     ],
-    Array [
+    [
       [Function],
       [Function],
     ],

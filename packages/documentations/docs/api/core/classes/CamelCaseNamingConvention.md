@@ -1,14 +1,14 @@
----
-id: "CamelCaseNamingConvention"
-title: "Class: CamelCaseNamingConvention"
-sidebar_label: "CamelCaseNamingConvention"
-sidebar_position: 0
-custom_edit_url: null
----
+# Class: CamelCaseNamingConvention
+
+Defined in: [core/src/lib/naming-conventions/camel-case-naming-convention.ts:8](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/naming-conventions/camel-case-naming-convention.ts#L8)
 
 CamelCaseNamingConvention
 
-**`example`** thisIsCamelCase
+## Example
+
+```ts
+thisIsCamelCase
+```
 
 ## Implements
 
@@ -16,49 +16,51 @@ CamelCaseNamingConvention
 
 ## Constructors
 
-### constructor
+### Constructor
 
-• **new CamelCaseNamingConvention**()
+> **new CamelCaseNamingConvention**(): `CamelCaseNamingConvention`
+
+#### Returns
+
+`CamelCaseNamingConvention`
 
 ## Properties
 
 ### separatorCharacter
 
-• **separatorCharacter**: `string` = `''`
+> **separatorCharacter**: `string` = `''`
+
+Defined in: [core/src/lib/naming-conventions/camel-case-naming-convention.ts:9](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/naming-conventions/camel-case-naming-convention.ts#L9)
 
 #### Implementation of
 
-[NamingConvention](../interfaces/NamingConvention.md).[separatorCharacter](../interfaces/NamingConvention.md#separatorcharacter)
+[`NamingConvention`](../interfaces/NamingConvention.md).[`separatorCharacter`](../interfaces/NamingConvention.md#separatorcharacter)
 
-#### Defined in
-
-[lib/naming-conventions/camel-case-naming-convention.ts:9](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/naming-conventions/camel-case-naming-convention.ts#L9)
-
-___
+***
 
 ### splittingExpression
 
-• **splittingExpression**: `RegExp`
+> **splittingExpression**: `RegExp`
+
+Defined in: [core/src/lib/naming-conventions/camel-case-naming-convention.ts:10](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/naming-conventions/camel-case-naming-convention.ts#L10)
 
 #### Implementation of
 
-[NamingConvention](../interfaces/NamingConvention.md).[splittingExpression](../interfaces/NamingConvention.md#splittingexpression)
-
-#### Defined in
-
-[lib/naming-conventions/camel-case-naming-convention.ts:10](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/naming-conventions/camel-case-naming-convention.ts#L10)
+[`NamingConvention`](../interfaces/NamingConvention.md).[`splittingExpression`](../interfaces/NamingConvention.md#splittingexpression)
 
 ## Methods
 
-### transformPropertyName
+### transformPropertyName()
 
-▸ **transformPropertyName**(`sourceNameParts`): `string`
+> **transformPropertyName**(`sourceNameParts`): `string`
+
+Defined in: [core/src/lib/naming-conventions/camel-case-naming-convention.ts:12](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/naming-conventions/camel-case-naming-convention.ts#L12)
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `sourceNameParts` | `string`[] |
+##### sourceNameParts
+
+`string`[]
 
 #### Returns
 
@@ -66,8 +68,4 @@ ___
 
 #### Implementation of
 
-[NamingConvention](../interfaces/NamingConvention.md).[transformPropertyName](../interfaces/NamingConvention.md#transformpropertyname)
-
-#### Defined in
-
-[lib/naming-conventions/camel-case-naming-convention.ts:12](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/naming-conventions/camel-case-naming-convention.ts#L12)
+[`NamingConvention`](../interfaces/NamingConvention.md).[`transformPropertyName`](../interfaces/NamingConvention.md#transformpropertyname)

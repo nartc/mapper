@@ -1,551 +1,704 @@
----
-id: "Mapper"
-title: "Interface: Mapper"
-sidebar_label: "Mapper"
-sidebar_position: 0
-custom_edit_url: null
----
+# Interface: Mapper
+
+Defined in: [core/src/lib/types.ts:165](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L165)
 
 ## Properties
 
-### [ERROR\_HANDLER]
+### \[ERROR\_HANDLER\]
 
-• **[ERROR\_HANDLER]**: [`ErrorHandler`](ErrorHandler.md)
+> **\[ERROR\_HANDLER\]**: [`ErrorHandler`](ErrorHandler.md)
 
-#### Defined in
+Defined in: [core/src/lib/types.ts:305](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L305)
 
-[lib/types.ts:274](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L274)
+***
 
-___
+### \[MAPPINGS\]
 
-### [MAPPINGS]
+> **\[MAPPINGS\]**: `Map`\<[`MetadataIdentifier`](../type-aliases/MetadataIdentifier.md)\<`any`\>, `Map`\<[`MetadataIdentifier`](../type-aliases/MetadataIdentifier.md)\<`any`\>, [`Mapping`](../type-aliases/Mapping.md)\<`any`, `any`\>\>\>
 
-• **[MAPPINGS]**: `Map`<[`MetadataIdentifier`](../modules.md#metadataidentifier)<`any`\>, `Map`<[`MetadataIdentifier`](../modules.md#metadataidentifier)<`any`\>, [`Mapping`](../modules.md#mapping)<`any`, `any`\>\>\>
+Defined in: [core/src/lib/types.ts:306](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L306)
 
-#### Defined in
+***
 
-[lib/types.ts:275](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L275)
+### \[METADATA\_MAP\]
 
-___
+> **\[METADATA\_MAP\]**: `Map`\<[`MetadataIdentifier`](../type-aliases/MetadataIdentifier.md)\<`any`\>, [`Metadata`](../type-aliases/Metadata.md)[]\>
 
-### [METADATA\_MAP]
+Defined in: [core/src/lib/types.ts:309](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L309)
 
-• **[METADATA\_MAP]**: `Map`<[`MetadataIdentifier`](../modules.md#metadataidentifier)<`any`\>, [`Metadata`](../modules.md#metadata)[]\>
+***
 
-#### Defined in
+### \[METADATA\_OBJECT\_MAP\]
 
-[lib/types.ts:278](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L278)
+> **\[METADATA\_OBJECT\_MAP\]**: `Map`\<[`MetadataIdentifier`](../type-aliases/MetadataIdentifier.md)\<`any`\>, \[`Record`\<`string`, `unknown`\>, `Record`\<`string`, `unknown`\>\]\>
 
-___
+Defined in: [core/src/lib/types.ts:310](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L310)
 
-### [METADATA\_OBJECT\_MAP]
+***
 
-• **[METADATA\_OBJECT\_MAP]**: `Map`<[`MetadataIdentifier`](../modules.md#metadataidentifier)<`any`\>, [asSource?: Record<string, unknown\>, asDestination?: Record<string, unknown\>]\>
+### \[NAMING\_CONVENTIONS\]
 
-#### Defined in
+> **\[NAMING\_CONVENTIONS\]**: [`NamingConventionInput`](../type-aliases/NamingConventionInput.md)
 
-[lib/types.ts:279](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L279)
+Defined in: [core/src/lib/types.ts:308](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L308)
 
-___
+***
 
-### [NAMING\_CONVENTIONS]
+### \[PROFILE\_CONFIGURATION\_CONTEXT\]
 
-• **[NAMING\_CONVENTIONS]**: [`NamingConventionInput`](../modules.md#namingconventioninput)
+> **\[PROFILE\_CONFIGURATION\_CONTEXT\]**: `Set`\<[`MappingConfiguration`](../type-aliases/MappingConfiguration.md)\<`any`, `any`\>\>
 
-#### Defined in
+Defined in: [core/src/lib/types.ts:319](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L319)
 
-[lib/types.ts:277](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L277)
+***
 
-___
+### \[RECURSIVE\_COUNT\]
 
-### [PROFILE\_CONFIGURATION\_CONTEXT]
+> **\[RECURSIVE\_COUNT\]**: `Map`\<[`MetadataIdentifier`](../type-aliases/MetadataIdentifier.md)\<`any`\>, [`ArrayKeyedMap`](../type-aliases/ArrayKeyedMap.md)\>
 
-• **[PROFILE\_CONFIGURATION\_CONTEXT]**: `Set`<[`MappingConfiguration`](../modules.md#mappingconfiguration)<`any`, `any`\>\>
+Defined in: [core/src/lib/types.ts:318](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L318)
 
-#### Defined in
+***
 
-[lib/types.ts:288](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L288)
+### \[RECURSIVE\_DEPTH\]
 
-___
+> **\[RECURSIVE\_DEPTH\]**: `Map`\<[`MetadataIdentifier`](../type-aliases/MetadataIdentifier.md)\<`any`\>, [`ArrayKeyedMap`](../type-aliases/ArrayKeyedMap.md)\>
 
-### [RECURSIVE\_COUNT]
+Defined in: [core/src/lib/types.ts:317](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L317)
 
-• **[RECURSIVE\_COUNT]**: `Map`<[`MetadataIdentifier`](../modules.md#metadataidentifier)<`any`\>, [`ArrayKeyedMap`](../modules.md#arraykeyedmap)\>
+***
 
-#### Defined in
+### \[STRATEGY\]
 
-[lib/types.ts:287](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L287)
+> **\[STRATEGY\]**: [`MappingStrategy`](MappingStrategy.md)\<[`MetadataIdentifier`](../type-aliases/MetadataIdentifier.md)\<`any`\>\>
 
-___
-
-### [RECURSIVE\_DEPTH]
-
-• **[RECURSIVE\_DEPTH]**: `Map`<[`MetadataIdentifier`](../modules.md#metadataidentifier)<`any`\>, [`ArrayKeyedMap`](../modules.md#arraykeyedmap)\>
-
-#### Defined in
-
-[lib/types.ts:286](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L286)
-
-___
-
-### [STRATEGY]
-
-• **[STRATEGY]**: [`MappingStrategy`](MappingStrategy.md)<[`MetadataIdentifier`](../modules.md#metadataidentifier)<`any`\>\>
-
-#### Defined in
-
-[lib/types.ts:276](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L276)
+Defined in: [core/src/lib/types.ts:307](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L307)
 
 ## Methods
 
-### dispose
+### dispose()
 
-▸ **dispose**(): `void`
+> **dispose**(): `void`
+
+Defined in: [core/src/lib/types.ts:303](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L303)
 
 #### Returns
 
 `void`
 
-#### Defined in
+***
 
-[lib/types.ts:272](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L272)
+### map()
 
-___
+#### Call Signature
 
-### map
+> **map**\<`TSource`, `TDestination`\>(`sourceObject`, `sourceIdentifier`, `destinationIdentifier`, `options?`): `TDestination`
 
-▸ **map**<`TSource`, `TDestination`\>(`sourceObject`, `sourceIdentifier`, `destinationIdentifier`, `options?`): `TDestination`
+Defined in: [core/src/lib/types.ts:166](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L166)
 
-#### Type parameters
+##### Type Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](../modules.md#dictionary)<`TSource`\> |
-| `TDestination` | extends [`Dictionary`](../modules.md#dictionary)<`TDestination`\> |
+###### TSource
 
-#### Parameters
+`TSource` *extends* [`Dictionary`](../type-aliases/Dictionary.md)\<`TSource`\>
 
-| Name | Type |
-| :------ | :------ |
-| `sourceObject` | `TSource` |
-| `sourceIdentifier` | [`ModelIdentifier`](../modules.md#modelidentifier)<`TSource`\> |
-| `destinationIdentifier` | [`ModelIdentifier`](../modules.md#modelidentifier)<`TDestination`\> |
-| `options?` | [`MapOptions`](MapOptions.md)<`TSource`, `TDestination`, `Record`<`string`, `any`\>\> |
+###### TDestination
 
-#### Returns
+`TDestination` *extends* [`Dictionary`](../type-aliases/Dictionary.md)\<`TDestination`\>
 
-`TDestination`
+##### Parameters
 
-#### Defined in
-
-[lib/types.ts:144](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L144)
-
-▸ **map**<`TSource`\>(`sourceObject`, `identifier`, `options?`): `TSource`
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](../modules.md#dictionary)<`TSource`\> |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `sourceObject` | `TSource` |
-| `identifier` | [`ModelIdentifier`](../modules.md#modelidentifier)<`TSource`\> |
-| `options?` | [`MapOptions`](MapOptions.md)<`TSource`, `TSource`, `Record`<`string`, `any`\>\> |
-
-#### Returns
+###### sourceObject
 
 `TSource`
 
-#### Defined in
+###### sourceIdentifier
 
-[lib/types.ts:153](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L153)
+[`ModelIdentifier`](../type-aliases/ModelIdentifier.md)\<`TSource`\>
 
-___
+###### destinationIdentifier
 
-### mapArray
+[`ModelIdentifier`](../type-aliases/ModelIdentifier.md)\<`TDestination`\>
 
-▸ **mapArray**<`TSource`, `TDestination`\>(`sourceArray`, `sourceIdentifier`, `destinationIdentifier`, `options?`): `TDestination`[]
+###### options?
 
-#### Type parameters
+[`MapOptions`](MapOptions.md)\<`TSource`, `TDestination`, `Record`\<`string`, `unknown`\>\>
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](../modules.md#dictionary)<`TSource`\> |
-| `TDestination` | extends [`Dictionary`](../modules.md#dictionary)<`TDestination`\> |
+##### Returns
 
-#### Parameters
+`TDestination`
 
-| Name | Type |
-| :------ | :------ |
-| `sourceArray` | `TSource`[] |
-| `sourceIdentifier` | [`ModelIdentifier`](../modules.md#modelidentifier)<`TSource`\> |
-| `destinationIdentifier` | [`ModelIdentifier`](../modules.md#modelidentifier)<`TDestination`\> |
-| `options?` | [`MapOptions`](MapOptions.md)<`TSource`[], `TDestination`[], `Record`<`string`, `any`\>\> |
+#### Call Signature
 
-#### Returns
+> **map**\<`TSource`\>(`sourceObject`, `identifier`, `options?`): `TSource`
 
-`TDestination`[]
+Defined in: [core/src/lib/types.ts:175](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L175)
 
-#### Defined in
+##### Type Parameters
 
-[lib/types.ts:174](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L174)
+###### TSource
 
-▸ **mapArray**<`TSource`\>(`sourceArray`, `identifier`, `options?`): `TSource`[]
+`TSource` *extends* [`Dictionary`](../type-aliases/Dictionary.md)\<`TSource`\>
 
-#### Type parameters
+##### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](../modules.md#dictionary)<`TSource`\> |
+###### sourceObject
 
-#### Parameters
+`TSource`
 
-| Name | Type |
-| :------ | :------ |
-| `sourceArray` | `TSource`[] |
-| `identifier` | [`ModelIdentifier`](../modules.md#modelidentifier)<`TSource`\> |
-| `options?` | [`MapOptions`](MapOptions.md)<`TSource`[], `TSource`[], `Record`<`string`, `any`\>\> |
+###### identifier
 
-#### Returns
+[`ModelIdentifier`](../type-aliases/ModelIdentifier.md)\<`TSource`\>
+
+###### options?
+
+[`MapOptions`](MapOptions.md)\<`TSource`, `TSource`, `Record`\<`string`, `unknown`\>\>
+
+##### Returns
+
+`TSource`
+
+***
+
+### mapArray()
+
+#### Call Signature
+
+> **mapArray**\<`TSource`, `TDestination`\>(`sourceArray`, `sourceIdentifier`, `destinationIdentifier`, `options?`): `TDestination`[]
+
+Defined in: [core/src/lib/types.ts:205](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L205)
+
+##### Type Parameters
+
+###### TSource
+
+`TSource` *extends* [`Dictionary`](../type-aliases/Dictionary.md)\<`TSource`\>
+
+###### TDestination
+
+`TDestination` *extends* [`Dictionary`](../type-aliases/Dictionary.md)\<`TDestination`\>
+
+##### Parameters
+
+###### sourceArray
 
 `TSource`[]
 
-#### Defined in
+###### sourceIdentifier
 
-[lib/types.ts:183](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L183)
+[`ModelIdentifier`](../type-aliases/ModelIdentifier.md)\<`TSource`\>
 
-___
+###### destinationIdentifier
 
-### mapArrayAsync
+[`ModelIdentifier`](../type-aliases/ModelIdentifier.md)\<`TDestination`\>
 
-▸ **mapArrayAsync**<`TSource`, `TDestination`\>(`sourceArray`, `sourceIdentifier`, `destinationIdentifier`, `options?`): `Promise`<`TDestination`[]\>
+###### options?
 
-#### Type parameters
+[`MapOptions`](MapOptions.md)\<`TSource`[], `TDestination`[], `Record`\<`string`, `unknown`\>\>
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](../modules.md#dictionary)<`TSource`\> |
-| `TDestination` | extends [`Dictionary`](../modules.md#dictionary)<`TDestination`\> |
+##### Returns
 
-#### Parameters
+`TDestination`[]
 
-| Name | Type |
-| :------ | :------ |
-| `sourceArray` | `TSource`[] |
-| `sourceIdentifier` | [`ModelIdentifier`](../modules.md#modelidentifier)<`TSource`\> |
-| `destinationIdentifier` | [`ModelIdentifier`](../modules.md#modelidentifier)<`TDestination`\> |
-| `options?` | [`MapOptions`](MapOptions.md)<`TSource`[], `TDestination`[], `Record`<`string`, `any`\>\> |
+#### Call Signature
 
-#### Returns
+> **mapArray**\<`TSource`\>(`sourceArray`, `identifier`, `options?`): `TSource`[]
 
-`Promise`<`TDestination`[]\>
+Defined in: [core/src/lib/types.ts:214](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L214)
 
-#### Defined in
+##### Type Parameters
 
-[lib/types.ts:189](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L189)
+###### TSource
 
-▸ **mapArrayAsync**<`TSource`\>(`sourceArray`, `identifier`, `options?`): `Promise`<`TSource`[]\>
+`TSource` *extends* [`Dictionary`](../type-aliases/Dictionary.md)\<`TSource`\>
 
-#### Type parameters
+##### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](../modules.md#dictionary)<`TSource`\> |
+###### sourceArray
 
-#### Parameters
+`TSource`[]
 
-| Name | Type |
-| :------ | :------ |
-| `sourceArray` | `TSource`[] |
-| `identifier` | [`ModelIdentifier`](../modules.md#modelidentifier)<`TSource`\> |
-| `options?` | [`MapOptions`](MapOptions.md)<`TSource`[], `TSource`[], `Record`<`string`, `any`\>\> |
+###### identifier
 
-#### Returns
+[`ModelIdentifier`](../type-aliases/ModelIdentifier.md)\<`TSource`\>
 
-`Promise`<`TSource`[]\>
+###### options?
 
-#### Defined in
+[`MapOptions`](MapOptions.md)\<`TSource`[], `TSource`[], `Record`\<`string`, `unknown`\>\>
 
-[lib/types.ts:198](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L198)
+##### Returns
 
-___
+`TSource`[]
 
-### mapAsync
+***
 
-▸ **mapAsync**<`TSource`, `TDestination`\>(`sourceObject`, `sourceIdentifier`, `destinationIdentifier`, `options?`): `Promise`<`TDestination`\>
+### mapArrayAsync()
 
-#### Type parameters
+#### Call Signature
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](../modules.md#dictionary)<`TSource`\> |
-| `TDestination` | extends [`Dictionary`](../modules.md#dictionary)<`TDestination`\> |
+> **mapArrayAsync**\<`TSource`, `TDestination`\>(`sourceArray`, `sourceIdentifier`, `destinationIdentifier`, `options?`): `Promise`\<`TDestination`[]\>
 
-#### Parameters
+Defined in: [core/src/lib/types.ts:220](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L220)
 
-| Name | Type |
-| :------ | :------ |
-| `sourceObject` | `TSource` |
-| `sourceIdentifier` | [`ModelIdentifier`](../modules.md#modelidentifier)<`TSource`\> |
-| `destinationIdentifier` | [`ModelIdentifier`](../modules.md#modelidentifier)<`TDestination`\> |
-| `options?` | [`MapOptions`](MapOptions.md)<`TSource`, `TDestination`, `Record`<`string`, `any`\>\> |
+##### Type Parameters
 
-#### Returns
+###### TSource
 
-`Promise`<`TDestination`\>
+`TSource` *extends* [`Dictionary`](../type-aliases/Dictionary.md)\<`TSource`\>
 
-#### Defined in
+###### TDestination
 
-[lib/types.ts:159](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L159)
+`TDestination` *extends* [`Dictionary`](../type-aliases/Dictionary.md)\<`TDestination`\>
 
-▸ **mapAsync**<`TSource`\>(`sourceObject`, `identifier`, `options?`): `Promise`<`TSource`\>
+##### Parameters
 
-#### Type parameters
+###### sourceArray
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](../modules.md#dictionary)<`TSource`\> |
+`TSource`[]
 
-#### Parameters
+###### sourceIdentifier
 
-| Name | Type |
-| :------ | :------ |
-| `sourceObject` | `TSource` |
-| `identifier` | [`ModelIdentifier`](../modules.md#modelidentifier)<`TSource`\> |
-| `options?` | [`MapOptions`](MapOptions.md)<`TSource`, `TSource`, `Record`<`string`, `any`\>\> |
+[`ModelIdentifier`](../type-aliases/ModelIdentifier.md)\<`TSource`\>
 
-#### Returns
+###### destinationIdentifier
 
-`Promise`<`TSource`\>
+[`ModelIdentifier`](../type-aliases/ModelIdentifier.md)\<`TDestination`\>
 
-#### Defined in
+###### options?
 
-[lib/types.ts:168](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L168)
+[`MapOptions`](MapOptions.md)\<`TSource`[], `TDestination`[], `Record`\<`string`, `unknown`\>\>
 
-___
+##### Returns
 
-### mutate
+`Promise`\<`TDestination`[]\>
 
-▸ **mutate**<`TSource`, `TDestination`\>(`sourceObject`, `destinationObject`, `sourceIdentifier`, `destinationIdentifier`, `options?`): `void`
+#### Call Signature
 
-#### Type parameters
+> **mapArrayAsync**\<`TSource`\>(`sourceArray`, `identifier`, `options?`): `Promise`\<`TSource`[]\>
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](../modules.md#dictionary)<`TSource`\> |
-| `TDestination` | extends [`Dictionary`](../modules.md#dictionary)<`TDestination`\> |
+Defined in: [core/src/lib/types.ts:229](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L229)
 
-#### Parameters
+##### Type Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `sourceObject` | `TSource` |
-| `destinationObject` | `TDestination` |
-| `sourceIdentifier` | [`ModelIdentifier`](../modules.md#modelidentifier)<`TSource`\> |
-| `destinationIdentifier` | [`ModelIdentifier`](../modules.md#modelidentifier)<`TDestination`\> |
-| `options?` | [`MapOptions`](MapOptions.md)<`TSource`, `TDestination`, `Record`<`string`, `any`\>\> |
+###### TSource
 
-#### Returns
+`TSource` *extends* [`Dictionary`](../type-aliases/Dictionary.md)\<`TSource`\>
+
+##### Parameters
+
+###### sourceArray
+
+`TSource`[]
+
+###### identifier
+
+[`ModelIdentifier`](../type-aliases/ModelIdentifier.md)\<`TSource`\>
+
+###### options?
+
+[`MapOptions`](MapOptions.md)\<`TSource`[], `TSource`[], `Record`\<`string`, `unknown`\>\>
+
+##### Returns
+
+`Promise`\<`TSource`[]\>
+
+***
+
+### mapAsync()
+
+#### Call Signature
+
+> **mapAsync**\<`TSource`, `TDestination`\>(`sourceObject`, `sourceIdentifier`, `destinationIdentifier`, `options?`): `Promise`\<`TDestination`\>
+
+Defined in: [core/src/lib/types.ts:190](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L190)
+
+Maps `sourceObject` and resolves with the result.
+
+##### Type Parameters
+
+###### TSource
+
+`TSource` *extends* [`Dictionary`](../type-aliases/Dictionary.md)\<`TSource`\>
+
+###### TDestination
+
+`TDestination` *extends* [`Dictionary`](../type-aliases/Dictionary.md)\<`TDestination`\>
+
+##### Parameters
+
+###### sourceObject
+
+`TSource`
+
+###### sourceIdentifier
+
+[`ModelIdentifier`](../type-aliases/ModelIdentifier.md)\<`TSource`\>
+
+###### destinationIdentifier
+
+[`ModelIdentifier`](../type-aliases/ModelIdentifier.md)\<`TDestination`\>
+
+###### options?
+
+[`MapOptions`](MapOptions.md)\<`TSource`, `TDestination`, `Record`\<`string`, `unknown`\>\>
+
+##### Returns
+
+`Promise`\<`TDestination`\>
+
+##### Remarks
+
+Member mapping itself is synchronous, but any `beforeMap`/`afterMap`
+callbacks that return a promise are collected and awaited before the
+returned promise resolves. Use the synchronous [map](#map) when no async
+callbacks are involved.
+
+#### Call Signature
+
+> **mapAsync**\<`TSource`\>(`sourceObject`, `identifier`, `options?`): `Promise`\<`TSource`\>
+
+Defined in: [core/src/lib/types.ts:199](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L199)
+
+##### Type Parameters
+
+###### TSource
+
+`TSource` *extends* [`Dictionary`](../type-aliases/Dictionary.md)\<`TSource`\>
+
+##### Parameters
+
+###### sourceObject
+
+`TSource`
+
+###### identifier
+
+[`ModelIdentifier`](../type-aliases/ModelIdentifier.md)\<`TSource`\>
+
+###### options?
+
+[`MapOptions`](MapOptions.md)\<`TSource`, `TSource`, `Record`\<`string`, `unknown`\>\>
+
+##### Returns
+
+`Promise`\<`TSource`\>
+
+***
+
+### mutate()
+
+#### Call Signature
+
+> **mutate**\<`TSource`, `TDestination`\>(`sourceObject`, `destinationObject`, `sourceIdentifier`, `destinationIdentifier`, `options?`): `void`
+
+Defined in: [core/src/lib/types.ts:235](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L235)
+
+##### Type Parameters
+
+###### TSource
+
+`TSource` *extends* [`Dictionary`](../type-aliases/Dictionary.md)\<`TSource`\>
+
+###### TDestination
+
+`TDestination` *extends* [`Dictionary`](../type-aliases/Dictionary.md)\<`TDestination`\>
+
+##### Parameters
+
+###### sourceObject
+
+`TSource`
+
+###### destinationObject
+
+`TDestination`
+
+###### sourceIdentifier
+
+[`ModelIdentifier`](../type-aliases/ModelIdentifier.md)\<`TSource`\>
+
+###### destinationIdentifier
+
+[`ModelIdentifier`](../type-aliases/ModelIdentifier.md)\<`TDestination`\>
+
+###### options?
+
+[`MapOptions`](MapOptions.md)\<`TSource`, `TDestination`, `Record`\<`string`, `unknown`\>\>
+
+##### Returns
 
 `void`
 
-#### Defined in
+#### Call Signature
 
-[lib/types.ts:204](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L204)
+> **mutate**\<`TSource`\>(`sourceObject`, `destinationObject`, `identifier`, `options?`): `void`
 
-▸ **mutate**<`TSource`\>(`sourceObject`, `destinationObject`, `identifier`, `options?`): `void`
+Defined in: [core/src/lib/types.ts:245](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L245)
 
-#### Type parameters
+##### Type Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](../modules.md#dictionary)<`TSource`\> |
+###### TSource
 
-#### Parameters
+`TSource` *extends* [`Dictionary`](../type-aliases/Dictionary.md)\<`TSource`\>
 
-| Name | Type |
-| :------ | :------ |
-| `sourceObject` | `TSource` |
-| `destinationObject` | `TSource` |
-| `identifier` | [`ModelIdentifier`](../modules.md#modelidentifier)<`TSource`\> |
-| `options?` | [`MapOptions`](MapOptions.md)<`TSource`, `TSource`, `Record`<`string`, `any`\>\> |
+##### Parameters
 
-#### Returns
+###### sourceObject
 
-`void`
+`TSource`
 
-#### Defined in
+###### destinationObject
 
-[lib/types.ts:214](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L214)
+`TSource`
 
-___
+###### identifier
 
-### mutateArray
+[`ModelIdentifier`](../type-aliases/ModelIdentifier.md)\<`TSource`\>
 
-▸ **mutateArray**<`TSource`, `TDestination`\>(`sourceArray`, `destinationArray`, `sourceIdentifier`, `destinationIdentifier`, `options?`): `void`
+###### options?
 
-#### Type parameters
+[`MapOptions`](MapOptions.md)\<`TSource`, `TSource`, `Record`\<`string`, `unknown`\>\>
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](../modules.md#dictionary)<`TSource`\> |
-| `TDestination` | extends [`Dictionary`](../modules.md#dictionary)<`TDestination`\> |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `sourceArray` | `TSource`[] |
-| `destinationArray` | `TDestination`[] |
-| `sourceIdentifier` | [`ModelIdentifier`](../modules.md#modelidentifier)<`TSource`\> |
-| `destinationIdentifier` | [`ModelIdentifier`](../modules.md#modelidentifier)<`TDestination`\> |
-| `options?` | [`MapOptions`](MapOptions.md)<`TSource`[], `TDestination`[], `Record`<`string`, `any`\>\> |
-
-#### Returns
+##### Returns
 
 `void`
 
-#### Defined in
+***
 
-[lib/types.ts:238](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L238)
+### mutateArray()
 
-▸ **mutateArray**<`TSource`\>(`sourceArray`, `destinationArray`, `identifier`, `options?`): `void`
+#### Call Signature
 
-#### Type parameters
+> **mutateArray**\<`TSource`, `TDestination`\>(`sourceArray`, `destinationArray`, `sourceIdentifier`, `destinationIdentifier`, `options?`): `void`
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](../modules.md#dictionary)<`TSource`\> |
+Defined in: [core/src/lib/types.ts:269](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L269)
 
-#### Parameters
+##### Type Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `sourceArray` | `TSource`[] |
-| `destinationArray` | `TSource`[] |
-| `identifier` | [`ModelIdentifier`](../modules.md#modelidentifier)<`TSource`\> |
-| `options?` | [`MapOptions`](MapOptions.md)<`TSource`[], `TSource`[], `Record`<`string`, `any`\>\> |
+###### TSource
 
-#### Returns
+`TSource` *extends* [`Dictionary`](../type-aliases/Dictionary.md)\<`TSource`\>
+
+###### TDestination
+
+`TDestination` *extends* [`Dictionary`](../type-aliases/Dictionary.md)\<`TDestination`\>
+
+##### Parameters
+
+###### sourceArray
+
+`TSource`[]
+
+###### destinationArray
+
+`TDestination`[]
+
+###### sourceIdentifier
+
+[`ModelIdentifier`](../type-aliases/ModelIdentifier.md)\<`TSource`\>
+
+###### destinationIdentifier
+
+[`ModelIdentifier`](../type-aliases/ModelIdentifier.md)\<`TDestination`\>
+
+###### options?
+
+[`MapOptions`](MapOptions.md)\<`TSource`[], `TDestination`[], `Record`\<`string`, `unknown`\>\>
+
+##### Returns
 
 `void`
 
-#### Defined in
+#### Call Signature
 
-[lib/types.ts:248](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L248)
+> **mutateArray**\<`TSource`\>(`sourceArray`, `destinationArray`, `identifier`, `options?`): `void`
 
-___
+Defined in: [core/src/lib/types.ts:279](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L279)
 
-### mutateArrayAsync
+##### Type Parameters
 
-▸ **mutateArrayAsync**<`TSource`, `TDestination`\>(`sourceArray`, `destinationArray`, `sourceIdentifier`, `destinationIdentifier`, `options?`): `Promise`<`void`\>
+###### TSource
 
-#### Type parameters
+`TSource` *extends* [`Dictionary`](../type-aliases/Dictionary.md)\<`TSource`\>
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](../modules.md#dictionary)<`TSource`\> |
-| `TDestination` | extends [`Dictionary`](../modules.md#dictionary)<`TDestination`\> |
+##### Parameters
 
-#### Parameters
+###### sourceArray
 
-| Name | Type |
-| :------ | :------ |
-| `sourceArray` | `TSource`[] |
-| `destinationArray` | `TDestination`[] |
-| `sourceIdentifier` | [`ModelIdentifier`](../modules.md#modelidentifier)<`TSource`\> |
-| `destinationIdentifier` | [`ModelIdentifier`](../modules.md#modelidentifier)<`TDestination`\> |
-| `options?` | [`MapOptions`](MapOptions.md)<`TSource`[], `TDestination`[], `Record`<`string`, `any`\>\> |
+`TSource`[]
 
-#### Returns
+###### destinationArray
 
-`Promise`<`void`\>
+`TSource`[]
 
-#### Defined in
+###### identifier
 
-[lib/types.ts:255](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L255)
+[`ModelIdentifier`](../type-aliases/ModelIdentifier.md)\<`TSource`\>
 
-▸ **mutateArrayAsync**<`TSource`\>(`sourceArray`, `destinationArray`, `identifier`, `options?`): `Promise`<`void`\>
+###### options?
 
-#### Type parameters
+[`MapOptions`](MapOptions.md)\<`TSource`[], `TSource`[], `Record`\<`string`, `unknown`\>\>
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](../modules.md#dictionary)<`TSource`\> |
+##### Returns
 
-#### Parameters
+`void`
 
-| Name | Type |
-| :------ | :------ |
-| `sourceArray` | `TSource`[] |
-| `destinationArray` | `TSource`[] |
-| `identifier` | [`ModelIdentifier`](../modules.md#modelidentifier)<`TSource`\> |
-| `options?` | [`MapOptions`](MapOptions.md)<`TSource`[], `TSource`[], `Record`<`string`, `any`\>\> |
+***
 
-#### Returns
+### mutateArrayAsync()
 
-`Promise`<`void`\>
+#### Call Signature
 
-#### Defined in
+> **mutateArrayAsync**\<`TSource`, `TDestination`\>(`sourceArray`, `destinationArray`, `sourceIdentifier`, `destinationIdentifier`, `options?`): `Promise`\<`void`\>
 
-[lib/types.ts:265](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L265)
+Defined in: [core/src/lib/types.ts:286](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L286)
 
-___
+##### Type Parameters
 
-### mutateAsync
+###### TSource
 
-▸ **mutateAsync**<`TSource`, `TDestination`\>(`sourceObject`, `destinationObject`, `sourceIdentifier`, `destinationIdentifier`, `options?`): `Promise`<`void`\>
+`TSource` *extends* [`Dictionary`](../type-aliases/Dictionary.md)\<`TSource`\>
 
-#### Type parameters
+###### TDestination
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](../modules.md#dictionary)<`TSource`\> |
-| `TDestination` | extends [`Dictionary`](../modules.md#dictionary)<`TDestination`\> |
+`TDestination` *extends* [`Dictionary`](../type-aliases/Dictionary.md)\<`TDestination`\>
 
-#### Parameters
+##### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `sourceObject` | `TSource` |
-| `destinationObject` | `TDestination` |
-| `sourceIdentifier` | [`ModelIdentifier`](../modules.md#modelidentifier)<`TSource`\> |
-| `destinationIdentifier` | [`ModelIdentifier`](../modules.md#modelidentifier)<`TDestination`\> |
-| `options?` | [`MapOptions`](MapOptions.md)<`TSource`, `TDestination`, `Record`<`string`, `any`\>\> |
+###### sourceArray
 
-#### Returns
+`TSource`[]
 
-`Promise`<`void`\>
+###### destinationArray
 
-#### Defined in
+`TDestination`[]
 
-[lib/types.ts:221](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L221)
+###### sourceIdentifier
 
-▸ **mutateAsync**<`TSource`\>(`sourceObject`, `destinationObject`, `identifier`, `options?`): `Promise`<`void`\>
+[`ModelIdentifier`](../type-aliases/ModelIdentifier.md)\<`TSource`\>
 
-#### Type parameters
+###### destinationIdentifier
 
-| Name | Type |
-| :------ | :------ |
-| `TSource` | extends [`Dictionary`](../modules.md#dictionary)<`TSource`\> |
+[`ModelIdentifier`](../type-aliases/ModelIdentifier.md)\<`TDestination`\>
 
-#### Parameters
+###### options?
 
-| Name | Type |
-| :------ | :------ |
-| `sourceObject` | `TSource` |
-| `destinationObject` | `TSource` |
-| `identifier` | [`ModelIdentifier`](../modules.md#modelidentifier)<`TSource`\> |
-| `options?` | [`MapOptions`](MapOptions.md)<`TSource`, `TSource`, `Record`<`string`, `any`\>\> |
+[`MapOptions`](MapOptions.md)\<`TSource`[], `TDestination`[], `Record`\<`string`, `unknown`\>\>
 
-#### Returns
+##### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
-#### Defined in
+#### Call Signature
 
-[lib/types.ts:231](https://github.com/nartc/mapper/blob/efc4cb9d/packages/core/src/lib/types.ts#L231)
+> **mutateArrayAsync**\<`TSource`\>(`sourceArray`, `destinationArray`, `identifier`, `options?`): `Promise`\<`void`\>
+
+Defined in: [core/src/lib/types.ts:296](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L296)
+
+##### Type Parameters
+
+###### TSource
+
+`TSource` *extends* [`Dictionary`](../type-aliases/Dictionary.md)\<`TSource`\>
+
+##### Parameters
+
+###### sourceArray
+
+`TSource`[]
+
+###### destinationArray
+
+`TSource`[]
+
+###### identifier
+
+[`ModelIdentifier`](../type-aliases/ModelIdentifier.md)\<`TSource`\>
+
+###### options?
+
+[`MapOptions`](MapOptions.md)\<`TSource`[], `TSource`[], `Record`\<`string`, `unknown`\>\>
+
+##### Returns
+
+`Promise`\<`void`\>
+
+***
+
+### mutateAsync()
+
+#### Call Signature
+
+> **mutateAsync**\<`TSource`, `TDestination`\>(`sourceObject`, `destinationObject`, `sourceIdentifier`, `destinationIdentifier`, `options?`): `Promise`\<`void`\>
+
+Defined in: [core/src/lib/types.ts:252](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L252)
+
+##### Type Parameters
+
+###### TSource
+
+`TSource` *extends* [`Dictionary`](../type-aliases/Dictionary.md)\<`TSource`\>
+
+###### TDestination
+
+`TDestination` *extends* [`Dictionary`](../type-aliases/Dictionary.md)\<`TDestination`\>
+
+##### Parameters
+
+###### sourceObject
+
+`TSource`
+
+###### destinationObject
+
+`TDestination`
+
+###### sourceIdentifier
+
+[`ModelIdentifier`](../type-aliases/ModelIdentifier.md)\<`TSource`\>
+
+###### destinationIdentifier
+
+[`ModelIdentifier`](../type-aliases/ModelIdentifier.md)\<`TDestination`\>
+
+###### options?
+
+[`MapOptions`](MapOptions.md)\<`TSource`, `TDestination`, `Record`\<`string`, `unknown`\>\>
+
+##### Returns
+
+`Promise`\<`void`\>
+
+#### Call Signature
+
+> **mutateAsync**\<`TSource`\>(`sourceObject`, `destinationObject`, `identifier`, `options?`): `Promise`\<`void`\>
+
+Defined in: [core/src/lib/types.ts:262](https://github.com/nartc/mapper/blob/b36ab9f978a051efd50c6c1edce5c764c9410d35/packages/core/src/lib/types.ts#L262)
+
+##### Type Parameters
+
+###### TSource
+
+`TSource` *extends* [`Dictionary`](../type-aliases/Dictionary.md)\<`TSource`\>
+
+##### Parameters
+
+###### sourceObject
+
+`TSource`
+
+###### destinationObject
+
+`TSource`
+
+###### identifier
+
+[`ModelIdentifier`](../type-aliases/ModelIdentifier.md)\<`TSource`\>
+
+###### options?
+
+[`MapOptions`](MapOptions.md)\<`TSource`, `TSource`, `Record`\<`string`, `unknown`\>\>
+
+##### Returns
+
+`Promise`\<`void`\>

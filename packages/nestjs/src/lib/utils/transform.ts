@@ -17,18 +17,18 @@ export function shouldSkipTransform<
     return !mapper || !to || !from;
 }
 
-export function transformArray<
+export async function transformArrayAsync<
     TSource extends Dictionary<TSource>,
     TDestination extends Dictionary<TDestination>
 >(
     value: TSource[],
-    mapper: Mapper | undefined,
+    mapper: Mapper,
     from: ModelIdentifier<TSource>,
     to: ModelIdentifier<TDestination>,
     options?: MapOptions<TSource[], TDestination[]>
-) {
+): Promise<TSource[] | TDestination[]> {
     if (!Array.isArray(value)) return value;
-    return mapper?.mapArray(value, from, to, options);
+    return mapper.mapArrayAsync(value, from, to, options);
 }
 
 export function getTransformOptions<

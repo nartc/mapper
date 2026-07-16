@@ -1,0 +1,14 @@
+{
+  "$schema": "./node_modules/typedoc-plugin-markdown/typedoc-plugin-markdown.schema.json",
+  "plugin": ["typedoc-plugin-markdown"],
+  "readme": "none",
+  "router": "member",
+  "entryFileName": "index.md",
+  "cleanOutputDir": true,
+  "excludeInternal": true,
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "gitRemote": "origin",
+  "gitRevision": "main",
+  "hideBreadcrumbs": true
+}

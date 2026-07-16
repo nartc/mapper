@@ -1,0 +1,52 @@
+name: Documentation
+
+on:
+    workflow_dispatch:
+    push:
+        branches: [main]
+        paths:
+            - '.github/workflows/docs.yml'
+            - 'packages/docs/**'
+            - 'packages/*/package.json'
+            - 'packages/*/src/**/*.ts'
+            - 'packages/*/tsconfig*.json'
+            - 'pnpm-lock.yaml'
+            - 'pnpm-workspace.yaml'
+            - 'tsconfig.base.json'
+
+permissions:
+    contents: write
+
+concurrency:
+    group: documentation-deploy
+    cancel-in-progress: true
+
+jobs:
+    build-docs:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: '22.14.0'
+
+            - name: Enable Corepack
+              run: corepack enable
+
+            - name: Install workspace dependencies
+              run: pnpm install --frozen-lockfile
+
+            - name: Build Blume documentation
+              run: pnpm --filter docs build
+
+            - name: Publish docs branch
+              if: github.ref == 'refs/heads/main'
+              uses: peaceiris/actions-gh-pages@v4
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  publish_branch: docs
+                  publish_dir: ./packages/docs/dist
+                  force_orphan: true

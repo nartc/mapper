@@ -1,2 +1,9 @@
 .blume/
 dist/
+docs/api/classes/
+docs/api/core/
+docs/api/mikro/
+docs/api/nestjs/
+docs/api/pojos/
+docs/api/sequelize/
+.blume-verify/

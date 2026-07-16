@@ -1,0 +1,22 @@
+# Docusaurus mounted authored and generated documentation under /docs.
+# Keep symbol routes stable while removing that prefix.
+/docs/getting-started/migrate-to-automapper-v8 /getting-started/migrate-v8 301!
+/docs/misc/fake-async /misc/async-mapping 301!
+/docs/fundamentals/auto-flattening /fundamentals/naming-convention#auto-flattening 301!
+/fundamentals/auto-flattening /fundamentals/naming-convention#auto-flattening 301!
+
+# TypeDoc 0.28 replaced the former package module pages with package indexes.
+/docs/api/core/modules /api/core 301!
+/docs/api/classes/modules /api/classes 301!
+/docs/api/pojos/modules /api/pojos 301!
+/docs/api/mikro/modules /api/mikro 301!
+/docs/api/sequelize/modules /api/sequelize 301!
+/docs/api/nestjs/modules /api/nestjs 301!
+/docs/api/core/enums/* /api/core/enumerations/:splat 301!
+
+/docs /getting-started/overview 301!
+/docs/* /:splat 301!
+
+# The Docusaurus blog contained scaffold content; releases now live here.
+/blog /changelog 301!
+/blog/* /changelog 301!

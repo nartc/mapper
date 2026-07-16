@@ -1,0 +1,32 @@
+---
+title: AutoMapper 9
+type: changelog
+date: 2026-07-15
+changelog:
+  version: 9.0.0
+  date: 2026-07-15
+  category: Major release
+---
+
+AutoMapper 9 moves the package family to a modern ESM and Node.js baseline, adds genuine asynchronous mapping, and introduces stronger runtime contracts.
+
+## Highlights
+
+- Async map and mutation APIs now await promise-returning member resolvers and lifecycle callbacks.
+- NestJS `MapInterceptor` and `MapPipe` await asynchronous object and array mappings.
+- `beforeMapArray()` and `afterMapArray()` configure collection-wide lifecycle work.
+- `AutoMapperError`, `MappingNotFoundError`, and `MapMemberError` make mapper failures distinguishable and inspectable.
+- `AutoMapperLogger` supports additional log levels, repeatable configuration, restoration, and reset.
+- Class identifiers accept abstract classes and classes with non-public constructors.
+- Mapping plans are compiled when mappings are created, reducing repeated per-object work.
+
+## Compatibility
+
+- Node.js 20 or later is required.
+- Packages are ESM-only.
+- NestJS 10 and 11 are supported.
+- MikroORM 6 is supported.
+- Sequelize 6 remains supported.
+- `reflect-metadata` 0.1.14 and 0.2 releases are accepted.
+
+Read [Migrating to AutoMapper 9](/getting-started/migrate-v9) for code examples and the upgrade checklist.

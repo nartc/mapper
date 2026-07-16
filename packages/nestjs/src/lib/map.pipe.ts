@@ -11,9 +11,14 @@ import { memoize } from './utils/memoize';
 import {
     getTransformOptions,
     shouldSkipTransform,
-    transformArray,
+    transformArrayAsync,
 } from './utils/transform';
 
+/**
+ * Maps request bodies or query values with synchronous or asynchronous mappings.
+ * Promise-returning member resolvers and callbacks are awaited, and mapping
+ * errors propagate through Nest's request pipeline.
+ */
 export const MapPipe: <
     TSource extends Dictionary<TSource>,
     TDestination extends Dictionary<TDestination>
@@ -47,10 +52,10 @@ function createMapPipe<
             private readonly mapper?: Mapper
         ) {}
 
-        transform(
+        async transform(
             value: TSource | TSource[],
             { type }: ArgumentMetadata
-        ): TSource | TSource[] | TDestination | TDestination[] {
+        ): Promise<TSource | TSource[] | TDestination | TDestination[]> {
             if (
                 shouldSkipTransform(this.mapper, from, to) ||
                 (type !== 'body' && type !== 'query')
@@ -58,29 +63,25 @@ function createMapPipe<
                 return value;
             }
 
-            try {
-                if (isArray) {
-                    return transformArray(
-                        value as TSource[],
-                        this.mapper,
-                        from,
-                        to,
-                        transformedMapOptions as unknown as MapOptions<
-                            TSource[],
-                            TDestination[]
-                        >
-                    ) as TDestination[];
-                }
-
-                return this.mapper?.map(
-                    value as TSource,
+            if (isArray) {
+                return transformArrayAsync(
+                    value as TSource[],
+                    this.mapper!,
                     from,
                     to,
-                    transformedMapOptions
-                ) as TDestination;
-            } catch {
-                return value;
+                    transformedMapOptions as unknown as MapOptions<
+                        TSource[],
+                        TDestination[]
+                    >
+                );
             }
+
+            return this.mapper!.mapAsync(
+                value as TSource,
+                from,
+                to,
+                transformedMapOptions
+            );
         }
     }
 

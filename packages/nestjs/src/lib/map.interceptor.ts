@@ -12,15 +12,20 @@ import type {
 } from '@nestjs/common';
 import { mixin, Optional } from '@nestjs/common';
 import type { Observable } from 'rxjs';
-import { map } from 'rxjs';
+import { concatMap } from 'rxjs';
 import { InjectMapper } from './di/inject-mapper';
 import { memoize } from './utils/memoize';
 import {
     getTransformOptions,
     shouldSkipTransform,
-    transformArray,
+    transformArrayAsync,
 } from './utils/transform';
 
+/**
+ * Maps route-handler responses with synchronous or asynchronous mappings.
+ * Promise-returning member resolvers and callbacks are awaited before the
+ * response is emitted, and mapping errors propagate through the response stream.
+ */
 export const MapInterceptor: <
     TSource extends Dictionary<TSource>,
     TDestination extends Dictionary<TDestination>
@@ -54,41 +59,37 @@ function createMapInterceptor<
             private readonly mapper?: Mapper
         ) {}
 
-        async intercept(
+        intercept(
             context: ExecutionContext,
             next: CallHandler
-        ): Promise<Observable<unknown>> {
+        ): Observable<unknown> {
             if (shouldSkipTransform(this.mapper, from, to)) {
                 return next.handle();
             }
 
-            try {
-                return next.handle().pipe(
-                    map((response) => {
-                        if (isArray) {
-                            return transformArray(
-                                response,
-                                this.mapper,
-                                from,
-                                to,
-                                transformedMapOptions as unknown as MapOptions<
-                                    TSource[],
-                                    TDestination[]
-                                >
-                            );
-                        }
-
-                        return this.mapper?.map(
+            return next.handle().pipe(
+                concatMap((response) => {
+                    if (isArray) {
+                        return transformArrayAsync(
                             response,
+                            this.mapper!,
                             from,
                             to,
-                            transformedMapOptions
+                            transformedMapOptions as unknown as MapOptions<
+                                TSource[],
+                                TDestination[]
+                            >
                         );
-                    })
-                );
-            } catch {
-                return next.handle();
-            }
+                    }
+
+                    return this.mapper!.mapAsync(
+                        response,
+                        from,
+                        to,
+                        transformedMapOptions
+                    );
+                })
+            );
         }
     }
 

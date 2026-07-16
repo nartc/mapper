@@ -1,3 +1,15 @@
+## 9.0.2 (2026-07-16)
+
+### 🩹 Fixes
+
+- **docs:** declare astro dependency ([26cd4f42](https://github.com/nartc/mapper/commit/26cd4f42))
+- **docs:** declare config dependencies ([d7518b8d](https://github.com/nartc/mapper/commit/d7518b8d))
+- **workspace:** resolve strategy types from local core ([cb77d7d8](https://github.com/nartc/mapper/commit/cb77d7d8))
+
+### ❤️ Thank You
+
+- Chau @nartc
+
 
 
 ### [8.8.1](https://github.com/nartc/mapper/compare/8.8.0...8.8.1) (2024-01-23)

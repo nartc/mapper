@@ -191,6 +191,15 @@ importers:
 
   packages/docs:
     dependencies:
+      '@astrojs/mdx':
+        specifier: ^7.0.0
+        version: 7.0.3(@astrojs/markdown-satteri@0.3.4)(astro@7.0.9)
+      '@shikijs/twoslash':
+        specifier: ^4.2.0
+        version: 4.3.1(typescript@6.0.3)
+      '@tailwindcss/vite':
+        specifier: ^4
+        version: 4.3.2(vite@8.0.16)
       astro:
         specifier: ^7.0.2
         version: 7.0.9(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@22.20.0)(jiti@2.6.1)
@@ -206,13 +215,13 @@ importers:
         version: link:../core
       typedoc:
         specifier: 0.28.20
-        version: 0.28.20(@typescript/typescript6@6.0.2)
+        version: 0.28.20(typescript@6.0.3)
       typedoc-plugin-markdown:
         specifier: 4.12.0
         version: 4.12.0(typedoc@0.28.20)
       typescript:
-        specifier: npm:@typescript/typescript6@6.0.2
-        version: /@typescript/typescript6@6.0.2
+        specifier: 6.0.3
+        version: 6.0.3
 
   packages/integration-test:
     devDependencies:
@@ -17031,10 +17040,10 @@ packages:
     peerDependencies:
       typedoc: 0.28.x
     dependencies:
-      typedoc: 0.28.20(@typescript/typescript6@6.0.2)
+      typedoc: 0.28.20(typescript@6.0.3)
     dev: true
 
-  /typedoc@0.28.20(@typescript/typescript6@6.0.2):
+  /typedoc@0.28.20(typescript@6.0.3):
     resolution: {integrity: sha512-uSKqkh8Cr48vllnEy+jdaAgOeR6Y+QCBW7usgUsKj7gJEfR7stw9U/fE49LBnj2tPRKPY0c0EBJSWe9Appmplg==}
     engines: {node: '>= 18', pnpm: '>= 10'}
     hasBin: true
@@ -17045,7 +17054,7 @@ packages:
       lunr: 2.3.9
       markdown-it: 14.3.0
       minimatch: 10.2.5
-      typescript: /@typescript/typescript6@6.0.2
+      typescript: 6.0.3
       yaml: 2.9.0
     dev: true
 

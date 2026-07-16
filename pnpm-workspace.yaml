@@ -1,8 +1,6 @@
-# All library + test packages are workspace members so @automapper/* resolves via
-# pnpm symlinks + each package's `exports` (source) — no tsconfig `paths` needed.
-# The legacy documentation projects are deliberately excluded so Docusaurus's
-# old dependencies do not fan conflicting versions into the workspace. The
-# current Blume project at packages/docs is included below.
+# All library, test, and documentation packages are workspace members so
+# @automapper/* resolves via pnpm symlinks and each package's `exports` (source)
+# without tsconfig `paths`.
 packages:
     - 'packages/core'
     - 'packages/classes'

@@ -15,10 +15,10 @@ _packages
  \_integration-test
  \_nestjs
  \_pojos
- \_documentations
+ \_docs
 ```
 
--   `documentations`: This is the documentations site powered by Docusaurus.
+-   `docs`: documentation site powered by Blume
 -   `classes`: `classes` strategy
 -   `core`: `core` package
 -   `nestjs`: `nestjs` integration

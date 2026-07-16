@@ -25,18 +25,16 @@
                 "cwd": "packages/nestjs"
             }
         },
-        "publish-next": {
-            "executor": "nx:run-commands",
-            "options": {
-                "command": "npm publish --tag=next",
-                "cwd": "dist/packages/nestjs"
-            }
-        },
         "publish": {
             "executor": "nx:run-commands",
             "options": {
                 "command": "npm publish",
                 "cwd": "dist/packages/nestjs"
+            },
+            "configurations": {
+                "next": {
+                    "command": "npm publish --tag=next"
+                }
             }
         },
         "nx-release-publish": {

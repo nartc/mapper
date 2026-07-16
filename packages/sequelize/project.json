@@ -25,18 +25,16 @@
                 "cwd": "packages/sequelize"
             }
         },
-        "publish-next": {
-            "executor": "nx:run-commands",
-            "options": {
-                "command": "npm publish --tag=next",
-                "cwd": "dist/packages/sequelize"
-            }
-        },
         "publish": {
             "executor": "nx:run-commands",
             "options": {
                 "command": "npm publish",
                 "cwd": "dist/packages/sequelize"
+            },
+            "configurations": {
+                "next": {
+                    "command": "npm publish --tag=next"
+                }
             }
         },
         "nx-release-publish": {

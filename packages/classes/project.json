@@ -26,18 +26,16 @@
                 "cwd": "packages/classes"
             }
         },
-        "publish-next": {
-            "executor": "nx:run-commands",
-            "options": {
-                "command": "npm publish --tag=next",
-                "cwd": "dist/packages/classes"
-            }
-        },
         "publish": {
             "executor": "nx:run-commands",
             "options": {
                 "command": "npm publish",
                 "cwd": "dist/packages/classes"
+            },
+            "configurations": {
+                "next": {
+                    "command": "npm publish --tag=next"
+                }
             }
         },
         "nx-release-publish": {

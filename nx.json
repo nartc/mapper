@@ -46,6 +46,7 @@
             "preVersionCommand": "pnpm package",
             "currentVersionResolver": "git-tag",
             "preserveLocalDependencyProtocols": false,
+            "preserveMatchingDependencyRanges": false,
             "manifestRootsToUpdate": ["dist/packages/{projectName}"]
         },
         "conventionalCommits": {

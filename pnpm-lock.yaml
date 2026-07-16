@@ -173,9 +173,6 @@ importers:
 
   packages/classes:
     dependencies:
-      '@automapper/core':
-        specifier: ^9.0.0-alpha.0
-        version: 9.0.1
       reflect-metadata:
         specifier: 0.2.2
         version: 0.2.2
@@ -183,6 +180,9 @@ importers:
       '@automapper/classes':
         specifier: workspace:*
         version: 'link:'
+      '@automapper/core':
+        specifier: workspace:*
+        version: link:../core
       typescript:
         specifier: npm:@typescript/typescript6@6.0.2
         version: /@typescript/typescript6@6.0.2
@@ -268,10 +268,10 @@ importers:
         version: link:../core
 
   packages/pojos:
-    dependencies:
+    devDependencies:
       '@automapper/core':
-        specifier: ^9.0.0-alpha.0
-        version: 9.0.1
+        specifier: workspace:*
+        version: link:../core
 
   packages/sequelize:
     dependencies:
@@ -700,11 +700,6 @@ packages:
     resolution: {integrity: sha512-8oddpOae35pJsXPQXhTkM0ypfKPskVsh2bCxRtbf7e+/Epw2nReakFYpLKjZMEr75CsoF203PMnCocpfz0s69A==}
     dependencies:
       yaml: 2.9.0
-    dev: false
-
-  /@automapper/core@9.0.1:
-    resolution: {integrity: sha512-4UeLnSySmyyCAyMkH+FAOi2CJUYQU0kAKMLGNq+b07R4JWvzGTJR5xK9/Nn8j/LjCizcsblXZOqMBog8/kpQjA==}
-    engines: {node: '>=20.0.0'}
     dev: false
 
   /@babel/code-frame@7.29.7:

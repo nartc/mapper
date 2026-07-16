@@ -19,6 +19,7 @@
     },
     "devDependencies": {
         "@automapper/classes": "workspace:*",
+        "@automapper/core": "workspace:*",
         "typescript": "npm:@typescript/typescript6@6.0.2"
     },
     "sideEffects": false,

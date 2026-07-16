@@ -1,6 +1,6 @@
 {
     "name": "@automapper/mikro",
-    "version": "9.0.0-alpha.0",
+    "version": "0.0.0-replace",
     "type": "module",
     "exports": {
         ".": "./src/index.ts"

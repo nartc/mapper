@@ -42,15 +42,26 @@
             "mikro",
             "sequelize"
         ],
-        "projectsRelationship": "independent",
-        "releaseTagPattern": "{projectName}@{version}",
         "version": {
-            "conventionalCommits": true,
-            "preserveLocalDependencyProtocols": true
+            "preVersionCommand": "pnpm package",
+            "currentVersionResolver": "git-tag",
+            "preserveLocalDependencyProtocols": false,
+            "manifestRootsToUpdate": ["dist/packages/{projectName}"]
+        },
+        "conventionalCommits": {
+            "types": {
+                "refactor": {
+                    "changelog": true,
+                    "semverBump": "patch"
+                },
+                "perf": {
+                    "changelog": true,
+                    "semverBump": "patch"
+                }
+            }
         },
         "changelog": {
-            "automaticFromRef": true,
-            "projectChangelogs": { "createRelease": "github" }
+            "workspaceChangelog": { "createRelease": "github" }
         }
     },
     "pluginsConfig": { "@nx/js": { "analyzeSourceFiles": true } },

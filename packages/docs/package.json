@@ -12,6 +12,7 @@
     "doctor": "pnpm generate:api && blume doctor"
   },
   "dependencies": {
+    "astro": "^7.0.2",
     "blume": "^1.0.3"
   },
   "devDependencies": {

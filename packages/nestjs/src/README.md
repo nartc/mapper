@@ -69,6 +69,10 @@ export class AppModule {}
 
 `AutomapperModule` is a `Global` module so when `Mapper` object(s) are initialized, they're available across the application.
 
+## Interceptors and pipes
+
+`MapInterceptor` maps route-handler responses, while `MapPipe` maps incoming `@Body()` or `@Query()` values. Both support synchronous and asynchronous mappings, including promise-returning member resolvers and mapping callbacks. Mapping errors propagate through Nest's normal exception handling.
+
 ## Logging
 
 AutoMapper logs through the global `AutoMapperLogger` from `@automapper/core`.

@@ -1,0 +1,24 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "paths": {
+      "@automapper/classes": ["../classes/src/index.ts"],
+      "@automapper/classes/*": ["../classes/*"],
+      "@automapper/core": ["../core/src/index.ts"],
+      "@automapper/mikro": ["../mikro/src/index.ts"],
+      "@automapper/nestjs": ["../nestjs/src/index.ts"],
+      "@automapper/pojos": ["../pojos/src/index.ts"],
+      "@automapper/sequelize": ["../sequelize/src/index.ts"]
+    }
+  },
+  "include": [
+    "../classes/src/**/*.ts",
+    "../core/src/**/*.ts",
+    "../mikro/src/**/*.ts",
+    "../nestjs/src/**/*.ts",
+    "../pojos/src/**/*.ts",
+    "../sequelize/src/**/*.ts"
+  ],
+  "exclude": ["../**/*.spec.ts", "../**/*.test.ts"]
+}

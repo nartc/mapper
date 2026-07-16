@@ -1,0 +1,35 @@
+:root {
+  --blume-foreground: #172033;
+  --blume-muted: #edf4fa;
+  --blume-muted-foreground: #526579;
+  --blume-border: #d1dfeb;
+  --blume-accent-foreground: #ffffff;
+  --blume-action: var(--blume-accent);
+  --blume-action-foreground: #ffffff;
+  --blume-code-background: #f2f7fb;
+  --automapper-accent-soft: #edf5fc;
+}
+
+:root[data-theme="dark"] {
+  --blume-foreground: #e6edf5;
+  --blume-muted: #142231;
+  --blume-muted-foreground: #9aadc0;
+  --blume-border: #26394c;
+  --blume-accent-foreground: #07121e;
+  --blume-action: var(--blume-accent);
+  --blume-action-foreground: #07121e;
+  --blume-code-background: #0f1b27;
+  --automapper-accent-soft: #142a3e;
+}
+
+/* Give ordinary documentation links a clear TypeScript-blue affordance while
+   leaving component links and heading permalinks in control of their styles. */
+.prose :where(a:not([class])) {
+  color: var(--blume-accent);
+}
+
+/* Keep the section tabs understated, but make the active area easier to scan. */
+[data-blume-header] nav a[aria-current="page"] {
+  background-color: var(--automapper-accent-soft);
+  color: var(--blume-accent);
+}

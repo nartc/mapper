@@ -1,0 +1,107 @@
+---
+title: POJOs strategy
+description: Register explicit metadata for interfaces, type aliases, and plain JavaScript objects.
+sidebar:
+  label: "@automapper/pojos"
+---
+
+TypeScript interfaces do not exist at runtime. `@automapper/pojos` associates their property metadata with string or symbol identifiers.
+
+**npm**
+
+```shell
+npm install @automapper/core @automapper/pojos
+```
+
+**pnpm**
+
+```shell
+pnpm add @automapper/core @automapper/pojos
+```
+
+**Bun**
+
+```shell
+bun add @automapper/core @automapper/pojos
+```
+
+## Register metadata
+
+Metadata must be registered before `createMap()`:
+
+```ts
+interface User {
+  firstName: string;
+  lastName: string;
+}
+
+interface UserDto {
+  firstName: string;
+  lastName: string;
+  fullName: string;
+}
+
+PojosMetadataMap.create<User>('User', {
+  firstName: String,
+  lastName: String,
+});
+
+PojosMetadataMap.create<UserDto>('UserDto', {
+  firstName: String,
+  lastName: String,
+  fullName: String,
+});
+
+const mapper = createMapper({ strategyInitializer: pojos() });
+
+createMap<User, UserDto>(
+  mapper,
+  'User',
+  'UserDto',
+  forMember(
+    (destination) => destination.fullName,
+    mapFrom((source) => `${source.firstName} ${source.lastName}`),
+  ),
+);
+
+const dto = mapper.map<User, UserDto>(user, 'User', 'UserDto');
+```
+
+The generic on `PojosMetadataMap.create<User>()` checks metadata keys against the interface.
+
+## Nested and array metadata
+
+Register nested identifiers before their parent:
+
+```ts
+PojosMetadataMap.create<Address>('Address', {
+  street: String,
+});
+
+PojosMetadataMap.create<User>('User', {
+  name: String,
+  address: 'Address',
+  previousAddresses: ['Address'],
+  logins: [Date],
+});
+```
+
+String identifiers are normalized to global symbols internally. You may provide symbols directly when global string identity is undesirable.
+
+## Circular depth
+
+```ts
+PojosMetadataMap.create<User>('User', {
+  organization: { type: 'Organization', depth: 2 },
+});
+```
+
+The default depth is `1`.
+
+## Reset metadata
+
+`PojosMetadataMap` is process-wide. Reset it when tests need isolated metadata registration:
+
+```ts
+afterEach(() => PojosMetadataMap.reset());
+```

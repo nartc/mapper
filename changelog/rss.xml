@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+  <title>AutoMapper TypeScript — Changelog</title>
+  <link>https://automapperts.netlify.app</link>
+  <description>Convention-based object mapping for TypeScript, with strategies for classes, POJOs, ORMs, and NestJS.</description>
+  <atom:link href="https://automapperts.netlify.app/changelog/rss.xml" rel="self" type="application/rss+xml" />
+  <item>
+    <title>AutoMapper 9</title>
+    <link>https://automapperts.netlify.app/changelog/v9-0-0</link>
+    <guid isPermaLink="true">https://automapperts.netlify.app/changelog/v9-0-0</guid>
+    <pubDate>Wed, 15 Jul 2026 00:00:00 GMT</pubDate>
+  </item>
+</channel>
+</rss>

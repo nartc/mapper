@@ -1,0 +1,59 @@
+---
+title: "Tutorial: map a user to a DTO"
+description: See the repetitive transformation code AutoMapper replaces in a class-based application.
+sidebar:
+  label: Preface
+---
+
+This tutorial maps a database-facing `User` model to a public `UserDto`. It uses `@automapper/classes`, but the same mapping concepts apply to other strategies.
+
+**user.ts**
+
+```ts
+export class User {
+  firstName!: string;
+  lastName!: string;
+  username!: string;
+  password!: string;
+  bio!: Bio;
+}
+
+export class Bio {
+  job!: Job;
+  birthday!: Date;
+  avatarUrl!: string;
+}
+
+export class Job {
+  title!: string;
+  salary!: number;
+}
+```
+
+**user.dto.ts**
+
+```ts
+export class UserDto {
+  firstName!: string;
+  lastName!: string;
+  fullName!: string;
+  username!: string;
+  bio!: BioDto;
+}
+
+export class BioDto {
+  jobTitle!: string;
+  jobSalary!: number;
+  birthday!: string;
+  avatarUrl!: string;
+}
+```
+
+Without a mapping layer, constructors, factories, or services must repeatedly copy matching values, flatten `bio.job`, format the birthday, and compute `fullName`. That couples the destination model to its source and spreads transformation rules through the application.
+
+The next steps move those rules into a mapper:
+
+1. [Create a mapper](/tutorial/create-mapper) and describe model metadata.
+2. [Create mappings](/tutorial/create-mapping) between model identifiers.
+3. [Configure the differences](/tutorial/mapping-configurations).
+4. [Group mappings in profiles](/tutorial/mapping-profile).

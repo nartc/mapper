@@ -1,0 +1,302 @@
+# AutoMapper TypeScript
+
+> Convention-based object mapping for TypeScript, with strategies for classes, POJOs, ORMs, and NestJS.
+
+## Docs
+
+- [AutoMapper TypeScript](https://automapperts.netlify.app/): Map TypeScript objects by convention, then configure only the differences.
+
+## Getting started
+
+- [Overview](https://automapperts.netlify.app/getting-started/overview): What AutoMapper TypeScript is, the problems it solves, and when conventions are a good fit.
+- [Installation](https://automapperts.netlify.app/getting-started/installation): Install AutoMapper TypeScript and configure a class, POJO, ORM, or NestJS project.
+- [Migrating to AutoMapper 9](https://automapperts.netlify.app/getting-started/migrate-v9): Upgrade requirements and consumer-facing behavior changes in AutoMapper TypeScript 9.
+- [Migrating to AutoMapper 8](https://automapperts.netlify.app/getting-started/migrate-v8): A concise reference for the functional API introduced in AutoMapper TypeScript 8.
+
+## Tutorial
+
+- [Tutorial: map a user to a DTO](https://automapperts.netlify.app/tutorial/preface): See the repetitive transformation code AutoMapper replaces in a class-based application.
+- [Create a mapper](https://automapperts.netlify.app/tutorial/create-mapper): Configure the classes strategy and describe class metadata with AutoMap decorators.
+- [Create mappings](https://automapperts.netlify.app/tutorial/create-mapping): Register nested and top-level mappings, then map a source object to its destination type.
+- [Configure the differences](https://automapperts.netlify.app/tutorial/mapping-configurations): Compute a member, convert a type, and enable convention-based flattening.
+- [Group mappings with profiles](https://automapperts.netlify.app/tutorial/mapping-profile): Organize related mapping declarations and share configuration across them.
+
+## Fundamentals
+
+- [Mapper and strategies](https://automapperts.netlify.app/fundamentals/mapper): Understand the mapper, mapping strategies, error handling, and global logger configuration.
+- [Mappings and transformations](https://automapperts.netlify.app/fundamentals/mapping): Learn how mappings relate source and destination identifiers and how destination members are transformed.
+- [Mapping profiles](https://automapperts.netlify.app/fundamentals/mapping-profiles): Organize related mapping declarations and share configuration across them.
+- [Naming conventions](https://automapperts.netlify.app/fundamentals/naming-convention): Match differently cased properties and flatten nested source paths into destination names.
+- [Mutation](https://automapperts.netlify.app/fundamentals/mutation): Apply a registered mapping to an existing destination object or array.
+
+## Mapping configuration
+
+- [Mapping configuration](https://automapperts.netlify.app/mapping-configuration/overview): Customize only the destination members and lifecycle behavior that convention cannot map automatically.
+- [autoMap](https://automapperts.netlify.app/mapping-configuration/auto-map): Explicitly map same-name class properties when decorator metadata is unavailable or undesirable.
+- [beforeMap](https://automapperts.netlify.app/mapping-configuration/before-map): Run synchronous or asynchronous work before object or array mapping begins.
+- [afterMap](https://automapperts.netlify.app/mapping-configuration/after-map): Run synchronous or asynchronous work after members or an entire array have been mapped.
+- [constructUsing](https://automapperts.netlify.app/mapping-configuration/construct-using): Override destination construction for one mapping.
+- [extend](https://automapperts.netlify.app/mapping-configuration/extend): Reuse destination-member configuration from an existing mapping.
+- [forSelf](https://automapperts.netlify.app/mapping-configuration/for-self): Map unprefixed destination members from a selected nested source model.
+- [namingConventions](https://automapperts.netlify.app/mapping-configuration/naming-conventions): Override source and destination naming conventions for one mapping.
+- [typeConverter](https://automapperts.netlify.app/mapping-configuration/type-converters): Convert every matching source and destination metadata type within one mapping.
+
+### forMember
+
+- [forMember](https://automapperts.netlify.app/mapping-configuration/for-member/overview): Select a destination path and assign one member-mapping function, with an optional precondition.
+- [ignore](https://automapperts.netlify.app/mapping-configuration/for-member/ignore): Mark a destination member as intentionally unmapped.
+- [mapFrom](https://automapperts.netlify.app/mapping-configuration/for-member/map-from): Select, compute, or asynchronously resolve a destination member from the source object.
+- [condition](https://automapperts.netlify.app/mapping-configuration/for-member/condition): Map a matching source member only when a predicate succeeds.
+- [fromValue](https://automapperts.netlify.app/mapping-configuration/for-member/from-value): Assign a fixed value to one destination member.
+- [mapWith](https://automapperts.netlify.app/mapping-configuration/for-member/map-with): Explicitly select and map a nested source value with registered model identifiers.
+- [convertUsing](https://automapperts.netlify.app/mapping-configuration/for-member/convert-using): Convert one selected source value with a reusable converter.
+- [nullSubstitution](https://automapperts.netlify.app/mapping-configuration/for-member/null-substitution): Replace a strictly null source member with a fixed destination value.
+- [undefinedSubstitution](https://automapperts.netlify.app/mapping-configuration/for-member/undefined-substitution): Replace a strictly undefined source member with a fixed destination value.
+- [mapWithArguments](https://automapperts.netlify.app/mapping-configuration/for-member/map-with-arguments): Resolve a destination member with source data and arguments supplied for one map invocation.
+- [mapDefer](https://automapperts.netlify.app/mapping-configuration/for-member/map-defer): Choose a member-mapping function at runtime from the current source object.
+
+## Strategies
+
+- [Classes strategy](https://automapperts.netlify.app/strategies/classes): Discover TypeScript class metadata with decorators or generated metadata factories.
+- [POJOs strategy](https://automapperts.netlify.app/strategies/pojos): Register explicit metadata for interfaces, type aliases, and plain JavaScript objects.
+- [MikroORM strategy](https://automapperts.netlify.app/strategies/mikro): Map MikroORM 6 entities with entity, reference, and collection serialization built into the classes strategy.
+- [Sequelize strategy](https://automapperts.netlify.app/strategies/sequelize): Map Sequelize 6 models with model serialization and construction built into the classes strategy.
+
+## Utilities and advanced usage
+
+- [Async mapping](https://automapperts.netlify.app/misc/async-mapping): Resolve asynchronous member selectors, callbacks, and array lifecycle work with AutoMapper 9.
+- [Transformer plugin](https://automapperts.netlify.app/misc/transformer-plugin): Generate classes-strategy metadata at compile time instead of decorating every model property.
+- [Mapped types](https://automapperts.netlify.app/misc/mapped-types): Derive pick, omit, and intersection classes while retaining AutoMapper class metadata.
+- [Self mapping](https://automapperts.netlify.app/misc/self-mapping): Register and execute a mapping whose source and destination share one model identifier.
+
+## Integrations
+
+- [NestJS integration](https://automapperts.netlify.app/nestjs): Configure AutoMapper in NestJS 10 or 11 with injection, profiles, interceptors, and pipes.
+
+## API
+
+- [API reference](https://automapperts.netlify.app/api): Generated reference documentation for every public AutoMapper TypeScript package.
+
+### @automapper/core
+
+- [@automapper/core](https://automapperts.netlify.app/api/core): Public API reference for @automapper/core.
+
+#### Classes
+
+- [Class: AutoMapperError](https://automapperts.netlify.app/api/core/classes/AutoMapperError): Class: AutoMapperError API reference from @automapper/core.
+- [Class: AutoMapperLogger](https://automapperts.netlify.app/api/core/classes/AutoMapperLogger): Class: AutoMapperLogger API reference from @automapper/core.
+- [Class: CamelCaseNamingConvention](https://automapperts.netlify.app/api/core/classes/CamelCaseNamingConvention): Class: CamelCaseNamingConvention API reference from @automapper/core.
+- [Class: MapMemberError](https://automapperts.netlify.app/api/core/classes/MapMemberError): Class: MapMemberError API reference from @automapper/core.
+- [Class: MappingNotFoundError](https://automapperts.netlify.app/api/core/classes/MappingNotFoundError): Class: MappingNotFoundError API reference from @automapper/core.
+- [Class: PascalCaseNamingConvention](https://automapperts.netlify.app/api/core/classes/PascalCaseNamingConvention): Class: PascalCaseNamingConvention API reference from @automapper/core.
+- [Class: SnakeCaseNamingConvention](https://automapperts.netlify.app/api/core/classes/SnakeCaseNamingConvention): Class: SnakeCaseNamingConvention API reference from @automapper/core.
+
+#### Interfaces
+
+- [Interface: AutoMapperLoggerLike](https://automapperts.netlify.app/api/core/interfaces/AutoMapperLoggerLike): Interface: AutoMapperLoggerLike API reference from @automapper/core.
+- [Interface: CompiledMapping\<TSource, TDestination\>](https://automapperts.netlify.app/api/core/interfaces/CompiledMapping): Interface: CompiledMapping\<TSource, TDestination\> API reference from @automapper/core.
+- [Interface: CompiledMappingDescriptors\<TSource, TDestination\>](https://automapperts.netlify.app/api/core/interfaces/CompiledMappingDescriptors): Interface: CompiledMappingDescriptors\<TSource, TDestination\> API reference from @automapper/core.
+- [Interface: CompiledMappingProperty\<TSource, TDestination\>](https://automapperts.netlify.app/api/core/interfaces/CompiledMappingProperty): Interface: CompiledMappingProperty\<TSource, TDestination\> API reference from @automapper/core.
+- [Interface: ConditionPredicate()\<TSource\>](https://automapperts.netlify.app/api/core/interfaces/ConditionPredicate): Interface: ConditionPredicate()\<TSource\> API reference from @automapper/core.
+- [Interface: Converter\<TSource, TConvertDestination\>](https://automapperts.netlify.app/api/core/interfaces/Converter): Interface: Converter\<TSource, TConvertDestination\> API reference from @automapper/core.
+- [Interface: CreateMapperOptions](https://automapperts.netlify.app/api/core/interfaces/CreateMapperOptions): Interface: CreateMapperOptions API reference from @automapper/core.
+- [Interface: DeferFunction()\<TSource, TDestination, TSelectorReturn\>](https://automapperts.netlify.app/api/core/interfaces/DeferFunction): Interface: DeferFunction()\<TSource, TDestination, TSelectorReturn\> API reference from @automapper/core.
+- [Interface: ErrorHandler](https://automapperts.netlify.app/api/core/interfaces/ErrorHandler): Interface: ErrorHandler API reference from @automapper/core.
+- [Interface: MapOptions\<TSource, TDestination, TExtraArgs\>](https://automapperts.netlify.app/api/core/interfaces/MapOptions): Interface: MapOptions\<TSource, TDestination, TExtraArgs\> API reference from @automapper/core.
+- [Interface: Mapper](https://automapperts.netlify.app/api/core/interfaces/Mapper): Interface: Mapper API reference from @automapper/core.
+- [Interface: MappingStrategy\<TIdentifier\>](https://automapperts.netlify.app/api/core/interfaces/MappingStrategy): Interface: MappingStrategy\<TIdentifier\> API reference from @automapper/core.
+- [Interface: MappingStrategyInitializerOptions](https://automapperts.netlify.app/api/core/interfaces/MappingStrategyInitializerOptions): Interface: MappingStrategyInitializerOptions API reference from @automapper/core.
+- [Interface: NamingConvention](https://automapperts.netlify.app/api/core/interfaces/NamingConvention): Interface: NamingConvention API reference from @automapper/core.
+- [Interface: Resolver\<TSource, TDestination, TResolvedType\>](https://automapperts.netlify.app/api/core/interfaces/Resolver): Interface: Resolver\<TSource, TDestination, TResolvedType\> API reference from @automapper/core.
+- [Interface: TransformerMetadataFactory](https://automapperts.netlify.app/api/core/interfaces/TransformerMetadataFactory): Interface: TransformerMetadataFactory API reference from @automapper/core.
+
+#### Functions
+
+- [Function: addProfile()](https://automapperts.netlify.app/api/core/functions/addProfile): Function: addProfile() API reference from @automapper/core.
+- [Function: afterMap()](https://automapperts.netlify.app/api/core/functions/afterMap): Function: afterMap() API reference from @automapper/core.
+- [Function: afterMapArray()](https://automapperts.netlify.app/api/core/functions/afterMapArray): Function: afterMapArray() API reference from @automapper/core.
+- [Function: autoMap()](https://automapperts.netlify.app/api/core/functions/autoMap): Function: autoMap() API reference from @automapper/core.
+- [Function: beforeMap()](https://automapperts.netlify.app/api/core/functions/beforeMap): Function: beforeMap() API reference from @automapper/core.
+- [Function: beforeMapArray()](https://automapperts.netlify.app/api/core/functions/beforeMapArray): Function: beforeMapArray() API reference from @automapper/core.
+- [Function: condition()](https://automapperts.netlify.app/api/core/functions/condition): Function: condition() API reference from @automapper/core.
+- [Function: constructUsing()](https://automapperts.netlify.app/api/core/functions/constructUsing): Function: constructUsing() API reference from @automapper/core.
+- [Function: convertUsing()](https://automapperts.netlify.app/api/core/functions/convertUsing): Function: convertUsing() API reference from @automapper/core.
+- [Function: createMap()](https://automapperts.netlify.app/api/core/functions/createMap): Function: createMap() API reference from @automapper/core.
+- [Function: createMapper()](https://automapperts.netlify.app/api/core/functions/createMapper): Function: createMapper() API reference from @automapper/core.
+- [Function: extend()](https://automapperts.netlify.app/api/core/functions/extend): Function: extend() API reference from @automapper/core.
+- [Function: forMember()](https://automapperts.netlify.app/api/core/functions/forMember): Function: forMember() API reference from @automapper/core.
+- [Function: forSelf()](https://automapperts.netlify.app/api/core/functions/forSelf): Function: forSelf() API reference from @automapper/core.
+- [Function: fromValue()](https://automapperts.netlify.app/api/core/functions/fromValue): Function: fromValue() API reference from @automapper/core.
+- [Function: getRecursiveValue()](https://automapperts.netlify.app/api/core/functions/getRecursiveValue): Function: getRecursiveValue() API reference from @automapper/core.
+- [Function: ignore()](https://automapperts.netlify.app/api/core/functions/ignore): Function: ignore() API reference from @automapper/core.
+- [Function: isDateConstructor()](https://automapperts.netlify.app/api/core/functions/isDateConstructor): Function: isDateConstructor() API reference from @automapper/core.
+- [Function: isEmpty()](https://automapperts.netlify.app/api/core/functions/isEmpty): Function: isEmpty() API reference from @automapper/core.
+- [Function: isMappableIdentifier()](https://automapperts.netlify.app/api/core/functions/isMappableIdentifier): Function: isMappableIdentifier() API reference from @automapper/core.
+- [Function: isPrimitiveConstructor()](https://automapperts.netlify.app/api/core/functions/isPrimitiveConstructor): Function: isPrimitiveConstructor() API reference from @automapper/core.
+- [Function: mapDefer()](https://automapperts.netlify.app/api/core/functions/mapDefer): Function: mapDefer() API reference from @automapper/core.
+- [Function: mapFrom()](https://automapperts.netlify.app/api/core/functions/mapFrom): Function: mapFrom() API reference from @automapper/core.
+- [Function: mapWith()](https://automapperts.netlify.app/api/core/functions/mapWith): Function: mapWith() API reference from @automapper/core.
+- [Function: mapWithArguments()](https://automapperts.netlify.app/api/core/functions/mapWithArguments): Function: mapWithArguments() API reference from @automapper/core.
+- [Function: namingConventions()](https://automapperts.netlify.app/api/core/functions/namingConventions): Function: namingConventions() API reference from @automapper/core.
+- [Function: nullSubstitution()](https://automapperts.netlify.app/api/core/functions/nullSubstitution): Function: nullSubstitution() API reference from @automapper/core.
+- [Function: preCondition()](https://automapperts.netlify.app/api/core/functions/preCondition): Function: preCondition() API reference from @automapper/core.
+- [Function: set()](https://automapperts.netlify.app/api/core/functions/set): Function: set() API reference from @automapper/core.
+- [Function: setMutate()](https://automapperts.netlify.app/api/core/functions/setMutate): Function: setMutate() API reference from @automapper/core.
+- [Function: setRecursiveValue()](https://automapperts.netlify.app/api/core/functions/setRecursiveValue): Function: setRecursiveValue() API reference from @automapper/core.
+- [Function: typeConverter()](https://automapperts.netlify.app/api/core/functions/typeConverter): Function: typeConverter() API reference from @automapper/core.
+- [Function: undefinedSubstitution()](https://automapperts.netlify.app/api/core/functions/undefinedSubstitution): Function: undefinedSubstitution() API reference from @automapper/core.
+
+#### Type Aliases
+
+- [Type Alias: AbstractConstructor\<T\>](https://automapperts.netlify.app/api/core/type-aliases/AbstractConstructor): Type Alias: AbstractConstructor\<T\> API reference from @automapper/core.
+- [Type Alias: AnyConstructor](https://automapperts.netlify.app/api/core/type-aliases/AnyConstructor): Type Alias: AnyConstructor API reference from @automapper/core.
+- [Type Alias: ApplyMetadata](https://automapperts.netlify.app/api/core/type-aliases/ApplyMetadata): Type Alias: ApplyMetadata API reference from @automapper/core.
+- [Type Alias: ApplyMetadataFn](https://automapperts.netlify.app/api/core/type-aliases/ApplyMetadataFn): Type Alias: ApplyMetadataFn API reference from @automapper/core.
+- [Type Alias: ArrayKeyedMap](https://automapperts.netlify.app/api/core/type-aliases/ArrayKeyedMap): Type Alias: ArrayKeyedMap API reference from @automapper/core.
+- [Type Alias: AutoMapperLogFn](https://automapperts.netlify.app/api/core/type-aliases/AutoMapperLogFn): Type Alias: AutoMapperLogFn API reference from @automapper/core.
+- [Type Alias: ClassIdentifier\<T\>](https://automapperts.netlify.app/api/core/type-aliases/ClassIdentifier): Type Alias: ClassIdentifier\<T\> API reference from @automapper/core.
+- [Type Alias: CompiledMapStep](https://automapperts.netlify.app/api/core/type-aliases/CompiledMapStep): Type Alias: CompiledMapStep API reference from @automapper/core.
+- [Type Alias: ConditionReturn\<TSource, TDestination, TSelectorReturn\>](https://automapperts.netlify.app/api/core/type-aliases/ConditionReturn): Type Alias: ConditionReturn\<TSource, TDestination, TSelectorReturn\> API reference from @automapper/core.
+- [Type Alias: Constructor\<T\>](https://automapperts.netlify.app/api/core/type-aliases/Constructor): Type Alias: Constructor\<T\> API reference from @automapper/core.
+- [Type Alias: ConvertUsingReturn\<TSource, TDestination, TSelectorReturn\>](https://automapperts.netlify.app/api/core/type-aliases/ConvertUsingReturn): Type Alias: ConvertUsingReturn\<TSource, TDestination, TSelectorReturn\> API reference from @automapper/core.
+- [Type Alias: DataMap](https://automapperts.netlify.app/api/core/type-aliases/DataMap): Type Alias: DataMap API reference from @automapper/core.
+- [Type Alias: DestinationConstructor\<TSource, TDestination\>](https://automapperts.netlify.app/api/core/type-aliases/DestinationConstructor): Type Alias: DestinationConstructor\<TSource, TDestination\> API reference from @automapper/core.
+- [Type Alias: Dictionary\<T\>](https://automapperts.netlify.app/api/core/type-aliases/Dictionary): Type Alias: Dictionary\<T\> API reference from @automapper/core.
+- [Type Alias: FromValueReturn\<TSource, TDestination, TSelectorReturn\>](https://automapperts.netlify.app/api/core/type-aliases/FromValueReturn): Type Alias: FromValueReturn\<TSource, TDestination, TSelectorReturn\> API reference from @automapper/core.
+- [Type Alias: IgnoreReturn\<TSource, TDestination\>](https://automapperts.netlify.app/api/core/type-aliases/IgnoreReturn): Type Alias: IgnoreReturn\<TSource, TDestination\> API reference from @automapper/core.
+- [Type Alias: MapCallback\<TSource, TDestination, TExtraArgs\>](https://automapperts.netlify.app/api/core/type-aliases/MapCallback): Type Alias: MapCallback\<TSource, TDestination, TExtraArgs\> API reference from @automapper/core.
+- [Type Alias: MapDeferReturn\<TSource, TDestination, TSelectorReturn\>](https://automapperts.netlify.app/api/core/type-aliases/MapDeferReturn): Type Alias: MapDeferReturn\<TSource, TDestination, TSelectorReturn\> API reference from @automapper/core.
+- [Type Alias: MapFromReturn\<TSource, TDestination, TSelectorReturn\>](https://automapperts.netlify.app/api/core/type-aliases/MapFromReturn): Type Alias: MapFromReturn\<TSource, TDestination, TSelectorReturn\> API reference from @automapper/core.
+- [Type Alias: MapInitializeReturn\<TSource, TDestination, TSelectorReturn\>](https://automapperts.netlify.app/api/core/type-aliases/MapInitializeReturn): Type Alias: MapInitializeReturn\<TSource, TDestination, TSelectorReturn\> API reference from @automapper/core.
+- [Type Alias: Mapping\<TSource, TDestination\>](https://automapperts.netlify.app/api/core/type-aliases/Mapping): Type Alias: Mapping\<TSource, TDestination\> API reference from @automapper/core.
+- [Type Alias: MappingConfiguration\<TSource, TDestination\>](https://automapperts.netlify.app/api/core/type-aliases/MappingConfiguration): Type Alias: MappingConfiguration\<TSource, TDestination\> API reference from @automapper/core.
+- [Type Alias: MappingProfile](https://automapperts.netlify.app/api/core/type-aliases/MappingProfile): Type Alias: MappingProfile API reference from @automapper/core.
+- [Type Alias: MappingProperty\<TSource, TDestination, TSelectorReturn\>](https://automapperts.netlify.app/api/core/type-aliases/MappingProperty): Type Alias: MappingProperty\<TSource, TDestination, TSelectorReturn\> API reference from @automapper/core.
+- [Type Alias: MappingStrategyInitializer\<TIdentifier\>](https://automapperts.netlify.app/api/core/type-aliases/MappingStrategyInitializer): Type Alias: MappingStrategyInitializer\<TIdentifier\> API reference from @automapper/core.
+- [Type Alias: MappingTransformation\<TSource, TDestination, TSelectorReturn\>](https://automapperts.netlify.app/api/core/type-aliases/MappingTransformation): Type Alias: MappingTransformation\<TSource, TDestination, TSelectorReturn\> API reference from @automapper/core.
+- [Type Alias: MapWithArgumentsReturn\<TSource, TDestination, TSelectorReturn\>](https://automapperts.netlify.app/api/core/type-aliases/MapWithArgumentsReturn): Type Alias: MapWithArgumentsReturn\<TSource, TDestination, TSelectorReturn\> API reference from @automapper/core.
+- [Type Alias: MapWithReturn\<TSource, TDestination, TSelectorReturn\>](https://automapperts.netlify.app/api/core/type-aliases/MapWithReturn): Type Alias: MapWithReturn\<TSource, TDestination, TSelectorReturn\> API reference from @automapper/core.
+- [Type Alias: MaybePromise\<T\>](https://automapperts.netlify.app/api/core/type-aliases/MaybePromise): Type Alias: MaybePromise\<T\> API reference from @automapper/core.
+- [Type Alias: MemberMapReturn\<TSource, TDestination, TSelectorReturn\>](https://automapperts.netlify.app/api/core/type-aliases/MemberMapReturn): Type Alias: MemberMapReturn\<TSource, TDestination, TSelectorReturn\> API reference from @automapper/core.
+- [Type Alias: MemberMapReturnNoDefer\<TSource, TDestination, TSelectorReturn\>](https://automapperts.netlify.app/api/core/type-aliases/MemberMapReturnNoDefer): Type Alias: MemberMapReturnNoDefer\<TSource, TDestination, TSelectorReturn\> API reference from @automapper/core.
+- [Type Alias: Metadata](https://automapperts.netlify.app/api/core/type-aliases/Metadata): Type Alias: Metadata API reference from @automapper/core.
+- [Type Alias: MetadataIdentifier\<T\>](https://automapperts.netlify.app/api/core/type-aliases/MetadataIdentifier): Type Alias: MetadataIdentifier\<T\> API reference from @automapper/core.
+- [Type Alias: MetadataList](https://automapperts.netlify.app/api/core/type-aliases/MetadataList): Type Alias: MetadataList API reference from @automapper/core.
+- [Type Alias: ModelIdentifier\<T\>](https://automapperts.netlify.app/api/core/type-aliases/ModelIdentifier): Type Alias: ModelIdentifier\<T\> API reference from @automapper/core.
+- [Type Alias: NamingConventionInput](https://automapperts.netlify.app/api/core/type-aliases/NamingConventionInput): Type Alias: NamingConventionInput API reference from @automapper/core.
+- [Type Alias: NestedMappingPair](https://automapperts.netlify.app/api/core/type-aliases/NestedMappingPair): Type Alias: NestedMappingPair API reference from @automapper/core.
+- [Type Alias: NullSubstitutionReturn\<TSource, TDestination, TSelectorReturn\>](https://automapperts.netlify.app/api/core/type-aliases/NullSubstitutionReturn): Type Alias: NullSubstitutionReturn\<TSource, TDestination, TSelectorReturn\> API reference from @automapper/core.
+- [Type Alias: PathMap](https://automapperts.netlify.app/api/core/type-aliases/PathMap): Type Alias: PathMap API reference from @automapper/core.
+- [Type Alias: PreConditionReturn\<TSource, TDestination, TSelectorReturn\>](https://automapperts.netlify.app/api/core/type-aliases/PreConditionReturn): Type Alias: PreConditionReturn\<TSource, TDestination, TSelectorReturn\> API reference from @automapper/core.
+- [Type Alias: Primitive](https://automapperts.netlify.app/api/core/type-aliases/Primitive): Type Alias: Primitive API reference from @automapper/core.
+- [Type Alias: PrimitiveConstructor](https://automapperts.netlify.app/api/core/type-aliases/PrimitiveConstructor): Type Alias: PrimitiveConstructor API reference from @automapper/core.
+- [Type Alias: PrimitiveConstructorExtended](https://automapperts.netlify.app/api/core/type-aliases/PrimitiveConstructorExtended): Type Alias: PrimitiveConstructorExtended API reference from @automapper/core.
+- [Type Alias: PrimitiveConstructorReturnType\<TType\>](https://automapperts.netlify.app/api/core/type-aliases/PrimitiveConstructorReturnType): Type Alias: PrimitiveConstructorReturnType\<TType\> API reference from @automapper/core.
+- [Type Alias: PrimitiveExtended](https://automapperts.netlify.app/api/core/type-aliases/PrimitiveExtended): Type Alias: PrimitiveExtended API reference from @automapper/core.
+- [Type Alias: Selector\<TObject, TReturnType\>](https://automapperts.netlify.app/api/core/type-aliases/Selector): Type Alias: Selector\<TObject, TReturnType\> API reference from @automapper/core.
+- [Type Alias: SelectorReturn\<TObject\>](https://automapperts.netlify.app/api/core/type-aliases/SelectorReturn): Type Alias: SelectorReturn\<TObject\> API reference from @automapper/core.
+- [Type Alias: UndefinedSubstitutionReturn\<TSource, TDestination, TSelectorReturn\>](https://automapperts.netlify.app/api/core/type-aliases/UndefinedSubstitutionReturn): Type Alias: UndefinedSubstitutionReturn\<TSource, TDestination, TSelectorReturn\> API reference from @automapper/core.
+- [Type Alias: ValueSelector\<TSource, TDestination, TValueReturn\>](https://automapperts.netlify.app/api/core/type-aliases/ValueSelector): Type Alias: ValueSelector\<TSource, TDestination, TValueReturn\> API reference from @automapper/core.
+
+#### Enumerations
+
+- [Enumeration: MapFnClassId](https://automapperts.netlify.app/api/core/enumerations/MapFnClassId): Enumeration: MapFnClassId API reference from @automapper/core.
+- [Enumeration: MappingCallbacksClassId](https://automapperts.netlify.app/api/core/enumerations/MappingCallbacksClassId): Enumeration: MappingCallbacksClassId API reference from @automapper/core.
+- [Enumeration: MappingClassId](https://automapperts.netlify.app/api/core/enumerations/MappingClassId): Enumeration: MappingClassId API reference from @automapper/core.
+- [Enumeration: MappingPropertiesClassId](https://automapperts.netlify.app/api/core/enumerations/MappingPropertiesClassId): Enumeration: MappingPropertiesClassId API reference from @automapper/core.
+- [Enumeration: MappingPropertyClassId](https://automapperts.netlify.app/api/core/enumerations/MappingPropertyClassId): Enumeration: MappingPropertyClassId API reference from @automapper/core.
+- [Enumeration: MappingTransformationClassId](https://automapperts.netlify.app/api/core/enumerations/MappingTransformationClassId): Enumeration: MappingTransformationClassId API reference from @automapper/core.
+- [Enumeration: MetadataClassId](https://automapperts.netlify.app/api/core/enumerations/MetadataClassId): Enumeration: MetadataClassId API reference from @automapper/core.
+- [Enumeration: MetadataObjectMapClassId](https://automapperts.netlify.app/api/core/enumerations/MetadataObjectMapClassId): Enumeration: MetadataObjectMapClassId API reference from @automapper/core.
+- [Enumeration: NestedMappingPairClassId](https://automapperts.netlify.app/api/core/enumerations/NestedMappingPairClassId): Enumeration: NestedMappingPairClassId API reference from @automapper/core.
+- [Enumeration: TransformationType](https://automapperts.netlify.app/api/core/enumerations/TransformationType): Enumeration: TransformationType API reference from @automapper/core.
+
+#### Variables
+
+- [Variable: defaultStrategyInitializerOptions](https://automapperts.netlify.app/api/core/variables/defaultStrategyInitializerOptions): Variable: defaultStrategyInitializerOptions API reference from @automapper/core.
+
+### @automapper/classes
+
+- [@automapper/classes](https://automapperts.netlify.app/api/classes): Public API reference for @automapper/classes.
+
+#### Interfaces
+
+- [Interface: AutoMapOptions](https://automapperts.netlify.app/api/classes/interfaces/AutoMapOptions): Interface: AutoMapOptions API reference from @automapper/classes.
+
+#### Functions
+
+- [Function: AutoMap()](https://automapperts.netlify.app/api/classes/functions/AutoMap): Function: AutoMap() API reference from @automapper/classes.
+- [Function: classes()](https://automapperts.netlify.app/api/classes/functions/classes): Function: classes() API reference from @automapper/classes.
+- [Function: getMetadataList()](https://automapperts.netlify.app/api/classes/functions/getMetadataList): Function: getMetadataList() API reference from @automapper/classes.
+
+#### Variables
+
+- [Variable: AUTOMAP\_PROPERTIES\_METADATA\_KEY](https://automapperts.netlify.app/api/classes/variables/AUTOMAP_PROPERTIES_METADATA_KEY): Variable: AUTOMAP\_PROPERTIES\_METADATA\_KEY API reference from @automapper/classes.
+- [Variable: AUTOMAP\_STANDALONE\_METADATA\_KEY](https://automapperts.netlify.app/api/classes/variables/AUTOMAP_STANDALONE_METADATA_KEY): Variable: AUTOMAP\_STANDALONE\_METADATA\_KEY API reference from @automapper/classes.
+- [Variable: AUTOMAPPER\_METADATA\_FACTORY\_KEY](https://automapperts.netlify.app/api/classes/variables/AUTOMAPPER_METADATA_FACTORY_KEY): Variable: AUTOMAPPER\_METADATA\_FACTORY\_KEY API reference from @automapper/classes.
+
+### @automapper/pojos
+
+- [@automapper/pojos](https://automapperts.netlify.app/api/pojos): Public API reference for @automapper/pojos.
+
+#### Classes
+
+- [Class: PojosMetadataMap](https://automapperts.netlify.app/api/pojos/classes/PojosMetadataMap): Class: PojosMetadataMap API reference from @automapper/pojos.
+
+#### Functions
+
+- [Function: pojos()](https://automapperts.netlify.app/api/pojos/functions/pojos): Function: pojos() API reference from @automapper/pojos.
+
+#### Type Aliases
+
+- [Type Alias: PojoMetadata](https://automapperts.netlify.app/api/pojos/type-aliases/PojoMetadata): Type Alias: PojoMetadata API reference from @automapper/pojos.
+
+### @automapper/mikro
+
+- [@automapper/mikro](https://automapperts.netlify.app/api/mikro): Public API reference for @automapper/mikro.
+
+#### Functions
+
+- [Function: mikro()](https://automapperts.netlify.app/api/mikro/functions/mikro): Function: mikro() API reference from @automapper/mikro.
+
+### @automapper/sequelize
+
+- [@automapper/sequelize](https://automapperts.netlify.app/api/sequelize): Public API reference for @automapper/sequelize.
+
+#### Functions
+
+- [Function: sequelize()](https://automapperts.netlify.app/api/sequelize/functions/sequelize): Function: sequelize() API reference from @automapper/sequelize.
+
+### @automapper/nestjs
+
+- [@automapper/nestjs](https://automapperts.netlify.app/api/nestjs): Public API reference for @automapper/nestjs.
+
+#### Classes
+
+- [Abstract Class: AutomapperProfile](https://automapperts.netlify.app/api/nestjs/classes/AutomapperProfile): Abstract Class: AutomapperProfile API reference from @automapper/nestjs.
+- [Class: AutomapperModule](https://automapperts.netlify.app/api/nestjs/classes/AutomapperModule): Class: AutomapperModule API reference from @automapper/nestjs.
+
+#### Interfaces
+
+- [Interface: AutomapperAsyncOptions](https://automapperts.netlify.app/api/nestjs/interfaces/AutomapperAsyncOptions): Interface: AutomapperAsyncOptions API reference from @automapper/nestjs.
+- [Interface: AutomapperGlobalOptions](https://automapperts.netlify.app/api/nestjs/interfaces/AutomapperGlobalOptions): Interface: AutomapperGlobalOptions API reference from @automapper/nestjs.
+- [Interface: AutomapperOptionsFactory](https://automapperts.netlify.app/api/nestjs/interfaces/AutomapperOptionsFactory): Interface: AutomapperOptionsFactory API reference from @automapper/nestjs.
+
+#### Functions
+
+- [Function: getMapperToken()](https://automapperts.netlify.app/api/nestjs/functions/getMapperToken): Function: getMapperToken() API reference from @automapper/nestjs.
+- [Function: InjectMapper()](https://automapperts.netlify.app/api/nestjs/functions/InjectMapper): Function: InjectMapper() API reference from @automapper/nestjs.
+
+#### Type Aliases
+
+- [Type Alias: AutomapperOptions](https://automapperts.netlify.app/api/nestjs/type-aliases/AutomapperOptions): Type Alias: AutomapperOptions API reference from @automapper/nestjs.
+
+#### Variables
+
+- [Variable: DEFAULT\_MAPPER\_TOKEN](https://automapperts.netlify.app/api/nestjs/variables/DEFAULT_MAPPER_TOKEN): Variable: DEFAULT\_MAPPER\_TOKEN API reference from @automapper/nestjs.
+- [Variable: MapInterceptor](https://automapperts.netlify.app/api/nestjs/variables/MapInterceptor): Variable: MapInterceptor API reference from @automapper/nestjs.
+- [Variable: MapPipe](https://automapperts.netlify.app/api/nestjs/variables/MapPipe): Variable: MapPipe API reference from @automapper/nestjs.
+
+## Changelog
+
+- [AutoMapper 9](https://automapperts.netlify.app/changelog/v9-0-0)

@@ -1,0 +1,32 @@
+[
+  {
+    "from": "/docs",
+    "status": 301,
+    "to": "/getting-started/overview"
+  },
+  {
+    "from": "/docs/getting-started/migrate-to-automapper-v8",
+    "status": 301,
+    "to": "/getting-started/migrate-v8"
+  },
+  {
+    "from": "/docs/misc/fake-async",
+    "status": 301,
+    "to": "/misc/async-mapping"
+  },
+  {
+    "from": "/docs/fundamentals/auto-flattening",
+    "status": 301,
+    "to": "/fundamentals/naming-convention#auto-flattening"
+  },
+  {
+    "from": "/fundamentals/auto-flattening",
+    "status": 301,
+    "to": "/fundamentals/naming-convention#auto-flattening"
+  },
+  {
+    "from": "/blog",
+    "status": 301,
+    "to": "/changelog"
+  }
+]

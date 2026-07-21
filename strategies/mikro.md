@@ -1,0 +1,48 @@
+---
+title: MikroORM strategy
+description: Map MikroORM 6 entities with entity, reference, and collection serialization built into the classes strategy.
+sidebar:
+  label: "@automapper/mikro"
+---
+
+`@automapper/mikro` extends the classes strategy for MikroORM 6.
+
+**npm**
+
+```shell
+npm install @automapper/core @automapper/classes @automapper/mikro reflect-metadata
+```
+
+**pnpm**
+
+```shell
+pnpm add @automapper/core @automapper/classes @automapper/mikro reflect-metadata
+```
+
+**Bun**
+
+```shell
+bun add @automapper/core @automapper/classes @automapper/mikro reflect-metadata
+```
+
+```ts
+const mapper = createMapper({
+  strategyInitializer: mikro(),
+});
+```
+
+Use `@AutoMap()` metadata and register mappings exactly as with `classes()`. The default `preMap` recursively serializes MikroORM entities, references, and collections before member mapping begins.
+
+Override strategy behavior when your entity lifecycle needs it:
+
+```ts
+const mapper = createMapper({
+  strategyInitializer: mikro({
+    preMap: (source, mapping) => customSerialize(source, mapping),
+    destinationConstructor: (_, destinationIdentifier) =>
+      entityManager.create(destinationIdentifier, {}),
+  }),
+});
+```
+
+Supplying `preMap` replaces MikroORM's default serialization hook, so the custom implementation is responsible for producing a mappable source shape.

@@ -1,0 +1,50 @@
+---
+title: Sequelize strategy
+description: Map Sequelize 6 models with model serialization and construction built into the classes strategy.
+sidebar:
+  label: "@automapper/sequelize"
+---
+
+`@automapper/sequelize` extends the classes strategy for Sequelize 6.
+
+**npm**
+
+```shell
+npm install @automapper/core @automapper/classes @automapper/sequelize reflect-metadata
+```
+
+**pnpm**
+
+```shell
+pnpm add @automapper/core @automapper/classes @automapper/sequelize reflect-metadata
+```
+
+**Bun**
+
+```shell
+bun add @automapper/core @automapper/classes @automapper/sequelize reflect-metadata
+```
+
+```ts
+const mapper = createMapper({
+  strategyInitializer: sequelize(),
+});
+```
+
+The default strategy behavior:
+
+- calls `Model#get()` when the source is a Sequelize model;
+- calls the destination model's static `build()` method when available;
+- falls back to normal class construction for non-Sequelize destinations.
+
+Override either hook when needed:
+
+```ts
+const mapper = createMapper({
+  strategyInitializer: sequelize({
+    preMap: (source) => customSerialize(source),
+    destinationConstructor: (_, destinationIdentifier) =>
+      customConstruct(destinationIdentifier),
+  }),
+});
+```

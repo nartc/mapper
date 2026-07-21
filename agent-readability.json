@@ -1,0 +1,24 @@
+{
+  "artifacts": {
+    "markdown": {
+      "contentNegotiation": "text/markdown",
+      "pattern": "https://automapperts.netlify.app/{route}.md"
+    },
+    "llmsFullTxt": "https://automapperts.netlify.app/llms-full.txt",
+    "llmsTxt": "https://automapperts.netlify.app/llms.txt",
+    "sitemap": "https://automapperts.netlify.app/sitemap.xml",
+    "feeds": [
+      "https://automapperts.netlify.app/changelog/rss.xml"
+    ]
+  },
+  "description": "Convention-based object mapping for TypeScript, with strategies for classes, POJOs, ORMs, and NestJS.",
+  "generator": "blume@1.0.4",
+  "name": "AutoMapper TypeScript",
+  "site": "https://automapperts.netlify.app",
+  "contentUsage": {
+    "search": true,
+    "ai-input": true,
+    "ai-train": true
+  },
+  "repository": "https://github.com/nartc/mapper"
+}

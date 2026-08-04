@@ -58,7 +58,7 @@
     "reflect-metadata": "~0.2.2",
     "release-it": "15.8.0",
     "rxjs": "~7.8.0",
-    "sequelize": "6.29.2",
+    "sequelize": "6.37.8",
     "supertest": "6.3.3",
     "ts-node": "10.9.1",
     "tsdown": "^0.22.3",

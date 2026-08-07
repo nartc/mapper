@@ -23,15 +23,15 @@ jobs:
                 node: ['20', '22']
         env:
             NX_CI_EXECUTION_ENV: 'node ${{ matrix.node }}'
+            MISE_NODE_VERSION: ${{ matrix.node }}
         steps:
             - uses: actions/checkout@v4
               with:
                   fetch-depth: 0
                   filter: tree:0
-            - uses: actions/setup-node@v4
+            - uses: jdx/mise-action@v4
               with:
-                  node-version: ${{ matrix.node }}
-            - run: corepack enable
+                  cache_key: 'mise-node-${{ matrix.node }}-{{file_hash}}'
             - run: pnpm install --frozen-lockfile
             - name: Start Nx Agents
               run: >-
@@ -49,10 +49,7 @@ jobs:
             NX_CI_EXECUTION_ENV: 'publint + attw'
         steps:
             - uses: actions/checkout@v4
-            - uses: actions/setup-node@v4
-              with:
-                  node-version: '22'
-            - run: corepack enable
+            - uses: jdx/mise-action@v4
             - run: pnpm install --frozen-lockfile
             - run: pnpm run package
             - run: pnpm nx record -- pnpm run check:packages
@@ -67,10 +64,7 @@ jobs:
             NX_CI_EXECUTION_ENV: 'nestjs-compat'
         steps:
             - uses: actions/checkout@v4
-            - uses: actions/setup-node@v4
-              with:
-                  node-version: '22'
-            - run: corepack enable
+            - uses: jdx/mise-action@v4
             - run: pnpm install --frozen-lockfile
             # downgrade only the @nestjs runtime; rxjs/reflect-metadata span both majors
             - run: pnpm --config.prefer-workspace-packages=true add -w @nestjs/common@^10 @nestjs/core@^10 @nestjs/testing@^10 @nestjs/platform-express@^10

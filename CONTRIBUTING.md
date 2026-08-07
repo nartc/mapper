@@ -1,9 +1,9 @@
 ## CONTRIBUTING
 
--   Fork this repo and clone the forked on your local environment
--   [Install **pnpm**](https://pnpm.io/installation)
+-   Fork this repo and clone the fork on your local environment
+-   [Install and activate **mise**](https://mise.jdx.dev/getting-started.html)
+-   Run `mise install` to install the repository's Node.js and pnpm versions
 -   Run `pnpm install` to install all dependencies
--   Run `npx husky install` to enable commit hooks
 -   Start working on changes
 
 ### Structure
@@ -27,14 +27,14 @@ _packages
 
 ### Test your changes
 
--   Run `npm run test` to run all test suites.
+-   Run `pnpm run test` to run all test suites.
 
 ### Commit
 
 After you finish with the changes
 
 -   Run `git add .` to stage all changes
--   Run `npm run commit` to start Conventional Commit flow
+-   Run `pnpm run commit` to start Conventional Commit flow
     -   Pick one of the type of changes from the options: feat, fix, chore, docs etc...
     -   If you modify changes in `core`, `classes`, `nestjs`, `pojos`, or `types`, please include at least one of this as the `scope`. Eg: `feat(classes)`, or `fix(core)` etc...
 

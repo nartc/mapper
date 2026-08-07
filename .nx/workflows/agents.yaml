@@ -6,12 +6,13 @@ launch-templates:
             - name: Checkout
               uses: 'nrwl/nx-cloud-workflows/v6/workflow-steps/checkout/main.yaml'
 
-            - name: Install Node 20
-              uses: 'nrwl/nx-cloud-workflows/v6/workflow-steps/install-node/main.yaml'
-              inputs:
-                  node_version: '20'
+            - name: Select Node 20
+              script: echo 'MISE_NODE_VERSION=20' >> "$NX_CLOUD_ENV"
 
-            - name: Install Node Nodules
+            - name: Install toolchain
+              uses: 'nrwl/nx-cloud-workflows/v6/workflow-steps/install-mise/main.yaml'
+
+            - name: Install Node Modules
               uses: 'nrwl/nx-cloud-workflows/v4/workflow-steps/install-node-modules/main.yaml'
 
     linux-medium-node22:
@@ -21,10 +22,11 @@ launch-templates:
             - name: Checkout
               uses: 'nrwl/nx-cloud-workflows/v6/workflow-steps/checkout/main.yaml'
 
-            - name: Install Node 22
-              uses: 'nrwl/nx-cloud-workflows/v6/workflow-steps/install-node/main.yaml'
-              inputs:
-                  node_version: '22'
+            - name: Select Node 22
+              script: echo 'MISE_NODE_VERSION=22' >> "$NX_CLOUD_ENV"
 
-            - name: Install Node Nodules
+            - name: Install toolchain
+              uses: 'nrwl/nx-cloud-workflows/v6/workflow-steps/install-mise/main.yaml'
+
+            - name: Install Node Modules
               uses: 'nrwl/nx-cloud-workflows/v4/workflow-steps/install-node-modules/main.yaml'

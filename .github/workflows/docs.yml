@@ -10,6 +10,7 @@ on:
             - 'packages/*/package.json'
             - 'packages/*/src/**/*.ts'
             - 'packages/*/tsconfig*.json'
+            - 'mise.toml'
             - 'pnpm-lock.yaml'
             - 'pnpm-workspace.yaml'
             - 'tsconfig.base.json'
@@ -29,12 +30,7 @@ jobs:
               with:
                   fetch-depth: 0
 
-            - uses: actions/setup-node@v4
-              with:
-                  node-version: '22.14.0'
-
-            - name: Enable Corepack
-              run: corepack enable
+            - uses: jdx/mise-action@v4
 
             - name: Install workspace dependencies
               run: pnpm install --frozen-lockfile

@@ -1,0 +1,61 @@
+{
+  "cli_version": "0.9.0",
+  "checkpoint_id": "01KZFACEP136AYYD7HNFVWM91C",
+  "session_id": "019fde9a-3af4-7028-84f8-58264c07714c",
+  "strategy": "manual-commit",
+  "created_at": "2026-08-07T23:54:24.385367Z",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "save_step_count": 1,
+  "files_touched": [
+    ".github/workflows/ci.yml",
+    ".github/workflows/docs.yml",
+    ".github/workflows/release.yml",
+    ".nvmrc",
+    ".nx/workflows/agents.yaml",
+    "CONTRIBUTING.md",
+    "mise.toml"
+  ],
+  "agent": "Pi",
+  "model": "gpt-5.6-sol",
+  "turn_id": "3b99f15fab44",
+  "compact_transcript_start": 0,
+  "token_usage": {
+    "input_tokens": 224442,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 2980352,
+    "output_tokens": 15737,
+    "api_call_count": 49
+  },
+  "session_metrics": {
+    "turn_count": 1
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-08-07T23:54:24.364732Z",
+    "agent_lines": 34,
+    "agent_removed": 39,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 34,
+    "total_lines_changed": 73,
+    "agent_percentage": 100,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0
+    },
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 34,
+      "agent_lines_removed": 39
+    }
+  ]
+}

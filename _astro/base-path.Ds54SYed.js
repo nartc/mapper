@@ -1,0 +1,1 @@
+var e=e=>e.endsWith(`/`)?e:`${e}/`,t=(t,n)=>`${e(t)}${n}`,n=(e,t)=>{if(!t.startsWith(`/`)||t.startsWith(`//`))return t;let n=e.replace(/\/+$/u,``);return!n||t===n||t.startsWith(`${n}/`)?t:t===`/`?n:`${n}${t}`};export{n,t};

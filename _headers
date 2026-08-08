@@ -1,0 +1,8 @@
+/*.md
+  Content-Type: text/markdown; charset=utf-8
+/*.mdx
+  Content-Type: text/markdown; charset=utf-8
+/*.txt
+  Content-Type: text/plain; charset=utf-8
+/
+  Link: </agent-readability.json>; rel="describedby"; type="application/json", </llms.txt>; rel="describedby"; type="text/plain", </index.md>; rel="alternate"; type="text/markdown"

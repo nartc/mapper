@@ -1,5 +1,5 @@
 name: CI
-# a/b experiment 1: comment-only edit to a declared shared input
+# a/b experiment 1 (rerun): comment-only edit to a declared shared input
 
 on:
     push:

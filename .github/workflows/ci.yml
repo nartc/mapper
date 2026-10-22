@@ -8,8 +8,6 @@ on:
 env:
     NX_VERBOSE_LOGGING: 'true'
     NX_CLOUD_CONTINUOUS_ASSIGNMENT: 'true'
-    # Nx 24 uses Ultracache in CI by default; hash from declared inputs for now
-    NX_CLOUD_USE_ULTRACACHE: 'false'
 
 concurrency:
     group: ${{ github.workflow }}-${{ github.ref }}

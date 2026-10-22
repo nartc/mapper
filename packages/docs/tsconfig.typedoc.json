@@ -10,7 +10,8 @@
       "@automapper/nestjs": ["../nestjs/src/index.ts"],
       "@automapper/pojos": ["../pojos/src/index.ts"],
       "@automapper/sequelize": ["../sequelize/src/index.ts"]
-    }
+    },
+    "ignoreDeprecations": "6.0"
   },
   "include": [
     "../classes/src/**/*.ts",

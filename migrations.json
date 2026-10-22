@@ -1,76 +1,192 @@
 {
-  "migrations": [
-    {
-      "version": "15.7.0-beta.0",
-      "description": "Split global configuration files into individual project.json files. This migration has been added automatically to the beginning of your migration set to retroactively make them work with the new version of Nx.",
-      "cli": "nx",
-      "implementation": "./src/migrations/update-15-7-0/split-configuration-into-project-json-files",
-      "package": "@nrwl/workspace",
-      "name": "15-7-0-split-configuration-into-project-json-files"
-    },
-    {
-      "version": "15.7.0-beta.0",
-      "description": "Split global configuration files (e.g., workspace.json) into individual project.json files.",
-      "cli": "nx",
-      "implementation": "./src/migrations/update-15-7-0/split-configuration-into-project-json-files",
-      "package": "@nrwl/workspace",
-      "name": "15-7-0-split-configuration-into-project-json-files"
-    },
-    {
-      "cli": "nx",
-      "version": "15.8.0-beta.0",
-      "description": "Rename .lib.swcrc to .swcrc for better SWC support throughout the workspace",
-      "factory": "./src/migrations/update-15-8-0/rename-swcrc-config",
-      "package": "@nrwl/js",
-      "name": "rename-swcrc-config"
-    },
-    {
-      "version": "15.8.0-beta.0",
-      "cli": "nx",
-      "description": "Update jest configs to support jest 29 changes (https://jestjs.io/docs/upgrading-to-jest29)",
-      "factory": "./src/migrations/update-15-8-0/update-configs-jest-29",
-      "package": "@nrwl/jest",
-      "name": "update-configs-jest-29"
-    },
-    {
-      "version": "15.8.0-beta.0",
-      "cli": "nx",
-      "description": "Update jest test files to support jest 29 changes (https://jestjs.io/docs/upgrading-to-jest29)",
-      "factory": "./src/migrations/update-15-8-0/update-tests-jest-29",
-      "package": "@nrwl/jest",
-      "name": "update-tests-jest-29"
-    },
-    {
-      "cli": "nx",
-      "version": "15.7.1-beta.0",
-      "description": "Add node_modules to root eslint ignore",
-      "factory": "./src/migrations/update-15-7-1/add-eslint-ignore",
-      "package": "@nrwl/linter",
-      "name": "add-eslint-ignore"
-    },
-    {
-      "cli": "nx",
-      "version": "15.5.4-beta.0",
-      "description": "Update `@nrwl/web/babel` preset to `@nrwl/js/babel` for projects that have a .babelrc file.",
-      "factory": "./src/migrations/update-15-5-4/update-babel-preset",
-      "package": "@nrwl/web",
-      "name": "update-babel-preset"
-    },
-    {
-      "cli": "nx",
-      "version": "15.0.12-beta.1",
-      "description": "Set project names in project.json files",
-      "implementation": "./src/migrations/update-15-1-0/set-project-names",
-      "package": "nx",
-      "name": "15.1.0-set-project-names"
-    },
-    {
-      "cli": "nx",
-      "version": "15.8.2-beta.0",
-      "description": "Updates the nx wrapper in encapsulated repos.",
-      "implementation": "./src/migrations/update-15-8-2/update-nxw",
-      "package": "nx",
-      "name": "15.8.2-update-nx-wrapper"
-    }
-  ]
+    "migrations": [
+        {
+            "version": "23.0.0-beta.18",
+            "description": "Adds .nx/migrate-runs to .gitignore",
+            "implementation": "./dist/src/migrations/update-23-0-0/add-migrate-runs-to-git-ignore",
+            "package": "nx",
+            "name": "23-0-0-add-migrate-runs-to-git-ignore"
+        },
+        {
+            "version": "23.2.0-beta.8",
+            "description": "Sets \"cache\" on some executor-based target defaults whose caching was previously enabled by a target name default, maintaining compatibility with how cacheability resolved before Nx 23. Keys the migration cannot decide are left alone, and the targets resolving through them need \"cache\" set by hand.",
+            "implementation": "./dist/src/migrations/update-23-2-0/set-cache-on-executor-target-defaults",
+            "documentation": "./dist/src/migrations/update-23-2-0/set-cache-on-executor-target-defaults.md",
+            "package": "nx",
+            "name": "23-2-0-set-cache-on-executor-target-defaults"
+        },
+        {
+            "version": "24.0.0-beta.0",
+            "description": "Finds local executors that declare a custom hasher, which is deprecated and will be removed in Nx 25. Rewriting a hasher as target inputs means reading what its code hashes, so the rewrite is driven by an AI prompt; the generator only reports each hasher.",
+            "implementation": "./dist/src/migrations/update-24-0-0/find-custom-hashers",
+            "prompt": "tools/ai-migrations/nx/24.0.0/move-custom-hashers-to-inputs.md",
+            "documentation": "./dist/src/migrations/update-24-0-0/find-custom-hashers.md",
+            "package": "nx",
+            "name": "24-0-0-move-custom-hashers-to-inputs"
+        },
+        {
+            "version": "24.0.0-beta.3",
+            "description": "Sets affected.legacy to true in nx.json so nx affected keeps selecting whole projects. Nx 24 selects individual affected tasks by default.",
+            "implementation": "./dist/src/migrations/update-24-0-0/enable-legacy-affected",
+            "documentation": "./dist/src/migrations/update-24-0-0/enable-legacy-affected.md",
+            "package": "nx",
+            "name": "24-0-0-enable-legacy-affected"
+        },
+        {
+            "version": "24.0.0-beta.3",
+            "description": "Renames the ultracache target options \"ignoredReads\" and \"ignoredWrites\" to \"ignoreReads\" and \"ignoreWrites\", and renames .nx/workflows/sandboxing-config.yaml to ultracache-config.yaml with its \"exclude-reads\" and \"exclude-writes\" keys renamed to \"ignore-reads\" and \"ignore-writes\".",
+            "implementation": "./dist/src/migrations/update-24-0-0/rename-ultracache-ignore-options",
+            "documentation": "./dist/src/migrations/update-24-0-0/rename-ultracache-ignore-options.md",
+            "package": "nx",
+            "name": "24-0-0-rename-ultracache-ignore-options"
+        },
+        {
+            "version": "23.0.0-beta.10",
+            "description": "Rewrites imports of `@nx/workspace/src/utilities/typescript/compilation` to `@nx/js/internal`, where the module now lives.",
+            "implementation": "./dist/src/migrations/update-23-0-0/move-typescript-compilation-import",
+            "package": "@nx/workspace",
+            "name": "23-0-0-move-typescript-compilation-import"
+        },
+        {
+            "version": "23.0.0-beta.25",
+            "description": "Rewrites `@nx/web/src/*` subpath imports now that the `./src/*` subpath is no longer exposed by `@nx/web`'s exports map. Named imports/exports of public symbols are routed to `@nx/web` and the rest to the new `@nx/web/internal` entry; `require`, dynamic `import` and `jest.mock` calls reference the whole module and are routed to `@nx/web/internal`.",
+            "implementation": "./dist/src/migrations/update-23-0-0/rewrite-internal-subpath-imports",
+            "package": "@nx/web",
+            "name": "rewrite-web-internal-subpath-imports"
+        },
+        {
+            "version": "24.0.0-beta.5",
+            "description": "Sets `readyWhen: { signal: true }` on `@nx/web:file-server` targets that get no `readyWhen` from their own configuration or `targetDefaults`, so tasks that depend on them with `waitFor: 'ready'` start once the server is listening. Those targets also get their build target as a dependency.",
+            "implementation": "./dist/src/migrations/update-24-0-0/add-ready-when-signal",
+            "documentation": "./dist/src/migrations/update-24-0-0/add-ready-when-signal.md",
+            "package": "@nx/web",
+            "name": "update-24-0-0-add-ready-when-signal"
+        },
+        {
+            "version": "23.0.0-beta.6",
+            "description": "Rewrite imports from `@nx/devkit/src/...` to `@nx/devkit` (for public symbols) or `@nx/devkit/internal` (for the rest), since deep imports are no longer reachable through the package's `exports` map.",
+            "implementation": "./dist/src/migrations/update-23-0-0/update-deep-imports",
+            "documentation": "./dist/src/migrations/update-23-0-0/update-deep-imports.md",
+            "package": "@nx/devkit",
+            "name": "update-devkit-deep-imports"
+        },
+        {
+            "version": "23.0.0-beta.24",
+            "description": "Rename deprecated CreateNodes `V2` type imports (CreateNodesV2, CreateNodesContextV2, CreateNodesResultV2, CreateNodesFunctionV2, NxPluginV2) from `@nx/devkit` to their canonical names.",
+            "implementation": "./dist/src/migrations/update-23-0-0/rename-create-nodes-v2-types",
+            "documentation": "./dist/src/migrations/update-23-0-0/rename-create-nodes-v2-types.md",
+            "package": "@nx/devkit",
+            "name": "update-23-0-0-rename-create-nodes-v2-types"
+        },
+        {
+            "version": "23.0.0-beta.17",
+            "description": "Rewrites `@nx/eslint/src/*` subpath imports now that the `./src/*` subpath is no longer exposed by `@nx/eslint`'s exports map. Named imports/exports of public symbols are routed to `@nx/eslint` and the rest to the new `@nx/eslint/internal` entry; `require`, dynamic `import` and `jest.mock` calls reference the whole module and are routed to `@nx/eslint/internal`.",
+            "implementation": "./dist/src/migrations/update-23-0-0/rewrite-internal-subpath-imports",
+            "package": "@nx/eslint",
+            "name": "rewrite-eslint-internal-subpath-imports"
+        },
+        {
+            "version": "23.0.0-beta.24",
+            "description": "Rename imports of `createNodesV2` from `@nx/eslint/plugin` to the canonical `createNodes` export.",
+            "implementation": "./dist/src/migrations/update-23-0-0/migrate-create-nodes-v2-to-create-nodes",
+            "documentation": "./dist/src/migrations/update-23-0-0/migrate-create-nodes-v2-to-create-nodes.md",
+            "package": "@nx/eslint",
+            "name": "update-23-0-0-migrate-create-nodes-v2-import"
+        },
+        {
+            "version": "23.1.0-beta.0",
+            "requires": {
+                "eslint": ">=9.0.0"
+            },
+            "description": "Convert remaining ESLint configs to flat config for ESLint v9 and keep the workspace lint-passing, disabling rules whose preset defaults changed.",
+            "implementation": "./dist/src/migrations/update-23-1-0/convert-to-flat-config",
+            "prompt": "tools/ai-migrations/@nx/eslint/24.0.0/convert-to-flat-config.md",
+            "package": "@nx/eslint",
+            "name": "update-23-1-0-convert-to-flat-config"
+        },
+        {
+            "version": "23.1.0-beta.5",
+            "description": "Handle typescript-eslint rules removed in v8 in ESLint flat configs, since referencing a removed rule stops the config from loading. Deletes the removed formatting/extension rules (e.g. @typescript-eslint/no-extra-semi) and rewrites the safe 1:1 renames (no-throw-literal -> only-throw-error, no-useless-template-literals -> no-unnecessary-template-expression) to preserve enforcement.",
+            "implementation": "./dist/src/migrations/update-23-1-0/remove-removed-typescript-eslint-extension-rules",
+            "package": "@nx/eslint",
+            "name": "update-23-1-0-remove-removed-typescript-eslint-extension-rules"
+        },
+        {
+            "version": "23.1.0-beta.5",
+            "description": "Migrate the removed @typescript-eslint/ban-types rule to its v8 successors (no-empty-object-type, no-unsafe-function-type, no-wrapper-object-types), whose options do not map 1:1 - so it is driven by an AI prompt rather than a deterministic codemod.",
+            "prompt": "tools/ai-migrations/@nx/eslint/24.0.0/migrate-ban-types-rule.md",
+            "package": "@nx/eslint",
+            "name": "update-23-1-0-migrate-ban-types-rule"
+        },
+        {
+            "version": "24.0.0-beta.3",
+            "description": "Converts targets using the removed `@nx/eslint` executors to inferred tasks; an AI prompt finishes the targets the converter cannot convert safely and validates the project graph.",
+            "implementation": "./dist/src/migrations/update-24-0-0/remove-deprecated-executors",
+            "prompt": "tools/ai-migrations/@nx/eslint/24.0.0/finish-inferred-conversion.md",
+            "documentation": "./dist/src/migrations/update-24-0-0/remove-deprecated-executors.md",
+            "package": "@nx/eslint",
+            "name": "remove-deprecated-executors"
+        },
+        {
+            "version": "24.0.0-beta.5",
+            "description": "Replaces the removed `setParserOptionsProject` generator option with `enableTypedLinting` in the generator defaults of `nx.json` and project configuration, so generators resolve typed linting as before.",
+            "implementation": "./dist/src/migrations/update-24-0-0/replace-set-parser-options-project",
+            "documentation": "./dist/src/migrations/update-24-0-0/replace-set-parser-options-project.md",
+            "package": "@nx/eslint",
+            "name": "update-24-0-0-replace-set-parser-options-project"
+        },
+        {
+            "version": "23.0.0-beta.14",
+            "description": "Rewrites `@nx/js/src/*` subpath imports to the new `@nx/js/internal` entry. The `./src/*` wildcard has been removed from `@nx/js`'s exports map; `@nx/js/src/release/version-actions` is preserved as a non-wildcard entry for back-compat with existing nx.json release configs. If a rewritten import resolves to a symbol that lives on the public `@nx/js` entry (e.g. `libraryGenerator`, `extractTsConfigBase`, `resolvePathsBaseUrl`), change the specifier to `@nx/js`.",
+            "factory": "./dist/src/migrations/update-23-0-0/rewrite-internal-subpath-imports",
+            "package": "@nx/js",
+            "name": "23-0-0-rewrite-internal-subpath-imports"
+        },
+        {
+            "version": "23.0.0-beta.24",
+            "description": "Rename imports of `createNodesV2` from `@nx/js/typescript` to the canonical `createNodes` export.",
+            "implementation": "./dist/src/migrations/update-23-0-0/migrate-create-nodes-v2-to-create-nodes",
+            "documentation": "./dist/src/migrations/update-23-0-0/migrate-create-nodes-v2-to-create-nodes.md",
+            "package": "@nx/js",
+            "name": "update-23-0-0-migrate-create-nodes-v2-import"
+        },
+        {
+            "version": "23.1.0-beta.8",
+            "description": "Adds `\"ignoreDeprecations\": \"6.0\"` to tsconfig files whose compilerOptions (or ts-node.compilerOptions) carry a TypeScript 6 deprecated option value, set directly or inherited through `extends` including from a base this migration does not edit (e.g. moduleResolution node/node10/classic, baseUrl, target es5, esModuleInterop false, outFile, module amd/umd/system/none, alwaysStrict false, allowSyntheticDefaultImports false, downlevelIteration set). Also pins `\"strict\": false`, `\"noUncheckedSideEffectImports\": false`, `\"types\": [\"*\"]`, and `\"esModuleInterop\": false` in chain-root tsconfigs (no \"extends\") that lack each key, preserving pre-TS6 behavior where these defaults changed; `esModuleInterop` false is itself deprecated (removed in TS7) so it also receives `ignoreDeprecations`, deferring the interop change to the TS7 migration. Also adds `ignoreDeprecations` to every `tsconfig.json` (the exact name jest/ts-node auto-resolve when compiling a config file; ts-node injects a deprecated default `target: es5` there, so the load can hit a TS6 error even on a clean config), even one with no deprecated value of its own; a stale local `ignoreDeprecations` (e.g. `5.0`) that would otherwise override the inherited flag is upgraded.",
+            "requires": {
+                "typescript": ">=6.0.0"
+            },
+            "factory": "./dist/src/migrations/update-23-1-0/add-ignore-deprecations-for-ts6",
+            "documentation": "./dist/src/migrations/update-23-1-0/add-ignore-deprecations-for-ts6.md",
+            "package": "@nx/js",
+            "name": "23-1-0-add-ignore-deprecations-for-ts6"
+        },
+        {
+            "version": "23.1.0-rc.2",
+            "description": "Sets an explicit `rootDir` on project `tsconfig*.json` files that lack one, pinned to the source directory TypeScript 5 inferred implicitly, so programs keep compiling and emitting the same layout under TypeScript 6, which otherwise hard-fails with TS5011 or TS6059 (for example a spec tsconfig importing another project's source through a `paths` alias). The pin is written even when the inferred directory already equals the tsconfig directory, because tools like ts-jest with `isolatedModules` compile a program per file and re-infer a deeper directory from that subset. The value is computed by the compiler, so emit layout is unchanged. Each config is written on its own; the migration never writes to a shared `extends` base, so a config never inherits a value computed for a sibling. Composite projects are pinned to their own directory: `rootDir` already defaults there under `tsc` so it is a no-op for a real composite build, but ts-jest strips `composite` for its per-file transpile and the explicit value is needed to avoid TS5011 there.",
+            "requires": {
+                "typescript": ">=6.0.0"
+            },
+            "factory": "./dist/src/migrations/update-23-1-0/set-tsconfig-root-dir-for-ts6",
+            "documentation": "./dist/src/migrations/update-23-1-0/set-tsconfig-root-dir-for-ts6.md",
+            "package": "@nx/js",
+            "name": "23-1-0-set-tsconfig-root-dir-for-ts6"
+        },
+        {
+            "version": "23.2.0-beta.11",
+            "description": "Add the pnpm-workspace.yaml, patches, and local_path_modules paths to the outputs of @nx/js:prune-lockfile targets in pnpm workspaces, and the workspace root pnpm-workspace.yaml, package.json, and a pnpm-major runtime probe to their inputs, so a cache replay restores the pnpm install settings, patch files, and vendored local-path dependencies the executor now emits, and a change to the root pnpm install settings or a pnpm major switch does not replay a stale one.",
+            "implementation": "./dist/src/migrations/update-23-2-0/add-pnpm-prune-lockfile-cache-config",
+            "documentation": "./dist/src/migrations/update-23-2-0/add-pnpm-prune-lockfile-cache-config.md",
+            "package": "@nx/js",
+            "name": "update-23-2-0-add-pnpm-prune-lockfile-cache-config"
+        },
+        {
+            "version": "23.2.0-beta.11",
+            "description": "Add the workspace root pnpm-workspace.yaml, the pnpm settings fields of the root package.json, and a pnpm-major runtime probe to the inputs of build targets that emit the pruned pnpm deploy output (webpack, rspack, vite, esbuild with generatePackageJson; next, remix, tsc, swc with generateLockfile), so revoking a build-script approval, changing another pnpm install setting, or crossing the pnpm 10/11 boundary does not replay a cached output that still carries the old one.",
+            "implementation": "./dist/src/migrations/update-23-2-0/add-pnpm-deploy-output-cache-inputs",
+            "documentation": "./dist/src/migrations/update-23-2-0/add-pnpm-deploy-output-cache-inputs.md",
+            "package": "@nx/js",
+            "name": "update-23-2-0-add-pnpm-deploy-output-cache-inputs"
+        }
+    ]
 }

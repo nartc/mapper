@@ -6,5 +6,8 @@
         {
             "path": "./packages/benchmark-core"
         }
-    ]
+    ],
+    "compilerOptions": {
+        "ignoreDeprecations": "6.0"
+    }
 }

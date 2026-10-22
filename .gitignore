@@ -52,3 +52,5 @@ old
 # local agent planning and visual brainstorming artifacts
 .superpowers/
 docs/superpowers/
+
+.nx/migrate-runs

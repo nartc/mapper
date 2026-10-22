@@ -3,21 +3,14 @@
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "packages/classes/src",
     "projectType": "library",
-    "tags": [
-        "classes"
-    ],
+    "tags": ["classes"],
     "targets": {
         "package": {
             "executor": "nx:run-commands",
-            "outputs": [
-                "{workspaceRoot}/dist/packages/classes"
-            ],
+            "outputs": ["{workspaceRoot}/dist/packages/classes"],
             "options": {
                 "command": "node tools/scripts/build-packages.mjs classes"
             }
-        },
-        "lint": {
-            "executor": "@nx/eslint:lint"
         },
         "test": {
             "executor": "nx:run-commands",

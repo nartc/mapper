@@ -2,21 +2,14 @@
     "name": "sequelize",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "packages/sequelize/src",
-    "tags": [
-        "sequelize"
-    ],
+    "tags": ["sequelize"],
     "targets": {
         "package": {
             "executor": "nx:run-commands",
-            "outputs": [
-                "{workspaceRoot}/dist/packages/sequelize"
-            ],
+            "outputs": ["{workspaceRoot}/dist/packages/sequelize"],
             "options": {
                 "command": "node tools/scripts/build-packages.mjs sequelize"
             }
-        },
-        "lint": {
-            "executor": "@nx/eslint:lint"
         },
         "test": {
             "executor": "nx:run-commands",

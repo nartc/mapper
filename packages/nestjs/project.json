@@ -2,21 +2,14 @@
     "name": "nestjs",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "packages/nestjs/src",
-    "tags": [
-        "nestjs"
-    ],
+    "tags": ["nestjs"],
     "targets": {
         "package": {
             "executor": "nx:run-commands",
-            "outputs": [
-                "{workspaceRoot}/dist/packages/nestjs"
-            ],
+            "outputs": ["{workspaceRoot}/dist/packages/nestjs"],
             "options": {
                 "command": "node tools/scripts/build-packages.mjs nestjs"
             }
-        },
-        "lint": {
-            "executor": "@nx/eslint:lint"
         },
         "test": {
             "executor": "nx:run-commands",

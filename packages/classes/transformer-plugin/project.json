@@ -2,13 +2,8 @@
     "name": "classes-transformer-plugin",
     "$schema": "../../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "packages/classes/transformer-plugin/src",
-    "tags": [
-        "classes"
-    ],
+    "tags": ["classes"],
     "targets": {
-        "lint": {
-            "executor": "@nx/eslint:lint"
-        },
         "test": {
             "executor": "nx:run-commands",
             "options": {

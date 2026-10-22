@@ -4,6 +4,23 @@
     "plugins": [
         {
             "plugin": "@nx/js/typescript"
+        },
+        {
+            "plugin": "@nx/eslint/plugin",
+            "options": {
+                "targetName": "lint"
+            },
+            "include": [
+                "packages/classes/mapped-types/**/*",
+                "packages/classes/**/*",
+                "packages/classes/transformer-plugin/**/*",
+                "packages/core/**/*",
+                "packages/integration-test/**/*",
+                "packages/mikro/**/*",
+                "packages/nestjs/**/*",
+                "packages/pojos/**/*",
+                "packages/sequelize/**/*"
+            ]
         }
     ],
     "namedInputs": {
@@ -12,7 +29,9 @@
         "shared": ["{workspaceRoot}/.github/workflows/ci.yml"]
     },
     "targetDefaults": {
-        "build": { "cache": true },
+        "build": {
+            "cache": true
+        },
         "package": {
             "cache": true,
             "inputs": [
@@ -21,16 +40,19 @@
                 "{workspaceRoot}/tools/scripts/build-packages.mjs"
             ]
         },
-        "package-lib": { "cache": true },
-        "test": { "inputs": ["default", "^prod"], "cache": true },
-        "@nx/eslint:lint": {
-            "inputs": [
-                "default",
-                "^default",
-                "{workspaceRoot}/.eslintrc.json",
-                "{workspaceRoot}/tools/eslint-rules/**/*"
-            ],
+        "package-lib": {
             "cache": true
+        },
+        "test": {
+            "inputs": ["default", "^prod"],
+            "cache": true
+        },
+        "typecheck": {
+            "dependsOn": ["^typecheck"],
+            "syncGenerators": ["@nx/js:typescript-sync"],
+            "options": {
+                "command": "tsc --build --emitDeclarationOnly"
+            }
         }
     },
     "release": {
@@ -62,12 +84,21 @@
             }
         },
         "changelog": {
-            "workspaceChangelog": { "createRelease": "github" }
+            "workspaceChangelog": {
+                "createRelease": "github"
+            }
         }
     },
-    "pluginsConfig": { "@nx/js": { "analyzeSourceFiles": true } },
+    "pluginsConfig": {
+        "@nx/js": {
+            "analyzeSourceFiles": true
+        }
+    },
     "defaultBase": "main",
     "analytics": false,
     "nxCloudId": "6a3e997e7427195a38f6bdbc",
-    "bust": "3"
+    "bust": "3",
+    "affected": {
+        "legacy": true
+    }
 }

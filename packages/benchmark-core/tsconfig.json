@@ -12,7 +12,8 @@
         "skipLibCheck": true,
         "experimentalDecorators": true,
         "useDefineForClassFields": false,
-        "types": ["node", "reflect-metadata"]
+        "types": ["node", "reflect-metadata"],
+        "ignoreDeprecations": "6.0"
     },
     "include": ["src/**/*.ts"],
     "references": []

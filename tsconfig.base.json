@@ -10,15 +10,10 @@
         "importHelpers": true,
         "target": "es2022",
         "module": "esnext",
-        "lib": [
-            "es2022",
-            "dom"
-        ],
+        "lib": ["es2022", "dom"],
         "skipLibCheck": true,
-        "skipDefaultLibCheck": true
+        "skipDefaultLibCheck": true,
+        "ignoreDeprecations": "6.0"
     },
-    "exclude": [
-        "node_modules",
-        "tmp"
-    ]
+    "exclude": ["node_modules", "tmp"]
 }

@@ -3,21 +3,14 @@
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "packages/core/src",
     "projectType": "library",
-    "tags": [
-        "core"
-    ],
+    "tags": ["core"],
     "targets": {
         "package": {
             "executor": "nx:run-commands",
-            "outputs": [
-                "{workspaceRoot}/dist/packages/core"
-            ],
+            "outputs": ["{workspaceRoot}/dist/packages/core"],
             "options": {
                 "command": "node tools/scripts/build-packages.mjs core"
             }
-        },
-        "lint": {
-            "executor": "@nx/eslint:lint"
         },
         "test": {
             "executor": "nx:run-commands",

@@ -2,21 +2,14 @@
     "name": "mikro",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "packages/mikro/src",
-    "tags": [
-        "mikro"
-    ],
+    "tags": ["mikro"],
     "targets": {
         "package": {
             "executor": "nx:run-commands",
-            "outputs": [
-                "{workspaceRoot}/dist/packages/mikro"
-            ],
+            "outputs": ["{workspaceRoot}/dist/packages/mikro"],
             "options": {
                 "command": "node tools/scripts/build-packages.mjs mikro"
             }
-        },
-        "lint": {
-            "executor": "@nx/eslint:lint"
         },
         "test": {
             "executor": "nx:run-commands",

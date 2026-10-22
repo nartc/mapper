@@ -8,6 +8,9 @@ on:
 env:
     NX_VERBOSE_LOGGING: 'true'
     NX_CLOUD_CONTINUOUS_ASSIGNMENT: 'true'
+    # packing a/b: declared hashing on both arms so the per-rep ci.yml edit busts every task
+    NX_CLOUD_USE_ULTRACACHE: 'false'
+    # packing a/b cache bust: rep 0
     # packing a/b treatment arm
     NX_CLOUD_AUTO_TASK_PACKING: 'true'
 
@@ -22,7 +25,8 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                node: ['20', '22']
+                # packing a/b: one job, so no second job shares the cold tasks
+                node: ['22']
         env:
             NX_CI_EXECUTION_ENV: 'node ${{ matrix.node }}'
             MISE_NODE_VERSION: ${{ matrix.node }}
@@ -42,8 +46,7 @@ jobs:
                   --stop-agents-after=lint,typecheck,package,test
             # fail fast if tsconfig project references drift from the graph
             - run: pnpm nx record -- nx sync:check
-            # cold runs: every task executes so packing has work to place
-            - run: pnpm nx run-many -t lint,typecheck,package,test --skip-nx-cache
+            - run: pnpm nx run-many -t lint,typecheck,package,test
 
     package-contract:
         name: publint + attw

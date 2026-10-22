@@ -1,0 +1,101 @@
+---
+title: Installation
+description: Install AutoMapper TypeScript and configure a class, POJO, ORM, or NestJS project.
+---
+
+:::warning
+AutoMapper 9 requires Node.js 20 or later and is ESM-only. Your application must be able to consume ES modules.
+:::
+
+## Choose a strategy
+
+Install `@automapper/core` and one strategy.
+
+<Tabs>
+  <Tab title="npm">
+
+```shell
+# Classes
+npm install @automapper/core @automapper/classes reflect-metadata
+
+# POJOs
+npm install @automapper/core @automapper/pojos
+
+# MikroORM
+npm install @automapper/core @automapper/classes @automapper/mikro reflect-metadata
+
+# Sequelize
+npm install @automapper/core @automapper/classes @automapper/sequelize reflect-metadata
+```
+
+  </Tab>
+  <Tab title="pnpm">
+
+```shell
+# Classes
+pnpm add @automapper/core @automapper/classes reflect-metadata
+
+# POJOs
+pnpm add @automapper/core @automapper/pojos
+
+# MikroORM
+pnpm add @automapper/core @automapper/classes @automapper/mikro reflect-metadata
+
+# Sequelize
+pnpm add @automapper/core @automapper/classes @automapper/sequelize reflect-metadata
+```
+
+  </Tab>
+  <Tab title="Bun">
+
+```shell
+# Classes
+bun add @automapper/core @automapper/classes reflect-metadata
+
+# POJOs
+bun add @automapper/core @automapper/pojos
+
+# MikroORM
+bun add @automapper/core @automapper/classes @automapper/mikro reflect-metadata
+
+# Sequelize
+bun add @automapper/core @automapper/classes @automapper/sequelize reflect-metadata
+```
+
+  </Tab>
+</Tabs>
+
+:::tip Using NestJS?
+If you're using NestJS, install your strategy above, then follow the [NestJS integration guide](/nestjs) to add `@automapper/nestjs` and register AutoMapper in your application.
+:::
+
+## Configure class metadata
+
+The classes-based strategies use decorators and emitted design metadata:
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  }
+}
+```
+
+Import `reflect-metadata` once, before decorated models are evaluated:
+
+```ts title="main.ts"
+import "reflect-metadata";
+```
+
+## ESM setup
+
+For Node.js applications, use an ESM-compatible package configuration and TypeScript module resolution. For example:
+
+```json title="package.json"
+{
+  "type": "module"
+}
+```
+
+Your framework or bundler may provide its own ESM configuration. The important requirement is that it does not attempt to load AutoMapper packages with CommonJS `require()`.

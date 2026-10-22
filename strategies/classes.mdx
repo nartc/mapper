@@ -1,0 +1,90 @@
+---
+title: Classes strategy
+description: Discover TypeScript class metadata with decorators or generated metadata factories.
+sidebar:
+  label: "@automapper/classes"
+---
+
+`@automapper/classes` maps TypeScript and JavaScript classes. It reads metadata created by `@AutoMap()` or the optional [transformer plugin](/misc/transformer-plugin).
+
+<Tabs>
+  <Tab title="npm">
+
+```shell
+npm install @automapper/core @automapper/classes reflect-metadata
+```
+
+  </Tab>
+  <Tab title="pnpm">
+
+```shell
+pnpm add @automapper/core @automapper/classes reflect-metadata
+```
+
+  </Tab>
+  <Tab title="Bun">
+
+```shell
+bun add @automapper/core @automapper/classes reflect-metadata
+```
+
+  </Tab>
+</Tabs>
+
+```ts
+import 'reflect-metadata';
+import { AutoMap, classes } from '@automapper/classes';
+import { createMapper } from '@automapper/core';
+
+const mapper = createMapper({ strategyInitializer: classes() });
+```
+
+## AutoMap metadata
+
+Use `@AutoMap()` when emitted design metadata identifies a primitive or `Date`. Supply an explicit callback for nested models, arrays, enums, unions, and ambiguous types.
+
+```ts
+enum Role {
+  Admin = 'admin',
+  User = 'user',
+}
+
+class User {
+  @AutoMap()
+  name!: string;
+
+  @AutoMap(() => String)
+  role!: Role;
+
+  @AutoMap(() => Profile)
+  profile!: Profile;
+
+  @AutoMap(() => [Date])
+  logins!: Date[];
+}
+```
+
+Array metadata wraps the element identifier in an array: `() => [Profile]`.
+
+## Circular models
+
+Nested metadata defaults to depth `1`. Use the options form when a circular relationship should traverse further:
+
+```ts
+class User {
+  @AutoMap({ type: () => Organization, depth: 2 })
+  organization!: Organization;
+}
+```
+
+Keep depth bounded so circular graphs terminate.
+
+## Class identifiers in v9
+
+Abstract classes and classes with non-public constructors can be used as runtime identifiers. If such a destination cannot be instantiated by the default strategy, provide `constructUsing()` for that mapping or a custom `destinationConstructor` in the strategy options.
+
+## Decoratorless options
+
+- Use [`autoMap()`](/mapping-configuration/auto-map) for a few same-name members.
+- Use the [transformer plugin](/misc/transformer-plugin) to emit metadata for whole model files.
+- Use [mapped types](/misc/mapped-types) to derive pick, omit, and intersection classes while retaining metadata.

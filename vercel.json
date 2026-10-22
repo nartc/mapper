@@ -1,0 +1,34 @@
+{
+  "redirects": [
+    {
+      "destination": "/getting-started/overview",
+      "source": "/docs",
+      "statusCode": 301
+    },
+    {
+      "destination": "/getting-started/migrate-v8",
+      "source": "/docs/getting-started/migrate-to-automapper-v8",
+      "statusCode": 301
+    },
+    {
+      "destination": "/misc/async-mapping",
+      "source": "/docs/misc/fake-async",
+      "statusCode": 301
+    },
+    {
+      "destination": "/fundamentals/naming-convention#auto-flattening",
+      "source": "/docs/fundamentals/auto-flattening",
+      "statusCode": 301
+    },
+    {
+      "destination": "/fundamentals/naming-convention#auto-flattening",
+      "source": "/fundamentals/auto-flattening",
+      "statusCode": 301
+    },
+    {
+      "destination": "/changelog",
+      "source": "/blog",
+      "statusCode": 301
+    }
+  ]
+}

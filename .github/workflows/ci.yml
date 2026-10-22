@@ -2,12 +2,16 @@ name: CI
 
 on:
     push:
-        branches: [main]
+        branches: [main, 'workers-ab/**']
     pull_request:
 
 env:
     NX_VERBOSE_LOGGING: 'true'
     NX_CLOUD_CONTINUOUS_ASSIGNMENT: 'true'
+    # workers a/b: declared hashing so the per-rep ci.yml edit busts every task
+    NX_CLOUD_USE_ULTRACACHE: 'false'
+    # workers a/b cache bust: rep 0
+    NX_CLOUD_AUTO_TASK_PACKING: 'true'
 
 concurrency:
     group: ${{ github.workflow }}-${{ github.ref }}
@@ -20,7 +24,8 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                node: ['20', '22']
+                # workers a/b: one job, so no second job shares the cold tasks
+                node: ['22']
         env:
             NX_CI_EXECUTION_ENV: 'node ${{ matrix.node }}'
             MISE_NODE_VERSION: ${{ matrix.node }}
@@ -36,7 +41,7 @@ jobs:
             - name: Start Nx Agents
               run: >-
                   pnpm nx start-ci-run
-                  --distribute-on="3 linux-medium-node${{ matrix.node }}"
+                  --distribute-on="1 linux-medium-node${{ matrix.node }}"
                   --stop-agents-after=lint,typecheck,package,test
             # fail fast if tsconfig project references drift from the graph
             - run: pnpm nx record -- nx sync:check
@@ -44,6 +49,7 @@ jobs:
 
     package-contract:
         name: publint + attw
+        if: ${{ !startsWith(github.ref, 'refs/heads/workers-ab/') }}
         runs-on: ubuntu-latest
         env:
             NX_CI_EXECUTION_ENV: 'publint + attw'
@@ -59,6 +65,7 @@ jobs:
     # downgrading the @nestjs runtime to v10 and running the DI integration specs.
     nestjs-compat:
         name: nestjs 10 compat
+        if: ${{ !startsWith(github.ref, 'refs/heads/workers-ab/') }}
         runs-on: ubuntu-latest
         env:
             NX_CI_EXECUTION_ENV: 'nestjs-compat'

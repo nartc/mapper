@@ -8,6 +8,8 @@ on:
 env:
     NX_VERBOSE_LOGGING: 'true'
     NX_CLOUD_CONTINUOUS_ASSIGNMENT: 'true'
+    # a/b control arm: hash from declared inputs
+    NX_CLOUD_USE_ULTRACACHE: 'false'
 
 concurrency:
     group: ${{ github.workflow }}-${{ github.ref }}

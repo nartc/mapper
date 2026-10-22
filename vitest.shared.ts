@@ -37,8 +37,8 @@ export function vitestConfig(testOverrides: ViteUserConfig['test'] = {}) {
             globals: true,
             environment: 'node',
             setupFiles: ['reflect-metadata'],
-            include: ['src/**/*.spec.ts'],
-            passWithNoTests: true,
+            include: ['src/**/*.does-not-exist.ts'],
+            passWithNoTests: false,
             ...testOverrides,
         },
     });

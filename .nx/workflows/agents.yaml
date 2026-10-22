@@ -11,6 +11,9 @@ launch-templates:
 
             - name: Install toolchain
               uses: 'nrwl/nx-cloud-workflows/v6/workflow-steps/install-mise/main.yaml'
+              inputs:
+                  # v6 defaults to mise v2025.12.2, whose bundled node keyring fails to import
+                  mise-version: 'v2026.7.7'
 
             - name: Install Node Modules
               uses: 'nrwl/nx-cloud-workflows/v4/workflow-steps/install-node-modules/main.yaml'
@@ -27,6 +30,9 @@ launch-templates:
 
             - name: Install toolchain
               uses: 'nrwl/nx-cloud-workflows/v6/workflow-steps/install-mise/main.yaml'
+              inputs:
+                  # v6 defaults to mise v2025.12.2, whose bundled node keyring fails to import
+                  mise-version: 'v2026.7.7'
 
             - name: Install Node Modules
               uses: 'nrwl/nx-cloud-workflows/v4/workflow-steps/install-node-modules/main.yaml'

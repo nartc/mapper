@@ -8,6 +8,8 @@ on:
 env:
     NX_VERBOSE_LOGGING: 'true'
     NX_CLOUD_CONTINUOUS_ASSIGNMENT: 'true'
+    # packing a/b treatment arm
+    NX_CLOUD_AUTO_TASK_PACKING: 'true'
 
 concurrency:
     group: ${{ github.workflow }}-${{ github.ref }}

@@ -46,8 +46,8 @@ jobs:
             - if: always()
               run: >-
                   sed 's/\x1b\[[0-9;]*m//g' nx-run.log
-                  | grep -E 'Successfully ran|Running targets? .* failed|read the output from the cache'
-                  | sed 's/^ *NX *//; s/^/::notice title=nx cache::/' || true
+                  | grep -E ' NX +[0-9]+ tasks?:|^ *Cache: |^ *Run duration:'
+                  | sed 's/^ *NX *//; s/^ *//; s/^/::notice title=nx cache::/' || true
 
     package-contract:
         name: publint + attw

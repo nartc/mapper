@@ -2,7 +2,7 @@ name: CI
 
 on:
     push:
-        branches: [main]
+        branches: [main, 'ultracache-ab/**']
     pull_request:
 
 env:
@@ -40,7 +40,13 @@ jobs:
                   --stop-agents-after=lint,typecheck,package,test
             # fail fast if tsconfig project references drift from the graph
             - run: pnpm nx record -- nx sync:check
-            - run: pnpm nx run-many -t lint,typecheck,package,test
+            - run: pnpm nx run-many -t lint,typecheck,package,test 2>&1 | tee nx-run.log
+            # surface the cache summary as annotations so the a/b numbers are readable without log access
+            - if: always()
+              run: >-
+                  sed 's/\x1b\[[0-9;]*m//g' nx-run.log
+                  | grep -E 'Successfully ran|Running targets? .* failed|read the output from the cache'
+                  | sed 's/^ *NX *//; s/^/::notice title=nx cache::/' || true
 
     package-contract:
         name: publint + attw

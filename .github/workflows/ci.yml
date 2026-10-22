@@ -10,7 +10,7 @@ env:
     NX_CLOUD_CONTINUOUS_ASSIGNMENT: 'true'
     # packing a/b: declared hashing on both arms so the per-rep ci.yml edit busts every task
     NX_CLOUD_USE_ULTRACACHE: 'false'
-    # packing a/b cache bust: rep 0
+    # packing a/b cache bust: rep 1
     # packing a/b treatment arm
     NX_CLOUD_AUTO_TASK_PACKING: 'true'
 

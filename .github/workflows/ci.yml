@@ -2,7 +2,7 @@ name: CI
 
 on:
     push:
-        branches: [main]
+        branches: [main, 'packing-ab/**']
     pull_request:
 
 env:
@@ -40,10 +40,12 @@ jobs:
                   --stop-agents-after=lint,typecheck,package,test
             # fail fast if tsconfig project references drift from the graph
             - run: pnpm nx record -- nx sync:check
-            - run: pnpm nx run-many -t lint,typecheck,package,test
+            # cold runs: every task executes so packing has work to place
+            - run: pnpm nx run-many -t lint,typecheck,package,test --skip-nx-cache
 
     package-contract:
         name: publint + attw
+        if: ${{ !startsWith(github.ref, 'refs/heads/packing-ab/') }}
         runs-on: ubuntu-latest
         env:
             NX_CI_EXECUTION_ENV: 'publint + attw'
@@ -59,6 +61,7 @@ jobs:
     # downgrading the @nestjs runtime to v10 and running the DI integration specs.
     nestjs-compat:
         name: nestjs 10 compat
+        if: ${{ !startsWith(github.ref, 'refs/heads/packing-ab/') }}
         runs-on: ubuntu-latest
         env:
             NX_CI_EXECUTION_ENV: 'nestjs-compat'

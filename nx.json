@@ -96,9 +96,10 @@
     },
     "defaultBase": "main",
     "analytics": false,
-    "nxCloudId": "6a3e997e7427195a38f6bdbc",
+    "nxCloudId": "6af52bbc1486612fffb938e3",
     "bust": "4",
     "affected": {
         "legacy": true
-    }
+    },
+    "nxCloudUrl": "https://staging.nx.app"
 }

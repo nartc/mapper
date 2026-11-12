@@ -100,6 +100,5 @@
     "bust": "4",
     "affected": {
         "legacy": true
-    },
-    "nxCloudUrl": "https://staging.nx.app"
+    }
 }

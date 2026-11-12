@@ -1,16 +1,117 @@
 # yaml-language-server: $schema=https://cloud.nx.app/nx-cloud/static/schemas/workflow.schema.json
-triggers:
-  pull-requests:
-    event: PR
-    branches: ['main']
-  pushes:
-    event: PUSH
-    branches: ['main']
+name: Nx Cloud CI
 
-workflows:
-  main:
-    runs-on: linux-medium-js
-    steps:
-      - name: Run affected tasks
-        script: |
-          pnpm exec nx affected -t lint test build
+on:
+    pull-requests:
+        event: PR
+        types: [opened, synchronize, reopened]
+    main-pushes:
+        event: PUSH
+        branches: [main]
+
+env:
+    CI: 'true'
+    NX_VERBOSE_LOGGING: 'true'
+    NX_CLOUD_CONTINUOUS_ASSIGNMENT: 'true'
+
+# Keep .github/workflows/ci.yml until all four jobs pass on a PR.
+# linux-medium-js supplies named checkout/cache/node/dependency init steps.
+# NODE_VERSION selects the bootstrap runtime; mise then installs the repo tools.
+# Reinstall explicitly after mise to retain the original frozen-lockfile command.
+# GitHub concurrency/cancellation cannot be expressed in this workflow format.
+jobs:
+    nx-verify-node20:
+        runs-on: linux-medium-js
+        timeout-minutes: 60
+        env:
+            NX_CI_EXECUTION_ENV: 'node 20'
+            MISE_NODE_VERSION: '20'
+            NODE_VERSION: '20'
+            GIT_CHECKOUT_DEPTH: '0'
+            GIT_FILTER: 'tree:0'
+        steps:
+            - name: Install Node 20 and pnpm from mise
+              uses: 'nrwl/nx-cloud-workflows/v6/workflow-steps/install-mise/main.yaml'
+              with:
+                  # Match agents.yaml; the template default has a broken Node keyring.
+                  mise-version: 'v2026.7.7'
+            - name: Install workspace dependencies
+              run: pnpm install --frozen-lockfile
+            - name: Start three Node 20 Nx Agents
+              run: >-
+                  pnpm nx start-ci-run
+                  --distribute-on="3 linux-medium-node20"
+                  --stop-agents-after=lint,typecheck,package,test
+            - name: Check TypeScript project references
+              run: pnpm nx record -- nx sync:check
+            - name: Lint, typecheck, package, and test all projects
+              run: pnpm nx run-many -t lint,typecheck,package,test
+
+    nx-verify-node22:
+        runs-on: linux-medium-js
+        timeout-minutes: 60
+        env:
+            NX_CI_EXECUTION_ENV: 'node 22'
+            MISE_NODE_VERSION: '22'
+            NODE_VERSION: '22'
+            GIT_CHECKOUT_DEPTH: '0'
+            GIT_FILTER: 'tree:0'
+        steps:
+            - name: Install Node 22 and pnpm from mise
+              uses: 'nrwl/nx-cloud-workflows/v6/workflow-steps/install-mise/main.yaml'
+              with:
+                  mise-version: 'v2026.7.7'
+            - name: Install workspace dependencies
+              run: pnpm install --frozen-lockfile
+            - name: Start three Node 22 Nx Agents
+              run: >-
+                  pnpm nx start-ci-run
+                  --distribute-on="3 linux-medium-node22"
+                  --stop-agents-after=lint,typecheck,package,test
+            - name: Check TypeScript project references
+              run: pnpm nx record -- nx sync:check
+            - name: Lint, typecheck, package, and test all projects
+              run: pnpm nx run-many -t lint,typecheck,package,test
+
+    nx-package-contract:
+        runs-on: linux-medium-js
+        timeout-minutes: 60
+        env:
+            NX_CI_EXECUTION_ENV: 'publint + attw'
+            NODE_VERSION: '22'
+            GIT_CHECKOUT_DEPTH: '1'
+        steps:
+            - name: Install repository toolchain from mise
+              uses: 'nrwl/nx-cloud-workflows/v6/workflow-steps/install-mise/main.yaml'
+              with:
+                  mise-version: 'v2026.7.7'
+            - name: Install workspace dependencies
+              run: pnpm install --frozen-lockfile
+            - name: Build all publishable packages
+              run: pnpm run package
+            - name: Validate package exports and types with publint and attw
+              run: pnpm nx record -- pnpm run check:packages
+
+    nx-nestjs-compat:
+        runs-on: linux-medium-js
+        timeout-minutes: 60
+        env:
+            NX_CI_EXECUTION_ENV: 'nestjs-compat'
+            NODE_VERSION: '22'
+            GIT_CHECKOUT_DEPTH: '1'
+        steps:
+            - name: Install repository toolchain from mise
+              uses: 'nrwl/nx-cloud-workflows/v6/workflow-steps/install-mise/main.yaml'
+              with:
+                  mise-version: 'v2026.7.7'
+            - name: Install workspace dependencies
+              run: pnpm install --frozen-lockfile
+            - name: Downgrade NestJS runtime to the supported v10 lower bound
+              run: pnpm --config.prefer-workspace-packages=true add -w @nestjs/common@^10 @nestjs/core@^10 @nestjs/testing@^10 @nestjs/platform-express@^10
+            - name: Start three Node 22 Nx Agents
+              run: >-
+                  pnpm nx start-ci-run
+                  --distribute-on="3 linux-medium-node22"
+                  --stop-agents-after=test
+            - name: Run NestJS 10 integration tests
+              run: pnpm nx run integration-test:test

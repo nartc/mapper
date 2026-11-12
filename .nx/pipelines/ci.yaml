@@ -4,6 +4,7 @@ name: Nx Cloud CI
 on:
     pull-requests:
         event: PR
+        # No branch filter: match GitHub CI for PRs targeting any branch.
         types: [opened, synchronize, reopened]
     main-pushes:
         event: PUSH

@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=https://cloud.nx.app/nx-cloud/static/schemas/workflow.schema.json
+triggers:
+  pull-requests:
+    event: PR
+    branches: ['main']
+  pushes:
+    event: PUSH
+    branches: ['main']
+
+workflows:
+  main:
+    runs-on: linux-medium-js
+    steps:
+      - name: Run affected tasks
+        script: |
+          pnpm exec nx affected -t lint test build
